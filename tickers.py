@@ -9,6 +9,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 import unidecode
 import json
+import pandas as pd
 
 
 def get_ticker_names():
@@ -49,3 +50,14 @@ def get_ticker_names():
 
     json.dumps(results)
     return results
+
+
+# FIX to csv
+def convert_tickers_into_csv(results):
+    data = list()
+
+    for line in results:
+        data.append(json.loads(line))
+
+    df = pd.DataFrame(data)
+    df.to_csv('tickers.csv', index=False)
