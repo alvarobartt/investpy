@@ -15,7 +15,7 @@ import tickers as ts
 
 def get_recent_data(ticker):
     for item in ts.get_ticker_names():
-        if item == ticker:
+        if item['name'] == ticker:
             url = "https://es.investing.com/equities/" + ticker + "-historical-data"
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.3'
@@ -43,56 +43,58 @@ def get_recent_data(ticker):
             df.set_index('Date', inplace=True)
 
             return df
-        break
 
 
 def get_historical_data(ticker, start, end):
-    options = Options()
-    options.add_argument("--headless")
-    browser = webdriver.Chrome(options=options)
+    for item in ts.get_ticker_names():
+        if item['name'] == ticker:
+            options = Options()
+            options.add_argument("--headless")
+            browser = webdriver.Chrome(options=options)
 
-    url = "https://es.investing.com/equities/" + ticker + "-historical-data"
-    browser.get(url)
+            url = "https://es.investing.com/equities/" + ticker + "-historical-data"
+            browser.get(url)
 
-    close = browser.find_element_by_class_name("popupCloseIcon")
-    browser.execute_script("arguments[0].click();", close)
+            close = browser.find_element_by_class_name("popupCloseIcon")
+            browser.execute_script("arguments[0].click();", close)
 
-    button = browser.find_element_by_id("flatDatePickerCanvasHol")
-    browser.execute_script("arguments[0].click();", button)
+            button = browser.find_element_by_id("flatDatePickerCanvasHol")
+            browser.execute_script("arguments[0].click();", button)
 
-    start_date = browser.find_element_by_id("startDate")
-    start_date.clear()
-    start_date.send_keys(start)
+            start_date = browser.find_element_by_id("startDate")
+            start_date.clear()
+            start_date.send_keys(start)
 
-    end_date = browser.find_element_by_id("endDate")
-    end_date.clear()
-    end_date.send_keys(end)
+            end_date = browser.find_element_by_id("endDate")
+            end_date.clear()
+            end_date.send_keys(end)
 
-    apply = browser.find_element_by_id("applyBtn")
-    browser.execute_script("arguments[0].click();", apply)
+            apply = browser.find_element_by_id("applyBtn")
+            browser.execute_script("arguments[0].click();", apply)
 
-    WebDriverWait(browser, 5).until(ec.presence_of_element_located((By.ID, 'curr_table')))
+            WebDriverWait(browser, 5).until(ec.presence_of_element_located((By.ID, 'curr_table')))
 
-    html = BeautifulSoup(browser.page_source, 'html.parser')
+            html = BeautifulSoup(browser.page_source, 'html.parser')
+            browser.close()
 
-    selection = html.select('div#results_box > table#curr_table > tbody > tr')
+            selection = html.select('div#results_box > table#curr_table > tbody > tr')
 
-    result = list()
+            result = list()
 
-    for element in selection:
-        info = element.getText().strip().split('\n')
-        stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-        stock_close = int(info[1].replace(',', ''))
-        stock_open = int(info[2].replace(',', ''))
-        result.insert(len(result), Data(stock_date, stock_close, stock_open))
+            for element in selection:
+                info = element.getText().strip().split('\n')
+                stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                stock_close = int(info[1].replace(',', ''))
+                stock_open = int(info[2].replace(',', ''))
+                result.insert(len(result), Data(stock_date, stock_close, stock_open))
 
-    result = result[::-1]
+            result = result[::-1]
 
-    df = pd.DataFrame.from_records([data.to_dict() for data in result])
-    df.set_index('Date', inplace=True)
+            df = pd.DataFrame.from_records([data.to_dict() for data in result])
+            df.set_index('Date', inplace=True)
 
-    return df
+            return df
 
 
-data = get_historical_data('bbva', '10/10/2016', '10/10/2018')
+data = get_historical_data('BBVA', '10/10/2016', '10/10/2018')
 print(data.head())
