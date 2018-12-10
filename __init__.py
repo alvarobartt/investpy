@@ -1,4 +1,5 @@
 import datetime
+import os.path
 
 import pandas as pd
 import requests
@@ -9,12 +10,18 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 
-from model import Data
+from data import Data
 import tickers as ts
 
 
 def get_recent_data(ticker):
-    for item in ts.get_ticker_names():
+    if os.path.exists('tickers.csv') is False:
+        tickers = ts.get_ticker_names()
+        ts.convert_tickers_into_csv(tickers)
+
+    tickers = pd.read_csv('tickers.csv')
+
+    for item in tickers:
         if item['name'] == ticker:
             url = "https://es.investing.com/equities/" + ticker + "-historical-data"
             headers = {
@@ -47,12 +54,12 @@ def get_recent_data(ticker):
 
 def get_historical_data(ticker, start, end):
     for item in ts.get_ticker_names():
-        if item['name'] == ticker:
+        if item['name'].lower() == ticker.lower():
             options = Options()
             options.add_argument("--headless")
             browser = webdriver.Chrome(options=options)
 
-            url = "https://es.investing.com/equities/" + ticker + "-historical-data"
+            url = "https://es.investing.com/equities/" + item['info'] + "-historical-data"
             browser.get(url)
 
             close = browser.find_element_by_class_name("popupCloseIcon")
@@ -90,11 +97,7 @@ def get_historical_data(ticker, start, end):
 
             result = result[::-1]
 
-            df = pd.DataFrame.from_records([data.to_dict() for data in result])
+            df = pd.DataFrame.from_records([value.to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df
-
-
-data = get_historical_data('BBVA', '10/10/2016', '10/10/2018')
-print(data.head())

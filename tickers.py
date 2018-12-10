@@ -1,15 +1,12 @@
+import pandas as pd
+import unidecode
 from bs4 import BeautifulSoup
-
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.wait import WebDriverWait
-
-import unidecode
-import json
-import pandas as pd
 
 
 def get_ticker_names():
@@ -48,16 +45,9 @@ def get_ticker_names():
 
             results.append(data)
 
-    json.dumps(results)
     return results
 
 
-# FIX to csv
-def convert_tickers_into_csv(results):
-    data = list()
-
-    for line in results:
-        data.append(json.loads(line))
-
+def convert_tickers_into_csv(data):
     df = pd.DataFrame(data)
-    df.to_csv('tickers.csv', index=False)
+    df.to_csv('tickers.csv', index=True)
