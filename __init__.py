@@ -4,6 +4,7 @@ import os.path
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+import requests_html
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec

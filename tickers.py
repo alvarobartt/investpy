@@ -1,35 +1,30 @@
 import pandas as pd
+import requests
 import unidecode
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as ec
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support.wait import WebDriverWait
 
 
 def get_ticker_names():
-    options = Options()
-    options.add_argument("--headless")
-    browser = webdriver.Chrome(options=options)
+    params = {
+        "noconstruct": "1",
+        "smlID": "10119",
+        "sid": "",
+        "tabletype": "price",
+        "index_id": "all"
+    }
 
-    url = "https://es.investing.com/equities/spain"
-    browser.get(url)
+    head = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
+        "X-Requested-With": "XMLHttpRequest"
+    }
 
-    WebDriverWait(browser, 10).until(ec.presence_of_element_located((By.CLASS_NAME, 'popupCloseIcon')))
+    url = "https://es.investing.com/equities/StocksFilter"
 
-    close = browser.find_element_by_class_name("popupCloseIcon")
-    browser.execute_script("arguments[0].click();", close)
+    req = requests.get(url, params=params, headers=head)
 
-    select = Select(browser.find_element_by_class_name("selectBox"))
-    select.select_by_visible_text("España - Acciones")
+    html = BeautifulSoup(req.content, 'html.parser')
 
-    WebDriverWait(browser, 5).until(ec.presence_of_element_located((By.ID, 'pair_101934')))
-
-    html = BeautifulSoup(browser.page_source, 'html.parser')
-
-    selection = html.select("table.crossRatesTbl > tbody > tr")
+    selection = html.select("table#cross_rate_markets_stocks_1 > tbody > tr")
 
     results = list()
 
