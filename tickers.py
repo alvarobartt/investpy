@@ -3,6 +3,8 @@ import requests
 import unidecode
 from bs4 import BeautifulSoup
 
+import user_agent as ua
+
 
 def get_ticker_names():
     params = {
@@ -14,7 +16,7 @@ def get_ticker_names():
     }
 
     head = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.110 Safari/537.36",
+        "User-Agent": ua.get_random(),
         "X-Requested-With": "XMLHttpRequest"
     }
 
