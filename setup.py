@@ -12,6 +12,7 @@ setup(
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from https://es.investing.com, into a Pandas DataFrame.',
     install_requires=['requests', 'pandas', 'beautifulsoup4', 'unidecode'],
     classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
         "Programming Language :: Python :: 3.6",
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
