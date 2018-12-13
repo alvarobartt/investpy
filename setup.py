@@ -1,9 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='investing_scrapper',
     version='0.2',
-    packages=['', 'investing_scrapper'],
+    packages=find_packages(),
     url='',
     download_url='https://github.com/alvarob96/investing-scrapper/archive/0.2.tar.gz',
     license='MIT License',
