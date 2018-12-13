@@ -1,6 +1,8 @@
 README.rst
 setup.cfg
 setup.py
+data/tickers.csv
+data/user-agent-list.txt
 investing_scrapper/__init__.py
 investing_scrapper/data.py
 investing_scrapper/tickers.py
