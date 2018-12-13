@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/dist/investing_scrapper-0.1.2.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO" afterDir="false" />
-    </list>
+    <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,10 +33,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-101" />
+            <state relative-caret-position="-256" />
           </provider>
         </entry>
       </file>
@@ -67,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user_agent.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="user_agent.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="4" column="36" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="36" />
+            <state relative-caret-position="168">
+              <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -407,13 +404,6 @@
         <state relative-caret-position="-5189" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="36" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/investing_scrapper/tickers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="331">
@@ -436,7 +426,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-101" />
+        <state relative-caret-position="-256" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        </state>
       </provider>
     </entry>
   </component>
