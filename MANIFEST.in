@@ -1,0 +1,3 @@
+include README.rst
+include data/tickers.csv
+include data/user-agent-list.txt
