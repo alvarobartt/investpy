@@ -10,10 +10,11 @@ from investing_scrapper.data import Data
 
 
 def get_recent_data(ticker):
-    if os.path.exists('tickers.csv') is False:
+    """
+    if os.path.exists('data/tickers.csv') is False:
         tickers = ts.get_ticker_names()
         ts.convert_tickers_into_csv(tickers)
-
+    """
     tickers = pd.read_csv('data/tickers.csv')
 
     for item in tickers:

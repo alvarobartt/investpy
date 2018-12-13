@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="" />
+    <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/tickers.csv" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/data/tickers.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/user-agent-list.txt" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/data/user-agent-list.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investing_scrapper/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/__init__.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -21,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1469">
-              <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
+            <state relative-caret-position="223">
+              <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -36,26 +43,30 @@
       <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-256" />
+            <state relative-caret-position="250">
+              <caret line="13" column="14" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="14" />
+            </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="tickers.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/data/tickers.csv">
+        <entry file="file://$PROJECT_DIR$/investing_scrapper/data/tickers.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5189" />
+            <state relative-caret-position="1808">
+              <caret line="232" column="71" selection-start-line="232" selection-start-column="71" selection-end-line="232" selection-end-column="71" />
+            </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="data.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investing_scrapper/data.py">
+      <file leaf-file-name="user-agent-list.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investing_scrapper/data/user-agent-list.txt">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="tickers.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/investing_scrapper/tickers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="331">
+            <state relative-caret-position="1176">
               <caret line="49" column="15" selection-start-line="49" selection-start-column="15" selection-end-line="49" selection-end-column="15" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
@@ -64,11 +75,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="user_agent.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SOURCES.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/SOURCES.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="requires.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/requires.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="dependency_links.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/dependency_links.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="PKG-INFO" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="48">
+              <caret line="2" column="14" lean-forward="true" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user_agent.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+            <state relative-caret-position="96">
+              <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -133,8 +168,9 @@
         <option value="$PROJECT_DIR$/../investing_scrapper/investing_scrapper/__init__.py" />
         <option value="$PROJECT_DIR$/../investing_scrapper/investing_scrapper/tickers.py" />
         <option value="$PROJECT_DIR$/../investing_scrapper/setup.py" />
-        <option value="$PROJECT_DIR$/investing_scrapper/user_agent.py" />
+        <option value="$PROJECT_DIR$/data/tickers.csv" />
         <option value="$PROJECT_DIR$/investing_scrapper/tickers.py" />
+        <option value="$PROJECT_DIR$/investing_scrapper/user_agent.py" />
         <option value="$PROJECT_DIR$/investing_scrapper/__init__.py" />
       </list>
     </option>
@@ -168,12 +204,13 @@
             <path>
               <item name="investing-scrapper" type="b2602c69:ProjectViewProjectNode" />
               <item name="investing-scrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="investing_scrapper" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="investing-scrapper" type="b2602c69:ProjectViewProjectNode" />
               <item name="investing-scrapper" type="462c0819:PsiDirectoryNode" />
               <item name="investing_scrapper" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -191,11 +228,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/investing_scrapper" />
       <recent name="$PROJECT_DIR$" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\data" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\investing_scrapper" />
-      <recent name="C:\Users\Bisite\Documents\GitHub\investing-scrapper\investing-scrapper" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -316,31 +353,31 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.33923706" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.41458333" side_tool="true" weight="0.3685601" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5854167" visible="true" weight="0.36727273" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32760897" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32760897" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5854167" weight="0.11151515" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.3286638" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6129707" visible="true" weight="0.16380544" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6129707" visible="true" weight="0.19456366" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="5" sideWeight="0.49784482" weight="0.3297568" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32848486" />
       <window_info anchor="right" id="SciView" order="4" sideWeight="0.49568966" weight="0.3297568" />
       <window_info id="Structure" order="1" sideWeight="0.3870293" side_tool="true" weight="0.14097223" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="3" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32848486" />
       <window_info anchor="right" x="0" y="0" width="310" height="631" id="Documentation" order="0" sideWeight="0.5021552" side_tool="true" weight="0.3297568" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="12" weight="0.32893" />
     </layout>
   </component>
@@ -359,6 +396,20 @@
     </ignored-roots>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="4" column="15" selection-start-line="4" selection-start-column="15" selection-end-line="4" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/data/tickers.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5568">
+          <caret line="232" column="71" selection-start-line="232" selection-start-column="71" selection-end-line="232" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../investing_scrapper/__init__.py" />
     <entry file="file://$PROJECT_DIR$/../investing_scrapper/investing_scrapper/tickers.py" />
     <entry file="file://$PROJECT_DIR$/../investing_scrapper/tickers.csv" />
@@ -396,17 +447,48 @@
     <entry file="file://$PROJECT_DIR$/../investing_scrapper/investing_scrapper/tickers.py" />
     <entry file="file://$PROJECT_DIR$/../investing_scrapper/investing_scrapper/__init__.py" />
     <entry file="file://$PROJECT_DIR$/../investing_scrapper/setup.py" />
+    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/investing_scrapper/data.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/tickers.csv">
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/data/tickers.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5189" />
+        <state relative-caret-position="1808">
+          <caret line="232" column="71" selection-start-line="232" selection-start-column="71" selection-end-line="232" selection-end-column="71" />
+        </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/SOURCES.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/requires.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/dependency_links.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="2" column="14" lean-forward="true" selection-start-line="2" selection-start-column="14" selection-end-line="2" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="13" column="14" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/data/user-agent-list.txt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/investing_scrapper/tickers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="331">
+        <state relative-caret-position="1176">
           <caret line="49" column="15" selection-start-line="49" selection-start-column="15" selection-end-line="49" selection-end-column="15" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
@@ -414,25 +496,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1469">
-          <caret line="16" column="27" selection-start-line="16" selection-start-column="27" selection-end-line="16" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="96">
+          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-256" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="7" column="14" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        <state relative-caret-position="223">
+          <caret line="12" column="7" selection-start-line="12" selection-start-column="7" selection-end-line="12" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

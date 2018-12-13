@@ -1,12 +1,12 @@
 Metadata-Version: 1.1
 Name: investing-scrapper
-Version: 0.1.3
+Version: 0.1.4
 Summary: This is a scrapping tool that retrieves continuous Spanish stock market information from https://es.investing.com, into a Pandas DataFrame.
 Home-page: https://github.com/alvarob96/investing-scrapper/
 Author: Álvaro Bartolomé
 Author-email: alvarob96@usal.es
 License: MIT License
-Download-URL: https://github.com/alvarob96/investing-scrapper/archive/0.1.3.tar.gz
+Download-URL: https://github.com/alvarob96/investing-scrapper/archive/0.1.4.tar.gz
 Description: UNKNOWN
 Keywords: investing,scrapper,pandas
 Platform: UNKNOWN
