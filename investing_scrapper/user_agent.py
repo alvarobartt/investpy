@@ -2,7 +2,7 @@ import random
 
 
 def get_random():
-    file = '../data/user-agent-list.txt'
+    file = 'data/user-agent-list.txt'
 
     with open(file, 'r') as f:
         lines = f.readlines()
