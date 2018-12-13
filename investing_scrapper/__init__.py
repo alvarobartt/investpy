@@ -14,7 +14,7 @@ def get_recent_data(ticker):
         tickers = ts.get_ticker_names()
         ts.convert_tickers_into_csv(tickers)
 
-    tickers = pd.read_csv('data/tickers.csv')
+    tickers = pd.read_csv('../data/tickers.csv')
 
     for item in tickers:
         if item['name'] == ticker:
