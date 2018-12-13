@@ -1,23 +1,25 @@
 import datetime
-import os.path
 
 import pandas as pd
+import pkg_resources
 import requests
 from bs4 import BeautifulSoup
 
+from investing_scrapper.Data import Data # TypeError: 'module' object is not callable
 from investing_scrapper import user_agent as ua, tickers as ts
-from investing_scrapper.data import Data
 
 
 def get_recent_data(ticker):
-    if os.path.exists('tickers.csv') is False:
-        tickers = ts.get_ticker_names()
-        ts.convert_tickers_into_csv(tickers)
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'tickers.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        tickers = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = ts.get_ticker_names()
+        tickers = pd.DataFrame(names)
 
-    tickers = pd.read_csv('../data/tickers.csv')
-
-    for item in tickers:
-        if item['name'] == ticker:
+    for row in tickers.itertuples():
+        if row.name.lower() == ticker.lower():
             url = "https://es.investing.com/equities/" + ticker + "-historical-data"
             headers = {
                 'User-Agent': ua.get_random()
@@ -41,7 +43,7 @@ def get_recent_data(ticker):
 
             result = result[::-1]
 
-            df = pd.DataFrame.from_records([_.to_dict() for _ in result])
+            df = pd.DataFrame.from_records([value.to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df

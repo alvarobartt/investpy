@@ -1,8 +1,11 @@
 import random
+import pkg_resources
 
 
 def get_random():
-    file = '../data/user-agent-list.txt'
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'user-agent-list.txt'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
 
     with open(file, 'r') as f:
         lines = f.readlines()

@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
-import unidecode
 from bs4 import BeautifulSoup
+import pkg_resources
 
 from investing_scrapper import user_agent as ua
 
@@ -32,7 +32,7 @@ def get_ticker_names():
 
     for element in selection:
         for nested in element.select("a"):
-            info = unidecode.unidecode(nested.text).lower()
+            info = nested.text.lower()
             info = info.replace(" ", "-")
 
             data = {
@@ -42,9 +42,11 @@ def get_ticker_names():
 
             results.append(data)
 
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'tickers.csv'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
+    df = pd.DataFrame(results)
+    df.to_csv(file, index=False)
+
     return results
-
-
-def convert_tickers_into_csv(data):
-    df = pd.DataFrame(data)
-    df.to_csv('../data/tickers.csv', index=True)

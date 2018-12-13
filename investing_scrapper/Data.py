@@ -1,8 +1,8 @@
 class Data(object):
-    def __init__(self, date, close, open):
-        self.date = date
-        self.close = close
-        self.open = open
+    def __init__(self, date_, close_, open_):
+        self.date = date_
+        self.close = close_
+        self.open = open_
 
     def to_dict(self):
         return {
