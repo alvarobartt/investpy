@@ -1,0 +1,4 @@
+requests
+pandas
+beautifulsoup4
+unidecode

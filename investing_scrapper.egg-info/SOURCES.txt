@@ -1,0 +1,12 @@
+README.rst
+setup.cfg
+setup.py
+investing_scrapper/__init__.py
+investing_scrapper/data.py
+investing_scrapper/tickers.py
+investing_scrapper/user_agent.py
+investing_scrapper.egg-info/PKG-INFO
+investing_scrapper.egg-info/SOURCES.txt
+investing_scrapper.egg-info/dependency_links.txt
+investing_scrapper.egg-info/requires.txt
+investing_scrapper.egg-info/top_level.txt

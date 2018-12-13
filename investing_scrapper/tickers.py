@@ -47,4 +47,8 @@ def get_ticker_names():
 
 def convert_tickers_into_csv(data):
     df = pd.DataFrame(data)
-    df.to_csv('../data/tickers.csv', index=True)
+    df.to_csv('data/tickers.csv', index=True)
+
+
+df = get_ticker_names()
+convert_tickers_into_csv(df)
