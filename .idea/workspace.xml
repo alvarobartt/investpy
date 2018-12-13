@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/dist/investing_scrapper-0.1.1.tar.gz" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/investing_scrapper-0.1.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/investing_scrapper-0.1.2.tar.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper.egg-info/PKG-INFO" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/tickers.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/tickers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/user_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/user_agent.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,7 +24,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1469">
@@ -37,6 +33,13 @@
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-101" />
           </provider>
         </entry>
       </file>
@@ -429,6 +432,11 @@
             <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-101" />
       </provider>
     </entry>
   </component>
