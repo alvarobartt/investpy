@@ -1,3 +1,2 @@
 include README.rst
-include investing_scrapper/resources/tickers.csv
-include investing_scrapper/resources/user-agent-list.txt
+include investing_scrapper/resources/*

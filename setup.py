@@ -2,17 +2,17 @@ from setuptools import setup, find_packages
 
 setup(
     name='investing_scrapper',
-    version='0.2.3',
+    version='0.2.4',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.2.3.tar.gz',
+    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.2.4.tar.gz',
     license='MIT License',
     author='Álvaro Bartolomé',
     author_email='alvarob96@usal.es',
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from https://es.investing.com, into a Pandas DataFrame.',
     install_requires=['requests', 'pandas', 'beautifulsoup4'],
     package_data={
-        'resources': ['tickers.csv', 'user-agent-list.txt']
+        'investing_scrapper/resources': ['investing_scrapper/resources/tickers.csv', 'investing_scrapper/resources/user-agent-list.txt']
     },
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
