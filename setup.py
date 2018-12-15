@@ -1,5 +1,11 @@
 from setuptools import setup, find_packages
 
+
+def readme():
+    with open('README.rst') as f:
+        return f.read()
+
+
 setup(
     name='investing_scrapper',
     version='0.2.6',
@@ -10,6 +16,7 @@ setup(
     author='Álvaro Bartolomé',
     author_email='alvarob96@usal.es',
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from https://es.investing.com, into a Pandas DataFrame.',
+    long_description=readme(),
     install_requires=['requests', 'pandas', 'beautifulsoup4'],
     data_files=[
         ('tickers', ['investing_scrapper/resources/tickers.csv']),
