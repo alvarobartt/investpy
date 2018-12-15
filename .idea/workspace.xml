@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/Data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/tests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/tests/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/tests/tickers_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/tests/tickers_test.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/tickers.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/tickers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investing_scrapper/user_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/investing_scrapper/user_agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investing_scrapper/tests/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/investing_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investing_scrapper/tests/tickers_test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,22 +32,24 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="207">
+              <caret line="9" column="85" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="85" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="setup.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="setup.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="-23">
+              <caret line="21" column="72" lean-forward="true" selection-start-line="21" selection-start-column="72" selection-end-line="21" selection-end-column="72" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="setup.cfg" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.cfg">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="user_agent.py" pinned="false" current-in-tab="false">
@@ -85,20 +84,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tickers_test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investing_scrapper/tests/tickers_test.py">
+      <file leaf-file-name="MANIFEST.in" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/MANIFEST.in">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="23">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+              <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/investing_scrapper/tests/__init__.py">
+      <file leaf-file-name="investing_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/investing_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="23">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="161">
+              <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+              <folding>
+                <element signature="e#23#36#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -169,14 +171,15 @@
         <option value="$PROJECT_DIR$/README.rst" />
         <option value="$PROJECT_DIR$/setup.cfg" />
         <option value="$PROJECT_DIR$/MANIFEST.in" />
-        <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/investing_scrapper/__init__.py" />
         <option value="$PROJECT_DIR$/investing_scrapper/user_agent.py" />
         <option value="$PROJECT_DIR$/investing_scrapper/tickers.py" />
         <option value="$PROJECT_DIR$/investing_scrapper/Data.py" />
         <option value="$PROJECT_DIR$/investing_scrapper/tests/tickers_test.py" />
         <option value="$PROJECT_DIR$/investing_scrapper/tests/__init__.py" />
+        <option value="$PROJECT_DIR$/investing_scrapper/__init__.py" />
+        <option value="$PROJECT_DIR$/tests/investing_test.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
+        <option value="$PROJECT_DIR$/setup.py" />
       </list>
     </option>
   </component>
@@ -216,7 +219,6 @@
             <path>
               <item name="investing-scrapper" type="b2602c69:ProjectViewProjectNode" />
               <item name="investing_scrapper" type="462c0819:PsiDirectoryNode" />
-              <item name="investing_scrapper" type="462c0819:PsiDirectoryNode" />
               <item name="tests" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -234,15 +236,15 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\data2" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\investing_scrapper\data2" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\investing_scrapper" />
-      <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\data" />
       <recent name="C:\Users\Bisite\Documents\GitHub\investing-scrapper\investing-scrapper" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Bisite\Documents\GitHub\investing_scrapper\data2" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -384,6 +386,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1066" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.33923706" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.41458333" side_tool="true" weight="0.3685601" />
@@ -391,7 +394,7 @@
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5854167" weight="0.36745688" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32760897" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32760897" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3286638" />
+      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3286638" />
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6129707" visible="true" weight="0.13059701" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="5" sideWeight="0.49784482" weight="0.3297568" />
@@ -601,19 +604,6 @@
     <entry file="file://$PROJECT_DIR$/investing_scrapper/resources/__init__.py" />
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/pandas/core/indexes/base.py" />
     <entry file="file://$PROJECT_DIR$/investing_scrapper/resources/tickers.csv" />
-    <entry file="file://$PROJECT_DIR$/setup.cfg">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.rst">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -622,20 +612,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/investing_scrapper/user_agent.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -656,12 +632,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investing_scrapper/Data.py">
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        <state relative-caret-position="207">
+          <caret line="9" column="85" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="85" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="23">
+          <caret line="1" column="38" selection-start-line="1" selection-start-column="38" selection-end-line="1" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.cfg">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/investing_scrapper/tests/tickers_test.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -670,10 +656,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investing_scrapper/tests/__init__.py">
+    <entry file="file://$PROJECT_DIR$/investing_scrapper/Data.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="46">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/investing_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="7" column="34" lean-forward="true" selection-start-line="7" selection-start-column="34" selection-end-line="7" selection-end-column="34" />
+          <folding>
+            <element signature="e#23#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-23">
+          <caret line="21" column="72" lean-forward="true" selection-start-line="21" selection-start-column="72" selection-end-line="21" selection-end-column="72" />
         </state>
       </provider>
     </entry>

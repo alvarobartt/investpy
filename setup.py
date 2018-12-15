@@ -19,7 +19,7 @@ setup(
     author_email='alvarob96@usal.es',
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from https://es.investing.com, into a Pandas DataFrame.',
     long_description=readme(),
-    install_requires=['requests', 'pandas', 'beautifulsoup4'],
+    install_requires=['requests', 'pandas', 'beautifulsoup4', 'pytest'],
     data_files=[
         ('tickers', ['investing_scrapper/resources/tickers.csv']),
         ('user-agents', ['investing_scrapper/resources/user-agent-list.txt'])
