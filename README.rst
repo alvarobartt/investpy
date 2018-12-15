@@ -1,6 +1,18 @@
 Investing Scrapper of continuous Spanish stock market
 =====================================================
 
+.. image:: https://img.shields.io/pypi/pyversions/investing-scrapper.svg
+    :target: https://pypi.org/project/investing-scrapper/
+    
+    
+.. image:: https://img.shields.io/pypi/v/investing-scrapper.svg
+    :target: https://pypi.org/project/investing-scrapper/
+
+
+.. image:: https://travis-ci.org/alvarob96/investing-scrapper.svg?branch=master
+    :target: https://pypi.org/project/investing-scrapper/
+    
+    
 -----------------
 Introduction
 -----------------
