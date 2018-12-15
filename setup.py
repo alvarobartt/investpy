@@ -10,16 +10,16 @@ def readme():
 
 setup(
     name='investing_scrapper',
-    version='0.3.1',
+    version='0.3.2',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.1.tar.gz',
+    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.2.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from investing, into a Pandas DataFrame.',
     long_description=readme(),
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     install_requires=['requests', 'pandas', 'beautifulsoup4', 'pytest'],
     data_files=[
         ('tickers', ['investing_scrapper/resources/tickers.csv']),
