@@ -1,14 +1,11 @@
 language: python
-
 python:
   - "2.7"
   - "3.6"
   - "3.7"
-
 install:
   - pip install pandas==0.23.4
   - pip install requests==2.19.1
-  - pip install beautifulsoup4==4.6.3
-  
+  - pip install beautifulsoup4==4.6.3  
 script:
   pytest
