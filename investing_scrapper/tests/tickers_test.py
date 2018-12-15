@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pandas as pd
 
 tickers = pd.read_csv('../resources/tickers.csv')

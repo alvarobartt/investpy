@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+
 class Data(object):
     def __init__(self, date_, close_, open_):
         self.date = date_
