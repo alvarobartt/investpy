@@ -3,7 +3,6 @@ language: python
 python:
   - "2.7"
   - "3.6"
-  - "3.7"
 
 install:
   - pip install pandas==0.23.4
@@ -11,4 +10,4 @@ install:
   - pip install beautifulsoup4==4.6.3
   
 script:
-  pytest
+  - pytest
