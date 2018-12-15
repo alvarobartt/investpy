@@ -10,10 +10,10 @@ def readme():
 
 setup(
     name='investing_scrapper',
-    version='0.2.6',
+    version='0.2.9',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.2.6.tar.gz',
+    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.2.9.tar.gz',
     license='MIT License',
     author='Álvaro Bartolomé',
     author_email='alvarob96@usal.es',
