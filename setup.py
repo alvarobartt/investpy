@@ -4,21 +4,22 @@ from setuptools import setup, find_packages
 
 
 def readme():
-    with open('README.md') as f:
+    with open('README.md', encoding='utf-8') as f:
         return f.read()
 
 
 setup(
     name='investing_scrapper',
-    version='0.3',
+    version='0.3.1',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.tar.gz',
+    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.1.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from investing, into a Pandas DataFrame.',
     long_description=readme(),
+    long_description_content_type='text/markdown'
     install_requires=['requests', 'pandas', 'beautifulsoup4', 'pytest'],
     data_files=[
         ('tickers', ['investing_scrapper/resources/tickers.csv']),
@@ -37,5 +38,5 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Operating System :: OS Independent",
     ],
-    keywords='investing, scrapper, pandas'
+    keywords='investing, scrapper, pandas, finance'
 )
