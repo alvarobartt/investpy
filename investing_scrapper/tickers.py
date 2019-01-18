@@ -34,8 +34,8 @@ def get_ticker_names():
 
     for element in selection:
         for nested in element.select("a"):
-            info = nested.text.lower()
-            info = info.replace(" ", "-")
+            info = nested.get("href")
+            info = info.replace("/equities/", "")
 
             data = {
                 "name": nested.text,
