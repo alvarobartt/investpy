@@ -22,7 +22,7 @@ All the dependencies are already listed on the setup file of the package, but to
 
 * [**Python 3.6**](https://www.python.org/downloads/release/python-360/)
 * [**pandas 0.23.4**](https://pypi.org/project/pandas/)
-* [**requests 2.19.1**](https://pypi.org/project/requests/)
+* [**requests 2.20.0**](https://pypi.org/project/requests/)
 * [**pytest 4.0.2**](https://pypi.org/project/pytest/)
 * [**beautifulsoup4 4.6.3**](https://pypi.org/project/beautifulsoup4/)
 

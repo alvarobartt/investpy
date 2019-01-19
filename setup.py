@@ -20,7 +20,7 @@ setup(
     description='This is a scrapping tool that retrieves continuous Spanish stock market information from investing, into a Pandas DataFrame.',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=['requests==2.19.1', 'pandas==0.23.4', 'beautifulsoup4==4.6.3', 'pytest'],
+    install_requires=['requests>=2.20.0', 'pandas==0.23.4', 'beautifulsoup4==4.6.3', 'pytest'],
     data_files=[
         ('equities', ['investing_scrapper/resources/equities.csv']),
         ('funds', ['investing_scrapper/resources/funds.csv']),
