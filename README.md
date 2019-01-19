@@ -53,7 +53,6 @@ You can check all the available equities for the **Spanish Stock Market** in thi
 * Spanish ETFs -> https://es.investing.com/etfs/spain-etfs
 * Spanish Funds -> https://es.investing.com/funds/spain-funds
 * Latest Spanish Stock News -> https://es.investing.com/search/?q=ticker&tab=news
-* Store data in a CSV
 * Allow multiple date formats
 
 ## Information
