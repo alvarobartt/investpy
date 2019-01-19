@@ -7,7 +7,7 @@ install:
   - pip install pandas==0.23.4
   - pip install requests>=2.20.0
   - pip install beautifulsoup4==4.6.3
-  - pip install investing-scrapper==0.3.3t
+  - pip install investing-scrapper==0.3.3
   
 script:
   - pytest
