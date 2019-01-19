@@ -8,21 +8,21 @@ import requests
 from bs4 import BeautifulSoup
 
 from investing_scrapper.Data import Data # TypeError: 'module' object is not callable
-from investing_scrapper import user_agent as ua, tickers as ts
+from investing_scrapper import user_agent as ua, equities as ts
 
 
-def get_recent_data(ticker):
+def get_recent_data(equity):
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'tickers.csv'))
+    resource_path = '/'.join(('resources', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        tickers = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = ts.get_ticker_names()
-        tickers = pd.DataFrame(names)
+        names = ts.get_equity_names()
+        equities = pd.DataFrame(names)
 
-    for row in tickers.itertuples():
-        if row.name.lower() == ticker.lower():
-            url = "https://es.investing.com/equities/" + ticker + "-historical-data"
+    for row in equities.itertuples():
+        if row.name.lower() == equity.lower():
+            url = "https://es.investing.com/equities/" + equity + "-historical-data"
             headers = {
                 'User-Agent': ua.get_random()
             }
@@ -51,9 +51,9 @@ def get_recent_data(ticker):
             return df
 
 
-def get_historical_data(ticker, start, end):
-    for item in ts.get_ticker_names():
-        if item['name'].lower() == ticker.lower():
+def get_historical_data(equity, start, end):
+    for item in ts.get_equity_names():
+        if item['name'].lower() == equity.lower():
             params = {
                 "curr_id": "558",
                 "smlID": "1159685",

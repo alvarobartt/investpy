@@ -30,21 +30,21 @@ All the dependencies are already listed on the setup file of the package, but to
 
 Currently you just have two possible options to retrieve data with this scrapper:
 
-* **Retrieve the recent data of a stock**: it retrieves the historical data from a stock from the last month. The function also checks if the introduced ticker name is correct and then retrieves the data.
+* **Retrieve the recent data of a stock**: it retrieves the historical data from a stock from the last month. The function also checks if the introduced equity name is correct and then retrieves the data.
 ```
 import investing_scrapper as ivs
 
 df = ivs.get_recent_data('bbva')
 ```
 
-* **Retrieve the historical data of a stock from a specific range of time**: it retrieves the historical data from a stock from a range of time between the start date and the end date, specified in dd/mm/YY format. This function also checks is the introduced ticker name is correct and then retrieves the data.
+* **Retrieve the historical data of a stock from a specific range of time**: it retrieves the historical data from a stock from a range of time between the start date and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity name is correct and then retrieves the data.
 ```
 import investing_scrapper as ivs
 
 df = ivs.get_historical_data('bbva', '10/10/2018', '10/12/2018')
 ```
 
-You can check all the available tickers for the **Spanish Stock Market** in this list from investing: https://es.investing.com/equities/spain
+You can check all the available equities for the **Spanish Stock Market** in this list from investing: https://es.investing.com/equities/spain
 
 (**NOTE**: you will need an active HTTP connection in order to get the scrapper working. As a temporary solution, you can just store the retrieved pandas.DataFrame in a CSV so you can work with that data offline.)
 

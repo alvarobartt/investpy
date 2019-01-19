@@ -8,7 +8,7 @@ import pkg_resources
 from investing_scrapper import user_agent as ua
 
 
-def get_ticker_names():
+def get_equity_names():
     params = {
         "noconstruct": "1",
         "smlID": "10119",
@@ -45,7 +45,7 @@ def get_ticker_names():
             results.append(data)
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'tickers.csv'))
+    resource_path = '/'.join(('resources', 'equities.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)

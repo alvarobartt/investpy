@@ -22,7 +22,7 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=['requests', 'pandas', 'beautifulsoup4', 'pytest'],
     data_files=[
-        ('tickers', ['investing_scrapper/resources/tickers.csv']),
+        ('equities', ['investing_scrapper/resources/equities.csv']),
         ('user-agents', ['investing_scrapper/resources/user-agent-list.txt'])
     ],
     include_package_data=True,
