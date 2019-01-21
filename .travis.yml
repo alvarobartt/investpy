@@ -1,6 +1,7 @@
 language: python
 
 python:
+  - "2.7"
   - "3.6"
   - "3.7"
 
@@ -8,9 +9,10 @@ dist: xenial
 
 install:
   - pip install pandas==0.23.4
-  - pip install requests>=2.20.0
-  - pip install beautifulsoup4==4.6.3
+  - pip install requests==2.21.0
+  - pip install beautifulsoup4==4.7.1
   - pip install investing-scrapper==0.3.4
+  - pip install pytest==4.1.1
   
 script:
   - pytest
