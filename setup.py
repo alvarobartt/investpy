@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 from setuptools import setup, find_packages
+import io
 
 
 def readme():
-    with open('README.md', encoding='utf-8') as f:
+    with io.open('README.md', encoding='utf-8') as f:
         return f.read()
 
 
