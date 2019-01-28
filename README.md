@@ -20,7 +20,6 @@ In order to get this package working you will need to install [**investing-scrap
 
 All the dependencies are already listed on the setup file of the package, but to sum it up, you will need this requirements:
 
-* [**Python 3.6**](https://www.python.org/downloads/release/python-360/)
 * [**pandas 0.23.4**](https://pypi.org/project/pandas/)
 * [**requests 2.20.0**](https://pypi.org/project/requests/)
 * [**pytest 4.0.2**](https://pypi.org/project/pytest/)
@@ -51,7 +50,7 @@ You can check all the available equities for the **Spanish Stock Market** in thi
 ## Future Work Ideas
 
 * Spanish ETFs -> https://es.investing.com/etfs/spain-etfs
-* Spanish Funds -> https://es.investing.com/funds/spain-funds
+* Spanish Funds -> https://es.investing.com/funds/spain-funds **(In progress)**
 * Latest Spanish Stock News -> https://es.investing.com/search/?q=ticker&tab=news
 * Allow multiple date formats
 
