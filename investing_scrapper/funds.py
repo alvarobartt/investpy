@@ -25,6 +25,9 @@ def get_fund_names():
     results = list()
 
     for element in selection:
+        id_ = element.get('id')
+        id_ = id_.replace('pair_', '')
+
         symbol = None
         for symbol in element.select("td.symbol"):
             symbol = symbol.get("title")
@@ -37,13 +40,15 @@ def get_fund_names():
                 data = {
                     "name": nested.text,
                     "symbol": symbol,
-                    "tag": info
+                    "tag": info,
+                    "id": id_
                 }
             else:
                 data = {
                     "name": nested.text,
                     "symbol": "undefined",
-                    "tag": info
+                    "tag": info,
+                    "id": id_
                 }
 
             results.append(data)
@@ -56,3 +61,22 @@ def get_fund_names():
     df.to_csv(file, index=False)
 
     return results
+
+
+# def get_id_value(fund):
+#     url = "https://es.investing.com/funds/" + fund + "-historical-data"
+#     headers = {
+#         'User-Agent': ua.get_random()
+#     }
+#
+#     req = requests.get(url, headers=headers)
+#
+#     html = BeautifulSoup(req.text, 'html.parser')
+#
+#     selection = html.select('div.js-inject-add-alert-widget > div')
+#
+#     for element in selection:
+#         id_ = element['data-pair-id']
+#         return id_
+#
+#     return 0

@@ -33,13 +33,16 @@ def get_equity_names():
     results = list()
 
     for element in selection:
+        id_ = element.get("id")
+        id_ = id_.replace('pair_', '')
         for nested in element.select("a"):
             info = nested.get("href")
             info = info.replace("/equities/", "")
 
             data = {
                 "name": nested.text,
-                "tag": info
+                "tag": info,
+                "id": id_
             }
 
             results.append(data)

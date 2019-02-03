@@ -10,7 +10,7 @@ class Data(object):
         self.min = min_
         self.volume = volume_
 
-    def to_dict(self):
+    def equity_to_dict(self):
         return {
             'Date': self.date,
             'Close': self.close,
@@ -18,4 +18,13 @@ class Data(object):
             'Max': self.max,
             'Min': self.min,
             'Volume': self.volume,
+        }
+
+    def fund_to_dict(self):
+        return {
+            'Date': self.date,
+            'Close': self.close,
+            'Open': self.open,
+            'Max': self.max,
+            'Min': self.min,
         }

@@ -11,10 +11,10 @@ def readme():
 
 setup(
     name='investing_scrapper',
-    version='0.3.4.1',
+    version='0.3.5',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.4.1.tar.gz',
+    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.5.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -42,5 +42,5 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Operating System :: OS Independent",
     ],
-    keywords='investing, scrapper, pandas, finance'
+    keywords='investing, scrapper, pandas, finance, stock, api'
 )
