@@ -11,14 +11,14 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.3.6',
+    version='0.4',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investpy/archive/0.3.9.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.4.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
-    description='This is a scraping tool that retrieves continuous Spanish stock market information from Investing.com, into a Pandas DataFrame.',
+    description='This is a scraping tool that retrieves historical data from the continuous Spanish stock market from Investing.com, converting into a pandas DataFrame.',
     long_description=readme(),
     long_description_content_type='text/markdown',
     install_requires=['requests==2.21.0', 'pandas==0.23.4', 'beautifulsoup4==4.7.1', 'pytest==4.1.1'],
@@ -29,7 +29,7 @@ setup(
     ],
     include_package_data=True,
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",

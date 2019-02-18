@@ -1,8 +1,8 @@
-# Investing Scraper of continuous Spanish stock market
+# Investing Scraper of historical data from continuous spanish stock market
 
-[![Python Version](https://img.shields.io/pypi/pyversions/investing-scrapper.svg)](https://pypi.org/project/investing-scrapper/)
-[![PyPi Version](https://img.shields.io/pypi/v/investing-scrapper.svg)](https://pypi.org/project/investing-scrapper/)
-[![Build Status](https://travis-ci.org/alvarob96/investing-scrapper.svg?branch=master)](https://pypi.org/project/investing-scrapper/)
+[![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
+[![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
+[![Build Status](https://travis-ci.org/alvarob96/investpy.svg?branch=master)](https://pypi.org/project/investpy/)
 
 ## Introduction
 
@@ -14,9 +14,9 @@ To sum up this is not the final version of this scrapper since this is just the 
 
 ## Installation
 
-In order to get this package working you will need to install [**investing-scrapper**](https://pypi.org/project/investing-scrapper/) from PyPi via Terminal: 
+In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal:
 
-``pip install investing-scrapper``
+``pip install investpy``
 
 All the dependencies are already listed on the setup file of the package, but to sum it up, you will need this requirements:
 
@@ -43,7 +43,7 @@ import investpy as ivs
 df = ivs.get_historical_data('bbva', '10/10/2018', '10/12/2018')
 ```
 
-You can check all the available equities for the **Spanish Stock Market** in this list from investing: https://es.investing.com/equities/spain
+You can check all the available equities for the **Spanish Stock Market** in this list from Investing: https://es.investing.com/equities/spain
 
 (**NOTE**: you will need an active HTTP connection in order to get the scrapper working. As a temporary solution, you can just store the retrieved pandas.DataFrame in a CSV so you can work with that data offline.)
 
