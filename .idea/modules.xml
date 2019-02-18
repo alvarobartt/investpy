@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/investing_scrapper.iml" filepath="$PROJECT_DIR$/.idea/investing_scrapper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/investpy.iml" filepath="$PROJECT_DIR$/.idea/investpy.iml" />
     </modules>
   </component>
 </project>

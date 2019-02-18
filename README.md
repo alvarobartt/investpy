@@ -1,4 +1,4 @@
-# Investing Scrapper of continuous Spanish stock market
+# Investing Scraper of continuous Spanish stock market
 
 [![Python Version](https://img.shields.io/pypi/pyversions/investing-scrapper.svg)](https://pypi.org/project/investing-scrapper/)
 [![PyPi Version](https://img.shields.io/pypi/v/investing-scrapper.svg)](https://pypi.org/project/investing-scrapper/)
@@ -31,14 +31,14 @@ Currently you just have two possible options to retrieve data with this scrapper
 
 * **Retrieve the recent data of a stock**: it retrieves the historical data from a stock from the last month. The function also checks if the introduced equity name is correct and then retrieves the data.
 ```
-import investing_scrapper as ivs
+import investpy as ivs
 
 df = ivs.get_recent_data('bbva')
 ```
 
 * **Retrieve the historical data of a stock from a specific range of time**: it retrieves the historical data from a stock from a range of time between the start date and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity name is correct and then retrieves the data.
 ```
-import investing_scrapper as ivs
+import investpy as ivs
 
 df = ivs.get_historical_data('bbva', '10/10/2018', '10/12/2018')
 ```

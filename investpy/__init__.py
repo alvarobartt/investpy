@@ -7,8 +7,8 @@ import pkg_resources
 import requests
 from bs4 import BeautifulSoup
 
-from investing_scrapper.Data import Data # TypeError: 'module' object is not callable
-from investing_scrapper import user_agent as ua, equities as ts, funds as fs
+from investpy.Data import Data # TypeError: 'module' object is not callable
+from investpy import user_agent as ua, equities as ts, funds as fs
 
 
 def get_recent_data(equity):

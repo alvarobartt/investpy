@@ -10,22 +10,22 @@ def readme():
 
 
 setup(
-    name='investing_scrapper',
+    name='investpy',
     version='0.3.6',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investing-scrapper/archive/0.3.6.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.3.9.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
-    description='This is a scrapping tool that retrieves continuous Spanish stock market information from investing, into a Pandas DataFrame.',
+    description='This is a scraping tool that retrieves continuous Spanish stock market information from Investing.com, into a Pandas DataFrame.',
     long_description=readme(),
     long_description_content_type='text/markdown',
     install_requires=['requests==2.21.0', 'pandas==0.23.4', 'beautifulsoup4==4.7.1', 'pytest==4.1.1'],
     data_files=[
-        ('equities', ['investing_scrapper/resources/equities.csv']),
-        ('funds', ['investing_scrapper/resources/funds.csv']),
-        ('user-agents', ['investing_scrapper/resources/user-agent-list.txt'])
+        ('equities', ['investpy/resources/equities.csv']),
+        ('funds', ['investpy/resources/funds.csv']),
+        ('user-agents', ['investpy/resources/user-agent-list.txt'])
     ],
     include_package_data=True,
     classifiers=[
@@ -42,5 +42,5 @@ setup(
         "Topic :: Software Development :: Libraries",
         "Operating System :: OS Independent",
     ],
-    keywords='investing, scrapper, pandas, finance, stock, api'
+    keywords='investing, investment, scraper, pandas, finance, stock, funds, etf, api'
 )

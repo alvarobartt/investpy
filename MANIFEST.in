@@ -1,2 +1,2 @@
 include README.md
-include investing_scrapper/resources/*
+include investpy/resources/*
