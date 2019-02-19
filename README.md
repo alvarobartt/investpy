@@ -6,11 +6,11 @@
 
 ## Introduction
 
-Since [**Investing**](https://es.investing.com/) does not have an API to retrieve historical data of the **Continuous Spanish Stock Market**, I decided to develop a scrapper to retrieve that information.
+Since [**Investing**](https://es.investing.com/) does not have an API to retrieve historical data of the **Continuous Spanish Stock Market**, I decided to develop a scraper to retrieve that information.
 
-I developed this scrapper in order to get the data from Investing for my Final Degree Project at the University of Salamanca titled "**Machine Learning for stock investment recommendation systems**".
+I developed this scraper in order to get the data from Investing for my Final Degree Project at the University of Salamanca titled "**Machine Learning for stock investment recommendation systems**".
 
-To sum up this is not the final version of this scrapper since this is just the pre-alpha version of it. So I will continue scrapping information indexed in investing so you can be able to retrieve more data, as soon as I can.
+To sum up this is not the final version of this scraper since this is just the pre-alpha version of it. So I will continue scraping information indexed in investing so you can be able to retrieve more data, as soon as I can.
 
 ## Installation
 
@@ -27,7 +27,7 @@ All the dependencies are already listed on the setup file of the package, but to
 
 ## Use
 
-Currently you just have two possible options to retrieve data with this scrapper:
+Currently you just have two possible options to retrieve data with this scraper:
 
 * **Retrieve the recent data of a stock**: it retrieves the historical data from a stock from the last month. The function also checks if the introduced equity name is correct and then retrieves the data.
 ```
@@ -45,7 +45,7 @@ df = ivs.get_historical_data('bbva', '10/10/2018', '10/12/2018')
 
 You can check all the available equities for the **Spanish Stock Market** in this list from Investing: https://es.investing.com/equities/spain
 
-(**NOTE**: you will need an active HTTP connection in order to get the scrapper working. As a temporary solution, you can just store the retrieved pandas.DataFrame in a CSV so you can work with that data offline.)
+(**NOTE**: you will need an active HTTP connection in order to get the scraper working. As a temporary solution, you can just store the retrieved pandas.DataFrame in a CSV so you can work with that data offline.)
 
 ## Future Work Ideas
 
@@ -58,4 +58,4 @@ You can check all the available equities for the **Spanish Stock Market** in thi
 
 For further information or any question feel free to contact me via email at alvarob96@usal.es
 
-**Disclaimer:** this is just for personal use, I am not related at all with Investing or any similar company. This is just a tool for the research project I am working on. I get no profit or economic benefit from this scrapper.
+**Disclaimer:** this is just for personal use, I am not related at all with Investing or any similar company. This is just a tool for the research project I am working on. I get no profit or economic benefit from this scraper. I also contacted Investing.com and they gave me permission to develop this project with the condition of mentioning the source where I get the data from.
