@@ -12,6 +12,21 @@ from investpy import user_agent as ua, equities as ts, funds as fs
 
 
 def get_recent_data(equity):
+    """
+    This function retrieves recent historical data from the specified equity.
+    The retrieved data corresponds to the last month and a half more or less.
+
+    Parameters
+    ----------
+    :param equity: str
+        name of the equity to retrieve recent historical data from
+
+    Returns
+    -------
+    :returns pandas.DataFrame
+        returns a pandas DataFrame containing the recent data of the equity
+    """
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -64,6 +79,24 @@ def get_recent_data(equity):
 
 
 def get_historical_data(equity, start, end):
+    """
+    This function retrieves historical data from the specified equity in the specified date range.
+
+    Parameters
+    ----------
+    :param equity: str
+        name of the equity to retrieve historical data from
+    :param start: str
+        start date since the data is going to be retrieved
+    :param end: str
+        end date until the data is going to be retrieved
+
+    Returns
+    -------
+    :returns pandas.DataFrame
+        returns a pandas DataFrame containing the historical data of the equity
+    """
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -143,6 +176,21 @@ def get_historical_data(equity, start, end):
 
 
 def get_fund_recent_data(fund):
+    """
+    This function retrieves recent historical data from the specified fund.
+    The retrieved data corresponds to the last month and a half more or less.
+
+    Parameters
+    ----------
+    :param fund: str
+        name of the fund to retrieve recent historical data from
+
+    Returns
+    -------
+    :returns pandas.DataFrame
+        returns a pandas DataFrame containing the recent data of the fund
+    """
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -187,6 +235,24 @@ def get_fund_recent_data(fund):
 
 
 def get_fund_historical_data(fund, start, end):
+    """
+    This function retrieves historical data from the specified fund in the specified date range.
+
+    Parameters
+    ----------
+    :param fund: str
+        name of the fund to retrieve historical data from
+    :param start: str
+        start date since the data is going to be retrieved
+    :param end: str
+        end date until the data is going to be retrieved
+
+    Returns
+    -------
+    :returns pandas.DataFrame
+        returns a pandas DataFrame containing the historical data of the fund
+    """
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):

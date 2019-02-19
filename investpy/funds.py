@@ -9,6 +9,15 @@ from investpy import user_agent as ua
 
 
 def get_fund_names():
+    """
+    This function retrieves all the available funds to retrieve data from.
+    All the funds available can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Returns
+    -------
+        returns a dictionary containing all the funds information
+    """
+
     head = {
         "User-Agent": ua.get_random(),
         "X-Requested-With": "XMLHttpRequest"

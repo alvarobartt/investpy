@@ -2,6 +2,26 @@
 
 
 class Data(object):
+    """
+    A class used to store the historical data of an equity, fund or etf
+
+    Attributes
+    ----------
+    date_: str
+        a string that stores the date in dd/mm/yyyy format
+    close_, open_, max_, min_: float
+        all the prices of an equity, fund or etf from the selected date
+    volume_: long
+        all the stocks sold on the selected date
+
+    Methods
+    -------
+    equity_to_dict()
+        converts the equity object into a dictionary (JSON format)
+    fund_to_dict()
+        converts the fund object into a dictionary (JSON format)
+    """
+
     def __init__(self, date_, close_, open_, max_, min_, volume_):
         self.date = date_
         self.close = close_

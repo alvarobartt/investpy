@@ -9,6 +9,15 @@ from investpy import user_agent as ua
 
 
 def get_equity_names():
+    """
+    This function retrieves all the available equities to retrieve data from.
+    All the equities available can be found at: https://es.investing.com/equities/spain
+
+    Returns
+    -------
+        returns a dictionary containing all the equities information
+    """
+
     params = {
         "noconstruct": "1",
         "smlID": "10119",
