@@ -25,7 +25,7 @@ def get_fund_names():
 
     url = "https://es.investing.com/funds/spain-funds?&issuer_filter=0"
 
-    req = requests.get(url, headers=head)
+    req = requests.get(url, headers=head, timeout=5)
 
     html = BeautifulSoup(req.content, 'html.parser')
 

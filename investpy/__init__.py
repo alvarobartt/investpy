@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from investpy.Data import Data # TypeError: 'module' object is not callable
+from investpy.Exceptions import HtmlParsingError, ConnectionRejectError
 from investpy import user_agent as ua, equities as ts, funds as fs
 
 
@@ -42,40 +43,48 @@ def get_recent_data(equity):
                 'User-Agent': ua.get_random()
             }
 
-            req = requests.get(url, headers=headers)
+            req = requests.get(url, headers=headers, timeout=5)
 
-            status = req.status_code
+            try:
+                if req.status_code != 200:
+                    raise ConnectionRejectError
+            except ConnectionRejectError:
+                print("HTTP connection was rejected")
+
             html = BeautifulSoup(req.text, 'html.parser')
 
             selection = html.select('div#results_box > table#curr_table > tbody > tr')
+            if selection:
 
-            result = list()
+                result = list()
 
-            for element in selection:
-                info = element.getText().strip().split()
+                for element in selection:
+                    info = element.getText().strip().split()
 
-                stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                stock_close = float(info[1].replace(',', '.'))
-                stock_open = float(info[2].replace(',', '.'))
-                stock_max = float(info[3].replace(',', '.'))
-                stock_min = float(info[4].replace(',', '.'))
-                stock_volume = 0
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_close = float(info[1].replace(',', '.'))
+                    stock_open = float(info[2].replace(',', '.'))
+                    stock_max = float(info[3].replace(',', '.'))
+                    stock_min = float(info[4].replace(',', '.'))
+                    stock_volume = 0
 
-                if info[5].__contains__('K'):
-                    stock_volume = int(float(info[5].replace('K', '').replace(',', '.')) * 1000)
-                elif info[5].__contains__('M'):
-                    stock_volume = int(float(info[5].replace('M', '').replace(',', '.')) * 1000000)
-                elif info[5].__contains__('B'):
-                    stock_volume = int(float(info[5].replace('B', '').replace(',', '.')) * 1000000000)
+                    if info[5].__contains__('K'):
+                        stock_volume = int(float(info[5].replace('K', '').replace(',', '.')) * 1000)
+                    elif info[5].__contains__('M'):
+                        stock_volume = int(float(info[5].replace('M', '').replace(',', '.')) * 1000000)
+                    elif info[5].__contains__('B'):
+                        stock_volume = int(float(info[5].replace('B', '').replace(',', '.')) * 1000000000)
 
-                result.insert(len(result), Data(stock_date, stock_close, stock_open, stock_max, stock_min, stock_volume,))
+                    result.insert(len(result), Data(stock_date, stock_close, stock_open, stock_max, stock_min, stock_volume,))
 
-            result = result[::-1]
+                result = result[::-1]
 
-            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
-            df.set_index('Date', inplace=True)
+                df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+                df.set_index('Date', inplace=True)
 
-            return df
+                return df
+            else:
+                return None
 
 
 def get_historical_data(equity, start, end):
@@ -112,9 +121,14 @@ def get_historical_data(equity, start, end):
                 'User-Agent': ua.get_random()
             }
 
-            req = requests.get(url, headers=headers)
+            req = requests.get(url, headers=headers, timeout=5)
 
-            status = req.status_code
+            try:
+                if req.status_code != 200:
+                    raise ConnectionRejectError
+            except ConnectionRejectError:
+                print("HTTP connection was rejected")
+
             html = BeautifulSoup(req.text, 'html.parser')
 
             selection = html.select('div.instrumentHeader > h2')
@@ -140,7 +154,7 @@ def get_historical_data(equity, start, end):
 
             url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-            req = requests.post(url, data=params, headers=head)
+            req = requests.post(url, data=params, headers=head, timeout=5)
 
             html = BeautifulSoup(req.content, 'html.parser')
 
@@ -206,9 +220,14 @@ def get_fund_recent_data(fund):
                 'User-Agent': ua.get_random()
             }
 
-            req = requests.get(url, headers=headers)
+            req = requests.get(url, headers=headers, timeout=5)
 
-            status = req.status_code
+            try:
+                if req.status_code != 200:
+                    raise ConnectionRejectError
+            except ConnectionRejectError:
+                print("HTTP connection was rejected")
+
             html = BeautifulSoup(req.text, 'html.parser')
 
             selection = html.select('div#results_box > table#curr_table > tbody > tr')
@@ -284,7 +303,7 @@ def get_fund_historical_data(fund, start, end):
 
             url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-            req = requests.post(url, data=params, headers=head)
+            req = requests.post(url, data=params, headers=head, timeout=5)
 
             html = BeautifulSoup(req.content, 'html.parser')
 
