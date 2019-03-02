@@ -47,7 +47,7 @@ You can check all the available equities for the **Spanish Stock Market** in thi
 
 (**NOTE**: you will need an active HTTP connection in order to get the scraper working. As a temporary solution, you can just store the retrieved pandas.DataFrame in a CSV so you can work with that data offline.)
 
-## Development Ideas
+## Development
 
 * Spanish ETFs -> https://es.investing.com/etfs/spain-etfs
 * Spanish Funds -> https://es.investing.com/funds/spain-funds **(In progress)**
