@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import pkg_resources
 
-from investpy import user_agent as ua
+from investpy_test import user_agent as ua
 
 
 def get_equity_names():

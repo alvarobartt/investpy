@@ -5,7 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 import pkg_resources
 
-from investpy import user_agent as ua
+from investpy_test import user_agent as ua
 
 
 def get_fund_names():
@@ -25,7 +25,7 @@ def get_fund_names():
 
     url = "https://es.investing.com/funds/spain-funds?&issuer_filter=0"
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.get(url, headers=head)
 
     html = BeautifulSoup(req.content, 'html.parser')
 
@@ -70,22 +70,3 @@ def get_fund_names():
     df.to_csv(file, index=False)
 
     return results
-
-
-# def get_id_value(fund):
-#     url = "https://es.investing.com/funds/" + fund + "-historical-data"
-#     headers = {
-#         'User-Agent': ua.get_random()
-#     }
-#
-#     req = requests.get(url, headers=headers)
-#
-#     html = BeautifulSoup(req.text, 'html.parser')
-#
-#     selection = html.select('div.js-inject-add-alert-widget > div')
-#
-#     for element in selection:
-#         id_ = element['data-pair-id']
-#         return id_
-#
-#     return 0

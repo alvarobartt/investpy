@@ -17,9 +17,13 @@ class Data(object):
     Methods
     -------
     equity_to_dict()
-        converts the equity object into a dictionary (JSON format)
+        converts the equity object into a dictionary
+    equity_as_json()
+        converts the equity object into a JSON object
     fund_to_dict()
-        converts the fund object into a dictionary (JSON format)
+        converts the fund object into a dictionary
+    fund_as_json()
+        converts the fund object into a JSON object
     """
 
     def __init__(self, date_, close_, open_, max_, min_, volume_):
@@ -40,6 +44,15 @@ class Data(object):
             'Volume': self.volume,
         }
 
+    def equity_as_json(self):
+        return {self.date.strftime('%d/%m/%Y'): {
+            'Close': self.close,
+            'Open': self.open,
+            'Max': self.max,
+            'Min': self.min,
+            'Volume': self.volume,
+        }}
+
     def fund_to_dict(self):
         return {
             'Date': self.date,
@@ -48,3 +61,11 @@ class Data(object):
             'Max': self.max,
             'Min': self.min,
         }
+
+    def fund_as_json(self):
+        return {self.date.strftime('%d/%m/%Y'): {
+            'Close': self.close,
+            'Open': self.open,
+            'Max': self.max,
+            'Min': self.min,
+        }}
