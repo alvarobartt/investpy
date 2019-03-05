@@ -35,7 +35,7 @@ The function has some optional parameters like:
     * *as_json* by default is **False** but if True the output of the function is a JSON object, not a pandas.DataFrame.
     * *order* by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
  
-    ```
+    ```python
     import investpy
     
     equities_df_ = investpy.get_recent_data('bbva', as_json=False, order='ascending')
@@ -47,7 +47,7 @@ The function has some optional parameters like:
     * *as_json* by default is **False** but if True the output of the function is a JSON object, not a pandas.DataFrame.
     * *order* by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
 
-    ```
+    ```python
     import investpy
     
     equities_df_ = investpy.get_historical_data('bbva', '10/10/2018', '10/12/2018', as_json=False, order='ascending')
@@ -71,7 +71,7 @@ Lets start with the first step before scraping a web, in this case [investing](h
 This unit tests are made with an stable Internet connection and done 500 times each, so we have a wide range of results in order to get to a better conclusion.
 As we can see they are very related and similar, but with a significant efficiency difference when calculating the download time of a website's HTML code of a POST request, as shown in the graph:
 
-![urllib3 vs requests](https://github.com/alvarob96/investpy/blob/master/statistic%20plots/urllib3-requests.png)
+![urllib3 vs requests](https://raw.githubusercontent.com/alvarob96/investpy/0.6/statistic%20plots/urllib3-requests.png)
 
 If we analyse the graph, we can see that the mean time when sending a POST request is better when we use **requests** instead of **urllib3**, and it is also more stable and more consistent so on.
 
@@ -83,7 +83,7 @@ The main Python packages used for HTML parsing are:
 This unit tests are made with an stable Internet connection and done 500 times each, so we have a wide range of results in order to get to a better conclusion.
 To determine which has a better time performance, we are going to parse a HTML that contains historical data from the last 10 years, to see which package works better for huge loads of data, as shown in the graph:
 
-![bs4 vs lxml](https://github.com/alvarob96/investpy/blob/master/statistic%20plots/bs4-lxml.png)
+![bs4 vs lxml](https://raw.githubusercontent.com/alvarob96/investpy/0.6/statistic%20plots/bs4-lxml.png)
 
 We can clearly see that **lxml** completely outperforms **bs4**, with a much more better time result when retrieving huge loads of data from a HTML file; and it is more stable, with less fluctuations being more consistent.
 
