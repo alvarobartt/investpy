@@ -8,8 +8,8 @@ import pkg_resources
 import requests
 from lxml.html import fromstring
 
-from investpy_test import user_agent as ua, equities as ts, funds as fs
-from investpy_test.Data import Data  # TypeError: 'module' object is not callable
+from investpy import user_agent as ua, equities as ts, funds as fs
+from investpy.Data import Data  # TypeError: 'module' object is not callable
 
 
 def get_recent_data(equity, as_json=False, order='ascending'):
