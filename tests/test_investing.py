@@ -1,5 +1,5 @@
 import pytest
-import investpy_test as invest
+import investpy as invest
 
 
 def test_investing():

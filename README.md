@@ -6,58 +6,78 @@
 
 ## Introduction
 
-Since [**Investing**](https://es.investing.com/) does not have an API to retrieve historical data of the **Continuous Spanish Stock Market**, I decided to develop a scraper to retrieve that information.
+Since [**Investing**](https://es.investing.com/) does not have an API, I decided to develop this Python scraper in order to retrieve historical data from the companies that integrate the **Continuous Spanish Stock Market**. The scraper is a Python package everyone can use through PyPi (Python Package Installer) via [investpy](https://pypi.org/project/investpy/).
 
-I developed this scraper in order to get the data from Investing for my Final Degree Project at the University of Salamanca titled "**Machine Learning for stock investment recommendation systems**".
+The main purpose of developing this package was to use it as the **Data Extraction** tool for its namesake section, for my Final Degree Project at the University of Salamanca titled "**Machine Learning for stock investment recommendation systems**". The package end up being so consistent, reliable and usable that it is going to be used as the main Data Extraction tool by another students in their Final Degree Projects named "*Recommender system of banking products*" and "*Robo-Advisor Application*".
 
-To sum up this is not the final version of this scraper since this is just the pre-alpha version of it. So I will continue scraping information indexed in investing so you can be able to retrieve more data, as soon as I can.
+To conclude this section, I am in the need to specify that this is not the final version of the package, this is just a beta version of it that will keep going while I develop a consistent Python package for financial data extraction.
 
 ## Installation
 
-In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal:
+In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
 ``pip install investpy``
 
-All the dependencies are already listed on the setup file of the package, but to sum it up, you will need this requirements:
+All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
 * [**pandas 0.23.4**](https://pypi.org/project/pandas/)
 * [**requests 2.20.0**](https://pypi.org/project/requests/)
 * [**pytest 4.0.2**](https://pypi.org/project/pytest/)
 * [**beautifulsoup4 4.6.3**](https://pypi.org/project/beautifulsoup4/)
+* [**lxml 4.3.2**](https://pypi.org/project/lxml/)
 
 ## Use
 
 Currently you just have two possible options to retrieve data with this scraper:
 
-* **Retrieve the recent data of a stock**: it retrieves the historical data from a stock from the last month. The function also checks if the introduced equity name is correct and then retrieves the data.
-```
-import investpy as ivs
+* **Retrieve the recent data of an equity/fund**: it retrieves the historical data of an equity/fund from the last month. The function also checks if the introduced equity/fund name is correct and then retrieves the data.
+The function has some optional parameters like: 
+    * *as_json* by default is **False** but if True the output of the function is a JSON object, not a pandas.DataFrame.
+    * *order* by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
+ 
+    ```
+    import investpy
+    
+    equities_df_ = investpy.get_recent_data('bbva', as_json=False, order='ascending')
+    funds_df_ = innvestpy.get_fund_recent_data('bbva multiactivo conservador pp', as_json=False, order='ascending')
+    ```
 
-df = ivs.get_recent_data('bbva')
-```
+* **Retrieve the historical data of an equity/fund from a specific range of time**: it retrieves the historical data from an equity/fund from a range of time between the start and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity/fund name is correct and then retrieves the data.
+The function has some optional parameters like: 
+    * *as_json* by default is **False** but if True the output of the function is a JSON object, not a pandas.DataFrame.
+    * *order* by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
 
-* **Retrieve the historical data of a stock from a specific range of time**: it retrieves the historical data from a stock from a range of time between the start date and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity name is correct and then retrieves the data.
-```
-import investpy as ivs
+    ```
+    import investpy
+    
+    equities_df_ = investpy.get_historical_data('bbva', '10/10/2018', '10/12/2018', as_json=False, order='ascending')
+    funds_df_ = investpy.get_fund_historical_data('bbva multiactivo conservador pp', '10/10/2018', '10/12/2018', as_json=False, order='ascending')
+    ```
 
-df = ivs.get_historical_data('bbva', '10/10/2018', '10/12/2018')
-```
+You can check all the available equities/funds you can retrieve data from in Investing:
+* Equities from the **Spanish Stock Market** -> https://es.investing.com/equities/spain
+* Funds from the **Spanish Stock Market** -> https://es.investing.com/funds/spain-funds
 
-You can check all the available equities for the **Spanish Stock Market** in this list from Investing: https://es.investing.com/equities/spain
+(**NOTE**: you will need an active Internet connection in order to get the scraper working.)
 
-(**NOTE**: you will need an active HTTP connection in order to get the scraper working. As a temporary solution, you can just store the retrieved pandas.DataFrame in a CSV so you can work with that data offline.)
+## Performance Analysis and Case Study
 
-## Development
+Detailed in Jupyter Notebook
 
-* Spanish ETFs -> https://es.investing.com/etfs/spain-etfs
-* Spanish Funds -> https://es.investing.com/funds/spain-funds **(In progress)**
-* Output as a JSON file (API like)
-* Latest Spanish Stock News -> https://es.investing.com/search/?q=ticker&tab=news
+## Future Work
+
+* Spanish ETFs
+* Latest Spanish Stock News
 * Allow multiple date formats
-* Improve performance
+* Add more function parameters if needed
 
-## Information
+## Additional Information
+
+The package is currently in a development version, so please, if needed open an [issues](https://github.com/alvarob96/investpy/issues) to solve all the possible problems the package may be causing
+so I fix them as fast as I can. Also, any new ideas or proposals are welcome, and I will gladly implement them in the package if the are positive and useful.
 
 For further information or any question feel free to contact me via email at alvarob96@usal.es
 
-**Disclaimer:** this is just for personal use, I am not related at all with Investing or any similar company. This is just a tool for the research project I am working on. I get no profit or economic benefit from this scraper. I also contacted Investing.com and they gave me permission to develop this project with the condition of mentioning the source where I get the data from.
+## Disclaimer
+
+This Python Package has been made for research purposes in order to fit a needs that Investing.com does not cover, so this package works like an API for Investing.com developed in an altruistic way. Conclude that I am not related at all with Investing.com or any similar company, so I contacted Investing.com via mail and they gave me permission to develop this scraper with the condition of mentioning the source where I retrieve the data from.
