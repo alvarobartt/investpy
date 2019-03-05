@@ -11,17 +11,17 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.4',
+    version='0.5',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investpy/archive/0.4.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.5.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
-    description='This is a scraping tool that retrieves historical data from the continuous Spanish stock market from Investing.com, converting into a pandas DataFrame.',
+    description='investpy - is a financial tool for stock analysis that retrieves historical data from Investing.com',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=['requests==2.21.0', 'pandas==0.23.4', 'beautifulsoup4==4.7.1', 'pytest==4.1.1'],
+    install_requires=['requests==2.21.0', 'pandas==0.23.4', 'beautifulsoup4==4.7.1', 'lxml==4.3.2', 'pytest==4.1.1'],
     data_files=[
         ('equities', ['investpy/resources/equities.csv']),
         ('funds', ['investpy/resources/funds.csv']),
@@ -29,7 +29,7 @@ setup(
     ],
     include_package_data=True,
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -38,9 +38,7 @@ setup(
         "Topic :: Office/Business :: Financial",
         "Topic :: Office/Business :: Financial :: Investment",
         "Topic :: Scientific/Engineering :: Information Analysis",
-        "Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator",
-        "Topic :: Software Development :: Libraries",
-        "Operating System :: OS Independent",
+        "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing, investment, scraper, pandas, finance, stock, funds, etf, api'
+    keywords='investing-api, spanish-stock-market, scraper, historical-data, financial-data, stock'
 )
