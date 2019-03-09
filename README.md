@@ -93,10 +93,8 @@ If you have any other package you want to compare with the ones used in this cas
 
 ## Future Work
 
-* Spanish ETFs
 * Latest Spanish Stock News
 * Allow multiple date formats
-* Add more function parameters if needed
 
 ## Additional Information
 

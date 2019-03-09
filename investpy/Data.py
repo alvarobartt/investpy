@@ -69,3 +69,20 @@ class Data(object):
             'Max': self.max,
             'Min': self.min,
         }}
+
+    def etf_to_dict(self):
+        return {
+            'Date': self.date,
+            'Close': self.close,
+            'Open': self.open,
+            'Max': self.max,
+            'Min': self.min,
+        }
+
+    def etf_as_json(self):
+        return {self.date.strftime('%d/%m/%Y'): {
+            'Close': self.close,
+            'Open': self.open,
+            'Max': self.max,
+            'Min': self.min,
+        }}
