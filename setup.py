@@ -25,6 +25,7 @@ setup(
     data_files=[
         ('equities', ['investpy/resources/equities.csv']),
         ('funds', ['investpy/resources/funds.csv']),
+        ('etfs', ['investpy/resources/etfs.csv']),
         ('user-agents', ['investpy/resources/user-agent-list.txt'])
     ],
     include_package_data=True,

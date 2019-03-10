@@ -159,6 +159,18 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                          "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
+    try:
+        datetime.datetime.strptime(start, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
+                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    try:
+        datetime.datetime.strptime(end, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
+                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -403,6 +415,18 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                          "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
+    try:
+        datetime.datetime.strptime(start, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
+                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    try:
+        datetime.datetime.strptime(end, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
+                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -625,6 +649,18 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
                          "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
+                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    try:
+        datetime.datetime.strptime(start, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
+                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    try:
+        datetime.datetime.strptime(end, '%Y-%m-%d')
+    except ValueError:
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     resource_package = __name__
