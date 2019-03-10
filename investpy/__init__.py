@@ -6,6 +6,7 @@ from random import randint
 import pandas as pd
 import pkg_resources
 import requests
+import json
 from lxml.html import fromstring
 
 from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
@@ -107,11 +108,11 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': row.name,
-                             'recent data':
+                    json_ = {'Name': row.name,
+                             'Recent Data':
                                  [value.equity_as_json() for value in result]
                              }
-                    return json_
+                    return json.dumps(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -262,7 +263,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                              'recent data':
                                  [value.equity_as_json() for value in result]
                              }
-                    return json_
+                    return json.dumps(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -328,7 +329,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                 "X-Requested-With": "XMLHttpRequest"
             }
 
-            req = requests.get(url, headers=headers)
+            req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
                 return None
@@ -366,7 +367,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                              'recent data':
                                  [value.fund_as_json() for value in result]
                              }
-                    return json_
+                    return json.dumps(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -498,11 +499,144 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                              'recent data':
                                  [value.fund_as_json() for value in result]
                              }
-                    return json_
+                    return json.dumps(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
                     return df
+            else:
+                raise RuntimeError("ERR#004: data retrieval error while scraping."
+                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
+                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        else:
+            continue
+
+
+def get_fund_information(fund, as_json=False):
+    """
+        This function retrieves historical data from the specified fund in the specified date range.
+
+        Parameters
+        ----------
+        :param fund: str
+            name of the fund to retrieve information from
+        :param as_json: bool
+            optional parameter to specify the output, default is pandas.DataFrame
+            if true, return value is a JSON object containing the information of the specified fund
+
+        Returns
+        -------
+        :returns pandas.DataFrame (or JSON object if specified)
+            returns a pandas DataFrame (or JSON object if specified) containing the information of the fund
+        """
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
+                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
+                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = fs.get_fund_names()
+        funds = pd.DataFrame(names)
+
+    if funds is None:
+        raise IOError("ERR#005: fund list not found or unable to retrieve."
+                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
+                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    for row in funds.itertuples():
+        if row.name.lower() == fund.lower():
+            url = "https://es.investing.com/funds/" + row.tag
+            headers = {
+                'User-Agent': ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest"
+            }
+
+            req = requests.get(url, headers=headers, timeout=5)
+
+            if req.status_code != 200:
+                return None
+
+            root_ = fromstring(req.text)
+            path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+            result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
+                                           'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
+                                           'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])
+            result.at[0, 'Fund Name'] = row.name  # set_value deprecation warning
+
+            if path_:
+                for elements_ in path_:
+                    title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
+                    if title_ == 'Rating':
+                        rating_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+                        result.at[0, 'Rating'] = rating_score
+                    elif title_ == 'Var. en un año':
+                        oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
+                        result.at[0, '1-Year Change'] = oneyear_variation
+                    elif title_ == 'Último cierre':
+                        previous_close = float(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(',', '.'))
+                        result.at[0, 'Previous Close'] = previous_close
+                    elif title_ == 'Calificación de riesgo':
+                        risk_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+                        result.at[0, 'Risk Rating'] = risk_score
+                    elif title_ == 'Rendimiento año móvil':
+                        ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'TTM Yield'] = ttm_percentage
+                    elif title_ == 'ROE':
+                        roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'ROE'] = roe_percentage
+                    elif title_ == 'Emisor':
+                        issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'Issuer'] = issuer_name
+                    elif title_ == 'Volumen de ventas':
+                        turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'Turnover'] = turnover_percentage
+                    elif title_ == 'ROA':
+                        roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'ROA'] = roa_percentage
+                    elif title_ == 'Fecha de inicio':
+                        value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        inception_date = datetime.datetime.strptime(value.replace('.', '-'), '%d-%m-%Y')
+                        result.at[0, 'Inception Date'] = inception_date
+                    elif title_ == 'Total activos':
+                        value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        total_assets = None
+                        if value.__contains__('K'):
+                            total_assets = int(float(value.replace('K', '').replace(',', '.')) * 1000)
+                        elif value.__contains__('M'):
+                            total_assets = int(float(value.replace('M', '').replace(',', '.')) * 1000000)
+                        elif value.__contains__('B'):
+                            total_assets = int(float(value.replace('B', '').replace(',', '.')) * 1000000000)
+                        result.at[0, 'Total Assets'] = total_assets
+                    elif title_ == 'Gastos':
+                        expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'Expenses'] = expenses_percentage
+                    elif title_ == 'Inversión mínima':
+                        min_investment = int(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content())
+                        result.at[0, 'Min Investment'] = min_investment
+                    elif title_ == 'Cap. mercado':
+                        value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        market_cap = None
+                        if value.__contains__('K'):
+                            market_cap = int(float(value.replace('K', '').replace(',', '.')) * 1000)
+                        elif value.__contains__('M'):
+                            market_cap = int(float(value.replace('M', '').replace(',', '.')) * 1000000)
+                        elif value.__contains__('B'):
+                            market_cap = int(float(value.replace('B', '').replace(',', '.')) * 1000000000)
+                        result.at[0, 'Market Cap'] = market_cap
+                    elif title_ == 'Categoría':
+                        category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                        result.at[0, 'Category'] = category_name
+
+                if as_json is True:
+                    json_ = fs.fund_information_to_json(result)
+                    return json_
+                elif as_json is False:
+                    return result
             else:
                 raise RuntimeError("ERR#004: data retrieval error while scraping."
                                    "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
@@ -602,7 +736,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                              'recent data':
                                  [value.etf_as_json() for value in result]
                              }
-                    return json_
+                    return json.dumps(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -734,7 +868,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                              'recent data':
                                  [value.etf_as_json() for value in result]
                              }
-                    return json_
+                    return json.dumps(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -745,3 +879,9 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                                    "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
         else:
             continue
+
+
+if __name__ == '__main__':
+    jej = get_fund_information('Quality Inversion Conservadora FI', as_json=True)
+    parsed = json.loads(jej)
+    print(json.dumps(parsed, indent=4, sort_keys=False))

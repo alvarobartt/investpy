@@ -2,6 +2,7 @@
 
 import pandas as pd
 import requests
+import json
 from bs4 import BeautifulSoup
 import pkg_resources
 
@@ -70,3 +71,33 @@ def get_fund_names():
     df.to_csv(file, index=False)
 
     return results
+
+
+def fund_information_to_json(df):
+    """
+    This function converts a pandas.DataFrame, containing all the information from a fund, into a JSON
+
+    Returns
+    -------
+        returns a JSON object containing fund information
+    """
+    json_ = {
+        'Fund Name': str(df['Fund Name'][0]),
+        'Rating': str(df['Rating'][0]),
+        '1-Year Change': str(df['1-Year Change'][0]),
+        'Previous Close': str(df['Previous Close'][0]),
+        'Risk Rating': str(df['Risk Rating'][0]),
+        'TTM Yield': str(df['TTM Yield'][0]),
+        'ROE': str(df['ROE'][0]),
+        'Issuer': str(df['Issuer'][0]),
+        'Turnover': str(df['Turnover'][0]),
+        'ROA': str(df['ROA'][0]),
+        'Inception Date': str(df['Inception Date'][0]),
+        'Total Assets': str(df['Total Assets'][0]),
+        'Expenses': str(df['Expenses'][0]),
+        'Min Investment': str(df['Min Investment'][0]),
+        'Market Cap': str(df['Market Cap'][0]),
+        'Category': str(df['Category'][0])
+    }
+    result = json.dumps(json_)
+    return result

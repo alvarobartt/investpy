@@ -95,8 +95,8 @@ If you have any other package you want to compare with the ones used in this cas
 
 * Latest Spanish Stock News
 * Allow multiple input equities/funds/etfs
-* Retrieve additional information for Funds (Name/Column Attrs)
 * List equities, funds and etfs
+* Remove bs4 for equity/fund/etf list retrieval
 
 ## Additional Information
 
