@@ -161,13 +161,13 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     try:
-        datetime.datetime.strptime(start, '%Y-%m-%d')
+        datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                       "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     try:
-        datetime.datetime.strptime(end, '%Y-%m-%d')
+        datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                       "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
@@ -879,9 +879,3 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                                    "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
         else:
             continue
-
-
-if __name__ == '__main__':
-    jej = get_fund_information('Quality Inversion Conservadora FI', as_json=True)
-    parsed = json.loads(jej)
-    print(json.dumps(parsed, indent=4, sort_keys=False))

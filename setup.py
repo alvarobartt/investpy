@@ -11,14 +11,14 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.6',
+    version='0.7',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investpy/archive/0.6.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.7.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
-    description='investpy - is a financial tool for stock analysis that retrieves historical data from Investing.com',
+    description='investpy - Python package for historical data scraping of the continuous spanish stock market',
     long_description=readme(),
     long_description_content_type='text/markdown',
     install_requires=['requests==2.21.0', 'pandas==0.23.4', 'beautifulsoup4==4.7.1', 'lxml==4.3.2', 'pytest==4.1.1'],
