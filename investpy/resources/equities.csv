@@ -1,235 +1,234 @@
-id,name,tag
-442,ACS,acs-cons-y-serv
-443,Abengoa,abengoa
-444,Atresmedia,atresmedia
-445,Acerinox,acerinox
-446,BBVA,bbva
-447,Bankinter,bankinter
-448,BME,bolsas-y-mer-esp
-449,Acciona,acciona-sa
-452,Caixabank,caixabank-sa
-453,Enagás,enagas
-455,FCC,fcc
-456,Naturgy Energy,gas-natural-sdg
-457,Siemens Gamesa,gamesa
-458,Grifols,grifols
-459,Ferrovial,grupo-ferrovial
-460,Red Eléctrica,red-electrica
-461,Inditex,inditex
-462,Repsol,repsol-ypf
-463,Iberdrola,iberdrola
-465,Indra,indra-sistemas
-466,Mapfre,mapfre
-469,Telefónica,telefonica
-471,Mediaset,mediaset-esp
-472,Sacyr,sacyr-valle
-473,Banco Sabadell,bco-de-sabadell
-474,Santander,banco-santander
-9060,Colonial,inmob-colonial
-10526,Técnicas Reunidas,tecnicas-reunidas
-13808,OHL,ohl
-13809,IAG,intl.-cons.-air-grp?cid=13809
-13815,Ebro Foods,ebro-foods
-13816,Endesa,endesa
-14615,Amadeus,amadeus
-14616,Bankia,bankia
-18893,DIA,dia
-32176,Vértice 360,vertice-trescientos-sesenta-grados
-32178,Rovi,laboratorios-farmaceuticos-rovi-sa
-32179,GAM,general-de-alquiler-de-maquinaria
-32180,Solaria,solaria-energia-y-medio-ambiente
-32183,Papeles Y Cartones,europac
-32184,Airtificial Intelligence,inypsa-informes-y-proyectos-sa
-32185,Alantra Partners,dinamia-capital-privado-scr-sa
-32186,Alba SA,corporacion-financiera-alba-sa
-32187,Promotora Informaciones,prisa
-32188,Meliá Hotels,melia-hotels-international-sa
-32189,Empresarial San Jose,grupo-empresarial-san-jose-sa
-32190,Nueva Expresion,dogi-international-fabrics-sa
-32191,Audax Renovables,fersa-energias-renovables-sa
-32195,Miquel y Costas,iquel-y-costas---miquel-sa
-32196,Catalana Occidente,grupo-catalana-occidente-sa
-32197,Service P.S.,service-point-solutions-sa
-32198,ENCE,ence-energia-y-celulosa-sa
-32199,Construcciones y Auxiliar,auxiliar-de-ferrocarriles
-32200,Urbas,urbas-grupo-financiero-sa
-32203,Insur,inmobiliaria-del-sur-sa
-32207,Quabit,quabit-inmobiliaria-sa
-32208,Lingotes Especiales,lingotes-especiales-sa
-32218,Iberpapel,iberpapel-gestion-sa
-32224,Bodegas Riojanas,bodegas-riojanas-sa
-32225,Adolfo Domínguez,adolfo-dominguez-sa
-32227,Realia,realia-business-sa
-32228,Nyesa Valores Corp,nyesa-valores-corp
-32229,Clínica Baviera,clinica-baviera-sa
-32230,Reno De Medici,reno-de-medici-spa?cid=32230
-32231,Nicolás Correa,nicolas-correa-sa
-32232,Cie Automotive,cie-automotive-sa
-32235,Renta 4,renta-4-banco-sa
-32236,Reig Jofre,natraceutical-sa
-32237,Ezentis,grupo-ezentis-sa
-32238,Duro Felguera,duro-felguera-sa
-32244,Zardoya,zardoya-otis-sa
-32245,Barón de Ley,baron-de-ley-sa
-32249,Montebalito,montebalito-sa
-32250,Metrovacesa,metrovacesa-sa
-32256,NH Hoteles,nh-hoteles-sa
-32258,Faes Farma,faes-farma-sa
-32264,Tubos Reunidos,tubos-reunid
-32265,Pescanova,pescanova-sa
-32266,Grifols Pref,grifols-sa-b
-32268,Biosearch,biosearch-sa
-32274,Viscofan,viscofan-sa
-32276,Prosegur,prosegur-sa
-32279,Almirall,almirall-sa
-32280,Vocento,vocento-sa
-32281,Vidrala,vidrala-sa
-32282,Empresarial Materiales,uralita-sa
-32283,Tubacex,tubacex-sa
-32284,Renta Corp.,renta-corp
-32285,Fluidra,fluidra-sa
-32286,Elecnor,elecnor-sa
-32287,Azkoyen,azkoyen-sa
-32288,Aperam,aperam?cid=32288
-32291,Sniace,sniace-sa
-32292,Ercros,ercros-sa
-32293,Codere,codere-sa
-32295,Bayer,bayer-ag?cid=32295
-32299,Natra,natra-sa
-32301,Amper,amper-sa
-32302,Airbus Group,eads?cid=32302
-32303,Prim,prim-sa
-32305,Deoleo,deoleo
-32439,ArcelorMittal,arcelormittal-reg?cid=32439
-40331,Abengoa B,abengoa-b
-40902,Liberbank,liberbank-sa
-44452,Ebioss Energy,ebioss-energy-ad-sofia
-44453,Entrecampos Cuatro,entre-cua-socimi
-48594,PETROBRAS PN,petrobras-pn?cid=48594
-48595,America Movil,america-movil-l?cid=48595
-48597,BRADESPAR ON,bradespar-on-n1?cid=48597
-48598,BRADESPAR PN,bradespar-pn-n1?cid=48598
-48599,BRASKEM PNA,braskem-pna-n1?cid=48599
-48600,COPEL PNB,copel-pnb?cid=48600
-48601,ELETROBRAS ON,eletrobras-on?cid=48601
-48602,ELETROBRAS PNB,eletrobras-pnb?cid=48602
-48603,PETROBRAS ON,petrobras-on?cid=48603
-48604,USIMINAS ON,usiminas-on?cid=48604
-48605,USIMINAS PNA,usiminas-pna?cid=48605
-48606,VALE ON,vale-on-n1?cid=48606
-48607,Alfa,alfa-a?cid=48607
-48608,Grupo Elektra,elektra?cid=48608
-48609,Grupo Financiero Banorte,financiero-banorte?cid=48609
-48611,TV Azteca Cpo,tv-azteca-cpo?cid=48611
-48612,Frances,frances?cid=48612
-48613,CEMIG PN,cemig-pn-n1?cid=48613
-48614,BRADESCO PN EJ N1 ,bradesco-pn-n1?cid=48614
-48615,GERDAU PN N1,gerdau-pn-n1?cid=48615
-48618,Volcan,volcan-cmp-min
-49930,1nkemia IUCT SA,1nkemia-iuct-group-s.a.
-49931,Ab-Biotics,ab-biotics-s.a.
-49932,Altia,altia-consultores-s.a.
-49933,ADL Bionatur,bionaturis
-49936,Catenon,catenon-s.a.
-49937,Euroespes,euroespes-s.a.
-49938,Eurona,eurona-wireless-telecom-s.a.
-49939,Griñó Ecologic,grino-ecologic-s.a.
-49940,Masmovil Ibercom,world-wide-web-ibercom-s.a.
-49941,Imaginarium,imaginarium-s.a.
-49942,Medcom Tech,medcom-tech-s.a.
-49943,Neuron,neuron-bio-s.a.
-49944,Secuoya,secuoya-grupo-de-comunicacion-s.a.
-49946,Zinkia,zinkia-entertainment-s.a.
-100241,eDreams,edreams-odigeo-sa
-100242,Lar España,lar-espana-real-estate-socimi-sa
-100243,Hispania,hispania-activos-inmobiliarios-sau
-101934,Applus,applus-services-sa
-102931,Merlin Properties,merlin-properties-sa
-103907,Facephi,facephi-biometria-sa
-104388,Logista,logista
-940784,Cerbium,only-apartments-sa
-942718,Home Meal,home-meal
-945627,Aena,aena-aeropuertos-sa
-946356,Uro Property Holdings,uro-property-holdings
-949224,NBI Bearings Europe,nbi-bearings-europe-s.a.
-949749,Naturhouse,naturhouse-health-sa
-951681,Cellnex Telecom,cellnex-telecom
-951682,Talgo,talgo
-955670,Euskaltel SA,euskaltel-sa
-955671,Fidere Patrimonio SOCIMI SA,fidere-patrimonio-socimi-sa
-955882,Grenergy Renovables SA,grenergy-renovables-sa
-958276,Inclam CO2 SA,inclam-co2-sa
-958277,Trajano Iberia Socimi SA,trajano-iberia-socimi-sa
-958860,Lleidanetworks Serveis Telematics,lleidanetworks-serveis-telematics
-958861,Autonomy Spain Real Estate Socimi S,autonomy-spain-real-estate-socimi-s
-958862,Obsido Socimi SA,obsido-socimi-sa
-959215,Pharma Mar,pharma-mar-sau
-960710,Gigas Hosting SA,gigas-hosting-sa
-960711,Neol Biosolutions SA,neol-biosolutions-sa
-961658,Agile Content SA,agile-content-sa
-961659,Think Smart SA,think-smart-sa
-961773,Zambal Spain Socimi SA,zambal-spain-socimi-sa
-962024,Oryzon Genomics,oryzon-genomics-sa
-962349,Tecnoquark Trust SA,tecnoquark-trust-sa
-968993,Clerhp Estructuras,clerhp-estructuras-sa
-976081,Corpfin Capital Prime Retail III,corpfin-capital-prime-retail-iii-so
-976471,Global Dominion,global-dominion-access-sa
-976472,Telepizza,telepizza-group-sa
-976553,Parques Reunidos,parques-reunidos-servicios
-977685,Jaba I Inversiones,jaba-i-inversiones-inmobiliarias-so
-978750,Corporacion Geo SAB,corporacion-geo-sab-de-cv
-980156,Silvercode Investments,silvercode-investments-socimi-sa
-980157,Coca-Cola European,coca-cola-ent?cid=980157
-985714,Asturias Retail,brookfield-business-partners-lp
-985794,Vitruvio Real Estate,vitruvio-real-estate
-985943,Isc Fresh Water,isc-fresh-water-investment-socimi
-985944,Quonia SOCIMI,quonia-socimi-sa
-985976,Atrys Health,atrys-health-sl
-986094,Voztelecom Oigaa360,voztelecom-oigaa360-sa
-986096,GMP Property,gmp-property-socimi-sa
-990008,Optimum Re Spain,optimum-re-spain-socimi-sa
-993678,CommCenter,commcenter-sa
-993679,ECG,euroconsult-engineering-consulting
-994270,Clever Global,clever-global-sa
-994271,Mondo TV,mondo-tv-iberoamerica-sa
-994484,Pangaea Oncology,pangaea-oncology-sa
-994781,VBARE Iberian Properties,vbare-iberian-properties-socimi-sa
-996540,Ores Socimi,olimpo-real-estate-sa
-997807,Prosegur Cash,prosegur-cash-sa
-999061,Neinor Homes,neinor-homes-slu
-1006174,Gestamp,gestamp-automocion-sa
-1010687,Optimum III Value Added,optimum-iii-value-added-residential
-1013384,Asturiana de Laminados,asturiana-de-laminados-sa
-1013395,Unicaja Banco,unicaja-banco-sa
-1024614,GGC,general-de-galerias-comerciales
-1025089,Numulae Gestion de Servicios,numulae-gestion-de-servicios
-1025131,Borges Agricultural,borges-agricultural-industrial-nuts
-1029197,AM Locales Property,am-locales-property
-1030978,Grupo Ortiz,grupo-ortiz
-1050163,Domo Activos,domo-activos
-1052410,Aedas Homes,aedas-homes-sl
-1053093,Netex Knowledge,netex-knoledge-factory
-1055914,Greenalia,greenalia
-1057278,Student Properties,student-properties
-1061411,Heref Habaneras,heref-habaneras
-1067156,Robot,robot
-1073101,Tempore Properties,tempore-properties-socimi
-1073221,Serrano 61 Desarrollo,serrano-61-desarrollo-socimi
-1076567,Ap67 Socimi,ap67-socimi
-1084842,Tier1,tier-1-technology
-1087966,Torbel Investmentד,torbel-investments-2015-socimi
-1088135,Quid Pro Quo Alquiler,quid-pro-quo-alquiler-seguro-socimi
-1089239,Excem Socimi,excem-capital-partners-sociedad
-1089443,Castellana Properties,castellana-properties-socimi
-1089467,Testa Residencial,testa-residencial-socimi
-1093905,Berkeley Energy,berkeley-resources-limited?cid=1093905
-1093991,Alquiber Quality,alquiber-quality
-1096060,Go Madrid Benz,go-madrid-benz
-1107547,Arima Real Estate,arima-real-estate
-1111709,Amrest,amrest-holdings-se?cid=1111709
-1112818,Atom Hoteles,atom-hoteles-socimi
-1115133,Solarpack Corporación Tecnológica,solarpack-corporacion-tecnologica
-1116351,Arrienda Rental,arrienda-rental
-1116352,Vivenio Residencial,vivenio-residencial
-1117970,Almagro Capital,almagro-capital-socimi
-1118084,Inmobiliaria Park Rose,inmobiliaria-park-rose
+id,isin,name,tag
+442,ES0167050915 ,ACS,acs-cons-y-serv
+443,ES0105200416 ,Abengoa,abengoa
+444,ES0109427734 ,Atresmedia,atresmedia
+445,ES0132105018 ,Acerinox,acerinox
+446,ES0113211835 ,BBVA,bbva
+447,ES0113679I37 ,Bankinter,bankinter
+448,ES0115056139 ,BME,bolsas-y-mer-esp
+449,ES0125220311 ,Acciona,acciona-sa
+452,ES0140609019,Caixabank,caixabank-sa
+453,ES0130960018 ,Enagás,enagas
+455,ES0122060314 ,FCC,fcc
+456,ES0116870314 ,Naturgy Energy,gas-natural-sdg
+457,ES0143416115 ,Siemens Gamesa,gamesa
+458,ES0171996087 ,Grifols,grifols
+459,ES0118900010 ,Ferrovial,grupo-ferrovial
+460,ES0173093024 ,Red Eléctrica,red-electrica
+461,ES0148396007 ,Inditex,inditex
+462,ES0173516115 ,Repsol,repsol-ypf
+463,ES0144580Y14 ,Iberdrola,iberdrola
+465,ES0118594417 ,Indra,indra-sistemas
+466,ES0124244E34 ,Mapfre,mapfre
+469,ES0178430E18 ,Telefónica,telefonica
+471,ES0152503035 ,Mediaset,mediaset-esp
+472,ES0182870214 ,Sacyr,sacyr-valle
+473,ES0113860A34 ,Banco Sabadell,bco-de-sabadell
+474,ES0113900J37 ,Santander,banco-santander
+9060,ES0139140174 ,Colonial,inmob-colonial
+10526,ES0178165017 ,Técnicas Reunidas,tecnicas-reunidas
+13808,ES0142090317 ,OHL,ohl
+13809,ES0177542018 ,IAG,intl.-cons.-air-grp?cid=13809
+13815,ES0112501012 ,Ebro Foods,ebro-foods
+13816,ES0130670112 ,Endesa,endesa
+14615,ES0109067019 ,Amadeus,amadeus
+14616,ES0113307062 ,Bankia,bankia
+18893,ES0126775032 ,DIA,dia
+32176,ES0183304312 ,Vértice 360,vertice-trescientos-sesenta-grados
+32178,ES0157261019 ,Rovi,laboratorios-farmaceuticos-rovi-sa
+32179,ES0141571192 ,GAM,general-de-alquiler-de-maquinaria
+32180,ES0165386014 ,Solaria,solaria-energia-y-medio-ambiente
+32184,ES0152768612 ,Airtificial Intelligence,inypsa-informes-y-proyectos-sa
+32185,ES0126501131 ,Alantra Partners,dinamia-capital-privado-scr-sa
+32186,ES0117160111 ,Alba SA,corporacion-financiera-alba-sa
+32187,ES0171743901 ,Promotora Informaciones,prisa
+32188,ES0176252718 ,Meliá Hotels,melia-hotels-international-sa
+32189,ES0180918015 ,Empresarial San Jose,grupo-empresarial-san-jose-sa
+32190,ES0126962069 ,Nueva Expresion,dogi-international-fabrics-sa
+32191,ES0136463017 ,Audax Renovables,fersa-energias-renovables-sa
+32195,ES0164180012 ,Miquel y Costas,iquel-y-costas---miquel-sa
+32196,ES0116920333 ,Catalana Occidente,grupo-catalana-occidente-sa
+32197,ES0143421073 ,Service P.S.,service-point-solutions-sa
+32198,ES0130625512 ,ENCE,ence-energia-y-celulosa-sa
+32199,ES0121975009 ,Construcciones y Auxiliar,auxiliar-de-ferrocarriles
+32200,ES0182280018 ,Urbas,urbas-grupo-financiero-sa
+32203,ES0154653911 ,Insur,inmobiliaria-del-sur-sa
+32207,ES0110944172 ,Quabit,quabit-inmobiliaria-sa
+32208,ES0158480311 ,Lingotes Especiales,lingotes-especiales-sa
+32218,ES0147561015 ,Iberpapel,iberpapel-gestion-sa
+32224,ES0115002018 ,Bodegas Riojanas,bodegas-riojanas-sa
+32225,ES0106000013 ,Adolfo Domínguez,adolfo-dominguez-sa
+32227,ES0173908015 ,Realia,realia-business-sa
+32228,ES0150480111 ,Nyesa Valores Corp,nyesa-valores-corp
+32229,ES0119037010 ,Clínica Baviera,clinica-baviera-sa
+32230,IT0001178299 ,Reno De Medici,reno-de-medici-spa?cid=32230
+32231,ES0166300212 ,Nicolás Correa,nicolas-correa-sa
+32232,ES0105630315 ,Cie Automotive,cie-automotive-sa
+32235,ES0173358039 ,Renta 4,renta-4-banco-sa
+32236,ES0165359029 ,Reig Jofre,natraceutical-sa
+32237,ES0172708234 ,Ezentis,grupo-ezentis-sa
+32238,ES0162600417 ,Duro Felguera,duro-felguera-sa
+32244,ES0184933812 ,Zardoya,zardoya-otis-sa
+32245,ES0114297015 ,Barón de Ley,baron-de-ley-sa
+32249,ES0116494016 ,Montebalito,montebalito-sa
+32250,ES0105122024 ,Metrovacesa,metrovacesa-sa
+32256,ES0161560018 ,NH Hoteles,nh-hoteles-sa
+32258,ES0134950F36 ,Faes Farma,faes-farma-sa
+32264,ES0180850416 ,Tubos Reunidos,tubos-reunid
+32265,ES0169350016 ,Pescanova,pescanova-sa
+32266,ES0171996095 ,Grifols Pref,grifols-sa-b
+32268,ES0172233118 ,Biosearch,biosearch-sa
+32274,ES0184262212 ,Viscofan,viscofan-sa
+32276,ES0175438003 ,Prosegur,prosegur-sa
+32279,ES0157097017 ,Almirall,almirall-sa
+32280,ES0114820113 ,Vocento,vocento-sa
+32281,ES0183746314 ,Vidrala,vidrala-sa
+32282,ES0182170003 ,Empresarial Materiales,uralita-sa
+32283,ES0132945017 ,Tubacex,tubacex-sa
+32284,ES0173365018 ,Renta Corp.,renta-corp
+32285,ES0137650018 ,Fluidra,fluidra-sa
+32286,ES0129743318 ,Elecnor,elecnor-sa
+32287,ES0112458312 ,Azkoyen,azkoyen-sa
+32288,LU0569974404 ,Aperam,aperam?cid=32288
+32291,ES0165380017 ,Sniace,sniace-sa
+32292,ES0125140A14 ,Ercros,ercros-sa
+32293,ES0119256032 ,Codere,codere-sa
+32295,DE000BAY0017 ,Bayer,bayer-ag?cid=32295
+32299,ES0165515117 ,Natra,natra-sa
+32301,ES0109260531 ,Amper,amper-sa
+32302,NL0000235190 ,Airbus Group,eads?cid=32302
+32303,ES0170884417 ,Prim,prim-sa
+32305,ES0110047919 ,Deoleo,deoleo
+32439,LU1598757687 ,ArcelorMittal,arcelormittal-reg?cid=32439
+40331,ES0105200002 ,Abengoa B,abengoa-b
+40902,ES0168675090 ,Liberbank,liberbank-sa
+44452,BG1100005179 ,Ebioss Energy,ebioss-energy-ad-sofia
+44453,ES0131172001 ,Entrecampos Cuatro,entre-cua-socimi
+48594,BRPETRACNPR6 ,PETROBRAS PN,petrobras-pn?cid=48594
+48595,MXP001691213 ,America Movil,america-movil-l?cid=48595
+48597,BRBRAPACNOR5 ,BRADESPAR ON,bradespar-on-n1?cid=48597
+48598,BRBRAPACNPR2 ,BRADESPAR PN,bradespar-pn-n1?cid=48598
+48599,BRBRKMACNPA4 ,BRASKEM PNA,braskem-pna-n1?cid=48599
+48600,BRCPLEACNPB9 ,COPEL PNB,copel-pnb?cid=48600
+48601,BRELETACNOR6 ,ELETROBRAS ON,eletrobras-on?cid=48601
+48602,BRELETACNPB7 ,ELETROBRAS PNB,eletrobras-pnb?cid=48602
+48603,BRPETRACNOR9 ,PETROBRAS ON,petrobras-on?cid=48603
+48604,BRUSIMACNOR3 ,USIMINAS ON,usiminas-on?cid=48604
+48605,BRUSIMACNPA6 ,USIMINAS PNA,usiminas-pna?cid=48605
+48606,BRVALEACNOR0 ,VALE ON,vale-on-n1?cid=48606
+48607,MXP000511016 ,Alfa,alfa-a?cid=48607
+48608,MX01EL000003 ,Grupo Elektra,elektra?cid=48608
+48609,MXP370711014 ,Grupo Financiero Banorte,financiero-banorte?cid=48609
+48611,MX01AZ060013 ,TV Azteca Cpo,tv-azteca-cpo?cid=48611
+48612,ARP125991090 ,Frances,frances?cid=48612
+48613,BRCMIGACNPR3 ,CEMIG PN,cemig-pn-n1?cid=48613
+48614,BRBBDCACNPR8 ,BRADESCO PN EJ N1 ,bradesco-pn-n1?cid=48614
+48615,BRGGBRACNPR8 ,GERDAU PN N1,gerdau-pn-n1?cid=48615
+48618,PEP648014202 ,Volcan,volcan-cmp-min
+49930,ES0156303002 ,1nkemia IUCT SA,1nkemia-iuct-group-s.a.
+49931,ES0109659013 ,Ab-Biotics,ab-biotics-s.a.
+49932,ES0113312005 ,Altia,altia-consultores-s.a.
+49933,ES0184980003 ,ADL Bionatur,bionaturis
+49936,ES0112320009 ,Catenon,catenon-s.a.
+49937,ES0133421000 ,Euroespes,euroespes-s.a.
+49938,ES0133443004 ,Eurona,eurona-wireless-telecom-s.a.
+49939,ES0143328005 ,Griñó Ecologic,grino-ecologic-s.a.
+49940,ES0184696104 ,Masmovil Ibercom,world-wide-web-ibercom-s.a.
+49941,ES0147791018 ,Imaginarium,imaginarium-s.a.
+49942,ES0161857018 ,Medcom Tech,medcom-tech-s.a.
+49943,ES0166198012 ,Neuron,neuron-bio-s.a.
+49944,ES0131703003 ,Secuoya,secuoya-grupo-de-comunicacion-s.a.
+100241,LU1048328220 ,eDreams,edreams-odigeo-sa
+100242,ES0105015012 ,Lar España,lar-espana-real-estate-socimi-sa
+100243,ES0105019006 ,Hispania,hispania-activos-inmobiliarios-sau
+101934,ES0105022000 ,Applus,applus-services-sa
+102931,ES0105025003 ,Merlin Properties,merlin-properties-sa
+103907,ES0105029005 ,Facephi,facephi-biometria-sa
+104388,ES0105027009 ,Logista,logista
+940784,ES0105038006 ,Cerbium,only-apartments-sa
+942718,ES0105049003 ,Home Meal,home-meal
+945627,ES0105046009 ,Aena,aena-aeropuertos-sa
+946356,ES0105059002 ,Uro Property Holdings,uro-property-holdings
+949224,ES0105062022 ,NBI Bearings Europe,nbi-bearings-europe-s.a.
+949749,ES0105043006 ,Naturhouse,naturhouse-health-sa
+951681,ES0105066007 ,Cellnex Telecom,cellnex-telecom
+951682,ES0105065009 ,Talgo,talgo
+955670,ES0105075008 ,Euskaltel SA,euskaltel-sa
+955671,ES0105071007 ,Fidere Patrimonio SOCIMI SA,fidere-patrimonio-socimi-sa
+955882,ES0105079000 ,Grenergy Renovables SA,grenergy-renovables-sa
+958276,ES0105083002 ,Inclam CO2 SA,inclam-co2-sa
+958277,ES0105077004 ,Trajano Iberia Socimi SA,trajano-iberia-socimi-sa
+958860,ES0105089009 ,Lleidanetworks Serveis Telematics,lleidanetworks-serveis-telematics
+958861,ES0105090007 ,Autonomy Spain Real Estate Socimi S,autonomy-spain-real-estate-socimi-s
+958862,ES0105074001 ,Obsido Socimi SA,obsido-socimi-sa
+959215,ES0169501030 ,Pharma Mar,pharma-mar-sau
+960710,ES0105093001 ,Gigas Hosting SA,gigas-hosting-sa
+960711,ES0105081006 ,Neol Biosolutions SA,neol-biosolutions-sa
+961658,ES0105102000 ,Agile Content SA,agile-content-sa
+961659,ES0105097002 ,Think Smart SA,think-smart-sa
+961773,ES0105080008 ,Zambal Spain Socimi SA,zambal-spain-socimi-sa
+962024,ES0167733015 ,Oryzon Genomics,oryzon-genomics-sa
+962349,ES0105076006 ,Tecnoquark Trust SA,tecnoquark-trust-sa
+968993,ES0105121000 ,Clerhp Estructuras,clerhp-estructuras-sa
+976081,ES0105111001 ,Corpfin Capital Prime Retail III,corpfin-capital-prime-retail-iii-so
+976471,ES0105130001 ,Global Dominion,global-dominion-access-sa
+976472,ES0105128005 ,Telepizza,telepizza-group-sa
+976553,ES0105131009 ,Parques Reunidos,parques-reunidos-servicios
+977685,ES0105098000 ,Jaba I Inversiones,jaba-i-inversiones-inmobiliarias-so
+980156,ES0105133005 ,Silvercode Investments,silvercode-investments-socimi-sa
+980157,GB00BDCPN049 ,Coca-Cola European,coca-cola-ent?cid=980157
+985714,ES0105127007 ,Asturias Retail,brookfield-business-partners-lp
+985794,ES0105139002 ,Vitruvio Real Estate,vitruvio-real-estate
+985943,ES0105153003 ,Isc Fresh Water,isc-fresh-water-investment-socimi
+985944,ES0105150009 ,Quonia SOCIMI,quonia-socimi-sa
+985976,ES0105148003 ,Atrys Health,atrys-health-sl
+986094,ES0105156006 ,Voztelecom Oigaa360,voztelecom-oigaa360-sa
+986096,ES0105134011 ,GMP Property,gmp-property-socimi-sa
+990008,ES0105174009 ,Optimum Re Spain,optimum-re-spain-socimi-sa
+993678,ES0121071007 ,CommCenter,commcenter-sa
+993679,ES0105042008 ,ECG,euroconsult-engineering-consulting
+994270,ES0105152005 ,Clever Global,clever-global-sa
+994271,,Mondo TV,mondo-tv-iberoamerica-sa
+994484,,Pangaea Oncology,pangaea-oncology-sa
+994781,,VBARE Iberian Properties,vbare-iberian-properties-socimi-sa
+996540,,Ores Socimi,olimpo-real-estate-sa
+997807,,Prosegur Cash,prosegur-cash-sa
+999061,,Neinor Homes,neinor-homes-slu
+1006174,,Gestamp,gestamp-automocion-sa
+1010687,,Optimum III Value Added,optimum-iii-value-added-residential
+1013384,,Asturiana de Laminados,asturiana-de-laminados-sa
+1013395,,Unicaja Banco,unicaja-banco-sa
+1024614,,GGC,general-de-galerias-comerciales
+1025089,,Numulae Gestion de Servicios,numulae-gestion-de-servicios
+1025131,,Borges Agricultural,borges-agricultural-industrial-nuts
+1029197,,AM Locales Property,am-locales-property
+1030978,,Grupo Ortiz,grupo-ortiz
+1050163,,Domo Activos,domo-activos
+1052410,,Aedas Homes,aedas-homes-sl
+1053093,,Netex Knowledge,netex-knoledge-factory
+1055914,,Greenalia,greenalia
+1057278,,Student Properties,student-properties
+1061411,,Heref Habaneras,heref-habaneras
+1067156,,Robot,robot
+1073101,,Tempore Properties,tempore-properties-socimi
+1073221,,Serrano 61 Desarrollo,serrano-61-desarrollo-socimi
+1076567,,Ap67 Socimi,ap67-socimi
+1084842,,Tier1,tier-1-technology
+1087966,,Torbel Investmentד,torbel-investments-2015-socimi
+1088135,,Quid Pro Quo Alquiler,quid-pro-quo-alquiler-seguro-socimi
+1089239,,Excem Socimi,excem-capital-partners-sociedad
+1089443,,Castellana Properties,castellana-properties-socimi
+1089467,,Testa Residencial,testa-residencial-socimi
+1093905,,Berkeley Energy,berkeley-resources-limited?cid=1093905
+1093991,,Alquiber Quality,alquiber-quality
+1096060,,Go Madrid Benz,go-madrid-benz
+1107547,,Arima Real Estate,arima-real-estate
+1111709,,Amrest,amrest-holdings-se?cid=1111709
+1112818,,Atom Hoteles,atom-hoteles-socimi
+1115133,,Solarpack Corporación Tecnológica,solarpack-corporacion-tecnologica
+1116351,,Arrienda Rental,arrienda-rental
+1116352,,Vivenio Residencial,vivenio-residencial
+1117970,,Almagro Capital,almagro-capital-socimi
+1118084,,Inmobiliaria Park Rose,inmobiliaria-park-rose
+1122284,,Euripo Properties,euripo-properties-socimi
+1123486,,Proeduca Altus,proeduca-altus

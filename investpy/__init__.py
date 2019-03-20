@@ -86,7 +86,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -237,7 +237,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -349,7 +349,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -417,13 +417,13 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     try:
-        datetime.datetime.strptime(start, '%Y-%m-%d')
+        datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     try:
-        datetime.datetime.strptime(end, '%Y-%m-%d')
+        datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
@@ -481,7 +481,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -600,7 +600,7 @@ def get_fund_information(fund, as_json=False):
                         result.at[0, 'ROA'] = roa_percentage
                     elif title_ == 'Fecha de inicio':
                         value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        inception_date = datetime.datetime.strptime(value.replace('.', '-'), '%d-%m-%Y')
+                        inception_date = datetime.datetime.strptime(value.replace('.', '-'), '%d/%m/%Y')
                         result.at[0, 'Inception Date'] = inception_date
                     elif title_ == 'Total activos':
                         value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
@@ -718,7 +718,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -786,13 +786,13 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     try:
-        datetime.datetime.strptime(start, '%Y-%m-%d')
+        datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
     try:
-        datetime.datetime.strptime(end, '%Y-%m-%d')
+        datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
@@ -850,7 +850,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))

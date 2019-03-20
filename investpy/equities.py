@@ -3,6 +3,7 @@
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup
+from lxml.html import fromstring
 import pkg_resources
 
 from investpy import user_agent as ua
@@ -48,9 +49,12 @@ def get_equity_names():
             info = nested.get("href")
             info = info.replace("/equities/", "")
 
+            isin_code = get_isin_code(info)
+
             data = {
                 "name": nested.text,
                 "tag": info,
+                "isin": isin_code,
                 "id": id_
             }
 
@@ -64,3 +68,27 @@ def get_equity_names():
     df.to_csv(file, index=False)
 
     return results
+
+
+def get_isin_code(info):
+    url = "https://es.investing.com/equities/" + info
+    headers = {
+        'User-Agent': ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest"
+    }
+
+    req = requests.get(url, headers=headers, timeout=5)
+
+    if req.status_code != 200:
+        return None
+
+    print(req.status_code)
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("/html/body/div[5]/section/div[4]/div[1]/div[2]/div[3]/span[2]")
+
+    return path_[0].text_content().rstrip()
+
+
+if __name__ == '__main__':
+    get_equity_names()
