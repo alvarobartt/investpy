@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/__init__.py" afterDir="false" />
-    </list>
+    <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +37,7 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="129">
               <caret line="320" column="27" lean-forward="true" selection-start-line="320" selection-start-column="27" selection-end-line="320" selection-end-column="27" />
               <folding>
                 <element signature="e#23#38#0" expanded="true" />
@@ -247,7 +244,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="x" value="-1920" />
     <option name="y" value="23" />
     <option name="width" value="1920" />
@@ -291,6 +288,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="full.screen.before.presentation.mode" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -462,12 +460,12 @@
       <workItem from="1551780348777" duration="936000" />
       <workItem from="1551781305539" duration="8357000" />
       <workItem from="1553095402243" duration="2047000" />
-      <workItem from="1553169531937" duration="2674000" />
+      <workItem from="1553169531937" duration="3002000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="15409000" />
+    <option name="totallyTimeSpent" value="15737000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="23" width="1920" height="1014" extended-state="0" />
@@ -674,7 +672,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
+        <state relative-caret-position="129">
           <caret line="320" column="27" lean-forward="true" selection-start-line="320" selection-start-column="27" selection-end-line="320" selection-end-column="27" />
           <folding>
             <element signature="e#23#38#0" expanded="true" />

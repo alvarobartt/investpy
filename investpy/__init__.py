@@ -90,7 +90,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -241,7 +241,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -398,7 +398,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -530,7 +530,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -771,7 +771,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
@@ -903,7 +903,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                                          "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
                                          "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
                     stock_open = float(info[2].replace(',', '.'))
                     stock_max = float(info[3].replace(',', '.'))
