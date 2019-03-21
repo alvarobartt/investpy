@@ -280,6 +280,47 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
             continue
 
 
+def get_equity_description(equity):
+
+    if not equity:
+        raise ValueError("ERR#012: as_json argument can just be True or False, bool type."
+                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
+                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'equities.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = ts.get_equity_names()
+        equities = pd.DataFrame(names)
+
+    if equities is None:
+        raise IOError("ERR#001: equities list not found or unable to retrieve."
+                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
+                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+
+    for row in equities.itertuples():
+        if row.name.lower() == equity.lower():
+            url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + row.isin
+
+            headers = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest"
+            }
+
+            req = requests.get(url, headers=headers, timeout=5)
+
+            root_ = fromstring(req.text)
+
+            path_ = root_.xpath(".//td[contains(@class, 'Perfil')]")
+
+            if path_:
+                return path_[0].text_content()
+            else:
+                return None
+
+
 def get_funds_list():
     return fs.list_funds()
 
