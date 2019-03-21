@@ -68,3 +68,15 @@ def get_etf_names():
     df.to_csv(file, index=False)
 
     return results
+
+
+def list_etfs():
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'etfs.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_etf_names()
+        etfs = pd.DataFrame(names)
+
+    return etfs['name'].tolist()

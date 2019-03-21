@@ -101,3 +101,15 @@ def fund_information_to_json(df):
     }
     result = json.dumps(json_)
     return result
+
+
+def list_funds():
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_fund_names()
+        funds = pd.DataFrame(names)
+
+    return funds['name'].tolist()

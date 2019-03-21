@@ -88,3 +88,15 @@ def get_isin_code(info):
     path_ = root_.xpath("/html/body/div[5]/section/div[4]/div[1]/div[2]/div[3]/span[2]")
 
     return path_[0].text_content().rstrip()
+
+
+def list_equities():
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'equities.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_equity_names()
+        equities = pd.DataFrame(names)
+
+    return equities['name'].tolist()

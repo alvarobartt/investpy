@@ -32,19 +32,19 @@ Currently you just have two possible options to retrieve data with this scraper:
 
 * **Retrieve the recent data of an equity/fund**: it retrieves the historical data of an equity/fund from the last month. The function also checks if the introduced equity/fund name is correct and then retrieves the data.
 The function has some optional parameters like: 
-    * *as_json* by default is **False** but if True the output of the function is a JSON object, not a pandas.DataFrame.
+    * *as_json* by default is **False** but if **True** the output of the function is a JSON object, not a pandas.DataFrame.
     * *order* by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
  
     ```python
     import investpy
     
     equities_df_ = investpy.get_recent_data('bbva', as_json=False, order='ascending')
-    funds_df_ = innvestpy.get_fund_recent_data('bbva multiactivo conservador pp', as_json=False, order='ascending')
+    funds_df_ = investpy.get_fund_recent_data('bbva multiactivo conservador pp', as_json=False, order='ascending')
     ```
 
 * **Retrieve the historical data of an equity/fund from a specific range of time**: it retrieves the historical data from an equity/fund from a range of time between the start and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity/fund name is correct and then retrieves the data.
-The function has some optional parameters like: 
-    * *as_json* by default is **False** but if True the output of the function is a JSON object, not a pandas.DataFrame.
+The function has some optional parameters like:
+    * *as_json* by default is **False** but if **True** the output of the function is a JSON object, not a pandas.DataFrame.
     * *order* by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
 
     ```python
@@ -95,7 +95,6 @@ If you have any other package you want to compare with the ones used in this cas
 
 * Latest Spanish Stock News
 * Allow multiple input equities/funds/etfs
-* List equities, funds and etfs
 * Remove bs4 for equity/fund/etf list retrieval
 
 ## Additional Information
@@ -104,6 +103,8 @@ The package is currently in a development version, so please, if needed open an 
 so I fix them as fast as I can. Also, any new ideas or proposals are welcome, and I will gladly implement them in the package if the are positive and useful.
 
 For further information or any question feel free to contact me via email at alvarob96@usal.es
+
+You can also check my [Medium Publication](https://medium.com/research-studies-by-alvaro-bartolome/investpy-a-python-library-for-historical-data-extraction-from-the-spanish-stock-market-ad4d564dbfc5).
 
 ## Disclaimer
 

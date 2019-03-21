@@ -13,6 +13,10 @@ from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
 from investpy.Data import Data  # TypeError: 'module' object is not callable
 
 
+def get_equities_list():
+    return ts.list_equities()
+
+
 def get_recent_data(equity, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the specified equity.
@@ -274,6 +278,10 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                                    "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
         else:
             continue
+
+
+def get_funds_list():
+    return fs.list_funds()
 
 
 def get_fund_recent_data(fund, as_json=False, order='ascending'):
@@ -643,6 +651,10 @@ def get_fund_information(fund, as_json=False):
                                    "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
         else:
             continue
+
+
+def get_etfs_list():
+    return es.list_etfs()
 
 
 def get_etf_recent_data(etf, as_json=False, order='ascending'):
