@@ -88,7 +88,3 @@ def get_isin_code(info):
     path_ = root_.xpath("/html/body/div[5]/section/div[4]/div[1]/div[2]/div[3]/span[2]")
 
     return path_[0].text_content().rstrip()
-
-
-if __name__ == '__main__':
-    get_equity_names()
