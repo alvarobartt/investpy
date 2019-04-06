@@ -309,7 +309,7 @@ def get_equity_company_profile(equity, source='Investing'):
 
     for row in equities.itertuples():
         if row.name.lower() == equity.lower():
-            if source is 'Bolsa de Madrid':
+            if source == 'Bolsa de Madrid':
                 url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + row.isin
 
                 headers = {
@@ -327,7 +327,7 @@ def get_equity_company_profile(equity, source='Investing'):
                     return path_[0].text_content()
                 else:
                     return None
-            elif source is 'Investing':
+            elif source == 'Investing':
                 url = "https://www.investing.com/equities/" + row.tag + "-company-profile"
 
                 headers = {
