@@ -9,7 +9,7 @@ class Data(object):
     ----------
     date_: str
         a string that stores the date in dd/mm/yyyy format
-    close_, open_, max_, min_: float
+    open_, high_, low_, close_: float
         all the prices of an equity, fund or etf from the selected date
     volume_: long
         all the stocks sold on the selected date
@@ -26,63 +26,63 @@ class Data(object):
         converts the fund object into a JSON object
     """
 
-    def __init__(self, date_, close_, open_, max_, min_, volume_):
+    def __init__(self, date_, open_, high_, low_, close_, volume_):
         self.date = date_
-        self.close = close_
         self.open = open_
-        self.max = max_
-        self.min = min_
+        self.high = high_
+        self.low = low_
+        self.close = close_
         self.volume = volume_
 
     def equity_to_dict(self):
         return {
             'Date': self.date,
-            'Close': self.close,
             'Open': self.open,
-            'Max': self.max,
-            'Min': self.min,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
             'Volume': self.volume,
         }
 
     def equity_as_json(self):
         return {self.date.strftime('%d/%m/%Y'): {
-            'Close': self.close,
             'Open': self.open,
-            'Max': self.max,
-            'Min': self.min,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
             'Volume': self.volume,
         }}
 
     def fund_to_dict(self):
         return {
             'Date': self.date,
-            'Close': self.close,
             'Open': self.open,
-            'Max': self.max,
-            'Min': self.min,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
         }
 
     def fund_as_json(self):
         return {self.date.strftime('%d/%m/%Y'): {
-            'Close': self.close,
             'Open': self.open,
-            'Max': self.max,
-            'Min': self.min,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
         }}
 
     def etf_to_dict(self):
         return {
             'Date': self.date,
-            'Close': self.close,
             'Open': self.open,
-            'Max': self.max,
-            'Min': self.min,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
         }
 
     def etf_as_json(self):
         return {self.date.strftime('%d/%m/%Y'): {
-            'Close': self.close,
             'Open': self.open,
-            'Max': self.max,
-            'Min': self.min,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
         }}
