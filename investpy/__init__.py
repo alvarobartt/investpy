@@ -324,7 +324,7 @@ def get_equity_company_profile(equity, source='Investing'):
                 path_ = root_.xpath(".//td[contains(@class, 'Perfil')]")
 
                 if path_:
-                    return path_[0].text_content()
+                    return str(path_[0].text_content())
                 else:
                     return None
             elif source == 'Investing':
@@ -342,7 +342,7 @@ def get_equity_company_profile(equity, source='Investing'):
                 path_ = root_.xpath(".//*[@id=\"profile-fullStory-showhide\"]")
 
                 if path_:
-                    return path_[0].text_content()
+                    return str(path_[0].text_content())
                 else:
                     return None
 
@@ -646,6 +646,7 @@ def get_fund_information(fund, as_json=False):
             if path_:
                 for elements_ in path_:
                     title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
+
                     if title_ == 'Rating':
                         rating_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
                         result.at[0, 'Rating'] = rating_score
