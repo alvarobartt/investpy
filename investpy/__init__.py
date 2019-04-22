@@ -10,7 +10,7 @@ import json
 from lxml.html import fromstring
 
 from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
-from investpy.Data import Data  # TypeError: 'module' object is not callable
+from investpy.Data import Data
 
 
 def get_equities_list():
@@ -73,7 +73,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return None
+                return pd.DataFrame()
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -200,7 +200,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return None
+                return pd.DataFrame()
 
             root_ = fromstring(req.text)
             header = root_.xpath('//h2//text()')[0]
@@ -407,7 +407,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return None
+                return pd.DataFrame()
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -634,7 +634,7 @@ def get_fund_information(fund, as_json=False):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return None
+                return pd.DataFrame()
 
             root_ = fromstring(req.text)
             path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
@@ -780,7 +780,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers)
 
             if req.status_code != 200:
-                return None
+                return pd.DataFrame()
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
