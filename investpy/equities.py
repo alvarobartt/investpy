@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Copyright 2018-2019 Alvaro Bartolome
+# See LICENSE for details.
+
 import pandas as pd
 import requests
 from bs4 import BeautifulSoup

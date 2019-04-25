@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+# Copyright 2018-2019 Alvaro Bartolome
+# See LICENSE for details.
+
 import random
 import pkg_resources
 import os
