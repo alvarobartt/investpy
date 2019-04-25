@@ -11,7 +11,7 @@ from investpy import user_agent as ua
 def get_etf_names():
     """
     This function retrieves all the available etfs to retrieve data from.
-    All the funds available can be found at: https://es.investing.com/etfs/spain-etfs
+    All the available etfs available can be found at: https://es.investing.com/etfs/spain-etfs
 
     Returns
     -------
@@ -26,7 +26,12 @@ def get_etf_names():
     url = "https://es.investing.com/etfs/spain-etfs"
 
     req = requests.get(url, headers=head, timeout=5)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+
     html = BeautifulSoup(req.content, 'html.parser')
+
     selection = html.select("table#etfs > tbody > tr")
 
     results = list()
@@ -71,6 +76,15 @@ def get_etf_names():
 
 
 def list_etfs():
+    """
+    This function retrieves all the available etfs and returns a list of each one of them.
+    All the available etfs can be found at: https://es.investing.com/etfs/spain-etfs
+
+    Returns
+    -------
+        returns a list with all the available etfs to retrieve data from
+    """
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -78,5 +92,8 @@ def list_etfs():
     else:
         names = get_etf_names()
         etfs = pd.DataFrame(names)
+
+    if etfs is None:
+        raise IOError("ERR#009: etf list not found or unable to retrieve.")
 
     return etfs['name'].tolist()

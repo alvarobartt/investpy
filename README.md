@@ -16,7 +16,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8``
+``pip install investpy==0.8.2``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -40,7 +40,7 @@ The function has some optional parameters like:
     
     equities_df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
     funds_df = investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=False, order='ascending')
-    etfs_df = investpy.get_etf_recent_data(etf='bbva-accion-dj-eurostoxx-50', as_json=False, order='ascending')
+    etfs_df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending')
     ```
 
 * **Retrieve the Historical Data of an Equity/Fund/ETF from a Specific Range of Time**: it retrieves the historical data from an equity/fund/etf from a range of time between the start and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity/fund/etf name is correct and then retrieves the data.
@@ -53,7 +53,7 @@ The function has some optional parameters like:
     
     equities_df = investpy.get_historical_data(equity='bbva', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
     funds_df = investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
-    etfs_df = investpy.get_etf_historical_data(etf='bbva-accion-dj-eurostoxx-50', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
+    etfs_df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
     ```
     
 * **Retrieve the Company Profile of an Equity**: you can retrieve the company profile of an equity in spanish or english, so you need to specify a valid equity name and a valid source. 
@@ -93,12 +93,13 @@ This function has an optional parameter:
 
 (**NOTE**: you will need an active Internet connection in order to get the scraper working.)
 
-## Release Notes 0.8
+## Release Notes 0.8.2
 
 * Company Profile Retrieval for All Equities
 * Fund Historical Data Date Error Fixed
 * Fund Overview Information Retrieval
 * Functions for Listing Equities, Funds and ETFs
+* Raise Exceptions Added
 
 ## Additional Information
 

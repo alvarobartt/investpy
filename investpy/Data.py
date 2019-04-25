@@ -10,7 +10,7 @@ class Data(object):
     date_: str
         a string that stores the date in dd/mm/yyyy format
     open_, high_, low_, close_: float
-        all the prices of an equity, fund or etf from the selected date
+        all the price values of an equity, fund or etf on the selected date
     volume_: long
         all the stocks sold on the selected date
 
@@ -24,6 +24,10 @@ class Data(object):
         converts the fund object into a dictionary
     fund_as_json()
         converts the fund object into a JSON object
+    etf_to_dict()
+        converts the etf object into a dictionary
+    etf_as_json()
+        converts the etf object into a JSON object
     """
 
     def __init__(self, date_, open_, high_, low_, close_, volume_):

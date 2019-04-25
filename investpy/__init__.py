@@ -14,6 +14,15 @@ from investpy.Data import Data
 
 
 def get_equities_list():
+    """
+    This function retrieves the list of all the available equities
+
+    Returns
+    -------
+    :returns list
+        returns a list that contains all the available equity names
+    """
+
     return ts.list_equities()
 
 
@@ -40,14 +49,10 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
@@ -58,9 +63,10 @@ def get_recent_data(equity, as_json=False, order='ascending'):
         equities = pd.DataFrame(names)
 
     if equities is None:
-        raise IOError("ERR#001: equities list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#001: equities object not found or unable to retrieve.")
+
+    if equity.lower() not in [value.lower() for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
 
     for row in equities.itertuples():
         if row.name.lower() == equity.lower():
@@ -73,7 +79,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return pd.DataFrame()
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -86,9 +92,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#007: equity information unavailable or not found." 
-                                         "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
-                                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                        raise IndexError("ERR#007: equity information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -122,11 +126,11 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                     df.set_index('Date', inplace=True)
                     return df
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping." 
-                                    "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
-                                    "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+    return pd.DataFrame()
 
 
 def get_historical_data(equity, start, end, as_json=False, order='ascending'):
@@ -155,26 +159,20 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     try:
         datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#012: incorrect end date format, it should be 'dd/mm/yyyy'.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
@@ -185,9 +183,10 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
         equities = pd.DataFrame(names)
 
     if equities is None:
-        raise IOError("ERR#001: equities list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#001: equities object not found or unable to retrieve.")
+
+    if equity.lower() not in [value.lower() for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
 
     for row in equities.itertuples():
         if row.name.lower() == equity.lower():
@@ -200,7 +199,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return pd.DataFrame()
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
             root_ = fromstring(req.text)
             header = root_.xpath('//h2//text()')[0]
@@ -226,6 +225,9 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
             req = requests.post(url, data=params, headers=head)
 
+            if req.status_code != 200:
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
             result = list()
@@ -237,9 +239,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#007: equity information unavailable or not found." 
-                                         "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
-                                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                        raise IndexError("ERR#007: equity information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -273,11 +273,11 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                     df.set_index('Date', inplace=True)
                     return df
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping."
-                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+    return pd.DataFrame()
 
 
 def get_equity_company_profile(equity, source='Investing'):
@@ -285,14 +285,10 @@ def get_equity_company_profile(equity, source='Investing'):
     available_sources = ['Investing', 'Bolsa de Madrid']
 
     if not equity:
-        raise ValueError("ERR#012: equity parameter is mandatory and must be a valid equity name."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#013: equity parameter is mandatory and must be a valid equity name.")
 
     if source not in available_sources:
-        raise ValueError("ERR#013: the specified source is not valid, it can just be either" + ' or '.join(available_sources) +
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#014: the specified source is not valid, it can just be either" + ' or '.join(available_sources) + ".")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
@@ -303,9 +299,10 @@ def get_equity_company_profile(equity, source='Investing'):
         equities = pd.DataFrame(names)
 
     if equities is None:
-        raise IOError("ERR#001: equities list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#001: equities object not found or unable to retrieve.")
+
+    if equity.lower() not in [value.lower() for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
 
     for row in equities.itertuples():
         if row.name.lower() == equity.lower():
@@ -318,6 +315,9 @@ def get_equity_company_profile(equity, source='Investing'):
                 }
 
                 req = requests.get(url, headers=headers, timeout=5)
+
+                if req.status_code != 200:
+                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
                 root_ = fromstring(req.text)
 
@@ -337,6 +337,9 @@ def get_equity_company_profile(equity, source='Investing'):
 
                 req = requests.get(url, headers=headers, timeout=5)
 
+                if req.status_code != 200:
+                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+
                 root_ = fromstring(req.text)
 
                 path_ = root_.xpath(".//*[@id=\"profile-fullStory-showhide\"]")
@@ -346,8 +349,19 @@ def get_equity_company_profile(equity, source='Investing'):
                 else:
                     return None
 
+    return pd.DataFrame()
+
 
 def get_funds_list():
+    """
+    This function retrieves the list of all the available funds
+
+    Returns
+    -------
+    :returns list
+        returns a list that contains all the available fund names
+    """
+
     return fs.list_funds()
 
 
@@ -374,14 +388,10 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds.csv'))
@@ -392,9 +402,10 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
         funds = pd.DataFrame(names)
 
     if funds is None:
-        raise IOError("ERR#005: fund list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#005: funds object not found or unable to retrieve.")
+
+    if fund.lower() not in [value.lower() for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
         if row.name.lower() == fund.lower():
@@ -407,7 +418,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return pd.DataFrame()
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -420,9 +431,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#008: fund information unavailable or not found." 
-                                         "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
-                                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                        raise IndexError("ERR#008: fund information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -449,11 +458,11 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                     return df
 
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping."
-                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+    return pd.DataFrame()
 
 
 def get_fund_historical_data(fund, start, end, as_json=False, order='ascending'):
@@ -482,26 +491,20 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     try:
         datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#012: incorrect end date format, it should be 'dd/mm/yyyy'.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds.csv'))
@@ -512,9 +515,10 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
         funds = pd.DataFrame(names)
 
     if funds is None:
-        raise IOError("ERR#005: fund list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#005: funds object not found or unable to retrieve.")
+
+    if fund.lower() not in [value.lower() for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
         if row.name.lower() == fund.lower():
@@ -541,6 +545,9 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
             req = requests.post(url, data=params, headers=head)
 
+            if req.status_code != 200:
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
             result = list()
@@ -552,9 +559,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#008: fund information unavailable or not found." 
-                                         "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es" 
-                                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                        raise IndexError("ERR#008: fund information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -580,11 +585,11 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                     df.set_index('Date', inplace=True)
                     return df
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping."
-                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+    return pd.DataFrame()
 
 
 def get_fund_information(fund, as_json=False):
@@ -606,9 +611,7 @@ def get_fund_information(fund, as_json=False):
         """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds.csv'))
@@ -619,9 +622,10 @@ def get_fund_information(fund, as_json=False):
         funds = pd.DataFrame(names)
 
     if funds is None:
-        raise IOError("ERR#005: fund list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#005: funds object not found or unable to retrieve.")
+
+    if fund.lower() not in [value.lower() for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
         if row.name.lower() == fund.lower():
@@ -634,7 +638,7 @@ def get_fund_information(fund, as_json=False):
             req = requests.get(url, headers=headers, timeout=5)
 
             if req.status_code != 200:
-                return pd.DataFrame()
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
@@ -714,47 +718,53 @@ def get_fund_information(fund, as_json=False):
                 elif as_json is False:
                     return result
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping."
-                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
 
+    return pd.DataFrame()
+
 
 def get_etfs_list():
+    """
+    This function retrieves the list of all the available etfs
+
+    Returns
+    -------
+    :returns list
+        returns a list that contains all the available etf names
+    """
+
     return es.list_etfs()
 
 
 def get_etf_recent_data(etf, as_json=False, order='ascending'):
     """
-        This function retrieves recent historical data from the specified etf.
-        The retrieved data corresponds to the last month and a half more or less.
+    This function retrieves recent historical data from the specified etf.
+    The retrieved data corresponds to the last month and a half more or less.
 
-        Parameters
-        ----------
-        :param etf: str
-            name of the etf to retrieve recent historical data from
-        :param order: str
-            optional parameter to indicate the order of the recent data to retrieve
-            default value is ascending
-        :param as_json: bool
-            optional parameter to specify the output, default is pandas.DataFrame
-            if true, return value is a JSON object containing the recent data from the specified etf
+    Parameters
+    ----------
+    :param etf: str
+        name of the etf to retrieve recent historical data from
+    :param order: str
+        optional parameter to indicate the order of the recent data to retrieve
+        default value is ascending
+    :param as_json: bool
+        optional parameter to specify the output, default is pandas.DataFrame
+        if true, return value is a JSON object containing the recent data from the specified etf
 
-        Returns
-        -------
-        :returns pandas.DataFrame (or JSON object if specified)
-            returns a pandas DataFrame (or JSON object if specified) containing the recent data of the etf
-        """
+    Returns
+    -------
+    :returns pandas.DataFrame (or JSON object if specified)
+        returns a pandas DataFrame (or JSON object if specified) containing the recent data of the etf
+    """
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs.csv'))
@@ -765,9 +775,10 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
         etfs = pd.DataFrame(names)
 
     if etfs is None:
-        raise IOError("ERR#009: etf list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#009: etfs object not found or unable to retrieve.")
+
+    if etf.lower() not in [value.lower() for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
         if row.name.lower() == etf.lower():
@@ -780,7 +791,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             req = requests.get(url, headers=headers)
 
             if req.status_code != 200:
-                return pd.DataFrame()
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -793,9 +804,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#010: etf information unavailable or not found."
-                                         "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                        raise IndexError("ERR#010: etf information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -822,11 +831,11 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                     return df
 
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping."
-                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+    return pd.DataFrame()
 
 
 def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
@@ -855,26 +864,20 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type."
-                         "\n\t\t\tPlease check you are passing the parameters correctly or contact package admin: alvarob96@usal.es"
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     try:
         datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'."
-                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs.csv'))
@@ -885,9 +888,10 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
         etfs = pd.DataFrame(names)
 
     if etfs is None:
-        raise IOError("ERR#009: etf list not found or unable to retrieve."
-                      "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                      "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+        raise IOError("ERR#009: etfs object not found or unable to retrieve.")
+
+    if etf.lower() not in [value.lower() for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
         if row.name.lower() == etf.lower():
@@ -914,6 +918,9 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
 
             req = requests.post(url, data=params, headers=head)
 
+            if req.status_code != 200:
+                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
             result = list()
@@ -925,9 +932,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#010: etf information unavailable or not found."
-                                         "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                         "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                        raise IndexError("ERR#010: etf information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -953,8 +958,8 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                     df.set_index('Date', inplace=True)
                     return df
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping."
-                                   "\n\t\t\tPlease check your Internet connection or contact package admin: alvarob96@usal.es"
-                                   "\n\t\t\tIf needed, open an issue on: https://github.com/alvarob96/investpy/issues")
+                raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+    return pd.DataFrame()
