@@ -33,7 +33,6 @@ def get_equity_names():
     head = {
         "User-Agent": ua.get_random(),
         "X-Requested-With": "XMLHttpRequest",
-        "Host": "es.investing.com",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
@@ -90,16 +89,15 @@ def get_isin_code(info):
 
     url = "https://es.investing.com/equities/" + info
 
-    headers = {
+    head = {
         "User-Agent": ua.get_random(),
         "X-Requested-With": "XMLHttpRequest",
-        "Host": "es.investing.com",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
     }
 
-    req = requests.get(url, headers=headers, timeout=5)
+    req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
         # raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -142,7 +140,3 @@ def list_equities():
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
 
     return equities['name'].tolist()
-
-
-if __name__ == '__main__':
-    get_equity_names()

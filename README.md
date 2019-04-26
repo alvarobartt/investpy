@@ -20,11 +20,11 @@ In order to get this package working you will need to install [**investpy**](htt
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
-* [**pandas 0.23.4**](https://pypi.org/project/pandas/)
-* [**requests 2.20.0**](https://pypi.org/project/requests/)
-* [**pytest 4.0.2**](https://pypi.org/project/pytest/)
-* [**beautifulsoup4 4.6.3**](https://pypi.org/project/beautifulsoup4/)
-* [**lxml 4.3.2**](https://pypi.org/project/lxml/)
+* [**pandas 0.24.2**](https://pypi.org/project/pandas/)
+* [**requests 2.21.0**](https://pypi.org/project/requests/)
+* [**pytest 4.1.1**](https://pypi.org/project/pytest/)
+* [**beautifulsoup4 4.7.1**](https://pypi.org/project/beautifulsoup4/)
+* [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 
 ## Use
 

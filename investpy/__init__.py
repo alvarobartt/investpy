@@ -5,6 +5,7 @@
 
 import datetime
 from random import randint
+import unidecode
 
 import pandas as pd
 import pkg_resources
@@ -68,18 +69,22 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
 
-    if equity.lower() not in [value.lower() for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#018: equity " + unidecode.unidecode(equity.lower()) + " not found, check if it is correct.")
 
     for row in equities.itertuples():
-        if row.name.lower() == equity.lower():
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
-            headers = {
-                'User-Agent': ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
-            req = requests.get(url, headers=headers, timeout=5)
+            req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -188,18 +193,22 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
 
-    if equity.lower() not in [value.lower() for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#018: equity " + unidecode.unidecode(equity.lower()) + " not found, check if it is correct.")
 
     for row in equities.itertuples():
-        if row.name.lower() == equity.lower():
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
-            headers = {
-                'User-Agent': ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
-            req = requests.get(url, headers=headers, timeout=5)
+            req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -221,12 +230,15 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
             head = {
                 "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
             url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-            req = requests.post(url, data=params, headers=head)
+            req = requests.post(url, headers=head, data=params)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -304,20 +316,23 @@ def get_equity_company_profile(equity, source='Investing'):
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
 
-    if equity.lower() not in [value.lower() for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#018: equity " + unidecode.unidecode(equity.lower()) + " not found, check if it is correct.")
 
     for row in equities.itertuples():
-        if row.name.lower() == equity.lower():
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             if source == 'Bolsa de Madrid':
                 url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + row.isin
 
-                headers = {
+                head = {
                     "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest"
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "text/html",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Connection": "keep-alive",
                 }
 
-                req = requests.get(url, headers=headers, timeout=5)
+                req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
                     raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -333,12 +348,15 @@ def get_equity_company_profile(equity, source='Investing'):
             elif source == 'Investing':
                 url = "https://www.investing.com/equities/" + row.tag + "-company-profile"
 
-                headers = {
+                head = {
                     "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest"
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "text/html",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Connection": "keep-alive",
                 }
 
-                req = requests.get(url, headers=headers, timeout=5)
+                req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
                     raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -407,18 +425,22 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
 
-    if fund.lower() not in [value.lower() for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#019: fund " + unidecode.unidecode(fund.lower()) + " not found, check if it is correct.")
 
     for row in funds.itertuples():
-        if row.name.lower() == fund.lower():
+        if row.name.lower() == unidecode.unidecode(fund.lower()):
             url = "https://es.investing.com/funds/" + row.tag + "-historical-data"
-            headers = {
-                'User-Agent': ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
-            req = requests.get(url, headers=headers, timeout=5)
+            req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -520,11 +542,11 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
 
-    if fund.lower() not in [value.lower() for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#019: fund " + unidecode.unidecode(fund.lower()) + " not found, check if it is correct.")
 
     for row in funds.itertuples():
-        if row.name.lower() == fund.lower():
+        if row.name.lower() == unidecode.unidecode(fund.lower()):
             header = "Datos históricos " + row.symbol
 
             params = {
@@ -541,12 +563,15 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
             head = {
                 "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
             url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-            req = requests.post(url, data=params, headers=head)
+            req = requests.post(url, headers=head, data=params)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -627,18 +652,22 @@ def get_fund_information(fund, as_json=False):
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
 
-    if fund.lower() not in [value.lower() for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#019: fund " + unidecode.unidecode(fund.lower()) + " not found, check if it is correct.")
 
     for row in funds.itertuples():
-        if row.name.lower() == fund.lower():
+        if row.name.lower() == unidecode.unidecode(fund.lower()):
             url = "https://es.investing.com/funds/" + row.tag
-            headers = {
-                'User-Agent': ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
-            req = requests.get(url, headers=headers, timeout=5)
+            req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -780,18 +809,22 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
 
-    if etf.lower() not in [value.lower() for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#019: etf " + unidecode.unidecode(etf.lower()) + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
-        if row.name.lower() == etf.lower():
+        if row.name.lower() == unidecode.unidecode(etf.lower()):
             url = "https://es.investing.com/etfs/" + row.tag + "-historical-data"
-            headers = {
-                'User-Agent': ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
-            req = requests.get(url, headers=headers)
+            req = requests.get(url, headers=head)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
@@ -893,11 +926,11 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
 
-    if etf.lower() not in [value.lower() for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#019: etf " + unidecode.unidecode(etf.lower()) + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
-        if row.name.lower() == etf.lower():
+        if row.name.lower() == unidecode.unidecode(etf.lower()):
             header = "Datos históricos " + row.symbol
 
             params = {
@@ -914,12 +947,15 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
 
             head = {
                 "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest"
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
             }
 
             url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-            req = requests.post(url, data=params, headers=head)
+            req = requests.post(url, headers=head, data=params)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")

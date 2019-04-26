@@ -23,7 +23,10 @@ def get_etf_names():
 
     head = {
         "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest"
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
     }
 
     url = "https://es.investing.com/etfs/spain-etfs"

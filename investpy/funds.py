@@ -24,7 +24,10 @@ def get_fund_names():
 
     head = {
         "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest"
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
     }
 
     url = "https://es.investing.com/funds/spain-funds?&issuer_filter=0"
