@@ -5,7 +5,7 @@
 
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
+import time
 from lxml.html import fromstring
 import pkg_resources
 
@@ -32,7 +32,11 @@ def get_equity_names():
 
     head = {
         "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest"
+        "X-Requested-With": "XMLHttpRequest",
+        "Host": "es.investing.com",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
     }
 
     url = "https://es.investing.com/equities/StocksFilter"
@@ -42,29 +46,27 @@ def get_equity_names():
     if req.status_code != 200:
         raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
-    html = BeautifulSoup(req.content, 'html.parser')
-
-    selection = html.select("table#cross_rate_markets_stocks_1 > tbody > tr")
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']/tbody/tr")
 
     results = list()
 
-    for element in selection:
-        id_ = element.get("id")
-        id_ = id_.replace('pair_', '')
-        for nested in element.select("a"):
-            info = nested.get("href")
-            info = info.replace("/equities/", "")
+    if path_:
+        for elements_ in path_:
+            id_ = elements_.get('id').replace('pair_', '')
 
-            isin_code = get_isin_code(info)
+            for element_ in elements_.xpath('.//a'):
+                tag_ = element_.get('href').replace('/equities/', '')
+                isin_ = get_isin_code(tag_)
 
-            data = {
-                "name": nested.text,
-                "tag": info,
-                "isin": isin_code,
-                "id": id_
-            }
+                data = {
+                    "name": element_.text_content(),
+                    "tag": tag_,
+                    "isin": isin_,
+                    "id": id_
+                }
 
-            results.append(data)
+                results.append(data)
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities.csv'))
@@ -89,14 +91,19 @@ def get_isin_code(info):
     url = "https://es.investing.com/equities/" + info
 
     headers = {
-        'User-Agent': ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest"
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Host": "es.investing.com",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
     }
 
     req = requests.get(url, headers=headers, timeout=5)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+        # raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+        return None
 
     root_ = fromstring(req.text)
     path_ = root_.xpath("/html/body/div[5]/section/div[4]/div[1]/div[2]/div[3]/span[2]")
@@ -106,6 +113,7 @@ def get_isin_code(info):
     if path_:
         try:
             code = path_[0].text_content().rstrip()
+            time.sleep(.5)
         except IndexError:
             raise IndexError("ERR#017: isin code unavailable or not found.")
 
@@ -134,3 +142,7 @@ def list_equities():
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
 
     return equities['name'].tolist()
+
+
+if __name__ == '__main__':
+    get_equity_names()

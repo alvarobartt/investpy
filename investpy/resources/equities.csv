@@ -7,7 +7,7 @@ id,isin,name,tag
 447,ES0113679I37,Bankinter,bankinter
 448,ES0115056139,BME,bolsas-y-mer-esp
 449,ES0125220311,Acciona,acciona-sa
-452,ES0140609019,Caixabank,caixabank-sa
+452,ES0140609019,CaixaBank,caixabank-sa
 453,ES0130960018,Enagás,enagas
 455,ES0122060314,FCC,fcc
 456,ES0116870314,Naturgy Energy,gas-natural-sdg
@@ -140,7 +140,6 @@ id,isin,name,tag
 49944,ES0131703003,Secuoya,secuoya-grupo-de-comunicacion-s.a.
 100241,LU1048328220,eDreams,edreams-odigeo-sa
 100242,ES0105015012,Lar España,lar-espana-real-estate-socimi-sa
-100243,ES0105019006,Hispania,hispania-activos-inmobiliarios-sau
 101934,ES0105022000,Applus,applus-services-sa
 102931,ES0105025003,Merlin Properties,merlin-properties-sa
 103907,ES0105029005,Facephi,facephi-biometria-sa
@@ -161,7 +160,7 @@ id,isin,name,tag
 958860,ES0105089009,Lleidanetworks Serveis Telematics,lleidanetworks-serveis-telematics
 958861,ES0105090007,Autonomy Spain Real Estate Socimi S,autonomy-spain-real-estate-socimi-s
 958862,ES0105074001,Obsido Socimi SA,obsido-socimi-sa
-959215,ES0169501030,Pharma Mar,pharma-mar-sau
+959215,ES0169501030,PharmaMar,pharma-mar-sau
 960710,ES0105093001,Gigas Hosting SA,gigas-hosting-sa
 960711,ES0105081006,Neol Biosolutions SA,neol-biosolutions-sa
 961658,ES0105102000,Agile Content SA,agile-content-sa
@@ -207,6 +206,7 @@ id,isin,name,tag
 1052410,ES0105287009,Aedas Homes,aedas-homes-sl
 1053093,ES0105270005,Netex Knowledge,netex-knoledge-factory
 1055914,ES0105293007,Greenalia,greenalia
+1057007,ES0170756037,Prevision Sanitaria,prevision-sanitaria-nacional
 1057278,ES0105294005,Student Properties,student-properties
 1061411,ES0105103008,Heref Habaneras,heref-habaneras
 1067156,ES0105225009,Robot,robot
@@ -225,10 +225,12 @@ id,isin,name,tag
 1107547,ES0105376000,Arima Real Estate,arima-real-estate
 1111709,ES0105375002,Amrest,amrest-holdings-se?cid=1111709
 1112818,ES0105318002,Atom Hoteles,atom-hoteles-socimi
-1115133,ES0105385001,Solarpack Corporación Tecnológica,solarpack-corporacion-tecnologica
+1115133,ES0105385001,Solarpack,solarpack-corporacion-tecnologica
 1116351,ES0105383006,Arrienda Rental,arrienda-rental
 1116352,ES0105384004,Vivenio Residencial,vivenio-residencial
 1117970,ES0105389003,Almagro Capital,almagro-capital-socimi
 1118084,ES0105391009,Inmobiliaria Park Rose,inmobiliaria-park-rose
 1122284,ES0105387007,Euripo Properties,euripo-properties-socimi
 1123486,ES0105400008,Proeduca Altus,proeduca-altus
+1123955,ES0105313003,Meridia RE III,meridia-re-iii
+1123956,ES0171613005,Iffe Futura,iffe-futura
