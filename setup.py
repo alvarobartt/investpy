@@ -21,7 +21,7 @@ setup(
     description='investpy — a Python package for historical data extraction from the spanish stock market',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=['requests==2.21.0', 'pandas==0.24.2', 'beautifulsoup4==4.7.1', 'lxml==4.3.3', 'pytest==4.1.1'],
+    install_requires=['requests==2.21.0', 'pandas==0.24.2', 'lxml==4.3.3', 'pytest==4.1.1'],
     data_files=[
         ('equities', ['investpy/resources/equities.csv']),
         ('funds', ['investpy/resources/funds.csv']),
@@ -32,6 +32,7 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",

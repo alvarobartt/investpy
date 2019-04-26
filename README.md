@@ -23,7 +23,6 @@ All the dependencies are already listed on the setup file of the package, but to
 * [**pandas 0.24.2**](https://pypi.org/project/pandas/)
 * [**requests 2.21.0**](https://pypi.org/project/requests/)
 * [**pytest 4.1.1**](https://pypi.org/project/pytest/)
-* [**beautifulsoup4 4.7.1**](https://pypi.org/project/beautifulsoup4/)
 * [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 
 ## Use

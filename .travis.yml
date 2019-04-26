@@ -2,7 +2,6 @@ language: python
 
 python:
   - "2.7"
-  - "3.4"
   - "3.5"
   - "3.6"
   - "3.7"
@@ -12,7 +11,6 @@ dist: xenial
 install:
   - pip install pandas==0.24.2
   - pip install requests==2.21.0
-  - pip install beautifulsoup4==4.7.1
   - pip install investpy==0.8.2
   - pip install pytest==4.1.1
   - pip install lxml==4.3.2

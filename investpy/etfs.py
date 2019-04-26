@@ -5,8 +5,8 @@
 
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
 import pkg_resources
+from lxml.html import fromstring
 
 from investpy import user_agent as ua
 
@@ -36,23 +36,18 @@ def get_etf_names():
     if req.status_code != 200:
         raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
-    html = BeautifulSoup(req.content, 'html.parser')
-
-    selection = html.select("table#etfs > tbody > tr")
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='etfs']/tbody/tr")
 
     results = list()
 
-    for element in selection:
-        id_ = element.get('id')
-        id_ = id_.replace('pair_', '')
+    if path_:
+        for elements_ in path_:
+            id_ = elements_.get('id').replace('pair_', '')
+            symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-        symbol = None
-        for symbol in element.select("td.symbol"):
-            symbol = symbol.get("title")
-
-        for nested in element.select("a"):
-            info = nested.get("href")
-            info = info.replace("/etfs/", "")
+            nested = elements_.xpath(".//a")[0]
+            info = nested.get('href').replace('/etfs/', '')
 
             if symbol:
                 data = {
