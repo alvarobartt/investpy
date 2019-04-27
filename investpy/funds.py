@@ -68,7 +68,7 @@ def get_fund_names():
             results.append(data)
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
@@ -121,7 +121,7 @@ def list_funds():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

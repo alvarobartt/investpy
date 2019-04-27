@@ -59,7 +59,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -214,7 +214,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
             flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -357,7 +357,7 @@ def get_equity_company_profile(equity, language='english'):
     selected_source = available_sources[language.lower()]
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -466,7 +466,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -614,7 +614,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
             flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -737,7 +737,7 @@ def get_fund_information(fund, as_json=False):
         raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -894,7 +894,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'es', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -1042,7 +1042,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
             flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'es', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

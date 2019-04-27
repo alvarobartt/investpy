@@ -16,89 +16,19 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.2``
+``pip install investpy==0.8.3``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
 * [**pandas 0.24.2**](https://pypi.org/project/pandas/)
 * [**requests 2.21.0**](https://pypi.org/project/requests/)
+* [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
 * [**pytest 4.1.1**](https://pypi.org/project/pytest/)
 * [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 
-## Use
+## Release Notes 0.8.3
 
-As this package is in a Beta Version, every use or application of the package that is not implemented can b developed for future releases, so do not hesitate on asking for them. So on, currently using investpy you can:
-
-* **Retrieve the Recent Data of an Equity/Fund/ETF**: it retrieves the historical data of an equity/fund/etf from the last month. The function also checks if the introduced equity/fund/etf name is correct and then retrieves the data.
-The function has some optional parameters like: 
-    * *as_json*, by default is **False** but if **True** the output of the function is a JSON object, not a pandas.DataFrame.
-    * *order*, by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
- 
-    ```python
-    import investpy
-    
-    equities_df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
-    funds_df = investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=False, order='ascending')
-    etfs_df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending')
-    ```
-
-* **Retrieve the Historical Data of an Equity/Fund/ETF from a Specific Range of Time**: it retrieves the historical data from an equity/fund/etf from a range of time between the start and the end date, specified in dd/mm/YY format. This function also checks is the introduced equity/fund/etf name is correct and then retrieves the data.
-The function has some optional parameters like:
-    * *as_json*, by default is **False** but if **True** the output of the function is a JSON object, not a pandas.DataFrame.
-    * *order*, by default is **'ascending'** ordering the historical data in the pandas.DataFrame from the older to the newest, **'descending'** should be used for the contrary testing. 
-
-    ```python
-    import investpy
-    
-    equities_df = investpy.get_historical_data(equity='bbva', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
-    funds_df = investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
-    etfs_df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='10/10/2018', end='10/12/2018', as_json=False, order='ascending')
-    ```
-    
-* **Retrieve the Company Profile of an Equity**: you can retrieve the company profile of an equity in spanish or english, so you need to specify a valid equity name and a valid source. 
-The language of the Company Profile depends on the specified value for the following optional parameter:
-    * **source**, Investing for English Profile or Bolsa de Madrid for Spanish Profile, but default value is Investing, so the Company Profile that this function is going to retrieve is going to be in English.
-
-    ```python
-    import investpy
-    
-    equity_profile = investpy.get_equity_company_profile(equity='bbva', source='Investing')
-    ```
-    
-* **Retrieve Information Available of a Fund**: it consists on retrieving all the additional information indexed in Investing.com from a specified fund. The function checks that the fund is valid and it retrieves the information from it.
-This function has an optional parameter:
-    * **as_json**, if True instead of returning a pandas.DataFrame with the information it returns a JSON document, by default it is False.
-
-    ```python
-    import investpy
-    
-    fund_information = investpy.get_fund_information(fund='bbva multiactivo conservador pp', as_json=False)
-    ```
-    
-* **Get a List of Available Equities/Funds/ETFs Names**: this function returns a list containing all the available equities/funds/etfs from where you can retrieve information from.
-
-    ```python
-    import investpy
-    
-    equities_list = investpy.get_equities_list()
-    funds_list = investpy.get_funds_list()
-    etfs_list = investpy.get_etfs_list()
-    ```
-
-    Or you can manually check all the available equities/funds/etfs indexed in Investing.com:
-    * Equities from the **Spanish Stock Market** -> https://es.investing.com/equities/spain
-    * Funds from the **Spanish Stock Market** -> https://es.investing.com/funds/spain-funds
-    * ETFs from the **Spanish Stock Market** -> https://es.investing.com/etfs/spain-etfs
-
-(**NOTE**: you will need an active Internet connection in order to get the scraper working.)
-
-## Release Notes 0.8.2
-
-* Company Profile Retrieval for All Equities
-* Fund Historical Data Date Error Fixed
-* Fund Overview Information Retrieval
-* Functions for Listing Equities, Funds and ETFs
-* Raise Exceptions Added
+* 
 
 ## Additional Information
 
@@ -111,6 +41,4 @@ You can also check my [Medium Publication](https://medium.com/research-studies-b
 
 ## Disclaimer
 
-This Python Package has been made for research purposes in order to fit a needs that Investing.com does not cover, so this package works like an API for Investing.com developed in an altruistic way. Conclude that I am not related at all with Investing.com or any similar company, so I contacted Investing.com via mail and they gave me permission to develop this scraper with the condition of mentioning the source where I retrieve the data from.
-
-To clear any doubt if this is legal or not, I will tell you literally what *Enrique from Investing.com Support* answered me when I asked them for permission to develop this scraper: "[...] *thank you for contacting and choosing us (as the reliable source to get the data from)* [...] *you can use and retrieve all the data that Investing.com offers to the users as far as you specify which is the source you get the data from* [...]".
+This Python Package has been made for research purposes in order to fit a needs that Investing.com does not cover, so this package works like an Application Programming Interface (API) of Investing.com developed in an altruistic way. Conclude that this package is not related in any way with Investing.com or any dependant company, the only requirement for developing this package was to mention the source where data is retrieved.

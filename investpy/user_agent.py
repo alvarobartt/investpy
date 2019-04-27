@@ -18,7 +18,7 @@ def get_random():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'user-agent-list.txt'))
+    resource_path = '/'.join(('resources', 'user_agent_list.txt'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     if os.path.exists(file):
