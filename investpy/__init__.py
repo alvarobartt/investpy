@@ -124,8 +124,8 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                     result = result
 
                 if as_json is True:
-                    json_ = {'Name': row.name,
-                             'Recent Data':
+                    json_ = {'name': row.name,
+                             'recent':
                                  [value.equity_as_json() for value in result]
                              }
                     return json.dumps(json_)
@@ -314,7 +314,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
                     if as_json is True:
                         json_ = {'name': row.name,
-                                 'recent data':
+                                 'historical':
                                      [value.equity_as_json() for value in result]
                                  }
                         final.append(json_)
@@ -524,7 +524,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
 
                 if as_json is True:
                     json_ = {'name': row.name,
-                             'recent data':
+                             'recent':
                                  [value.fund_as_json() for value in result]
                              }
                     return json.dumps(json_)
@@ -689,7 +689,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
                     if as_json is True:
                         json_ = {'name': row.name,
-                                 'recent data':
+                                 'historical':
                                      [value.fund_as_json() for value in result]
                                  }
 
@@ -952,7 +952,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
 
                 if as_json is True:
                     json_ = {'name': row.name,
-                             'recent data':
+                             'recent':
                                  [value.etf_as_json() for value in result]
                              }
                     return json.dumps(json_)
@@ -1117,7 +1117,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
 
                     if as_json is True:
                         json_ = {'name': row.name,
-                                 'recent data':
+                                 'historical':
                                      [value.etf_as_json() for value in result]
                                  }
 
