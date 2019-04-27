@@ -28,7 +28,13 @@ All the dependencies are already listed on the setup file of the package, but to
 
 ## Release Notes 0.8.3
 
-* 
+* Several fixes on minor bugs/errors
+* Added support for Python 3.5
+* Updated window size when data retrieval interval is above 20 years
+* JSON structured to work better when plotting it
+* docstring updated and "Use" section removed from package documentation
+* Setup of some changes for future releases
+* Handled errors such as input error return values or input dates format
 
 ## Additional Information
 

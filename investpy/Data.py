@@ -52,7 +52,7 @@ class Data(object):
         }
 
     def equity_as_json(self):
-        return {self.date.strftime('%d/%m/%Y'): {
+        return {self.date.strftime('%Y/%m/%d'): {
             'Open': self.open,
             'High': self.high,
             'Low': self.low,
