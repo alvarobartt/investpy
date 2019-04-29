@@ -56,10 +56,12 @@ def get_equity_names():
 
             for element_ in elements_.xpath('.//a'):
                 tag_ = element_.get('href').replace('/equities/', '')
+                full_name_ = element_.get('title').replace(' (CFD)', '')
                 isin_ = get_isin_code(tag_)
 
                 data = {
                     "name": element_.text_content(),
+                    "full_name": full_name_,
                     "tag": tag_,
                     "isin": isin_,
                     "id": id_

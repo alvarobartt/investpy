@@ -370,10 +370,17 @@ def get_equity_company_profile(equity, language='english'):
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#018: equity " + unidecode.unidecode(equity.lower()) + " not found, check if it is correct.")
 
+    company_profile = {
+        'url': None,
+        'desc': None
+    }
+
     for row in equities.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             if selected_source == 'Bolsa de Madrid':
                 url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + row.isin
+
+                company_profile['url'] = url
 
                 head = {
                     "User-Agent": ua.get_random(),
@@ -393,11 +400,15 @@ def get_equity_company_profile(equity, language='english'):
                 path_ = root_.xpath(".//td[contains(@class, 'Perfil')]")
 
                 if path_:
-                    return str(path_[0].text_content())
+                    company_profile['desc'] = str(path_[0].text_content())
+
+                    return company_profile
                 else:
-                    return None
+                    return company_profile
             elif selected_source == 'Investing':
                 url = "https://www.investing.com/equities/" + row.tag + "-company-profile"
+
+                company_profile['url'] = url
 
                 head = {
                     "User-Agent": ua.get_random(),
@@ -417,11 +428,13 @@ def get_equity_company_profile(equity, language='english'):
                 path_ = root_.xpath(".//*[@id=\"profile-fullStory-showhide\"]")
 
                 if path_:
-                    return str(path_[0].text_content())
-                else:
-                    return None
+                    company_profile['desc'] = str(path_[0].text_content())
 
-    return pd.DataFrame()
+                    return company_profile
+                else:
+                    return company_profile
+
+    return company_profile
 
 
 def get_funds_list():
