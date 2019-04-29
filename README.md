@@ -16,17 +16,17 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.3``
+``pip install investpy==0.8.4``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
 * [**pandas 0.24.2**](https://pypi.org/project/pandas/)
 * [**requests 2.21.0**](https://pypi.org/project/requests/)
+* [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 * [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
 * [**pytest 4.1.1**](https://pypi.org/project/pytest/)
-* [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 
-## Release Notes 0.8.3
+## Release Notes 0.8.4
 
 * Several fixes on minor bugs/errors
 * Added support for Python 3.5
@@ -35,6 +35,9 @@ All the dependencies are already listed on the setup file of the package, but to
 * docstring updated and "Use" section removed from package documentation
 * Setup of some changes for future releases
 * Handled errors such as input error return values or input dates format
+* Full company name for equities add
+* Company Profile retrieval returned value is a dict with the source and the description
+* Internal fixes to improve its ease of adaptability
 
 ## Additional Information
 

@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/investpy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investpy/equities.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/equities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investpy/resources/es/equities.csv" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/resources/es/equities.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,7 +33,7 @@
     <SUITE FILE_PATH="coverage/investing_scrapper$tickers.coverage" NAME="tickers Coverage Results" MODIFIED="1549191373922" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investing_scrapper" />
     <SUITE FILE_PATH="coverage/investpy$funds.coverage" NAME="funds Coverage Results" MODIFIED="1556358048168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
     <SUITE FILE_PATH="coverage/investing_scrapper$test.coverage" NAME="test Coverage Results" MODIFIED="1544619818749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/investpy$equities.coverage" NAME="equities Coverage Results" MODIFIED="1556275576912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
+    <SUITE FILE_PATH="coverage/investpy$equities.coverage" NAME="equities Coverage Results" MODIFIED="1556535841170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
     <SUITE FILE_PATH="coverage/investpy$etfs.coverage" NAME="etfs Coverage Results" MODIFIED="1553170196728" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
   </component>
   <component name="FavoritesManager">
@@ -37,168 +41,86 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.cfg">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/setup.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="48" />
+              <folding>
+                <element signature="e#23#66#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="15">
+                <caret line="24" column="49" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investpy.egg-info/dependency_links.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
+        <entry file="file://$PROJECT_DIR$/investpy.egg-info/PKG-INFO">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="1156" lean-forward="true" selection-start-line="1156" selection-end-line="1156" />
-              <folding>
-                <element signature="n#!!doc" />
-                <element signature="e#395#615#0" />
-                <element signature="e#395#584#1" />
-                <element signature="e#685#5533#0" />
-                <element signature="e#685#1504#1" />
-                <element signature="e#2070#2138#0" />
-                <element signature="e#2548#5506#0" />
-                <element signature="e#2641#5471#0" />
-                <element signature="e#2735#2990#0" />
-                <element signature="e#3371#5369#0" />
-                <element signature="e#3415#4707#0" />
-                <element signature="e#4929#5148#0" />
-                <element signature="e#4937#5103#0" />
-                <element signature="e#5208#5369#0" />
-                <element signature="e#5619#13495#0" />
-                <element signature="e#5619#6544#1" />
-                <element signature="e#7325#7357#0" />
-                <element signature="e#7408#8014#0" />
-                <element signature="e#7482#7776#0" />
-                <element signature="e#7488#7652#0" />
-                <element signature="e#7803#8014#0" />
-                <element signature="e#7809#7936#0" />
-                <element signature="e#8300#8368#0" />
-                <element signature="e#8778#13395#0" />
-                <element signature="e#8871#13360#0" />
-                <element signature="e#8969#13211#0" />
-                <element signature="e#9067#9346#0" />
-                <element signature="e#9687#10167#0" />
-                <element signature="e#10192#10471#0" />
-                <element signature="e#10968#13101#0" />
-                <element signature="e#11016#12376#0" />
-                <element signature="e#12622#12856#0" />
-                <element signature="e#12630#12812#0" />
-                <element signature="e#12924#13101#0" />
-                <element signature="e#13583#13720#0" />
-                <element signature="e#14369#14437#0" />
-                <element signature="e#16830#17042#0" />
-                <element signature="e#16830#17014#1" />
-                <element signature="e#17115#21381#0" />
-                <element signature="e#17115#17924#1" />
-                <element signature="e#18484#18547#0" />
-                <element signature="e#18939#21354#0" />
-                <element signature="e#19009#21319#0" />
-                <element signature="e#19100#19355#0" />
-                <element signature="e#19736#21216#0" />
-                <element signature="e#19780#20558#0" />
-                <element signature="e#20780#20997#0" />
-                <element signature="e#20788#20952#0" />
-                <element signature="e#21057#21216#0" />
-                <element signature="e#21470#28088#0" />
-                <element signature="e#21470#22385#1" />
-                <element signature="e#23166#23198#0" />
-                <element signature="e#23249#23855#0" />
-                <element signature="e#23323#23617#0" />
-                <element signature="e#23329#23493#0" />
-                <element signature="e#23644#23855#0" />
-                <element signature="e#23650#23777#0" />
-                <element signature="e#24135#24198#0" />
-                <element signature="e#24590#27988#0" />
-                <element signature="e#24660#27953#0" />
-                <element signature="e#24757#27804#0" />
-                <element signature="e#24825#25305#0" />
-                <element signature="e#25330#25609#0" />
-                <element signature="e#26106#27694#0" />
-                <element signature="e#26154#26972#0" />
-                <element signature="e#27218#27451#0" />
-                <element signature="e#27226#27406#0" />
-                <element signature="e#27519#27694#0" />
-                <element signature="e#28142#36186#0" />
-                <element signature="e#28142#28796#1" />
-                <element signature="e#29207#29270#0" />
-                <element signature="e#29662#36159#0" />
-                <element signature="e#29732#36124#0" />
-                <element signature="e#29802#30057#0" />
-                <element signature="e#30426#30724#0" />
-                <element signature="e#30847#36022#0" />
-                <element signature="e#30891#35815#0" />
-                <element signature="e#31041#31220#0" />
-                <element signature="e#31298#31492#0" />
-                <element signature="e#31569#31766#0" />
-                <element signature="e#31852#32032#0" />
-                <element signature="e#32117#32284#0" />
-                <element signature="e#32351#32512#0" />
-                <element signature="e#32582#32740#0" />
-                <element signature="e#32821#32997#0" />
-                <element signature="e#33064#33225#0" />
-                <element signature="e#33304#33572#0" />
-                <element signature="e#33649#34330#0" />
-                <element signature="e#34400#34576#0" />
-                <element signature="e#34656#34833#0" />
-                <element signature="e#34909#35578#0" />
-                <element signature="e#35651#35815#0" />
-                <element signature="e#35873#35949#0" />
-                <element signature="e#36214#36423#0" />
-                <element signature="e#36214#36396#1" />
-                <element signature="e#36494#40728#0" />
-                <element signature="e#36494#37298#1" />
-                <element signature="e#37856#37917#0" />
-                <element signature="e#38302#40701#0" />
-                <element signature="e#38371#40666#0" />
-                <element signature="e#38461#38716#0" />
-                <element signature="e#39086#40563#0" />
-                <element signature="e#39130#39907#0" />
-                <element signature="e#40129#40345#0" />
-                <element signature="e#40137#40300#0" />
-                <element signature="e#40405#40563#0" />
-                <element signature="e#40815#47403#0" />
-                <element signature="e#40815#41725#1" />
-                <element signature="e#42496#42528#0" />
-                <element signature="e#42579#43185#0" />
-                <element signature="e#42653#42947#0" />
-                <element signature="e#42659#42823#0" />
-                <element signature="e#42974#43185#0" />
-                <element signature="e#42980#43107#0" />
-                <element signature="e#43463#43524#0" />
-                <element signature="e#43909#47303#0" />
-                <element signature="e#43978#47268#0" />
-                <element signature="e#44075#47119#0" />
-                <element signature="e#44143#44623#0" />
-                <element signature="e#44648#44927#0" />
-                <element signature="e#45424#47009#0" />
-                <element signature="e#45472#46289#0" />
-                <element signature="e#46535#46767#0" />
-                <element signature="e#46543#46722#0" />
-                <element signature="e#46835#47009#0" />
-              </folding>
+            <state relative-caret-position="1110">
+              <caret line="74" column="67" lean-forward="true" selection-start-line="74" selection-start-column="67" selection-end-line="74" selection-end-column="67" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/equities.py">
+        <entry file="file://$PROJECT_DIR$/investpy.egg-info/requires.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="870">
-              <caret line="58" column="51" lean-forward="true" selection-start-line="58" selection-start-column="51" selection-end-line="58" selection-end-column="51" />
-              <folding>
-                <element signature="e#90#109#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/Data.py">
+        <entry file="file://$PROJECT_DIR$/investpy.egg-info/SOURCES.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="54" column="44" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
+            <state relative-caret-position="255">
+              <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/resources/es/equities.csv">
+        <entry file="file://$PROJECT_DIR$/investpy.egg-info/top_level.txt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
+            <state relative-caret-position="225">
+              <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -215,8 +137,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isin</find>
-      <find>True</find>
       <find>%d</find>
       <find>datetime.datetime.strptime(info[0].replace('.', '-'), '%d/%m/%Y')</find>
       <find>Nyesa Valores Corp</find>
@@ -245,6 +165,8 @@
       <find>resource_path = '/'.join(('resources',</find>
       <find>Recent Data</find>
       <find>name</find>
+      <find>0.8.4</find>
+      <find>0.8.2</find>
     </findStrings>
     <replaceStrings>
       <replace>datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')</replace>
@@ -297,19 +219,21 @@
         <option value="$PROJECT_DIR$/tests/test_investing.py" />
         <option value="$PROJECT_DIR$/investpy/resources/__init__.py" />
         <option value="$PROJECT_DIR$/investpy/resources/equities.csv" />
-        <option value="$PROJECT_DIR$/investpy.egg-info/PKG-INFO" />
-        <option value="$PROJECT_DIR$/investpy.egg-info/requires.txt" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/investpy/funds.py" />
         <option value="$PROJECT_DIR$/investpy/resources/available_languages.csv" />
         <option value="$PROJECT_DIR$/investpy/etfs.py" />
         <option value="$PROJECT_DIR$/investpy/Data.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/investpy/__init__.py" />
+        <option value="$PROJECT_DIR$/investpy/resources/es/equities.csv" />
+        <option value="$PROJECT_DIR$/investpy/equities.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/setup.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
-        <option value="$PROJECT_DIR$/investpy/equities.py" />
-        <option value="$PROJECT_DIR$/investpy/__init__.py" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/investpy.egg-info/SOURCES.txt" />
+        <option value="$PROJECT_DIR$/investpy.egg-info/requires.txt" />
+        <option value="$PROJECT_DIR$/investpy.egg-info/PKG-INFO" />
       </list>
     </option>
   </component>
@@ -349,6 +273,11 @@
               <item name="investpy" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
               <item name="es" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="investpy" type="b2602c69:ProjectViewProjectNode" />
+              <item name="investpy" type="462c0819:PsiDirectoryNode" />
+              <item name="investpy.egg-info" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="investpy" type="b2602c69:ProjectViewProjectNode" />
@@ -394,7 +323,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.__init__ (1)">
+  <component name="RunManager" selected="Python.equities">
     <configuration name="__init__ (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="investpy" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -514,9 +443,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.equities" />
         <item itemvalue="Python.__init__ (1)" />
         <item itemvalue="Python.funds" />
-        <item itemvalue="Python.equities" />
         <item itemvalue="Python.etfs" />
         <item itemvalue="Python.test_investing" />
       </list>
@@ -548,23 +477,23 @@
       <workItem from="1555944398837" duration="150000" />
       <workItem from="1556183890748" duration="23434000" />
       <workItem from="1556364701864" duration="738000" />
-      <workItem from="1556520337847" duration="3332000" />
+      <workItem from="1556520337847" duration="4784000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56927000" />
+    <option name="totallyTimeSpent" value="58379000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1" y="23" width="1920" height="1016" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.5479833" visible="true" weight="0.18849841" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5479833" visible="true" weight="0.18849841" />
       <window_info id="Structure" order="1" sideWeight="0.3885899" side_tool="true" weight="0.17196187" />
       <window_info id="Favorites" order="2" sideWeight="0.45201668" side_tool="true" weight="0.14987469" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32746115" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.5846645" visible="true" weight="0.3625541" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5846645" visible="true" weight="0.3625541" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -669,16 +598,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/resources/available_languages.csv" />
     <entry file="file://$PROJECT_DIR$/investpy/resources/es/funds.csv" />
-    <entry file="file://$PROJECT_DIR$/investpy/resources/user_agent_list.txt" />
-    <entry file="file://$PROJECT_DIR$/investpy.egg-info/PKG-INFO">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1560">
-          <caret line="104" column="8" lean-forward="true" selection-start-line="104" selection-start-column="8" selection-end-line="104" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/investpy/resources/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
@@ -703,93 +623,10 @@
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tests/test_investing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#67#80#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LICENSE">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="630">
-            <caret line="42" selection-start-line="42" selection-end-line="42" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../investpy_web/requirements.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="15" lean-forward="true" selection-start-column="15" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="22" selection-start-line="23" selection-start-column="22" selection-end-line="23" selection-end-column="22" />
-          <folding>
-            <element signature="e#23#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.cfg">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/resources/es/equities.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="38" lean-forward="true" selection-start-line="13" selection-start-column="38" selection-end-line="13" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/equities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="58" column="51" lean-forward="true" selection-start-line="58" selection-start-column="51" selection-end-line="58" selection-end-column="51" />
-          <folding>
-            <element signature="e#90#109#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -800,10 +637,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/resources/es/equities.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="230" column="22" lean-forward="true" selection-start-line="230" selection-start-column="22" selection-end-line="230" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="1156" lean-forward="true" selection-start-line="1156" selection-end-line="1156" />
+        <state relative-caret-position="122">
+          <caret line="341" column="59" selection-start-line="341" selection-start-column="59" selection-end-line="341" selection-end-column="59" />
           <folding>
             <element signature="n#!!doc" />
             <element signature="e#395#615#0" />
@@ -839,8 +683,17 @@
             <element signature="e#12622#12856#0" />
             <element signature="e#12630#12812#0" />
             <element signature="e#12924#13101#0" />
+            <element signature="e#13563#17099#0" />
             <element signature="e#13583#13720#0" />
             <element signature="e#14369#14437#0" />
+            <element signature="e#14920#17071#0" />
+            <element signature="e#15013#17071#0" />
+            <element signature="e#15074#16074#0" />
+            <element signature="e#15106#15385#0" />
+            <element signature="e#15842#16009#0" />
+            <element signature="e#16113#17071#0" />
+            <element signature="e#16019#16298#0" />
+            <element signature="e#16924#17022#0" />
             <element signature="e#16830#17042#0" />
             <element signature="e#16830#17014#1" />
             <element signature="e#17115#21381#0" />
@@ -931,6 +784,128 @@
             <element signature="e#46543#46722#0" />
             <element signature="e#46835#47009#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/equities.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+          <folding>
+            <element signature="n#!!doc" />
+            <element signature="e#261#2046#0" />
+            <element signature="e#261#532#1" />
+            <element signature="e#547#683#0" />
+            <element signature="e#696#903#0" />
+            <element signature="e#2078#3201#0" />
+            <element signature="e#2078#2360#1" />
+            <element signature="e#2428#2635#0" />
+            <element signature="e#2730#2833#0" />
+            <element signature="e#2997#3184#0" />
+            <element signature="e#3014#3080#0" />
+            <element signature="e#3229#4021#0" />
+            <element signature="e#3229#3525#1" />
+            <element signature="e#3811#3876#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/resources/available_languages.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/resources/user_agent_list.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/test_investing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#67#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="28" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.cfg">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy.egg-info/SOURCES.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="30" lean-forward="true" selection-start-line="17" selection-start-column="30" selection-end-line="17" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy.egg-info/top_level.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy.egg-info/requires.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy.egg-info/dependency_links.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="34" column="8" selection-start-line="34" selection-start-column="8" selection-end-line="34" selection-end-column="48" />
+          <folding>
+            <element signature="e#23#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="15">
+            <caret line="24" column="49" selection-start-line="24" selection-start-column="49" selection-end-line="24" selection-end-column="49" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy.egg-info/PKG-INFO">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1110">
+          <caret line="74" column="67" lean-forward="true" selection-start-line="74" selection-start-column="67" selection-end-line="74" selection-end-column="67" />
         </state>
       </provider>
     </entry>

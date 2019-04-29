@@ -61,7 +61,7 @@ def get_equity_names():
 
                 data = {
                     "name": element_.text_content(),
-                    "full_name": full_name_,
+                    "full_name": full_name_.rstrip(),
                     "tag": tag_,
                     "isin": isin_,
                     "id": id_
