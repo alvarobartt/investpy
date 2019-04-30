@@ -1,4 +1,4 @@
-# Investing Scraper of historical data from continuous spanish stock market
+# investpy - Spanish Stock Historical Data Scraper
 
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
@@ -16,7 +16,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.4``
+``pip install investpy==0.8.4.1``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -26,7 +26,7 @@ All the dependencies are already listed on the setup file of the package, but to
 * [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
 * [**pytest 4.1.1**](https://pypi.org/project/pytest/)
 
-## Release Notes 0.8.4
+## Release Notes 0.8.4.x
 
 * Several fixes on minor bugs/errors
 * Added support for Python 3.5
@@ -38,6 +38,7 @@ All the dependencies are already listed on the setup file of the package, but to
 * Full company name for equities add
 * Company Profile retrieval returned value is a dict with the source and the description
 * Internal fixes to improve its ease of adaptability
+* Python 2.7 unidecode error fix (warning Python 2.7 will be deprecated in 2020)
 
 ## Additional Information
 

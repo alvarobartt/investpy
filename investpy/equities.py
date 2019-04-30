@@ -3,11 +3,12 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-import pandas as pd
-import requests
 import time
-from lxml.html import fromstring
+
+import pandas as pd
 import pkg_resources
+import requests
+from lxml.html import fromstring
 
 from investpy import user_agent as ua
 
@@ -60,7 +61,7 @@ def get_equity_names():
                 isin_ = get_isin_code(tag_)
 
                 data = {
-                    "name": element_.text_content(),
+                    "name": element_.text,
                     "full_name": full_name_.rstrip(),
                     "tag": tag_,
                     "isin": isin_,
