@@ -10,11 +10,11 @@ def test_investing():
     This function checks that main functions of investpy work properly.
     """
 
-    investpy.get_recent_data(equity='bbva',
+    investpy.get_recent_data(equity='enegás',
                              as_json=True,
                              order='ascending')
 
-    investpy.get_historical_data(equity='bbva',
+    investpy.get_historical_data(equity='enegás',
                                  start='30/10/2018',
                                  end='30/12/2018',
                                  as_json=False,

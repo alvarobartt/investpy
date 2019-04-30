@@ -16,7 +16,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.4.1``
+``pip install investpy==0.8.4.2``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -38,7 +38,7 @@ All the dependencies are already listed on the setup file of the package, but to
 * Full company name for equities add
 * Company Profile retrieval returned value is a dict with the source and the description
 * Internal fixes to improve its ease of adaptability
-* Python 2.7 unidecode error fix (warning Python 2.7 will be deprecated in 2020)
+* Temporarily removed Python 2.7 support due to its warning of deprecation in January 1st of 2020
 
 ## Additional Information
 

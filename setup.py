@@ -11,10 +11,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.8.4.1',
+    version='0.8.4.2',
     packages=find_packages(),
     url='',
-    download_url='https://github.com/alvarob96/investpy/archive/0.8.4.1.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.8.4.2.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -31,7 +31,6 @@ setup(
     include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
-        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",

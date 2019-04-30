@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python
 
 # Copyright 2018-2019 Alvaro Bartolome
@@ -225,11 +224,11 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
 
-    if unidecode.unidecode(equity.lower()) not in [value.lower() for value in equities['name'].tolist()]:
+    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
 
     for row in equities.itertuples():
-        if row.name.lower() == unidecode.unidecode(equity.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             final = list()
 
             for index in range(len(date_interval['intervals'])):
@@ -368,7 +367,7 @@ def get_equity_company_profile(equity, language='english'):
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
 
-    if unidecode.unidecode(equity.lower()) not in [value.lower() for value in equities['name'].tolist()]:
+    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
 
     company_profile = {
@@ -377,7 +376,7 @@ def get_equity_company_profile(equity, language='english'):
     }
 
     for row in equities.itertuples():
-        if row.name.lower() == unidecode.unidecode(equity.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             if selected_source == 'Bolsa de Madrid':
                 url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + row.isin
 
@@ -490,11 +489,11 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
 
-    if unidecode.unidecode(fund.lower()) not in [value.lower() for value in funds['name'].tolist()]:
+    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
-        if row.name.lower() == unidecode.unidecode(fund.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
             url = "https://es.investing.com/funds/" + row.tag + "-historical-data"
 
             head = {
@@ -638,11 +637,11 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
 
-    if unidecode.unidecode(fund.lower()) not in [value.lower() for value in funds['name'].tolist()]:
+    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
-        if row.name.lower() == unidecode.unidecode(fund.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
             final = list()
 
             for index in range(len(date_interval['intervals'])):
@@ -761,11 +760,11 @@ def get_fund_information(fund, as_json=False):
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
 
-    if unidecode.unidecode(fund.lower()) not in [value.lower() for value in funds['name'].tolist()]:
+    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
-        if row.name.lower() == unidecode.unidecode(fund.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
             url = "https://es.investing.com/funds/" + row.tag
 
             head = {
@@ -918,11 +917,11 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
 
-    if unidecode.unidecode(etf.lower()) not in [value.lower() for value in etfs['name'].tolist()]:
+    if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
-        if row.name.lower() == unidecode.unidecode(etf.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
             url = "https://es.investing.com/etfs/" + row.tag + "-historical-data"
 
             head = {
@@ -1066,11 +1065,11 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
 
-    if unidecode.unidecode(etf.lower()) not in [value.lower() for value in etfs['name'].tolist()]:
+    if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
-        if row.name.lower() == unidecode.unidecode(etf.lower()):
+        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
             final = list()
 
             for index in range(len(date_interval['intervals'])):
