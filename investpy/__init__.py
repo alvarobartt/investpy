@@ -125,6 +125,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
 
                 if as_json is True:
                     json_ = {'name': row.name,
+                             'full_name': row.full_name,
                              'recent':
                                  [value.equity_as_json() for value in result]
                              }
@@ -314,6 +315,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
                     if as_json is True:
                         json_ = {'name': row.name,
+                                 'full_name': row.full_name,
                                  'historical':
                                      [value.equity_as_json() for value in result]
                                  }
