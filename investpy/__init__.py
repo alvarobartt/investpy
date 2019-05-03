@@ -17,6 +17,20 @@ from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
 from investpy.Data import Data
 
 
+# TODO: add country/market param and mapping of 'resources/available_markets' in order to allow users retrieve
+#  historical data from different markets.
+
+# TODO: create thread pools to increase scraping efficiency and improve 'investpy' performance
+
+# TODO: generate sphinx documentation for version 1.0
+
+# TODO: allow user to retrieve information from more than one equity/fund/etf in the same function call
+
+# TODO: handle connection errors and add params to retry on error codes [403, 404, 443, 500, ...] like /tweepy/binder.py
+
+# TODO: consider moving from es.investing to www.investing (long task - develop on developer branch)
+
+
 def get_equities_list():
     """
     This function retrieves the list of all the available equities
@@ -342,6 +356,21 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
 
 def get_equity_company_profile(equity, language='english'):
+    """
+    This function retrieves the company profile from an equity in the specified language from different sources.
+
+    Parameters
+    ----------
+    :param equity: str
+        name of the equity to the company profile from
+    :param language: str
+        language or code in which the company profile is going to be retrieved
+
+    Returns
+    -------
+    :returns str
+        returns a string containing the company profile of the specified equity
+    """
 
     available_sources = {
         'english': 'Investing',

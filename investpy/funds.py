@@ -19,7 +19,7 @@ def get_fund_names():
 
     Returns
     -------
-        returns a dictionary containing all the funds information
+        :returns a dictionary containing all the funds information
     """
 
     head = {
@@ -83,7 +83,7 @@ def fund_information_to_json(df):
 
     Returns
     -------
-        returns a JSON object containing fund information
+        :returns a JSON object containing fund information
     """
 
     json_ = {
@@ -117,7 +117,7 @@ def list_funds():
 
     Returns
     -------
-        returns a list with all the available funds to retrieve data from
+        :returns a list with all the available funds to retrieve data from
     """
 
     resource_package = __name__

@@ -20,7 +20,7 @@ def get_equity_names():
 
     Returns
     -------
-        returns a dictionary containing all the equities information
+        :returns a dictionary containing all the equities information
     """
 
     params = {
@@ -82,12 +82,12 @@ def get_equity_names():
 
 def get_isin_code(info):
     """
-    This is an auxiliar function that adds data to the equities pandas.DataFrame.
+    This is an additional function that adds data to the equities pandas.DataFrame.
     Added data in this case, are the ISIN codes of every company in order to identify it.
 
     Returns
     -------
-        returns a str that contains the ISIN code of the specified equity
+        :returns a str that contains the ISIN code of the specified equity
     """
 
     url = "https://es.investing.com/equities/" + info
@@ -128,7 +128,7 @@ def list_equities():
 
     Returns
     -------
-        returns a list with all the available equities to retrieve data from
+        :returns a list with all the available equities to retrieve data from
     """
 
     resource_package = __name__

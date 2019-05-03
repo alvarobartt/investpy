@@ -14,7 +14,7 @@ def get_random():
 
     Returns
     -------
-        returns a string with the random user agent to use
+        :returns a string with the random user agent to use
     """
 
     resource_package = __name__
@@ -25,6 +25,7 @@ def get_random():
         with open(file, 'r') as f:
             try:
                 lines = f.readlines()
+
                 return str(random.choice(lines)).replace("\n", "")
             except IOError:
                 raise IOError("ERR#016: unable to retrieve a random user agent")

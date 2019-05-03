@@ -18,7 +18,7 @@ def get_etf_names():
 
     Returns
     -------
-        returns a dictionary containing all the etfs information
+        :returns a dictionary containing all the etfs information
     """
 
     head = {
@@ -83,7 +83,7 @@ def list_etfs():
 
     Returns
     -------
-        returns a list with all the available etfs to retrieve data from
+        :returns a list with all the available etfs to retrieve data from
     """
 
     resource_package = __name__

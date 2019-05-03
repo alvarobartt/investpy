@@ -16,7 +16,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.4.2``
+``pip install investpy==0.8.4.3``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -25,6 +25,15 @@ All the dependencies are already listed on the setup file of the package, but to
 * [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 * [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
 * [**pytest 4.1.1**](https://pypi.org/project/pytest/)
+
+## GitHub Gists on investpy use
+
+In order to explain the use of [**investpy**](https://pypi.org/project/investpy/), some self-explanatory gists have been created and they can be found at [my GitHub Gist Page](https://gist.github.com/alvarob96). As the package is updated with new functionality, gists will be updated so they can be easily tested and provide useful information for investpy use.
+
+* Equity Data Retrieval: https://gist.github.com/alvarob96/461dce00d9196dd3140f37993f8808f8
+
+If needed you can open an [issue](https://github.com/alvarob96/investpy/issues) or [email me](alvarob96@usal.es) to request any other Gist or further explanation on how the package works.
+
 
 ## Release Notes 0.8.4.x
 
@@ -39,6 +48,7 @@ All the dependencies are already listed on the setup file of the package, but to
 * Company Profile retrieval returned value is a dict with the source and the description
 * Internal fixes to improve its ease of adaptability
 * Temporarily removed Python 2.7 support due to its warning of deprecation in January 1st of 2020
+* Updated docstrings as reStructuredText (via PyCharm)
 
 ## Additional Information
 
