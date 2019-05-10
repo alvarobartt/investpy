@@ -3,6 +3,8 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
+__author__ = "Alvaro Bartolome <alvarob96@usal.es>"
+
 import datetime
 from random import randint
 import unidecode
@@ -29,6 +31,10 @@ from investpy.Data import Data
 # TODO: handle connection errors and add params to retry on error codes [403, 404, 443, 500, ...] like /tweepy/binder.py
 
 # TODO: consider moving from es.investing to www.investing (long task - develop on developer branch)
+
+# TODO: create API project built on Flask
+
+# TODO: add additional markets for equities/funds/etfs
 
 
 def get_equities_list():
