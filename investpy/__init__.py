@@ -19,10 +19,10 @@ from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
 from investpy.Data import Data
 
 
-# TODO: add country/market param and mapping of 'resources/available_markets' in order to allow users retrieve
+# TODO: add country/market param and mapping of ‘resources/available_markets’ in order to allow users retrieve
 #  historical data from different markets.
 
-# TODO: create thread pools to increase scraping efficiency and improve 'investpy' performance
+# TODO: create thread pools to increase scraping efficiency and improve ‘investpy’ performance => CHECK BOOK DOC
 
 # TODO: generate sphinx documentation for version 1.0
 
@@ -32,9 +32,24 @@ from investpy.Data import Data
 
 # TODO: consider moving from es.investing to www.investing (long task - develop on developer branch)
 
-# TODO: create API project built on Flask
+# DONE: create API project built on Flask => 0.8.5
 
 # TODO: add additional markets for equities/funds/etfs
+
+# DONE: redefine JSON output for ETFs => 0.8.5
+#  https://eodhistoricaldata.com/api/eod/AAPL.US?api_token=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX&period=d.&fmt=json
+
+# TODO: keep HTML doc structure (remove get_text() functions or similar)
+
+# TODO: improve project as described in ‘’Web Scraping with Python’'
+
+# TODO: modify __init__ structure as functions are not supposed to be defined here?
+
+# DONE: get etfs listed as dictionary with specified params
+
+# DONE: updated docstrings
+
+# TODO: fix dosctrings and unify structure with Google docstrings or similar
 
 
 def get_equities_list():
@@ -915,6 +930,18 @@ def get_etfs_list():
     return es.list_etfs()
 
 
+def get_etfs_dict(columns, as_json):
+    """
+    This function retrieves a dictionary with the specfied columns of all the available etfs
+
+    Returns
+    -------
+    :returns a dictionary that contains all the available etf values specified in the columns
+    """
+
+    return es.dict_etfs(columns=columns, as_json=as_json)
+
+
 def get_etf_recent_data(etf, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the specified etf.
@@ -1174,7 +1201,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                         final.append(json_)
                     elif as_json is False:
                         df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
-                        df.set_index('Date', inplace=True)
+                        df.set_index('date', inplace=True)
 
                         final.append(df)
                 else:

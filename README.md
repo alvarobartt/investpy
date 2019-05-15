@@ -16,7 +16,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.4.3``
+``pip install investpy==0.8.4.4``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -49,6 +49,8 @@ If needed you can open an [issue](https://github.com/alvarob96/investpy/issues) 
 * Internal fixes to improve its ease of adaptability
 * Temporarily removed Python 2.7 support due to its warning of deprecation in January 1st of 2020
 * Updated docstrings as reStructuredText (via PyCharm)
+* Modified JSON output to fit current standard for historical data
+* Added function to retrieve information from listed ETFs (id, name, symbol and tag)
 
 ## Additional Information
 

@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investpy/Data.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/Data.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investpy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/equities.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/equities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investpy/etfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/etfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/funds.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/funds.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/resources/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/resources/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/user_agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/user_agent.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_investing.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_investing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +25,7 @@
     <SUITE FILE_PATH="coverage/investing_scrapper$investing_test.coverage" NAME="investing_test Coverage Results" MODIFIED="1544892254363" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investing_scrapper/tests" />
     <SUITE FILE_PATH="coverage/investing_wrapper$tickers.coverage" NAME="tickers Coverage Results" MODIFIED="1544609893595" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/investing_wrapper$__int__.coverage" NAME="__int__ Coverage Results" MODIFIED="1543331975913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/investpy$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1556615114101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
+    <SUITE FILE_PATH="coverage/investpy$__init____1_.coverage" NAME="__init__ (1) Coverage Results" MODIFIED="1557937703560" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
     <SUITE FILE_PATH="coverage/investing_scrapper$test_investing.coverage" NAME="test_investing Coverage Results" MODIFIED="1547805720191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/investing_scrapper$tickers_test.coverage" NAME="tickers_test Coverage Results" MODIFIED="1544724198908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investing_scrapper/tests" />
     <SUITE FILE_PATH="coverage/investing_scrapper$funds.coverage" NAME="funds Coverage Results" MODIFIED="1549191888619" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investing_scrapper" />
@@ -41,7 +38,7 @@
     <SUITE FILE_PATH="coverage/investpy$funds.coverage" NAME="funds Coverage Results" MODIFIED="1556358048168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
     <SUITE FILE_PATH="coverage/investing_scrapper$test.coverage" NAME="test Coverage Results" MODIFIED="1544619818749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/investpy$equities.coverage" NAME="equities Coverage Results" MODIFIED="1556609322556" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
-    <SUITE FILE_PATH="coverage/investpy$etfs.coverage" NAME="etfs Coverage Results" MODIFIED="1553170196728" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
+    <SUITE FILE_PATH="coverage/investpy$etfs.coverage" NAME="etfs Coverage Results" MODIFIED="1557933314662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/investpy" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="investpy" />
@@ -49,55 +46,19 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/funds.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="802">
-              <caret line="136" selection-start-line="136" selection-end-line="136" />
-              <folding>
-                <element signature="e#90#109#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/user_agent.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-              <folding>
-                <element signature="e#90#103#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/resources/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/test_investing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-              <folding>
-                <element signature="e#67#80#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-25">
+              <caret line="6" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/setup.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+            <state relative-caret-position="425">
+              <caret line="37" column="42" lean-forward="true" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
               <folding>
                 <element signature="e#23#66#0" expanded="true" />
               </folding>
@@ -106,10 +67,183 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="780">
+                <caret line="52" column="84" selection-start-line="52" selection-start-column="84" selection-end-line="52" selection-end-column="84" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.travis.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investpy/resources/es/etfs.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="365">
+              <caret line="1037" column="35" selection-start-line="1037" selection-start-column="35" selection-end-line="1037" selection-end-column="35" />
+              <folding>
+                <element signature="n#!!doc" />
+                <element signature="e#1379#1599#0" />
+                <element signature="e#1379#1568#1" />
+                <element signature="e#1669#6553#0" />
+                <element signature="e#1669#2488#1" />
+                <element signature="e#3054#3122#0" />
+                <element signature="e#3511#6526#0" />
+                <element signature="e#3604#6491#0" />
+                <element signature="e#3698#3953#0" />
+                <element signature="e#4334#6389#0" />
+                <element signature="e#4378#5670#0" />
+                <element signature="e#5892#6168#0" />
+                <element signature="e#5900#6123#0" />
+                <element signature="e#6228#6389#0" />
+                <element signature="e#6639#14555#0" />
+                <element signature="e#6639#7564#1" />
+                <element signature="e#8345#8377#0" />
+                <element signature="e#8428#9034#0" />
+                <element signature="e#8502#8796#0" />
+                <element signature="e#8508#8672#0" />
+                <element signature="e#8823#9034#0" />
+                <element signature="e#8829#8956#0" />
+                <element signature="e#9320#9388#0" />
+                <element signature="e#9777#14455#0" />
+                <element signature="e#9870#14420#0" />
+                <element signature="e#9968#14271#0" />
+                <element signature="e#10066#10345#0" />
+                <element signature="e#10686#11166#0" />
+                <element signature="e#11191#11470#0" />
+                <element signature="e#11967#14161#0" />
+                <element signature="e#12015#13375#0" />
+                <element signature="e#13621#13916#0" />
+                <element signature="e#13629#13872#0" />
+                <element signature="e#13984#14161#0" />
+                <element signature="e#14622#18618#0" />
+                <element signature="e#14622#15081#1" />
+                <element signature="e#15107#15244#0" />
+                <element signature="e#15893#15961#0" />
+                <element signature="e#16326#16375#0" />
+                <element signature="e#16423#18590#0" />
+                <element signature="e#16516#18590#0" />
+                <element signature="e#16573#17550#0" />
+                <element signature="e#16728#17007#0" />
+                <element signature="e#17387#17485#0" />
+                <element signature="e#17616#18590#0" />
+                <element signature="e#17761#18040#0" />
+                <element signature="e#18427#18525#0" />
+                <element signature="e#18647#18859#0" />
+                <element signature="e#18647#18831#1" />
+                <element signature="e#18932#23198#0" />
+                <element signature="e#18932#19741#1" />
+                <element signature="e#20301#20364#0" />
+                <element signature="e#20735#23171#0" />
+                <element signature="e#20826#23136#0" />
+                <element signature="e#20917#21172#0" />
+                <element signature="e#21553#23033#0" />
+                <element signature="e#21597#22375#0" />
+                <element signature="e#22597#22814#0" />
+                <element signature="e#22605#22769#0" />
+                <element signature="e#22874#23033#0" />
+                <element signature="e#23287#29905#0" />
+                <element signature="e#23287#24202#1" />
+                <element signature="e#24983#25015#0" />
+                <element signature="e#25066#25672#0" />
+                <element signature="e#25140#25434#0" />
+                <element signature="e#25146#25310#0" />
+                <element signature="e#25461#25672#0" />
+                <element signature="e#25467#25594#0" />
+                <element signature="e#25952#26015#0" />
+                <element signature="e#26386#29805#0" />
+                <element signature="e#26477#29770#0" />
+                <element signature="e#26574#29621#0" />
+                <element signature="e#26642#27122#0" />
+                <element signature="e#27147#27426#0" />
+                <element signature="e#27923#29511#0" />
+                <element signature="e#27971#28789#0" />
+                <element signature="e#29035#29268#0" />
+                <element signature="e#29043#29223#0" />
+                <element signature="e#29336#29511#0" />
+                <element signature="e#29959#38003#0" />
+                <element signature="e#29959#30613#1" />
+                <element signature="e#31024#31087#0" />
+                <element signature="e#31458#37976#0" />
+                <element signature="e#31549#37941#0" />
+                <element signature="e#31619#31874#0" />
+                <element signature="e#32243#32541#0" />
+                <element signature="e#32664#37839#0" />
+                <element signature="e#32708#37632#0" />
+                <element signature="e#32858#33037#0" />
+                <element signature="e#33115#33309#0" />
+                <element signature="e#33386#33583#0" />
+                <element signature="e#33669#33849#0" />
+                <element signature="e#33934#34101#0" />
+                <element signature="e#34168#34329#0" />
+                <element signature="e#34399#34557#0" />
+                <element signature="e#34638#34814#0" />
+                <element signature="e#34881#35042#0" />
+                <element signature="e#35121#35389#0" />
+                <element signature="e#35466#36147#0" />
+                <element signature="e#36217#36393#0" />
+                <element signature="e#36473#36650#0" />
+                <element signature="e#36726#37395#0" />
+                <element signature="e#37468#37632#0" />
+                <element signature="e#37690#37766#0" />
+                <element signature="e#38031#38240#0" />
+                <element signature="e#38031#38213#1" />
+                <element signature="e#38497#38705#0" />
+                <element signature="e#38592#38804#1" />
+                <element signature="e#42632#49220#0" />
+                <element signature="e#42632#43542#1" />
+                <element signature="e#44313#44345#0" />
+                <element signature="e#44396#45002#0" />
+                <element signature="e#44470#44764#0" />
+                <element signature="e#44476#44640#0" />
+                <element signature="e#44791#45002#0" />
+                <element signature="e#44797#44924#0" />
+                <element signature="e#45280#45341#0" />
+                <element signature="e#45705#49120#0" />
+                <element signature="e#45795#49085#0" />
+                <element signature="e#45892#48936#0" />
+                <element signature="e#45960#46440#0" />
+                <element signature="e#46465#46744#0" />
+                <element signature="e#47241#48826#0" />
+                <element signature="e#47289#48106#0" />
+                <element signature="e#48352#48584#0" />
+                <element signature="e#48360#48539#0" />
+                <element signature="e#48652#48826#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/investpy/resources/available_languages.csv">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/investpy/Data.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="7" />
+            <state relative-caret-position="380">
+              <caret line="90" column="14" selection-start-line="90" selection-start-column="14" selection-end-line="90" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -118,7 +252,7 @@
         <entry file="file://$PROJECT_DIR$/investpy/equities.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -126,27 +260,28 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/investpy/etfs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="787">
-              <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
+            <state relative-caret-position="210">
+              <caret line="140" lean-forward="true" selection-start-line="140" selection-end-line="140" />
               <folding>
-                <element signature="e#90#109#0" expanded="true" />
+                <element signature="n#!!doc" />
+                <element signature="e#299#2145#0" />
+                <element signature="e#299#570#1" />
+                <element signature="e#583#790#0" />
+                <element signature="e#1157#1889#0" />
+                <element signature="e#1193#1889#0" />
+                <element signature="e#1479#1647#0" />
+                <element signature="e#1486#1647#0" />
+                <element signature="e#1682#1855#0" />
+                <element signature="e#1689#1855#0" />
+                <element signature="e#2169#2923#0" />
+                <element signature="e#2169#2455#1" />
+                <element signature="e#2733#2791#0" />
+                <element signature="e#2981#4003#0" />
+                <element signature="e#3013#3318#1" />
+                <element signature="e#3535#3597#0" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitattributes">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -161,8 +296,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Nyesa Valores Corp</find>
-      <find>013</find>
       <find>Max</find>
       <find>max</find>
       <find>Min</find>
@@ -191,6 +324,8 @@
       <find>2.7</find>
       <find>unidecode</find>
       <find>0.8.2</find>
+      <find>ERR#020</find>
+      <find>Date</find>
     </findStrings>
     <replaceStrings>
       <replace>datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')</replace>
@@ -251,22 +386,23 @@
         <option value="$PROJECT_DIR$/investpy.egg-info/SOURCES.txt" />
         <option value="$PROJECT_DIR$/investpy.egg-info/requires.txt" />
         <option value="$PROJECT_DIR$/investpy.egg-info/PKG-INFO" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/investpy/equities.py" />
+        <option value="$PROJECT_DIR$/investpy/funds.py" />
+        <option value="$PROJECT_DIR$/investpy/user_agent.py" />
+        <option value="$PROJECT_DIR$/tests/test_investing.py" />
+        <option value="$PROJECT_DIR$/investpy/resources/__init__.py" />
+        <option value="$PROJECT_DIR$/investpy/etfs.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/investpy/__init__.py" />
         <option value="$PROJECT_DIR$/investpy/Data.py" />
-        <option value="$PROJECT_DIR$/investpy/equities.py" />
-        <option value="$PROJECT_DIR$/investpy/etfs.py" />
-        <option value="$PROJECT_DIR$/investpy/funds.py" />
-        <option value="$PROJECT_DIR$/investpy/user_agent.py" />
-        <option value="$PROJECT_DIR$/investpy/resources/__init__.py" />
-        <option value="$PROJECT_DIR$/tests/test_investing.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="-1920" />
     <option name="y" value="23" />
     <option name="width" value="1920" />
     <option name="height" value="1016" />
@@ -467,9 +603,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.__init__ (1)" />
+        <item itemvalue="Python.etfs" />
         <item itemvalue="Python.equities" />
         <item itemvalue="Python.funds" />
-        <item itemvalue="Python.etfs" />
         <item itemvalue="Python.test_investing" />
       </list>
     </recent_temporary>
@@ -506,22 +642,24 @@
       <workItem from="1556869394378" duration="5256000" />
       <workItem from="1557337093545" duration="1482000" />
       <workItem from="1557475678561" duration="288000" />
+      <workItem from="1557745440138" duration="2169000" />
+      <workItem from="1557930819102" duration="4516000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72171000" />
+    <option name="totallyTimeSpent" value="78856000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1920" height="1016" extended-state="0" />
+    <frame x="-1920" y="23" width="1920" height="1016" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5479833" visible="true" weight="0.19808307" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5479833" visible="true" weight="0.20234291" />
       <window_info id="Structure" order="1" sideWeight="0.3885899" side_tool="true" weight="0.17196187" />
       <window_info id="Favorites" order="2" sideWeight="0.45201668" side_tool="true" weight="0.14987469" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32746115" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5846645" weight="0.3625541" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5846645" visible="true" weight="0.26190478" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3991323" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -597,9 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/resources/available_languages.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/investpy/resources/user_agent_list.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -634,21 +769,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/investpy/__init__ 2.py" />
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="480">
-            <caret line="32" column="91" selection-start-line="32" selection-start-column="91" selection-end-line="32" selection-end-column="91" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MANIFEST.in">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -660,23 +780,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="51" />
-          <folding>
-            <element signature="e#90#105#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -694,8 +797,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/resources/es/etfs.csv">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/investpy/funds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1950">
+          <caret line="136" selection-start-line="136" selection-end-line="136" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/user_agent.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
@@ -707,74 +821,234 @@
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/Data.py">
+    <entry file="file://$PROJECT_DIR$/investpy/resources/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="7" />
+        <state relative-caret-position="90">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/investpy/equities.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="9" column="19" lean-forward="true" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/investpy/etfs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="787">
-          <caret line="102" lean-forward="true" selection-start-line="102" selection-end-line="102" />
+        <state relative-caret-position="210">
+          <caret line="140" lean-forward="true" selection-start-line="140" selection-end-line="140" />
           <folding>
-            <element signature="e#90#109#0" expanded="true" />
+            <element signature="n#!!doc" />
+            <element signature="e#299#2145#0" />
+            <element signature="e#299#570#1" />
+            <element signature="e#583#790#0" />
+            <element signature="e#1157#1889#0" />
+            <element signature="e#1193#1889#0" />
+            <element signature="e#1479#1647#0" />
+            <element signature="e#1486#1647#0" />
+            <element signature="e#1682#1855#0" />
+            <element signature="e#1689#1855#0" />
+            <element signature="e#2169#2923#0" />
+            <element signature="e#2169#2455#1" />
+            <element signature="e#2733#2791#0" />
+            <element signature="e#2981#4003#0" />
+            <element signature="e#3013#3318#1" />
+            <element signature="e#3535#3597#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/funds.py">
+    <entry file="file://$PROJECT_DIR$/investpy/resources/es/etfs.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="802">
-          <caret line="136" selection-start-line="136" selection-end-line="136" />
-          <folding>
-            <element signature="e#90#109#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/user_agent.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-          <folding>
-            <element signature="e#90#103#0" expanded="true" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/investpy/resources/available_languages.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="780">
+            <caret line="52" column="84" selection-start-line="52" selection-start-column="84" selection-end-line="52" selection-end-column="84" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/resources/__init__.py">
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
+        <state relative-caret-position="210">
+          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/test_investing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="e#67#80#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-25">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/setup.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="17" lean-forward="true" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+        <state relative-caret-position="425">
+          <caret line="37" column="42" lean-forward="true" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
           <folding>
             <element signature="e#23#66#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="1037" column="35" selection-start-line="1037" selection-start-column="35" selection-end-line="1037" selection-end-column="35" />
+          <folding>
+            <element signature="n#!!doc" />
+            <element signature="e#1379#1599#0" />
+            <element signature="e#1379#1568#1" />
+            <element signature="e#1669#6553#0" />
+            <element signature="e#1669#2488#1" />
+            <element signature="e#3054#3122#0" />
+            <element signature="e#3511#6526#0" />
+            <element signature="e#3604#6491#0" />
+            <element signature="e#3698#3953#0" />
+            <element signature="e#4334#6389#0" />
+            <element signature="e#4378#5670#0" />
+            <element signature="e#5892#6168#0" />
+            <element signature="e#5900#6123#0" />
+            <element signature="e#6228#6389#0" />
+            <element signature="e#6639#14555#0" />
+            <element signature="e#6639#7564#1" />
+            <element signature="e#8345#8377#0" />
+            <element signature="e#8428#9034#0" />
+            <element signature="e#8502#8796#0" />
+            <element signature="e#8508#8672#0" />
+            <element signature="e#8823#9034#0" />
+            <element signature="e#8829#8956#0" />
+            <element signature="e#9320#9388#0" />
+            <element signature="e#9777#14455#0" />
+            <element signature="e#9870#14420#0" />
+            <element signature="e#9968#14271#0" />
+            <element signature="e#10066#10345#0" />
+            <element signature="e#10686#11166#0" />
+            <element signature="e#11191#11470#0" />
+            <element signature="e#11967#14161#0" />
+            <element signature="e#12015#13375#0" />
+            <element signature="e#13621#13916#0" />
+            <element signature="e#13629#13872#0" />
+            <element signature="e#13984#14161#0" />
+            <element signature="e#14622#18618#0" />
+            <element signature="e#14622#15081#1" />
+            <element signature="e#15107#15244#0" />
+            <element signature="e#15893#15961#0" />
+            <element signature="e#16326#16375#0" />
+            <element signature="e#16423#18590#0" />
+            <element signature="e#16516#18590#0" />
+            <element signature="e#16573#17550#0" />
+            <element signature="e#16728#17007#0" />
+            <element signature="e#17387#17485#0" />
+            <element signature="e#17616#18590#0" />
+            <element signature="e#17761#18040#0" />
+            <element signature="e#18427#18525#0" />
+            <element signature="e#18647#18859#0" />
+            <element signature="e#18647#18831#1" />
+            <element signature="e#18932#23198#0" />
+            <element signature="e#18932#19741#1" />
+            <element signature="e#20301#20364#0" />
+            <element signature="e#20735#23171#0" />
+            <element signature="e#20826#23136#0" />
+            <element signature="e#20917#21172#0" />
+            <element signature="e#21553#23033#0" />
+            <element signature="e#21597#22375#0" />
+            <element signature="e#22597#22814#0" />
+            <element signature="e#22605#22769#0" />
+            <element signature="e#22874#23033#0" />
+            <element signature="e#23287#29905#0" />
+            <element signature="e#23287#24202#1" />
+            <element signature="e#24983#25015#0" />
+            <element signature="e#25066#25672#0" />
+            <element signature="e#25140#25434#0" />
+            <element signature="e#25146#25310#0" />
+            <element signature="e#25461#25672#0" />
+            <element signature="e#25467#25594#0" />
+            <element signature="e#25952#26015#0" />
+            <element signature="e#26386#29805#0" />
+            <element signature="e#26477#29770#0" />
+            <element signature="e#26574#29621#0" />
+            <element signature="e#26642#27122#0" />
+            <element signature="e#27147#27426#0" />
+            <element signature="e#27923#29511#0" />
+            <element signature="e#27971#28789#0" />
+            <element signature="e#29035#29268#0" />
+            <element signature="e#29043#29223#0" />
+            <element signature="e#29336#29511#0" />
+            <element signature="e#29959#38003#0" />
+            <element signature="e#29959#30613#1" />
+            <element signature="e#31024#31087#0" />
+            <element signature="e#31458#37976#0" />
+            <element signature="e#31549#37941#0" />
+            <element signature="e#31619#31874#0" />
+            <element signature="e#32243#32541#0" />
+            <element signature="e#32664#37839#0" />
+            <element signature="e#32708#37632#0" />
+            <element signature="e#32858#33037#0" />
+            <element signature="e#33115#33309#0" />
+            <element signature="e#33386#33583#0" />
+            <element signature="e#33669#33849#0" />
+            <element signature="e#33934#34101#0" />
+            <element signature="e#34168#34329#0" />
+            <element signature="e#34399#34557#0" />
+            <element signature="e#34638#34814#0" />
+            <element signature="e#34881#35042#0" />
+            <element signature="e#35121#35389#0" />
+            <element signature="e#35466#36147#0" />
+            <element signature="e#36217#36393#0" />
+            <element signature="e#36473#36650#0" />
+            <element signature="e#36726#37395#0" />
+            <element signature="e#37468#37632#0" />
+            <element signature="e#37690#37766#0" />
+            <element signature="e#38031#38240#0" />
+            <element signature="e#38031#38213#1" />
+            <element signature="e#38497#38705#0" />
+            <element signature="e#38592#38804#1" />
+            <element signature="e#42632#49220#0" />
+            <element signature="e#42632#43542#1" />
+            <element signature="e#44313#44345#0" />
+            <element signature="e#44396#45002#0" />
+            <element signature="e#44470#44764#0" />
+            <element signature="e#44476#44640#0" />
+            <element signature="e#44791#45002#0" />
+            <element signature="e#44797#44924#0" />
+            <element signature="e#45280#45341#0" />
+            <element signature="e#45705#49120#0" />
+            <element signature="e#45795#49085#0" />
+            <element signature="e#45892#48936#0" />
+            <element signature="e#45960#46440#0" />
+            <element signature="e#46465#46744#0" />
+            <element signature="e#47241#48826#0" />
+            <element signature="e#47289#48106#0" />
+            <element signature="e#48352#48584#0" />
+            <element signature="e#48360#48539#0" />
+            <element signature="e#48652#48826#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/Data.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="90" column="14" selection-start-line="90" selection-start-column="14" selection-end-line="90" selection-end-column="14" />
         </state>
       </provider>
     </entry>

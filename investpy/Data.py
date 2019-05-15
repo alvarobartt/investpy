@@ -6,6 +6,9 @@
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
 
+# TODO: all lower case in objects to access it via dot operator (.)
+#  look for a proper justification of it
+
 class Data(object):
     """
     A class used to store the historical data of an equity, fund or etf
@@ -89,9 +92,10 @@ class Data(object):
         }
 
     def etf_as_json(self):
-        return {self.date.strftime('%d/%m/%Y'): {
-            'Open': self.open,
-            'High': self.high,
-            'Low': self.low,
-            'Close': self.close,
-        }}
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
+        }
