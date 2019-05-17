@@ -5,6 +5,8 @@
 
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
+import time
+
 import pandas as pd
 import requests
 import json
@@ -40,7 +42,9 @@ def get_etf_names():
         raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='etfs']/tbody/tr")
+    path_ = root_.xpath(".//table[@id='etfs']"
+                        "/tbody"
+                        "/tr")
 
     results = list()
 
@@ -99,11 +103,11 @@ def list_etfs():
 
     if etfs is None:
         raise IOError("ERR#009: etf list not found or unable to retrieve.")
+    else:
+        return etfs['name'].tolist()
 
-    return etfs['name'].tolist()
 
-
-def dict_etfs(columns=['id', 'name', 'symbol', 'tag'], as_json=False):
+def dict_etfs(columns=None, as_json=False):
     """
     This function retrieves all the available etfs and returns a dictionary with the specified columns.
     Available columns are: 'id', 'name', 'symbol' and 'tag'
@@ -114,8 +118,11 @@ def dict_etfs(columns=['id', 'name', 'symbol', 'tag'], as_json=False):
         :returns a dictionary that contains all the available etf values specified in the columns
     """
 
-    if not isinstance(columns, list):
-        raise ValueError("ERR#020: specified columns argument is not a list, it can just be list type.")
+    if columns is None:
+        columns = ['id', 'name', 'symbol', 'tag']
+    else:
+        if not isinstance(columns, list):
+            raise ValueError("ERR#020: specified columns argument is not a list, it can just be list type.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")

@@ -9,11 +9,11 @@ dist: xenial
 
 install:
   - pip install pandas==0.24.2
-  - pip install requests==2.21.0
+  - pip install requests==2.22.0
   - pip install lxml==4.3.3
   - pip install unidecode==1.0.23
-  - pip install investpy==0.8.4.3
-  - pip install pytest==4.1.1
+  - pip install investpy==0.8.4.5
+  - pip install pytest==4.5
   
 script:
   - pytest

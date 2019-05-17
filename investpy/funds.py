@@ -40,7 +40,9 @@ def get_fund_names():
         raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='etfs']/tbody/tr")
+    path_ = root_.xpath(".//table[@id='etfs']"
+                        "/tbody"
+                        "/tr")
 
     results = list()
 
@@ -49,19 +51,19 @@ def get_fund_names():
             id_ = elements_.get('id').replace('pair_', '')
             symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-            nested = elements_.xpath(".//a")[0]
-            info = nested.get('href').replace('/funds/', '')
+            nested = elements_.xpath(".//a")[0].get('title').rstrip()
+            info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
 
             if symbol:
                 data = {
-                    "name": nested.text,
+                    "name": nested,
                     "symbol": symbol,
                     "tag": info,
                     "id": id_
                 }
             else:
                 data = {
-                    "name": nested.text,
+                    "name": nested,
                     "symbol": "undefined",
                     "tag": info,
                     "id": id_
@@ -107,7 +109,7 @@ def fund_information_to_json(df):
         'Category': str(df['Category'][0])
     }
 
-    result = json.dumps(json_)
+    result = json.dumps(json_, sort_keys=False)
 
     return result
 
@@ -132,5 +134,9 @@ def list_funds():
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
+    else:
+        return funds['name'].tolist()
 
-    return funds['name'].tolist()
+
+if __name__ == '__main__':
+    get_fund_names()

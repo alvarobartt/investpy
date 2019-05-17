@@ -6,13 +6,13 @@
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
 import datetime
+import json
 from random import randint
-import unidecode
 
 import pandas as pd
 import pkg_resources
 import requests
-import json
+import unidecode
 from lxml.html import fromstring
 
 from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
@@ -21,6 +21,8 @@ from investpy.Data import Data
 
 # TODO: add country/market param and mapping of ‘resources/available_markets’ in order to allow users retrieve
 #  historical data from different markets.
+
+# DONE: available_languages replaced by available_markets
 
 # TODO: create thread pools to increase scraping efficiency and improve ‘investpy’ performance => CHECK BOOK DOC
 
@@ -50,6 +52,12 @@ from investpy.Data import Data
 # DONE: updated docstrings
 
 # TODO: fix dosctrings and unify structure with Google docstrings or similar
+
+# WARNING: RE-GENERATE MARKET FILES BEFORE EVERY RELEASE
+
+# TODO: add 'clase de activo', 'isin' and 'emisor' to funds
+
+# DONE: updated equities, funds and etfs retrieval functions
 
 
 def get_equities_list():
@@ -164,10 +172,12 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                              'recent':
                                  [value.equity_as_json() for value in result]
                              }
-                    return json.dumps(json_)
+
+                    return json.dumps(json_, sort_keys=False)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
+
                     return df
             else:
                 raise RuntimeError("ERR#004: data retrieval error while scraping.")
@@ -364,7 +374,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                     raise RuntimeError("ERR#004: data retrieval error while scraping.")
 
             if as_json is True:
-                return json.dumps(final)
+                return json.dumps(final, sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
         else:
@@ -592,10 +602,12 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                              'recent':
                                  [value.fund_as_json() for value in result]
                              }
-                    return json.dumps(json_)
+
+                    return json.dumps(json_, sort_keys=False)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
+
                     return df
 
             else:
@@ -768,7 +780,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                     raise RuntimeError("ERR#004: data retrieval error while scraping.")
 
             if as_json is True:
-                return json.dumps(final)
+                return json.dumps(final, sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
         else:
@@ -1032,10 +1044,12 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                              'recent':
                                  [value.etf_as_json() for value in result]
                              }
-                    return json.dumps(json_)
+
+                    return json.dumps(json_, sort_keys=False)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
+
                     return df
 
             else:
@@ -1201,14 +1215,14 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                         final.append(json_)
                     elif as_json is False:
                         df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
-                        df.set_index('date', inplace=True)
+                        df.set_index('Date', inplace=True)
 
                         final.append(df)
                 else:
                     raise RuntimeError("ERR#004: data retrieval error while scraping.")
 
             if as_json is True:
-                return json.dumps(final)
+                return json.dumps(final, sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
         else:

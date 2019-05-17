@@ -75,12 +75,13 @@ class Data(object):
         }
 
     def fund_as_json(self):
-        return {self.date.strftime('%d/%m/%Y'): {
-            'Open': self.open,
-            'High': self.high,
-            'Low': self.low,
-            'Close': self.close,
-        }}
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
+        }
 
     def etf_to_dict(self):
         return {

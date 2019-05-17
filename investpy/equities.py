@@ -49,7 +49,9 @@ def get_equity_names():
         raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']/tbody/tr")
+    path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
+                        "/tbody"
+                        "/tr")
 
     results = list()
 
@@ -60,7 +62,11 @@ def get_equity_names():
             for element_ in elements_.xpath('.//a'):
                 tag_ = element_.get('href').replace('/equities/', '')
                 full_name_ = element_.get('title').replace(' (CFD)', '')
-                isin_ = get_isin_code(tag_)
+
+                try:
+                    isin_ = get_isin_code(tag_)
+                except (ConnectionError, IndexError):
+                    isin_ = None
 
                 data = {
                     "name": element_.text,
@@ -105,22 +111,30 @@ def get_isin_code(info):
     req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
-        # raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
-        return None
+        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath("/html/body/div[5]/section/div[4]/div[1]/div[2]/div[3]/span[2]")
+    path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
+                        "/div[@id='quotes_summary_current_data']"
+                        "/div[@class='right']"
+                        "/div")
 
-    code = None
-
-    if path_:
+    for p in path_:
         try:
-            code = path_[0].text_content().rstrip()
-            time.sleep(.5)
+            if p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
+                try:
+                    code = p.xpath("span[@class='elp']")[0].text_content().rstrip()
+                    time.sleep(.5)
+
+                    return code
+                except IndexError:
+                    raise IndexError("ERR#017: isin code unavailable or not found.")
+            else:
+                continue
         except IndexError:
             raise IndexError("ERR#017: isin code unavailable or not found.")
 
-    return code
+    return None
 
 
 def list_equities():
