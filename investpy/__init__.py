@@ -59,6 +59,8 @@ from investpy.Data import Data
 
 # DONE: updated equities, funds and etfs retrieval functions
 
+# TODO: handle all errors => 0.9
+
 
 def get_equities_list():
     """

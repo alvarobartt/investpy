@@ -23,11 +23,14 @@ def get_random():
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
-    if os.path.exists(file):
-        with open(file, 'r') as f:
-            try:
-                lines = f.readlines()
+    try:
+        if os.path.exists(file):
+            with open(file, 'r') as f:
+                try:
+                    lines = f.readlines()
 
-                return str(random.choice(lines)).replace("\n", "")
-            except IOError:
-                raise IOError("ERR#016: unable to retrieve a random user agent")
+                    return str(random.choice(lines)).replace("\n", "")
+                except IOError:
+                    raise IOError("ERR#016: unable to retrieve a random user agent")
+    except FileNotFoundError:
+        raise FileNotFoundError("ERR#022: user agents file not found")

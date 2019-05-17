@@ -157,5 +157,5 @@ def list_equities():
 
     if equities is None:
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
-
-    return equities['name'].tolist()
+    else:
+        return equities['name'].tolist()

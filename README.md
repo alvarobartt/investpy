@@ -51,7 +51,7 @@ If needed you can open an [issue](https://github.com/alvarob96/investpy/issues) 
 * Updated docstrings as reStructuredText (via PyCharm)
 * Modified JSON output to fit current standard for historical data
 * Added function to retrieve information from listed ETFs (id, name, symbol and tag)
-* 
+* ...
 
 ## Additional Information
 
