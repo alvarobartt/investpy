@@ -6,9 +6,6 @@
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
 
-# TODO: all lower case in objects to access it via dot operator (.)
-#  look for a proper justification of it
-
 class Data(object):
     """
     A class used to store the historical data of an equity, fund or etf

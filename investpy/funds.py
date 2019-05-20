@@ -7,6 +7,7 @@ __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
 import pandas as pd
 import requests
+from tqdm import tqdm
 import json
 from lxml.html import fromstring
 import pkg_resources
@@ -47,29 +48,37 @@ def get_fund_names():
     results = list()
 
     if path_:
-        for elements_ in path_:
+        for elements_ in tqdm(path_, ascii=True, ncols=80):
             id_ = elements_.get('id').replace('pair_', '')
             symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
             nested = elements_.xpath(".//a")[0].get('title').rstrip()
             info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
 
+            data = get_fund_data(info)
+
             if symbol:
-                data = {
+                obj = {
                     "name": nested,
                     "symbol": symbol,
                     "tag": info,
-                    "id": id_
+                    "id": id_,
+                    "issuer": data['issuer'],
+                    "isin": data['isin'],
+                    "asset class": data['asset class'],
                 }
             else:
-                data = {
+                obj = {
                     "name": nested,
                     "symbol": "undefined",
                     "tag": info,
-                    "id": id_
+                    "id": id_,
+                    "issuer": data['issuer'],
+                    "isin": data['isin'],
+                    "asset class": data['asset class'],
                 }
 
-            results.append(data)
+            results.append(obj)
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'es', 'funds.csv'))
@@ -79,6 +88,65 @@ def get_fund_names():
     df.to_csv(file, index=False)
 
     return results
+
+
+def get_fund_data(fund_tag):
+    url = "https://www.investing.com/funds/" + fund_tag
+
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head, timeout=5)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
+                        "/div[@id='quotes_summary_current_data']"
+                        "/div[@class='right']"
+                        "/div")
+
+    result = {
+        'issuer': None,
+        'isin': None,
+        'asset class': None,
+    }
+
+    for p in path_:
+        try:
+            if p.xpath("span[not(@class)]")[0].text_content().__contains__('Issuer'):
+                try:
+                    result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+                    continue
+                except IndexError:
+                    raise IndexError("ERR#023: fund issuer unavailable or not found.")
+            elif p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
+                try:
+                    result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+                    continue
+                except IndexError:
+                    raise IndexError("ERR#024: fund isin code unavailable or not found.")
+            elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
+                try:
+                    result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+                    continue
+                except IndexError:
+                    raise IndexError("ERR#025: fund asset class unavailable or not found.")
+            else:
+                continue
+        except IndexError:
+            raise IndexError("ERR#017: isin code unavailable or not found.")
+
+    if None not in result.values():
+        return result
+    else:
+        return result
 
 
 def fund_information_to_json(df):
@@ -136,7 +204,3 @@ def list_funds():
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
     else:
         return funds['name'].tolist()
-
-
-if __name__ == '__main__':
-    get_fund_names()

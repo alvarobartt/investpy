@@ -5,13 +5,13 @@
 
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
-import time
+import json
 
 import pandas as pd
-import requests
-import json
 import pkg_resources
+import requests
 from lxml.html import fromstring
+from tqdm import tqdm
 
 from investpy import user_agent as ua
 
@@ -49,7 +49,7 @@ def get_etf_names():
     results = list()
 
     if path_:
-        for elements_ in path_:
+        for elements_ in tqdm(path_, ascii=True, ncols=80):
             id_ = elements_.get('id').replace('pair_', '')
             symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 

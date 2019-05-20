@@ -8,6 +8,7 @@ __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 import datetime
 import json
 from random import randint
+from tqdm import tqdm
 
 import pandas as pd
 import pkg_resources
@@ -22,8 +23,6 @@ from investpy.Data import Data
 # TODO: add country/market param and mapping of ‘resources/available_markets’ in order to allow users retrieve
 #  historical data from different markets.
 
-# DONE: available_languages replaced by available_markets
-
 # TODO: create thread pools to increase scraping efficiency and improve ‘investpy’ performance => CHECK BOOK DOC
 
 # TODO: generate sphinx documentation for version 1.0
@@ -34,32 +33,21 @@ from investpy.Data import Data
 
 # TODO: consider moving from es.investing to www.investing (long task - develop on developer branch)
 
-# DONE: create API project built on Flask => 0.8.5
-
 # TODO: add additional markets for equities/funds/etfs
-
-# DONE: redefine JSON output for ETFs => 0.8.5
-#  https://eodhistoricaldata.com/api/eod/AAPL.US?api_token=OeAFFmMliFG5orCUuwAKQ8l4WWFQ67YX&period=d.&fmt=json
-
-# TODO: keep HTML doc structure (remove get_text() functions or similar)
-
-# TODO: improve project as described in ‘’Web Scraping with Python’'
 
 # TODO: modify __init__ structure as functions are not supposed to be defined here?
 
-# DONE: get etfs listed as dictionary with specified params
-
-# DONE: updated docstrings
+# TODO: update equities.py and equity data retrieval
 
 # TODO: fix dosctrings and unify structure with Google docstrings or similar
 
-# WARNING: RE-GENERATE MARKET FILES BEFORE EVERY RELEASE
-
-# TODO: add 'clase de activo', 'isin' and 'emisor' to funds
-
-# DONE: updated equities, funds and etfs retrieval functions
-
 # TODO: handle all errors => 0.9
+
+# TODO: add filtering when retrieving list of equities/funds/etfs
+
+# TODO: add function to download information from market (es/en/ge/..) investpy.load('market name')
+
+# TODO: handle market without data exceptions (loaded by default?)
 
 
 def get_equities_list():
@@ -139,7 +127,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             result = list()
 
             if path_:
-                for elements_ in path_:
+                for elements_ in tqdm(path_, ascii=True, ncols=80):
                     info = []
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.text_content())
@@ -331,7 +319,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                 result = list()
 
                 if path_:
-                    for elements_ in path_:
+                    for elements_ in tqdm(path_, ascii=True, ncols=80):
                         info = []
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
@@ -578,7 +566,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             result = list()
 
             if path_:
-                for elements_ in path_:
+                for elements_ in tqdm(path_, ascii=True, ncols=80):
                     info = []
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.text_content())
@@ -745,7 +733,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                 result = list()
 
                 if path_:
-                    for elements_ in path_:
+                    for elements_ in tqdm(path_, ascii=True, ncols=80):
                         info = []
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
@@ -1020,7 +1008,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             result = list()
 
             if path_:
-                for elements_ in path_:
+                for elements_ in tqdm(path_, ascii=True, ncols=80):
                     info = []
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.text_content())
@@ -1187,7 +1175,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                 result = list()
 
                 if path_:
-                    for elements_ in path_:
+                    for elements_ in tqdm(path_, ascii=True, ncols=80):
                         info = []
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
