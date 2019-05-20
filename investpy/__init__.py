@@ -50,6 +50,19 @@ from investpy.Data import Data
 # TODO: handle market without data exceptions (loaded by default?)
 
 
+def get_equities():
+    """
+    This function retrieves all the available equities and returns a pandas.DataFrame of them all.
+    All the available equities can be found at: https://es.investing.com/equities/spain
+
+    Returns
+    -------
+        :returns a pandas.DataFrame with all the available equities to retrieve data from
+    """
+
+    return ts.get_equities()
+
+
 def get_equities_list():
     """
     This function retrieves the list of all the available equities
@@ -489,6 +502,19 @@ def get_equity_company_profile(equity, language='english'):
     return company_profile
 
 
+def get_funds():
+    """
+    This function retrieves all the available funds and returns a pandas.DataFrame of them all.
+    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Returns
+    -------
+        :returns a pandas.DataFrame with all the available funds to retrieve data from
+    """
+
+    return fs.get_funds()
+
+
 def get_funds_list():
     """
     This function retrieves the list of all the available funds
@@ -500,6 +526,18 @@ def get_funds_list():
     """
 
     return fs.list_funds()
+
+
+def get_funds_dict(columns, as_json):
+    """
+    This function retrieves a dictionary with the specified columns of all the available funds
+
+    Returns
+    -------
+    :returns a dictionary that contains all the available fund values specified in the columns
+    """
+
+    return fs.dict_funds(columns=columns, as_json=as_json)
 
 
 def get_fund_recent_data(fund, as_json=False, order='ascending'):
@@ -919,6 +957,19 @@ def get_fund_information(fund, as_json=False):
     return pd.DataFrame()
 
 
+def get_etfs():
+    """
+    This function retrieves all the available etfs and returns a pandas.DataFrame of them all.
+    All the available etfs can be found at: https://es.investing.com/etfs/spain-etfs
+
+    Returns
+    -------
+        :returns a pandas.DataFrame with all the available etfs to retrieve data from
+    """
+
+    return es.get_etfs()
+
+
 def get_etfs_list():
     """
     This function retrieves the list of all the available etfs
@@ -934,7 +985,7 @@ def get_etfs_list():
 
 def get_etfs_dict(columns, as_json):
     """
-    This function retrieves a dictionary with the specfied columns of all the available etfs
+    This function retrieves a dictionary with the specified columns of all the available etfs
 
     Returns
     -------

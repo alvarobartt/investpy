@@ -5,12 +5,13 @@
 
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
-import pandas as pd
-import requests
-from tqdm import tqdm
 import json
-from lxml.html import fromstring
+
+import pandas as pd
 import pkg_resources
+import requests
+from lxml.html import fromstring
+from tqdm import tqdm
 
 from investpy import user_agent as ua
 
@@ -182,6 +183,30 @@ def fund_information_to_json(df):
     return result
 
 
+def get_funds():
+    """
+    This function retrieves all the available funds and returns a pandas.DataFrame of them all.
+    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Returns
+    -------
+        :returns a pandas.DataFrame with all the available funds to retrieve data from
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_fund_names()
+        funds = pd.DataFrame(names)
+
+    if funds is None:
+        raise IOError("ERR#005: fund list not found or unable to retrieve.")
+    else:
+        return funds
+
+
 def list_funds():
     """
     This function retrieves all the available funds and returns a list of each one of them.
@@ -204,3 +229,44 @@ def list_funds():
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
     else:
         return funds['name'].tolist()
+
+
+def dict_funds(columns=None, as_json=False):
+    """
+    This function retrieves all the available funds and returns a dictionary with the specified columns.
+    Available columns are: 'asset class', 'id', 'isin', 'issuer', 'name', 'symbol' and 'tag'
+    All the available funds can be found at: https://es.investing.com/etfs/spain-etfs
+
+    Returns
+    -------
+        :returns a dictionary that contains all the available fund values specified in the columns
+    """
+
+    if columns is None:
+        columns = ['asset class', 'id', 'isin', 'issuer', 'name', 'symbol', 'tag']
+    else:
+        if not isinstance(columns, list):
+            raise ValueError("ERR#020: specified columns argument is not a list, it can just be list type.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_fund_names()
+        funds = pd.DataFrame(names)
+
+    if funds is None:
+        raise IOError("ERR#005: fund list not found or unable to retrieve.")
+
+    if not all(column in funds.columns.tolist() for column in columns):
+        raise ValueError("ERR#026: specified columns does not exist, available columns are "
+                         "<asset class, id, isin, issuer, name, symbol, tag>")
+
+    if as_json:
+        return json.dumps(funds[columns].to_dict(orient='records'))
+    else:
+        return funds[columns].to_dict(orient='records')

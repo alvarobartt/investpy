@@ -83,6 +83,30 @@ def get_etf_names():
     return results
 
 
+def get_etfs():
+    """
+    This function retrieves all the available etfs and returns a pandas.DataFrame of them all.
+    All the available etfs can be found at: https://es.investing.com/etfs/spain-etfs
+
+    Returns
+    -------
+        :returns a pandas.DataFrame with all the available etfs to retrieve data from
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'es', 'etfs.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_etf_names()
+        etfs = pd.DataFrame(names)
+
+    if etfs is None:
+        raise IOError("ERR#009: etf list not found or unable to retrieve.")
+    else:
+        return etfs
+
+
 def list_etfs():
     """
     This function retrieves all the available etfs and returns a list of each one of them.

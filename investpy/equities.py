@@ -138,6 +138,30 @@ def get_isin_code(info):
     return None
 
 
+def get_equities():
+    """
+    This function retrieves all the available equities and returns a pandas.DataFrame of them all.
+    All the available equities can be found at: https://es.investing.com/equities/spain
+
+    Returns
+    -------
+        :returns a pandas.DataFrame with all the available equities to retrieve data from
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        names = get_equity_names()
+        equities = pd.DataFrame(names)
+
+    if equities is None:
+        raise IOError("ERR#001: equities list not found or unable to retrieve.")
+    else:
+        return equities
+
+
 def list_equities():
     """
     This function retrieves all the available equities and returns a list of each one of them.

@@ -53,6 +53,8 @@ class Data(object):
             'Volume': self.volume,
         }
 
+    # TODO: pending refactor
+
     def equity_as_json(self):
         return {self.date.strftime('%Y/%m/%d'): {
             'Open': self.open,
