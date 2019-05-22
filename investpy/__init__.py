@@ -49,6 +49,10 @@ from investpy.Data import Data
 
 # TODO: handle market without data exceptions (loaded by default?)
 
+# TODO: add conda & docker installation (as tweepy?)
+
+# TODO: add sectors to equities, funds and etfs
+
 
 def get_equities():
     """
