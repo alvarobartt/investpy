@@ -18,7 +18,7 @@ install:
   - pip install codecov==2.0.15
 
 script:
-  - coverage run investpy
+  - coverage run tests/test_investpy.py
 
 after_success:
   - codecov
