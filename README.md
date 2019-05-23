@@ -28,7 +28,7 @@ All the dependencies are already listed on the setup file of the package, but to
 * [**requests 2.22.0**](https://pypi.org/project/requests/)
 * [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 * [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
-* [**pytest 4.1.1**](https://pypi.org/project/pytest/)
+* [**pytest 4.5.0**](https://pypi.org/project/pytest/)
 
 ## GitHub Gists on investpy use
 
