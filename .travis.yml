@@ -14,13 +14,11 @@ install:
   - pip install unidecode==1.0.23
   - pip install tqdm==4.32.1
   - pip install investpy==0.8.4.6
-  - pip install pytest==4.5
-  
-script:
-  - py.test --cov.report term --cov=app/test/
+  - pip install pytest==4.5.0
+  - pip install codecov==2.0.15
 
-env:
-  - CODECOV_TOKEN=0dbc6655-ea12-4385-9c92-cab7b3f46e78
+script:
+  - coverage run tests/test_investpy.py
 
 after_success:
   - codecov

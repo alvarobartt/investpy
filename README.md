@@ -24,7 +24,7 @@ In order to get this package working you will need to install [**investpy**](htt
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
 * [**pandas 0.24.2**](https://pypi.org/project/pandas/)
-* [**requests 2.21.0**](https://pypi.org/project/requests/)
+* [**requests 2.22.0**](https://pypi.org/project/requests/)
 * [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 * [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
 * [**pytest 4.1.1**](https://pypi.org/project/pytest/)
