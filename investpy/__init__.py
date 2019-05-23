@@ -53,6 +53,10 @@ from investpy.Data import Data
 
 # TODO: add sectors to equities, funds and etfs
 
+# TODO: handle raise exception when retrieving from interval until the request is completed
+
+# TODO: warning that funds and etfs from stock market are just from 2010-2011 until now
+
 
 def get_equities():
     """
