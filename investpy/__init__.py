@@ -916,7 +916,7 @@ def get_fund_information(fund, as_json=False):
                         result.at[0, 'ROA'] = roa_percentage
                     elif title_ == 'Fecha de inicio':
                         value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        inception_date = datetime.datetime.strptime(value.replace('.', '-'), '%d/%m/%Y')
+                        inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
                         result.at[0, 'Inception Date'] = inception_date
                     elif title_ == 'Total activos':
                         value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
