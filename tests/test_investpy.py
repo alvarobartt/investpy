@@ -24,7 +24,7 @@ def test_investing():
         investpy.get_recent_data(equity='enagás', as_json=value, order='ascending')
         investpy.get_historical_data(equity='enagás', start='01/01/1990', end='01/01/2019', as_json=value, order='ascending')
 
-    for value in ['spanish', 'language']:
+    for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás', language=value)
 
     get_equity_names()
