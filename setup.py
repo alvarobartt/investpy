@@ -21,11 +21,11 @@ setup(
     description='investpy — a Python package for historical data extraction from the spanish stock market',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=['requests==2.21.0',
+    install_requires=['requests==2.22.0',
                       'pandas==0.24.2',
                       'unidecode==1.0.23',
                       'lxml==4.3.3',
-                      'pytest==4.1.1',
+                      'pytest==4.5',
                       'tqdm==4.32.1'],
     data_files=[
         ('equities_es', ['investpy/resources/es/equities.csv']),

@@ -17,4 +17,10 @@ install:
   - pip install pytest==4.5
   
 script:
-  - pytest
+  - py.test --cov.report term --cov=app/test/
+
+env:
+  - CODECOV_TOKEN=0dbc6655-ea12-4385-9c92-cab7b3f46e78
+
+after_success:
+  - codecov
