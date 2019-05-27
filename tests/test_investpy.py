@@ -6,13 +6,15 @@
 __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 
 import pytest
+
 import investpy
+
 from investpy.equities import get_equity_names
 from investpy.funds import get_fund_names
 from investpy.etfs import get_etf_names
 
 
-def test_investing():
+def test_investpy():
     """
     This function checks that main functions of investpy work properly.
     """
@@ -33,11 +35,10 @@ def test_investing():
     investpy.get_funds_list()
 
     for value in [True, False]:
-        investpy.get_funds_dict(columns=['id', 'tag'], as_json=value)
+        investpy.get_funds_dict(as_json=value)
         investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=value, order='ascending')
         investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=value, order='ascending')
-
-    investpy.get_fund_information(fund='bbva multiactivo conservador pp')
+        investpy.get_fund_information(fund='bbva multiactivo conservador pp', as_json=value)
 
     get_fund_names()
 
@@ -53,4 +54,4 @@ def test_investing():
 
 
 if __name__ == '__main__':
-    test_investing()
+    test_investpy()

@@ -58,26 +58,15 @@ def get_fund_names():
 
             data = get_fund_data(info)
 
-            if symbol:
-                obj = {
-                    "name": nested,
-                    "symbol": symbol,
-                    "tag": info,
-                    "id": id_,
-                    "issuer": data['issuer'],
-                    "isin": data['isin'],
-                    "asset class": data['asset class'],
-                }
-            else:
-                obj = {
-                    "name": nested,
-                    "symbol": "undefined",
-                    "tag": info,
-                    "id": id_,
-                    "issuer": data['issuer'],
-                    "isin": data['isin'],
-                    "asset class": data['asset class'],
-                }
+            obj = {
+                "name": nested,
+                "symbol": symbol,
+                "tag": info,
+                "id": id_,
+                "issuer": data['issuer'],
+                "isin": data['isin'],
+                "asset class": data['asset class'],
+            }
 
             results.append(obj)
 
@@ -92,6 +81,32 @@ def get_fund_names():
 
 
 def get_fund_data(fund_tag):
+    """
+    This function retrieves additional information from a fund as listed on
+    es.Investing.com. Every fund data is retrieved and stored in a CSV in order
+    to get all the possible information from a fund.
+
+    Args:
+        fund_tag (str): is the identifying tag of the specified fund.
+
+    Returns:
+        dict: contains the retrieved data if found, if not, the corresponding
+        fields are filled with None values.
+
+        The Return dictionary if the data was retrieved will look like::
+
+            {
+                'issuer': issuer_value,
+                'isin': isin_value,
+                'asset class': asset_value
+            }
+
+    Raises:
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if fund information was unavailable or not found.
+
+    """
+
     url = "https://www.investing.com/funds/" + fund_tag
 
     head = {
@@ -144,10 +159,7 @@ def get_fund_data(fund_tag):
         except IndexError:
             raise IndexError("ERR#017: isin code unavailable or not found.")
 
-    if None not in result.values():
-        return result
-    else:
-        return result
+    return result
 
 
 def fund_information_to_json(df):

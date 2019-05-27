@@ -39,7 +39,7 @@ from investpy.Data import Data
 
 # TODO: update equities.py and equity data retrieval
 
-# TODO: fix dosctrings and unify structure with Google docstrings or similar
+# TODO: fix dosctrings and unify structure with Google docstrings or similar => https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
 
 # TODO: handle all errors => 0.9
 
@@ -55,7 +55,17 @@ from investpy.Data import Data
 
 # TODO: handle raise exception when retrieving from interval until the request is completed
 
+# TODO: when generating one-time-read values use yield instead of return or () instead of []
+
 # TODO: warning that funds and etfs from stock market are just from 2010-2011 until now
+
+# TODO: [![HitCount](http://hits.dwyl.io/alvarob96/investpy.svg)](http://hits.dwyl.io/alvarob96/investpy)
+
+# TODO: check that start date is earlier than end date
+
+# TODO: modify check 'not in' that value is a string
+
+# TODO: add equity parameter check (it is mandatory)
 
 
 def get_equities():
@@ -77,8 +87,7 @@ def get_equities_list():
 
     Returns
     -------
-    :returns list
-        returns a list that contains all the available equity names
+    :returns list that contains all the available equity names
     """
 
     return ts.list_equities()
@@ -102,8 +111,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
 
     Returns
     -------
-    :returns pandas.DataFrame (or JSON object if specified)
-        returns a pandas DataFrame (or JSON object if specified) containing the recent data of the equity
+    :returns pandas DataFrame (or JSON object if specified) containing the recent data of the equity
     """
 
     if not isinstance(as_json, bool):
@@ -219,8 +227,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
     Returns
     -------
-    :returns pandas.DataFrame (or JSON object if specified)
-        returns a pandas DataFrame (or JSON object if specified) containing the historical data of the equity
+    :returns pandas DataFrame (or JSON object if specified) containing the historical data of the equity
     """
 
     if not isinstance(as_json, bool):
@@ -410,8 +417,7 @@ def get_equity_company_profile(equity, language='english'):
 
     Returns
     -------
-    :returns str
-        returns a string containing the company profile of the specified equity
+    :returns str containing the company profile of the specified equity
     """
 
     available_sources = {
@@ -529,8 +535,7 @@ def get_funds_list():
 
     Returns
     -------
-    :returns list
-        returns a list that contains all the available fund names
+    :returns list that contains all the available fund names
     """
 
     return fs.list_funds()
@@ -566,8 +571,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
 
     Returns
     -------
-    :returns pandas.DataFrame (or JSON object if specified)
-        returns a pandas DataFrame (or JSON object if specified) containing the recent data of the fund
+    :returns pandas DataFrame (or JSON object if specified) containing the recent data of the fund
     """
 
     if not isinstance(as_json, bool):
@@ -675,8 +679,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
     Returns
     -------
-    :returns pandas.DataFrame (or JSON object if specified)
-        returns a pandas DataFrame (or JSON object if specified) containing the historical data of the fund
+    :returns pandas DataFrame (or JSON object if specified) containing the historical data of the fund
     """
 
     if not isinstance(as_json, bool):
@@ -830,21 +833,20 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
 def get_fund_information(fund, as_json=False):
     """
-        This function retrieves historical data from the specified fund in the specified date range.
+    This function retrieves historical data from the specified fund in the specified date range.
 
-        Parameters
-        ----------
-        :param fund: str
-            name of the fund to retrieve information from
-        :param as_json: bool
-            optional parameter to specify the output, default is pandas.DataFrame
-            if true, return value is a JSON object containing the information of the specified fund
+    Parameters
+    ----------
+    :param fund: str
+        name of the fund to retrieve information from
+    :param as_json: bool
+        optional parameter to specify the output, default is pandas.DataFrame
+        if true, return value is a JSON object containing the information of the specified fund
 
-        Returns
-        -------
-        :returns pandas.DataFrame (or JSON object if specified)
-            returns a pandas DataFrame (or JSON object if specified) containing the information of the fund
-        """
+    Returns
+    -------
+    :returns pandas DataFrame (or JSON object if specified) containing the information of the fund
+    """
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
@@ -1021,8 +1023,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
 
     Returns
     -------
-    :returns pandas.DataFrame (or JSON object if specified)
-        returns a pandas DataFrame (or JSON object if specified) containing the recent data of the etf
+    :returns pandas DataFrame (or JSON object if specified) containing the recent data of the etf
     """
 
     if not isinstance(as_json, bool):
@@ -1130,8 +1131,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
 
     Returns
     -------
-    :returns pandas.DataFrame (or JSON object if specified)
-        returns a pandas DataFrame (or JSON object if specified) containing the historical data of the etf
+    :returns pandas DataFrame (or JSON object if specified) containing the historical data of the etf
     """
 
     if not isinstance(as_json, bool):
