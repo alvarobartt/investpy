@@ -35,7 +35,7 @@ def test_investpy():
     investpy.get_funds_list()
 
     for value in [True, False]:
-        investpy.get_funds_dict(as_json=value)
+        investpy.get_funds_dict(columns=['id', 'name'], as_json=value)
         investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=value, order='ascending')
         investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=value, order='ascending')
         investpy.get_fund_information(fund='bbva multiactivo conservador pp', as_json=value)
