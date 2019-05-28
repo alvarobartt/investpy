@@ -16,9 +16,10 @@ install:
   - pip install investpy==0.8.4.7
   - pip install pytest==4.5.0
   - pip install codecov==2.0.15
+  - pip install pytest-cov==2.7.1
 
 script:
-  - coverage run tests/test_investpy.py
+  - pytest --cov-report term --cov=investpy tests/
 
 after_success:
   - codecov

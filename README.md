@@ -66,7 +66,7 @@ Additionally, you can triage issues on [investpy CodeTriage](https://www.codetri
 
 Feel free to contact package administrator via [email](alvarob96@usal.es)!
 
-##License
+## License
 
 [MIT License](https://github.com/alvarob96/investpy/blob/master/LICENSE)
 

@@ -4,10 +4,8 @@
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/equities.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/equities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/etfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/etfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/funds.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/funds.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investpy/resources/es/etfs.csv" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/resources/es/etfs.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -121,19 +119,6 @@
               <folding>
                 <element signature="n#!!doc" />
                 <element signature="e#143#154#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/investpy/user_agent.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="12" column="4" selection-start-line="12" selection-start-column="4" selection-end-line="12" selection-end-column="4" />
-              <folding>
-                <element signature="n#!!doc" />
-                <element signature="e#143#156#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -298,20 +283,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+            <state relative-caret-position="360">
+              <caret line="24" column="11" lean-forward="true" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="631">
+                <caret line="68" column="3" selection-start-line="68" selection-start-column="3" selection-end-line="68" selection-end-column="3" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="586">
-                <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
-              </first_editor>
-              <second_editor />
+        <entry file="file://$PROJECT_DIR$/requirements.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -427,7 +421,6 @@
         <option value="$PROJECT_DIR$/investpy.egg-info/SOURCES.txt" />
         <option value="$PROJECT_DIR$/investpy/resources/es/equities.csv" />
         <option value="$PROJECT_DIR$/investpy/user_agent.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/tests/__init__.py" />
         <option value="$PROJECT_DIR$/investpy/resources/__init__.py" />
         <option value="$PROJECT_DIR$/investpy/Data.py" />
@@ -439,9 +432,10 @@
         <option value="$PROJECT_DIR$/investpy/equities.py" />
         <option value="$PROJECT_DIR$/investpy/etfs.py" />
         <option value="$PROJECT_DIR$/investpy/funds.py" />
-        <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/investpy/__init__.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/.travis.yml" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
       </list>
     </option>
   </component>
@@ -468,12 +462,6 @@
               <item name="investpy" type="b2602c69:ProjectViewProjectNode" />
               <item name="investpy" type="462c0819:PsiDirectoryNode" />
               <item name="investpy" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="investpy" type="b2602c69:ProjectViewProjectNode" />
-              <item name="investpy" type="462c0819:PsiDirectoryNode" />
-              <item name="investpy" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="investpy" type="b2602c69:ProjectViewProjectNode" />
@@ -634,7 +622,7 @@
       <workItem from="1558682335186" duration="160000" />
       <workItem from="1558697887860" duration="2378000" />
       <workItem from="1558941586168" duration="920000" />
-      <workItem from="1558961213721" duration="11130000" />
+      <workItem from="1558961213721" duration="12295000" />
     </task>
     <servers />
   </component>
@@ -653,7 +641,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="133366000" />
+    <option name="totallyTimeSpent" value="134531000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -838,7 +826,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt" />
     <entry file="file://$PROJECT_DIR$/investpy/resources/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1136,18 +1123,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="33" lean-forward="true" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="586">
-            <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+          <first_editor relative-caret-position="631">
+            <caret line="68" column="3" selection-start-line="68" selection-start-column="3" selection-end-line="68" selection-end-column="3" />
           </first_editor>
           <second_editor />
         </state>
@@ -1155,6 +1135,20 @@
       <provider editor-type-id="text-editor">
         <state relative-caret-position="532">
           <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" column="11" lean-forward="true" selection-start-line="24" selection-start-column="11" selection-end-line="24" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
