@@ -67,6 +67,10 @@ from investpy.Data import Data
 
 # TODO: add equity parameter check (it is mandatory)
 
+# TODO: create a contributing to investpy tab as https://github.com/pandas-dev/pandas#contributing-to-pandas-
+
+# TODO: create a script.sh in order to retrieve all test paths to build coverage
+
 
 def get_equities():
     """
