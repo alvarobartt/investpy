@@ -39,7 +39,7 @@ def get_fund_names():
     req = requests.get(url, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='etfs']"
@@ -120,7 +120,7 @@ def get_fund_data(fund_tag):
     req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"

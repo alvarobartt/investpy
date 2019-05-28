@@ -19,8 +19,6 @@ install:
 
 script:
   - coverage run tests/test_investpy.py
-  - coverage run tests/test_errors.py
-  - coverage combine
 
 after_success:
   - codecov

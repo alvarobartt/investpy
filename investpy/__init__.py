@@ -20,58 +20,6 @@ from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
 from investpy.Data import Data
 
 
-# TODO: add country/market param and mapping of ‘resources/available_markets’ in order to allow users retrieve
-#  historical data from different markets.
-
-# TODO: create thread pools to increase scraping efficiency and improve ‘investpy’ performance => CHECK BOOK DOC
-
-# TODO: generate sphinx documentation for version 1.0
-
-# TODO: allow user to retrieve information from more than one equity/fund/etf in the same function call
-
-# TODO: handle connection errors and add params to retry on error codes [403, 404, 443, 500, ...] like /tweepy/binder.py
-
-# TODO: consider moving from es.investing to www.investing (long task - develop on developer branch)
-
-# TODO: add additional markets for equities/funds/etfs
-
-# TODO: modify __init__ structure as functions are not supposed to be defined here?
-
-# TODO: update equities.py and equity data retrieval
-
-# TODO: fix dosctrings and unify structure with Google docstrings or similar => https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html
-
-# TODO: handle all errors => 0.9
-
-# TODO: add filtering when retrieving list of equities/funds/etfs
-
-# TODO: add function to download information from market (es/en/ge/..) investpy.load('market name')
-
-# TODO: handle market without data exceptions (loaded by default?)
-
-# TODO: add conda & docker installation (as tweepy?)
-
-# TODO: add sectors to equities, funds and etfs
-
-# TODO: handle raise exception when retrieving from interval until the request is completed
-
-# TODO: when generating one-time-read values use yield instead of return or () instead of []
-
-# TODO: warning that funds and etfs from stock market are just from 2010-2011 until now
-
-# TODO: [![HitCount](http://hits.dwyl.io/alvarob96/investpy.svg)](http://hits.dwyl.io/alvarob96/investpy)
-
-# TODO: check that start date is earlier than end date
-
-# TODO: modify check 'not in' that value is a string
-
-# TODO: add equity parameter check (it is mandatory)
-
-# TODO: create a contributing to investpy tab as https://github.com/pandas-dev/pandas#contributing-to-pandas-
-
-# TODO: create a script.sh in order to retrieve all test paths to build coverage
-
-
 def get_equities():
     """
     This function retrieves all the available equities and returns a pandas.DataFrame of them all.
@@ -153,7 +101,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -314,7 +262,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                 req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
                 header = root_.xpath('//h2//text()')[0]
@@ -344,7 +292,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -476,7 +424,7 @@ def get_equity_company_profile(equity, language='english'):
                 req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
 
@@ -504,7 +452,7 @@ def get_equity_company_profile(equity, language='english'):
                 req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
 
@@ -613,7 +561,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -779,7 +727,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -884,7 +832,7 @@ def get_fund_information(fund, as_json=False):
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
@@ -1065,7 +1013,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             req = requests.get(url, headers=head)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -1231,7 +1179,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")

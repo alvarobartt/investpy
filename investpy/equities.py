@@ -47,7 +47,7 @@ def get_equity_names():
     req = requests.get(url, params=params, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
@@ -112,7 +112,7 @@ def get_isin_code(info):
     req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + req.status_code + ", try again later.")
+        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"

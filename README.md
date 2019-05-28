@@ -3,10 +3,10 @@
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
 [![Anaconda Cloud Version](https://anaconda.org/alvarob96/investpy/badges/version.svg)](https://pypi.org/project/investpy/)
+[![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
 [![Build Status](https://travis-ci.org/alvarob96/investpy.svg?branch=master)](https://pypi.org/project/investpy/)
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
 [![Downloads](https://img.shields.io/pypi/dm/investpy.svg?style=flat)](https://pypi.python.org/pypi/investpy)
-[![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 
 ## Introduction
 
@@ -36,9 +36,6 @@ In order to explain the use of [**investpy**](https://pypi.org/project/investpy/
 
 * Equity Data Retrieval: https://gist.github.com/alvarob96/461dce00d9196dd3140f37993f8808f8
 
-If needed you can open an [issue](https://github.com/alvarob96/investpy/issues) or [email me](alvarob96@usal.es) to request any other Gist or further explanation on how the package works.
-
-
 ## Release Notes 0.8.4.x
 
 * Several fixes on minor bugs/errors
@@ -59,9 +56,23 @@ If needed you can open an [issue](https://github.com/alvarob96/investpy/issues) 
 * Loading bar tests
 * ...
 
+## Contribute to investpy - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
+
+As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements, enhancements and ideas.
+
+Also there is an open tab of [issues](https://github.com/alvarob96/investpy/issues) where anyone can contribute opening new issues if needed or navigate through them in order to solve them or contribute to its solving.
+
+Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarob96/investpy) so you can provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new ideas to improve package functionality and efficiency.
+
+Feel free to contact package administrator via [email](alvarob96@usal.es)!
+
+##License
+
+[MIT License](https://github.com/alvarob96/investpy/blob/master/LICENSE)
+
 ## Additional Information
 
-The package is currently in a development version, so please, if needed open an [issues](https://github.com/alvarob96/investpy/issues) to solve all the possible problems the package may be causing
+The package is currently in a development version, so please, if needed open an [issue](https://github.com/alvarob96/investpy/issues) to solve all the possible problems the package may be causing
 so I fix them as fast as I can. Also, any new ideas or proposals are welcome, and I will gladly implement them in the package if the are positive and useful.
 
 For further information or any question feel free to contact me via email at alvarob96@usal.es
