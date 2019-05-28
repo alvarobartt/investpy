@@ -22,9 +22,16 @@ def test_investpy():
     investpy.get_equities()
     investpy.get_equities_list()
 
-    for value in [True, False]:
-        investpy.get_recent_data(equity='enagás', as_json=value, order='ascending')
-        investpy.get_historical_data(equity='enagás', start='01/01/1990', end='01/01/2019', as_json=value, order='ascending')
+    params = [
+        {'as_json': False, 'order': 'ascending'},
+        {'as_json': True, 'order': 'descending'},
+        {'as_json': True, 'order': 'ascending'},
+        {'as_json': False, 'order': 'descending'},
+    ]
+
+    for param in params:
+        investpy.get_recent_data(equity='enagás', as_json=param['as_json'], order=param['order'])
+        investpy.get_historical_data(equity='enagás', start='01/01/1990', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
     for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás', language=value)
@@ -36,9 +43,18 @@ def test_investpy():
 
     for value in [True, False]:
         investpy.get_funds_dict(columns=['id', 'name'], as_json=value)
-        investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=value, order='ascending')
-        investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=value, order='ascending')
         investpy.get_fund_information(fund='bbva multiactivo conservador pp', as_json=value)
+
+    params = [
+        {'as_json': False, 'order': 'ascending'},
+        {'as_json': True, 'order': 'descending'},
+        {'as_json': True, 'order': 'ascending'},
+        {'as_json': False, 'order': 'descending'},
+    ]
+
+    for param in params:
+        investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=param['as_json'], order=param['order'])
+        investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
     get_fund_names()
 
@@ -47,8 +63,17 @@ def test_investpy():
 
     for value in [True, False]:
         investpy.get_etfs_dict(columns=['id', 'name'], as_json=value)
-        investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=value, order='ascending')
-        investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=value, order='ascending')
+
+    params = [
+        {'as_json': False, 'order': 'ascending'},
+        {'as_json': True, 'order': 'descending'},
+        {'as_json': True, 'order': 'ascending'},
+        {'as_json': False, 'order': 'descending'},
+    ]
+
+    for param in params:
+        investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=param['as_json'], order=param['order'])
+        investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
     get_etf_names()
 
