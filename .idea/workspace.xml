@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investpy/resources/es/etfs.csv" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/resources/es/etfs.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/investpy/resources/es/funds.csv" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/resources/es/funds.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -293,8 +295,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+            <state relative-caret-position="345">
+              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
             </state>
           </provider>
         </entry>
@@ -617,7 +619,7 @@
       <workItem from="1558682335186" duration="160000" />
       <workItem from="1558697887860" duration="2378000" />
       <workItem from="1558941586168" duration="920000" />
-      <workItem from="1558961213721" duration="8100000" />
+      <workItem from="1558961213721" duration="8409000" />
     </task>
     <servers />
   </component>
@@ -636,7 +638,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130336000" />
+    <option name="totallyTimeSpent" value="130645000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1136,8 +1138,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="23" lean-forward="true" selection-start-line="21" selection-start-column="23" selection-end-line="21" selection-end-column="23" />
+        <state relative-caret-position="345">
+          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
         </state>
       </provider>
     </entry>
