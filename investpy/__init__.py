@@ -153,8 +153,6 @@ def get_recent_data(equity, as_json=False, order='ascending'):
         else:
             continue
 
-    return pd.DataFrame()
-
 
 def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     """
@@ -456,8 +454,6 @@ def get_equity_company_profile(equity, language='english'):
                 else:
                     return company_profile
 
-    return company_profile
-
 
 def get_funds():
     """
@@ -596,8 +592,6 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                 raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
-
-    return pd.DataFrame()
 
 
 def get_fund_historical_data(fund, start, end, as_json=False, order='ascending'):
@@ -899,8 +893,6 @@ def get_fund_information(fund, as_json=False):
         else:
             continue
 
-    return pd.DataFrame()
-
 
 def get_etfs():
     """
@@ -1040,8 +1032,6 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                 raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
-
-    return pd.DataFrame()
 
 
 def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):

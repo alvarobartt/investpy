@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a9bfea21-dacc-4e42-8516-85b05123f266" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.travis.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.travis.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/investpy/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/equities.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/equities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/etfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/etfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/investpy/funds.py" beforeDir="false" afterPath="$PROJECT_DIR$/investpy/funds.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/.ipynb_checkpoints/hyper-checkpoint.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notebooks/hyper.ipynb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_errors.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_errors.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,11 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="742" column="38" lean-forward="true" selection-start-line="742" selection-start-column="38" selection-end-line="742" selection-end-column="38" />
+            <state relative-caret-position="60">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
               <folding>
                 <element signature="n#!!doc" />
                 <element signature="e#465#808#0" />
@@ -95,7 +83,7 @@
                 <element signature="e#13019#13314#0" />
                 <element signature="e#13027#13270#0" />
                 <element signature="e#13382#13559#0" />
-                <element signature="e#14037#18018#0" />
+                <element signature="e#13788#17719#0" />
                 <element signature="e#14037#14471#1" />
                 <element signature="e#14497#14634#0" />
                 <element signature="e#15716#15765#0" />
@@ -113,12 +101,17 @@
                 <element signature="e#18422#18583#1" />
                 <element signature="e#18656#18942#0" />
                 <element signature="e#18656#18882#1" />
-                <element signature="e#18849#23052#0" />
+                <element signature="e#18771#22947#0" />
                 <element signature="e#19015#19759#1" />
+                <element signature="e#20565#23025#0" />
+                <element signature="e#20656#22990#0" />
                 <element signature="e#20935#21190#0" />
+                <element signature="e#21388#22887#0" />
+                <element signature="e#21432#22210#0" />
                 <element signature="e#22648#22883#0" />
                 <element signature="e#22656#22820#0" />
                 <element signature="e#22943#23103#0" />
+                <element signature="e#23357#29960#0" />
                 <element signature="e#23357#24207#1" />
                 <element signature="e#24988#25020#0" />
                 <element signature="e#25071#25677#0" />
@@ -126,13 +119,17 @@
                 <element signature="e#25151#25315#0" />
                 <element signature="e#25466#25677#0" />
                 <element signature="e#25472#25599#0" />
+                <element signature="e#26391#29860#0" />
+                <element signature="e#26482#29825#0" />
+                <element signature="e#26579#29659#0" />
                 <element signature="e#26647#27127#0" />
                 <element signature="e#27152#27431#0" />
+                <element signature="e#27933#29549#0" />
                 <element signature="e#28009#28827#0" />
                 <element signature="e#29073#29306#0" />
                 <element signature="e#29081#29261#0" />
                 <element signature="e#29374#29549#0" />
-                <element signature="e#30014#37946#0" />
+                <element signature="e#29543#37426#0" />
                 <element signature="e#30014#30551#1" />
                 <element signature="e#31396#37919#0" />
                 <element signature="e#31487#37884#0" />
@@ -204,7 +201,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -217,15 +214,28 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/setup.cfg">
-          <provider selected="true" editor-type-id="text-editor" />
+        <entry file="file://$PROJECT_DIR$/MANIFEST.in">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="1" column="28" lean-forward="true" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.travis.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
+            <state relative-caret-position="360">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -278,45 +288,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tests/test_errors.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
-              <folding>
-                <element signature="n#!!doc" />
-                <element signature="e#207#1898#0" />
-                <element signature="e#216#424#0" />
-                <element signature="e#459#605#0" />
-                <element signature="e#620#1288#0" />
-                <element signature="e#1323#1554#0" />
-                <element signature="e#1340#1521#0" />
-                <element signature="e#1569#1726#0" />
-                <element signature="e#1761#1898#0" />
-                <element signature="e#1930#4095#0" />
-                <element signature="e#1939#2084#0" />
-                <element signature="e#2119#2244#0" />
-                <element signature="e#2259#2519#0" />
-                <element signature="e#2554#2701#0" />
-                <element signature="e#2716#3517#0" />
-                <element signature="e#3552#3768#0" />
-                <element signature="e#3569#3735#0" />
-                <element signature="e#3783#3909#0" />
-                <element signature="e#3944#4095#0" />
-                <element signature="e#3961#4062#0" />
-                <element signature="e#4125#5880#0" />
-                <element signature="e#4134#4279#0" />
-                <element signature="e#4314#4438#0" />
-                <element signature="e#4453#4698#0" />
-                <element signature="e#4733#4877#0" />
-                <element signature="e#4892#5657#0" />
-                <element signature="e#5692#5880#0" />
-                <element signature="e#5914#5983#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -329,7 +300,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>name</find>
       <find>0.8.4</find>
       <find>2.7</find>
       <find>unidecode</find>
@@ -359,6 +329,7 @@
       <find>print</find>
       <find>funds</find>
       <find>tqdm</find>
+      <find>return pd.DataFrame()</find>
     </findStrings>
     <replaceStrings>
       <replace>datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')</replace>
@@ -426,11 +397,11 @@
         <option value="$PROJECT_DIR$/investpy/equities.py" />
         <option value="$PROJECT_DIR$/investpy/etfs.py" />
         <option value="$PROJECT_DIR$/investpy/funds.py" />
-        <option value="$PROJECT_DIR$/investpy/__init__.py" />
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/setup.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/investpy/__init__.py" />
       </list>
     </option>
   </component>
@@ -654,7 +625,7 @@
       <workItem from="1558682335186" duration="160000" />
       <workItem from="1558697887860" duration="2378000" />
       <workItem from="1558941586168" duration="920000" />
-      <workItem from="1558961213721" duration="16723000" />
+      <workItem from="1558961213721" duration="18974000" />
     </task>
     <servers />
   </component>
@@ -673,7 +644,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138959000" />
+    <option name="totallyTimeSpent" value="141210000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -686,14 +657,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.5834483" visible="true" weight="0.16453674" />
       <window_info id="Structure" order="1" sideWeight="0.41655174" side_tool="true" weight="0.1517572" />
       <window_info id="Favorites" order="2" sideWeight="0.41655174" side_tool="true" weight="0.1517572" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32673267" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5841321" visible="true" weight="0.33366337" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.5841321" weight="0.33366337" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3982684" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -835,22 +805,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitattributes">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="28" lean-forward="true" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/investpy/resources/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
@@ -976,10 +932,93 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/equities.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="468">
+          <caret line="177" column="9" lean-forward="true" selection-start-line="177" selection-start-column="9" selection-end-line="177" selection-end-column="9" />
+          <folding>
+            <element signature="n#!!doc" />
+            <element signature="e#143#154#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/investpy/funds.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="371">
+          <caret line="269" column="21" lean-forward="true" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
+          <folding>
+            <element signature="n#!!doc" />
+            <element signature="e#335#618#1" />
+            <element signature="e#631#838#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/setup.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
+          <folding>
+            <element signature="e#23#66#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="330">
+            <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MANIFEST.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="28" lean-forward="true" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/investpy/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="742" column="38" lean-forward="true" selection-start-line="742" selection-start-column="38" selection-end-line="742" selection-end-column="38" />
+        <state relative-caret-position="60">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
           <folding>
             <element signature="n#!!doc" />
             <element signature="e#465#808#0" />
@@ -1015,7 +1054,7 @@
             <element signature="e#13019#13314#0" />
             <element signature="e#13027#13270#0" />
             <element signature="e#13382#13559#0" />
-            <element signature="e#14037#18018#0" />
+            <element signature="e#13788#17719#0" />
             <element signature="e#14037#14471#1" />
             <element signature="e#14497#14634#0" />
             <element signature="e#15716#15765#0" />
@@ -1033,12 +1072,17 @@
             <element signature="e#18422#18583#1" />
             <element signature="e#18656#18942#0" />
             <element signature="e#18656#18882#1" />
-            <element signature="e#18849#23052#0" />
+            <element signature="e#18771#22947#0" />
             <element signature="e#19015#19759#1" />
+            <element signature="e#20565#23025#0" />
+            <element signature="e#20656#22990#0" />
             <element signature="e#20935#21190#0" />
+            <element signature="e#21388#22887#0" />
+            <element signature="e#21432#22210#0" />
             <element signature="e#22648#22883#0" />
             <element signature="e#22656#22820#0" />
             <element signature="e#22943#23103#0" />
+            <element signature="e#23357#29960#0" />
             <element signature="e#23357#24207#1" />
             <element signature="e#24988#25020#0" />
             <element signature="e#25071#25677#0" />
@@ -1046,13 +1090,17 @@
             <element signature="e#25151#25315#0" />
             <element signature="e#25466#25677#0" />
             <element signature="e#25472#25599#0" />
+            <element signature="e#26391#29860#0" />
+            <element signature="e#26482#29825#0" />
+            <element signature="e#26579#29659#0" />
             <element signature="e#26647#27127#0" />
             <element signature="e#27152#27431#0" />
+            <element signature="e#27933#29549#0" />
             <element signature="e#28009#28827#0" />
             <element signature="e#29073#29306#0" />
             <element signature="e#29081#29261#0" />
             <element signature="e#29374#29549#0" />
-            <element signature="e#30014#37946#0" />
+            <element signature="e#29543#37426#0" />
             <element signature="e#30014#30551#1" />
             <element signature="e#31396#37919#0" />
             <element signature="e#31487#37884#0" />
@@ -1111,75 +1159,6 @@
             <element signature="e#48936#49115#0" />
             <element signature="e#49228#49402#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/equities.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="177" column="9" lean-forward="true" selection-start-line="177" selection-start-column="9" selection-end-line="177" selection-end-column="9" />
-          <folding>
-            <element signature="n#!!doc" />
-            <element signature="e#143#154#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/investpy/funds.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="269" column="21" lean-forward="true" selection-start-line="269" selection-start-column="21" selection-end-line="269" selection-end-column="21" />
-          <folding>
-            <element signature="n#!!doc" />
-            <element signature="e#335#618#1" />
-            <element signature="e#631#838#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LICENSE">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.travis.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/setup.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="34" column="17" lean-forward="true" selection-start-line="34" selection-start-column="17" selection-end-line="34" selection-end-column="17" />
-          <folding>
-            <element signature="e#23#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="18" lean-forward="true" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="330">
-            <caret line="22" column="31" selection-start-line="22" selection-start-column="31" selection-end-line="22" selection-end-column="31" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="99" lean-forward="true" selection-start-line="99" selection-end-line="99" />
         </state>
       </provider>
     </entry>
