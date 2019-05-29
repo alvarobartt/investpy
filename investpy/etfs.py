@@ -11,7 +11,6 @@ import pandas as pd
 import pkg_resources
 import requests
 from lxml.html import fromstring
-from tqdm import tqdm
 
 from investpy import user_agent as ua
 
@@ -49,7 +48,7 @@ def get_etf_names():
     results = list()
 
     if path_:
-        for elements_ in tqdm(path_, ascii=True, ncols=80):
+        for elements_ in path_:
             id_ = elements_.get('id').replace('pair_', '')
             symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
@@ -98,8 +97,7 @@ def get_etfs():
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_etf_names()
-        etfs = pd.DataFrame(names)
+        etfs = pd.DataFrame(get_etf_names())
 
     if etfs is None:
         raise IOError("ERR#009: etf list not found or unable to retrieve.")
@@ -122,8 +120,7 @@ def list_etfs():
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_etf_names()
-        etfs = pd.DataFrame(names)
+        etfs = pd.DataFrame(get_etf_names())
 
     if etfs is None:
         raise IOError("ERR#009: etf list not found or unable to retrieve.")
@@ -156,8 +153,7 @@ def dict_etfs(columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_etf_names()
-        etfs = pd.DataFrame(names)
+        etfs = pd.DataFrame(get_etf_names())
 
     if etfs is None:
         raise IOError("ERR#009: etf list not found or unable to retrieve.")

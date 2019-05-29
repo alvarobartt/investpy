@@ -11,7 +11,6 @@ import pandas as pd
 import pkg_resources
 import requests
 from lxml.html import fromstring
-from tqdm import tqdm
 
 from investpy import user_agent as ua
 
@@ -49,7 +48,7 @@ def get_fund_names():
     results = list()
 
     if path_:
-        for elements_ in tqdm(path_, ascii=True, ncols=80):
+        for elements_ in path_:
             id_ = elements_.get('id').replace('pair_', '')
             symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
@@ -210,8 +209,7 @@ def get_funds():
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_fund_names()
-        funds = pd.DataFrame(names)
+        funds = pd.DataFrame(get_fund_names())
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
@@ -234,8 +232,7 @@ def list_funds():
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_fund_names()
-        funds = pd.DataFrame(names)
+        funds = pd.DataFrame(get_fund_names())
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
@@ -268,8 +265,7 @@ def dict_funds(columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_fund_names()
-        funds = pd.DataFrame(names)
+        funds = pd.DataFrame(get_fund_names())
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")

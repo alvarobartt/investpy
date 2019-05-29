@@ -8,7 +8,6 @@ __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 import datetime
 import json
 from random import randint
-from tqdm import tqdm
 
 import pandas as pd
 import pkg_resources
@@ -77,8 +76,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = ts.get_equity_names()
-        equities = pd.DataFrame(names)
+        equities = pd.DataFrame(ts.get_equity_names())
 
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
@@ -108,7 +106,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             result = list()
 
             if path_:
-                for elements_ in tqdm(path_, ascii=True, ncols=80):
+                for elements_ in path_:
                     info = []
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.text_content())
@@ -234,8 +232,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = ts.get_equity_names()
-        equities = pd.DataFrame(names)
+        equities = pd.DataFrame(ts.get_equity_names())
 
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
@@ -299,7 +296,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                 result = list()
 
                 if path_:
-                    for elements_ in tqdm(path_, ascii=True, ncols=80):
+                    for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
@@ -350,11 +347,6 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
         else:
             continue
 
-    if as_json is True:
-        return {}
-    elif as_json is False:
-        return pd.DataFrame()
-
 
 def get_equity_company_profile(equity, language='english'):
     """
@@ -392,8 +384,7 @@ def get_equity_company_profile(equity, language='english'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = ts.get_equity_names()
-        equities = pd.DataFrame(names)
+        equities = pd.DataFrame(ts.get_equity_names())
 
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
@@ -537,8 +528,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = fs.get_fund_names()
-        funds = pd.DataFrame(names)
+        funds = pd.DataFrame(fs.get_fund_names())
 
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
@@ -568,7 +558,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             result = list()
 
             if path_:
-                for elements_ in tqdm(path_, ascii=True, ncols=80):
+                for elements_ in path_:
                     info = []
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.text_content())
@@ -686,8 +676,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = fs.get_fund_names()
-        funds = pd.DataFrame(names)
+        funds = pd.DataFrame(fs.get_fund_names())
 
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
@@ -734,7 +723,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                 result = list()
 
                 if path_:
-                    for elements_ in tqdm(path_, ascii=True, ncols=80):
+                    for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
@@ -777,11 +766,6 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
         else:
             continue
 
-    if as_json is True:
-        return {}
-    elif as_json is False:
-        return pd.DataFrame()
-
 
 def get_fund_information(fund, as_json=False):
     """
@@ -808,8 +792,7 @@ def get_fund_information(fund, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = fs.get_fund_names()
-        funds = pd.DataFrame(names)
+        funds = pd.DataFrame(fs.get_fund_names())
 
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
@@ -989,8 +972,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = es.get_etf_names()
-        etfs = pd.DataFrame(names)
+        etfs = pd.DataFrame(es.get_etf_names())
 
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
@@ -1020,7 +1002,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             result = list()
 
             if path_:
-                for elements_ in tqdm(path_, ascii=True, ncols=80):
+                for elements_ in path_:
                     info = []
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.text_content())
@@ -1138,8 +1120,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = es.get_etf_names()
-        etfs = pd.DataFrame(names)
+        etfs = pd.DataFrame(es.get_etf_names())
 
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
@@ -1186,7 +1167,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                 result = list()
 
                 if path_:
-                    for elements_ in tqdm(path_, ascii=True, ncols=80):
+                    for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
@@ -1228,8 +1209,3 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                 return pd.concat(final)
         else:
             continue
-
-    if as_json is True:
-        return {}
-    elif as_json is False:
-        return pd.DataFrame()

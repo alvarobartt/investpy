@@ -30,6 +30,7 @@ def test_equity_errors():
         {'equity': 'bbva', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'equity': 'bbva', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
         {'equity': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -67,8 +68,8 @@ def test_fund_errors():
             pass
 
     params = [
-        {'fund': 'bbva multiactivo conservador pp', 'as_json': 'error', 'order': 'ascending'},
-        {'fund': 'bbva multiactivo conservador pp', 'as_json': True, 'order': 'error'},
+        {'fund': 'quality inversion conservadora fi', 'as_json': 'error', 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'as_json': True, 'order': 'error'},
         {'fund': 'error', 'as_json': True, 'order': 'ascending'},
     ]
 
@@ -79,26 +80,29 @@ def test_fund_errors():
             pass
 
     params = [
-        {'fund': 'bbva multiactivo conservador pp', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
-        {'fund': 'bbva multiactivo conservador pp', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
-        {'fund': 'bbva multiactivo conservador pp', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'bbva multiactivo conservador pp', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
+        {'fund': 'quality inversion conservadora fi', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
         {'fund': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
         try:
+            print(param)
             investpy.get_fund_historical_data(fund=param['fund'], start=param['start'], end=param['end'], as_json=param['as_json'], order=param['order'])
         except:
             pass
 
     params = [
-        {'fund': 'bbva multiactivo conservador pp', 'as_json': 'error'},
+        {'fund': 'quality inversion conservadora fi', 'as_json': 'error'},
         {'fund': 'error', 'as_json': True},
     ]
 
     for param in params:
         try:
+            print('hola')
             investpy.get_fund_information(fund=param['fund'], as_json=param['as_json'])
         except:
             pass
@@ -135,6 +139,7 @@ def test_etf_errors():
         {'etf': 'bbva accion dj eurostoxx 50', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
         {'etf': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -145,6 +150,6 @@ def test_etf_errors():
 
 
 if __name__ == '__main__':
-    test_equity_errors()
+    # test_equity_errors()
     test_fund_errors()
-    test_etf_errors()
+    # test_etf_errors()

@@ -1,6 +1,5 @@
 requests==2.22.0
 Unidecode==1.0.23
 pandas==0.24.2
-tqdm==4.24.0
 lxml==4.3.3
 setuptools==40.6.3

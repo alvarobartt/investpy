@@ -11,7 +11,6 @@ import pandas as pd
 import pkg_resources
 import requests
 from lxml.html import fromstring
-from tqdm import tqdm
 
 from investpy import user_agent as ua
 
@@ -57,7 +56,7 @@ def get_equity_names():
     results = list()
 
     if path_:
-        for elements_ in tqdm(path_, ascii=True, ncols=80):
+        for elements_ in path_:
             id_ = elements_.get('id').replace('pair_', '')
 
             for element_ in elements_.xpath('.//a'):
@@ -153,8 +152,7 @@ def get_equities():
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_equity_names()
-        equities = pd.DataFrame(names)
+        equities = pd.DataFrame(get_equity_names())
 
     if equities is None:
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
@@ -177,8 +175,7 @@ def list_equities():
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        names = get_equity_names()
-        equities = pd.DataFrame(names)
+        equities = pd.DataFrame(get_equity_names())
 
     if equities is None:
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
