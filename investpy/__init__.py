@@ -894,7 +894,24 @@ def get_fund_information(fund, as_json=False):
             continue
 
 
-def get_etfs():
+def get_available_countries_etf():
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'etf_markets.csv'))
+
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#027: available_etfs file not found")
+
+    return countries
+
+
+def get_etf_markets():
+
+    return es.get_etf_markets()
+
+
+def get_etf_df(country=None):
     """
     This function retrieves all the available etfs and returns a pandas.DataFrame of them all.
     All the available etfs can be found at: https://es.investing.com/etfs/spain-etfs
@@ -904,10 +921,10 @@ def get_etfs():
         :returns a pandas.DataFrame with all the available etfs to retrieve data from
     """
 
-    return es.get_etfs()
+    return es.df_etfs(country)
 
 
-def get_etfs_list():
+def get_etf_list(country=None):
     """
     This function retrieves the list of all the available etfs
 
@@ -917,10 +934,10 @@ def get_etfs_list():
         returns a list that contains all the available etf names
     """
 
-    return es.list_etfs()
+    return es.list_etfs(country)
 
 
-def get_etfs_dict(columns, as_json):
+def get_etf_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves a dictionary with the specified columns of all the available etfs
 
@@ -929,7 +946,7 @@ def get_etfs_dict(columns, as_json):
     :returns a dictionary that contains all the available etf values specified in the columns
     """
 
-    return es.dict_etfs(columns=columns, as_json=as_json)
+    return es.dict_etfs(country, columns=columns, as_json=as_json)
 
 
 def get_etf_recent_data(etf, as_json=False, order='ascending'):
@@ -939,6 +956,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
 
     Parameters
     ----------
+    :param country:
     :param etf: str
         name of the etf to retrieve recent historical data from
     :param order: str
@@ -960,11 +978,11 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = pd.DataFrame(es.get_etf_names())
+        etfs = pd.DataFrame(es.get_etfs())
 
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
@@ -1106,11 +1124,11 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
             flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = pd.DataFrame(es.get_etf_names())
+        etfs = pd.DataFrame(es.get_etfs())
 
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")

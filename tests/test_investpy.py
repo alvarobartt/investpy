@@ -11,7 +11,7 @@ import investpy
 
 from investpy.equities import get_equity_names
 from investpy.funds import get_fund_names
-from investpy.etfs import get_etf_names
+from investpy.etfs import get_etfs
 
 
 def test_investpy():
@@ -58,11 +58,11 @@ def test_investpy():
 
     get_fund_names()
 
-    investpy.get_etfs()
-    investpy.get_etfs_list()
-
-    for value in [True, False]:
-        investpy.get_etfs_dict(columns=['id', 'name'], as_json=value)
+    # investpy.get_etfs()
+    #     # investpy.get_etfs_list()
+    #     #
+    #     # for value in [True, False]:
+    #     #     investpy.get_etfs_dict(columns=['id', 'name'], as_json=value)
 
     params = [
         {'as_json': False, 'order': 'ascending'},
@@ -75,7 +75,7 @@ def test_investpy():
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=param['as_json'], order=param['order'])
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
-    get_etf_names()
+    get_etfs()
 
 
 if __name__ == '__main__':
