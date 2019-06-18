@@ -7,6 +7,7 @@
 [![Build Status](https://travis-ci.org/alvarob96/investpy.svg?branch=master)](https://pypi.org/project/investpy/)
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
 [![Downloads](https://img.shields.io/pypi/dm/investpy.svg?style=flat)](https://pypi.python.org/pypi/investpy)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falvarob96%2Finvestpy.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Falvarob96%2Finvestpy?ref=badge_shield)
 
 ## Introduction
 
@@ -69,6 +70,9 @@ Feel free to contact package administrator via [email](alvarob96@usal.es)!
 ## License
 
 [MIT License](https://github.com/alvarob96/investpy/blob/master/LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Falvarob96%2Finvestpy.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Falvarob96%2Finvestpy?ref=badge_large)
 
 ## Additional Information
 
