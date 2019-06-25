@@ -21,12 +21,23 @@ from investpy.Data import Data
 
 def get_equities():
     """
-    This function retrieves all the available equities and returns a pandas.DataFrame of them all.
-    All the available equities can be found at: https://es.investing.com/equities/spain
+    This function retrieves all the available equities indexed on a CSV file,
+    previously filled via Web Scraping of Investing, as a pandas.DataFrame.
 
-    Returns
-    -------
-        :returns a pandas.DataFrame with all the available equities to retrieve data from
+    Returns:
+        equities (:obj:`pandas.DataFrame`): description
+            it contains the retrieved data from equities.csv file with its respective column values
+            <full_name, id, isin, name, tag>
+
+            So the resulting `pandas.DataFrame` should look like:
+
+                full_name | id | isin | name | tag
+                ----------------------------------
+                xxxxxxxxx | xx | xxxx | xxxx | xxx
+
+    Raises:
+        IOError: if data could not be retrieved due to file error.
+
     """
 
     return ts.get_equities()
@@ -34,11 +45,22 @@ def get_equities():
 
 def get_equities_list():
     """
-    This function retrieves the list of all the available equities
+    This function retrieves all the available equities indexed on a CSV file,
+    previously filled via Web Scraping of Investing, as a list. The resulting list
+    contains all the names of all the available equities, which can be further used
+    for recent or historical data retrieval.
 
-    Returns
-    -------
-    :returns list that contains all the available equity names
+    Returns:
+        equities (:obj:`list` of :obj:`str`): description
+            it contains the retrieved data from equities.csv as a list with all the equity names available.
+
+            So the resulting `list` should look like:
+
+                equities = ['acs', 'abengoa', ...]
+
+    Raises:
+        IOError: if data could not be retrieved due to file error.
+
     """
 
     return ts.list_equities()
@@ -46,23 +68,60 @@ def get_equities_list():
 
 def get_recent_data(equity, as_json=False, order='ascending'):
     """
-    This function retrieves recent historical data from the specified equity.
-    The retrieved data corresponds to the last month and a half more or less.
 
-    Parameters
-    ----------
-    :param equity: str
-        name of the equity to retrieve recent historical data from
-    :param order: str
-        optional parameter to indicate the order of the recent data to retrieve
-        default value is ascending
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the recent data from the specified equity
+    This function retrieves recent historical data from the introduced equity from Investing
+    via Web Scraping. The resulting data can it either be stored in a pandas.DataFrame or in a
+    json file with ascending or descending order.
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the recent data of the equity
+    Args:
+        equity (str): name of the equity to retrieve recent historical data from.
+
+        as_json (:obj:`boolean`, optional): optional argument to determine the format of the output data (pandas.DataFrame or JSON).
+
+        order (:obj:`str`, optional): optional argument to define the order of the retrieved data (ascending or descending).
+
+    Returns:
+        data (pandas.DataFrame or JSON): description
+            The function returns a either a pandas.DataFrame or a JSON file containing the retrieved recent data
+            from the specified equity via argument. The dataset contains the open, high, low, close and volume values
+            for the selected equity on market days.
+
+            The Return data is case we use default arguments will look like::
+
+            date || open | high | low | close | volume
+            -----||-----------------------------------
+            xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+
+            , but if we define as_json=True, then the output will be::
+
+                {
+                    name: name,
+                    full_name: full_name,
+                    recent: [
+                        dd/mm/yyyy: {
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            volume: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: equities object/file not found or unable to retrieve.
+        RuntimeError: introduced equity does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if equity information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
+        date || open | high | low | close | volume
+        -----||-----------------------------------
+        xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+
     """
 
     if not isinstance(as_json, bool):
@@ -156,26 +215,64 @@ def get_recent_data(equity, as_json=False, order='ascending'):
 
 def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     """
-    This function retrieves historical data from the specified equity in the specified date range.
 
-    Parameters
-    ----------
-    :param equity: str
-        name of the equity to retrieve historical data from
-    :param start: str
-        start date since the data is going to be retrieved
-    :param end: str
-        end date until the data is going to be retrieved
-    :param order: str
-        optional parameter to indicate the order of the historical data to retrieve
-        default value is ascending
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the historical data from the specified equity
+        This function retrieves historical data from the introduced equity from Investing
+        via Web Scraping on the introduced date range. The resulting data can it either be `
+        stored in a `pandas.DataFrame` or in a `json` object with ascending or descending order.
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the historical data of the equity
+        Args:
+            equity (str): name of the equity to retrieve recent historical data from.
+
+            start (str): start date as `str` formatted as dd/mm/yyyy
+
+            end (str): end date as `str` formatted as dd/mm/yyyy
+
+            as_json (:obj:`boolean`, optional): to determine the format of the output data (pandas.DataFrame or JSON).
+
+            order (:obj:`str`, optional): to define the order of the retrieved data (ascending or descending).
+
+        Returns:
+            data (:obj:`pandas.DataFrame` or :obj:`json`): description
+                The function returns a either a pandas.DataFrame or a JSON file containing the retrieved recent data
+                from the specified equity via argument. The dataset contains the open, high, low, close and volume values
+                for the selected equity on market days.
+
+                The Return data is case we use default arguments will look like::
+
+                date || open | high | low | close | volume
+                -----||-----------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+
+                , but if we define as_json=True, then the output will be::
+
+                    {
+                        name: name,
+                        full_name: full_name,
+                        historical: [
+                            dd/mm/yyyy: {
+                                open: x,
+                                high: x,
+                                low: x,
+                                close: x,
+                                volume: x
+                            },
+                            ...
+                        ]
+                    }
+
+        Raises:
+            ValueError: argument error.
+            IOError: equities object/file not found or unable to retrieve.
+            RuntimeError: introduced equity does not match any of the indexed ones.
+            ConnectionError: if GET requests does not return 200 status code.
+            IndexError: if equity information was unavailable or not found.
+
+        Examples:
+            >>> investpy.get_historical_data(equity='bbva', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+            date || open | high | low | close | volume
+            -----||-----------------------------------
+            xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+
     """
 
     if not isinstance(as_json, bool):
@@ -348,18 +445,37 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
 def get_equity_company_profile(equity, language='english'):
     """
-    This function retrieves the company profile from an equity in the specified language from different sources.
+    This function retrieves the company profile from an equity in the specified language
+    from different sources. Currently just the company profile of spanish equities in english
+    and spanish is available for retrieval.
 
-    Parameters
-    ----------
-    :param equity: str
-        name of the equity to the company profile from
-    :param language: str
-        language or code in which the company profile is going to be retrieved
+    Args:
+        equity (str): name of the equity to retrieve ther company profile from.
 
-    Returns
-    -------
-    :returns str containing the company profile of the specified equity
+        language (:obj:`str`, optional): language of the company profile to be retrieved (english or spanish).
+
+    Returns:
+        company_profile (:obj:`dict`): description
+            it contains the retrieved company profile from either Investing.com (english) or Bolsa de Madrid (spanish)
+            and its respective url link from where it was retrieved.
+
+            So the resulting `dict` should look like::
+
+                company_profile = {
+                    url: 'https://www.investing.com/equities/bbva-company-profile',
+                    desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a diversified financial company [...]'
+                }
+
+    Raises:
+        IOError: if data could not be retrieved due to file error.
+
+    Examples:
+        >>> investpy.get_equity_company_profile(equity='bbva', language='english')
+        company_profile = {
+            url: 'https://www.investing.com/equities/bbva-company-profile',
+            desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a diversified financial company [...]'
+        }
+
     """
 
     available_sources = {
