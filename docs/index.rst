@@ -10,14 +10,13 @@ Welcome to investpy's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   introduction
-   installation
-   examples
-   release
-   contribution
-   license
-   information
-   disclaimer
+   introduction.rst
+   installation.rst
+   model.rst
+   equities.rst
+   api.rst
+   information.md
+   disclaimer.md
 
 
 Indices and tables
