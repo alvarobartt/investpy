@@ -54,8 +54,6 @@ def test_investpy():
 
     investpy.get_funds()
 
-    investpy.get_available_countries_etf()
-
     investpy.get_etf_markets()
 
     for value in ['spain', None]:

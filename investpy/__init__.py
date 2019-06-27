@@ -1024,18 +1024,6 @@ def get_etfs():
     return es.get_etfs()
 
 
-def get_available_countries_etf():
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'etf_markets.csv'))
-
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#027: available_etfs file not found")
-
-    return countries
-
-
 def get_etf_markets():
 
     return es.get_etf_markets()
