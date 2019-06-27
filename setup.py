@@ -18,7 +18,7 @@ setup(
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
-    description='investpy — a Python package for historical data extraction from the spanish stock market',
+    description='investpy — a Python package for historical data retrieval from Investing',
     long_description=readme(),
     long_description_content_type='text/markdown',
     install_requires=['requests==2.22.0',

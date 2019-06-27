@@ -6,3 +6,5 @@ API Reference
 
    main_api.rst
    equities_api.rst
+   funds_api.rst
+   etfs_api.rst

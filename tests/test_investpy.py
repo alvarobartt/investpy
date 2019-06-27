@@ -9,10 +9,6 @@ import pytest
 
 import investpy
 
-from investpy.equities import get_equity_names
-from investpy.funds import get_fund_names
-from investpy.etfs import get_etfs
-
 
 def test_investpy():
     """
@@ -36,7 +32,7 @@ def test_investpy():
     for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás', language=value)
 
-    get_equity_names()
+    investpy.get_equities()
 
     investpy.get_funds()
     investpy.get_funds_list()
@@ -56,13 +52,24 @@ def test_investpy():
         investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=param['as_json'], order=param['order'])
         investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
-    get_fund_names()
+    investpy.get_funds()
 
-    # investpy.get_etfs()
-    #     # investpy.get_etfs_list()
-    #     #
-    #     # for value in [True, False]:
-    #     #     investpy.get_etfs_dict(columns=['id', 'name'], as_json=value)
+    investpy.get_available_countries_etf()
+
+    investpy.get_etf_markets()
+
+    for value in ['spain', None]:
+        investpy.get_etf_df(country=value)
+        investpy.get_etf_list(country=value)
+
+    params = [
+        {'country': None, 'columns': ['id', 'name'], 'as_json': False},
+        {'country': None, 'columns': ['id', 'name'], 'as_json': True},
+        {'country': 'spain', 'columns': None, 'as_json': False},
+    ]
+
+    for param in params:
+        investpy.get_etf_dict(country=param['country'], columns=param['columns'], as_json=param['as_json'])
 
     params = [
         {'as_json': False, 'order': 'ascending'},
@@ -75,7 +82,7 @@ def test_investpy():
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=param['as_json'], order=param['order'])
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
-    get_etfs()
+    investpy.get_etfs()
 
 
 if __name__ == '__main__':

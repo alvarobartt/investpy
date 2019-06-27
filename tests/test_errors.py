@@ -8,6 +8,7 @@ __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 import pytest
 
 import investpy
+from investpy.etfs import get_etf
 
 
 def test_equity_errors():
@@ -90,7 +91,6 @@ def test_fund_errors():
 
     for param in params:
         try:
-            print(param)
             investpy.get_fund_historical_data(fund=param['fund'], start=param['start'], end=param['end'], as_json=param['as_json'], order=param['order'])
         except:
             pass
@@ -102,54 +102,77 @@ def test_fund_errors():
 
     for param in params:
         try:
-            print('hola')
             investpy.get_fund_information(fund=param['fund'], as_json=param['as_json'])
         except:
             pass
 
 
-# def test_etf_errors():
-#     params = [
-#         {'columns': None, 'as_json': 'error'},
-#         {'columns': 0, 'as_json': True},
-#         {'columns': ['error'], 'as_json': False},
-#     ]
-#
-#     for param in params:
-#         try:
-#             investpy.get_etfs_dict(columns=param['columns'], as_json=param['as_json'])
-#         except:
-#             pass
-#
-#     params = [
-#         {'etf': 'bbva accion dj eurostoxx 50', 'as_json': 'error', 'order': 'ascending'},
-#         {'etf': 'bbva accion dj eurostoxx 50', 'as_json': True, 'order': 'error'},
-#         {'etf': 'error', 'as_json': True, 'order': 'ascending'},
-#     ]
-#
-#     for param in params:
-#         try:
-#             investpy.get_etf_recent_data(etf=param['etf'], as_json=param['as_json'], order=param['order'])
-#         except:
-#             pass
-#
-#     params = [
-#         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
-#         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
-#         {'etf': 'bbva accion dj eurostoxx 50', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-#         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
-#         {'etf': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-#         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-#     ]
-#
-#     for param in params:
-#         try:
-#             investpy.get_etf_historical_data(etf=param['etf'], start=param['start'], end=param['end'], as_json=param['as_json'], order=param['order'])
-#         except:
-#             pass
+def test_etf_errors():
+    params = [
+        {'country': None, 'columns': None, 'as_json': False},
+        {'country': 'spain', 'columns': None, 'as_json': 'error'},
+        {'country': 'spain', 'columns': 0, 'as_json': True},
+        {'country': 'spain', 'columns': ['error'], 'as_json': False},
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etf_dict(country=param['country'], columns=param['columns'], as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {'country': None},
+        {'country': 'spain'},
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etf_df(country=param['country'])
+        except:
+            pass
+
+    for param in params:
+        try:
+            get_etf(param)
+        except:
+            pass
+
+    for param in params:
+        try:
+            investpy.get_etf_list(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {'etf': 'bbva accion dj eurostoxx 50', 'as_json': 'error', 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'as_json': True, 'order': 'error'},
+        {'etf': 'error', 'as_json': True, 'order': 'ascending'},
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etf_recent_data(etf=param['etf'], as_json=param['as_json'], order=param['order'])
+        except:
+            pass
+
+    params = [
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etf_historical_data(etf=param['etf'], start=param['start'], end=param['end'], as_json=param['as_json'], order=param['order'])
+        except:
+            pass
 
 
 if __name__ == '__main__':
     test_equity_errors()
     test_fund_errors()
-    # test_etf_errors()
+    test_etf_errors()

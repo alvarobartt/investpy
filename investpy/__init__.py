@@ -19,6 +19,9 @@ from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
 from investpy.Data import Data
 
 
+"""------------- EQUITIES -------------"""
+
+
 def get_equities():
     """
     This function retrieves all the available equities indexed on a CSV file,
@@ -571,6 +574,9 @@ def get_equity_company_profile(equity, language='english'):
                     return company_profile
 
 
+"""------------- FUNDS -------------"""
+
+
 def get_funds():
     """
     This function retrieves all the available funds and returns a pandas.DataFrame of them all.
@@ -1008,6 +1014,14 @@ def get_fund_information(fund, as_json=False):
                 raise RuntimeError("ERR#004: data retrieval error while scraping.")
         else:
             continue
+
+
+"""------------- ETFS -------------"""
+
+
+def get_etfs():
+
+    return es.get_etfs()
 
 
 def get_available_countries_etf():
