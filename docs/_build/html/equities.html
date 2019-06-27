@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Equities/Stocks &mdash; investpy 0.8.5 documentation</title>
+  <title>Stocks/Equities &mdash; investpy 0.8.5 documentation</title>
   
 
   
@@ -89,9 +89,13 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Equities/Stocks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#recent-historical-data">Recent &amp; Historical Data</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Stocks/Equities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#listing">Listing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recent-historical-data">Recent &amp; Historical Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#company-profile">Company Profile</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#samples">Samples</a></li>
 </ul>
 </li>
@@ -143,7 +147,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Equities/Stocks</li>
+      <li>Stocks/Equities</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -162,16 +166,92 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="equities-stocks">
-<h1>Equities/Stocks<a class="headerlink" href="#equities-stocks" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="stocks-equities">
+<h1>Stocks/Equities<a class="headerlink" href="#stocks-equities" title="Permalink to this headline">¶</a></h1>
+<p>A stock (also known as “shares” or “equity) is a type of security that signifies proportionate ownership in the issuing
+corporation. This entitles the stockholder to that proportion of the corporation’s assets and earnings.</p>
+<p>Stocks are bought and sold predominantly on stock exchanges, though there can be private sales as well, and are the
+foundation of nearly every portfolio. These transactions have to conform to government regulations which are meant to
+protect investors from fraudulent practices. Historically, they have outperformed most other investments over the long
+run. These investments can be purchased from most online stock brokers.</p>
+<p>In this case, historical data from stocks or equities is retrieved from <a class="reference external" href="https://es.investing.com/equities/spain">Investing Equities</a>
+just for the Spanish Stock Market, on the current release 0.8.5.</p>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>To get started using <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> you first need to install it as described on
+<a class="reference internal" href="installation.html#installation-label"><span class="std std-ref">Installation</span></a>. Once you have it installed you can proceed to use it and retrieve data from stocks/equities,
+after importing the package as it follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ import investpy
+</pre></div>
+</div>
+<div class="section" id="listing">
+<h3>Listing<a class="headerlink" href="#listing" title="Permalink to this headline">¶</a></h3>
+<p>investpy offers some listing functions that allow the user to get the general information of the indexed stocks/equities
+on <a class="reference external" href="https://es.investing.com/">Investing</a> as that information is already stored on CSV files generated automatically
+on the package installation.</p>
+<p>We can either retrieve the whole <cite>pandas.DataFrame</cite> containing all the information stored on the CSV file or a <cite>list</cite>
+containing just the names of the stocks/equities, which are the input parameters to the data retrieval functions and so
+on, the ones that are needed as input on the data retrieval functions.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieve all available stocks/equities information as a pandas.DataFrame</span>
+<span class="n">equities_df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_equities</span><span class="p">()</span>
+<span class="c1"># Retrieve a listing of all the available stock/equity names</span>
+<span class="n">equities_list</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_equities_list</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <cite>pandas.DataFrame</cite> contains internal package information that is probably useless for users, but it is provided
+anyways. On a future release stocks/equities listing functions will be improved in order to provide just useful data.</p>
+</div>
 </div>
 <div class="section" id="recent-historical-data">
-<h2>Recent &amp; Historical Data<a class="headerlink" href="#recent-historical-data" title="Permalink to this headline">¶</a></h2>
+<h3>Recent &amp; Historical Data<a class="headerlink" href="#recent-historical-data" title="Permalink to this headline">¶</a></h3>
+<p>The main functions of <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> refer to historical data extraction of
+stocks/equities in this case. As the main functionality of the package is to retrieve historical data, some functions
+have been developed in order to retrieve both recent and historical data between a date range.</p>
+<p>So on an example is proposed in order to clarify the use of investpy for historical data retrieval:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieves the recent data of BBVA (last month) as a pandas.DataFrame on ascending order</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+
+<span class="c1"># Retrieves the historical data of BBVA on the specified date range as a pandas.DataFrame on ascending order</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_historical_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As we already saw, both functions take a lot of parameters, but some of them are <em>optional</em> which means that the function
+does not need the user to specify them.</p>
+<p>When retrieving recent data from an equity, we can additionally specify if we want the output as a json object or not, via
+setting the parameter <cite>as_json</cite> on either <em>True</em> or <em>False</em>, respectively. We can also set the <cite>order</cite> we want the
+returned object to have based on dates, where <em>ascending</em> goes from the very first date retrieved until now, and
+<em>descending</em> goes the other way.</p>
+<p>Furthermore when it comes to historical data retrieval we also need to specify both <cite>start</cite> and <cite>end</cite> dates, mandatory.
+Where both date values are <cite>str</cite> objects as <em>dd/mm/yyyy</em> format, as it is the Spanish format to specify dates.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you are not familiar with spanish stocks/equities remember that you can either retrieve a listing of the ones
+available or check the listing on <a class="reference external" href="https://es.investing.com/equities/spain">Investing Spanish Equities</a>.</p>
+</div>
+</div>
+<div class="section" id="company-profile">
+<h3>Company Profile<a class="headerlink" href="#company-profile" title="Permalink to this headline">¶</a></h3>
+<p>As an extra feature, via <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> you can retrieve the company profile from a
+company in order to either classify or analyse them based on the information these companies publicly provide, as it
+is a self-made description of the company.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">investpy</span><span class="o">.</span><span class="n">get_equity_company_profile</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Just the <cite>equity</cite> parameter is mandatory, as the default value for the <cite>language</cite> of the retrieved company profile is
+<em>english</em> (due to <a class="reference external" href="https://es.investing.com/">Investing</a>, as it just provides company profiles on english), but the
+function also retrieves the company profile on <em>spanish</em> from
+<a class="reference external" href="http://www.bolsamadrid.es/esp/aspx/Portada/Portada.aspx">Bolsa de Madrid</a>, the additional resource used along this
+package.</p>
+</div>
 </div>
 <div class="section" id="samples">
 <h2>Samples<a class="headerlink" href="#samples" title="Permalink to this headline">¶</a></h2>
+<p>As the generated dataset has been uploaded to <a class="reference external" href="https://www.kaggle.com/alvarob96/spanish-stocks-historical-data">Kaggle</a>
+some kernels with samples on retrieved data usage have been created for the community. I highly recommend you to check
+the kernel created by <a class="reference external" href="https://www.kaggle.com/dhimananubhav">Anubhav Dhiman</a> titled
+<a class="reference external" href="https://www.kaggle.com/dhimananubhav/workflow-for-visualizing-and-analyzing-stocks">*Workflow for visualizing and analyzing stocks*</a>.</p>
 </div>
 </div>
 

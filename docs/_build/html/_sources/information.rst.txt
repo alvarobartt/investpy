@@ -2,7 +2,7 @@ Additional Information
 ======================
 
 As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements,
-enhancements and ideas. On Github you canfind an open tab of `issues <https://github.com/alvarob96/investpy/issues/>`_
+enhancements and ideas. On Github you can find an open tab of `issues <https://github.com/alvarob96/investpy/issues/>`_
 where you can contribute by opening new issues if needed or contribute to its solving.
 
 Additionally, you can triage issues on `investpy Code Triage <https://www.codetriage.com/alvarob96/investpy>`_ where

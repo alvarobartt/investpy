@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Equities/Stocks" href="equities.html" />
+    <link rel="next" title="Stocks/Equities" href="equities.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
 </head>
 
@@ -89,7 +89,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="equities.html">Equities/Stocks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="equities.html">Stocks/Equities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="information.html">Additional Information</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disclaimer.html">Disclaimer</a></li>
@@ -161,7 +161,8 @@
 <h1>Model<a class="headerlink" href="#model" title="Permalink to this headline">¶</a></h1>
 <p>As the retrieved historical data is common to every financial product that investpy extracts data from, only a model
 class has been created in order to store the day-a-day historical data.</p>
-<p>So this model looks like:</p>
+<p>So in we define a model in where every value corresponds to each value of the OHLC (Open-High-Low-Close) nomenclature
+(except on equities, that it also includes the volume) and it looks like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">date_</span><span class="p">,</span> <span class="n">open_</span><span class="p">,</span> <span class="n">high_</span><span class="p">,</span> <span class="n">low_</span><span class="p">,</span> <span class="n">close_</span><span class="p">,</span> <span class="n">volume_</span><span class="p">):</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">date_</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">open</span> <span class="o">=</span> <span class="n">open_</span>
@@ -171,8 +172,6 @@ class has been created in order to store the day-a-day historical data.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">volume</span> <span class="o">=</span> <span class="n">volume_</span>
 </pre></div>
 </div>
-<p>, where every value corresponds to each value of the OHLC (Open-High-Low-Close) nomenclature, but in the case of
-equities, it also includes the Volume.</p>
 <p>As their names indicate, OHLC values refer to opening, highest, lowest and closing values of the market on a trading
 day, respectively. And the volume value refers to the number of shares traded in a security day.</p>
 <div class="admonition note">
@@ -191,7 +190,7 @@ structure that either the resulting pandas.DataFrame or JSON file will be based 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="equities.html" class="btn btn-neutral float-right" title="Equities/Stocks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="equities.html" class="btn btn-neutral float-right" title="Stocks/Equities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
