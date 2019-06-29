@@ -85,17 +85,12 @@ def get_etf(country):
                         }
 
                     results.append(data)
-
-            resource_package = __name__
-            resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
-            file = pkg_resources.resource_filename(resource_package, resource_path)
+            else:
+                raise IOError("ERR#029: specified country etfs not found or unable to retrieve.")
 
             df = pd.DataFrame(results)
-            df.to_csv(file, index=False)
 
-            return results
-
-    raise IOError("ERR#029: specified country etfs not found or unable to retrieve.")
+            return df
 
 
 def get_etfs():

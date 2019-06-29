@@ -11,7 +11,7 @@ import investpy
 
 from investpy.equities import get_equity_names
 from investpy.funds import get_fund_names
-from investpy.etfs import get_etfs
+from investpy.etfs import get_etfs, get_etf
 
 
 def test_investpy():
@@ -60,6 +60,7 @@ def test_investpy():
 
     get_fund_names()
 
+    get_etf('spain')
     investpy.get_etfs()
     investpy.get_etf_markets()
 
