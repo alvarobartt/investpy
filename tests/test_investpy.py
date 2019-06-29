@@ -9,6 +9,10 @@ import pytest
 
 import investpy
 
+from investpy.equities import get_equity_names
+from investpy.funds import get_fund_names
+from investpy.etfs import get_etfs
+
 
 def test_investpy():
     """
@@ -32,7 +36,7 @@ def test_investpy():
     for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás', language=value)
 
-    investpy.get_equities()
+    get_equity_names()
 
     investpy.get_funds()
     investpy.get_funds_list()
@@ -54,6 +58,9 @@ def test_investpy():
 
     investpy.get_funds()
 
+    get_fund_names()
+
+    investpy.get_etfs()
     investpy.get_etf_markets()
 
     for value in ['spain', None]:
@@ -80,7 +87,7 @@ def test_investpy():
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=param['as_json'], order=param['order'])
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
-    investpy.get_etfs()
+    get_etfs()
 
 
 if __name__ == '__main__':

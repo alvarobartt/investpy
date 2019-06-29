@@ -8,7 +8,6 @@ __author__ = "Alvaro Bartolome <alvarob96@usal.es>"
 import pytest
 
 import investpy
-from investpy.etfs import get_etf
 
 
 def test_equity_errors():
@@ -118,29 +117,6 @@ def test_etf_errors():
     for param in params:
         try:
             investpy.get_etf_dict(country=param['country'], columns=param['columns'], as_json=param['as_json'])
-        except:
-            pass
-
-    params = [
-        {'country': None},
-        {'country': 'spain'},
-    ]
-
-    for param in params:
-        try:
-            investpy.get_etf_df(country=param['country'])
-        except:
-            pass
-
-    for param in params:
-        try:
-            get_etf(param)
-        except:
-            pass
-
-    for param in params:
-        try:
-            investpy.get_etf_list(country=param['country'])
         except:
             pass
 

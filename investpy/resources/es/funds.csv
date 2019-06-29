@@ -1,101 +1,101 @@
 asset class,id,isin,issuer,name,symbol,tag
+Equity,1043264,LU0171283533,BlackRock (Luxembourg) SA,Blackrock Global Funds - Global Allocation Fund E2,0P0000VHL2,blackrock-global-allocation-e2-eur
 Equity,1010294,ES0172273007,BBVA Asset Management SGIIC,Quality Inversión Conservadora Fi,172273007,quality-inversion-conservadora-fi
 Equity,1073639,LU0227385266,Nordea Investment Funds SA,Nordea 1 - Stable Return Fund E Eur,0P00001N5G,nordea-1-stable-return-fund-e-eur
 Equity,1073479,IE00BLP5S460,Old Mutual Global Investors (UK) Limited,Merian Global Equity Absolute Return Fund A Eur Hedged Acc,0P00013398,old-mutual-global-equity-abs-a-acc
 Bond,1085467,LU0129121025,GAM (Luxembourg) SA,Gam Multibond - Local Emerging Bond Usd E,0P00000MSY,julius-baer-locemrgngbnd-usd-e
-Equity,1010291,ES0172242002,BBVA Asset Management SGIIC,Quality Inversión Moderada Fi,172242002,quality-inversion-moderada-fi
 Equity,1073183,LU0552385709,Morgan Stanley Investment Management (ACD) Limited,Morgan Stanley Investment Funds - Global Opportunity Fund Bh (eur),0P0000RZ2K,ms-global-opportunity-fund-bh-eur
-Other,1073646,LU0599946893,DWS Investment S.A.,Dws Concept Kaldemorgen Eur Lc,0P0000T2ET,deutsche-concept-kaldemorgen-lc
+Equity,1010291,ES0172242002,BBVA Asset Management SGIIC,Quality Inversión Moderada Fi,172242002,quality-inversion-moderada-fi
 Other,1061762,LU0599947198,Deutsche Asset Management S.A.,Dws Concept Kaldemorgen Eur Nc,0P0000T2EV,deutsche-concept-kaldemorgen-nc
+Other,1073646,LU0599946893,DWS Investment S.A.,Dws Concept Kaldemorgen Eur Lc,0P0000T2ET,deutsche-concept-kaldemorgen-lc
 Other,1061760,LU0438336264,BlackRock (Luxembourg) SA,Blackrock Strategic Funds - Fixed Income Strategies Fund A2 Eur,0P0000LZO2,fixed-income-strategies-fund-a2-eur
-Equity,1009514,ES0107781017,Santander Asset Management SGIIC,Mi Fondo Santander Moderado A Fi,107781017,santander-select-moderado-a-fi
 Equity,1009513,ES0107781009,Santander Asset Management SGIIC,Mi Fondo Santander Moderado S Fi,107781009,santander-select-moderado-s-fi
-Bond,1063186,ES0138045051,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Institucional Fi,0P0000V8VI,caixabank-monetario-institucionalfi
-Bond,1063184,ES0138045044,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Cartera Fi,0P0000V8VH,caixabank-monetario-cartera-fi
-Bond,1063187,ES0138045036,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Platinum Fi,0P00000WDT,caixabank-monetario-platinum-fi
+Equity,1009514,ES0107781017,Santander Asset Management SGIIC,Mi Fondo Santander Moderado A Fi,107781017,santander-select-moderado-a-fi
 Bond,1063188,ES0138045010,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Plus Fi,0P0000V8VF,caixabank-monetario-plus-fi
-Bond,1063185,ES0138045002,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Estándar Fi,0P0000V8VE,caixabank-monetario-estoindar-fi
+Bond,1063186,ES0138045051,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Institucional Fi,0P0000V8VI,caixabank-monetario-institucionalfi
 Bond,1063189,ES0138045028,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Premium Fi,0P0000V8VG,caixabank-monetario-premium-fi
-Equity,1010149,ES0158976037,Bankia Fondos SGIIC,Bankia Soy Así Cauto Universal Fi,158976037,bankia-soy-asi-cauto-fi
+Bond,1063187,ES0138045036,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Platinum Fi,0P00000WDT,caixabank-monetario-platinum-fi
+Bond,1063185,ES0138045002,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Estándar Fi,0P0000V8VE,caixabank-monetario-estoindar-fi
+Bond,1063184,ES0138045044,Caixabank Asset Management SGIIC,Caixabank Monetario Rendimiento Cartera Fi,0P0000V8VH,caixabank-monetario-cartera-fi
 Equity,1073642,LU1279334996,Pictet Asset Management (Europe) SA,Pictet - Robotics Hp Eur,0P0001788V,pictet-robotics-hp-eur
-Bond,1063162,ES0105002028,Caixabank Asset Management SGIIC,Caixabank Ahorro Institucional Fi,0P000160SC,caixabank-ahorro-institucional-fi
-Bond,1009477,ES0105002002,Caixabank Asset Management SGIIC,Caixabank Ahorro Estándar Fi,105002002,caixabank-ahorro-estandar-fi
-Bond,1009479,ES0105002036,Caixabank Asset Management SGIIC,Caixabank Ahorro Premium Fi,105002036,caixabank-ahorro-premium-fi
-Bond,1009478,ES0105002010,Caixabank Asset Management SGIIC,Caixabank Ahorro Plus Fi,105002010,caixabank-ahorro-plus-fi
-Equity,1009576,ES0111187003,Sabadell Asset Management SGIIC,Sabadell Prudente Base Fi,111187003,sabadell-prudente-base-fi
-Equity,1063735,ES0111187037,Sabadell Asset Management SGIIC,Sabadell Prudente Premier Fi,0P00015Q8R,sabadell-prudente-premier-fi
-Equity,1063733,ES0111187052,Sabadell Asset Management SGIIC,Sabadell Prudente Empresa Fi,0P00016RCN,sabadell-prudente-empresa-fi
+Equity,1010149,ES0158976037,Bankia Fondos SGIIC,Bankia Soy Así Cauto Universal Fi,158976037,bankia-soy-asi-cauto-fi
 Equity,1063736,ES0111187045,Sabadell Asset Management SGIIC,Sabadell Prudente Pyme Fi,0P00016RCM,sabadell-prudente-pyme-fi
+Equity,1063733,ES0111187052,Sabadell Asset Management SGIIC,Sabadell Prudente Empresa Fi,0P00016RCN,sabadell-prudente-empresa-fi
+Equity,1063735,ES0111187037,Sabadell Asset Management SGIIC,Sabadell Prudente Premier Fi,0P00015Q8R,sabadell-prudente-premier-fi
+Equity,1009576,ES0111187003,Sabadell Asset Management SGIIC,Sabadell Prudente Base Fi,111187003,sabadell-prudente-base-fi
 Equity,1063734,ES0111187029,Sabadell Asset Management SGIIC,Sabadell Prudente Plus Fi,0P00015Q8Q,sabadell-prudente-plus-fi
-Equity,1009504,ES0107678015,Caixabank Asset Management SGIIC,Albus Extra Fi,107678015,albus-extra-fi
 Equity,1009503,ES0107678007,Caixabank Asset Management SGIIC,Albus Platinum Fi,107678007,albus-platinum-fi
-Bond,1063193,ES0138219029,Caixabank Asset Management SGIIC,Caixabank Renta Fija Flexible Platinum Fi,0P000148IK,caixabank-renta-fija-flexible-plat
-Bond,1063192,ES0138219052,Caixabank Asset Management SGIIC,Caixabank Renta Fija Flexible Cartera Fi,0P000160T8,caixabank-renta-fija-flexible-cart
-Bond,1009902,ES0138219011,Caixabank Asset Management SGIIC,Caixabank Renta Fija Flexible Patrimonio Fi,138219011,caixabank-renta-fija-flexible-patri
-Bond,1063194,ES0138219045,Caixabank Asset Management SGIIC,Caixabank Renta Fija Flexible Premium Fi,0P000148IL,caixabank-renta-fija-flexible-prem
-Bond,1009903,ES0138219037,Caixabank Asset Management SGIIC,Caixabank Renta Fija Flexible Plus Fi,138219037,caixabank-renta-fija-flexible-plus
-Bond,1009901,ES0138219003,Caixabank Asset Management SGIIC,Caixabank Renta Fija Flexible Estándar Fi,138219003,caixabank-renta-fija-flexible-estan
+Equity,1009504,ES0107678015,Caixabank Asset Management SGIIC,Albus Extra Fi,107678015,albus-extra-fi
+Equity,1066563,LU0996177134,Amundi Luxembourg S.A.,Amundi Index Solutions - Amundi Index Msci Emerging Markets Ae-c,0P00012TNM,amundi-index-msci-em-aec
 Equity,1043265,LU0128522157,Franklin Templeton Investment Funds,Templeton Asian Growth Fund A(acc)usd,0P00000B0R,templeton-asian-growth-a-acc-usd
 Equity,1063145,,Vida Caixa Se. y Re.,Cabk Equilibrio Pp,0P000011YT,cabk-equilibrio-pp
-Equity,1010030,ES0145458016,Caixabank Asset Management SGIIC,Caixabank Iter Platinum Fi,145458016,caixabank-iter-platinum-fi
 Equity,1010029,ES0145458008,Caixabank Asset Management SGIIC,Caixabank Iter Extra Fi,145458008,caixabank-iter-extra-fi
+Equity,1010030,ES0145458016,Caixabank Asset Management SGIIC,Caixabank Iter Platinum Fi,145458016,caixabank-iter-platinum-fi
 Equity,1075198,IE0007201043,Vanguard Group (Ireland) Limited,Vanguard Pacific Ex-japan Stock Index Fund Investor Eur Accumulation,0P00012I6O,vanguard-pacific-exjp-stock-eur-acc
-Equity,1066563,LU0996177134,Amundi Luxembourg S.A.,Amundi Index Solutions - Amundi Index Msci Emerging Markets Ae-c,0P00012TNM,amundi-index-msci-em-aec
 Equity,1072968,LU0218912235,Vontobel Asset Management S.A.,Vontobel Fund - Emerging Markets Equity H (hedged) Eur,0P00005VLV,vontobel-em-equity-h-eur
-Equity,1010194,ES0164540009,Caixabank Asset Management SGIIC,Caixabank Crecimiento Estándar Fi,164540009,caixabank-crecimiento-estandar-fi
-Equity,1010195,ES0164540033,Caixabank Asset Management SGIIC,Caixabank Crecimiento Plus Fi,164540033,caixabank-crecimiento-plus-fi
 Equity,1073187,LU0073232471,Morgan Stanley Investment Management (ACD) Limited,Morgan Stanley Investment Funds - Us Growth Fund A,0P00000BN2,ms-us-growth-fund-a-usd
 Equity,1073186,LU0073232471,Morgan Stanley Investment Management (ACD) Limited,Morgan Stanley Investment Funds - Us Growth Fund A,0P00000SGC,ms-us-growth-fund-a
-Equity,1010355,ES0175835000,Santander Asset Management SGIIC,Mi Fondo Santander Patrimonio S Fi,175835000,santander-select-patrimonio-s-fi
+Equity,1010194,ES0164540009,Caixabank Asset Management SGIIC,Caixabank Crecimiento Estándar Fi,164540009,caixabank-crecimiento-estandar-fi
+Equity,1010195,ES0164540033,Caixabank Asset Management SGIIC,Caixabank Crecimiento Plus Fi,164540033,caixabank-crecimiento-plus-fi
 Equity,1010356,ES0175835018,Santander Asset Management SGIIC,Mi Fondo Santander Patrimonio A Fi,175835018,santander-select-patrimonio-a-fi
-Equity,1010191,ES0164539001,Caixabank Asset Management SGIIC,Caixabank Evolución Estándar Fi,164539001,caixabank-equilibrio-estandar-fi
-Equity,1010193,ES0164539035,Caixabank Asset Management SGIIC,Caixabank Evolución Plus Fi,164539035,caixabank-equilibrio-plus-fi
-Equity,1010192,ES0164539019,Caixabank Asset Management SGIIC,Caixabank Evolución Premium Fi,164539019,caixabank-equilibrio-premium-fi
-Equity,1073644,LU0289214628,JPMorgan Asset Management (Europe) S.à r.l.,Jpmorgan Funds - Europe Equity Plus Fund D (perf) (acc) - Eur,0P000094D4,jp-europe-equity-plus-d-perf-acc
-Bond,1009928,ES0138534047,Santander Asset Management SGIIC,Santander Rendimiento S Fi,138534047,santander-rendimiento-s-fi
+Equity,1010355,ES0175835000,Santander Asset Management SGIIC,Mi Fondo Santander Patrimonio S Fi,175835000,santander-select-patrimonio-s-fi
 Equity,1063139,,Vida Caixa Se. y Re.,Cabk Destino 2022 Pp,0P000170QF,cabk-destino-2022-pp
-Bond,1009927,ES0138534039,Santander Asset Management SGIIC,Santander Rendimiento C Fi,138534039,santander-rendimiento-c-fi
-Bond,1009926,ES0138534021,Santander Asset Management SGIIC,Santander Rendimiento B Fi,138534021,santander-rendimiento-b-fi
+Equity,1073644,LU0289214628,JPMorgan Asset Management (Europe) S.à r.l.,Jpmorgan Funds - Europe Equity Plus Fund D (perf) (acc) - Eur,0P000094D4,jp-europe-equity-plus-d-perf-acc
+Equity,1010191,ES0164539001,Caixabank Asset Management SGIIC,Caixabank Evolución Estándar Fi,164539001,caixabank-equilibrio-estandar-fi
+Equity,1010192,ES0164539019,Caixabank Asset Management SGIIC,Caixabank Evolución Premium Fi,164539019,caixabank-equilibrio-premium-fi
+Equity,1010193,ES0164539035,Caixabank Asset Management SGIIC,Caixabank Evolución Plus Fi,164539035,caixabank-equilibrio-plus-fi
 Bond,1009925,ES0138534005,Santander Asset Management SGIIC,Santander Rendimiento A Fi,138534005,santander-rendimiento-a-fi
+Bond,1009926,ES0138534021,Santander Asset Management SGIIC,Santander Rendimiento B Fi,138534021,santander-rendimiento-b-fi
+Bond,1009927,ES0138534039,Santander Asset Management SGIIC,Santander Rendimiento C Fi,138534039,santander-rendimiento-c-fi
+Bond,1009928,ES0138534047,Santander Asset Management SGIIC,Santander Rendimiento S Fi,138534047,santander-rendimiento-s-fi
 Bond,1063833,ES0138534054,Santander Asset Management SGIIC,Santander Rendimiento Cartera Fi,0P00016ZNJ,santander-rendimiento-cartera-fi
-Equity,1072234,IE0007281425,Vanguard Group (Ireland) Limited,Vanguard Japan Stock Index Fund Investor Eur Accumulation,0P00001QSE,vanguard-japan-stock-investor-e-acc
 Equity,1063032,,BBVA Pensiones EGFP,Bbva Multiactivo Conservador Pp,0P00000ZZX,bbva-multiactivo-conservador-pp
+Equity,1072234,IE0007281425,Vanguard Group (Ireland) Limited,Vanguard Japan Stock Index Fund Investor Eur Accumulation,0P00001QSE,vanguard-japan-stock-investor-e-acc
 Bond,1063849,ES0112793007,Santander Asset Management SGIIC,Spb Rf Corto Plazo A Fi,0P00015L1O,spb-rf-corto-plazo-a-fi
-Bond,1063835,ES0105931002,Santander Asset Management SGIIC,Santander Renta Fija Corto Plazo A Fi,0P00015KUS,santander-renta-fija-corto-plazo-a
 Bond,1009585,ES0112793031,Santander Asset Management SGIIC,Spb Rf Corto Plazo I Fi,112793031,spb-rf-corto-plazo-i-fi
+Bond,1063835,ES0105931002,Santander Asset Management SGIIC,Santander Renta Fija Corto Plazo A Fi,0P00015KUS,santander-renta-fija-corto-plazo-a
 Bond,1009491,ES0105931036,Santander Asset Management SGIIC,Santander Renta Fija Corto Plazo I Fi,105931036,santander-renta-fija-corto-plazo-i
+Equity,1010199,ES0164853006,Caixabank Asset Management SGIIC,Caixabank Selección Tendencias Estándar Fi,164853006,caixabank-seleccion-tendencias-esta
+Equity,1010200,ES0164853014,Caixabank Asset Management SGIIC,Caixabank Selección Tendencias Plus Fi,164853014,caixabank-seleccion-tendencias-plus
+Bond,1063742,ES0173829062,Sabadell Asset Management SGIIC,Sabadell Rendimiento Pyme Fi,0P0001774K,sabadell-rendimiento-pyme-fi
+Bond,1063741,ES0173829054,Sabadell Asset Management SGIIC,Sabadell Rendimiento Premier Fi,0P0001774J,sabadell-rendimiento-premier-fi
+Bond,1010317,ES0173829039,Sabadell Asset Management SGIIC,Sabadell Rendimiento Base Fi,173829039,sabadell-rendimiento-base-fi
 Bond,1063738,ES0173829013,Sabadell Asset Management SGIIC,Sabadell Rendimiento Cartera Fi,0P0001774G,sabadell-rendimiento-cartera-fi
 Bond,1063737,ES0173829005,Sabadell Asset Management SGIIC,Sabadell Rendimiento Canalizador Fi,0P0001774F,sabadell-rendimiento-canalizador-fi
 Bond,1063739,ES0173829021,Sabadell Asset Management SGIIC,Sabadell Rendimiento Empresa Fi,0P0001774H,sabadell-rendimiento-empresa-fi
 Bond,1063740,ES0173829047,Sabadell Asset Management SGIIC,Sabadell Rendimiento Plus Fi,0P0001774I,sabadell-rendimiento-plus-fi
-Bond,1063742,ES0173829062,Sabadell Asset Management SGIIC,Sabadell Rendimiento Pyme Fi,0P0001774K,sabadell-rendimiento-pyme-fi
-Bond,1063741,ES0173829054,Sabadell Asset Management SGIIC,Sabadell Rendimiento Premier Fi,0P0001774J,sabadell-rendimiento-premier-fi
-Bond,1010317,ES0173829039,Sabadell Asset Management SGIIC,Sabadell Rendimiento Base Fi,173829039,sabadell-rendimiento-base-fi
-Equity,1010199,ES0164853006,Caixabank Asset Management SGIIC,Caixabank Selección Tendencias Estándar Fi,164853006,caixabank-seleccion-tendencias-esta
-Equity,1010200,ES0164853014,Caixabank Asset Management SGIIC,Caixabank Selección Tendencias Plus Fi,164853014,caixabank-seleccion-tendencias-plus
 Equity,1013692,,Vida Caixa Se. y Re.,Cabk Crecimiento Pp,LP77001891,plancaixa-ambicion-global-pp
 Equity,1073650,LU0108459040,Candriam Luxembourg,Candriam Equities L Biotechnology Class C Usd Cap,0P00000BOM,candriam-equities-biotech-c-usd-cap
-Bond,1010035,ES0145822005,Santander Asset Management SGIIC,Santander Inversión Corto Plazo Fi,145822005,santander-inversion-corto-plazo-fi
 Equity,1073649,LU0109394709,Franklin Templeton International Services S.à r.l.,Franklin Biotechnology Discovery Fund A(acc)usd,0P00000SX6,franklin-biotech-discovery-a-acc
+Bond,1010035,ES0145822005,Santander Asset Management SGIIC,Santander Inversión Corto Plazo Fi,145822005,santander-inversion-corto-plazo-fi
 Equity,1062934,,Bankia Pensiones EGFP,Bankia Cauto Pp,0P00000WZY,bankia-cauto-pp
-Bond,1010042,ES0146791001,Ibercaja Gestión SGIIC,Ibercaja Bp Renta Fija A Fi,146791001,ibercaja-bp-renta-fija-a-fi
 Bond,1010043,ES0146791019,Ibercaja Gestión SGIIC,Ibercaja Bp Renta Fija B Fi,146791019,ibercaja-bp-renta-fija-b-fi
+Bond,1010042,ES0146791001,Ibercaja Gestión SGIIC,Ibercaja Bp Renta Fija A Fi,146791001,ibercaja-bp-renta-fija-a-fi
 Equity,1063522,,Santander Pensiones EGFP,Mi Plan Santander Moderado Pp,0P0000UJ6B,mi-plan-santander-moderado-pp
-Equity,1063523,,Santander Pensiones EGFP,Mi Plan Santander Prudente Pp,0P0000UI86,mi-plan-santander-prudente-pp
 Equity,1009656,ES0114673033,Bestinver Gestión SGIIC,Bestinfond Fi,114673033,bestinfond-fi
-Bond,1009766,ES0125627002,Kutxabank Gestión SGIIC,Kutxabank Rf Carteras Fi,125627002,kutxabank-rf-carteras-fi
+Equity,1063523,,Santander Pensiones EGFP,Mi Plan Santander Prudente Pp,0P0000UI86,mi-plan-santander-prudente-pp
 Equity,1063047,,BBVA Pensiones EGFP,Bbva Plan Multiactivo Moderado Pp,0P000085O0,bbva-plan-multiactivo-moderado-pp
-Equity,1063260,ES0133578007,Allianz Popular Asset Management SGIIC,Cartera óptima Prudente A Fi,0P000155MZ,cartera-optima-prudente-a-fi
-Equity,1009824,ES0133578031,Allianz Popular Asset Management SGIIC,Cartera óptima Prudente B Fi,133578031,cartera-optima-prudente-b-fi
 Equity,1010050,ES0146944006,Ibercaja Gestión SGIIC,Ibercaja Mixto Flexible 15 A Fi,146944006,ibercaja-mixto-flexible-15-a-fi
+Equity,1043263,LU0197230542,Fidelity (FIL Inv Mgmt (Lux) S.A.),Fidelity Funds - India Focus Fund A-eur,0P00000ZJK,fidelity-india-focus-a-dist-eur
+Bond,1009766,ES0125627002,Kutxabank Gestión SGIIC,Kutxabank Rf Carteras Fi,125627002,kutxabank-rf-carteras-fi
 Equity,1063400,ES0146944014,Ibercaja Gestión SGIIC,Ibercaja Mixto Flexible 15 B Fi,0P0000Q74L,ibercaja-mixto-flexible-15-b-fi
 Equity,1063141,,Vida Caixa Se. y Re.,Cabk Destino 2030 Pp,0P000170QH,cabk-destino-2030-pp
-Other,1062939,ES0158965030,Bankia Fondos SGIIC,Bankia Evolución Prudente Universal Fi,0P00000GIY,bankia-evolucion-prudente-fi
-Equity,1010156,ES0159084039,Bankia Fondos SGIIC,Bankia Soy Así Flexible Universal Fi,159084039,bankia-soy-asi-flexible-fi
+Equity,1009824,ES0133578031,Allianz Popular Asset Management SGIIC,Cartera óptima Prudente B Fi,133578031,cartera-optima-prudente-b-fi
+Equity,1063260,ES0133578007,Allianz Popular Asset Management SGIIC,Cartera óptima Prudente A Fi,0P000155MZ,cartera-optima-prudente-a-fi
 Equity,1073182,LU0909472069,Credit Suisse Fund Management S.A.,Cs Invm Fds 2 - Credit Suisse (lux) Global Security Equity Fund Bh Eur,0P0000YOFZ,cs-global-security-equity-bh-eur
+Other,1062939,ES0158965030,Bankia Fondos SGIIC,Bankia Evolución Prudente Universal Fi,0P00000GIY,bankia-evolucion-prudente-fi
 Equity,1062956,,Bankia Pensiones EGFP,Bankia Moderado Pp,0P000013XR,bankia-moderado-pp
+Equity,1009653,ES0114638036,Bestinver Gestión SGIIC,Bestinver Internacional Fi,114638036,bestinver-internacional-fi
 Equity,1063259,ES0133878001,Allianz Popular Asset Management SGIIC,Cartera óptima Moderada A Fi,0P000155MW,cartera-optima-moderada-a-fi
 Equity,1009842,ES0133878035,Allianz Popular Asset Management SGIIC,Cartera óptima Moderada B Fi,133878035,cartera-optima-moderada-b-fi
 Bond,1010115,ES0152772036,Renta 4 Gestora SGIIC S.A.,Ing Direct Fondo Naranja Renta Fija Fi,152772036,ing-direct-fondo-naranja-renta-fija
-Equity,1009653,ES0114638036,Bestinver Gestión SGIIC,Bestinver Internacional Fi,114638036,bestinver-internacional-fi
+Equity,1010156,ES0159084039,Bankia Fondos SGIIC,Bankia Soy Así Flexible Universal Fi,159084039,bankia-soy-asi-flexible-fi
+Other,1063389,ES0146843000,Ibercaja Gestión SGIIC,Ibercaja Crecimiento Dinámico B Fi,0P0000S2C0,ibercaja-crecimiento-dinoimico-b-fi
+Other,1063388,ES0146843034,Ibercaja Gestión SGIIC,Ibercaja Crecimiento Dinámico A Fi,0P00006A82,ibercaja-crecimiento-dinoimico-a-fi
 Equity,1009891,ES0138172038,Caixabank Asset Management SGIIC,Caixabank Bolsa Selección Global Estándar Fi,138172038,caixabank-bolsa-seleccion-global-es
+Equity,1009889,ES0138172004,Caixabank Asset Management SGIIC,Caixabank Bolsa Selección Global Plus Fi,138172004,caixabank-bolsa-seleccion-global-pl
+Equity,1009890,ES0138172012,Caixabank Asset Management SGIIC,Caixabank Bolsa Selección Global Premium Fi,138172012,caixabank-bolsa-seleccion-global-pr
+Bond,1010063,ES0147102018,Ibercaja Gestión SGIIC,Ibercaja Plus D Fi,147102018,ibercaja-plus-d-fi
+Bond,1010062,ES0147102000,Ibercaja Gestión SGIIC,Ibercaja Plus C Fi,147102000,ibercaja-plus-c-fi
+Bond,1010064,ES0147102034,Ibercaja Gestión SGIIC,Ibercaja Plus A Fi,147102034,ibercaja-plus-a-fi
+Bond,1089472,LU0389812933,Amundi Luxembourg S.A.,Amundi Index Solutions - Amundi Index J.p. Morgan Gbi Global Govies Ahe-c,0P0000IKFQ,amundi-jpm-gbi-global-govies-ahec
