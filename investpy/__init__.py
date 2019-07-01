@@ -43,7 +43,7 @@ def get_equities():
 
     """
 
-    return ts.get_equities()
+    return ts.equities_as_df()
 
 
 def get_equities_list():
@@ -66,7 +66,7 @@ def get_equities_list():
 
     """
 
-    return ts.list_equities()
+    return ts.equities_as_list()
 
 
 def get_recent_data(equity, as_json=False, order='ascending'):
@@ -134,11 +134,11 @@ def get_recent_data(equity, as_json=False, order='ascending'):
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = pd.DataFrame(ts.get_equity_names())
+        equities = get_equities()
 
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
@@ -326,11 +326,11 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
             flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = pd.DataFrame(ts.get_equity_names())
+        equities = ts.retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
@@ -497,11 +497,11 @@ def get_equity_company_profile(equity, language='english'):
     selected_source = available_sources[language.lower()]
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = pd.DataFrame(ts.get_equity_names())
+        equities = ts.retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#001: equities object not found or unable to retrieve.")
@@ -587,7 +587,7 @@ def get_funds():
         :returns a pandas.DataFrame with all the available funds to retrieve data from
     """
 
-    return fs.get_funds()
+    return fs.funds_as_df()
 
 
 def get_funds_list():
@@ -599,7 +599,7 @@ def get_funds_list():
     :returns list that contains all the available fund names
     """
 
-    return fs.list_funds()
+    return fs.funds_as_list()
 
 
 def get_funds_dict(columns, as_json):
@@ -611,7 +611,7 @@ def get_funds_dict(columns, as_json):
     :returns a dictionary that contains all the available fund values specified in the columns
     """
 
-    return fs.dict_funds(columns=columns, as_json=as_json)
+    return fs.funds_as_dict(columns=columns, as_json=as_json)
 
 
 def get_fund_recent_data(fund, as_json=False, order='ascending'):
@@ -642,11 +642,11 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
         raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = pd.DataFrame(fs.get_fund_names())
+        funds = get_funds()
 
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
@@ -788,11 +788,11 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
             flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = pd.DataFrame(fs.get_fund_names())
+        funds = get_funds()
 
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
@@ -904,11 +904,11 @@ def get_fund_information(fund, as_json=False):
         raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = pd.DataFrame(fs.get_fund_names())
+        funds = get_funds()
 
     if funds is None:
         raise IOError("ERR#005: funds object not found or unable to retrieve.")
@@ -938,7 +938,7 @@ def get_fund_information(fund, as_json=False):
             result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
                                            'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
                                            'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])
-            result.at[0, 'Fund Name'] = row.name  # set_value deprecation warning
+            result.at[0, 'Fund Name'] = row.name
 
             if path_:
                 for elements_ in path_:
@@ -1006,7 +1006,7 @@ def get_fund_information(fund, as_json=False):
                         result.at[0, 'Category'] = category_name
 
                 if as_json is True:
-                    json_ = fs.fund_information_to_json(result)
+                    json_ = fs.fund_information_as_json(result)
                     return json_
                 elif as_json is False:
                     return result
@@ -1021,12 +1021,12 @@ def get_fund_information(fund, as_json=False):
 
 def get_etfs():
 
-    return es.get_etfs()
+    return es.retrieve_etfs()
 
 
-def get_etf_markets():
+def get_etf_countries():
 
-    return es.get_etf_markets()
+    return es.retrieve_etf_countries()
 
 
 def get_etf_df(country=None):
@@ -1039,7 +1039,7 @@ def get_etf_df(country=None):
         :returns a pandas.DataFrame with all the available etfs to retrieve data from
     """
 
-    return es.df_etfs(country)
+    return es.etfs_as_df(country)
 
 
 def get_etf_list(country=None):
@@ -1052,7 +1052,7 @@ def get_etf_list(country=None):
         returns a list that contains all the available etf names
     """
 
-    return es.list_etfs(country)
+    return es.etfs_as_list(country)
 
 
 def get_etf_dict(country=None, columns=None, as_json=False):
@@ -1064,7 +1064,7 @@ def get_etf_dict(country=None, columns=None, as_json=False):
     :returns a dictionary that contains all the available etf values specified in the columns
     """
 
-    return es.dict_etfs(country, columns=columns, as_json=as_json)
+    return es.etfs_as_dict(country, columns=columns, as_json=as_json)
 
 
 def get_etf_recent_data(etf, as_json=False, order='ascending'):
@@ -1100,7 +1100,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = pd.DataFrame(es.get_etfs())
+        etfs = es.retrieve_etfs()
 
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")
@@ -1246,7 +1246,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = pd.DataFrame(es.get_etfs())
+        etfs = es.retrieve_etfs()
 
     if etfs is None:
         raise IOError("ERR#009: etfs object not found or unable to retrieve.")

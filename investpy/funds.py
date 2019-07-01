@@ -15,7 +15,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def get_fund_names():
+def retrieve_funds():
     """
     This function retrieves all the available funds to retrieve data from.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
@@ -55,7 +55,7 @@ def get_fund_names():
             nested = elements_.xpath(".//a")[0].get('title').rstrip()
             info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
 
-            data = get_fund_data(info)
+            data = retrieve_fund_data(info)
 
             obj = {
                 "name": nested,
@@ -70,23 +70,23 @@ def get_fund_names():
             results.append(obj)
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
     df.to_csv(file, index=False)
 
-    return results
+    return df
 
 
-def get_fund_data(fund_tag):
+def retrieve_fund_data(fund):
     """
     This function retrieves additional information from a fund as listed on
     es.Investing.com. Every fund data is retrieved and stored in a CSV in order
     to get all the possible information from a fund.
 
     Args:
-        fund_tag (str): is the identifying tag of the specified fund.
+        fund (str): is the identifying tag of the specified fund.
 
     Returns:
         dict: contains the retrieved data if found, if not, the corresponding
@@ -106,7 +106,7 @@ def get_fund_data(fund_tag):
 
     """
 
-    url = "https://www.investing.com/funds/" + fund_tag
+    url = "https://www.investing.com/funds/" + fund
 
     head = {
         "User-Agent": ua.get_random(),
@@ -161,7 +161,7 @@ def get_fund_data(fund_tag):
     return result
 
 
-def fund_information_to_json(df):
+def fund_information_as_json(df):
     """
     This function converts a pandas.DataFrame, containing all the information from a fund, into a JSON
 
@@ -194,7 +194,7 @@ def fund_information_to_json(df):
     return result
 
 
-def get_funds():
+def funds_as_df():
     """
     This function retrieves all the available funds and returns a pandas.DataFrame of them all.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
@@ -205,11 +205,11 @@ def get_funds():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = pd.DataFrame(get_fund_names())
+        funds = retrieve_funds()
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
@@ -217,7 +217,7 @@ def get_funds():
         return funds
 
 
-def list_funds():
+def funds_as_list():
     """
     This function retrieves all the available funds and returns a list of each one of them.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
@@ -228,11 +228,11 @@ def list_funds():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = pd.DataFrame(get_fund_names())
+        funds = retrieve_funds()
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")
@@ -240,7 +240,7 @@ def list_funds():
         return funds['name'].tolist()
 
 
-def dict_funds(columns=None, as_json=False):
+def funds_as_dict(columns=None, as_json=False):
     """
     This function retrieves all the available funds and returns a dictionary with the specified columns.
     Available columns are: 'asset class', 'id', 'isin', 'issuer', 'name', 'symbol' and 'tag'
@@ -261,11 +261,11 @@ def dict_funds(columns=None, as_json=False):
         raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = pd.DataFrame(get_fund_names())
+        funds = retrieve_funds()
 
     if funds is None:
         raise IOError("ERR#005: fund list not found or unable to retrieve.")

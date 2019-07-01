@@ -26,10 +26,9 @@ setup(
                       'Unidecode==1.0.23',
                       'lxml==4.3.3'],
     data_files=[
-        ('equities_es', ['investpy/resources/es/equities.csv']),
-        ('funds_es', ['investpy/resources/es/funds.csv']),
-        ('etfs', ['investpy/resources/etfs/etfs.csv']),
-        ('etf_markets', ['investpy/resources/etfs/etf_markets.csv']),
+        ('equities', ['investpy/resources/equities/equities.csv']),
+        ('funds', ['investpy/resources/funds/funds.csv']),
+        ('etfs', ['investpy/resources/etfs/etfs.csv', 'investpy/resources/etfs/etf_markets.csv']),
         ('user_agents', ['investpy/resources/user_agent_list.txt'])
     ],
     include_package_data=True,

@@ -168,8 +168,24 @@
   <div class="section" id="module-investpy.funds">
 <span id="investpy-funds"></span><h1><a class="reference internal" href="#module-investpy.funds" title="investpy.funds"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.funds</span></code></a><a class="headerlink" href="#module-investpy.funds" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="investpy.funds.dict_funds">
+<code class="descclassname">investpy.funds.</code><code class="descname">dict_funds</code><span class="sig-paren">(</span><em>columns=None</em>, <em>as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.dict_funds" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available funds and returns a dictionary with the specified columns.
+Available columns are: ‘asset class’, ‘id’, ‘isin’, ‘issuer’, ‘name’, ‘symbol’ and ‘tag’
+All the available funds can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a dictionary that contains all the available fund values specified in the columns</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.funds.fund_information_to_json">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">fund_information_to_json</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.fund_information_to_json" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.funds.</code><code class="descname">fund_information_to_json</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.fund_information_to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function converts a pandas.DataFrame, containing all the information from a fund, into a JSON</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -182,8 +198,43 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="investpy.funds.get_fund_data">
+<code class="descclassname">investpy.funds.</code><code class="descname">get_fund_data</code><span class="sig-paren">(</span><em>fund_tag</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves additional information from a fund as listed on
+es.Investing.com. Every fund data is retrieved and stored in a CSV in order
+to get all the possible information from a fund.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>fund_tag</strong> (<em>str</em>) – is the identifying tag of the specified fund.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>contains the retrieved data if found, if not, the corresponding
+fields are filled with None values.</p>
+<p>The Return dictionary if the data was retrieved will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;issuer&#39;</span><span class="p">:</span> <span class="n">issuer_value</span><span class="p">,</span>
+    <span class="s1">&#39;isin&#39;</span><span class="p">:</span> <span class="n">isin_value</span><span class="p">,</span>
+    <span class="s1">&#39;asset class&#39;</span><span class="p">:</span> <span class="n">asset_value</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – if fund information was unavailable or not found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.funds.get_fund_names">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_fund_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_names" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.funds.</code><code class="descname">get_fund_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_names" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds to retrieve data from.
 All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
 <dl class="field-list simple">
@@ -197,8 +248,23 @@ All the available funds can be found at: <a class="reference external" href="htt
 </dd></dl>
 
 <dl class="function">
+<dt id="investpy.funds.get_funds">
+<code class="descclassname">investpy.funds.</code><code class="descname">get_funds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available funds and returns a pandas.DataFrame of them all.
+All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a pandas.DataFrame with all the available funds to retrieve data from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.funds.list_funds">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">list_funds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.list_funds" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.funds.</code><code class="descname">list_funds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.list_funds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds and returns a list of each one of them.
 All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
 <dl class="field-list simple">

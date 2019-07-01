@@ -168,22 +168,84 @@
   <div class="section" id="module-investpy">
 <span id="investpy"></span><h1><a class="reference internal" href="#module-investpy" title="investpy"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy</span></code></a><a class="headerlink" href="#module-investpy" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="investpy.get_equities">
+<code class="descclassname">investpy.</code><code class="descname">get_equities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_equities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available equities and returns a pandas.DataFrame of them all.
+All the available equities can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a pandas.DataFrame with all the available equities to retrieve data from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.get_equities_list">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_equities_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_equities_list" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_equities_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_equities_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves the list of all the available equities</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a list that contains all the available equity names</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns list</p>
+<dd class="field-even"><p>returns list that contains all the available equity names</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_equity_company_profile">
+<code class="descclassname">investpy.</code><code class="descname">get_equity_company_profile</code><span class="sig-paren">(</span><em>equity</em>, <em>language='english'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_equity_company_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves the company profile from an equity in the specified language from different sources.</p>
+<p>:param : name of the equity to the company profile from
+:type : param equity: str
+:param : language or code in which the company profile is going to be retrieved
+:type : param language: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns str containing the company profile of the specified equity</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_etf_df">
+<code class="descclassname">investpy.</code><code class="descname">get_etf_df</code><span class="sig-paren">(</span><em>country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available etfs and returns a pandas.DataFrame of them all.
+All the available etfs can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a pandas.DataFrame with all the available etfs to retrieve data from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_etf_dict">
+<code class="descclassname">investpy.</code><code class="descname">get_etf_dict</code><span class="sig-paren">(</span><em>country=None</em>, <em>columns=None</em>, <em>as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves a dictionary with the specified columns of all the available etfs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a dictionary that contains all the available etf values specified in the columns</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_etf_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_etf_historical_data</code><span class="sig-paren">(</span><em>etf</em>, <em>start</em>, <em>end</em>, <em>as_json=False</em>, <em>order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the specified etf in the specified date range.</p>
 <p>:param : name of the etf to retrieve historical data from
 :type : param etf: str
@@ -203,20 +265,36 @@
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the historical data of the etf</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the historical data of the etf</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_etf_list">
+<code class="descclassname">investpy.</code><code class="descname">get_etf_list</code><span class="sig-paren">(</span><em>country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves the list of all the available etfs</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>returns a list that contains all the available etf names</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns list</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_etf_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_etf_recent_data</code><span class="sig-paren">(</span><em>etf</em>, <em>as_json=False</em>, <em>order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the specified etf.
 The retrieved data corresponds to the last month and a half more or less.</p>
-<p>:param : name of the etf to retrieve recent historical data from
+<p>:param :
+:type : param country:
+:param : name of the etf to retrieve recent historical data from
 :type : param etf: str
 :param : optional parameter to indicate the order of the recent data to retrieve</p>
 <blockquote>
@@ -230,31 +308,17 @@ The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the recent data of the etf</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.get_etfs_list">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etfs_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etfs_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves the list of all the available etfs</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a list that contains all the available etf names</p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns list</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the recent data of the etf</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_fund_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_historical_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_fund_historical_data</code><span class="sig-paren">(</span><em>fund</em>, <em>start</em>, <em>end</em>, <em>as_json=False</em>, <em>order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the specified fund in the specified date range.</p>
 <p>:param : name of the fund to retrieve historical data from
 :type : param fund: str
@@ -274,17 +338,17 @@ The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the historical data of the fund</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the historical data of the fund</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_fund_information">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_information</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_information" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_fund_information</code><span class="sig-paren">(</span><em>fund</em>, <em>as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_information" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the specified fund in the specified date range.</p>
 <p>:param : name of the fund to retrieve information from
 :type : param fund: str
@@ -295,17 +359,17 @@ The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the information of the fund</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the information of the fund</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_fund_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_recent_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_fund_recent_data</code><span class="sig-paren">(</span><em>fund</em>, <em>as_json=False</em>, <em>order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the specified fund.
 The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:param : name of the fund to retrieve recent historical data from
@@ -322,31 +386,60 @@ The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the recent data of the fund</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the recent data of the fund</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_funds">
+<code class="descclassname">investpy.</code><code class="descname">get_funds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available funds and returns a pandas.DataFrame of them all.
+All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a pandas.DataFrame with all the available funds to retrieve data from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_funds_dict">
+<code class="descclassname">investpy.</code><code class="descname">get_funds_dict</code><span class="sig-paren">(</span><em>columns</em>, <em>as_json</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves a dictionary with the specified columns of all the available funds</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a dictionary that contains all the available fund values specified in the columns</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_funds_list">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_list" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_funds_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves the list of all the available funds</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a list that contains all the available fund names</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns list</p>
+<dd class="field-even"><p>returns list that contains all the available fund names</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_historical_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_historical_data</code><span class="sig-paren">(</span><em>equity</em>, <em>start</em>, <em>end</em>, <em>as_json=False</em>, <em>order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the specified equity in the specified date range.</p>
 <p>:param : name of the equity to retrieve historical data from
 :type : param equity: str
@@ -366,17 +459,17 @@ The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the historical data of the equity</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the historical data of the equity</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_recent_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">investpy.</code><code class="descname">get_recent_data</code><span class="sig-paren">(</span><em>equity</em>, <em>as_json=False</em>, <em>order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the specified equity.
 The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:param : name of the equity to retrieve recent historical data from
@@ -393,10 +486,10 @@ The retrieved data corresponds to the last month and a half more or less.</p>
 <p>:type : param as_json: bool</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>returns a pandas DataFrame (or JSON object if specified) containing the recent data of the equity</p>
+<dd class="field-odd"><p></p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns pandas.DataFrame (or JSON object if specified)</p>
+<dd class="field-even"><p>returns pandas DataFrame (or JSON object if specified) containing the recent data of the equity</p>
 </dd>
 </dl>
 </dd></dl>

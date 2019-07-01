@@ -9,9 +9,9 @@ import pytest
 
 import investpy
 
-from investpy.equities import get_equity_names
-from investpy.funds import get_fund_names
-from investpy.etfs import get_etfs, get_etf
+from investpy.equities import retrieve_equities
+from investpy.funds import retrieve_funds
+from investpy.etfs import retrieve_etfs
 
 
 def test_investpy():
@@ -36,7 +36,7 @@ def test_investpy():
     for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás', language=value)
 
-    get_equity_names()
+    retrieve_equities()
 
     investpy.get_funds()
     investpy.get_funds_list()
@@ -58,11 +58,10 @@ def test_investpy():
 
     investpy.get_funds()
 
-    get_fund_names()
+    retrieve_funds()
 
-    get_etf('spain')
     investpy.get_etfs()
-    investpy.get_etf_markets()
+    investpy.get_etf_countries()
 
     for value in ['spain', None]:
         investpy.get_etf_df(country=value)
@@ -72,6 +71,7 @@ def test_investpy():
         {'country': None, 'columns': ['id', 'name'], 'as_json': False},
         {'country': None, 'columns': ['id', 'name'], 'as_json': True},
         {'country': 'spain', 'columns': None, 'as_json': False},
+        {'country': 'spain', 'columns': ['id', 'name'], 'as_json': True},
     ]
 
     for param in params:
@@ -88,7 +88,7 @@ def test_investpy():
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=param['as_json'], order=param['order'])
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
-    get_etfs()
+    retrieve_etfs()
 
 
 if __name__ == '__main__':

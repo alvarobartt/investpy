@@ -15,7 +15,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def get_equity_names():
+def retrieve_equities():
     """
     This function retrieves all the available equities to retrieve data from.
     All the equities available can be found at: https://es.investing.com/equities/spain
@@ -64,7 +64,7 @@ def get_equity_names():
                 full_name_ = element_.get('title').replace(' (CFD)', '')
 
                 try:
-                    isin_ = get_isin_code(tag_)
+                    isin_ = retrieve_isin_code(tag_)
                 except (ConnectionError, IndexError):
                     isin_ = None
 
@@ -79,16 +79,16 @@ def get_equity_names():
                 results.append(data)
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
     df.to_csv(file, index=False)
 
-    return results
+    return df
 
 
-def get_isin_code(info):
+def retrieve_isin_code(info):
     """
     This is an additional function that adds data to the equities pandas.DataFrame.
     Added data in this case, are the ISIN codes of every company in order to identify it.
@@ -137,7 +137,7 @@ def get_isin_code(info):
     return None
 
 
-def get_equities():
+def equities_as_df():
     """
     This function retrieves all the available equities and returns a pandas.DataFrame of them all.
     All the available equities can be found at: https://es.investing.com/equities/spain
@@ -148,11 +148,11 @@ def get_equities():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = pd.DataFrame(get_equity_names())
+        equities = retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
@@ -160,7 +160,7 @@ def get_equities():
         return equities
 
 
-def list_equities():
+def equities_as_list():
     """
     This function retrieves all the available equities and returns a list of each one of them.
     All the available equities can be found at: https://es.investing.com/equities/spain
@@ -171,11 +171,11 @@ def list_equities():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'es', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = pd.DataFrame(get_equity_names())
+        equities = retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#001: equities list not found or unable to retrieve.")
