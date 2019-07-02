@@ -127,11 +127,17 @@ def get_recent_data(equity, as_json=False, order='ascending'):
 
     """
 
+    if not isinstance(equity, str):
+        raise ValueError("ERR#0030: equity argument needs to be a str.")
+
+    if not equity:
+        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
+        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
@@ -141,10 +147,10 @@ def get_recent_data(equity, as_json=False, order='ascending'):
         equities = get_equities()
 
     if equities is None:
-        raise IOError("ERR#001: equities object not found or unable to retrieve.")
+        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
     for row in equities.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
@@ -161,7 +167,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -174,7 +180,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#007: equity information unavailable or not found.")
+                        raise IndexError("ERR#0007: equity information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -211,7 +217,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
 
                     return df
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
             continue
 
@@ -278,24 +284,33 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
     """
 
+    if not isinstance(equity, str):
+        raise ValueError("ERR#0030: equity argument needs to be a str.")
+
+    if not equity:
+        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
+        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     try:
         datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect start date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#012: incorrect end date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0012: incorrect end date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(start, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError("ERR#0035: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -325,6 +340,11 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
             flag = False
 
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -333,34 +353,36 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
         equities = ts.retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#001: equities object not found or unable to retrieve.")
+        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
     for row in equities.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
             final = list()
 
+            url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
+
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+            }
+
+            req = requests.get(url, headers=head, timeout=5)
+
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            root_ = fromstring(req.text)
+            header = root_.xpath('//h2//text()')[0]
+
             for index in range(len(date_interval['intervals'])):
 
-                url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
-
-                head = {
-                    "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "text/html",
-                    "Accept-Encoding": "gzip, deflate, br",
-                    "Connection": "keep-alive",
-                }
-
-                req = requests.get(url, headers=head, timeout=5)
-
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
-
-                root_ = fromstring(req.text)
-                header = root_.xpath('//h2//text()')[0]
+                interval_counter += 1
 
                 params = {
                     "curr_id": row.id,
@@ -387,7 +409,10 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                if not req.text:
+                    continue
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -400,43 +425,52 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
                             info.append(nested_.text_content())
 
                         if info[0] == 'No se encontraron resultados':
-                            raise IndexError("ERR#007: equity information unavailable or not found.")
+                            if interval_counter < interval_limit:
+                                data_flag = False
+                            else:
+                                raise IndexError("ERR#0007: equity information unavailable or not found.")
+                        else:
+                            data_flag = True
 
-                        stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                        stock_close = float(info[1].replace(',', '.'))
-                        stock_open = float(info[2].replace(',', '.'))
-                        stock_high = float(info[3].replace(',', '.'))
-                        stock_low = float(info[4].replace(',', '.'))
-                        stock_volume = 0
+                        if data_flag is True:
+                            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                            stock_close = float(info[1].replace(',', '.'))
+                            stock_open = float(info[2].replace(',', '.'))
+                            stock_high = float(info[3].replace(',', '.'))
+                            stock_low = float(info[4].replace(',', '.'))
+                            stock_volume = 0
 
-                        if info[5].__contains__('K'):
-                            stock_volume = int(float(info[5].replace('K', '').replace(',', '.')) * 1000)
-                        elif info[5].__contains__('M'):
-                            stock_volume = int(float(info[5].replace('M', '').replace(',', '.')) * 1000000)
-                        elif info[5].__contains__('B'):
-                            stock_volume = int(float(info[5].replace('B', '').replace(',', '.')) * 1000000000)
+                            if info[5].__contains__('K'):
+                                stock_volume = int(float(info[5].replace('K', '').replace(',', '.')) * 1000)
+                            elif info[5].__contains__('M'):
+                                stock_volume = int(float(info[5].replace('M', '').replace(',', '.')) * 1000000)
+                            elif info[5].__contains__('B'):
+                                stock_volume = int(float(info[5].replace('B', '').replace(',', '.')) * 1000000000)
 
-                        result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
+                            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
-                    if order == 'ascending':
-                        result = result[::-1]
-                    elif order == 'descending':
-                        result = result
+                    if data_flag is True:
+                        if order == 'ascending':
+                            result = result[::-1]
+                        elif order == 'descending':
+                            result = result
 
-                    if as_json is True:
-                        json_ = {'name': row.name,
-                                 'full_name': row.full_name,
-                                 'historical':
-                                     [value.equity_as_json() for value in result]
-                                 }
-                        final.append(json_)
-                    elif as_json is False:
-                        df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
-                        df.set_index('Date', inplace=True)
+                        if as_json is True:
+                            json_ = {'name': row.name,
+                                     'full_name': row.full_name,
+                                     'historical':
+                                         [value.equity_as_json() for value in result]
+                                     }
+                            final.append(json_)
+                        elif as_json is False:
+                            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+                            df.set_index('Date', inplace=True)
 
-                        final.append(df)
+                            final.append(df)
+                    else:
+                        continue
                 else:
-                    raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                    raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
             if as_json is True:
                 return json.dumps(final, sort_keys=False)
@@ -488,11 +522,14 @@ def get_equity_company_profile(equity, language='english'):
         'es': 'Bolsa de Madrid',
     }
 
+    if not isinstance(equity, str):
+        raise ValueError("ERR#0030: equity argument needs to be a str.")
+
     if not equity:
-        raise ValueError("ERR#013: equity parameter is mandatory and must be a valid equity name.")
+        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
 
     if language.lower() not in available_sources.keys():
-        raise ValueError("ERR#014: the specified language is not valid, it can just be either spanish (es) or english (en).")
+        raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
 
     selected_source = available_sources[language.lower()]
 
@@ -504,10 +541,10 @@ def get_equity_company_profile(equity, language='english'):
         equities = ts.retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#001: equities object not found or unable to retrieve.")
+        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#018: equity " + equity.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
     company_profile = {
         'url': None,
@@ -532,7 +569,7 @@ def get_equity_company_profile(equity, language='english'):
                 req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
 
@@ -560,7 +597,7 @@ def get_equity_company_profile(equity, language='english'):
                 req = requests.get(url, headers=head, timeout=5)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
                 root_ = fromstring(req.text)
 
@@ -635,11 +672,17 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     :returns pandas DataFrame (or JSON object if specified) containing the recent data of the fund
     """
 
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0031: fund argument needs to be a str.")
+
+    if not fund:
+        raise ValueError("ERR#0032: fund parameter is mandatory and must be a valid fund name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
+        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
@@ -649,10 +692,10 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#005: funds object not found or unable to retrieve.")
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
@@ -669,7 +712,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -682,7 +725,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#008: fund information unavailable or not found.")
+                        raise IndexError("ERR#0008: fund information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -711,7 +754,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                     return df
 
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
             continue
 
@@ -740,24 +783,36 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     :returns pandas DataFrame (or JSON object if specified) containing the historical data of the fund
     """
 
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0031: fund argument needs to be a str.")
+
+    if not fund:
+        raise ValueError("ERR#0032: fund parameter is mandatory and must be a valid fund name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
+        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     try:
         datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect start date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#012: incorrect end date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0012: incorrect end date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(start, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError("ERR#0035: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+
+    if start_date.year < 2010:
+        start_date = start_date.replace(year=2010)
 
     date_interval = {
         'intervals': [],
@@ -787,6 +842,11 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
             flag = False
 
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -795,10 +855,10 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#005: funds object not found or unable to retrieve.")
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
@@ -832,7 +892,10 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                if not req.text:
+                    continue
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -845,35 +908,45 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
                             info.append(nested_.text_content())
 
                         if info[0] == 'No se encontraron resultados':
-                            raise IndexError("ERR#008: fund information unavailable or not found.")
+                            if interval_counter < interval_limit:
+                                data_flag = False
+                            else:
+                                raise IndexError("ERR#0008: fund information unavailable or not found.")
 
-                        stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                        stock_close = float(info[1].replace(',', '.'))
-                        stock_open = float(info[2].replace(',', '.'))
-                        stock_high = float(info[3].replace(',', '.'))
-                        stock_low = float(info[4].replace(',', '.'))
+                        else:
+                            data_flag = True
 
-                        result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+                        if data_flag is True:
+                            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                            stock_close = float(info[1].replace(',', '.'))
+                            stock_open = float(info[2].replace(',', '.'))
+                            stock_high = float(info[3].replace(',', '.'))
+                            stock_low = float(info[4].replace(',', '.'))
 
-                    if order == 'ascending':
-                        result = result[::-1]
-                    elif order == 'descending':
-                        result = result
+                            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
-                    if as_json is True:
-                        json_ = {'name': row.name,
-                                 'historical':
-                                     [value.fund_as_json() for value in result]
-                                 }
+                    if data_flag is True:
+                        if order == 'ascending':
+                            result = result[::-1]
+                        elif order == 'descending':
+                            result = result
 
-                        final.append(json_)
-                    elif as_json is False:
-                        df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
-                        df.set_index('Date', inplace=True)
+                        if as_json is True:
+                            json_ = {'name': row.name,
+                                     'historical':
+                                         [value.fund_as_json() for value in result]
+                                     }
 
-                        final.append(df)
+                            final.append(json_)
+                        elif as_json is False:
+                            df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+                            df.set_index('Date', inplace=True)
+
+                            final.append(df)
+                    else:
+                        continue
                 else:
-                    raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                    raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
             if as_json is True:
                 return json.dumps(final, sort_keys=False)
@@ -900,8 +973,14 @@ def get_fund_information(fund, as_json=False):
     :returns pandas DataFrame (or JSON object if specified) containing the information of the fund
     """
 
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0031: fund argument needs to be a str.")
+
+    if not fund:
+        raise ValueError("ERR#0032: fund parameter is mandatory and must be a valid fund name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
@@ -911,10 +990,10 @@ def get_fund_information(fund, as_json=False):
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#005: funds object not found or unable to retrieve.")
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#019: fund " + fund.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
     for row in funds.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
@@ -931,7 +1010,7 @@ def get_fund_information(fund, as_json=False):
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
@@ -1011,7 +1090,7 @@ def get_fund_information(fund, as_json=False):
                 elif as_json is False:
                     return result
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
             continue
 
@@ -1089,11 +1168,17 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     :returns pandas DataFrame (or JSON object if specified) containing the recent data of the etf
     """
 
+    if not isinstance(etf, str):
+        raise ValueError("ERR#0033: etf argument needs to be a str.")
+
+    if not etf:
+        raise ValueError("ERR#0034: etf parameter is mandatory and must be a valid etf name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
+        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
@@ -1103,10 +1188,10 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
         etfs = es.retrieve_etfs()
 
     if etfs is None:
-        raise IOError("ERR#009: etfs object not found or unable to retrieve.")
+        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
@@ -1123,7 +1208,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             req = requests.get(url, headers=head)
 
             if req.status_code != 200:
-                raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -1136,7 +1221,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                         info.append(nested_.text_content())
 
                     if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#010: etf information unavailable or not found.")
+                        raise IndexError("ERR#0010: etf information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                     stock_close = float(info[1].replace(',', '.'))
@@ -1165,7 +1250,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                     return df
 
             else:
-                raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
             continue
 
@@ -1194,24 +1279,36 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     :returns pandas DataFrame (or JSON object if specified) containing the historical data of the etf
     """
 
+    if not isinstance(etf, str):
+        raise ValueError("ERR#0033: etf argument needs to be a str.")
+
+    if not etf:
+        raise ValueError("ERR#0034: etf parameter is mandatory and must be a valid etf name.")
+
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#003: order argument can just be ascending or descending, str type.")
+        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     try:
         datetime.datetime.strptime(start, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(end, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#011: incorrect data format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(start, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError("ERR#0035: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+
+    if start_date.year < 2010:
+        start_date = start_date.replace(year=2010)
 
     date_interval = {
         'intervals': [],
@@ -1241,6 +1338,11 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
 
             flag = False
 
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -1249,10 +1351,10 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
         etfs = es.retrieve_etfs()
 
     if etfs is None:
-        raise IOError("ERR#009: etfs object not found or unable to retrieve.")
+        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#019: etf " + etf.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
 
     for row in etfs.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
@@ -1286,7 +1388,10 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
-                    raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                if not req.text:
+                    continue
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -1299,35 +1404,44 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
                             info.append(nested_.text_content())
 
                         if info[0] == 'No se encontraron resultados':
-                            raise IndexError("ERR#010: etf information unavailable or not found.")
+                            if interval_counter < interval_limit:
+                                data_flag = False
+                            else:
+                                raise IndexError("ERR#0010: etf information unavailable or not found.")
+                        else:
+                            data_flag = True
 
-                        stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                        stock_close = float(info[1].replace(',', '.'))
-                        stock_open = float(info[2].replace(',', '.'))
-                        stock_high = float(info[3].replace(',', '.'))
-                        stock_low = float(info[4].replace(',', '.'))
+                        if data_flag is True:
+                            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                            stock_close = float(info[1].replace(',', '.'))
+                            stock_open = float(info[2].replace(',', '.'))
+                            stock_high = float(info[3].replace(',', '.'))
+                            stock_low = float(info[4].replace(',', '.'))
 
-                        result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+                            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
-                    if order == 'ascending':
-                        result = result[::-1]
-                    elif order == 'descending':
-                        result = result
+                    if data_flag is True:
+                        if order == 'ascending':
+                            result = result[::-1]
+                        elif order == 'descending':
+                            result = result
 
-                    if as_json is True:
-                        json_ = {'name': row.name,
-                                 'historical':
-                                     [value.etf_as_json() for value in result]
-                                 }
+                        if as_json is True:
+                            json_ = {'name': row.name,
+                                     'historical':
+                                         [value.etf_as_json() for value in result]
+                                     }
 
-                        final.append(json_)
-                    elif as_json is False:
-                        df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
-                        df.set_index('Date', inplace=True)
+                            final.append(json_)
+                        elif as_json is False:
+                            df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
+                            df.set_index('Date', inplace=True)
 
-                        final.append(df)
+                            final.append(df)
+                    else:
+                        continue
                 else:
-                    raise RuntimeError("ERR#004: data retrieval error while scraping.")
+                    raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
             if as_json is True:
                 return json.dumps(final, sort_keys=False)

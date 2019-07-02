@@ -38,7 +38,7 @@ def retrieve_etfs():
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#027: etf_markets file not found")
+        raise FileNotFoundError("ERR#0027: etf_markets file not found")
 
     final = list()
 
@@ -51,7 +51,7 @@ def retrieve_etfs():
         req = requests.get(url, headers=head, timeout=15)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='etfs']"
@@ -98,7 +98,7 @@ def retrieve_etf_countries():
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#031: etf_markets file not found")
+        raise FileNotFoundError("ERR#0031: etf_markets file not found")
 
     return markets['country'].tolist()
 
@@ -114,7 +114,7 @@ def etfs_as_df(country=None):
     """
 
     if country is not None and not isinstance(country, str):
-        raise IOError("ERR#028: specified country value not valid.")
+        raise IOError("ERR#0028: specified country value not valid.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
@@ -124,7 +124,7 @@ def etfs_as_df(country=None):
         etfs = retrieve_etfs()
 
     if etfs is None:
-        raise IOError("ERR#009: etf list not found or unable to retrieve.")
+        raise IOError("ERR#0009: etf list not found or unable to retrieve.")
 
     if country is None:
         return etfs
@@ -143,7 +143,7 @@ def etfs_as_list(country=None):
     """
 
     if country is not None and not isinstance(country, str):
-        raise IOError("ERR#028: specified country value not valid.")
+        raise IOError("ERR#0028: specified country value not valid.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
@@ -154,12 +154,12 @@ def etfs_as_list(country=None):
 
     if country is None:
         if etfs is None:
-            raise IOError("ERR#009: etf list not found or unable to retrieve.")
+            raise IOError("ERR#0009: etf list not found or unable to retrieve.")
         else:
             return etfs['name'].tolist()
     elif country in retrieve_etf_countries():
         if etfs is None:
-            raise IOError("ERR#009: etf list not found or unable to retrieve.")
+            raise IOError("ERR#0009: etf list not found or unable to retrieve.")
         else:
             return etfs[etfs['country'] == country]['name'].tolist()
 
@@ -176,16 +176,16 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     """
 
     if country is not None and not isinstance(country, str):
-        raise IOError("ERR#028: specified country value not valid.")
+        raise IOError("ERR#0028: specified country value not valid.")
 
     if columns is None:
         columns = ['id', 'name', 'symbol', 'tag']
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
@@ -195,10 +195,10 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
         etfs = retrieve_etfs()
 
     if etfs is None:
-        raise IOError("ERR#009: etf list not found or unable to retrieve.")
+        raise IOError("ERR#0009: etf list not found or unable to retrieve.")
 
     if not all(column in etfs.columns.tolist() for column in columns):
-        raise ValueError("ERR#021: specified columns does not exist, available columns are <id, name, symbol, tag>")
+        raise ValueError("ERR#0021: specified columns does not exist, available columns are <id, name, symbol, tag>")
 
     if country is None:
         if as_json:
@@ -226,7 +226,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 #     """
 #
 #     if country is None or not isinstance(country, str):
-#         raise IOError("ERR#028: specified country value not valid.")
+#         raise IOError("ERR#0028: specified country value not valid.")
 #
 #     head = {
 #         "User-Agent": ua.get_random(),
@@ -241,7 +241,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 #     if pkg_resources.resource_exists(resource_package, resource_path):
 #         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
 #     else:
-#         raise FileNotFoundError("ERR#027: etf_markets file not found")
+#         raise FileNotFoundError("ERR#0027: etf_markets file not found")
 #
 #     for index, row in markets.iterrows():
 #         if row['country'] == country.lower():
@@ -250,7 +250,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 #             req = requests.get(url, headers=head, timeout=15)
 #
 #             if req.status_code != 200:
-#                 raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+#                 raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 #
 #             root_ = fromstring(req.text)
 #             path_ = root_.xpath(".//table[@id='etfs']"
@@ -276,7 +276,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 #
 #                     results.append(data)
 #             else:
-#                 raise IOError("ERR#029: specified country etfs not found or unable to retrieve.")
+#                 raise IOError("ERR#0029: specified country etfs not found or unable to retrieve.")
 #
 #             df = pd.DataFrame(results)
 #

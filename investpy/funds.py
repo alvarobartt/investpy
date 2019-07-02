@@ -38,7 +38,7 @@ def retrieve_funds():
     req = requests.get(url, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='etfs']"
@@ -119,7 +119,7 @@ def retrieve_fund_data(fund):
     req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
@@ -140,23 +140,23 @@ def retrieve_fund_data(fund):
                     result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
                     continue
                 except IndexError:
-                    raise IndexError("ERR#023: fund issuer unavailable or not found.")
+                    raise IndexError("ERR#0023: fund issuer unavailable or not found.")
             elif p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
                 try:
                     result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
                     continue
                 except IndexError:
-                    raise IndexError("ERR#024: fund isin code unavailable or not found.")
+                    raise IndexError("ERR#0024: fund isin code unavailable or not found.")
             elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
                 try:
                     result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
                     continue
                 except IndexError:
-                    raise IndexError("ERR#025: fund asset class unavailable or not found.")
+                    raise IndexError("ERR#0025: fund asset class unavailable or not found.")
             else:
                 continue
         except IndexError:
-            raise IndexError("ERR#017: isin code unavailable or not found.")
+            raise IndexError("ERR#0017: isin code unavailable or not found.")
 
     return result
 
@@ -212,7 +212,7 @@ def funds_as_df():
         funds = retrieve_funds()
 
     if funds is None:
-        raise IOError("ERR#005: fund list not found or unable to retrieve.")
+        raise IOError("ERR#0005: fund list not found or unable to retrieve.")
     else:
         return funds
 
@@ -235,7 +235,7 @@ def funds_as_list():
         funds = retrieve_funds()
 
     if funds is None:
-        raise IOError("ERR#005: fund list not found or unable to retrieve.")
+        raise IOError("ERR#0005: fund list not found or unable to retrieve.")
     else:
         return funds['name'].tolist()
 
@@ -255,10 +255,10 @@ def funds_as_dict(columns=None, as_json=False):
         columns = ['asset class', 'id', 'isin', 'issuer', 'name', 'symbol', 'tag']
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
@@ -268,10 +268,10 @@ def funds_as_dict(columns=None, as_json=False):
         funds = retrieve_funds()
 
     if funds is None:
-        raise IOError("ERR#005: fund list not found or unable to retrieve.")
+        raise IOError("ERR#0005: fund list not found or unable to retrieve.")
 
     if not all(column in funds.columns.tolist() for column in columns):
-        raise ValueError("ERR#026: specified columns does not exist, available columns are "
+        raise ValueError("ERR#0026: specified columns does not exist, available columns are "
                          "<asset class, id, isin, issuer, name, symbol, tag>")
 
     if as_json:

@@ -30,6 +30,6 @@ def get_random():
 
                 return str(random.choice(lines)).replace("\n", "")
             except IOError:
-                raise IOError("ERR#016: unable to retrieve a random user agent")
+                raise IOError("ERR#0016: unable to retrieve a random user agent")
     else:
-        raise FileNotFoundError("ERR#022: user agents file not found")
+        raise FileNotFoundError("ERR#0022: user agents file not found")

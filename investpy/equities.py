@@ -46,7 +46,7 @@ def retrieve_equities():
     req = requests.get(url, params=params, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
@@ -111,7 +111,7 @@ def retrieve_isin_code(info):
     req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
@@ -122,17 +122,14 @@ def retrieve_isin_code(info):
     for p in path_:
         try:
             if p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
-                try:
-                    code = p.xpath("span[@class='elp']")[0].text_content().rstrip()
-                    time.sleep(.5)
+                code = p.xpath("span[@class='elp']")[0].text_content().rstrip()
+                time.sleep(.5)
 
-                    return code
-                except IndexError:
-                    raise IndexError("ERR#017: isin code unavailable or not found.")
+                return code
             else:
                 continue
         except IndexError:
-            raise IndexError("ERR#017: isin code unavailable or not found.")
+            raise IndexError("ERR#0017: isin code unavailable or not found.")
 
     return None
 
@@ -155,7 +152,7 @@ def equities_as_df():
         equities = retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#001: equities list not found or unable to retrieve.")
+        raise IOError("ERR#0001: equities list not found or unable to retrieve.")
     else:
         return equities
 
@@ -178,6 +175,6 @@ def equities_as_list():
         equities = retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#001: equities list not found or unable to retrieve.")
+        raise IOError("ERR#0001: equities list not found or unable to retrieve.")
     else:
         return equities['name'].tolist()

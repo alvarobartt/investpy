@@ -16,6 +16,7 @@ def test_equity_errors():
         {'equity': 'bbva', 'as_json': 'error', 'order': 'ascending'},
         {'equity': 'bbva', 'as_json': True, 'order': 'error'},
         {'equity': 'error', 'as_json': True, 'order': 'ascending'},
+        {'equity': ['error'], 'as_json': True, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -30,7 +31,11 @@ def test_equity_errors():
         {'equity': 'bbva', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'equity': 'bbva', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
         {'equity': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': ['error'], 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'start': '01/01/1999', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'start': '01/01/1900', 'end': '01/01/1950', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'start': '01/01/1950', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'start': '01/01/2019', 'end': '01/01/1999', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -44,6 +49,7 @@ def test_equity_errors():
         {'equity': None, 'language': 'spanish'},
         {'equity': 'bbva', 'language': 'error'},
         {'equity': 'error', 'language': 'spanish'},
+        {'equity': ['error'], 'language': 'spanish'},
     ]
 
     for param in params:
@@ -71,6 +77,7 @@ def test_fund_errors():
         {'fund': 'quality inversion conservadora fi', 'as_json': 'error', 'order': 'ascending'},
         {'fund': 'quality inversion conservadora fi', 'as_json': True, 'order': 'error'},
         {'fund': 'error', 'as_json': True, 'order': 'ascending'},
+        {'fund': ['error'], 'as_json': True, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -85,7 +92,11 @@ def test_fund_errors():
         {'fund': 'quality inversion conservadora fi', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
         {'fund': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': ['error'], 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'fund': 'quality inversion conservadora fi', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/1990', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': '01/01/1998', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'start': '01/01/1900', 'end': '01/01/1950', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -97,6 +108,7 @@ def test_fund_errors():
     params = [
         {'fund': 'quality inversion conservadora fi', 'as_json': 'error'},
         {'fund': 'error', 'as_json': True},
+        {'fund': ['error'], 'as_json': True},
     ]
 
     for param in params:
@@ -124,6 +136,7 @@ def test_etf_errors():
         {'etf': 'bbva accion dj eurostoxx 50', 'as_json': 'error', 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'as_json': True, 'order': 'error'},
         {'etf': 'error', 'as_json': True, 'order': 'ascending'},
+        {'etf': ['error'], 'as_json': True, 'order': 'ascending'},
     ]
 
     for param in params:
@@ -138,7 +151,11 @@ def test_etf_errors():
         {'etf': 'bbva accion dj eurostoxx 50', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
         {'etf': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': ['error'], 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1900', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/1998', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1900', 'end': '01/01/1950', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
