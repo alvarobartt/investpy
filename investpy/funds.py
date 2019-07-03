@@ -136,23 +136,14 @@ def retrieve_fund_data(fund):
     for p in path_:
         try:
             if p.xpath("span[not(@class)]")[0].text_content().__contains__('Issuer'):
-                try:
-                    result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-                    continue
-                except IndexError:
-                    raise IndexError("ERR#0023: fund issuer unavailable or not found.")
+                result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+                continue
             elif p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
-                try:
-                    result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-                    continue
-                except IndexError:
-                    raise IndexError("ERR#0024: fund isin code unavailable or not found.")
+                result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+                continue
             elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
-                try:
-                    result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-                    continue
-                except IndexError:
-                    raise IndexError("ERR#0025: fund asset class unavailable or not found.")
+                result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+                continue
             else:
                 continue
         except IndexError:
@@ -271,7 +262,7 @@ def funds_as_dict(columns=None, as_json=False):
         raise IOError("ERR#0005: fund list not found or unable to retrieve.")
 
     if not all(column in funds.columns.tolist() for column in columns):
-        raise ValueError("ERR#0026: specified columns does not exist, available columns are "
+        raise ValueError("ERR#0023: specified columns does not exist, available columns are "
                          "<asset class, id, isin, issuer, name, symbol, tag>")
 
     if as_json:

@@ -1,4 +1,4 @@
-# investpy — a Python package for historical data retrieval from Investing
+# investpy — Python package for stock historical data extraction from Investing
 
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
@@ -21,7 +21,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.4.9``
+``pip install investpy==0.8.5``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -29,33 +29,10 @@ All the dependencies are already listed on the setup file of the package, but to
 * [**requests 2.22.0**](https://pypi.org/project/requests/)
 * [**lxml 4.3.3**](https://pypi.org/project/lxml/)
 * [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
-* [**pytest 4.5.0**](https://pypi.org/project/pytest/)
 
-## GitHub Gists on investpy use
+## Documentation
 
-In order to explain the use of [**investpy**](https://pypi.org/project/investpy/), some self-explanatory gists have been created and they can be found at [my GitHub Gist Page](https://gist.github.com/alvarob96). As the package is updated with new functionality, gists will be updated so they can be easily tested and provide useful information for investpy use.
-
-* Equity Data Retrieval: https://gist.github.com/alvarob96/461dce00d9196dd3140f37993f8808f8
-
-## Release Notes 0.8.4.x
-
-* Several fixes on minor bugs/errors
-* Added support for Python 3.5
-* Updated window size when data retrieval interval is above 20 years
-* JSON structured to work better when plotting it
-* docstring updated and "Use" section removed from package documentation
-* Setup of some changes for future releases
-* Handled errors such as input error return values or input dates format
-* Full company name for equities add
-* Company Profile retrieval returned value is a dict with the source and the description
-* Internal fixes to improve its ease of adaptability
-* Temporarily removed Python 2.7 support due to its warning of deprecation in January 1st of 2020
-* Updated docstrings as reStructuredText (via PyCharm)
-* Modified JSON output to fit current standard for historical data
-* Added function to retrieve information from listed ETFs (id, name, symbol and tag)
-* Funds additional information add
-* Loading bar tests
-* ...
+[investpy - Read the Docs](https://investpy.readthedocs.io/en/latest/)
 
 ## Contribute to investpy - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 

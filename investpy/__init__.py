@@ -128,7 +128,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     """
 
     if not isinstance(equity, str):
-        raise ValueError("ERR#0030: equity argument needs to be a str.")
+        raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if not equity:
         raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
@@ -285,7 +285,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     """
 
     if not isinstance(equity, str):
-        raise ValueError("ERR#0030: equity argument needs to be a str.")
+        raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if not equity:
         raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
@@ -310,7 +310,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0035: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -523,7 +523,7 @@ def get_equity_company_profile(equity, language='english'):
     }
 
     if not isinstance(equity, str):
-        raise ValueError("ERR#0030: equity argument needs to be a str.")
+        raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if not equity:
         raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
@@ -673,10 +673,10 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     """
 
     if not isinstance(fund, str):
-        raise ValueError("ERR#0031: fund argument needs to be a str.")
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if not fund:
-        raise ValueError("ERR#0032: fund parameter is mandatory and must be a valid fund name.")
+        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -784,10 +784,10 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     """
 
     if not isinstance(fund, str):
-        raise ValueError("ERR#0031: fund argument needs to be a str.")
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if not fund:
-        raise ValueError("ERR#0032: fund parameter is mandatory and must be a valid fund name.")
+        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -809,7 +809,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
     end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0035: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
 
     if start_date.year < 2010:
         start_date = start_date.replace(year=2010)
@@ -974,10 +974,10 @@ def get_fund_information(fund, as_json=False):
     """
 
     if not isinstance(fund, str):
-        raise ValueError("ERR#0031: fund argument needs to be a str.")
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if not fund:
-        raise ValueError("ERR#0032: fund parameter is mandatory and must be a valid fund name.")
+        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1169,10 +1169,10 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     """
 
     if not isinstance(etf, str):
-        raise ValueError("ERR#0033: etf argument needs to be a str.")
+        raise ValueError("ERR#0030: etf argument needs to be a str.")
 
     if not etf:
-        raise ValueError("ERR#0034: etf parameter is mandatory and must be a valid etf name.")
+        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1280,10 +1280,10 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     """
 
     if not isinstance(etf, str):
-        raise ValueError("ERR#0033: etf argument needs to be a str.")
+        raise ValueError("ERR#0030: etf argument needs to be a str.")
 
     if not etf:
-        raise ValueError("ERR#0034: etf parameter is mandatory and must be a valid etf name.")
+        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1305,7 +1305,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0035: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
 
     if start_date.year < 2010:
         start_date = start_date.replace(year=2010)
