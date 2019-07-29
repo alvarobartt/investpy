@@ -32,7 +32,7 @@ All the dependencies are already listed on the setup file of the package, but to
 
 ## Documentation
 
-[investpy - Read the Docs](https://investpy.readthedocs.io/en/latest/)
+[investpy - Read the Docs](https://investpy.readthedocs.io/)
 
 ## Contribute to investpy - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 

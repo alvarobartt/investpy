@@ -168,8 +168,8 @@
   <div class="section" id="module-investpy.etfs">
 <span id="investpy-etfs"></span><h1><a class="reference internal" href="#module-investpy.etfs" title="investpy.etfs"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.etfs</span></code></a><a class="headerlink" href="#module-investpy.etfs" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="investpy.etfs.df_etfs">
-<code class="descclassname">investpy.etfs.</code><code class="descname">df_etfs</code><span class="sig-paren">(</span><em>country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.df_etfs" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.etfs.etfs_as_df">
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">etfs_as_df</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.etfs_as_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available etfs and returns a pandas.DataFrame of them all.
 All the available etfs can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
 <dl class="field-list simple">
@@ -183,8 +183,8 @@ All the available etfs can be found at: <a class="reference external" href="http
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.etfs.dict_etfs">
-<code class="descclassname">investpy.etfs.</code><code class="descname">dict_etfs</code><span class="sig-paren">(</span><em>country=None</em>, <em>columns=None</em>, <em>as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.dict_etfs" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.etfs.etfs_as_dict">
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">etfs_as_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.etfs_as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available etfs and returns a dictionary with the specified columns.
 Available columns are: ‘id’, ‘name’, ‘symbol’ and ‘tag’
 All the available etfs can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
@@ -199,38 +199,8 @@ All the available etfs can be found at: <a class="reference external" href="http
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.etfs.get_etf">
-<code class="descclassname">investpy.etfs.</code><code class="descname">get_etf</code><span class="sig-paren">(</span><em>country</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available etfs to retrieve data from.
-All the available etfs available can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns a dictionary containing all the etfs information</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.etfs.get_etfs">
-<code class="descclassname">investpy.etfs.</code><code class="descname">get_etfs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etfs" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available etfs to retrieve data from.
-All the available etfs available can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns a dictionary containing all the etfs information</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.etfs.list_etfs">
-<code class="descclassname">investpy.etfs.</code><code class="descname">list_etfs</code><span class="sig-paren">(</span><em>country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.list_etfs" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.etfs.etfs_as_list">
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">etfs_as_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.etfs_as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available etfs and returns a list of each one of them.
 All the available etfs can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
 <dl class="field-list simple">
@@ -239,6 +209,21 @@ All the available etfs can be found at: <a class="reference external" href="http
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>returns a list with all the available etfs to retrieve data from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.etfs.retrieve_etfs">
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">retrieve_etfs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.retrieve_etfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available etfs to retrieve data from.
+All the available etfs available can be found at: <a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a dictionary containing all the etfs information</p>
 </dd>
 </dl>
 </dd></dl>

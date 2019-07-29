@@ -168,8 +168,8 @@
   <div class="section" id="module-investpy.equities">
 <span id="investpy-equities"></span><h1><a class="reference internal" href="#module-investpy.equities" title="investpy.equities"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.equities</span></code></a><a class="headerlink" href="#module-investpy.equities" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="investpy.equities.get_equities">
-<code class="descclassname">investpy.equities.</code><code class="descname">get_equities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.get_equities" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.equities.equities_as_df">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_df</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available equities and returns a pandas.DataFrame of them all.
 All the available equities can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a></p>
 <dl class="field-list simple">
@@ -183,8 +183,23 @@ All the available equities can be found at: <a class="reference external" href="
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.equities.get_equity_names">
-<code class="descclassname">investpy.equities.</code><code class="descname">get_equity_names</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.get_equity_names" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.equities.equities_as_list">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available equities and returns a list of each one of them.
+All the available equities can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p></p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>returns a list with all the available equities to retrieve data from</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.equities.retrieve_equities">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_equities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_equities" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available equities to retrieve data from.
 All the equities available can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a></p>
 <dl class="field-list simple">
@@ -198,8 +213,8 @@ All the equities available can be found at: <a class="reference external" href="
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.equities.get_isin_code">
-<code class="descclassname">investpy.equities.</code><code class="descname">get_isin_code</code><span class="sig-paren">(</span><em>info</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.get_isin_code" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.equities.retrieve_isin_code">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_isin_code</code><span class="sig-paren">(</span><em class="sig-param">info</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_isin_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is an additional function that adds data to the equities pandas.DataFrame.
 Added data in this case, are the ISIN codes of every company in order to identify it.</p>
 <dl class="field-list simple">
@@ -208,21 +223,6 @@ Added data in this case, are the ISIN codes of every company in order to identif
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p>returns a str that contains the ISIN code of the specified equity</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.equities.list_equities">
-<code class="descclassname">investpy.equities.</code><code class="descname">list_equities</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.list_equities" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available equities and returns a list of each one of them.
-All the available equities can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a></p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p></p>
-</dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>returns a list with all the available equities to retrieve data from</p>
 </dd>
 </dl>
 </dd></dl>
