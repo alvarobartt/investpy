@@ -21,7 +21,9 @@ def get_random():
         a lot of requests, since it has been tested with over 10k requests on an iteration.
 
     Returns:
-        A :obj:`str` which is the name of a random User-Agent, which will be passed on the headers of a request.
+        :obj:`str` - user_agent:
+            The returned :obj:`str` is the name of a random User-Agent, which will be passed on the headers of a request
+            so to avoid restrictions due to the use of multiple requests from the same User-Agent.
 
     Raises:
         IOError: raised when `user_agent_list.csv` file was unable to retrieve or errored.

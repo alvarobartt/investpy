@@ -29,15 +29,16 @@ def retrieve_funds(debug_mode=False):
             coverage.
 
     Returns:
-        The resulting :obj:`pandas.DataFrame`: contains all the spanish fund meta-information if found, if not, an
-        empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
+        :obj:`pandas.DataFrame` - funds:
+            The resulting :obj:`pandas.DataFrame` contains all the spanish fund meta-information if found, if not, an
+            empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
 
-        In the case that the retrieval process of spanish funds was successfully completed, the resulting
-        :obj:`pandas.DataFrame` will look like::
+            In the case that the retrieval process of spanish funds was successfully completed, the resulting
+            :obj:`pandas.DataFrame` will look like::
 
-            asset class | id | isin | issuer | name | symbol | tag
-            ------------|----|------|--------|------|--------|-----
-            xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
+                asset class | id | isin | issuer | name | symbol | tag
+                ------------|----|------|--------|------|--------|-----
+                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
 
     Raises:
         ValueError: if any of the introduced arguments is not valid.
@@ -112,8 +113,8 @@ def retrieve_fund_data(fund):
         fund (:obj:`str`): is the identifying tag of the specified fund.
 
     Returns:
-        :obj:`dict`:
-            The resulting dictionary contains the retrieved data if found, if not, the corresponding
+        :obj:`dict` - fund_data:
+            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
             fields are filled with `None` values.
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
@@ -187,8 +188,8 @@ def fund_information_as_json(df):
             information listed on Investing.com
 
     Returns:
-        :obj:`dict`:
-            The resulting dictionary as :obj:`JSON` contains all the features from the :obj:`pandas.DataFrame`
+        :obj:`dict` - funds_information:
+            The resulting :obj:`dict` as :obj:`JSON` contains all the features from the :obj:`pandas.DataFrame`
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
@@ -249,9 +250,10 @@ def funds_as_df():
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
 
     Returns:
-        :obj:`pandas.DataFrame`:
-            It contains all the funds basic information retrieved from Investing.com, some of which is not useful for
-            the user, but for the inner package functions, such as the `id` field, for example.
+        :obj:`pandas.DataFrame` - funds_df:
+            The resulting :obj:`pandas.DataFrame` contains all the funds basic information retrieved from Investing.com,
+            some of which is not useful for the user, but for the inner package functions, such as the `id` field,
+            for example.
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
@@ -285,7 +287,7 @@ def funds_as_list():
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
 
     Returns:
-        :obj:`list` - funds:
+        :obj:`list` - funds_list:
             The resulting list contains the retrieved data, which corresponds to the fund names of
             every fund listed on Investing.com.
 
@@ -328,9 +330,9 @@ def funds_as_dict(columns=None, as_json=False):
             value to determine the format of the output data (:obj:`dict` or :obj:`JSON`).
 
     Returns:
-        :obj:`dict`:
-            The resulting dictionary contains the retrieved data if found, if not, the corresponding
-            fields are filled with None values.
+        :obj:`dict` or :obj:`JSON` - funds_dict:
+            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
+            fields are filled with `None` values.
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 

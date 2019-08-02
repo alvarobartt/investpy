@@ -8,3 +8,4 @@ API Reference
    equities_api.rst
    funds_api.rst
    etfs_api.rst
+   user_agent.rst

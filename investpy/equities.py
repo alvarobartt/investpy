@@ -17,12 +17,35 @@ from investpy import user_agent as ua
 
 def retrieve_equities(debug_mode=False):
     """
-    This function retrieves all the available equities to retrieve data from.
-    All the equities available can be found at: https://es.investing.com/equities/spain
+    This function retrieves all the available `spanish equities` indexed on Investing.com, so to
+    retrieve data from them which will be used later for inner functions for data retrieval.
+    All the equities available can be found at: https://es.investing.com/equities/spain. Additionally,
+    when equities are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
+    and stored on a CSV file on a package folder containing all the available resources.
+    Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
+    just used for inner function purposes.
 
-    Returns
-    -------
-        :returns a dictionary containing all the equities information
+    Args:
+        debug_mode (:obj:`boolean`):
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            coverage.
+
+    Returns:
+        :obj:`pandas.DataFrame` - equities:
+            The resulting :obj:`pandas.DataFrame` contains all the spanish equities meta-information if found, if not, an
+            empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
+
+            In the case that the retrieval process of spanish equities was successfully completed, the resulting
+            :obj:`pandas.DataFrame` will look like::
+
+                name | full name | tag | isin | id
+                -----|-----------|-----|------|----
+                xxxx | xxxxxxxxx | xxx | xxxx | xx
+
+    Raises:
+        ValueError: if any of the introduced arguments is not valid.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if equities information was unavailable or not found.
     """
 
     params = {
@@ -93,12 +116,21 @@ def retrieve_equities(debug_mode=False):
 
 def retrieve_isin_code(info):
     """
-    This is an additional function that adds data to the equities pandas.DataFrame.
-    Added data in this case, are the ISIN codes of every company in order to identify it.
+    This function retrieves the ISIN code from an equity which will lead to
+    the later company profile extraction as the ISIN code is the identifier
+    used by "Bolsa de Madrid", so to retrieve the company profile. The ISIN
+    code will be added to the `equities.csv` file, as additional information.
 
-    Returns
-    -------
-        :returns a str that contains the ISIN code of the specified equity
+    Args:
+        info (:obj:`str`): is the tag of the equity to retrieve the ISIN code from as indexed by Investing.com.
+
+    Returns:
+        :obj:`str` - isin_code:
+            The resulting :obj:`str` contains the ISIN code of the introduced equity.
+
+    Raises:
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if isin code was unavailable or not found.
     """
 
     url = "https://es.investing.com/equities/" + info
@@ -139,12 +171,18 @@ def retrieve_isin_code(info):
 
 def equities_as_df():
     """
-    This function retrieves all the available equities and returns a pandas.DataFrame of them all.
-    All the available equities can be found at: https://es.investing.com/equities/spain
+    This function retrieves all the equities previously stored on `equities.csv` file, via
+    `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
+    it is created again; but if it does exists, it is loaded into a :obj:`pandas.DataFrame`.
 
-    Returns
-    -------
-        :returns a pandas.DataFrame with all the available equities to retrieve data from
+    Returns:
+        :obj:`pandas.DataFrame` - equities_df:
+            The resulting :obj:`pandas.DataFrame` contains the `equities.csv` file content if
+            it was properly read or retrieved in case it did not exist in the moment when the
+            function was first called.
+
+    Raises:
+        IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
     resource_package = __name__
@@ -162,12 +200,18 @@ def equities_as_df():
 
 def equities_as_list():
     """
-    This function retrieves all the available equities and returns a list of each one of them.
-    All the available equities can be found at: https://es.investing.com/equities/spain
+    This function retrieves all the equities previously stored on `equities.csv` file, via
+    `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
+    it is created again; but if it does exists, equity names are loaded into a :obj:`list`.
 
-    Returns
-    -------
-        :returns a list with all the available equities to retrieve data from
+    Returns:
+        :obj:`list` - equities_list:
+            The resulting :obj:`list` contains the `equities.csv` file content if
+            it was properly read or retrieved in case it did not exist in the moment when the
+            function was first called, as a :obj:`list` containing all the equity names.
+
+    Raises:
+        IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
     resource_package = __name__
