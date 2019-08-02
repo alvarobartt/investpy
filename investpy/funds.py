@@ -15,13 +15,18 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_funds():
+def retrieve_funds(debug_mode=False):
     """
     This function retrieves all the available `spanish funds` listed on Investing.com
     (https://es.investing.com/funds/spain-funds?&issuer_filter=0). Retrieving all the meta-information attached to
     them. Additionally when funds are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
     and stored on a CSV file on a package folder containing all the available resources. Note that maybe some of the
     information contained in the resulting :obj:`pandas.DataFrame` is useless.
+
+    Args:
+        debug_mode (:obj:`boolean`):
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            coverage.
 
     Returns:
         The resulting :obj:`pandas.DataFrame`: contains all the spanish fund meta-information if found, if not, an
@@ -35,6 +40,7 @@ def retrieve_funds():
             xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
 
     Raises:
+        ValueError: if any of the introduced arguments is not valid.
         ConnectionError: if GET requests does not return 200 status code.
         IndexError: if fund information was unavailable or not found.
     """
@@ -82,6 +88,9 @@ def retrieve_funds():
             }
 
             results.append(obj)
+
+            if debug_mode is True:
+                break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))

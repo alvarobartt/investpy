@@ -15,7 +15,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_equities():
+def retrieve_equities(debug_mode=False):
     """
     This function retrieves all the available equities to retrieve data from.
     All the equities available can be found at: https://es.investing.com/equities/spain
@@ -77,6 +77,9 @@ def retrieve_equities():
                 }
 
                 results.append(data)
+
+            if debug_mode is True:
+                break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))

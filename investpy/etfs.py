@@ -15,7 +15,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_etfs():
+def retrieve_etfs(debug_mode=False):
     """
     This function retrieves all the available etfs to retrieve data from.
     All the available etfs available can be found at: https://es.investing.com/etfs/spain-etfs
@@ -79,7 +79,13 @@ def retrieve_etfs():
 
                 results.append(data)
 
+                if debug_mode is True:
+                    break
+
         final.extend(results)
+
+        if debug_mode is True:
+            break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
