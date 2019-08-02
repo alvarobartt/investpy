@@ -12,11 +12,20 @@ import os
 
 def get_random():
     """
-    This function selects a random user agent in order to not get banned of the site due to high load of simultaneous requests.
+    This function selects a random User-Agent from the `user-agent-list` csv file, in
+    order to avoid the limitations of the requests to Investing.com. The User-Agent is
+    specified on the headers of the requests and is different for every request.
 
-    Returns
-    -------
-        :returns a string with the random user agent to use
+    ..note:
+        Investing.com, via changing the User-Agent on the headers of every request, supports
+        a lot of requests, since it has been tested with over 10k requests on an iteration.
+
+    Returns:
+        A :obj:`str` which is the name of a random User-Agent, which will be passed on the headers of a request.
+
+    Raises:
+        IOError: raised when `user_agent_list.csv` file was unable to retrieve or errored.
+        FileNotFoundError: if `user_agent_list.csv` file has not been found.
     """
 
     resource_package = __name__
