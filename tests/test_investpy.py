@@ -15,8 +15,6 @@ from investpy.equities import retrieve_equities
 from investpy.funds import retrieve_funds
 from investpy.etfs import retrieve_etfs
 
-from investpy.user_agent import get_random
-
 
 def test_investpy():
     """
@@ -93,18 +91,6 @@ def test_investpy():
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=param['as_json'], order=param['order'])
 
     retrieve_etfs(debug_mode=True)
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
-
-    open(file, 'w').close()
-
-    get_random()
-
-    os.remove(file)
-
-    get_random()
 
 
 if __name__ == '__main__':

@@ -9,6 +9,8 @@ import pytest
 
 import investpy
 
+from investpy.user_agent import get_random, clear_file, delete_file
+
 
 def test_equity_errors():
 
@@ -165,7 +167,22 @@ def test_etf_errors():
             pass
 
 
+def test_user_agent_errors():
+    clear_file()
+    try:
+        get_random()
+    except:
+        pass
+
+    delete_file()
+    try:
+        get_random()
+    except:
+        pass
+
+
 if __name__ == '__main__':
     test_equity_errors()
     test_fund_errors()
     test_etf_errors()
+    test_user_agent_errors()

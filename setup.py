@@ -44,5 +44,5 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing-api, spanish-stock-market, scraper, historical-data, financial-data, stock'
+    keywords='investing, investing-api, spanish-stock-market, scraper, historical-data, financial-data, finance'
 )

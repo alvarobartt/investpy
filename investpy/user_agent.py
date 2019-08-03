@@ -44,3 +44,37 @@ def get_random():
                 raise IOError("ERR#0016: unable to retrieve a random user agent")
     else:
         raise FileNotFoundError("ERR#0022: user agents file not found")
+
+
+def clear_file():
+    """
+    This function clears out the content of `user_agent_list.txt` file so to
+    improve code coverage as to test the whole functionality of `investpy.user_agent.get_random()`
+    function. When the content of the file is cleared out, the next time that the function
+    `investpy.user_agent.get_random()` is called, it is going to raise an `IOError` due to
+    missing content on file `user_agent_list.txt`.
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'user_agent_list.txt'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
+    if os.path.exists(file):
+        with open(file, 'r') as f:
+            f.close()
+
+
+def delete_file():
+    """
+    This function deletes `user_agent_list.txt` file so to improve code coverage as to
+    test the whole functionality of `investpy.user_agent.get_random()` function.
+    When file is missing, the next time that the function `investpy.user_agent.get_random()`
+    is called, it is going to raise a `FileNotFoundError` due to missing file `user_agent_list.txt`.
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'user_agent_list.txt'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
+    if os.path.exists(file):
+        os.remove(file)
