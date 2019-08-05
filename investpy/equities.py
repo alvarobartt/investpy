@@ -181,6 +181,12 @@ def equities_as_df():
             it was properly read or retrieved in case it did not exist in the moment when the
             function was first called.
 
+            So on, the resulting :obj:`pandas.DataFrame` will look like::
+
+                name | full name | tag | isin | id
+                -----|-----------|-----|------|----
+                xxxx | xxxxxxxxx | xxx | xxxx | xx
+
     Raises:
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
@@ -209,6 +215,11 @@ def equities_as_list():
             The resulting :obj:`list` contains the `equities.csv` file content if
             it was properly read or retrieved in case it did not exist in the moment when the
             function was first called, as a :obj:`list` containing all the equity names.
+
+            So on the listing will contain the equity names listed on Investing.com and will
+            look like the following::
+
+                equities_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
 
     Raises:
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.

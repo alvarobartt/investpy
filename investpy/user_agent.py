@@ -16,9 +16,9 @@ def get_random():
     order to avoid the limitations of the requests to Investing.com. The User-Agent is
     specified on the headers of the requests and is different for every request.
 
-    ..note:
-        Investing.com, via changing the User-Agent on the headers of every request, supports
-        a lot of requests, since it has been tested with over 10k requests on an iteration.
+    Note that Investing.com, via changing the User-Agent on the headers of every request, allows
+    a lot of requests, since it has been tested with over 10k consecutive requests without getting
+    any HTTP error code from Investing.com.
 
     Returns:
         :obj:`str` - user_agent:
@@ -60,7 +60,7 @@ def clear_file():
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     if os.path.exists(file):
-        with open(file, 'r') as f:
+        with open(file, 'w') as f:
             f.close()
 
 

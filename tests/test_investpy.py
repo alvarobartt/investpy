@@ -62,11 +62,10 @@ def test_investpy():
 
     retrieve_funds(debug_mode=True)
 
-    investpy.get_etfs()
     investpy.get_etf_countries()
 
     for value in ['spain', None]:
-        investpy.get_etf_df(country=value)
+        investpy.get_etfs(country=value)
         investpy.get_etf_list(country=value)
 
     params = [
