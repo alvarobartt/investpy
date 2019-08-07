@@ -3,9 +3,6 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.8.6'
-
 import pytest
 
 import investpy
@@ -19,6 +16,9 @@ def test_investpy():
     """
     This function checks that main functions of investpy work properly.
     """
+
+    print(investpy.__author__)
+    print(investpy.__version__)
 
     investpy.get_equities()
     investpy.get_equities_list()
