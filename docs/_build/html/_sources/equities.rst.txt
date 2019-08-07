@@ -10,7 +10,7 @@ protect investors from fraudulent practices. Historically, they have outperforme
 run. These investments can be purchased from most online stock brokers.
 
 In this case, historical data from stocks or equities is retrieved from `Investing Equities <https://es.investing.com/equities/spain>`_
-just for the Spanish Stock Market, on the current release 0.8.5.
+just for the Spanish Stock Market, on the current release 0.8.6.
 
 Getting Started
 ---------------

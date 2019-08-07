@@ -3,7 +3,8 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-__author__ = "Alvaro Bartolome <alvarob96@usal.es>"
+__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
+__version__ = '0.8.6'
 
 import json
 
@@ -256,17 +257,17 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`JSON`).
+    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`json`).
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
         as_json (:obj:`boolean`, optional):
-            value to determine the format of the output data (:obj:`dict` or :obj:`JSON`).
+            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
-        :obj:`dict` or :obj:`JSON` - etfs_dict:
+        :obj:`dict` or :obj:`json` - etfs_dict:
             The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
             fields are filled with `None` values.
 

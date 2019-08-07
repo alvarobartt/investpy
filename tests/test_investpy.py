@@ -2,12 +2,11 @@
 
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
-import pkg_resources
 
-__author__ = "Alvaro Bartolome <alvarob96@usal.es>"
+__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
+__version__ = '0.8.6'
 
 import pytest
-import os
 
 import investpy
 

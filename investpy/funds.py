@@ -3,7 +3,8 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-__author__ = "Alvaro Bartolome <alvarob96@usal.es>"
+__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
+__version__ = '0.8.6'
 
 import json
 
@@ -178,7 +179,7 @@ def retrieve_fund_data(fund):
 
 def fund_information_as_json(df):
     """
-    This function converts a :obj:`pandas.DataFrame` into a :obj:`JSON` object, where the introduced
+    This function converts a :obj:`pandas.DataFrame` into a :obj:`json` object, where the introduced
     :obj:`pandas.DataFrame`, is the one created by the `investpy.get_fund_information(fund, as_json)` function,
     when as_json is `True`, which retrieves all the information listed on Investing.com from a fund.
 
@@ -188,10 +189,10 @@ def fund_information_as_json(df):
             information listed on Investing.com
 
     Returns:
-        :obj:`dict` - funds_information:
-            The resulting :obj:`dict` as :obj:`JSON` contains all the features from the :obj:`pandas.DataFrame`
+        :obj:`json` - funds_information:
+            The resulting :obj:`json` as :obj:`json` contains all the features from the :obj:`pandas.DataFrame`
 
-            In case the information was successfully retrieved, the :obj:`dict` will look like::
+            In case the information was successfully retrieved, the :obj:`json` will look like::
 
                 {
                     'Fund Name': fund_name,
@@ -327,10 +328,10 @@ def funds_as_dict(columns=None, as_json=False):
         columns (:obj:`list` of :obj:`str`, optional): description
             a `list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`boolean`, optional): description
-            value to determine the format of the output data (:obj:`dict` or :obj:`JSON`).
+            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
-        :obj:`dict` or :obj:`JSON` - funds_dict:
+        :obj:`dict` or :obj:`json` - funds_dict:
             The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
             fields are filled with `None` values.
 

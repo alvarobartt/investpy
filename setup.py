@@ -11,10 +11,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.8.5',
+    version='0.8.6',
     packages=find_packages(),
-    url='https://github.com/alvarob96/investpy',
-    download_url='https://github.com/alvarob96/investpy/archive/0.8.5.tar.gz',
+    url='https://investpy.readthedocs.io/',
+    download_url='https://github.com/alvarob96/investpy/archive/0.8.6.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -34,6 +34,7 @@ setup(
     include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
+        "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
@@ -44,5 +45,11 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing, investing-api, spanish-stock-market, scraper, historical-data, financial-data, finance'
+    keywords='investing, investing-api, spanish-stock-market, scraper, historical-data, financial-data, finance',
+    python_requires='>=3',
+    project_urls={
+        'Bug Reports': 'https://github.com/alvarob96/investpy/issues',
+        'Source': 'https://github.com/alvarob96/investpy',
+        'Documentation': 'https://investpy.readthedocs.io/'
+    },
 )

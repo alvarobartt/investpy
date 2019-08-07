@@ -21,7 +21,7 @@ To conclude this section, I am in the need to specify that this is not the final
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.5``
+``pip install investpy==0.8.6``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 

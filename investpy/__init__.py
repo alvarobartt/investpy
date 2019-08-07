@@ -3,7 +3,8 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-__author__ = "Alvaro Bartolome <alvarob96@usal.es>"
+__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
+__version__ = '0.8.6'
 
 import datetime
 import json
@@ -75,18 +76,18 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the introduced `equity` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
-    :obj:`JSON` file, with `ascending` or `descending` order.
+    :obj:`json` file, with `ascending` or `descending` order.
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve recent historical data from.
         as_json (:obj:`boolean`, optional):
-            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`JSON`).
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (ascending or descending).
 
     Returns:
-        :obj:`pandas.DataFrame` or :obj:`JSON`:
-            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`JSON` file containing the retrieved
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
             recent data from the specified equity via argument. The dataset contains the open, high, low, close and
             volume values for the selected equity on market days.
 
@@ -226,7 +227,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
     """
     This function retrieves historical data from the introduced `equity` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
-    stored in a :obj:`pandas.DataFrame` or in a :obj:`JSON` object with `ascending` or `descending` order.
+    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve recent historical data from.
@@ -238,11 +239,11 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
-            The function returns a either a pandas.DataFrame or a JSON file containing the retrieved recent data
-            from the specified equity via argument. The dataset contains the open, high, low, close and volume values
-            for the selected equity on market days.
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified equity via argument. The dataset contains the open, high, low, close and
+            volume values for the selected equity on market days.
 
-            The Return data is case we use default arguments will look like::
+            The returned data is case we use default arguments will look like::
 
                 date || open | high | low | close | volume
                 -----||-----------------------------------
@@ -674,10 +675,10 @@ def get_funds_dict(columns, as_json):
         columns (:obj:`list` of :obj:`str`, optional): description
             a `list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`boolean`, optional): description
-            value to determine the format of the output data (:obj:`dict` or :obj:`JSON`).
+            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
-        :obj:`dict` or :obj:`JSON` - funds_dict:
+        :obj:`dict` or :obj:`json` - funds_dict:
             The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
             fields are filled with `None` values.
 
@@ -703,23 +704,56 @@ def get_funds_dict(columns, as_json):
 
 def get_fund_recent_data(fund, as_json=False, order='ascending'):
     """
-    This function retrieves recent historical data from the specified fund.
-    The retrieved data corresponds to the last month and a half more or less.
+    This function retrieves recent historical data from the introduced `fund` from Investing
+    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
+    :obj:`json` file, with `ascending` or `descending` order.
 
-    Parameters
-    ----------
-    :param fund: str
-        name of the fund to retrieve recent historical data from
-    :param order: str
-        optional parameter to indicate the order of the recent data to retrieve
-        default value is ascending
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the recent data from the specified fund
+    Args:
+        fund (:obj:`str`): name of the fund to retrieve recent historical data from.
+        as_json (:obj:`boolean`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (ascending or descending).
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the recent data of the fund
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified fund via argument. The dataset contains the open, high, low and close
+            values for the selected fund on market days.
+
+            The return data is case we use default arguments will look like::
+
+                date || open | high | low | close
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        date: dd/mm/yyyy,
+                        open: x,
+                        high: x,
+                        low: x,
+                        close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: funds object/file not found or unable to retrieve.
+        RuntimeError: introduced fund does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if fund information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=False, order='ascending')
+            date || open | high | low | close
+            -----||---------------------------
+            xxxx || xxxx | xxxx | xxx | xxxxx
     """
 
     if not isinstance(fund, str):
@@ -811,26 +845,59 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
 
 def get_fund_historical_data(fund, start, end, as_json=False, order='ascending'):
     """
-    This function retrieves historical data from the specified fund in the specified date range.
+    This function retrieves historical data from the introduced `fund` from Investing
+    via Web Scraping on the introduced date range. The resulting data can it either be
+    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
 
-    Parameters
-    ----------
-    :param fund: str
-        name of the fund to retrieve historical data from
-    :param start: str
-        start date since the data is going to be retrieved
-    :param end: str
-        end date until the data is going to be retrieved
-    :param order: str
-        optional parameter to indicate the order of the historical data to retrieve
-        default value is ascending
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the historical data from the specified fund
+    Args:
+        fund (:obj:`str`): name of the fund to retrieve recent historical data from.
+        start (:obj:`str`): start date as `str` formatted as `dd/mm/yyyy`
+        end (:obj:`str`): end date as `str` formatted as `dd/mm/yyyy`
+        as_json (:obj:`boolean`, optional):
+            to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the historical data of the fund
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified fund via argument. The dataset contains the open, high, low and close
+            values for the selected fund on market days.
+
+            The returned data is case we use default arguments will look like::
+
+                date || open | high | low | close
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    historical: [
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: funds object/file not found or unable to retrieve.
+        RuntimeError: introduced fund does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if fund information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+            date || open | high | low | close
+            -----||---------------------------
+            xxxx || xxxx | xxxx | xxx | xxxxx
+
     """
 
     if not isinstance(fund, str):
@@ -1008,19 +1075,44 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
 def get_fund_information(fund, as_json=False):
     """
-    This function retrieves historical data from the specified fund in the specified date range.
+    This function retrieves basic financial information from the specified fund.
+    As the information is also provided by Investing.com, the tags and names remain the same so
+    a new Web Scraping process is not needed, the headers can be created with the existing information.
+    The retrieved information from the fund can be valuable as it is additional information that can
+    be used combined with OHLC values, so to determine financial insights from the company which holds
+    the specified fund.
 
-    Parameters
-    ----------
-    :param fund: str
-        name of the fund to retrieve information from
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the information of the specified fund
+    Args:
+        fund (:obj:`str`): name of the fund to retrieve the financial information from.
+        as_json (:obj:`boolean`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the information of the fund
+    Returns:
+        :obj:`dict` - fund_information:
+            The resulting :obj:`dict` contains the information fields retrieved from Investing.com from the
+            specified funds; it can also be returned as a :obj:`json`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                fund_information = {
+                    'Fund Name': fund_name,
+                    'Rating': rating,
+                    '1-Year Change': year_change,
+                    'Previous Close': prev_close,
+                    'Risk Rating': risk_rating,
+                    'TTM Yield': ttm_yield,
+                    'ROE': roe,
+                    'Issuer': issuer,
+                    'Turnover': turnover,
+                    'ROA': row,
+                    'Inception Date': inception_date,
+                    'Total Assets': total_assets,
+                    'Expenses': expenses,
+                    'Min Investment': min_investment,
+                    'Market Cap': market_cap,
+                    'Category': category
+                }
     """
 
     if not isinstance(fund, str):
@@ -1241,17 +1333,17 @@ def get_etf_dict(country=None, columns=None, as_json=False):
     stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`JSON`).
+    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`json`).
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
         as_json (:obj:`boolean`, optional):
-            value to determine the format of the output data (:obj:`dict` or :obj:`JSON`).
+            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
-        :obj:`dict` or :obj:`JSON` - etfs_dict:
+        :obj:`dict` or :obj:`json` - etfs_dict:
             The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
             fields are filled with `None` values.
 
@@ -1276,23 +1368,57 @@ def get_etf_dict(country=None, columns=None, as_json=False):
 
 def get_etf_recent_data(etf, as_json=False, order='ascending'):
     """
-    This function retrieves recent historical data from the specified etf.
-    The retrieved data corresponds to the last month and a half more or less.
+    This function retrieves recent historical data from the introduced `etf` from Investing
+    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
+    :obj:`json` file, with `ascending` or `descending` order.
 
-    Parameters
-    ----------
-    :param etf: str
-        name of the etf to retrieve recent historical data from
-    :param order: str
-        optional parameter to indicate the order of the recent data to retrieve
-        default value is ascending
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the recent data from the specified etf
+    Args:
+        etf (:obj:`str`): name of the etf to retrieve recent historical data from.
+        as_json (:obj:`boolean`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (ascending or descending).
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the recent data of the etf
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified etf via argument. The dataset contains the open, high, low and close
+            values for the selected etf on market days.
+
+            The returned data is case we use default arguments will look like::
+
+                date || open | high | low | close
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: etfs object/file not found or unable to retrieve.
+        RuntimeError: introduced etf does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if etf information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending')
+            date || open | high | low | close
+            -----||---------------------------
+            xxxx || xxxx | xxxx | xxx | xxxxx
     """
 
     if not isinstance(etf, str):
@@ -1384,26 +1510,59 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
 
 def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
     """
-    This function retrieves historical data from the specified etf in the specified date range.
+    This function retrieves historical data from the introduced `etf` from Investing
+    via Web Scraping on the introduced date range. The resulting data can it either be
+    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
 
-    Parameters
-    ----------
-    :param etf: str
-        name of the etf to retrieve historical data from
-    :param start: str
-        start date since the data is going to be retrieved
-    :param end: str
-        end date until the data is going to be retrieved
-    :param order: str
-        optional parameter to indicate the order of the historical data to retrieve
-        default value is ascending
-    :param as_json: bool
-        optional parameter to specify the output, default is pandas.DataFrame
-        if true, return value is a JSON object containing the historical data from the specified etf
+    Args:
+        etf (:obj:`str`): name of the etf to retrieve recent historical data from.
+        start (:obj:`str`): start date as `str` formatted as `dd/mm/yyyy`
+        end (:obj:`str`): end date as `str` formatted as `dd/mm/yyyy`
+        as_json (:obj:`boolean`, optional):
+            to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
 
-    Returns
-    -------
-    :returns pandas DataFrame (or JSON object if specified) containing the historical data of the etf
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified etf via argument. The dataset contains the open, high, low and close
+            values for the selected etf on market days.
+
+            The returned data is case we use default arguments will look like::
+
+                date || open | high | low | close
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    historical: [
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: etfs object/file not found or unable to retrieve.
+        RuntimeError: introduced etf does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if etf information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+            date || open | high | low | close
+            -----||---------------------------
+            xxxx || xxxx | xxxx | xxx | xxxxx
+
     """
 
     if not isinstance(etf, str):
