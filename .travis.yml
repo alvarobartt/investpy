@@ -12,7 +12,7 @@ install:
   - pip install requests==2.22.0
   - pip install lxml==4.3.3
   - pip install Unidecode==1.0.23
-  - pip install investpy==0.8.6
+  - pip install investpy==0.8.7
   - pip install pytest==4.5.0
   - pip install codecov==2.0.15
   - pip install pytest-cov==2.7.1

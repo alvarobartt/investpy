@@ -26,21 +26,21 @@ def test_equity_errors():
             pass
 
     params = [
-        {'equity': 'bbva', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
-        {'equity': 'bbva', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'equity': ['error'], 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/1999', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/1900', 'end': '01/01/1950', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/1950', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'equity': 'bbva', 'start': '01/01/2019', 'end': '01/01/1999', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'error'},
+        {'equity': 'bbva', 'from_date': 'error', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/2019', 'to_date': 'error', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'error', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': ['error'], 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/1999', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/1900', 'to_date': '01/01/1950', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/1950', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'equity': 'bbva', 'from_date': '01/01/2019', 'to_date': '01/01/1999', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
         try:
-            investpy.get_historical_data(equity=param['equity'], start=param['start'], end=param['end'],
+            investpy.get_historical_data(equity=param['equity'], from_date=param['from_date'], to_date=param['to_date'],
                                          as_json=param['as_json'], order=param['order'])
         except:
             pass
@@ -87,21 +87,21 @@ def test_fund_errors():
             pass
 
     params = [
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
-        {'fund': 'quality inversion conservadora fi', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'fund': ['error'], 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/1990', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/2019', 'end': '01/01/1998', 'as_json': False, 'order': 'ascending'},
-        {'fund': 'quality inversion conservadora fi', 'start': '01/01/1900', 'end': '01/01/1950', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'error'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': 'error', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/2019', 'to_date': 'error', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'error', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': ['error'], 'from_date': '01/01/1998', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/1998', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/1990', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/2019', 'to_date': '01/01/1998', 'as_json': False, 'order': 'ascending'},
+        {'fund': 'quality inversion conservadora fi', 'from_date': '01/01/1900', 'to_date': '01/01/1950', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
         try:
-            investpy.get_fund_historical_data(fund=param['fund'], start=param['start'], end=param['end'], as_json=param['as_json'], order=param['order'])
+            investpy.get_fund_historical_data(fund=param['fund'], from_date=param['from_date'], to_date=param['to_date'], as_json=param['as_json'], order=param['order'])
         except:
             pass
 
@@ -146,21 +146,21 @@ def test_etf_errors():
             pass
 
     params = [
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'error'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': 'error', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': 'error', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'error', 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'etf': ['error'], 'start': '01/01/2019', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1998', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1900', 'end': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/2019', 'end': '01/01/1998', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'start': '01/01/1900', 'end': '01/01/1950', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': 'error', 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'error'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': 'error', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/2019', 'to_date': 'error', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'error', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': ['error'], 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1998', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascto_dateing'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1900', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/2019', 'to_date': '01/01/1998', 'as_json': False, 'order': 'ascending'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1900', 'to_date': '01/01/1950', 'as_json': False, 'order': 'ascending'},
     ]
 
     for param in params:
         try:
-            investpy.get_etf_historical_data(etf=param['etf'], start=param['start'], end=param['end'], as_json=param['as_json'], order=param['order'])
+            investpy.get_etf_historical_data(etf=param['etf'], from_date=param['from_date'], to_date=param['to_date'], as_json=param['as_json'], order=param['order'])
         except:
             pass
 

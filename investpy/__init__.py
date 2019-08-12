@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.8.6'
+__version__ = '0.8.7'
 
 import datetime
 import json
@@ -223,7 +223,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             continue
 
 
-def get_historical_data(equity, start, end, as_json=False, order='ascending'):
+def get_historical_data(equity, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves historical data from the introduced `equity` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -231,8 +231,8 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve recent historical data from.
-        start (:obj:`str`): start date as `str` formatted as `dd/mm/yyyy`
-        end (:obj:`str`): end date as `str` formatted as `dd/mm/yyyy`
+        from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
+        to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`boolean`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
@@ -274,7 +274,7 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
         IndexError: if equity information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_historical_data(equity='bbva', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+        >>> investpy.get_historical_data(equity='bbva', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
             date || open | high | low | close | volume
             -----||-----------------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
@@ -294,17 +294,17 @@ def get_historical_data(equity, start, end, as_json=False, order='ascending'):
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     try:
-        datetime.datetime.strptime(start, '%d/%m/%Y')
+        datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(end, '%d/%m/%Y')
+        datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0012: incorrect end date format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(start, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
+    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
@@ -843,7 +843,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             continue
 
 
-def get_fund_historical_data(fund, start, end, as_json=False, order='ascending'):
+def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves historical data from the introduced `fund` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -851,8 +851,8 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve recent historical data from.
-        start (:obj:`str`): start date as `str` formatted as `dd/mm/yyyy`
-        end (:obj:`str`): end date as `str` formatted as `dd/mm/yyyy`
+        from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
+        to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`boolean`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
@@ -893,7 +893,7 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -913,17 +913,17 @@ def get_fund_historical_data(fund, start, end, as_json=False, order='ascending')
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     try:
-        datetime.datetime.strptime(start, '%d/%m/%Y')
+        datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(end, '%d/%m/%Y')
+        datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0012: incorrect end date format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(start, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
+    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
@@ -1508,7 +1508,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             continue
 
 
-def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
+def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves historical data from the introduced `etf` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -1516,8 +1516,8 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
 
     Args:
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
-        start (:obj:`str`): start date as `str` formatted as `dd/mm/yyyy`
-        end (:obj:`str`): end date as `str` formatted as `dd/mm/yyyy`
+        from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
+        to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`boolean`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
@@ -1558,7 +1558,7 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
         IndexError: if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -1578,17 +1578,17 @@ def get_etf_historical_data(etf, start, end, as_json=False, order='ascending'):
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
     try:
-        datetime.datetime.strptime(start, '%d/%m/%Y')
+        datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(end, '%d/%m/%Y')
+        datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(start, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(end, '%d/%m/%Y')
+    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")

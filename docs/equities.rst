@@ -10,7 +10,7 @@ protect investors from fraudulent practices. Historically, they have outperforme
 run. These investments can be purchased from most online stock brokers.
 
 In this case, historical data from stocks or equities is retrieved from `Investing Equities <https://es.investing.com/equities/spain>`_
-just for the Spanish Stock Market, on the current release 0.8.6.
+just for the Spanish Stock Market, on the current release 0.8.7.
 
 Getting Started
 ---------------
@@ -57,7 +57,7 @@ So on an example is proposed in order to clarify the use of investpy for histori
     df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
 
     # Retrieves the historical data of BBVA on the specified date range as a pandas.DataFrame on ascending order
-    df = investpy.get_historical_data(equity='bbva', start='01/01/2010', end='01/01/2019', as_json=False, order='ascending')
+    df = investpy.get_historical_data(equity='bbva', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
 
 As we already saw, both functions take a lot of parameters, but some of them are *optional* which means that the function
 does not need the user to specify them.

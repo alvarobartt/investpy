@@ -21,7 +21,7 @@ investpy seeks to be one of the most used Python packages when it comes to histo
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
 
-``pip install investpy==0.8.6``
+``pip install investpy==0.8.7``
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
 
@@ -55,7 +55,7 @@ Date
 2019-07-17  4.905  4.965  4.900  4.952  22410000
 2019-07-18  4.856  4.894  4.812  4.879  35820000
 
-df = investpy.get_historical_data(equity='bbva', start='01/01/2018', end='12/08/2019', as_json=False, order='ascending')
+df = investpy.get_historical_data(equity='bbva', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending')
 print(df.head())
 
 >>>
@@ -85,7 +85,7 @@ Date
 2019-07-17  1.129  1.129  1.129  1.129
 2019-07-18  1.126  1.126  1.126  1.126
 
-df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', start='01/01/2018', end='12/08/2019', as_json=False, order='ascending')
+df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending')
 print(df.head())
 
 >>>
@@ -115,7 +115,7 @@ Date
 2019-07-17  35.830  36.080  35.810  35.965
 2019-07-18  35.640  35.785  35.515  35.515
 
-df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', start='01/01/2018', end='12/08/2019', as_json=False, order='ascending')
+df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending')
 print(df.head())
 
 >>>
