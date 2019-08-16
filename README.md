@@ -2,12 +2,12 @@
 
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
-[![Anaconda Cloud Version](https://anaconda.org/alvarob96/investpy/badges/version.svg)](https://pypi.org/project/investpy/)
+[![Anaconda Cloud Version](https://anaconda.org/alvarob96/investpy/badges/version.svg)](https://anaconda.org/alvarob96/investpy)
 [![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://travis-ci.org/alvarob96/investpy.svg?branch=master)](https://pypi.org/project/investpy/)
-[![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/en/latest/?badge=latest)
+[![Build Status](https://travis-ci.org/alvarob96/investpy.svg?branch=master)](https://travis-ci.org/alvarob96/investpy)
+[![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
-[![Downloads](https://img.shields.io/pypi/dm/investpy.svg?style=flat)](https://pypi.python.org/pypi/investpy)
+[![Downloads](https://img.shields.io/pypi/dm/investpy.svg?style=flat)](https://pypistats.org/packages/investpy)
 
 ## Introduction
 
@@ -19,20 +19,17 @@ investpy seeks to be one of the most used Python packages when it comes to histo
 
 ## Installation
 
-In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) from PyPi via Terminal typing:
+In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using pip on the terminal by typing:
 
-``pip install investpy==0.8.7``
+``$ pip install investpy==0.8.7``
 
-All the dependencies are already listed on the setup file of the package, but to sum them up, you will need the following requirements:
+Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) file, which can also be installed via pip:
 
-* [**pandas 0.24.2**](https://pypi.org/project/pandas/)
-* [**requests 2.22.0**](https://pypi.org/project/requests/)
-* [**lxml 4.3.3**](https://pypi.org/project/lxml/)
-* [**unidecode 1.0.23**](https://pypi.org/project/unidecode/)
+``$ pip install -r requirements.txt``
 
 ## Usage
 
-Eventhough some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/equities.html), some basic functionality will be sorted out with sample Python code blocks.
+Even though some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/equities.html), some basic functionality will be sorted out with sample Python code blocks.
 
 ### Recent/Historical Data
 

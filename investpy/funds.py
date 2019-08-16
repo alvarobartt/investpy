@@ -13,7 +13,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_funds(debug_mode=False):
+def retrieve_funds(test_mode=False):
     """
     This function retrieves all the available `spanish funds` listed on Investing.com
     (https://es.investing.com/funds/spain-funds?&issuer_filter=0). Retrieving all the meta-information attached to
@@ -22,7 +22,7 @@ def retrieve_funds(debug_mode=False):
     information contained in the resulting :obj:`pandas.DataFrame` is useless.
 
     Args:
-        debug_mode (:obj:`boolean`):
+        test_mode (:obj:`boolean`):
             variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
             coverage.
 
@@ -88,7 +88,7 @@ def retrieve_funds(debug_mode=False):
 
             results.append(obj)
 
-            if debug_mode is True:
+            if test_mode is True:
                 break
 
     resource_package = __name__

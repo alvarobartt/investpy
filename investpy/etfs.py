@@ -13,7 +13,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_etfs(debug_mode=False):
+def retrieve_etfs(test_mode=False):
     """
     This function retrieves all the available `world etfs` indexed on Investing.com, so to
     retrieve data from them which will be used later for inner functions for data retrieval.
@@ -24,7 +24,7 @@ def retrieve_etfs(debug_mode=False):
     just used for inner function purposes.
 
     Args:
-        debug_mode (:obj:`boolean`):
+        test_mode (:obj:`boolean`):
             variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
             coverage.
 
@@ -100,12 +100,12 @@ def retrieve_etfs(debug_mode=False):
 
                 results.append(data)
 
-                if debug_mode is True:
+                if test_mode is True:
                     break
 
         final.extend(results)
 
-        if debug_mode is True:
+        if test_mode is True:
             break
 
     resource_package = __name__

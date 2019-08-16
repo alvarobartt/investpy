@@ -11,6 +11,9 @@ from investpy.user_agent import get_random, clear_file, delete_file
 
 
 def test_equity_errors():
+    """
+    This function raises errors on equity functions
+    """
 
     params = [
         {'equity': 'bbva', 'as_json': 'error', 'order': 'ascending'},
@@ -60,6 +63,9 @@ def test_equity_errors():
 
 
 def test_fund_errors():
+    """
+    This function raises errors on fund functions
+    """
 
     params = [
         {'columns': None, 'as_json': 'error'},
@@ -119,6 +125,10 @@ def test_fund_errors():
 
 
 def test_etf_errors():
+    """
+    This function raises errors on etf functions
+    """
+
     params = [
         {'country': None, 'columns': None, 'as_json': False},
         {'country': 'spain', 'columns': None, 'as_json': 'error'},
@@ -152,7 +162,7 @@ def test_etf_errors():
         {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/2019', 'to_date': 'error', 'as_json': False, 'order': 'ascending'},
         {'etf': 'error', 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'etf': ['error'], 'from_date': '01/01/2019', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
-        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1998', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascto_dateing'},
+        {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1998', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1900', 'to_date': '01/01/2019', 'as_json': False, 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/2019', 'to_date': '01/01/1998', 'as_json': False, 'order': 'ascending'},
         {'etf': 'bbva accion dj eurostoxx 50', 'from_date': '01/01/1900', 'to_date': '01/01/1950', 'as_json': False, 'order': 'ascending'},
@@ -166,6 +176,10 @@ def test_etf_errors():
 
 
 def test_user_agent_errors():
+    """
+    This function raises errors on user_agent functions
+    """
+
     clear_file()
     try:
         get_random()

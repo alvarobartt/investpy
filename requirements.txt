@@ -1,5 +1,7 @@
 requests==2.22.0
-Unidecode==1.0.23
-pandas==0.24.2
-lxml==4.3.3
-setuptools==40.6.3
+Unidecode==1.1.1
+setuptools==41.1.0
+pandas==0.25
+sphinx_rtd_theme==0.4.3
+lxml==4.4.1
+pytest==5.1.0

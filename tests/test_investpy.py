@@ -37,7 +37,7 @@ def test_investpy():
     for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás', language=value)
 
-    retrieve_equities(debug_mode=True)
+    retrieve_equities(True)
 
     investpy.get_funds()
     investpy.get_funds_list()
@@ -59,7 +59,7 @@ def test_investpy():
 
     investpy.get_funds()
 
-    retrieve_funds(debug_mode=True)
+    retrieve_funds(True)
 
     investpy.get_etf_countries()
 
@@ -88,7 +88,7 @@ def test_investpy():
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=param['as_json'], order=param['order'])
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2010', to_date='01/01/2019', as_json=param['as_json'], order=param['order'])
 
-    retrieve_etfs(debug_mode=True)
+    retrieve_etfs(True)
 
 
 if __name__ == '__main__':
