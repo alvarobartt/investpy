@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Stocks/Equities &mdash; investpy 0.8.7 documentation</title>
+  <title>Stocks/Equities &mdash; investpy 0.8.8 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.8.7
+                0.8.8
               </div>
             
           
@@ -175,7 +175,7 @@ foundation of nearly every portfolio. These transactions have to conform to gove
 protect investors from fraudulent practices. Historically, they have outperformed most other investments over the long
 run. These investments can be purchased from most online stock brokers.</p>
 <p>In this case, historical data from stocks or equities is retrieved from <a class="reference external" href="https://es.investing.com/equities/spain">Investing Equities</a>
-just for the Spanish Stock Market, on the current release 0.8.7.</p>
+just for the Spanish Stock Market, on the current release 0.8.8.</p>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>To get started using <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> you first need to install it as described on
@@ -211,10 +211,10 @@ stocks/equities in this case. As the main functionality of the package is to ret
 have been developed in order to retrieve both recent and historical data between a date range.</p>
 <p>So on an example is proposed in order to clarify the use of investpy for historical data retrieval:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retrieves the recent data of BBVA (last month) as a pandas.DataFrame on ascending order</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
 <span class="c1"># Retrieves the historical data of BBVA on the specified date range as a pandas.DataFrame on ascending order</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_historical_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_historical_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>As we already saw, both functions take a lot of parameters, but some of them are <em>optional</em> which means that the function

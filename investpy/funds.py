@@ -22,7 +22,7 @@ def retrieve_funds(test_mode=False):
     information contained in the resulting :obj:`pandas.DataFrame` is useless.
 
     Args:
-        test_mode (:obj:`boolean`):
+        test_mode (:obj:`bool`):
             variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
             coverage.
 
@@ -96,7 +96,9 @@ def retrieve_funds(test_mode=False):
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
-    df.to_csv(file, index=False)
+
+    if test_mode is False:
+        df.to_csv(file, index=False)
 
     return df
 
@@ -324,7 +326,7 @@ def funds_as_dict(columns=None, as_json=False):
     Args:
         columns (:obj:`list` of :obj:`str`, optional): description
             a `list` containing the column names from which the data is going to be retrieved.
-        as_json (:obj:`boolean`, optional): description
+        as_json (:obj:`bool`, optional): description
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:

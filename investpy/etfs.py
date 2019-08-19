@@ -24,7 +24,7 @@ def retrieve_etfs(test_mode=False):
     just used for inner function purposes.
 
     Args:
-        test_mode (:obj:`boolean`):
+        test_mode (:obj:`bool`):
             variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
             coverage.
 
@@ -113,7 +113,9 @@ def retrieve_etfs(test_mode=False):
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(final)
-    df.to_csv(file, index=False)
+
+    if test_mode is False:
+        df.to_csv(file, index=False)
 
     return df
 
@@ -260,7 +262,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:

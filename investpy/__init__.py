@@ -4,11 +4,12 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.8.7'
+__version__ = '0.8.8'
 
 import datetime
 import json
 from random import randint
+import logging
 
 import pandas as pd
 import pkg_resources
@@ -72,7 +73,7 @@ def get_equities_list():
     return ts.equities_as_list()
 
 
-def get_recent_data(equity, as_json=False, order='ascending'):
+def get_recent_data(equity, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced `equity` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -80,10 +81,12 @@ def get_recent_data(equity, as_json=False, order='ascending'):
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve recent historical data from.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (ascending or descending).
+            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -122,7 +125,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
         IndexError: if equity information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
+        >>> investpy.get_recent_data(equity='bbva', as_json=False, order='ascending', debug=False)
             date || open | high | low | close | volume
             -----||-----------------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
@@ -140,6 +143,9 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -153,8 +159,20 @@ def get_recent_data(equity, as_json=False, order='ascending'):
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced equity on Investing.com')
+
     for row in equities.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
+            logger.info(str(equity) + ' found on Investing.com')
+
             url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
 
             head = {
@@ -165,16 +183,22 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                 "Connection": "keep-alive",
             }
 
+            logger.info('Request sent to Investing.com!')
+
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
             result = list()
 
             if path_:
+                logger.info('Data parsing process starting...')
+
                 for elements_ in path_:
                     info = []
                     for nested_ in elements_.xpath(".//td"):
@@ -204,6 +228,8 @@ def get_recent_data(equity, as_json=False, order='ascending'):
                 elif order == 'descending':
                     result = result
 
+                logger.info('Data parsing process finished...')
+
                 if as_json is True:
                     json_ = {'name': row.name,
                              'full_name': row.full_name,
@@ -223,7 +249,7 @@ def get_recent_data(equity, as_json=False, order='ascending'):
             continue
 
 
-def get_historical_data(equity, from_date, to_date, as_json=False, order='ascending'):
+def get_historical_data(equity, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced `equity` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -233,9 +259,11 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
         equity (:obj:`str`): name of the equity to retrieve recent historical data from.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -274,7 +302,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
         IndexError: if equity information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_historical_data(equity='bbva', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
+        >>> investpy.get_historical_data(equity='bbva', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
             date || open | high | low | close | volume
             -----||-----------------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
@@ -292,6 +320,9 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
@@ -355,9 +386,19 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced equity on Investing.com')
+
     for row in equities.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
-            final = list()
+            logger.info(str(equity) + ' found on Investing.com')
 
             url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
 
@@ -369,16 +410,21 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                 "Connection": "keep-alive",
             }
 
+            logger.info('Request sent to Investing.com!')
+
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+
             root_ = fromstring(req.text)
             header = root_.xpath('//h2//text()')[0]
 
-            for index in range(len(date_interval['intervals'])):
+            final = list()
 
+            for index in range(len(date_interval['intervals'])):
                 interval_counter += 1
 
                 params = {
@@ -413,6 +459,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
                 root_ = fromstring(req.text)
                 path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+
                 result = list()
 
                 if path_:
@@ -468,6 +515,8 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                         continue
                 else:
                     raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+            logger.info('Data parsing process finished...')
 
             if as_json is True:
                 return json.dumps(final, sort_keys=False)
@@ -674,7 +723,7 @@ def get_funds_dict(columns, as_json):
     Args:
         columns (:obj:`list` of :obj:`str`, optional): description
             a `list` containing the column names from which the data is going to be retrieved.
-        as_json (:obj:`boolean`, optional): description
+        as_json (:obj:`bool`, optional): description
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
@@ -702,7 +751,7 @@ def get_funds_dict(columns, as_json):
     return fs.funds_as_dict(columns=columns, as_json=as_json)
 
 
-def get_fund_recent_data(fund, as_json=False, order='ascending'):
+def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced `fund` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -710,10 +759,12 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve recent historical data from.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (ascending or descending).
+            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -750,7 +801,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=False, order='ascending')
+        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -768,6 +819,9 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -781,8 +835,20 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced fund on Investing.com')
+
     for row in funds.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
+            logger.info(str(fund) + ' found on Investing.com')
+
             url = "https://es.investing.com/funds/" + row.tag + "-historical-data"
 
             head = {
@@ -793,16 +859,22 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                 "Connection": "keep-alive",
             }
 
+            logger.info('Request sent to Investing.com!')
+
             req = requests.get(url, headers=head, timeout=5)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
             result = list()
 
             if path_:
+                logger.info('Data parsing process starting...')
+
                 for elements_ in path_:
                     info = []
                     for nested_ in elements_.xpath(".//td"):
@@ -824,6 +896,8 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
                 elif order == 'descending':
                     result = result
 
+                logger.info('Data parsing process finished...')
+
                 if as_json is True:
                     json_ = {'name': row.name,
                              'recent':
@@ -843,7 +917,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending'):
             continue
 
 
-def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='ascending'):
+def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced `fund` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -853,9 +927,12 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
         fund (:obj:`str`): name of the fund to retrieve recent historical data from.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
-        order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -893,7 +970,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
+        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -911,6 +988,9 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
@@ -977,8 +1057,20 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced fund on Investing.com')
+
     for row in funds.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
+            logger.info(str(fund) + ' found on Investing.com')
+
             final = list()
 
             for index in range(len(date_interval['intervals'])):
@@ -1006,10 +1098,14 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
                 url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
+                logger.info('Request sent to Investing.com!')
+
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
                     raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
                 if not req.text:
                     continue
@@ -1019,6 +1115,8 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
                 result = list()
 
                 if path_:
+                    logger.info('Data parsing process starting...')
+
                     for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
@@ -1065,6 +1163,8 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
                 else:
                     raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
+            logger.info('Data parsing process finished...')
+
             if as_json is True:
                 return json.dumps(final, sort_keys=False)
             elif as_json is False:
@@ -1084,7 +1184,7 @@ def get_fund_information(fund, as_json=False):
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve the financial information from.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
@@ -1339,7 +1439,7 @@ def get_etf_dict(country=None, columns=None, as_json=False):
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
@@ -1366,7 +1466,7 @@ def get_etf_dict(country=None, columns=None, as_json=False):
     return es.etfs_as_dict(country=country, columns=columns, as_json=as_json)
 
 
-def get_etf_recent_data(etf, as_json=False, order='ascending'):
+def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced `etf` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -1374,10 +1474,12 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
 
     Args:
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (ascending or descending).
+            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -1415,7 +1517,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
         IndexError: if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending')
+        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -1433,6 +1535,9 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
 
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -1446,8 +1551,20 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced etf on Investing.com')
+
     for row in etfs.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
+            logger.info(str(etf) + 'found on Investing.com')
+
             url = "https://es.investing.com/etfs/" + row.tag + "-historical-data"
 
             head = {
@@ -1458,16 +1575,22 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                 "Connection": "keep-alive",
             }
 
+            logger.info('Request sent to Investing.com!')
+
             req = requests.get(url, headers=head)
 
             if req.status_code != 200:
                 raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
             root_ = fromstring(req.text)
             path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
             result = list()
 
             if path_:
+                logger.info('Data parsing process starting...')
+
                 for elements_ in path_:
                     info = []
                     for nested_ in elements_.xpath(".//td"):
@@ -1489,6 +1612,8 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
                 elif order == 'descending':
                     result = result
 
+                logger.info('Data parsing process finished...')
+
                 if as_json is True:
                     json_ = {'name': row.name,
                              'recent':
@@ -1508,7 +1633,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending'):
             continue
 
 
-def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascending'):
+def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced `etf` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -1518,9 +1643,12 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
-        as_json (:obj:`boolean`, optional):
+        as_json (:obj:`bool`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
-        order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -1558,7 +1686,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
         IndexError: if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending')
+        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -1576,6 +1704,9 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
     if order not in ['ascending', 'descending']:
         raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
@@ -1642,8 +1773,20 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
 
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced etf on Investing.com')
+
     for row in etfs.itertuples():
         if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
+            logger.info(str(etf) + 'found on Investing.com')
+
             final = list()
 
             for index in range(len(date_interval['intervals'])):
@@ -1671,10 +1814,14 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
                 url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
+                logger.info('Request sent to Investing.com!')
+
                 req = requests.post(url, headers=head, data=params)
 
                 if req.status_code != 200:
                     raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
                 if not req.text:
                     continue
@@ -1684,6 +1831,8 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                 result = list()
 
                 if path_:
+                    logger.info('Data parsing process starting...')
+
                     for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
@@ -1728,6 +1877,8 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                         continue
                 else:
                     raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+            logger.info('Data parsing process finished...')
 
             if as_json is True:
                 return json.dumps(final, sort_keys=False)

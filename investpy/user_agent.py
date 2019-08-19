@@ -34,11 +34,13 @@ def get_random():
 
     if os.path.exists(file):
         with open(file, 'r') as f:
-            try:
+            content = f.read(1)
+
+            if content:
                 lines = f.readlines()
 
                 return str(random.choice(lines)).replace("\n", "")
-            except IOError:
+            else:
                 raise IOError("ERR#0016: unable to retrieve a random user agent")
     else:
         raise FileNotFoundError("ERR#0022: user agents file not found")

@@ -43,7 +43,7 @@ Reference. So a block of code in order to get to test investpy usage is presente
     equities = investpy.get_equities_list()
 
     # Retrieve the recent historical data (past month) of an equity as a pandas.DataFrame on ascending date order
-    df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
+    df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending', debug=False)
 
     # Retrieve the company profile of the introduced equity on english
     profile = investpy.get_company_profile(equity='bbva', language='english')

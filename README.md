@@ -21,7 +21,7 @@ investpy seeks to be one of the most used Python packages when it comes to histo
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using pip on the terminal by typing:
 
-``$ pip install investpy==0.8.7``
+``$ pip install investpy==0.8.8``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) file, which can also be installed via pip:
 
@@ -40,7 +40,7 @@ As the main functionality is based on historical data retrieval, the usage of ev
 ```python
 import investpy
 
-df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending')
+df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -51,8 +51,11 @@ Date
 2019-07-16  4.971  5.008  4.913  4.947  30730000
 2019-07-17  4.905  4.965  4.900  4.952  22410000
 2019-07-18  4.856  4.894  4.812  4.879  35820000
+```
+```python
+import investpy
 
-df = investpy.get_historical_data(equity='bbva', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending')
+df = investpy.get_historical_data(equity='bbva', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -70,7 +73,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp', as_json=False, order='ascending')
+df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -81,8 +84,12 @@ Date
 2019-07-16  1.130  1.130  1.130  1.130
 2019-07-17  1.129  1.129  1.129  1.129
 2019-07-18  1.126  1.126  1.126  1.126
+```
 
-df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending')
+```python
+import investpy
+
+df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -100,7 +107,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending')
+df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -111,8 +118,12 @@ Date
 2019-07-16  36.040  36.085  35.835  35.845
 2019-07-17  35.830  36.080  35.810  35.965
 2019-07-18  35.640  35.785  35.515  35.515
+```
 
-df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending')
+```python
+import investpy
+
+df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -148,7 +159,8 @@ import investpy
 fund_information = investpy.get_fund_information(fund='bbva plan multiactivo moderado pp', as_json=True)
 print(fund_information)
 
->>> {'Fund Name': 'Bbva Plan Multiactivo Moderado Pp',
+>>> {
+ 'Fund Name': 'Bbva Plan Multiactivo Moderado Pp',
  'Rating': '4',
  '1-Year Change': '-1,19%',
  'Previous Close': '1.103',
@@ -163,7 +175,8 @@ print(fund_information)
  'Expenses': 'N/A',
  'Min Investment': '30',
  'Market Cap': '34820000000',
- 'Category': 'Mixtos Euros Moderados PP'}
+ 'Category': 'Mixtos Euros Moderados PP'
+}
 ```
 
 ## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)

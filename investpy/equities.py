@@ -24,7 +24,7 @@ def retrieve_equities(test_mode=False):
     just used for inner function purposes.
 
     Args:
-        test_mode (:obj:`boolean`):
+        test_mode (:obj:`bool`):
             variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
             coverage.
 
@@ -107,7 +107,9 @@ def retrieve_equities(test_mode=False):
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
-    df.to_csv(file, index=False)
+
+    if test_mode is False:
+        df.to_csv(file, index=False)
 
     return df
 
