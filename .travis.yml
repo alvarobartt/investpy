@@ -8,10 +8,7 @@ python:
 dist: xenial
 
 install:
-  - pip install pandas==0.25.0
-  - pip install requests==2.22.0
-  - pip install lxml==4.4.1
-  - pip install Unidecode==1.1.1
+  - pip install -r requirements.txt
   - pip install investpy==0.8.8
   - pip install pytest==5.1.0
   - pip install codecov==2.0.15

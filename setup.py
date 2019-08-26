@@ -21,10 +21,11 @@ setup(
     description='investpy — a Python package for financial historical data extraction from Investing',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=['requests==2.22.0',
-                      'pandas==0.24.2',
-                      'Unidecode==1.0.23',
-                      'lxml==4.3.3'],
+    install_requires=['Unidecode>=1.1.1',
+                      'pandas>=0.25.0'
+                      'lxml>=4.4.1'
+                      'setuptools>=41.2.0'
+                      'requests>=2.22.0'],
     data_files=[
         ('equities', ['investpy/resources/equities/equities.csv']),
         ('funds', ['investpy/resources/funds/funds.csv']),

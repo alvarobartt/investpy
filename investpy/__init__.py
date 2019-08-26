@@ -156,6 +156,8 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
+    equity = equity.strip()
+
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
@@ -256,7 +258,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
     stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
 
     Args:
-        equity (:obj:`str`): name of the equity to retrieve recent historical data from.
+        equity (:obj:`str`): name of the equity to retrieve historical data from.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`bool`, optional):
@@ -332,13 +334,13 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
     try:
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0012: incorrect end date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -383,6 +385,8 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
+    equity = equity.strip()
+
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
 
@@ -423,6 +427,8 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
             header = root_.xpath('//h2//text()')[0]
 
             final = list()
+
+            logger.info('Data parsing process starting...')
 
             for index in range(len(date_interval['intervals'])):
                 interval_counter += 1
@@ -519,7 +525,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
             logger.info('Data parsing process finished...')
 
             if as_json is True:
-                return json.dumps(final, sort_keys=False)
+                return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
         else:
@@ -588,6 +594,8 @@ def get_equity_company_profile(equity, language='english'):
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+
+    equity = equity.strip()
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
         raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
@@ -832,6 +840,8 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
+    fund = fund.strip()
+
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
@@ -1000,13 +1010,13 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
     try:
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0012: incorrect end date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     if start_date.year < 2010:
         start_date = start_date.replace(year=2010)
@@ -1054,6 +1064,8 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
+    fund = fund.strip()
+
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
@@ -1072,6 +1084,8 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
             logger.info(str(fund) + ' found on Investing.com')
 
             final = list()
+
+            logger.info('Data parsing process starting...')
 
             for index in range(len(date_interval['intervals'])):
                 header = "Datos históricos " + row.symbol
@@ -1115,8 +1129,6 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
                 result = list()
 
                 if path_:
-                    logger.info('Data parsing process starting...')
-
                     for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
@@ -1166,7 +1178,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
             logger.info('Data parsing process finished...')
 
             if as_json is True:
-                return json.dumps(final, sort_keys=False)
+                return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
         else:
@@ -1233,6 +1245,8 @@ def get_fund_information(fund, as_json=False):
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
+    fund = fund.strip()
 
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
@@ -1548,6 +1562,8 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
+    etf = etf.strip()
+
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
 
@@ -1722,7 +1738,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: end_date should be greater than start_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     if start_date.year < 2010:
         start_date = start_date.replace(year=2010)
@@ -1770,6 +1786,8 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
+    etf = etf.strip()
+
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
 
@@ -1788,6 +1806,8 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
             logger.info(str(etf) + 'found on Investing.com')
 
             final = list()
+
+            logger.info('Data parsing process starting...')
 
             for index in range(len(date_interval['intervals'])):
                 header = "Datos históricos " + row.symbol
@@ -1831,8 +1851,6 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                 result = list()
 
                 if path_:
-                    logger.info('Data parsing process starting...')
-
                     for elements_ in path_:
                         info = []
                         for nested_ in elements_.xpath(".//td"):
@@ -1881,7 +1899,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
             logger.info('Data parsing process finished...')
 
             if as_json is True:
-                return json.dumps(final, sort_keys=False)
+                return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
         else:

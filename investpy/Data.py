@@ -52,13 +52,14 @@ class Data(object):
         }
 
     def equity_as_json(self):
-        return {self.date.strftime('%Y/%m/%d'): {
-            'Open': self.open,
-            'High': self.high,
-            'Low': self.low,
-            'Close': self.close,
-            'Volume': self.volume,
-        }}
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
+            'volume': self.volume,
+        }
 
     def fund_to_dict(self):
         return {

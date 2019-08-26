@@ -4,14 +4,15 @@
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
 [![Anaconda Cloud Version](https://anaconda.org/alvarob96/investpy/badges/version.svg)](https://anaconda.org/alvarob96/investpy)
 [![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://travis-ci.org/alvarob96/investpy.svg?branch=master)](https://travis-ci.org/alvarob96/investpy)
+[![Build Status](https://dev.azure.com/alvarob96/alvarob96/_apis/build/status/alvarob96.investpy?branchName=master)](https://dev.azure.com/alvarob96/alvarob96/_build?definitionId=1&_a=summary)
+[![Build Status](https://img.shields.io/travis/alvarob96/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarob96/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
 [![Downloads](https://img.shields.io/pypi/dm/investpy.svg?style=flat)](https://pypistats.org/packages/investpy)
 
 ## Introduction
 
-investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/) mainly
+**investpy** is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/) mainly
 of spanish financial products, but it is intended to be scalable and so on, work with world financial products such as 
 equities, funds, ETFs or currencies.
 
