@@ -84,7 +84,7 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
         debug (:obj:`bool`, optional):
             optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
@@ -140,8 +140,8 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
@@ -225,9 +225,9 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
-                if order == 'ascending':
+                if order in ['ascending', 'asc']:
                     result = result[::-1]
-                elif order == 'descending':
+                elif order in ['descending', 'desc']:
                     result = result
 
                 logger.info('Data parsing process finished...')
@@ -320,8 +320,8 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
@@ -500,9 +500,9 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
                     if data_flag is True:
-                        if order == 'ascending':
+                        if order in ['ascending', 'asc']:
                             result = result[::-1]
-                        elif order == 'descending':
+                        elif order in ['descending', 'desc']:
                             result = result
 
                         if as_json is True:
@@ -770,7 +770,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
         debug (:obj:`bool`, optional):
             optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
@@ -824,8 +824,8 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
@@ -901,9 +901,9 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
-                if order == 'ascending':
+                if order in ['ascending', 'asc']:
                     result = result[::-1]
-                elif order == 'descending':
+                elif order in ['descending', 'desc']:
                     result = result
 
                 logger.info('Data parsing process finished...')
@@ -940,7 +940,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
         as_json (:obj:`bool`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
         debug (:obj:`bool`, optional):
             optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
@@ -996,8 +996,8 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
@@ -1153,9 +1153,9 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
                     if data_flag is True:
-                        if order == 'ascending':
+                        if order in ['ascending', 'asc']:
                             result = result[::-1]
-                        elif order == 'descending':
+                        elif order in ['descending', 'desc']:
                             result = result
 
                         if as_json is True:
@@ -1491,7 +1491,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
         debug (:obj:`bool`, optional):
             optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
@@ -1546,8 +1546,8 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
@@ -1623,9 +1623,9 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
-                if order == 'ascending':
+                if order in ['ascending', 'asc']:
                     result = result[::-1]
-                elif order == 'descending':
+                elif order in ['descending', 'desc']:
                     result = result
 
                 logger.info('Data parsing process finished...')
@@ -1662,7 +1662,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
         as_json (:obj:`bool`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending` or `descending`).
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
         debug (:obj:`bool`, optional):
             optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
@@ -1718,8 +1718,8 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    if order not in ['ascending', 'descending']:
-        raise ValueError("ERR#0003: order argument can just be ascending or descending, str type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
@@ -1874,9 +1874,9 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
                     if data_flag is True:
-                        if order == 'ascending':
+                        if order in ['ascending', 'asc']:
                             result = result[::-1]
-                        elif order == 'descending':
+                        elif order in ['descending', 'desc']:
                             result = result
 
                         if as_json is True:
