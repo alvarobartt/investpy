@@ -17,6 +17,12 @@ def test_equity_errors():
 
     params = [
         {
+            'equity': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
             'equity': 'bbva',
             'as_json': 'error',
             'order': 'ascending',
@@ -59,8 +65,16 @@ def test_equity_errors():
 
     params = [
         {
+            'equity': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
             'equity': 'bbva',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
@@ -68,7 +82,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
@@ -92,7 +106,7 @@ def test_equity_errors():
         },
         {
             'equity': 'error',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
@@ -100,7 +114,7 @@ def test_equity_errors():
         },
         {
             'equity': ['error'],
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
@@ -215,6 +229,12 @@ def test_fund_errors():
 
     params = [
         {
+            'fund': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
             'fund': 'quality inversion conservadora fi',
             'as_json': 'error',
             'order': 'ascending',
@@ -258,7 +278,7 @@ def test_fund_errors():
     params = [
         {
             'fund': 'quality inversion conservadora fi',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
@@ -266,7 +286,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
@@ -290,7 +310,7 @@ def test_fund_errors():
         },
         {
             'fund': 'error',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
@@ -307,14 +327,6 @@ def test_fund_errors():
         {
             'fund': 'quality inversion conservadora fi',
             'from_date': '01/01/1998',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'debug': True
-        },
-        {
-            'fund': 'quality inversion conservadora fi',
-            'from_date': '01/01/1990',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
@@ -358,6 +370,10 @@ def test_fund_errors():
             pass
 
     params = [
+        {
+            'fund': None,
+            'as_json': False
+        },
         {
             'fund': 'quality inversion conservadora fi',
             'as_json': 'error'
@@ -418,6 +434,12 @@ def test_etf_errors():
 
     params = [
         {
+            'etf': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
             'etf': 'bbva accion dj eurostoxx 50',
             'as_json': 'error',
             'order': 'ascending',
@@ -460,8 +482,16 @@ def test_etf_errors():
 
     params = [
         {
+            'etf': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
             'etf': 'bbva accion dj eurostoxx 50',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
@@ -469,7 +499,7 @@ def test_etf_errors():
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
@@ -493,7 +523,7 @@ def test_etf_errors():
         },
         {
             'etf': 'error',
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
@@ -501,7 +531,7 @@ def test_etf_errors():
         },
         {
             'etf': ['error'],
-            'from_date': '01/01/2019',
+            'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
@@ -510,14 +540,6 @@ def test_etf_errors():
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'from_date': '01/01/1998',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'debug': True
-        },
-        {
-            'etf': 'bbva accion dj eurostoxx 50',
-            'from_date': '01/01/1900',
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',

@@ -247,8 +247,6 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
                     return df
             else:
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-        else:
-            continue
 
 
 def get_historical_data(equity, from_date, to_date, as_json=False, order='ascending', debug=False):
@@ -517,8 +515,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                             df.set_index('Date', inplace=True)
 
                             final.append(df)
-                    else:
-                        continue
+
                 else:
                     raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
@@ -528,8 +525,6 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                 return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
-        else:
-            continue
 
 
 def get_equity_company_profile(equity, language='english'):
@@ -920,11 +915,8 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
                     df.set_index('Date', inplace=True)
 
                     return df
-
             else:
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-        else:
-            continue
 
 
 def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='ascending', debug=False):
@@ -1017,9 +1009,6 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
-
-    if start_date.year < 2010:
-        start_date = start_date.replace(year=2010)
 
     date_interval = {
         'intervals': [],
@@ -1170,8 +1159,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
                             df.set_index('Date', inplace=True)
 
                             final.append(df)
-                    else:
-                        continue
+
                 else:
                     raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
@@ -1181,8 +1169,6 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
                 return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
-        else:
-            continue
 
 
 def get_fund_information(fund, as_json=False):
@@ -1347,8 +1333,6 @@ def get_fund_information(fund, as_json=False):
                     return result
             else:
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-        else:
-            continue
 
 
 """------------- ETFS -------------"""
@@ -1645,8 +1629,6 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
 
             else:
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-        else:
-            continue
 
 
 def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascending', debug=False):
@@ -1739,9 +1721,6 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
-
-    if start_date.year < 2010:
-        start_date = start_date.replace(year=2010)
 
     date_interval = {
         'intervals': [],
@@ -1891,8 +1870,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                             df.set_index('Date', inplace=True)
 
                             final.append(df)
-                    else:
-                        continue
+
                 else:
                     raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
@@ -1902,5 +1880,3 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                 return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
-        else:
-            continue
