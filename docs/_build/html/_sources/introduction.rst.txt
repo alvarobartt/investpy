@@ -53,7 +53,7 @@ Data Source
 -----------
 
 `Investing <https://www.investing.com/>`_ is the main data source from which investpy retrieves the data. Investing is a
-global financial portal and Internet bran owned by Fusion Media Ltd. which provides news, analysis, streaming quotes,
+global financial portal and Internet brand owned by Fusion Media Ltd. which provides news, analysis, streaming quotes,
 charts, technical data and financial tools about the global financial markets.
 
 So as, the decision of choosing Investing as the data source is based on its reliability and also because it is one of

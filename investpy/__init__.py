@@ -131,11 +131,11 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
             xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
     """
 
-    if not isinstance(equity, str):
-        raise ValueError("ERR#0027: equity argument needs to be a str.")
-
     if not equity:
         raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+
+    if not isinstance(equity, str):
+        raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -311,11 +311,11 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
     """
 
-    if not isinstance(equity, str):
-        raise ValueError("ERR#0027: equity argument needs to be a str.")
-
     if not equity:
         raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+
+    if not isinstance(equity, str):
+        raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -574,11 +574,11 @@ def get_equity_company_profile(equity, language='english'):
         'es': 'Bolsa de Madrid',
     }
 
-    if not isinstance(equity, str):
-        raise ValueError("ERR#0027: equity argument needs to be a str.")
-
     if not equity:
         raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+
+    if not isinstance(equity, str):
+        raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if language.lower() not in available_sources.keys():
         raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
@@ -815,11 +815,11 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
             xxxx || xxxx | xxxx | xxx | xxxxx
     """
 
-    if not isinstance(fund, str):
-        raise ValueError("ERR#0028: fund argument needs to be a str.")
-
     if not fund:
         raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -987,11 +987,11 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     """
 
-    if not isinstance(fund, str):
-        raise ValueError("ERR#0028: fund argument needs to be a str.")
-
     if not fund:
         raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1227,11 +1227,11 @@ def get_fund_information(fund, as_json=False):
                 }
     """
 
-    if not isinstance(fund, str):
-        raise ValueError("ERR#0028: fund argument needs to be a str.")
-
     if not fund:
         raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1537,11 +1537,11 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
             xxxx || xxxx | xxxx | xxx | xxxxx
     """
 
-    if not isinstance(etf, str):
-        raise ValueError("ERR#0030: etf argument needs to be a str.")
-
     if not etf:
         raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+
+    if not isinstance(etf, str):
+        raise ValueError("ERR#0030: etf argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1709,11 +1709,11 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
     """
 
-    if not isinstance(etf, str):
-        raise ValueError("ERR#0030: etf argument needs to be a str.")
-
     if not etf:
         raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+
+    if not isinstance(etf, str):
+        raise ValueError("ERR#0030: etf argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")

@@ -96,6 +96,4 @@ Samples
 -------
 
 As the generated dataset has been uploaded to `Kaggle <https://www.kaggle.com/alvarob96/spanish-stocks-historical-data>`_
-some kernels with samples on retrieved data usage have been created for the community. I highly recommend you to check
-the kernel created by `Anubhav Dhiman <https://www.kaggle.com/dhimananubhav>`_ titled
-`*Workflow for visualizing and analyzing stocks* <https://www.kaggle.com/dhimananubhav/workflow-for-visualizing-and-analyzing-stocks>`_.
+some kernels with samples on retrieved data usage have been created for the community.
