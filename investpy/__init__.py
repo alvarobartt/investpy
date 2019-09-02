@@ -1464,7 +1464,7 @@ def get_etf_dict(country=None, columns=None, as_json=False):
     return es.etfs_as_dict(country=country, columns=columns, as_json=as_json)
 
 
-def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
+def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced `etf` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -1472,6 +1472,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
 
     Args:
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the etf is.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -1481,7 +1482,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
-            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            The function returns either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
             recent data from the specified etf via argument. The dataset contains the open, high, low and close
             values for the selected etf on market days.
 
@@ -1515,7 +1516,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
         IndexError: if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -1526,6 +1527,9 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
 
     if not isinstance(etf, str):
         raise ValueError("ERR#0030: etf argument needs to be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1545,6 +1549,11 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['country'].unique().tolist()]:
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    etfs = etfs[etfs['country'] == country]
 
     etf = etf.strip()
 
@@ -1631,7 +1640,7 @@ def get_etf_recent_data(etf, as_json=False, order='ascending', debug=False):
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced `etf` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -1639,6 +1648,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
     Args:
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the etf is.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`bool`, optional):
@@ -1650,7 +1660,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
-            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            The function returns either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
             recent data from the specified etf via argument. The dataset contains the open, high, low and close
             values for the selected etf on market days.
 
@@ -1684,7 +1694,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
         IndexError: if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -1696,6 +1706,9 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
 
     if not isinstance(etf, str):
         raise ValueError("ERR#0030: etf argument needs to be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1765,10 +1778,15 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
+    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['country'].unique().tolist()]:
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    etfs = etfs[etfs['country'] == country]
+
     etf = etf.strip()
 
     if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: etf " + str(etf.lower()) + " not found in " + str(country.lower()) + ", check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1832,6 +1850,7 @@ def get_etf_historical_data(etf, from_date, to_date, as_json=False, order='ascen
                 if path_:
                     for elements_ in path_:
                         info = []
+
                         for nested_ in elements_.xpath(".//td"):
                             info.append(nested_.text_content())
 

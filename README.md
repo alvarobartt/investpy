@@ -108,7 +108,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', as_json=False, order='ascending', debug=False)
+df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -124,7 +124,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
