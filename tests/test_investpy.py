@@ -174,11 +174,13 @@ def test_investpy():
 
     for param in params:
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50',
+                                     country='spain',
                                      as_json=param['as_json'],
                                      order=param['order'],
                                      debug=param['debug'])
 
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50',
+                                         country='spain',
                                          from_date='01/01/2010',
                                          to_date='01/01/2019',
                                          as_json=param['as_json'],
