@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.equities &mdash; investpy 0.8.8 documentation</title>
+  <title>investpy.equities &mdash; investpy 0.8.9 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.8.8
+                0.8.9
               </div>
             
           
@@ -225,7 +225,7 @@ look like the following:</p>
 
 <dl class="function">
 <dt id="investpy.equities.retrieve_equities">
-<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_equities</code><span class="sig-paren">(</span><em class="sig-param">debug_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_equities" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_equities</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_equities" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>spanish equities</cite> indexed on Investing.com, so to
 retrieve data from them which will be used later for inner functions for data retrieval.
 All the equities available can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a>. Additionally,
@@ -235,7 +235,7 @@ Note that maybe some of the information contained in the resulting <code class="
 just used for inner function purposes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>debug_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
 coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>

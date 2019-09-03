@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.8.8'
+__version__ = '0.8.9'
 
 import datetime
 import json
@@ -210,18 +210,18 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
                         raise IndexError("ERR#0007: equity information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace(',', '.'))
-                    stock_open = float(info[2].replace(',', '.'))
-                    stock_high = float(info[3].replace(',', '.'))
-                    stock_low = float(info[4].replace(',', '.'))
+                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
                     stock_volume = 0
 
                     if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace(',', '.')) * 1000)
+                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
                     elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace(',', '.')) * 1000000)
+                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                     elif info[5].__contains__('B'):
-                        stock_volume = int(float(info[5].replace('B', '').replace(',', '.')) * 1000000000)
+                        stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
@@ -482,18 +482,18 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
                         if data_flag is True:
                             stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                            stock_close = float(info[1].replace(',', '.'))
-                            stock_open = float(info[2].replace(',', '.'))
-                            stock_high = float(info[3].replace(',', '.'))
-                            stock_low = float(info[4].replace(',', '.'))
+                            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                            stock_low = float(info[4].replace('.', '').replace(',', '.'))
                             stock_volume = 0
 
                             if info[5].__contains__('K'):
-                                stock_volume = int(float(info[5].replace('K', '').replace(',', '.')) * 1000)
+                                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
                             elif info[5].__contains__('M'):
-                                stock_volume = int(float(info[5].replace('M', '').replace(',', '.')) * 1000000)
+                                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                             elif info[5].__contains__('B'):
-                                stock_volume = int(float(info[5].replace('B', '').replace(',', '.')) * 1000000000)
+                                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
 
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
@@ -889,10 +889,10 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
                         raise IndexError("ERR#0008: fund information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace(',', '.'))
-                    stock_open = float(info[2].replace(',', '.'))
-                    stock_high = float(info[3].replace(',', '.'))
-                    stock_low = float(info[4].replace(',', '.'))
+                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
@@ -1134,10 +1134,10 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
                         if data_flag is True:
                             stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                            stock_close = float(info[1].replace(',', '.'))
-                            stock_open = float(info[2].replace(',', '.'))
-                            stock_high = float(info[3].replace(',', '.'))
-                            stock_low = float(info[4].replace(',', '.'))
+                            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                            stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
@@ -1272,7 +1272,7 @@ def get_fund_information(fund, as_json=False):
                         oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
                         result.at[0, '1-Year Change'] = oneyear_variation
                     elif title_ == 'Último cierre':
-                        previous_close = float(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(',', '.'))
+                        previous_close = float(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace('.', '').replace(',', '.'))
                         result.at[0, 'Previous Close'] = previous_close
                     elif title_ == 'Calificación de riesgo':
                         risk_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
@@ -1300,11 +1300,11 @@ def get_fund_information(fund, as_json=False):
                         value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
                         total_assets = None
                         if value.__contains__('K'):
-                            total_assets = int(float(value.replace('K', '').replace(',', '.')) * 1000)
+                            total_assets = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
                         elif value.__contains__('M'):
-                            total_assets = int(float(value.replace('M', '').replace(',', '.')) * 1000000)
+                            total_assets = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                         elif value.__contains__('B'):
-                            total_assets = int(float(value.replace('B', '').replace(',', '.')) * 1000000000)
+                            total_assets = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
                         result.at[0, 'Total Assets'] = total_assets
                     elif title_ == 'Gastos':
                         expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
@@ -1316,11 +1316,11 @@ def get_fund_information(fund, as_json=False):
                         value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
                         market_cap = None
                         if value.__contains__('K'):
-                            market_cap = int(float(value.replace('K', '').replace(',', '.')) * 1000)
+                            market_cap = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
                         elif value.__contains__('M'):
-                            market_cap = int(float(value.replace('M', '').replace(',', '.')) * 1000000)
+                            market_cap = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                         elif value.__contains__('B'):
-                            market_cap = int(float(value.replace('B', '').replace(',', '.')) * 1000000000)
+                            market_cap = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
                         result.at[0, 'Market Cap'] = market_cap
                     elif title_ == 'Categoría':
                         category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
@@ -1609,10 +1609,10 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
                         raise IndexError("ERR#0010: etf information unavailable or not found.")
 
                     stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace(',', '.'))
-                    stock_open = float(info[2].replace(',', '.'))
-                    stock_high = float(info[3].replace(',', '.'))
-                    stock_low = float(info[4].replace(',', '.'))
+                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
@@ -1864,10 +1864,10 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
                         if data_flag is True:
                             stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                            stock_close = float(info[1].replace(',', '.'))
-                            stock_open = float(info[2].replace(',', '.'))
-                            stock_high = float(info[3].replace(',', '.'))
-                            stock_low = float(info[4].replace(',', '.'))
+                            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                            stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
@@ -1899,3 +1899,110 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                 return json.dumps(final[0], sort_keys=False)
             elif as_json is False:
                 return pd.concat(final)
+
+
+def get_etfs_overview(country, as_json=False):
+    """
+    This function retrieves an object containing all the real time data available for all the ETFs from a country,
+    such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on all the available ETFs from a country.
+
+    Args:
+        country (:obj:`str`): name of the country to retrieve all its available etf data from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` - etfs_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com from all the ETFs
+            from a country in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                name | symbol | last | change | turnover
+                ----------------------------------------
+                xxxx | xxxxxx | xxxx | xxxxxx | xxxxxxxx
+    Raises:
+        ValueError: raised if there was any argument error.
+        FileNotFoundError:  raised when `etf_markets.csv` file is missing.
+        RuntimeError: raised it the introduced country does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    """
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'etfs', 'etf_markets.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0024: etf_markets file not found")
+
+    countries = markets['country'].unique().tolist()
+
+    if country not in countries:
+        raise RuntimeError('ERR#0025: specified country value not valid.')
+
+    url = "https://es.investing.com/etfs/" + country.replace(" ", "-") + "-etfs"
+
+    req = requests.get(url, headers=head, timeout=15)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='etfs']"
+                        "/tbody"
+                        "/tr")
+
+    results = list()
+
+    if path_:
+        for element_ in path_:
+            id_ = element_.get('id').replace('pair_', '')
+            symbol = element_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+
+            name = element_.xpath(".//a")[0]
+
+            last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+            last = element_.xpath(last_path)[0].text_content()
+
+            change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+            change = element_.xpath(change_path)[0].text_content()
+
+            turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
+            turnover = element_.xpath(turnover_path)[0].text_content()
+
+            if turnover.__contains__('K'):
+                turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+            elif turnover.__contains__('M'):
+                turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+
+            data = {
+                "name": name.text.strip(),
+                "symbol": symbol,
+                "last": float(last.replace('.', '').replace(',', '.')),
+                "change": change,
+                "turnover": turnover,
+            }
+
+            results.append(data)
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return df.to_json(orient='records')
+    else:
+        return df

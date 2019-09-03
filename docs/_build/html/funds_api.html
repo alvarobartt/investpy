@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.funds &mdash; investpy 0.8.8 documentation</title>
+  <title>investpy.funds &mdash; investpy 0.8.9 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.8.8
+                0.8.9
               </div>
             
           
@@ -255,7 +255,7 @@ returns them as a <code class="xref py py-obj docutils literal notranslate"><spa
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – description
 a <cite>list</cite> containing the column names from which the data is going to be retrieved.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – description
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – description
 value to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
 </dd>
@@ -355,7 +355,7 @@ fields are filled with <cite>None</cite> values.</p>
 
 <dl class="function">
 <dt id="investpy.funds.retrieve_funds">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">retrieve_funds</code><span class="sig-paren">(</span><em class="sig-param">debug_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.retrieve_funds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">retrieve_funds</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.retrieve_funds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>spanish funds</cite> listed on Investing.com
 (<a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a>). Retrieving all the meta-information attached to
 them. Additionally when funds are retrieved all the meta-information is both returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>
@@ -363,7 +363,7 @@ and stored on a CSV file on a package folder containing all the available resour
 information contained in the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> is useless.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>debug_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
 coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>

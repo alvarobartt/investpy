@@ -187,6 +187,20 @@ def test_investpy():
                                          order=param['order'],
                                          debug=param['debug'])
 
+    params = [
+        {
+            'country': 'france',
+            'as_json': True,
+        },
+        {
+            'country': 'usa',
+            'as_json': False,
+        },
+    ]
+
+    for param in params:
+        investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'])
+
     retrieve_etfs(test_mode=True)
 
 

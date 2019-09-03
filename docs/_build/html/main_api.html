@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy &mdash; investpy 0.8.8 documentation</title>
+  <title>investpy &mdash; investpy 0.8.9 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.8.8
+                0.8.9
               </div>
             
           
@@ -306,7 +306,7 @@ or from every listed country; the columns which the user wants to be included on
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available etfs from.</p></li>
 <li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – names of the columns of the etf data to retrieve &lt;country, country_code, id, name, symbol, tag&gt;</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – value to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – value to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -339,7 +339,7 @@ fields are filled with <cite>None</cite> values.</p>
 
 <dl class="function">
 <dt id="investpy.get_etf_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced <cite>etf</cite> from Investing
 via Web Scraping on the introduced date range. The resulting data can it either be
 stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -347,10 +347,11 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>etf</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the etf to retrieve recent historical data from.</p></li>
-<li><p><strong>start</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – start date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite></p></li>
-<li><p><strong>end</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – end date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite></p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, from where data is going to be retrieved.</p></li>
+<li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, until where data is going to be retrieved.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -395,7 +396,7 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close</span>
 <span class="go">    -----||---------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
@@ -441,7 +442,7 @@ retrieval functions as the name of the etf to retrieve data from needs to be spe
 
 <dl class="function">
 <dt id="investpy.get_etf_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>etf</cite> from Investing
 via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -449,8 +450,9 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>etf</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the etf to retrieve recent historical data from.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (ascending or descending).</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -495,7 +497,7 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close</span>
 <span class="go">    -----||---------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
@@ -542,7 +544,7 @@ successfully completed, the resulting <code class="xref py py-obj docutils liter
 
 <dl class="function">
 <dt id="investpy.get_fund_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_historical_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_historical_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced <cite>fund</cite> from Investing
 via Web Scraping on the introduced date range. The resulting data can it either be
 stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -550,10 +552,11 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve recent historical data from.</p></li>
-<li><p><strong>start</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – start date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite></p></li>
-<li><p><strong>end</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – end date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite></p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, from where data is going to be retrieved.</p></li>
+<li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, until where data is going to be retrieved.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -598,7 +601,7 @@ values for the selected fund on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_historical_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_historical_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close</span>
 <span class="go">    -----||---------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
@@ -619,7 +622,7 @@ the specified fund.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve the financial information from.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -657,7 +660,7 @@ None values. If the retrieval process succeeded, the resulting <code class="xref
 
 <dl class="function">
 <dt id="investpy.get_fund_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_recent_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_recent_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>fund</cite> from Investing
 via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -665,8 +668,9 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve recent historical data from.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (ascending or descending).</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -710,7 +714,7 @@ values for the selected fund on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_recent_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_recent_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close</span>
 <span class="go">    -----||---------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
@@ -760,7 +764,7 @@ returns them as a <code class="xref py py-obj docutils literal notranslate"><spa
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – description
 a <cite>list</cite> containing the column names from which the data is going to be retrieved.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – description
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – description
 value to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
 </dd>
@@ -825,7 +829,7 @@ every fund listed on Investing.com.</p>
 
 <dl class="function">
 <dt id="investpy.get_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_historical_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">start</em>, <em class="sig-param">end</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_historical_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced <cite>equity</cite> from Investing
 via Web Scraping on the introduced date range. The resulting data can it either be
 stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -833,10 +837,11 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>equity</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the equity to retrieve recent historical data from.</p></li>
-<li><p><strong>start</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – start date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite></p></li>
-<li><p><strong>end</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – end date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite></p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, from where data is going to be retrieved.</p></li>
+<li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, until where data is going to be retrieved.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 <li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -882,7 +887,7 @@ volume values for the selected equity on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_historical_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_historical_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close | volume</span>
 <span class="go">    -----||-----------------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx</span>
@@ -892,7 +897,7 @@ volume values for the selected equity on market days.</p>
 
 <dl class="function">
 <dt id="investpy.get_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_recent_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_recent_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>equity</cite> from Investing
 via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -900,8 +905,9 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>equity</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the equity to retrieve recent historical data from.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">boolean</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (ascending or descending).</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite> or <cite>descending</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -947,7 +953,7 @@ volume values for the selected equity on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close | volume</span>
 <span class="go">    -----||-----------------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx</span>

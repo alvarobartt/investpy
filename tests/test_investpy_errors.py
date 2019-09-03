@@ -521,6 +521,7 @@ def test_etf_errors():
                                          debug=param['debug'])
         except:
             pass
+
     params = [
         {
             'etf': None,
@@ -668,6 +669,35 @@ def test_etf_errors():
                                              as_json=param['as_json'],
                                              order=param['order'],
                                              debug=param['debug'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': 'error',
+            'as_json': False,
+        },
+        {
+            'country': None,
+            'as_json': False,
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+        },
+        {
+            'country': 'spain',
+            'as_json': None,
+        },
+        {
+            'country': 'spain',
+            'as_json': ['error'],
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etfs_overview(country=param['country'])
         except:
             pass
 
