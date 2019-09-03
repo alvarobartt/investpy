@@ -6,31 +6,24 @@
 
 class Data(object):
     """
-    A class used to store the historical data of an equity, fund or etf
+    This class is used to store the historical data of an equity, fund or ETF; and so on to store it
+    as a JSON or as a Python :obj:`dict`.
 
-    Attributes
-    ----------
-    date_: str
-        a string that stores the date in dd/mm/yyyy format
-    open_, high_, low_, close_: float
-        all the price values of an equity, fund or etf on the selected date
-    volume_: long
-        all the stocks sold on the selected date
+    Args:
+        date_ (:obj:`str`): date in dd/mm/yyyy format
+        open_ (:obj:`float`): open value of the market on the introduced date
+        high_ (:obj:`float`): highest value of the market on the introduced date
+        low_ (:obj:`float`): lowest value of the market on the introduced date
+        close_ (:obj:`float`): close value of the market on the introduced date
+        volume_ (:obj:`long`): number of shares traded on the introduced date
 
-    Methods
-    -------
-    equity_to_dict()
-        converts the equity object into a dictionary
-    equity_as_json()
-        converts the equity object into a JSON object
-    fund_to_dict()
-        converts the fund object into a dictionary
-    fund_as_json()
-        converts the fund object into a JSON object
-    etf_to_dict()
-        converts the etf object into a dictionary
-    etf_as_json()
-        converts the etf object into a JSON object
+    Attributes:
+        date_ (:obj:`str`): date in dd/mm/yyyy format
+        open_ (:obj:`float`): open value of the market on the introduced date
+        high_ (:obj:`float`): highest value of the market on the introduced date
+        low_ (:obj:`float`): lowest value of the market on the introduced date
+        close_ (:obj:`float`): close value of the market on the introduced date
+        volume_ (:obj:`long`): number of shares traded on the introduced date
     """
 
     def __init__(self, date_, open_, high_, low_, close_, volume_):
