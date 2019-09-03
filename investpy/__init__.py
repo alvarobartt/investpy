@@ -215,14 +215,14 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
                     stock_high = float(info[3].replace('.', '').replace(',', '.'))
                     stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
+                    stock_volume = 0
+
                     if info[5].__contains__('K'):
                         stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
                     elif info[5].__contains__('M'):
                         stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                     elif info[5].__contains__('B'):
                         stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
-                    else:
-                        stock_volume = int(float(info[5].replace('.', '').replace(',', '.')))
 
                     result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
@@ -487,6 +487,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                             stock_open = float(info[2].replace('.', '').replace(',', '.'))
                             stock_high = float(info[3].replace('.', '').replace(',', '.'))
                             stock_low = float(info[4].replace('.', '').replace(',', '.'))
+
                             stock_volume = 0
 
                             if info[5].__contains__('K'):
@@ -495,8 +496,6 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
                                 stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                             elif info[5].__contains__('B'):
                                 stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
-                            else:
-                                stock_volume = int(float(info[5].replace('.', '').replace(',', '.')))
 
                             result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
