@@ -17,6 +17,12 @@ def test_equity_errors():
 
     params = [
         {
+            'equity': 'Euripo Properties Socimi',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
             'equity': None,
             'as_json': False,
             'order': 'ascending',
@@ -64,6 +70,14 @@ def test_equity_errors():
             pass
 
     params = [
+        {
+            'equity': 'Euripo Properties Socimi',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
         {
             'equity': None,
             'from_date': '01/01/2018',
@@ -276,6 +290,14 @@ def test_fund_errors():
             pass
 
     params = [
+        {
+            'fund': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
         {
             'fund': 'quality inversion conservadora fi',
             'from_date': '01/01/2018',

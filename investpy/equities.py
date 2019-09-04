@@ -84,18 +84,18 @@ def retrieve_equities(test_mode=False):
                 tag_ = element_.get('href').replace('/equities/', '')
                 full_name_ = element_.get('title').replace(' (CFD)', '')
 
-                try:
-                    isin_ = retrieve_isin_code(tag_)
-                except (ConnectionError, IndexError):
-                    isin_ = None
+                info = retrieve_info(tag_)
 
                 data = {
-                    "name": element_.text.strip(),
-                    "full_name": full_name_.rstrip(),
-                    "tag": tag_,
-                    "isin": isin_,
-                    "id": id_
+                    'name': element_.text.strip(),
+                    'full_name': full_name_.rstrip(),
+                    'tag': tag_,
+                    'isin': info['isin'],
+                    'id': id_,
+                    'currency': info['currency'],
                 }
+
+                print(data)
 
                 results.append(data)
 
@@ -114,26 +114,27 @@ def retrieve_equities(test_mode=False):
     return df
 
 
-def retrieve_isin_code(info):
+def retrieve_info(tag):
     """
-    This function retrieves the ISIN code from an equity which will lead to
-    the later company profile extraction as the ISIN code is the identifier
-    used by "Bolsa de Madrid", so to retrieve the company profile. The ISIN
-    code will be added to the `equities.csv` file, as additional information.
+    This function retrieves both the ISIN code and the currency of an equity indexed in Investing.com, so to add
+    additional information to the `equities.csv` file. The ISIN code will later be used in order to retrieve more
+    information from the specified equity as the ISIN code is an unique identifier of every equity; and the currency
+    which will be required in order to know which currency is the value in.
 
     Args:
-        info (:obj:`str`): is the tag of the equity to retrieve the ISIN code from as indexed by Investing.com.
+        tag (:obj:`str`): is the tag of the equity to retrieve the information from as indexed by Investing.com.
 
     Returns:
-        :obj:`str` - isin_code:
-            The resulting :obj:`str` contains the ISIN code of the introduced equity.
+        :obj:`dict` - info:
+            The resulting :obj:`dict` contains the needed information for the equities listing, so on, both the the ISIN
+             code of the introduced equity and the currency of its values.
 
     Raises:
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if isin code was unavailable or not found.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if either the isin code or the currency were unable to retrieve.
     """
 
-    url = "https://es.investing.com/equities/" + info
+    url = "https://es.investing.com/equities/" + tag
 
     head = {
         "User-Agent": ua.get_random(),
@@ -148,25 +149,37 @@ def retrieve_isin_code(info):
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+    result = {
+        'isin': None,
+        'currency': None
+    }
+
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
                         "/div[@id='quotes_summary_current_data']"
                         "/div[@class='right']"
                         "/div")
 
-    for p in path_:
+    for element_ in path_:
         try:
-            if p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
-                code = p.xpath("span[@class='elp']")[0].text_content().rstrip()
-                time.sleep(.5)
-
-                return code
-            else:
-                continue
+            if element_.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
+                code = element_.xpath("span[@class='elp']")[0].text_content().rstrip()
+                # time.sleep(.5)
+                result['isin'] = code
         except IndexError:
-            raise IndexError("ERR#0017: isin code unavailable or not found.")
+            raise IndexError("ERR#0017: isin code unable to retrieve.")
 
-    return None
+    path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
+                        "/span[@class='bold']")
+
+    for element_ in path_:
+        try:
+            if element_.text_content():
+                result['currency'] = element_.text_content()
+        except IndexError:
+            raise IndexError("ERR#0036: currency unable to retrieve.")
+
+    return result
 
 
 def retrieve_equity_countries(test_mode=False):
