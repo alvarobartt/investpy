@@ -624,10 +624,17 @@ def get_equity_company_profile(equity, language='english'):
 
                 root_ = fromstring(req.text)
 
-                path_ = root_.xpath(".//td[contains(@class, 'Perfil')]")
+                path_ = root_.xpath(".//td[contains(@class, 'Perfil')]/p")
 
                 if path_:
-                    company_profile['desc'] = str(path_[0].text_content())
+                    text = list()
+                    for element_ in path_:
+                        if not element_.xpath(".//a"):
+                            text.append(element_.text_content())
+
+                    text = ''.join(text)
+
+                    company_profile = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
 
                     return company_profile
                 else:
