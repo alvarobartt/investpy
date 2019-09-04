@@ -30,9 +30,9 @@ setup(
                       'setuptools>=41.2.0'
                       'requests>=2.22.0'],
     data_files=[
-        ('equities', ['investpy/resources/equities/equities.csv']),
+        ('equities', ['investpy/resources/equities/equities.csv', 'investpy/resources/equities/equity_countries.csv']),
         ('funds', ['investpy/resources/funds/funds.csv']),
-        ('etfs', ['investpy/resources/etfs/etfs.csv', 'investpy/resources/etfs/etf_markets.csv']),
+        ('etfs', ['investpy/resources/etfs/etfs.csv', 'investpy/resources/etfs/etf_countries.csv']),
         ('user_agents', ['investpy/resources/user_agent_list.txt'])
     ],
     include_package_data=True,

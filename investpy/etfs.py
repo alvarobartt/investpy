@@ -42,7 +42,7 @@ def retrieve_etfs(test_mode=False):
 
     Raises:
         ValueError: if any of the introduced arguments is not valid.
-        FileNotFoundError: raised when `etf_markets.csv` file is missing.
+        FileNotFoundError: raised when `etf_countries.csv` file is missing.
         ConnectionError: if GET requests does not return 200 status code.
     """
 
@@ -55,11 +55,11 @@ def retrieve_etfs(test_mode=False):
     }
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'etfs', 'etf_markets.csv'))
+    resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0024: etf_markets file not found")
+        raise FileNotFoundError("ERR#0024: etf_countries file not found")
 
     final = list()
 
@@ -132,22 +132,22 @@ def retrieve_etf_countries():
             The resulting :obj:`list` contains all the countries listed on Investing.com with
             etfs available to retrieve data from.
 
-            In the case that the file reading of `etf_markets.csv` which contains the names and codes of the countries
+            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
             with etfs was successfully completed, the resulting :obj:`list` will look like::
 
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when `etf_markets.csv` file is missing.
+        FileNotFoundError: raised when `etf_countries.csv` file is missing.
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'etfs', 'etf_markets.csv'))
+    resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
 
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0028: etf_markets file not found")
+        raise FileNotFoundError("ERR#0028: etf_countries file not found")
 
     return markets['country'].tolist()
 

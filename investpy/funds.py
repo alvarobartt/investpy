@@ -77,13 +77,13 @@ def retrieve_funds(test_mode=False):
             data = retrieve_fund_data(info)
 
             obj = {
-                "name": nested,
+                "name": nested.strip(),
                 "symbol": symbol,
                 "tag": info,
                 "id": id_,
-                "issuer": data['issuer'],
+                "issuer": data['issuer'].strip(),
                 "isin": data['isin'],
-                "asset class": data['asset class'],
+                "asset class": data['asset class'].lower(),
             }
 
             results.append(obj)

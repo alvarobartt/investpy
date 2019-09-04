@@ -90,7 +90,7 @@ def retrieve_equities(test_mode=False):
                     isin_ = None
 
                 data = {
-                    "name": element_.text,
+                    "name": element_.text.strip(),
                     "full_name": full_name_.rstrip(),
                     "tag": tag_,
                     "isin": isin_,
@@ -167,6 +167,118 @@ def retrieve_isin_code(info):
             raise IndexError("ERR#0017: isin code unavailable or not found.")
 
     return None
+
+
+def retrieve_equity_countries(test_mode=False):
+    """
+    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+    from, via Web Scraping https://www.investing.com/equities/ where the available countries are listed, and from their
+    names the specific equity website of every country is retrieved in order to get the ID which will later be used
+    when retrieving all the information from the available equities in every country.
+
+    Args:
+        test_mode (:obj:`bool`):
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            coverage.
+
+    Returns:
+        :obj:`pandas.DataFrame` - equity_countries:
+            The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding ID,
+            which will be used later by investpy.
+
+    Raises:
+        ConnectionError: raised if connection to Investing.com could not be established.
+        RuntimeError: raised if no countries were retrieved from Investing.com equity listing.
+    """
+
+    headers = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/equities/'
+
+    req = requests.get(url, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root = fromstring(req.text)
+    path = root.xpath("//*[@id='countryDropdownContainer']/div")
+
+    countries = list()
+
+    for element in path:
+        if element.get('id') != 'regionsSelectorContainer' and element.get('id') != 'cdregion0':
+            for value in element.xpath(".//ul/li/a"):
+                countries.append(value.get('href').replace('/equities/', '').strip())
+
+    results = list()
+
+    if len(countries) > 0:
+        for country in countries:
+            country_url = url + country
+
+            req = requests.get(country_url, headers=headers)
+
+            root = fromstring(req.text)
+            path = root.xpath(".//*[@id='leftColumn']/input[@id='smlID']")
+
+            country_id = path[0].get('value')
+
+            obj = {
+                'country': country,
+                'id': country_id
+            }
+
+            results.append(obj)
+
+            if test_mode:
+                break
+    else:
+        raise RuntimeError('ERR#0035: no countries could be retrieved!')
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
+    df = pd.DataFrame(results)
+
+    if test_mode is False:
+        df.to_csv(file, index=False)
+
+    return df
+
+
+def equity_countries_as_list():
+    """
+    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+
+    Raises:
+        IndexError: if `equity_countries.csv` was unavailable or not found.
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        countries = retrieve_equity_countries(test_mode=False)
+
+    if countries is None:
+        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
+    else:
+        return countries['country'].tolist()
 
 
 def equities_as_df():

@@ -49,6 +49,24 @@ def get_equities():
     return ts.equities_as_df()
 
 
+def get_equity_countries():
+    """
+    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+
+    Raises:
+        IndexError: if `equity_countries.csv` was unavailable or not found.
+    """
+
+    return ts.equity_countries_as_list()
+
+
 def get_equities_list():
     """
     This function retrieves all the equities previously stored on `equities.csv` file, via
@@ -1391,13 +1409,13 @@ def get_etf_countries():
             The resulting :obj:`list` contains all the countries listed on Investing.com with
             etfs available to retrieve data from.
 
-            In the case that the file reading of `etf_markets.csv` which contains the names and codes of the countries
+            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
             with etfs was successfully completed, the resulting :obj:`list` will look like::
 
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when `etf_markets.csv` file is missing.
+        FileNotFoundError: raised when `etf_countries.csv` file is missing.
     """
 
     return es.retrieve_etf_countries()
@@ -1933,7 +1951,7 @@ def get_etfs_overview(country, as_json=False):
                 xxxx | xxxxxx | xxxx | xxxxxx | xxxxxxxx
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError:  raised when `etf_markets.csv` file is missing.
+        FileNotFoundError:  raised when `etf_countries.csv` file is missing.
         RuntimeError: raised it the introduced country does not match any of the indexed ones.
         ConnectionError: raised if GET requests does not return 200 status code.
     """
@@ -1953,11 +1971,11 @@ def get_etfs_overview(country, as_json=False):
     }
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'etfs', 'etf_markets.csv'))
+    resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0024: etf_markets file not found")
+        raise FileNotFoundError("ERR#0024: etf_countries file not found")
 
     countries = markets['country'].unique().tolist()
 

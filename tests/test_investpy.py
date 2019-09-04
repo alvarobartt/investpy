@@ -7,7 +7,7 @@ import pytest
 
 import investpy
 
-from investpy.equities import retrieve_equities
+from investpy.equities import retrieve_equities, retrieve_equity_countries
 from investpy.funds import retrieve_funds
 from investpy.etfs import retrieve_etfs
 
@@ -17,11 +17,11 @@ def test_investpy():
     This function checks that main functions of investpy work properly.
     """
 
-    print(investpy.__author__)
-    print(investpy.__version__)
+    print(investpy.__author__, investpy.__version__)
 
     investpy.get_equities()
     investpy.get_equities_list()
+    investpy.get_equity_countries()
 
     params = [
         {
@@ -64,6 +64,7 @@ def test_investpy():
                                             language=value)
 
     retrieve_equities(test_mode=True)
+    retrieve_equity_countries(test_mode=True)
 
     investpy.get_funds()
     investpy.get_funds_list()
