@@ -25,9 +25,9 @@ setup(
     long_description=readme(),
     long_description_content_type='text/markdown',
     install_requires=['Unidecode>=1.1.1',
-                      'pandas>=0.25.1'
-                      'lxml>=4.4.1'
-                      'setuptools>=41.2.0'
+                      'pandas>=0.25.1',
+                      'lxml>=4.4.1',
+                      'setuptools>=41.2.0',
                       'requests>=2.22.0'],
     data_files=[
         ('equities', ['investpy/resources/equities/equities.csv', 'investpy/resources/equities/equity_countries.csv']),

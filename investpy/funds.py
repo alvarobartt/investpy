@@ -219,20 +219,20 @@ def fund_information_as_json(df):
     try:
         json_ = {
             'Fund Name': str(df['Fund Name'][0]),
-            'Rating': str(df['Rating'][0]),
+            'Rating': int(float(df['Rating'][0])),
             '1-Year Change': str(df['1-Year Change'][0]),
             'Previous Close': str(df['Previous Close'][0]),
-            'Risk Rating': str(df['Risk Rating'][0]),
+            'Risk Rating': int(float(df['Risk Rating'][0])),
             'TTM Yield': str(df['TTM Yield'][0]),
             'ROE': str(df['ROE'][0]),
             'Issuer': str(df['Issuer'][0]),
             'Turnover': str(df['Turnover'][0]),
             'ROA': str(df['ROA'][0]),
-            'Inception Date': str(df['Inception Date'][0]),
-            'Total Assets': str(df['Total Assets'][0]),
+            'Inception Date': df['Inception Date'][0].strftime('%d/%m/%Y'),
+            'Total Assets': int(float(df['Total Assets'][0])),
             'Expenses': str(df['Expenses'][0]),
-            'Min Investment': str(df['Min Investment'][0]),
-            'Market Cap': str(df['Market Cap'][0]),
+            'Min Investment': int(float(df['Min Investment'][0])),
+            'Market Cap': int(float(df['Market Cap'][0])),
             'Category': str(df['Category'][0])
         }
 

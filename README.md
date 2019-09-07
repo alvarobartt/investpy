@@ -8,7 +8,7 @@
 [![Build Status](https://img.shields.io/travis/alvarob96/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarob96/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
-[![Downloads](https://img.shields.io/pypi/dm/investpy.svg?style=flat)](https://pypistats.org/packages/investpy)
+[![Downloads](https://img.shields.io/pypi/dm/investpy.svg?maxAge=2592000&label=installs&color=%2327B1FF)](https://pypistats.org/packages/investpy)
 
 ## Introduction
 
@@ -162,20 +162,20 @@ print(fund_information)
 
 >>> {
  'Fund Name': 'Bbva Plan Multiactivo Moderado Pp',
- 'Rating': '4',
+ 'Rating': 4,
  '1-Year Change': '-1,19%',
  'Previous Close': '1.103',
- 'Risk Rating': '1',
+ 'Risk Rating': 1,
  'TTM Yield': '0%',
  'ROE': '14,02%',
  'Issuer': 'BBVA Pensiones EGFP',
  'Turnover': 'N/A',
  'ROA': '4,97%',
- 'Inception Date': '2012-10-16 00:00:00',
- 'Total Assets': '1670000000',
+ 'Inception Date': '16/10/2012',
+ 'Total Assets': 1670000000,
  'Expenses': 'N/A',
- 'Min Investment': '30',
- 'Market Cap': '34820000000',
+ 'Min Investment': 30,
+ 'Market Cap': 34820000000,
  'Category': 'Mixtos Euros Moderados PP'
 }
 ```

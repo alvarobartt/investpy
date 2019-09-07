@@ -46,61 +46,87 @@ def retrieve_equities(test_mode=False):
         IndexError: if equities information was unavailable or not found.
     """
 
-    params = {
-        "noconstruct": "1",
-        "smlID": "10119",
-        "sid": "",
-        "tabletype": "price",
-        "index_id": "all"
-    }
-
-    head = {
-        "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
-    url = "https://es.investing.com/equities/StocksFilter"
-
-    req = requests.get(url, params=params, headers=head)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
-                        "/tbody"
-                        "/tr")
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0038: equity_countries file not found")
 
     results = list()
 
-    if path_:
-        for elements_ in path_:
-            id_ = elements_.get('id').replace('pair_', '')
+    for index, row in countries.iterrows():
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-            for element_ in elements_.xpath('.//a'):
-                tag_ = element_.get('href').replace('/equities/', '')
-                full_name_ = element_.get('title').replace(' (CFD)', '')
+        params = {
+            "noconstruct": "1",
+            "smlID": str(row['id']),
+            "sid": "",
+            "tabletype": "price",
+            "index_id": "all"
+        }
 
-                info = retrieve_info(tag_)
+        url = "https://es.investing.com/equities/StocksFilter"
 
-                data = {
-                    'name': element_.text.strip(),
-                    'full_name': full_name_.rstrip(),
-                    'tag': tag_,
-                    'isin': info['isin'],
-                    'id': id_,
-                    'currency': info['currency'],
-                }
+        req = requests.get(url, params=params, headers=head)
 
-                print(data)
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                results.append(data)
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
+                            "/tbody"
+                            "/tr")
 
-            if test_mode is True:
-                break
+        if path_:
+            for elements_ in path_:
+                id_ = elements_.get('id').replace('pair_', '')
+
+                for element_ in elements_.xpath('.//a'):
+                    tag_ = element_.get('href')
+
+                    if not str(tag_).__contains__('/equities/'):
+                        continue
+
+                    tag_ = tag_.replace('/equities/', '')
+
+                    full_name_ = element_.get('title').replace(' (CFD)', '')
+
+                    try:
+                        info = retrieve_info(tag_)
+
+                        data = {
+                            'country': str(row['country']),
+                            'name': element_.text.strip(),
+                            'full_name': full_name_.rstrip(),
+                            'tag': tag_,
+                            'isin': info['isin'],
+                            'id': id_,
+                            'currency': info['currency'],
+                        }
+                    except:
+                        data = {
+                            'country': str(row['country']),
+                            'name': element_.text.strip(),
+                            'full_name': full_name_.rstrip(),
+                            'tag': tag_,
+                            'isin': None,
+                            'id': id_,
+                            'currency': None,
+                        }
+
+                    results.append(data)
+
+                if test_mode is True:
+                    break
+        if test_mode is True:
+            break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
@@ -164,7 +190,7 @@ def retrieve_info(tag):
         try:
             if element_.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
                 code = element_.xpath("span[@class='elp']")[0].text_content().rstrip()
-                # time.sleep(.5)
+
                 result['isin'] = code
         except IndexError:
             raise IndexError("ERR#0017: isin code unable to retrieve.")
@@ -177,7 +203,7 @@ def retrieve_info(tag):
             if element_.text_content():
                 result['currency'] = element_.text_content()
         except IndexError:
-            raise IndexError("ERR#0036: currency unable to retrieve.")
+            raise IndexError("ERR#0037: currency unable to retrieve.")
 
     return result
 
@@ -233,21 +259,22 @@ def retrieve_equity_countries(test_mode=False):
 
     if len(countries) > 0:
         for country in countries:
-            country_url = url + country
+            if country not in ['estonia', 'latvia', 'lithuania']:
+                country_url = url + country
 
-            req = requests.get(country_url, headers=headers)
+                req = requests.get(country_url, headers=headers)
 
-            root = fromstring(req.text)
-            path = root.xpath(".//*[@id='leftColumn']/input[@id='smlID']")
+                root = fromstring(req.text)
+                path = root.xpath(".//*[@id='leftColumn']/input[@id='smlID']")
 
-            country_id = path[0].get('value')
+                country_id = path[0].get('value')
 
-            obj = {
-                'country': country,
-                'id': country_id
-            }
+                obj = {
+                    'country': country,
+                    'id': country_id
+                }
 
-            results.append(obj)
+                results.append(obj)
 
             if test_mode:
                 break
