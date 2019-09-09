@@ -388,3 +388,24 @@ def equities_as_list():
         raise IOError("ERR#0001: equities list not found or unable to retrieve.")
     else:
         return equities['name'].tolist()
+
+
+# Aux Function to Fill Missing equities.csv Data
+# ----------------------------------------------
+# def fill_missing_equities():
+#     df = equities_as_df()
+#
+#     df = df.where((pd.notnull(df)), None)
+#
+#     for index, row in df.iterrows():
+#         if not row['isin'] and not row['currency']:
+#             info = retrieve_info(row['tag'])
+#
+#             df.loc[index, 'isin'] = info['isin']
+#             df.loc[index, 'currency'] = info['currency']
+#
+#     resource_package = __name__
+#     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+#     file = pkg_resources.resource_filename(resource_package, resource_path)
+#
+#     df.to_csv(file, index=False)

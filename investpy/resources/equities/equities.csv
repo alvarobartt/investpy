@@ -1994,7 +1994,6 @@ colombia,Banco Davivienda Pf,Banco Davivienda Pf,pfdavvnda,COB51PA00076,102124,C
 colombia,Grupo Argos Pref,Grupo Argos SA Pref,pfgrupoarg,COT09PA00043,102125,COP
 colombia,Pfgrupsura,Pfgrupsura,pfgrupsura,COT13PA00060,102126,COP
 colombia,Promigas,Promigas,promigas,COI04PA00021,102128,COP
-colombia,Global X SuperDividend,Sdiv,/etfs/global-x-superdividend?cid=102129,,102129,
 colombia,Banco de Occidente SA,Banco de Occidente SA,banco-de-occidente-sa,COB23PA00067,950058,COP
 colombia,Corporacion Financiera Colombiana,Corporacion Financiera Colombiana,corporacion-financiera-colombiana,COJ12PA00097,950059,COP
 colombia,Construcciones el Condor SA,Construcciones el Condor SA,construcciones-el-condor-sa,COF20PA00015,950060,COP
@@ -6081,7 +6080,7 @@ germany,Lloyd Fonds AG,Lloyd Fonds AG,lloyd-fonds-ag,DE000A12UP29,19855,EUR
 germany,Ever-Glory,Ever-Glory Intl Group Inc,ever-glory-international-group-inc?cid=19856,US2997662042,19856,EUR
 germany,Logwin,Logwin AG,logwin-ag,LU1618151879,19857,EUR
 germany,LPKF,LPKF Laser & Electronics,lpkf-laser---electronics-ag,DE0006450000,19858,EUR
-germany,Ludwig Beck,Ludwig Beck A.Rathauseck,ludwig-beck-ag,,19859,
+germany,Ludwig Beck,Ludwig Beck A.Rathauseck,ludwig-beck-ag,DE0005199905,19859,EUR
 germany,Vaalco Energy,VAALCO Energy Inc,vaalco-energy-inc?cid=19860,US91851C2017,19860,EUR
 germany,Man SE VZO,Man SE Pref,man-se-vz,DE0005937031,19861,EUR
 germany,BankUnited,BankUnited Inc,bankunited-inc?cid=19862,US06652K1034,19862,EUR
@@ -15129,90 +15128,90 @@ hong-kong,Kingdee Int Software,Kingdee International Software Group Co Ltd,kingd
 hong-kong,China Resources & Transportation,China Resources and Transportation Group Ltd,crtg,KYG2162D1126,100020,HKD
 hong-kong,BYD Electronic Int,BYD Electronic International Co Ltd,byd-electronic,HK0285041858,100021,HKD
 hong-kong,China Travel Int,China Travel International Investment Hong Kong Ltd,china-travel-h,HK0308001558,100022,HKD
-hong-kong,SmarTone Telecom,SmarTone Telecommunications Holdings Ltd,smartone-tele,,100023,
-hong-kong,Maanshan Iron & Steel,Maanshan Iron & Steel Co Ltd,maanshan-iron,,100024,
-hong-kong,Sinopec Shanghai Petrochemical H,Sinopec Shanghai Petrochemical Co Ltd Class H,shanghai-peche,,100025,
-hong-kong,Yanchang Petroleum Int,Yanchang Petroleum International Ltd,yanchang-petro,,100026,
-hong-kong,Beijing Enterprises Water,Beijing Enterprises Water Group Ltd,bj-ent-water,,100027,
-hong-kong,North Mining Shares,North Mining Shares Co Ltd,north-mining,,100028,
-hong-kong,Dah Sing Financial,Dah Sing Financial Holdings Ltd,dah-sing,,100029,
-hong-kong,COSCO SHIPPING HK,COSCO SHIPPING International HONG KONG Co Ltd,cosco-intl-hol,,100030,
-hong-kong,ASM Pacific Technology,ASM Pacific Technology Ltd,asm-pacific,,100031,
-hong-kong,Guangshen Railway,Guangshen Railway Co Ltd,guangshen-rail,,100032,
-hong-kong,Ajisen China Holdings,Ajisen China Holdings Ltd,ajisen-(china),,100033,
-hong-kong,Fufeng Group Ltd,Fufeng Group Ltd,fufeng-group,,100034,
-hong-kong,China Communications Services,China Communications Services Corp Ltd,chinacomservic,,100035,
-hong-kong,REXLot Holdings,REXLot Holdings Ltd,rexlot-holding,,100036,
-hong-kong,Shanghai Industrial Urban Develop,Shanghai Industrial Urban Development Group Ltd,sh-ind-urban,,100037,
-hong-kong,Luk Fook Holdings Int,Luk Fook Holdings International Ltd,luk-fook-hold,,100039,
-hong-kong,China Oil and Gas,China Oil and Gas Group Ltd,china-oil---ga,,100040,
-hong-kong,Shenzhen Investment,Shenzhen Investment Ltd,shenzhen-inves,,100041,
-hong-kong,NWS Holdings Ltd,NWS Holdings Ltd,nws-holdings,,100042,
-hong-kong,Beijing Capital Int Airport,Beijing Capital International Airport Co Ltd,beijing-airpor,,100043,
-hong-kong,Shougangncord Int Enterprises,Shougang Concord International Enterprises Co Ltd,shougang-intl,,100044,
-hong-kong,Giordano Int,Giordano International Ltd,giordano-intl,,100045,
-hong-kong,Singamas Container,Singamas Container Holdings Ltd,singamas-cont,,100046,
-hong-kong,FDG Electric Vehicles,FDG Electric Vehicles Ltd,sinopolybatter,,100047,
-hong-kong,Truly Int,Truly International Holdings Ltd,truly-intl,,100048,
-hong-kong,China Power Clean Energy,China Power Clean Energy Development Co Ltd,c-p-new-energy,,100049,
-hong-kong,Hopewell Highway Infrastructure,Hopewell Highway Infrastructure Ltd,hopewell-infr,,100050,
-hong-kong,Asia Cement China,Asia Cement China Holdings Corp,asia-cement-ch,,100051,
-hong-kong,Lee & Man Chemical,Lee & Man Chemical Co Ltd,l---m-chemical,,100052,
-hong-kong,China Rare Earth,China Rare Earth Holdings Ltd,china-rareeart,,100053,
-hong-kong,Value Partners,Value Partners Group Ltd,value-partners,,100054,
-hong-kong,Global Bio-chem Tech,Global Bio-chem Technology Group Co Ltd,global-bio-che,,100055,
-hong-kong,Tianneng Power Int,Tianneng Power International Ltd,tianneng-power,,100056,
-hong-kong,Mingfa Group Int,Mingfa Group International Co Ltd,mingfa-group,,100057,
-hong-kong,Maoye Int Holdings,Maoye International Holdings Ltd,maoye-intl,,100058,
-hong-kong,MicroPort Scientific,MicroPort Scientific Corp,microport,,100059,
-hong-kong,China Medical System,China Medical System Holdings Ltd,cms,,100060,
-hong-kong,SJM Holdings Ltd,SJM Holdings Ltd,sjm-hld,,100061,
-hong-kong,Tianjin Develop,Tianjin Development Holdings Ltd,tianjin-dev,,100062,
-hong-kong,CIFI Group Co,CIFI Holdings Group Co Ltd,cifi-hold-gp,,100063,
-hong-kong,Silver Base Group Holdings,Silver Base Group Holdings Ltd,silver-base,,100064,
-hong-kong,Emperor Watch & Jewellery,Emperor Watch & Jewellery Ltd,emperor-watch-,,100065,
-hong-kong,Trinity Ltd,Trinity Ltd,trinity,,100066,
-hong-kong,China Vanadium Titano-Magnetite,China Vanadium Titano-Magnetite Mining Co Ltd,chinavtm-minin,,100067,
-hong-kong,TPV Technology,TPV Technology Ltd,tpv-technology,,100068,
-hong-kong,CPMC Holdings Ltd,CPMC Holdings Ltd,cofco-packagin,,100069,
-hong-kong,Sinopec Kantons,Sinopec Kantons Holdings Ltd,sinopec-kanton,,100071,
-hong-kong,CST,CST Group Ltd,cst-mining,,100072,
-hong-kong,I.T. Limited,I.T. Limited,i.t,,100073,
-hong-kong,KNT,KNT Holdings Ltd,wumart,,100074,
-hong-kong,IRC Ltd,IRC Ltd,irc,,100075,
-hong-kong,Future Land Development,Future Land Development Holdings Ltd,future-land,,100076,
-hong-kong,G-Resources Group,G-Resources Group Ltd,g-resources,,100077,
-hong-kong,Yuexiu Transport Infrastructure,Yuexiu Transport Infrastructure Ltd,yuexiutranspor,,100078,
-hong-kong,China Southern Airlines,China Southern Airlines Co Ltd,china-south-ai,,100079,
-hong-kong,TCL Multimedia Tech,TCL Multimedia Technology Holdings Ltd,tcl-multimedia,,100080,
-hong-kong,Dongfang Electric,Dongfang Electric Corp Ltd,dongfang-elec,,100081,
-hong-kong,Towngas China Co,Towngas China Co Ltd,towngas-china,,100082,
-hong-kong,CSPC Pharma,CSPC Pharmaceutical Group Ltd,cspc-pharma,,100083,
-hong-kong,Road King Infrastructure,Road King Infrastructure Ltd,road-king-infr,,100084,
-hong-kong,China Huarong Energy,China Huarong Energy Co Ltd,ch-rongsheng,,100085,
-hong-kong,H&H,Health and Happiness (H&H) International Holdings Ltd,biostime,,100086,
-hong-kong,Tibet Water Resources,Tibet Water Resources Ltd,tibet-5100,,100087,
-hong-kong,China Modern Dairy,China Modern Dairy Holdings Ltd,ch-modern-d,,100088,
-hong-kong,Wynn Macau Ltd,Wynn Macau Ltd,wynn-macau,,100089,
-hong-kong,Munsun Capital,Munsun Capital Group Ltd,c-preciousmeta,,100092,
-hong-kong,MMG Ltd,MMG Ltd,mmg,,100093,
-hong-kong,Lifestyle Int,Lifestyle International Holdings Ltd,lifestyle-int,,100094,
-hong-kong,C C Land Holdings,C C Land Holdings Ltd,c-c-land,,100095,
-hong-kong,Yashili Int Holdings,Yashili International Holdings Ltd,yashili-intl,,100096,
-hong-kong,China Lilang Ltd,China Lilang Ltd,china-lilang,,100097,
-hong-kong,Powerlong Real Estate,Powerlong Real Estate Holdings Ltd,powerlong,,100098,
-hong-kong,Grand Baoxin Auto,Grand Baoxin Auto Group Ltd,baoxin-auto,,100099,
-hong-kong,Pacific Textiles,Pacific Textiles Holdings Ltd,pacifictextile,,100100,
-hong-kong,MIE Holdings Corp,MIE Holdings Corp,mie-holdings,,100101,
-hong-kong,Metallurgical Corp China,Metallurgical Corporation of China Ltd,mcc,,100102,
-hong-kong,Kaisa Holdings,Kaisa Group Holdings Ltd,kaisa-group,,100103,
-hong-kong,China South City,China South City Holdings Ltd,chinasouthcity,,100104,
-hong-kong,China ZhengTong Auto Services,China ZhengTong Auto Services Holdings Ltd,zhengtongauto,,100105,
-hong-kong,E -Commodities Hlds,E -Commodities Holdings Ltd,winsway,,100106,
-hong-kong,Fantasia Holdings Group,Fantasia Holdings Group Co Ltd,fantasia,,100107,
-hong-kong,Guotai Junan Int,Guotai Junan International Holdings Ltd,guotai-junan-i,,100108,
-hong-kong,Zhaojin Mining Industry,Zhaojin Mining Industry Co Ltd,zhaojin-mining,,100109,
-hong-kong,Dah Chong Hong,Dah Chong Hong Holdings Ltd,dch-holdings,,100110,
+hong-kong,SmarTone Telecom,SmarTone Telecommunications Holdings Ltd,smartone-tele,BMG8219Z1059,100023,HKD
+hong-kong,Maanshan Iron & Steel,Maanshan Iron & Steel Co Ltd,maanshan-iron,CNE1000003R8,100024,HKD
+hong-kong,Sinopec Shanghai Petrochemical H,Sinopec Shanghai Petrochemical Co Ltd Class H,shanghai-peche,CNE1000004C8,100025,HKD
+hong-kong,Yanchang Petroleum Int,Yanchang Petroleum International Ltd,yanchang-petro,BMG9833W1064,100026,HKD
+hong-kong,Beijing Enterprises Water,Beijing Enterprises Water Group Ltd,bj-ent-water,BMG0957L1090,100027,HKD
+hong-kong,North Mining Shares,North Mining Shares Co Ltd,north-mining,BMG6661B1211,100028,HKD
+hong-kong,Dah Sing Financial,Dah Sing Financial Holdings Ltd,dah-sing,HK0440001847,100029,HKD
+hong-kong,COSCO SHIPPING HK,COSCO SHIPPING International HONG KONG Co Ltd,cosco-intl-hol,BMG8114Z1014,100030,HKD
+hong-kong,ASM Pacific Technology,ASM Pacific Technology Ltd,asm-pacific,KYG0535Q1331,100031,HKD
+hong-kong,Guangshen Railway,Guangshen Railway Co Ltd,guangshen-rail,CNE100000379,100032,HKD
+hong-kong,Ajisen China Holdings,Ajisen China Holdings Ltd,ajisen-(china),KYG0192S1093,100033,HKD
+hong-kong,Fufeng Group Ltd,Fufeng Group Ltd,fufeng-group,KYG368441195,100034,HKD
+hong-kong,China Communications Services,China Communications Services Corp Ltd,chinacomservic,CNE1000002G3,100035,HKD
+hong-kong,REXLot Holdings,REXLot Holdings Ltd,rexlot-holding,BMG7541U1071,100036,HKD
+hong-kong,Shanghai Industrial Urban Develop,Shanghai Industrial Urban Development Group Ltd,sh-ind-urban,BMG8065B1037,100037,HKD
+hong-kong,Luk Fook Holdings Int,Luk Fook Holdings International Ltd,luk-fook-hold,BMG5695X1258,100039,HKD
+hong-kong,China Oil and Gas,China Oil and Gas Group Ltd,china-oil---ga,BMG2155W1010,100040,HKD
+hong-kong,Shenzhen Investment,Shenzhen Investment Ltd,shenzhen-inves,HK0604011236,100041,HKD
+hong-kong,NWS Holdings Ltd,NWS Holdings Ltd,nws-holdings,BMG668971101,100042,HKD
+hong-kong,Beijing Capital Int Airport,Beijing Capital International Airport Co Ltd,beijing-airpor,CNE100000221,100043,HKD
+hong-kong,Shougangncord Int Enterprises,Shougang Concord International Enterprises Co Ltd,shougang-intl,HK0697002241,100044,HKD
+hong-kong,Giordano Int,Giordano International Ltd,giordano-intl,BMG6901M1010,100045,HKD
+hong-kong,Singamas Container,Singamas Container Holdings Ltd,singamas-cont,HK0716002271,100046,HKD
+hong-kong,FDG Electric Vehicles,FDG Electric Vehicles Ltd,sinopolybatter,BMG3361N1258,100047,HKD
+hong-kong,Truly Int,Truly International Holdings Ltd,truly-intl,KYG910191363,100048,HKD
+hong-kong,China Power Clean Energy,China Power Clean Energy Development Co Ltd,c-p-new-energy,HK0000350550,100049,HKD
+hong-kong,Hopewell Highway Infrastructure,Hopewell Highway Infrastructure Ltd,hopewell-infr,KYG459951003,100050,HKD
+hong-kong,Asia Cement China,Asia Cement China Holdings Corp,asia-cement-ch,KYG0539C1069,100051,HKD
+hong-kong,Lee & Man Chemical,Lee & Man Chemical Co Ltd,l---m-chemical,KYG5427E1145,100052,HKD
+hong-kong,China Rare Earth,China Rare Earth Holdings Ltd,china-rareeart,KYG210891001,100053,HKD
+hong-kong,Value Partners,Value Partners Group Ltd,value-partners,KYG931751005,100054,HKD
+hong-kong,Global Bio-chem Tech,Global Bio-chem Technology Group Co Ltd,global-bio-che,KYG3919S1057,100055,HKD
+hong-kong,Tianneng Power Int,Tianneng Power International Ltd,tianneng-power,KYG8655K1094,100056,HKD
+hong-kong,Mingfa Group Int,Mingfa Group International Co Ltd,mingfa-group,KYG614131038,100057,HKD
+hong-kong,Maoye Int Holdings,Maoye International Holdings Ltd,maoye-intl,KYG5804G1047,100058,HKD
+hong-kong,MicroPort Scientific,MicroPort Scientific Corp,microport,KYG608371046,100059,HKD
+hong-kong,China Medical System,China Medical System Holdings Ltd,cms,KYG211081248,100060,HKD
+hong-kong,SJM Holdings Ltd,SJM Holdings Ltd,sjm-hld,HK0880043028,100061,HKD
+hong-kong,Tianjin Develop,Tianjin Development Holdings Ltd,tianjin-dev,HK0882007260,100062,HKD
+hong-kong,CIFI Group Co,CIFI Holdings Group Co Ltd,cifi-hold-gp,KYG2140A1076,100063,HKD
+hong-kong,Silver Base Group Holdings,Silver Base Group Holdings Ltd,silver-base,KYG816941044,100064,HKD
+hong-kong,Emperor Watch & Jewellery,Emperor Watch & Jewellery Ltd,emperor-watch-,HK0000047982,100065,HKD
+hong-kong,Trinity Ltd,Trinity Ltd,trinity,BMG906241002,100066,HKD
+hong-kong,China Vanadium Titano-Magnetite,China Vanadium Titano-Magnetite Mining Co Ltd,chinavtm-minin,KYG211321081,100067,HKD
+hong-kong,TPV Technology,TPV Technology Ltd,tpv-technology,BMG8984D1074,100068,HKD
+hong-kong,CPMC Holdings Ltd,CPMC Holdings Ltd,cofco-packagin,HK0000057171,100069,HKD
+hong-kong,Sinopec Kantons,Sinopec Kantons Holdings Ltd,sinopec-kanton,BMG8165U1009,100071,HKD
+hong-kong,CST,CST Group Ltd,cst-mining,KYG2586J1094,100072,HKD
+hong-kong,I.T. Limited,I.T. Limited,i.t,BMG4977W1038,100073,HKD
+hong-kong,KNT,KNT Holdings Ltd,wumart,KYG5042B1077,100074,HKD
+hong-kong,IRC Ltd,IRC Ltd,irc,HK0000068244,100075,HKD
+hong-kong,Future Land Development,Future Land Development Holdings Ltd,future-land,KYG3701A1067,100076,HKD
+hong-kong,G-Resources Group,G-Resources Group Ltd,g-resources,BMG4111M1029,100077,HKD
+hong-kong,Yuexiu Transport Infrastructure,Yuexiu Transport Infrastructure Ltd,yuexiutranspor,BMG9880L1028,100078,HKD
+hong-kong,China Southern Airlines,China Southern Airlines Co Ltd,china-south-ai,CNE1000002T6,100079,HKD
+hong-kong,TCL Multimedia Tech,TCL Multimedia Technology Holdings Ltd,tcl-multimedia,KYG8701T1388,100080,HKD
+hong-kong,Dongfang Electric,Dongfang Electric Corp Ltd,dongfang-elec,CNE100000304,100081,HKD
+hong-kong,Towngas China Co,Towngas China Co Ltd,towngas-china,KYG8972T1067,100082,HKD
+hong-kong,CSPC Pharma,CSPC Pharmaceutical Group Ltd,cspc-pharma,HK1093012172,100083,HKD
+hong-kong,Road King Infrastructure,Road King Infrastructure Ltd,road-king-infr,BMG760581097,100084,HKD
+hong-kong,China Huarong Energy,China Huarong Energy Co Ltd,ch-rongsheng,KYG2116D1198,100085,HKD
+hong-kong,H&H,Health and Happiness (H&H) International Holdings Ltd,biostime,KYG4387E1070,100086,HKD
+hong-kong,Tibet Water Resources,Tibet Water Resources Ltd,tibet-5100,KYG886121097,100087,HKD
+hong-kong,China Modern Dairy,China Modern Dairy Holdings Ltd,ch-modern-d,KYG215791008,100088,HKD
+hong-kong,Wynn Macau Ltd,Wynn Macau Ltd,wynn-macau,KYG981491007,100089,HKD
+hong-kong,Munsun Capital,Munsun Capital Group Ltd,c-preciousmeta,BMG633561102,100092,HKD
+hong-kong,MMG Ltd,MMG Ltd,mmg,HK1208013172,100093,HKD
+hong-kong,Lifestyle Int,Lifestyle International Holdings Ltd,lifestyle-int,KYG548561284,100094,HKD
+hong-kong,C C Land Holdings,C C Land Holdings Ltd,c-c-land,BMG1985B1138,100095,HKD
+hong-kong,Yashili Int Holdings,Yashili International Holdings Ltd,yashili-intl,KYG983401053,100096,HKD
+hong-kong,China Lilang Ltd,China Lilang Ltd,china-lilang,KYG211411098,100097,HKD
+hong-kong,Powerlong Real Estate,Powerlong Real Estate Holdings Ltd,powerlong,KYG720051047,100098,HKD
+hong-kong,Grand Baoxin Auto,Grand Baoxin Auto Group Ltd,baoxin-auto,KYG4134L1077,100099,HKD
+hong-kong,Pacific Textiles,Pacific Textiles Holdings Ltd,pacifictextile,KYG686121032,100100,HKD
+hong-kong,MIE Holdings Corp,MIE Holdings Corp,mie-holdings,KYG611571061,100101,HKD
+hong-kong,Metallurgical Corp China,Metallurgical Corporation of China Ltd,mcc,CNE100000FF3,100102,HKD
+hong-kong,Kaisa Holdings,Kaisa Group Holdings Ltd,kaisa-group,KYG521321003,100103,HKD
+hong-kong,China South City,China South City Holdings Ltd,chinasouthcity,HK0000056264,100104,HKD
+hong-kong,China ZhengTong Auto Services,China ZhengTong Auto Services Holdings Ltd,zhengtongauto,KYG215A81084,100105,HKD
+hong-kong,E -Commodities Hlds,E -Commodities Holdings Ltd,winsway,VGG2921V1067,100106,HKD
+hong-kong,Fantasia Holdings Group,Fantasia Holdings Group Co Ltd,fantasia,KYG3311L1041,100107,HKD
+hong-kong,Guotai Junan Int,Guotai Junan International Holdings Ltd,guotai-junan-i,HK0000065869,100108,HKD
+hong-kong,Zhaojin Mining Industry,Zhaojin Mining Industry Co Ltd,zhaojin-mining,CNE1000004R6,100109,HKD
+hong-kong,Dah Chong Hong,Dah Chong Hong Holdings Ltd,dch-holdings,HK1828040670,100110,HKD
 hong-kong,China Machinery Engineering,China Machinery Engineering Corp,cmec,CNE100001NP4,100111,HKD
 hong-kong,Haitian Int,Haitian International Holdings Ltd,haitian-intl,KYG4232C1087,100112,HKD
 hong-kong,CITIC Telecom Int,CITIC Telecom International Holdings Ltd,citic-telecom,HK1883037637,100113,HKD
@@ -17716,7 +17715,7 @@ japan,Sony,Sony Corp,sony-corp.,JP3435000009,44266,JPY
 japan,Aeon,"Aeon Co., Ltd.","aeon-co.,-ltd.",JP3388200002,44267,JPY
 japan,KDDI Corp.,KDDI Corp.,kddi-corp.,JP3496400007,44268,JPY
 japan,Kuraray,"Kuraray Co., Ltd.","kuraray-co.,-ltd.",JP3269600007,44269,JPY
-japan,TOTO,TOTO Ltd.,toto-ltd.,,44270,
+japan,TOTO,TOTO Ltd.,toto-ltd.,JP3596200000,44270,JPY
 japan,TDK,TDK Corp,tdk-corp.,JP3538800008,44271,JPY
 japan,"NTT Docomo, Inc.","NTT Docomo, Inc.","ntt-docomo,-inc.",JP3165650007,44273,JPY
 japan,Asahi Kasei Corp.,Asahi Kasei Corp.,asahi-kasei-corp.,JP3111200006,44274,JPY
