@@ -4,11 +4,23 @@ codecov:
 
 coverage:
   precision: 2
-  round: up
+  round: down
   range: "70...100"
-
   status:
-    project: yes
+    project:
+      default:
+        # basic
+        target: auto
+        threshold: null
+        base: auto
+        # advanced
+        branches: null
+        if_no_uploads: error
+        if_not_found: success
+        if_ci_failed: error
+        only_pulls: false
+        flags: null
+        paths: null
     patch: no
     changes: no
 
