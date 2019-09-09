@@ -661,71 +661,73 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         'desc': None
     }
 
-    for row in equities.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
-            if selected_source == 'Bolsa de Madrid':
-                url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + row.isin
+    if selected_source == 'Bolsa de Madrid':
+        isin = equities.loc[(equities['name'] == equity).idxmax(), 'isin']
 
-                company_profile['url'] = url
+        url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + isin
 
-                head = {
-                    "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "text/html",
-                    "Accept-Encoding": "gzip, deflate, br",
-                    "Connection": "keep-alive",
-                }
+        company_profile['url'] = url
 
-                req = requests.get(url, headers=head, timeout=5)
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        req = requests.get(url, headers=head, timeout=5)
 
-                root_ = fromstring(req.text)
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                path_ = root_.xpath(".//td[contains(@class, 'Perfil')]/p")
+        root_ = fromstring(req.text)
 
-                if path_:
-                    text = list()
-                    for element_ in path_:
-                        if not element_.xpath(".//a"):
-                            text.append(element_.text_content())
+        path_ = root_.xpath(".//td[contains(@class, 'Perfil')]/p")
 
-                    text = ''.join(text)
+        if path_:
+            text = list()
+            for element_ in path_:
+                if not element_.xpath(".//a"):
+                    text.append(element_.text_content())
 
-                    company_profile = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
+            text = ''.join(text)
 
-                    return company_profile
-                else:
-                    return company_profile
-            elif selected_source == 'Investing':
-                url = "https://www.investing.com/equities/" + row.tag + "-company-profile"
+            company_profile = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
 
-                company_profile['url'] = url
+            return company_profile
+        else:
+            return company_profile
+    elif selected_source == 'Investing':
+        tag = equities.loc[(equities['name'] == equity).idxmax(), 'tag']
 
-                head = {
-                    "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "text/html",
-                    "Accept-Encoding": "gzip, deflate, br",
-                    "Connection": "keep-alive",
-                }
+        url = "https://www.investing.com/equities/" + tag + "-company-profile"
 
-                req = requests.get(url, headers=head, timeout=5)
+        company_profile['url'] = url
 
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-                root_ = fromstring(req.text)
+        req = requests.get(url, headers=head, timeout=5)
 
-                path_ = root_.xpath(".//*[@id=\"profile-fullStory-showhide\"]")
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                if path_:
-                    company_profile['desc'] = str(path_[0].text_content())
+        root_ = fromstring(req.text)
 
-                    return company_profile
-                else:
-                    return company_profile
+        path_ = root_.xpath(".//*[@id=\"profile-fullStory-showhide\"]")
+
+        if path_:
+            company_profile['desc'] = str(path_[0].text_content())
+
+            return company_profile
+        else:
+            return company_profile
 
 
 """------------- FUNDS -------------"""
@@ -918,73 +920,73 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
 
     logger.info('Searching introduced fund on Investing.com')
 
-    for row in funds.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
-            logger.info(str(fund) + ' found on Investing.com')
+    tag = funds.loc[(funds['name'] == fund).idxmax(), 'tag']
 
-            url = "https://es.investing.com/funds/" + row.tag + "-historical-data"
+    logger.info(str(fund) + ' found on Investing.com')
 
-            head = {
-                "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest",
-                "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-            }
+    url = "https://es.investing.com/funds/" + tag + "-historical-data"
 
-            logger.info('Request sent to Investing.com!')
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
-            req = requests.get(url, headers=head, timeout=5)
+    logger.info('Request sent to Investing.com!')
 
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+    req = requests.get(url, headers=head, timeout=5)
 
-            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-            root_ = fromstring(req.text)
-            path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-            result = list()
+    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
-            if path_:
-                logger.info('Data parsing process starting...')
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
 
-                for elements_ in path_:
-                    info = []
-                    for nested_ in elements_.xpath(".//td"):
-                        info.append(nested_.text_content())
+    if path_:
+        logger.info('Data parsing process starting...')
 
-                    if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#0008: fund information unavailable or not found.")
+        for elements_ in path_:
+            info = []
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.text_content())
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+            if info[0] == 'No se encontraron resultados':
+                raise IndexError("ERR#0008: fund information unavailable or not found.")
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+            stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-                if order in ['ascending', 'asc']:
-                    result = result[::-1]
-                elif order in ['descending', 'desc']:
-                    result = result
+            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
-                logger.info('Data parsing process finished...')
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
 
-                if as_json is True:
-                    json_ = {'name': row.name,
-                             'recent':
-                                 [value.fund_as_json() for value in result]
-                             }
+        logger.info('Data parsing process finished...')
 
-                    return json.dumps(json_, sort_keys=False)
-                elif as_json is False:
-                    df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
-                    df.set_index('Date', inplace=True)
+        if as_json is True:
+            json_ = {'name': fund,
+                     'recent':
+                         [value.fund_as_json() for value in result]
+                     }
 
-                    return df
-            else:
-                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='ascending', debug=False):
@@ -1136,107 +1138,108 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     logger.info('Searching introduced fund on Investing.com')
 
-    for row in funds.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
-            logger.info(str(fund) + ' found on Investing.com')
+    symbol = funds.loc[(funds['name'] == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'] == fund).idxmax(), 'id']
 
-            final = list()
+    logger.info(str(fund) + ' found on Investing.com')
 
-            logger.info('Data parsing process starting...')
+    final = list()
 
-            for index in range(len(date_interval['intervals'])):
-                header = "Datos históricos " + row.symbol
+    logger.info('Data parsing process starting...')
 
-                params = {
-                    "curr_id": row.id,
-                    "smlID": str(randint(1000000, 99999999)),
-                    "header": header,
-                    "st_date": date_interval['intervals'][index]['start'],
-                    "end_date": date_interval['intervals'][index]['end'],
-                    "interval_sec": "Daily",
-                    "sort_col": "date",
-                    "sort_ord": "DESC",
-                    "action": "historical_data"
-                }
+    for index in range(len(date_interval['intervals'])):
+        header = "Datos históricos " + symbol
 
-                head = {
-                    "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "text/html",
-                    "Accept-Encoding": "gzip, deflate, br",
-                    "Connection": "keep-alive",
-                }
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": "Daily",
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
 
-                url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-                logger.info('Request sent to Investing.com!')
+        url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-                req = requests.post(url, headers=head, data=params)
+        logger.info('Request sent to Investing.com!')
 
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        req = requests.post(url, headers=head, data=params)
 
-                logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                if not req.text:
-                    continue
+        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
-                root_ = fromstring(req.text)
-                path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-                result = list()
+        if not req.text:
+            continue
 
-                if path_:
-                    for elements_ in path_:
-                        info = []
-                        for nested_ in elements_.xpath(".//td"):
-                            info.append(nested_.text_content())
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        result = list()
 
-                        if info[0] == 'No se encontraron resultados':
-                            if interval_counter < interval_limit:
-                                data_flag = False
-                            else:
-                                raise IndexError("ERR#0008: fund information unavailable or not found.")
+        if path_:
+            for elements_ in path_:
+                info = []
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.text_content())
 
-                        else:
-                            data_flag = True
-
-                        if data_flag is True:
-                            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                            stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                            stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                            stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                            stock_low = float(info[4].replace('.', '').replace(',', '.'))
-
-                            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
-
-                    if data_flag is True:
-                        if order in ['ascending', 'asc']:
-                            result = result[::-1]
-                        elif order in ['descending', 'desc']:
-                            result = result
-
-                        if as_json is True:
-                            json_ = {'name': row.name,
-                                     'historical':
-                                         [value.fund_as_json() for value in result]
-                                     }
-
-                            final.append(json_)
-                        elif as_json is False:
-                            df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
-                            df.set_index('Date', inplace=True)
-
-                            final.append(df)
+                if info[0] == 'No se encontraron resultados':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0008: fund information unavailable or not found.")
 
                 else:
-                    raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+                    data_flag = True
 
-            logger.info('Data parsing process finished...')
+                if data_flag is True:
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            if as_json is True:
-                return json.dumps(final[0], sort_keys=False)
-            elif as_json is False:
-                return pd.concat(final)
+                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
+
+                if as_json is True:
+                    json_ = {'name': fund,
+                             'historical':
+                                 [value.fund_as_json() for value in result]
+                             }
+
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
+
+                    final.append(df)
+
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    logger.info('Data parsing process finished...')
+
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
 
 
 def get_fund_information(fund, as_json=False):
@@ -1305,102 +1308,102 @@ def get_fund_information(fund, as_json=False):
     if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
 
-    for row in funds.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(fund.lower()):
-            url = "https://es.investing.com/funds/" + row.tag
+    tag = funds.loc[(funds['name'] == fund).idxmax(), 'tag']
 
-            head = {
-                "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest",
-                "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-            }
+    url = "https://es.investing.com/funds/" + tag
 
-            req = requests.get(url, headers=head, timeout=5)
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+    req = requests.get(url, headers=head, timeout=5)
 
-            root_ = fromstring(req.text)
-            path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
-            result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
-                                           'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
-                                           'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])
-            result.at[0, 'Fund Name'] = row.name
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-            if path_:
-                for elements_ in path_:
-                    title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+    result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
+                                   'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
+                                   'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])
+    result.at[0, 'Fund Name'] = fund
 
-                    if title_ == 'Rating':
-                        rating_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
-                        result.at[0, 'Rating'] = rating_score
-                    elif title_ == 'Var. en un año':
-                        oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
-                        result.at[0, '1-Year Change'] = oneyear_variation
-                    elif title_ == 'Último cierre':
-                        previous_close = float(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace('.', '').replace(',', '.'))
-                        result.at[0, 'Previous Close'] = previous_close
-                    elif title_ == 'Calificación de riesgo':
-                        risk_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
-                        result.at[0, 'Risk Rating'] = risk_score
-                    elif title_ == 'Rendimiento año móvil':
-                        ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'TTM Yield'] = ttm_percentage
-                    elif title_ == 'ROE':
-                        roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'ROE'] = roe_percentage
-                    elif title_ == 'Emisor':
-                        issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'Issuer'] = issuer_name
-                    elif title_ == 'Volumen de ventas':
-                        turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'Turnover'] = turnover_percentage
-                    elif title_ == 'ROA':
-                        roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'ROA'] = roa_percentage
-                    elif title_ == 'Fecha de inicio':
-                        value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
-                        result.at[0, 'Inception Date'] = inception_date
-                    elif title_ == 'Total activos':
-                        value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        total_assets = None
-                        if value.__contains__('K'):
-                            total_assets = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                        elif value.__contains__('M'):
-                            total_assets = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                        elif value.__contains__('B'):
-                            total_assets = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
-                        result.at[0, 'Total Assets'] = total_assets
-                    elif title_ == 'Gastos':
-                        expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'Expenses'] = expenses_percentage
-                    elif title_ == 'Inversión mínima':
-                        min_investment = int(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content())
-                        result.at[0, 'Min Investment'] = min_investment
-                    elif title_ == 'Cap. mercado':
-                        value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        market_cap = None
-                        if value.__contains__('K'):
-                            market_cap = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                        elif value.__contains__('M'):
-                            market_cap = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                        elif value.__contains__('B'):
-                            market_cap = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
-                        result.at[0, 'Market Cap'] = market_cap
-                    elif title_ == 'Categoría':
-                        category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                        result.at[0, 'Category'] = category_name
+    if path_:
+        for elements_ in path_:
+            title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
 
-                if as_json is True:
-                    json_ = fs.fund_information_as_json(result)
-                    return json_
-                elif as_json is False:
-                    return result
-            else:
-                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            if title_ == 'Rating':
+                rating_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+                result.at[0, 'Rating'] = rating_score
+            elif title_ == 'Var. en un año':
+                oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
+                result.at[0, '1-Year Change'] = oneyear_variation
+            elif title_ == 'Último cierre':
+                previous_close = float(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace('.', '').replace(',', '.'))
+                result.at[0, 'Previous Close'] = previous_close
+            elif title_ == 'Calificación de riesgo':
+                risk_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+                result.at[0, 'Risk Rating'] = risk_score
+            elif title_ == 'Rendimiento año móvil':
+                ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'TTM Yield'] = ttm_percentage
+            elif title_ == 'ROE':
+                roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'ROE'] = roe_percentage
+            elif title_ == 'Emisor':
+                issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'Issuer'] = issuer_name
+            elif title_ == 'Volumen de ventas':
+                turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'Turnover'] = turnover_percentage
+            elif title_ == 'ROA':
+                roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'ROA'] = roa_percentage
+            elif title_ == 'Fecha de inicio':
+                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
+                result.at[0, 'Inception Date'] = inception_date
+            elif title_ == 'Total activos':
+                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                total_assets = None
+                if value.__contains__('K'):
+                    total_assets = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                elif value.__contains__('M'):
+                    total_assets = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                elif value.__contains__('B'):
+                    total_assets = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                result.at[0, 'Total Assets'] = total_assets
+            elif title_ == 'Gastos':
+                expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'Expenses'] = expenses_percentage
+            elif title_ == 'Inversión mínima':
+                min_investment = int(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content())
+                result.at[0, 'Min Investment'] = min_investment
+            elif title_ == 'Cap. mercado':
+                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                market_cap = None
+                if value.__contains__('K'):
+                    market_cap = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                elif value.__contains__('M'):
+                    market_cap = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                elif value.__contains__('B'):
+                    market_cap = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                result.at[0, 'Market Cap'] = market_cap
+            elif title_ == 'Categoría':
+                category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                result.at[0, 'Category'] = category_name
+
+        if as_json is True:
+            json_ = fs.fund_information_as_json(result)
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 """------------- ETFS -------------"""
