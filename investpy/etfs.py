@@ -239,16 +239,13 @@ def etfs_as_list(country=None):
     else:
         etfs = retrieve_etfs()
 
-    if country is None:
-        if etfs is None:
-            raise IOError("ERR#0009: etf list not found or unable to retrieve.")
-        else:
+    if etfs is not None:
+        if country is None:
             return etfs['name'].tolist()
-    elif country in etf_countries_as_list():
-        if etfs is None:
-            raise IOError("ERR#0009: etf list not found or unable to retrieve.")
-        else:
+        elif country in etf_countries_as_list():
             return etfs[etfs['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    else:
+        raise IOError("ERR#0009: etf list not found or unable to retrieve.")
 
 
 def etfs_as_dict(country=None, columns=None, as_json=False):

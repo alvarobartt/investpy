@@ -158,20 +158,17 @@ def retrieve_fund_data(fund):
     }
 
     for p in path_:
-        try:
-            if p.xpath("span[not(@class)]")[0].text_content().__contains__('Issuer'):
-                result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-                continue
-            elif p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
-                result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-                continue
-            elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
-                result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-                continue
-            else:
-                continue
-        except IndexError:
-            raise IndexError("ERR#0017: isin code unavailable or not found.")
+        if p.xpath("span[not(@class)]")[0].text_content().__contains__('Issuer'):
+            result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+            continue
+        elif p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
+            result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+            continue
+        elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
+            result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+            continue
+        else:
+            continue
 
     return result
 
@@ -216,31 +213,28 @@ def fund_information_as_json(df):
         IndexError: if fund information was unavailable or not found.
     """
 
-    try:
-        json_ = {
-            'Fund Name': str(df['Fund Name'][0]),
-            'Rating': int(float(df['Rating'][0])),
-            '1-Year Change': str(df['1-Year Change'][0]),
-            'Previous Close': str(df['Previous Close'][0]),
-            'Risk Rating': int(float(df['Risk Rating'][0])),
-            'TTM Yield': str(df['TTM Yield'][0]),
-            'ROE': str(df['ROE'][0]),
-            'Issuer': str(df['Issuer'][0]),
-            'Turnover': str(df['Turnover'][0]),
-            'ROA': str(df['ROA'][0]),
-            'Inception Date': df['Inception Date'][0].strftime('%d/%m/%Y'),
-            'Total Assets': int(float(df['Total Assets'][0])),
-            'Expenses': str(df['Expenses'][0]),
-            'Min Investment': int(float(df['Min Investment'][0])),
-            'Market Cap': int(float(df['Market Cap'][0])),
-            'Category': str(df['Category'][0])
-        }
+    json_ = {
+        'Fund Name': str(df['Fund Name'][0]),
+        'Rating': int(float(df['Rating'][0])),
+        '1-Year Change': str(df['1-Year Change'][0]),
+        'Previous Close': str(df['Previous Close'][0]),
+        'Risk Rating': int(float(df['Risk Rating'][0])),
+        'TTM Yield': str(df['TTM Yield'][0]),
+        'ROE': str(df['ROE'][0]),
+        'Issuer': str(df['Issuer'][0]),
+        'Turnover': str(df['Turnover'][0]),
+        'ROA': str(df['ROA'][0]),
+        'Inception Date': df['Inception Date'][0].strftime('%d/%m/%Y'),
+        'Total Assets': int(float(df['Total Assets'][0])),
+        'Expenses': str(df['Expenses'][0]),
+        'Min Investment': int(float(df['Min Investment'][0])),
+        'Market Cap': int(float(df['Market Cap'][0])),
+        'Category': str(df['Category'][0])
+    }
 
-        result = json.dumps(json_, sort_keys=False)
+    result = json.dumps(json_, sort_keys=False)
 
-        return result
-    except IndexError:
-        return {}
+    return result
 
 
 def funds_as_df():

@@ -91,14 +91,11 @@ def retrieve_equities(test_mode=False):
                 for element_ in elements_.xpath('.//a'):
                     tag_ = element_.get('href')
 
-                    if not str(tag_).__contains__('/equities/'):
-                        continue
+                    if str(tag_).__contains__('/equities/'):
+                        tag_ = tag_.replace('/equities/', '')
 
-                    tag_ = tag_.replace('/equities/', '')
+                        full_name_ = element_.get('title').replace(' (CFD)', '')
 
-                    full_name_ = element_.get('title').replace(' (CFD)', '')
-
-                    try:
                         info = retrieve_info(tag_)
 
                         data = {
@@ -110,18 +107,8 @@ def retrieve_equities(test_mode=False):
                             'id': id_,
                             'currency': info['currency'],
                         }
-                    except:
-                        data = {
-                            'country': str(row['country']),
-                            'name': element_.text.strip(),
-                            'full_name': full_name_.rstrip(),
-                            'tag': tag_,
-                            'isin': None,
-                            'id': id_,
-                            'currency': None,
-                        }
 
-                    results.append(data)
+                        results.append(data)
 
                 if test_mode is True:
                     break
@@ -193,7 +180,7 @@ def retrieve_info(tag):
 
                 result['isin'] = code
         except IndexError:
-            raise IndexError("ERR#0017: isin code unable to retrieve.")
+            result['isin'] = None
 
     path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
                         "/span[@class='bold']")
@@ -203,7 +190,7 @@ def retrieve_info(tag):
             if element_.text_content():
                 result['currency'] = element_.text_content()
         except IndexError:
-            raise IndexError("ERR#0037: currency unable to retrieve.")
+            result['currency'] = None
 
     return result
 

@@ -17,6 +17,26 @@ def test_equity_errors():
 
     params = [
         {
+            'country': ['error']
+        },
+        {
+            'country': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_equities_list(country=param['country'])
+        except:
+            pass
+
+        try:
+            investpy.get_equities(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
             'equity': 'Euripo Properties Socimi',
             'country': 'spain',
             'as_json': False,
@@ -507,6 +527,26 @@ def test_etf_errors():
     """
     This function raises errors on etf functions
     """
+
+    params = [
+        {
+            'country': ['error']
+        },
+        {
+            'country': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etf_list(country=param['country'])
+        except:
+            pass
+
+        try:
+            investpy.get_etfs(country=param['country'])
+        except:
+            pass
 
     params = [
         {

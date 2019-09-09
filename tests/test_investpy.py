@@ -19,8 +19,10 @@ def test_investpy():
 
     print(investpy.__author__, investpy.__version__)
 
-    investpy.get_equities()
-    investpy.get_equities_list()
+    for value in ['spain', None]:
+        investpy.get_equities(country=value)
+        investpy.get_equities_list(country=value)
+
     investpy.get_equity_countries()
 
     params = [
@@ -128,6 +130,11 @@ def test_investpy():
     params = [
         {
             'country': None,
+            'columns': ['id', 'name'],
+            'as_json': True
+        },
+        {
+            'country': 'spain',
             'columns': ['id', 'name'],
             'as_json': True
         },
