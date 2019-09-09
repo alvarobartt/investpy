@@ -18,42 +18,70 @@ def test_equity_errors():
     params = [
         {
             'equity': 'Euripo Properties Socimi',
+            'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
             'equity': None,
+            'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
             'equity': 'bbva',
+            'country': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'equity': 'bbva',
+            'country': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'equity': 'bbva',
+            'country': 'greece',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'equity': 'bbva',
+            'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
             'debug': True
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'as_json': True,
             'order': 'error',
             'debug': True
         },
         {
             'equity': 'error',
+            'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': True
         },
         {
             'equity': ['error'],
+            'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': True
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': 'error'
@@ -63,6 +91,7 @@ def test_equity_errors():
     for param in params:
         try:
             investpy.get_recent_data(equity=param['equity'],
+                                     country=param['country'],
                                      as_json=param['as_json'],
                                      order=param['order'],
                                      debug=param['debug'])
@@ -72,6 +101,7 @@ def test_equity_errors():
     params = [
         {
             'equity': 'Euripo Properties Socimi',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -80,6 +110,7 @@ def test_equity_errors():
         },
         {
             'equity': None,
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -88,6 +119,34 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'equity': 'bbva',
+            'country': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'equity': 'bbva',
+            'country': 'greece',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
@@ -96,6 +155,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -104,6 +164,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': 'error',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -112,6 +173,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': 'error',
             'as_json': False,
@@ -120,6 +182,7 @@ def test_equity_errors():
         },
         {
             'equity': 'error',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -128,6 +191,7 @@ def test_equity_errors():
         },
         {
             'equity': ['error'],
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -136,6 +200,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/1999',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -144,6 +209,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/1900',
             'to_date': '01/01/1950',
             'as_json': False,
@@ -152,6 +218,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/1950',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -160,6 +227,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/01/1999',
             'as_json': False,
@@ -168,6 +236,7 @@ def test_equity_errors():
         },
         {
             'equity': 'bbva',
+            'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -179,6 +248,7 @@ def test_equity_errors():
     for param in params:
         try:
             investpy.get_historical_data(equity=param['equity'],
+                                         country=param['country'],
                                          from_date=param['from_date'],
                                          to_date=param['to_date'],
                                          as_json=param['as_json'],
@@ -190,18 +260,32 @@ def test_equity_errors():
     params = [
         {
             'equity': None,
+            'country': 'spain',
             'language': 'spanish'
         },
         {
             'equity': 'bbva',
+            'country': None,
+            'language': 'spanish'
+        },
+        {
+            'equity': 'bbva',
+            'country': 'greece',
+            'language': 'spanish'
+        },
+        {
+            'equity': 'bbva',
+            'country': 'spain',
             'language': 'error'
         },
         {
             'equity': 'error',
+            'country': 'spain',
             'language': 'spanish'
         },
         {
             'equity': ['error'],
+            'country': 'spain',
             'language': 'spanish'
         },
     ]
@@ -209,6 +293,7 @@ def test_equity_errors():
     for param in params:
         try:
             investpy.get_equity_company_profile(equity=param['equity'],
+                                                country=param['country'],
                                                 language=param['language'])
         except:
             pass

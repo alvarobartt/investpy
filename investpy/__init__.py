@@ -24,11 +24,14 @@ from investpy.Data import Data
 """------------- EQUITIES -------------"""
 
 
-def get_equities():
+def get_equities(country=None):
     """
     This function retrieves all the equities previously stored on `equities.csv` file, via
     `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
     it is created again; but if it does exists, it is loaded into a :obj:`pandas.DataFrame`.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
 
     Returns:
         :obj:`pandas.DataFrame` - equities:
@@ -46,7 +49,7 @@ def get_equities():
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
-    return ts.equities_as_df()
+    return ts.equities_as_df(country)
 
 
 def get_equity_countries():
@@ -67,11 +70,14 @@ def get_equity_countries():
     return ts.equity_countries_as_list()
 
 
-def get_equities_list():
+def get_equities_list(country=None):
     """
     This function retrieves all the equities previously stored on `equities.csv` file, via
     `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
     it is created again; but if it does exists, equity names are loaded into a :obj:`list`.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
 
     Returns:
         :obj:`list` - equities_list:
@@ -88,10 +94,10 @@ def get_equities_list():
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
-    return ts.equities_as_list()
+    return ts.equities_as_list(country)
 
 
-def get_recent_data(equity, as_json=False, order='ascending', debug=False):
+def get_recent_data(equity, country, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced `equity` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -99,6 +105,7 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the equity is.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -155,6 +162,12 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
     if not isinstance(equity, str):
         raise ValueError("ERR#0027: equity argument needs to be a str.")
 
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
@@ -174,6 +187,11 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
+    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['country'].unique().tolist()]:
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+
     equity = equity.strip()
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
@@ -189,86 +207,85 @@ def get_recent_data(equity, as_json=False, order='ascending', debug=False):
 
     logger.info('Searching introduced equity on Investing.com')
 
-    for row in equities.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
-            logger.info(str(equity) + ' found on Investing.com')
+    tag = equities.loc[(equities['name'] == equity).idxmax(), 'tag']
 
-            url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
+    logger.info(str(equity) + ' found on Investing.com')
 
-            head = {
-                "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest",
-                "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-            }
+    url = "https://es.investing.com/equities/" + tag + "-historical-data"
 
-            logger.info('Request sent to Investing.com!')
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
-            req = requests.get(url, headers=head, timeout=5)
+    logger.info('Request sent to Investing.com!')
 
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+    req = requests.get(url, headers=head, timeout=5)
 
-            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-            root_ = fromstring(req.text)
-            path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-            result = list()
+    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
-            if path_:
-                logger.info('Data parsing process starting...')
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
 
-                for elements_ in path_:
-                    info = []
-                    for nested_ in elements_.xpath(".//td"):
-                        info.append(nested_.text_content())
+    if path_:
+        logger.info('Data parsing process starting...')
 
-                    if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#0007: equity information unavailable or not found.")
+        for elements_ in path_:
+            info = []
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.text_content())
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+            if info[0] == 'No se encontraron resultados':
+                raise IndexError("ERR#0007: equity information unavailable or not found.")
 
-                    stock_volume = 0
+            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+            stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-                    if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                    elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                    elif info[5].__contains__('B'):
-                        stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+            stock_volume = 0
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
+            if info[5].__contains__('K'):
+                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+            elif info[5].__contains__('M'):
+                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+            elif info[5].__contains__('B'):
+                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
 
-                if order in ['ascending', 'asc']:
-                    result = result[::-1]
-                elif order in ['descending', 'desc']:
-                    result = result
+            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
 
-                logger.info('Data parsing process finished...')
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
 
-                if as_json is True:
-                    json_ = {'name': row.name,
-                             'full_name': row.full_name,
-                             'recent':
-                                 [value.equity_as_json() for value in result]
-                             }
+        logger.info('Data parsing process finished...')
 
-                    return json.dumps(json_, sort_keys=False)
-                elif as_json is False:
-                    df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
-                    df.set_index('Date', inplace=True)
+        if as_json is True:
+            json_ = {'name': equity,
+                     'recent':
+                         [value.equity_as_json() for value in result]
+                     }
 
-                    return df
-            else:
-                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_historical_data(equity, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_historical_data(equity, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced `equity` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -276,6 +293,7 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve historical data from.
+        country (:obj:`str`): name of the country from where the equity is.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`bool`, optional):
@@ -333,6 +351,12 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
     if not isinstance(equity, str):
         raise ValueError("ERR#0027: equity argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -402,6 +426,11 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
+    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['country'].unique().tolist()]:
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+
     equity = equity.strip()
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
@@ -417,137 +446,137 @@ def get_historical_data(equity, from_date, to_date, as_json=False, order='ascend
 
     logger.info('Searching introduced equity on Investing.com')
 
-    for row in equities.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(equity.lower()):
-            logger.info(str(equity) + ' found on Investing.com')
+    tag = equities.loc[(equities['name'] == equity).idxmax(), 'tag']
+    id_ = equities.loc[(equities['name'] == equity).idxmax(), 'id']
 
-            url = "https://es.investing.com/equities/" + row.tag + "-historical-data"
+    logger.info(str(equity) + ' found on Investing.com')
 
-            head = {
-                "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest",
-                "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-            }
+    url = "https://es.investing.com/equities/" + tag + "-historical-data"
 
-            logger.info('Request sent to Investing.com!')
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
-            req = requests.get(url, headers=head, timeout=5)
+    logger.info('Request sent to Investing.com!')
 
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+    req = requests.get(url, headers=head, timeout=5)
 
-            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-            root_ = fromstring(req.text)
-            header = root_.xpath('//h2//text()')[0]
+    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
-            final = list()
+    root_ = fromstring(req.text)
+    header = root_.xpath('//h2//text()')[0]
 
-            logger.info('Data parsing process starting...')
+    final = list()
 
-            for index in range(len(date_interval['intervals'])):
-                interval_counter += 1
+    logger.info('Data parsing process starting...')
 
-                params = {
-                    "curr_id": row.id,
-                    "smlID": str(randint(1000000, 99999999)),
-                    "header": header,
-                    "st_date": date_interval['intervals'][index]['start'],
-                    "end_date": date_interval['intervals'][index]['end'],
-                    "interval_sec": "Daily",
-                    "sort_col": "date",
-                    "sort_ord": "DESC",
-                    "action": "historical_data"
-                }
+    for index in range(len(date_interval['intervals'])):
+        interval_counter += 1
 
-                head = {
-                    "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "text/html",
-                    "Accept-Encoding": "gzip, deflate, br",
-                    "Connection": "keep-alive",
-                }
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": "Daily",
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
 
-                url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-                req = requests.post(url, headers=head, data=params)
+        url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        req = requests.post(url, headers=head, data=params)
 
-                if not req.text:
-                    continue
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                root_ = fromstring(req.text)
-                path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        if not req.text:
+            continue
 
-                result = list()
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
 
-                if path_:
-                    for elements_ in path_:
-                        info = []
-                        for nested_ in elements_.xpath(".//td"):
-                            info.append(nested_.text_content())
+        result = list()
 
-                        if info[0] == 'No se encontraron resultados':
-                            if interval_counter < interval_limit:
-                                data_flag = False
-                            else:
-                                raise IndexError("ERR#0007: equity information unavailable or not found.")
-                        else:
-                            data_flag = True
+        if path_:
+            for elements_ in path_:
+                info = []
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.text_content())
 
-                        if data_flag is True:
-                            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                            stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                            stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                            stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                            stock_low = float(info[4].replace('.', '').replace(',', '.'))
-
-                            stock_volume = 0
-
-                            if info[5].__contains__('K'):
-                                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                            elif info[5].__contains__('M'):
-                                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                            elif info[5].__contains__('B'):
-                                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
-
-                            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
-
-                    if data_flag is True:
-                        if order in ['ascending', 'asc']:
-                            result = result[::-1]
-                        elif order in ['descending', 'desc']:
-                            result = result
-
-                        if as_json is True:
-                            json_ = {'name': row.name,
-                                     'full_name': row.full_name,
-                                     'historical':
-                                         [value.equity_as_json() for value in result]
-                                     }
-                            final.append(json_)
-                        elif as_json is False:
-                            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
-                            df.set_index('Date', inplace=True)
-
-                            final.append(df)
-
+                if info[0] == 'No se encontraron resultados':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0007: equity information unavailable or not found.")
                 else:
-                    raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+                    data_flag = True
 
-            logger.info('Data parsing process finished...')
+                if data_flag is True:
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            if as_json is True:
-                return json.dumps(final[0], sort_keys=False)
-            elif as_json is False:
-                return pd.concat(final)
+                    stock_volume = 0
+
+                    if info[5].__contains__('K'):
+                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                    elif info[5].__contains__('M'):
+                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                    elif info[5].__contains__('B'):
+                        stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+
+                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
+
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
+
+                if as_json is True:
+                    json_ = {'name': equity,
+                             'historical':
+                                 [value.equity_as_json() for value in result]
+                             }
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
+
+                    final.append(df)
+
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    logger.info('Data parsing process finished...')
+
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
 
 
-def get_equity_company_profile(equity, language='english'):
+def get_equity_company_profile(equity, country='spain', language='english'):
     """
     This function retrieves the company profile from an `equity` in the specified language
     from different sources. Currently just the company profile of spanish equities in english
@@ -555,6 +584,7 @@ def get_equity_company_profile(equity, language='english'):
 
     Args:
         equity (:obj:`str`): name of the equity to retrieve its company profile from.
+        country (:obj:`str`): name of the country from where the equity is.
         language (:obj:`str`, optional): language of the company profile to be retrieved (english or spanish).
 
     Returns:
@@ -595,8 +625,17 @@ def get_equity_company_profile(equity, language='english'):
     if not isinstance(equity, str):
         raise ValueError("ERR#0027: equity argument needs to be a str.")
 
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     if language.lower() not in available_sources.keys():
         raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
+
+    if unidecode.unidecode(country.lower()) not in ['spain']:
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
     selected_source = available_sources[language.lower()]
 
@@ -609,6 +648,8 @@ def get_equity_company_profile(equity, language='english'):
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+
+    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
 
     equity = equity.strip()
 
@@ -1418,7 +1459,7 @@ def get_etf_countries():
         FileNotFoundError: raised when `etf_countries.csv` file is missing.
     """
 
-    return es.retrieve_etf_countries()
+    return es.etf_countries_as_list()
 
 
 def get_etf_list(country=None):
@@ -1555,6 +1596,9 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if not isinstance(etf, str):
         raise ValueError("ERR#0030: etf argument needs to be a str.")
 
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
@@ -1580,7 +1624,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['country'].unique().tolist()]:
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    etfs = etfs[etfs['country'] == country]
+    etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
     etf = etf.strip()
 
@@ -1597,74 +1641,74 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
     logger.info('Searching introduced etf on Investing.com')
 
-    for row in etfs.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
-            logger.info(str(etf) + 'found on Investing.com')
+    tag = etfs.loc[(etfs['name'] == etf).idxmax(), 'tag']
 
-            url = "https://es.investing.com/etfs/" + row.tag + "-historical-data"
+    logger.info(str(etf) + 'found on Investing.com')
 
-            head = {
-                "User-Agent": ua.get_random(),
-                "X-Requested-With": "XMLHttpRequest",
-                "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-            }
+    url = "https://es.investing.com/etfs/" + tag + "-historical-data"
 
-            logger.info('Request sent to Investing.com!')
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
-            req = requests.get(url, headers=head)
+    logger.info('Request sent to Investing.com!')
 
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+    req = requests.get(url, headers=head)
 
-            logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-            root_ = fromstring(req.text)
-            path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-            result = list()
+    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
-            if path_:
-                logger.info('Data parsing process starting...')
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
 
-                for elements_ in path_:
-                    info = []
-                    for nested_ in elements_.xpath(".//td"):
-                        info.append(nested_.text_content())
+    if path_:
+        logger.info('Data parsing process starting...')
 
-                    if info[0] == 'No se encontraron resultados':
-                        raise IndexError("ERR#0010: etf information unavailable or not found.")
+        for elements_ in path_:
+            info = []
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.text_content())
 
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+            if info[0] == 'No se encontraron resultados':
+                raise IndexError("ERR#0010: etf information unavailable or not found.")
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+            stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-                if order in ['ascending', 'asc']:
-                    result = result[::-1]
-                elif order in ['descending', 'desc']:
-                    result = result
+            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
 
-                logger.info('Data parsing process finished...')
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
 
-                if as_json is True:
-                    json_ = {'name': row.name,
-                             'recent':
-                                 [value.etf_as_json() for value in result]
-                             }
+        logger.info('Data parsing process finished...')
 
-                    return json.dumps(json_, sort_keys=False)
-                elif as_json is False:
-                    df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
-                    df.set_index('Date', inplace=True)
+        if as_json is True:
+            json_ = {'name': etf,
+                     'recent':
+                         [value.etf_as_json() for value in result]
+                     }
 
-                    return df
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
 
-            else:
-                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            return df
+
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending', debug=False):
@@ -1733,6 +1777,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     if not isinstance(etf, str):
         raise ValueError("ERR#0030: etf argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
@@ -1808,7 +1855,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['country'].unique().tolist()]:
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    etfs = etfs[etfs['country'] == country]
+    etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
     etf = etf.strip()
 
@@ -1825,107 +1872,108 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     logger.info('Searching introduced etf on Investing.com')
 
-    for row in etfs.itertuples():
-        if unidecode.unidecode(row.name.lower()) == unidecode.unidecode(etf.lower()):
-            logger.info(str(etf) + 'found on Investing.com')
+    symbol = etfs.loc[(etfs['name'] == etf).idxmax(), 'symbol']
+    id_ = etfs.loc[(etfs['name'] == etf).idxmax(), 'id']
 
-            final = list()
+    logger.info(str(etf) + 'found on Investing.com')
 
-            logger.info('Data parsing process starting...')
+    final = list()
 
-            for index in range(len(date_interval['intervals'])):
-                header = "Datos históricos " + row.symbol
+    logger.info('Data parsing process starting...')
 
-                params = {
-                    "curr_id": row.id,
-                    "smlID": str(randint(1000000, 99999999)),
-                    "header": header,
-                    "st_date": date_interval['intervals'][index]['start'],
-                    "end_date": date_interval['intervals'][index]['end'],
-                    "interval_sec": "Daily",
-                    "sort_col": "date",
-                    "sort_ord": "DESC",
-                    "action": "historical_data"
-                }
+    for index in range(len(date_interval['intervals'])):
+        header = "Datos históricos " + symbol
 
-                head = {
-                    "User-Agent": ua.get_random(),
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Accept": "text/html",
-                    "Accept-Encoding": "gzip, deflate, br",
-                    "Connection": "keep-alive",
-                }
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": "Daily",
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
 
-                url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-                logger.info('Request sent to Investing.com!')
+        url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-                req = requests.post(url, headers=head, data=params)
+        logger.info('Request sent to Investing.com!')
 
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        req = requests.post(url, headers=head, data=params)
 
-                logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                if not req.text:
-                    continue
+        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
-                root_ = fromstring(req.text)
-                path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-                result = list()
+        if not req.text:
+            continue
 
-                if path_:
-                    for elements_ in path_:
-                        info = []
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        result = list()
 
-                        for nested_ in elements_.xpath(".//td"):
-                            info.append(nested_.text_content())
+        if path_:
+            for elements_ in path_:
+                info = []
 
-                        if info[0] == 'No se encontraron resultados':
-                            if interval_counter < interval_limit:
-                                data_flag = False
-                            else:
-                                raise IndexError("ERR#0010: etf information unavailable or not found.")
-                        else:
-                            data_flag = True
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.text_content())
 
-                        if data_flag is True:
-                            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                            stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                            stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                            stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                            stock_low = float(info[4].replace('.', '').replace(',', '.'))
-
-                            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
-
-                    if data_flag is True:
-                        if order in ['ascending', 'asc']:
-                            result = result[::-1]
-                        elif order in ['descending', 'desc']:
-                            result = result
-
-                        if as_json is True:
-                            json_ = {'name': row.name,
-                                     'historical':
-                                         [value.etf_as_json() for value in result]
-                                     }
-
-                            final.append(json_)
-                        elif as_json is False:
-                            df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
-                            df.set_index('Date', inplace=True)
-
-                            final.append(df)
-
+                if info[0] == 'No se encontraron resultados':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0010: etf information unavailable or not found.")
                 else:
-                    raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+                    data_flag = True
 
-            logger.info('Data parsing process finished...')
+                if data_flag is True:
+                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            if as_json is True:
-                return json.dumps(final[0], sort_keys=False)
-            elif as_json is False:
-                return pd.concat(final)
+                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
+
+                if as_json is True:
+                    json_ = {'name': etf,
+                             'historical':
+                                 [value.etf_as_json() for value in result]
+                             }
+
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
+
+                    final.append(df)
+
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    logger.info('Data parsing process finished...')
+
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
 
 
 def get_etfs_overview(country, as_json=False):
@@ -1956,6 +2004,9 @@ def get_etfs_overview(country, as_json=False):
         ConnectionError: raised if GET requests does not return 200 status code.
     """
 
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
@@ -1979,10 +2030,10 @@ def get_etfs_overview(country, as_json=False):
 
     countries = markets['country'].unique().tolist()
 
-    if country not in countries:
+    if unidecode.unidecode(country.lower()) not in countries:
         raise RuntimeError('ERR#0025: specified country value not valid.')
 
-    url = "https://es.investing.com/etfs/" + country.replace(" ", "-") + "-etfs"
+    url = "https://es.investing.com/etfs/" + unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
 
     req = requests.get(url, headers=head, timeout=15)
 

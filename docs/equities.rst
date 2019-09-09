@@ -9,8 +9,6 @@ foundation of nearly every portfolio. These transactions have to conform to gove
 protect investors from fraudulent practices. Historically, they have outperformed most other investments over the long
 run. These investments can be purchased from most online stock brokers.
 
-In this case, historical data from stocks or equities is retrieved from `Investing Equities <https://es.investing.com/equities/spain>`_
-just for the Spanish Stock Market, on the current release 0.8.9.
 
 Getting Started
 ---------------
@@ -72,8 +70,8 @@ Where both date values are `str` objects as *dd/mm/yyyy* format, as it is the Sp
 
 .. tip::
 
-    If you are not familiar with spanish stocks/equities remember that you can either retrieve a listing of the ones
-    available or check the listing on `Investing Spanish Equities <https://es.investing.com/equities/spain>`_.
+    If you are not familiar with stocks/equities remember that you can either retrieve a listing of the ones
+    available or check the listing on `Investing Equities <https://es.investing.com/equities>`_.
 
 Company Profile
 ^^^^^^^^^^^^^^^
@@ -84,13 +82,19 @@ is a self-made description of the company.
 
 .. code-block:: python
 
-    investpy.get_equity_company_profile(equity='bbva', language='english')
+    investpy.get_equity_company_profile(equity='bbva', country='spain', language='english')
 
 Just the `equity` parameter is mandatory, as the default value for the `language` of the retrieved company profile is
 *english* (due to `Investing <https://es.investing.com/>`_, as it just provides company profiles on english), but the
 function also retrieves the company profile on *spanish* from
 `Bolsa de Madrid <http://www.bolsamadrid.es/esp/aspx/Portada/Portada.aspx>`_, the additional resource used along this
 package.
+
+.. warning::
+
+    This function is just available for spanish equities, since investpy was first created just for spanish equities,
+    funds and ETFs retrieval. Future coverage for world equities company profiles is intended, but currently just the
+    spanish ones are available.
 
 Samples
 -------

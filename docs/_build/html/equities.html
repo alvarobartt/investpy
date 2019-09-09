@@ -174,8 +174,6 @@ corporation. This entitles the stockholder to that proportion of the corporation
 foundation of nearly every portfolio. These transactions have to conform to government regulations which are meant to
 protect investors from fraudulent practices. Historically, they have outperformed most other investments over the long
 run. These investments can be purchased from most online stock brokers.</p>
-<p>In this case, historical data from stocks or equities is retrieved from <a class="reference external" href="https://es.investing.com/equities/spain">Investing Equities</a>
-just for the Spanish Stock Market, on the current release 0.8.9.</p>
 <div class="section" id="getting-started">
 <h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>To get started using <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> you first need to install it as described on
@@ -227,8 +225,8 @@ returned object to have based on dates, where <em>ascending</em> goes from the v
 Where both date values are <cite>str</cite> objects as <em>dd/mm/yyyy</em> format, as it is the Spanish format to specify dates.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you are not familiar with spanish stocks/equities remember that you can either retrieve a listing of the ones
-available or check the listing on <a class="reference external" href="https://es.investing.com/equities/spain">Investing Spanish Equities</a>.</p>
+<p>If you are not familiar with stocks/equities remember that you can either retrieve a listing of the ones
+available or check the listing on <a class="reference external" href="https://es.investing.com/equities">Investing Equities</a>.</p>
 </div>
 </div>
 <div class="section" id="company-profile">
@@ -236,7 +234,7 @@ available or check the listing on <a class="reference external" href="https://es
 <p>As an extra feature, via <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> you can retrieve the company profile from a
 company in order to either classify or analyse them based on the information these companies publicly provide, as it
 is a self-made description of the company.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">investpy</span><span class="o">.</span><span class="n">get_equity_company_profile</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">investpy</span><span class="o">.</span><span class="n">get_equity_company_profile</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Just the <cite>equity</cite> parameter is mandatory, as the default value for the <cite>language</cite> of the retrieved company profile is
@@ -244,6 +242,12 @@ is a self-made description of the company.</p>
 function also retrieves the company profile on <em>spanish</em> from
 <a class="reference external" href="http://www.bolsamadrid.es/esp/aspx/Portada/Portada.aspx">Bolsa de Madrid</a>, the additional resource used along this
 package.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This function is just available for spanish equities, since investpy was first created just for spanish equities,
+funds and ETFs retrieval. Future coverage for world equities company profiles is intended, but currently just the
+spanish ones are available.</p>
+</div>
 </div>
 </div>
 <div class="section" id="samples">

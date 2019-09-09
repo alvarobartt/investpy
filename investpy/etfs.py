@@ -4,6 +4,7 @@
 # See LICENSE for details.
 
 import json
+import unidecode
 
 import pandas as pd
 import pkg_resources
@@ -120,7 +121,7 @@ def retrieve_etfs(test_mode=False):
     return df
 
 
-def retrieve_etf_countries():
+def etf_countries_as_list():
     """
     This function retrieves all the available countries to retrieve etfs from, as the listed
     countries are the ones indexed on Investing.com. The purpose of this function is to list
@@ -196,8 +197,8 @@ def etfs_as_df(country=None):
 
     if country is None:
         return etfs
-    elif country in retrieve_etf_countries():
-        return etfs[etfs['country'] == country]
+    elif unidecode.unidecode(country.lower()) in etf_countries_as_list():
+        return etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
 
 def etfs_as_list(country=None):
@@ -243,11 +244,11 @@ def etfs_as_list(country=None):
             raise IOError("ERR#0009: etf list not found or unable to retrieve.")
         else:
             return etfs['name'].tolist()
-    elif country in retrieve_etf_countries():
+    elif country in etf_countries_as_list():
         if etfs is None:
             raise IOError("ERR#0009: etf list not found or unable to retrieve.")
         else:
-            return etfs[etfs['country'] == country]['name'].tolist()
+            return etfs[etfs['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
 
 
 def etfs_as_dict(country=None, columns=None, as_json=False):
@@ -316,8 +317,8 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(etfs[columns].to_dict(orient='records'))
         else:
             return etfs[columns].to_dict(orient='records')
-    elif country in retrieve_etf_countries():
+    elif country in etf_countries_as_list():
         if as_json:
-            return json.dumps(etfs[etfs['country'] == country][columns].to_dict(orient='records'))
+            return json.dumps(etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return etfs[etfs['country'] == country][columns].to_dict(orient='records')
+            return etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')

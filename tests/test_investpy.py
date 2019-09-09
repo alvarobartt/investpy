@@ -48,11 +48,13 @@ def test_investpy():
 
     for param in params:
         investpy.get_recent_data(equity='enagás',
+                                 country='spain',
                                  as_json=param['as_json'],
                                  order=param['order'],
                                  debug=param['debug'])
 
         investpy.get_historical_data(equity='enagás',
+                                     country='spain',
                                      from_date='01/01/1990',
                                      to_date='01/01/2019',
                                      as_json=param['as_json'],
@@ -61,6 +63,7 @@ def test_investpy():
 
     for value in ['spanish', 'english']:
         investpy.get_equity_company_profile(equity='enagás',
+                                            country='spain',
                                             language=value)
 
     retrieve_equities(test_mode=True)

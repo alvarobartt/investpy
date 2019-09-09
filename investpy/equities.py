@@ -3,7 +3,7 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-import time
+import unidecode
 
 import pandas as pd
 import pkg_resources
@@ -321,11 +321,14 @@ def equity_countries_as_list():
         return countries['country'].tolist()
 
 
-def equities_as_df():
+def equities_as_df(country=None):
     """
     This function retrieves all the equities previously stored on `equities.csv` file, via
     `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
     it is created again; but if it does exists, it is loaded into a :obj:`pandas.DataFrame`.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
 
     Returns:
         :obj:`pandas.DataFrame` - equities_df:
@@ -343,6 +346,9 @@ def equities_as_df():
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -352,15 +358,21 @@ def equities_as_df():
 
     if equities is None:
         raise IOError("ERR#0001: equities list not found or unable to retrieve.")
-    else:
+
+    if country is None:
         return equities
+    elif unidecode.unidecode(country.lower()) in equity_countries_as_list():
+        return equities[equities['country'] == unidecode.unidecode(country.lower())]
 
 
-def equities_as_list():
+def equities_as_list(country=None):
     """
     This function retrieves all the equities previously stored on `equities.csv` file, via
     `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
     it is created again; but if it does exists, equity names are loaded into a :obj:`list`.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
 
     Returns:
         :obj:`list` - equities_list:
@@ -377,6 +389,9 @@ def equities_as_list():
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -386,8 +401,11 @@ def equities_as_list():
 
     if equities is None:
         raise IOError("ERR#0001: equities list not found or unable to retrieve.")
-    else:
-        return equities['name'].tolist()
+
+    if country is None:
+        return equities
+    elif unidecode.unidecode(country.lower()) in equity_countries_as_list():
+        return equities[equities['country'] == unidecode.unidecode(country.lower())]
 
 
 # Aux Function to Fill Missing equities.csv Data
