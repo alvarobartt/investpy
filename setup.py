@@ -14,10 +14,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.8.9',
+    version='0.9',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.8.9.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.9.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
