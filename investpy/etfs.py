@@ -254,14 +254,14 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`json`).
+    :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
         as_json (:obj:`bool`, optional):
-            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
+            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
 
     Returns:
         :obj:`dict` or :obj:`json` - etfs_dict:
@@ -287,12 +287,6 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    if columns is None:
-        columns = ['id', 'name', 'symbol', 'tag']
-    else:
-        if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
-
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
@@ -306,8 +300,15 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     if etfs is None:
         raise IOError("ERR#0009: etf list not found or unable to retrieve.")
 
+    if columns is None:
+        columns = etfs.columns.tolist()
+    else:
+        if not isinstance(columns, list):
+            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+
     if not all(column in etfs.columns.tolist() for column in columns):
-        raise ValueError("ERR#0021: specified columns does not exist, available columns are <id, name, symbol, tag>")
+        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
+                         "<country, country_code, id, name, symbol, tag>")
 
     if country is None:
         if as_json:

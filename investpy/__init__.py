@@ -52,24 +52,6 @@ def get_equities(country=None):
     return ts.equities_as_df(country)
 
 
-def get_equity_countries():
-    """
-    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
-    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
-
-    Raises:
-        IndexError: if `equity_countries.csv` was unavailable or not found.
-    """
-
-    return ts.equity_countries_as_list()
-
-
 def get_equities_list(country=None):
     """
     This function retrieves all the equities previously stored on `equities.csv` file, via
@@ -95,6 +77,64 @@ def get_equities_list(country=None):
     """
 
     return ts.equities_as_list(country)
+
+
+def get_equities_dict(country=None, columns=None, as_json=False):
+    """
+    This function retrieves all the available equities indexed in Investing.com, already
+    stored on `equities.csv`, which if does not exists, will be created by `investpy.equities.retrieve_equities()`.
+    This function also allows the user to specify which country do they want to retrieve data from,
+    or from every listed country; the columns which the user wants to be included on the resulting
+    :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
+        columns (:obj:`list`, optional):
+            names of the columns of the equity data to retrieve <country, name, full_name, tag, isin, id, currency>
+        as_json (:obj:`bool`, optional):
+            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
+
+    Returns:
+        :obj:`dict` or :obj:`json` - equities_dict:
+            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
+            fields are filled with `None` values.
+
+            In case the information was successfully retrieved, the :obj:`dict` will look like::
+
+                {
+                    'country': country,
+                    'name': name,
+                    'full_name': full_name,
+                    'tag': tag,
+                    'isin': isin,
+                    'id': id,
+                    'currency': currency,
+                }
+
+    Raises:
+        ValueError: raised when any of the input arguments is not valid.
+        IOError: raised when `equities.csv` file is missing or empty.
+    """
+
+    return ts.equities_as_dict(country=country, columns=columns, as_json=as_json)
+
+
+def get_equity_countries():
+    """
+    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+
+    Raises:
+        IndexError: if `equity_countries.csv` was unavailable or not found.
+    """
+
+    return ts.equity_countries_as_list()
 
 
 def get_recent_data(equity, country, as_json=False, order='ascending', debug=False):
@@ -1441,31 +1481,7 @@ def get_etfs(country=None):
     return es.etfs_as_df(country=country)
 
 
-def get_etf_countries():
-    """
-    This function retrieves all the available countries to retrieve etfs from, as the listed
-    countries are the ones indexed on Investing.com. The purpose of this function is to list
-    the countries which have available etfs according to Investing.com data, so to ease the
-    etf retrieval process of a particular country.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the countries listed on Investing.com with
-            etfs available to retrieve data from.
-
-            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
-            with etfs was successfully completed, the resulting :obj:`list` will look like::
-
-                countries = ['australia', 'austria', 'belgium', 'brazil', ...]
-
-    Raises:
-        FileNotFoundError: raised when `etf_countries.csv` file is missing.
-    """
-
-    return es.etf_countries_as_list()
-
-
-def get_etf_list(country=None):
+def get_etfs_list(country=None):
     """
     This function retrieves all the available etfs indexed on Investing.com, already
     stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
@@ -1496,7 +1512,7 @@ def get_etf_list(country=None):
     return es.etfs_as_list(country=country)
 
 
-def get_etf_dict(country=None, columns=None, as_json=False):
+def get_etfs_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available etfs indexed on Investing.com, already
     stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
@@ -1533,6 +1549,30 @@ def get_etf_dict(country=None, columns=None, as_json=False):
     """
 
     return es.etfs_as_dict(country=country, columns=columns, as_json=as_json)
+
+
+def get_etf_countries():
+    """
+    This function retrieves all the available countries to retrieve etfs from, as the listed
+    countries are the ones indexed on Investing.com. The purpose of this function is to list
+    the countries which have available etfs according to Investing.com data, so to ease the
+    etf retrieval process of a particular country.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the countries listed on Investing.com with
+            etfs available to retrieve data from.
+
+            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
+            with etfs was successfully completed, the resulting :obj:`list` will look like::
+
+                countries = ['australia', 'austria', 'belgium', 'brazil', ...]
+
+    Raises:
+        FileNotFoundError: raised when `etf_countries.csv` file is missing.
+    """
+
+    return es.etf_countries_as_list()
 
 
 def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=False):

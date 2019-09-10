@@ -37,6 +37,37 @@ def test_equity_errors():
 
     params = [
         {
+            'country': None,
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': None,
+            'as_json': 'error'
+        },
+        {
+            'country': 'spain',
+            'columns': 0,
+            'as_json': True
+        },
+        {
+            'country': 'spain',
+            'columns': ['error'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etfs_dict(country=param['country'],
+                                   columns=param['columns'],
+                                   as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
             'equity': 'Euripo Properties Socimi',
             'country': 'spain',
             'as_json': False,
@@ -539,7 +570,7 @@ def test_etf_errors():
 
     for param in params:
         try:
-            investpy.get_etf_list(country=param['country'])
+            investpy.get_etfs_list(country=param['country'])
         except:
             pass
 
@@ -573,9 +604,9 @@ def test_etf_errors():
 
     for param in params:
         try:
-            investpy.get_etf_dict(country=param['country'],
-                                  columns=param['columns'],
-                                  as_json=param['as_json'])
+            investpy.get_etfs_dict(country=param['country'],
+                                   columns=param['columns'],
+                                   as_json=param['as_json'])
         except:
             pass
 

@@ -23,6 +23,39 @@ def test_investpy():
         investpy.get_equities(country=value)
         investpy.get_equities_list(country=value)
 
+    params = [
+        {
+            'country': None,
+            'columns': ['id', 'name'],
+            'as_json': True
+        },
+        {
+            'country': 'spain',
+            'columns': ['id', 'name'],
+            'as_json': True
+        },
+        {
+            'country': None,
+            'columns': ['id', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': ['id', 'name'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_equities_dict(country=param['country'],
+                                   columns=param['columns'],
+                                   as_json=param['as_json'])
+
     investpy.get_equity_countries()
 
     params = [
@@ -125,7 +158,7 @@ def test_investpy():
 
     for value in ['spain', None]:
         investpy.get_etfs(country=value)
-        investpy.get_etf_list(country=value)
+        investpy.get_etfs_list(country=value)
 
     params = [
         {
@@ -156,9 +189,9 @@ def test_investpy():
     ]
 
     for param in params:
-        investpy.get_etf_dict(country=param['country'],
-                              columns=param['columns'],
-                              as_json=param['as_json'])
+        investpy.get_etfs_dict(country=param['country'],
+                               columns=param['columns'],
+                               as_json=param['as_json'])
 
     params = [
         {
