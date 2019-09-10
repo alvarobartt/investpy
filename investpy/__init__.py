@@ -150,7 +150,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
         IndexError: if equity information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_recent_data(equity='bbva', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_recent_data(equity='bbva', country='spain', as_json=False, order='ascending', debug=False)
             date || open | high | low | close | volume
             -----||-----------------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
@@ -339,7 +339,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
         IndexError: if equity information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_historical_data(equity='bbva', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_historical_data(equity='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
             date || open | high | low | close | volume
             -----||-----------------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
@@ -604,7 +604,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         IOError: if data could not be retrieved due to file error.
 
     Examples:
-        >>> investpy.get_equity_company_profile(equity='bbva', language='english')
+        >>> investpy.get_equity_company_profile(equity='bbva', country='spain', language='english')
             company_profile = {
                 url: 'https://www.investing.com/equities/bbva-company-profile',
                 desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a ...'

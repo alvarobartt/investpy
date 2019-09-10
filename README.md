@@ -41,7 +41,7 @@ As the main functionality is based on historical data retrieval, the usage of ev
 ```python
 import investpy
 
-df = investpy.get_recent_data(equity='bbva', as_json=False, order='ascending', debug=False)
+df = investpy.get_recent_data(equity='bbva', country='spain', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -56,7 +56,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_historical_data(equity='bbva', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_historical_data(equity='bbva', country='spain', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -146,7 +146,7 @@ As Investing provides more data apart from historical data, some of that data is
 ```python
 import investpy
 
-company_profile = investpy.get_equity_company_profile(equity='bbva', language='en')
+company_profile = investpy.get_equity_company_profile(equity='bbva', country='spain', language='en')
 print(company_profile)
 
 >>> "Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a diversified financial company engaged in retail banking ..."
