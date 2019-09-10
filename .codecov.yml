@@ -10,8 +10,8 @@ coverage:
     project:
       default:
         # basic
-        target: auto
-        threshold: null
+        target: 80%
+        threshold: 10%
         base: auto
         # advanced
         branches: null

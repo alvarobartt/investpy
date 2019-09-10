@@ -175,23 +175,17 @@ def retrieve_info(tag):
                         "/div")
 
     for element_ in path_:
-        try:
-            if element_.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
+        if element_.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
                 code = element_.xpath("span[@class='elp']")[0].text_content().rstrip()
 
                 result['isin'] = code
-        except IndexError:
-            result['isin'] = None
 
     path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
                         "/span[@class='bold']")
 
     for element_ in path_:
-        try:
-            if element_.text_content():
-                result['currency'] = element_.text_content()
-        except IndexError:
-            result['currency'] = None
+        if element_.text_content():
+            result['currency'] = element_.text_content()
 
     return result
 

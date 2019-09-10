@@ -60,9 +60,9 @@ def test_equity_errors():
 
     for param in params:
         try:
-            investpy.get_etfs_dict(country=param['country'],
-                                   columns=param['columns'],
-                                   as_json=param['as_json'])
+            investpy.get_equities_dict(country=param['country'],
+                                       columns=param['columns'],
+                                       as_json=param['as_json'])
         except:
             pass
 
