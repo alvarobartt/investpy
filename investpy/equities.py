@@ -3,6 +3,8 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
+import time
+
 import unidecode
 import json
 
@@ -107,6 +109,7 @@ def retrieve_equities(test_mode=False):
                             'isin': info['isin'],
                             'id': id_,
                             'currency': info['currency'],
+                            'symbol': info['symbol']
                         }
 
                         results.append(data)
@@ -130,18 +133,19 @@ def retrieve_equities(test_mode=False):
 
 def retrieve_info(tag):
     """
-    This function retrieves both the ISIN code and the currency of an equity indexed in Investing.com, so to add
-    additional information to the `equities.csv` file. The ISIN code will later be used in order to retrieve more
-    information from the specified equity as the ISIN code is an unique identifier of every equity; and the currency
-    which will be required in order to know which currency is the value in.
+    This function retrieves both the ISIN code, the currency and the symbol of an equity indexed in Investing.com, so
+    to include additional information in `equities.csv` file. The ISIN code will later be used in order to retrieve more
+    information from the specified equity, as the ISIN code is an unique identifier of each equity; the currency
+    will be required in order to know which currency is the value in, and the symbol will be used for processing the
+    request to HistoricalDataAjax to retrieve historical data from Investing.com.
 
     Args:
         tag (:obj:`str`): is the tag of the equity to retrieve the information from as indexed by Investing.com.
 
     Returns:
         :obj:`dict` - info:
-            The resulting :obj:`dict` contains the needed information for the equities listing, so on, both the the ISIN
-             code of the introduced equity and the currency of its values.
+            The resulting :obj:`dict` contains the needed information for the equities listing, so on, the ISIN
+             code of the introduced equity, the currency of its values and the symbol of the equity.
 
     Raises:
         ConnectionError: raised if GET requests does not return 200 status code.
@@ -165,7 +169,8 @@ def retrieve_info(tag):
 
     result = {
         'isin': None,
-        'currency': None
+        'currency': None,
+        'symbol': None
     }
 
     root_ = fromstring(req.text)
@@ -176,9 +181,7 @@ def retrieve_info(tag):
 
     for element_ in path_:
         if element_.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
-                code = element_.xpath("span[@class='elp']")[0].text_content().rstrip()
-
-                result['isin'] = code
+            result['isin'] = element_.xpath("span[@class='elp']")[0].text_content().rstrip()
 
     path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
                         "/span[@class='bold']")
@@ -186,6 +189,13 @@ def retrieve_info(tag):
     for element_ in path_:
         if element_.text_content():
             result['currency'] = element_.text_content()
+
+    path_ = root_.xpath(".//div[@class='instrumentHeader']"
+                        "/h2")
+
+    for element_ in path_:
+        if element_.text_content():
+            result['symbol'] = element_.text_content().replace('Resumen ', '').strip()
 
     return result
 
@@ -464,6 +474,7 @@ def equities_as_dict(country=None, columns=None, as_json=False):
         else:
             return equities[equities['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
 
+
 # Aux Function to Fill Missing equities.csv Data
 # ----------------------------------------------
 # def fill_missing_equities():
@@ -472,14 +483,44 @@ def equities_as_dict(country=None, columns=None, as_json=False):
 #     df = df.where((pd.notnull(df)), None)
 #
 #     for index, row in df.iterrows():
-#         if not row['isin'] and not row['currency']:
-#             info = retrieve_info(row['tag'])
-#
-#             df.loc[index, 'isin'] = info['isin']
-#             df.loc[index, 'currency'] = info['currency']
+#         if row['symbol'] is None:
+#             print('Retrieving symbol of... ' + str(row['full_name']))
+#             symbol = None
+#             while symbol is None:
+#                 try:
+#                     symbol = retrieve_symbol(row['tag'])
+#                 except:
+#                     pass
+#             df.loc[index, 'symbol'] = symbol
+#             print('Symbol of ' + str(row['full_name']) + ' is ... ' + str(symbol))
 #
 #     resource_package = __name__
 #     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
 #     file = pkg_resources.resource_filename(resource_package, resource_path)
 #
 #     df.to_csv(file, index=False)
+#
+#
+# def retrieve_symbol(tag):
+#     url = "https://es.investing.com/equities/" + tag
+#
+#     head = {
+#         "User-Agent": ua.get_random(),
+#         "X-Requested-With": "XMLHttpRequest",
+#         "Accept": "text/html",
+#         "Accept-Encoding": "gzip, deflate, br",
+#         "Connection": "keep-alive",
+#     }
+#
+#     req = requests.get(url, headers=head, timeout=5)
+#
+#     if req.status_code != 200:
+#         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+#
+#     root_ = fromstring(req.text)
+#     path_ = root_.xpath(".//div[@class='instrumentHeader']"
+#                         "/h2")
+#
+#     for element_ in path_:
+#         result = element_.text_content().replace('Resumen ', '').strip()
+#         return result

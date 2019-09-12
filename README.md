@@ -12,29 +12,39 @@
 
 ## Introduction
 
-**investpy** is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/) mainly
-of spanish financial products, but it is intended to be scalable and so on, work with world financial products such as 
-equities, funds, ETFs or currencies.
 
-investpy seeks to be one of the most used Python packages when it comes to historical data extraction from financial products, so to stop depending on public/private APIs, as investpy is **free** and has **no limitations**, features that lead investpy to be one of the most strong and consistent packages of financial data retrieval.
+investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
+It provides historical data retrieval from up to **28.121 equities, 8.762 etfs and much more**. Basically, 
+it allows you to download historical data from all the indexed equities, funds and etfs in Investing.com. Therefore,
+investpy is intended to wrap up all the available data from Investing, so that it can be retrieved via Python for 
+its further usage and/or analysis.
+
+investpy seeks to be one of the most complete Python packages when it comes to historical data extraction of financial
+products in order to stop relying on public/private APIs, as investpy is **FREE** and has **NO LIMITATIONS**. These
+are some of the features that currently lead investpy to be one of the most consistent packages of financial data retrieval.
 
 ## Installation
 
-In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using pip on the terminal by typing:
+In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
+pip on the terminal by typing:
 
 ``$ pip install investpy==0.9``
 
-Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) file, which can also be installed via pip:
+Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
+file, which can also be installed via pip:
 
 ``$ pip install -r requirements.txt``
 
 ## Usage
 
-Even though some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/equities.html), some basic functionality will be sorted out with sample Python code blocks.
+Even though some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/equities.html), 
+some basic functionality will be sorted out with sample Python code blocks.
 
 ### Recent/Historical Data
 
-As the main functionality is based on historical data retrieval, the usage of every function will be explained so to ease the user the use of investpy, which is mainly intended for historical data extraction, which means that every other function is additional.
+As the main functionality is based on historical data retrieval, the usage of every function will be explained so to 
+ease the user the use of investpy, which is mainly intended for historical data extraction, which means that every 
+other function is additional.
 
 #### Equity Data Retrieval
 
@@ -53,6 +63,7 @@ Date
 2019-07-17  4.905  4.965  4.900  4.952  22410000
 2019-07-18  4.856  4.894  4.812  4.879  35820000
 ```
+
 ```python
 import investpy
 
@@ -139,7 +150,9 @@ Date
 
 ### Additional Data
 
-As Investing provides more data apart from historical data, some of that data is fetched via investpy if it is considered to be useful. So on, some additional information is retrieved for both equities and funds such as company profiles or inner basic information for equities and funds, respectively as shown below.
+As Investing provides more data besides the historical one, some of that additional data can be fetched via investpy. 
+Currently, as the package is under-development, some additional information such as company profiles or inner basic 
+information is retrieved for both equities and funds, respectively as shown below.
 
 #### Equity Company Profile Retrieval
 
@@ -182,12 +195,19 @@ print(fund_information)
 
 ## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 
-As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements, enhancements and ideas.
+As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements, 
+enhancements and ideas.
 
-Also there is an open tab of [issues](https://github.com/alvarob96/investpy/issues) where anyone can contribute opening new issues if needed or navigate through them in order to solve them or contribute to its solving.
+Also there is an open tab of [issues](https://github.com/alvarob96/investpy/issues) where anyone can contribute opening 
+new issues if needed or navigate through them in order to solve them or contribute to its solving.
 
-Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarob96/investpy) so you can provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new ideas to improve package functionality and efficiency.
+Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarob96/investpy) so you can 
+provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new 
+ideas to improve package functionality and efficiency.
 
 ## Disclaimer
 
-This Python package has been made for research purposes in order to fit the needs that Investing.com does not cover, so this package works like an Application Programming Interface (API) of Investing.com developed in an altruistic way. Conclude that this package is not related in any way with Investing.com or any dependant company, the only requirement specified by Investing in order to develop this package was "*mention the source where data is retrieved from*".
+This Python package has been made for research purposes in order to fit the needs that Investing.com does not cover, so 
+this package works like an Application Programming Interface (API) of Investing.com developed in an altruistic way. 
+Conclude that this package is not related in any way with Investing.com or any dependant company, the only requirement 
+specified by Investing in order to develop this package was "*mention the source where data is retrieved from*".

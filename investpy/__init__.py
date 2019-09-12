@@ -233,9 +233,10 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
 
     equity = equity.strip()
+    equity = equity.lower()
 
-    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(equity) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#0018: equity " + equity + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -247,11 +248,22 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
 
     logger.info('Searching introduced equity on Investing.com')
 
-    tag = equities.loc[(equities['name'] == equity).idxmax(), 'tag']
+    symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
+    id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
 
     logger.info(str(equity) + ' found on Investing.com')
 
-    url = "https://es.investing.com/equities/" + tag + "-historical-data"
+    header = "Datos históricos " + symbol
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": "Daily",
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
 
     head = {
         "User-Agent": ua.get_random(),
@@ -261,9 +273,11 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
         "Connection": "keep-alive",
     }
 
+    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
     logger.info('Request sent to Investing.com!')
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -486,36 +500,16 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
 
     logger.info('Searching introduced equity on Investing.com')
 
-    tag = equities.loc[(equities['name'] == equity).idxmax(), 'tag']
-    id_ = equities.loc[(equities['name'] == equity).idxmax(), 'id']
+    symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
+    id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
 
     logger.info(str(equity) + ' found on Investing.com')
-
-    url = "https://es.investing.com/equities/" + tag + "-historical-data"
-
-    head = {
-        "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
-    logger.info('Request sent to Investing.com!')
-
-    req = requests.get(url, headers=head, timeout=5)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
-
-    root_ = fromstring(req.text)
-    header = root_.xpath('//h2//text()')[0]
 
     final = list()
 
     logger.info('Data parsing process starting...')
+
+    header = "Datos históricos " + symbol
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
@@ -702,7 +696,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     }
 
     if selected_source == 'Bolsa de Madrid':
-        isin = equities.loc[(equities['name'] == equity).idxmax(), 'isin']
+        isin = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'isin']
 
         url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + isin
 
@@ -739,7 +733,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         else:
             return company_profile
     elif selected_source == 'Investing':
-        tag = equities.loc[(equities['name'] == equity).idxmax(), 'tag']
+        tag = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'tag']
 
         url = "https://www.investing.com/equities/" + tag + "-company-profile"
 
@@ -1670,9 +1664,10 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
     etf = etf.strip()
+    etf = etf.lower()
 
-    if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#0019: etf " + etf.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1684,11 +1679,22 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
     logger.info('Searching introduced etf on Investing.com')
 
-    tag = etfs.loc[(etfs['name'] == etf).idxmax(), 'tag']
+    symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
+    id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
 
-    logger.info(str(etf) + 'found on Investing.com')
+    logger.info(str(etf) + ' found on Investing.com')
 
-    url = "https://es.investing.com/etfs/" + tag + "-historical-data"
+    header = "Datos históricos " + symbol
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": "Daily",
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
 
     head = {
         "User-Agent": ua.get_random(),
@@ -1698,9 +1704,11 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         "Connection": "keep-alive",
     }
 
+    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
     logger.info('Request sent to Investing.com!')
 
-    req = requests.get(url, headers=head)
+    req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -1901,9 +1909,10 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
     etf = etf.strip()
+    etf = etf.lower()
 
-    if unidecode.unidecode(etf.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#0019: etf " + str(etf.lower()) + " not found in " + str(country.lower()) + ", check if it is correct.")
+    if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1915,17 +1924,19 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     logger.info('Searching introduced etf on Investing.com')
 
-    symbol = etfs.loc[(etfs['name'] == etf).idxmax(), 'symbol']
-    id_ = etfs.loc[(etfs['name'] == etf).idxmax(), 'id']
+    symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
+    id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
 
-    logger.info(str(etf) + 'found on Investing.com')
+    logger.info(str(etf) + ' found on Investing.com')
 
     final = list()
 
     logger.info('Data parsing process starting...')
 
+    header = "Datos históricos " + symbol
+
     for index in range(len(date_interval['intervals'])):
-        header = "Datos históricos " + symbol
+        interval_counter += 1
 
         params = {
             "curr_id": id_,
