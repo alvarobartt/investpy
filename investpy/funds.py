@@ -153,7 +153,7 @@ def retrieve_fund_data(tag):
         "Connection": "keep-alive",
     }
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.get(url, headers=head)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -179,8 +179,6 @@ def retrieve_fund_data(tag):
             continue
         elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
             result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-            continue
-        else:
             continue
 
     return result

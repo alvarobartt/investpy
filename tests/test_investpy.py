@@ -8,7 +8,7 @@ import pytest
 import investpy
 
 from investpy.equities import retrieve_equities, retrieve_equity_countries
-from investpy.funds import retrieve_funds
+from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
 
 
@@ -211,6 +211,7 @@ def test_investpy():
     investpy.get_funds()
 
     retrieve_funds(test_mode=True)
+    retrieve_fund_countries(test_mode=True)
 
     investpy.get_etf_countries()
 

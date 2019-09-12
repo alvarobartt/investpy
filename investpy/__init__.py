@@ -710,7 +710,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
             "Connection": "keep-alive",
         }
 
-        req = requests.get(url, headers=head, timeout=5)
+        req = requests.get(url, headers=head)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -747,7 +747,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
             "Connection": "keep-alive",
         }
 
-        req = requests.get(url, headers=head, timeout=5)
+        req = requests.get(url, headers=head)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -1431,7 +1431,7 @@ def get_fund_information(fund, country, as_json=False):
         "Connection": "keep-alive",
     }
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.get(url, headers=head)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -2195,7 +2195,7 @@ def get_etfs_overview(country, as_json=False):
 
     url = "https://es.investing.com/etfs/" + unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.get(url, headers=head)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")

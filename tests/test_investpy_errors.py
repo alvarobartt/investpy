@@ -7,6 +7,9 @@ import pytest
 
 import investpy
 
+from investpy.equities import retrieve_equities, retrieve_equity_countries
+from investpy.funds import retrieve_funds, retrieve_fund_countries
+from investpy.etfs import retrieve_etfs
 from investpy.user_agent import get_random, clear_file, delete_file
 
 
@@ -14,6 +17,9 @@ def test_equity_errors():
     """
     This function raises errors on equity functions
     """
+
+    retrieve_equities(test_mode=None)
+    retrieve_equity_countries(test_mode=None)
 
     params = [
         {
@@ -26,18 +32,18 @@ def test_equity_errors():
 
     for param in params:
         try:
-            investpy.get_equities_list(country=param['country'])
+            investpy.get_equities(country=param['country'])
         except:
             pass
 
         try:
-            investpy.get_equities(country=param['country'])
+            investpy.get_equities_list(country=param['country'])
         except:
             pass
 
     params = [
         {
-            'country': None,
+            'country': ['error'],
             'columns': None,
             'as_json': False
         },
@@ -355,16 +361,44 @@ def test_fund_errors():
     This function raises errors on fund functions
     """
 
+    retrieve_funds(test_mode=None)
+    retrieve_fund_countries(test_mode=None)
+
     params = [
         {
+            'country': ['error'],
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_funds(country=param['country'])
+        except:
+            pass
+
+        try:
+            investpy.get_funds_list(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': ['error'],
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'country': None,
             'columns': None,
             'as_json': 'error'
         },
         {
+            'country': None,
             'columns': 0,
             'as_json': True
         },
         {
+            'country': None,
             'columns': ['error'],
             'as_json': False
         },
@@ -372,7 +406,8 @@ def test_fund_errors():
 
     for param in params:
         try:
-            investpy.get_funds_dict(columns=param['columns'],
+            investpy.get_funds_dict(country=param['country'],
+                                    columns=param['columns'],
                                     as_json=param['as_json'])
         except:
             pass
@@ -676,6 +711,8 @@ def test_etf_errors():
     This function raises errors on etf functions
     """
 
+    retrieve_etfs(test_mode=None)
+
     params = [
         {
             'country': ['error']
@@ -687,18 +724,18 @@ def test_etf_errors():
 
     for param in params:
         try:
-            investpy.get_etfs_list(country=param['country'])
+            investpy.get_etfs(country=param['country'])
         except:
             pass
 
         try:
-            investpy.get_etfs(country=param['country'])
+            investpy.get_etfs_list(country=param['country'])
         except:
             pass
 
     params = [
         {
-            'country': None,
+            'country': ['error'],
             'columns': None,
             'as_json': False
         },

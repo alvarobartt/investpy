@@ -73,7 +73,7 @@ def retrieve_etfs(test_mode=False):
 
         url = "https://es.investing.com/etfs/" + row['country'].replace(" ", "-") + "-etfs"
 
-        req = requests.get(url, headers=head, timeout=15)
+        req = requests.get(url, headers=head)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")

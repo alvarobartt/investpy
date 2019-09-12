@@ -166,7 +166,7 @@ def retrieve_info(tag):
         "Connection": "keep-alive",
     }
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.get(url, headers=head)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -520,7 +520,7 @@ def equities_as_dict(country=None, columns=None, as_json=False):
 #         "Connection": "keep-alive",
 #     }
 #
-#     req = requests.get(url, headers=head, timeout=5)
+#     req = requests.get(url, headers=head)
 #
 #     if req.status_code != 200:
 #         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
