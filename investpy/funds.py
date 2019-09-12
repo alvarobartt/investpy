@@ -67,7 +67,7 @@ def retrieve_funds(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        url = 'https://es.investing.com/funds/' + country + '-funds?&issuer_filter=0'
+        url = 'https://es.investing.com/funds/' + country.replace(' ', '-') + '-funds?&issuer_filter=0'
 
         req = requests.get(url, headers=head)
 
