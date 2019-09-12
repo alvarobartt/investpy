@@ -170,13 +170,16 @@
 <span id="investpy-equities"></span><h1><a class="reference internal" href="#module-investpy.equities" title="investpy.equities"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.equities</span></code></a><a class="headerlink" href="#module-investpy.equities" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
 <dt id="investpy.equities.equities_as_df">
-<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_df</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_df" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_df</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the equities previously stored on <cite>equities.csv</cite> file, via
 <cite>investpy.equities.retrieve_equities()</cite>. The CSV file is read and if it does not exists,
 it is created again; but if it does exists, it is loaded into a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains the <cite>equities.csv</cite> file content if
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available equities from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains the <cite>equities.csv</cite> file content if
 it was properly read or retrieved in case it did not exist in the moment when the
 function was first called.</p>
 <p>So on, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
@@ -187,24 +190,72 @@ function was first called.</p>
 </div>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - equities_df</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - equities_df</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>IOError</strong> – raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.</p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>IOError</strong> – raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.equities.equities_as_dict">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available equities indexed in Investing.com, already
+stored on <cite>equities.csv</cite>, which if does not exists, will be created by <cite>investpy.equities.retrieve_equities()</cite>.
+This function also allows the user to specify which country do they want to retrieve data from,
+or from every listed country; the columns which the user wants to be included on the resulting
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>; and the output of the function will either be a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available equities from.</p></li>
+<li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – names of the columns of the equity data to retrieve &lt;country, name, full_name, tag, isin, id, currency&gt;</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – value to determine the format of the output data which can either be a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the retrieved data if found, if not, the corresponding
+fields are filled with <cite>None</cite> values.</p>
+<p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+    <span class="s1">&#39;full_name&#39;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
+    <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
+    <span class="s1">&#39;isin&#39;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
+    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
+    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> - equities_dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised when any of the input arguments is not valid.</p></li>
+<li><p><strong>IOError</strong> – raised when <cite>equities.csv</cite> file is missing or empty.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.equities.equities_as_list">
-<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equities_as_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equities_as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the equities previously stored on <cite>equities.csv</cite> file, via
 <cite>investpy.equities.retrieve_equities()</cite>. The CSV file is read and if it does not exists,
 it is created again; but if it does exists, equity names are loaded into a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains the <cite>equities.csv</cite> file content if
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available equities from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains the <cite>equities.csv</cite> file content if
 it was properly read or retrieved in case it did not exist in the moment when the
 function was first called, as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> containing all the equity names.</p>
 <p>So on the listing will contain the equity names listed on Investing.com and will
@@ -214,11 +265,31 @@ look like the following:</p>
 </div>
 </p>
 </dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - equities_list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>IOError</strong> – raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.equities.equity_countries_as_list">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">equity_countries_as_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.equity_countries_as_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+from, via reading the <cite>equity_countries.csv</cite> file from the resources directory. So on, this function will display a
+listing containing a set of countries, in order to let the user know which countries are taken into account and also
+the return listing from this function can be used for country param check if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains all the available countries with equities as indexed in Investing.com</p>
+</dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - equities_list</p>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - countries</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>IOError</strong> – raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.</p>
+<dd class="field-odd"><p><strong>IndexError</strong> – if <cite>equity_countries.csv</cite> was unavailable or not found.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -264,26 +335,58 @@ empty <code class="xref py py-obj docutils literal notranslate"><span class="pre
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.equities.retrieve_isin_code">
-<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_isin_code</code><span class="sig-paren">(</span><em class="sig-param">info</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_isin_code" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves the ISIN code from an equity which will lead to
-the later company profile extraction as the ISIN code is the identifier
-used by “Bolsa de Madrid”, so to retrieve the company profile. The ISIN
-code will be added to the <cite>equities.csv</cite> file, as additional information.</p>
+<dt id="investpy.equities.retrieve_equity_countries">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_equity_countries</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_equity_countries" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+from, via Web Scraping <a class="reference external" href="https://www.investing.com/equities/">https://www.investing.com/equities/</a> where the available countries are listed, and from their
+names the specific equity website of every country is retrieved in order to get the ID which will later be used
+when retrieving all the information from the available equities in every country.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>info</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – is the tag of the equity to retrieve the ISIN code from as indexed by Investing.com.</p>
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> contains the ISIN code of the introduced equity.</p>
+<dd class="field-even"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the available countries with their corresponding ID,
+which will be used later by investpy.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> - isin_code</p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - equity_countries</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
-<li><p><strong>IndexError</strong> – if isin code was unavailable or not found.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if connection to Investing.com could not be established.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if no countries were retrieved from Investing.com equity listing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.equities.retrieve_info">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_info</code><span class="sig-paren">(</span><em class="sig-param">tag</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves both the ISIN code and the currency of an equity indexed in Investing.com, so to add
+additional information to the <cite>equities.csv</cite> file. The ISIN code will later be used in order to retrieve more
+information from the specified equity as the ISIN code is an unique identifier of every equity; and the currency
+which will be required in order to know which currency is the value in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – is the tag of the equity to retrieve the information from as indexed by Investing.com.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the needed information for the equities listing, so on, both the the ISIN</dt><dd><p>code of the introduced equity and the currency of its values.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> - info</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – raised if either the isin code or the currency were unable to retrieve.</p></li>
 </ul>
 </dd>
 </dl>

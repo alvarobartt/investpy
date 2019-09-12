@@ -26,7 +26,7 @@ def retrieve_etfs(test_mode=False):
 
     Args:
         test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
             coverage.
 
     Returns:
@@ -46,6 +46,9 @@ def retrieve_etfs(test_mode=False):
         FileNotFoundError: raised when `etf_countries.csv` file is missing.
         ConnectionError: if GET requests does not return 200 status code.
     """
+
+    if not isinstance(test_mode, bool):
+        raise ValueError('ERR#0041: test_mode can just be either True or False')
 
     head = {
         "User-Agent": ua.get_random(),

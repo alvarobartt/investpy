@@ -49,7 +49,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing, investing-api, spanish-stock-market, scraper, historical-data, financial-data, finance',
+    keywords='investing, investing-api, stock-market, scraper, historical-data, financial-data, finance',
     python_requires='>=3',
     project_urls={
         'Bug Reports': 'https://github.com/alvarob96/investpy/issues',

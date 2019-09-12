@@ -28,7 +28,7 @@ def retrieve_equities(test_mode=False):
 
     Args:
         test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
             coverage.
 
     Returns:
@@ -45,16 +45,20 @@ def retrieve_equities(test_mode=False):
 
     Raises:
         ValueError: if any of the introduced arguments is not valid.
+        FileNotFoundError: raised if `equity_countries.csv` file does not exists or is empty.
         ConnectionError: if GET requests does not return 200 status code.
         IndexError: if equities information was unavailable or not found.
     """
+
+    if not isinstance(test_mode, bool):
+        raise ValueError('ERR#0041: test_mode can just be either True or False')
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0038: equity_countries file not found")
+        raise FileNotFoundError("ERR#0038: equity_countries.csv file not found")
 
     results = list()
 
@@ -209,7 +213,7 @@ def retrieve_equity_countries(test_mode=False):
 
     Args:
         test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
             coverage.
 
     Returns:
@@ -218,9 +222,13 @@ def retrieve_equity_countries(test_mode=False):
             which will be used later by investpy.
 
     Raises:
+        ValueError: raised if any of the introduced arguments is not valid.
         ConnectionError: raised if connection to Investing.com could not be established.
         RuntimeError: raised if no countries were retrieved from Investing.com equity listing.
     """
+
+    if not isinstance(test_mode, bool):
+        raise ValueError('ERR#0041: test_mode can just be either True or False')
 
     headers = {
         "User-Agent": ua.get_random(),

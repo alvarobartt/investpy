@@ -820,7 +820,7 @@ def get_funds_list():
     return fs.funds_as_list()
 
 
-def get_funds_dict(columns, as_json):
+def get_funds_dict(columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and
     returns them as a :obj:`dict` containing the `asset_class`, `id`, `issuer`,
@@ -856,6 +856,24 @@ def get_funds_dict(columns, as_json):
     """
 
     return fs.funds_as_dict(columns=columns, as_json=as_json)
+
+
+def get_fund_countries():
+    """
+    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
+
+    Raises:
+        IndexError: if `fund_countries.csv` was unavailable or not found.
+    """
+
+    return fs.fund_countries_as_list()
 
 
 def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):

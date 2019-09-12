@@ -4,6 +4,7 @@
 # See LICENSE for details.
 
 import json
+import time
 
 import pandas as pd
 import pkg_resources
@@ -23,7 +24,7 @@ def retrieve_funds(test_mode=False):
 
     Args:
         test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
             coverage.
 
     Returns:
@@ -44,52 +45,64 @@ def retrieve_funds(test_mode=False):
         IndexError: if fund information was unavailable or not found.
     """
 
-    head = {
-        "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
+    if not isinstance(test_mode, bool):
+        raise ValueError('ERR#0041: test_mode can just be either True or False')
 
-    url = "https://es.investing.com/funds/spain-funds?&issuer_filter=0"
-
-    req = requests.get(url, headers=head)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='etfs']"
-                        "/tbody"
-                        "/tr")
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0042: fund_countries.csv file not found")
 
     results = list()
 
-    if path_:
-        for elements_ in path_:
-            id_ = elements_.get('id').replace('pair_', '')
-            symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+    for country in countries['country'].tolist():
+        head = {
+            "User-Agent": ua.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-            nested = elements_.xpath(".//a")[0].get('title').rstrip()
-            info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
+        url = 'https://es.investing.com/funds/' + country + '-funds?&issuer_filter=0'
 
-            data = retrieve_fund_data(info)
+        req = requests.get(url, headers=head)
 
-            obj = {
-                "name": nested.strip(),
-                "symbol": symbol,
-                "tag": info,
-                "id": id_,
-                "issuer": data['issuer'].strip(),
-                "isin": data['isin'],
-                "asset class": data['asset class'].lower(),
-            }
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-            results.append(obj)
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='etfs']"
+                            "/tbody"
+                            "/tr")
 
-            if test_mode is True:
-                break
+        if path_:
+            for elements_ in path_:
+                id_ = elements_.get('id').replace('pair_', '')
+                symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+
+                nested = elements_.xpath(".//a")[0].get('title').rstrip()
+                info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
+
+                data = retrieve_fund_data(info)
+
+                obj = {
+                    "country": country,
+                    "name": nested.strip(),
+                    "symbol": symbol,
+                    "tag": info,
+                    "id": id_,
+                    "issuer": data['issuer'].strip() if data['issuer'] is not None else data['issuer'],
+                    "isin": data['isin'],
+                    "asset class": data['asset class'].lower() if data['asset class'] is not None else data['asset class'],
+                }
+
+                results.append(obj)
+
+                if test_mode is True:
+                    break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
@@ -103,14 +116,13 @@ def retrieve_funds(test_mode=False):
     return df
 
 
-def retrieve_fund_data(fund):
+def retrieve_fund_data(tag):
     """
-    This function retrieves additional information from a `fund` as listed on
-    es.Investing.com. Every fund data is retrieved and stored in a CSV in order
-    to get all the possible information from a fund.
+    This function retrieves additional information from a fund as listed in Investing.com. Every fund data is retrieved
+    and stored in a CSV in order to get all the possible information from a fund.
 
     Args:
-        fund (:obj:`str`): is the identifying tag of the specified fund.
+        tag (:obj:`str`): is the identifying tag of the specified fund.
 
     Returns:
         :obj:`dict` - fund_data:
@@ -130,7 +142,7 @@ def retrieve_fund_data(fund):
         IndexError: if fund information was unavailable or not found.
     """
 
-    url = "https://www.investing.com/funds/" + fund
+    url = "https://www.investing.com/funds/" + tag
 
     head = {
         "User-Agent": ua.get_random(),
@@ -171,6 +183,98 @@ def retrieve_fund_data(fund):
             continue
 
     return result
+
+
+def retrieve_fund_countries(test_mode=False):
+    """
+    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+    from, via Web Scraping https://www.investing.com/funds/ where the available countries are listed and retrieved.
+
+    Args:
+        test_mode (:obj:`bool`):
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
+            coverage.
+
+    Returns:
+        :obj:`pandas.DataFrame` - fund_countries:
+            The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding ID,
+            which will be used later by investpy.
+
+    Raises:
+        ConnectionError: raised if connection to Investing.com could not be established.
+        RuntimeError: raised if no countries were retrieved from Investing.com fund listing.
+    """
+
+    if not isinstance(test_mode, bool):
+        raise ValueError('ERR#0041: test_mode can just be either True or False')
+
+    headers = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/funds/'
+
+    req = requests.get(url, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root = fromstring(req.text)
+    path = root.xpath("//div[@id='country_select']/select/option")
+
+    countries = list()
+
+    for element in path:
+        if element.get('value') != '/funds/world-funds':
+            obj = {
+                'country': element.get('value').replace('/funds/', '').replace('-funds', '').strip(),
+                'id': int(element.get('country_id')),
+            }
+
+            countries.append(obj)
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
+    df = pd.DataFrame(countries)
+
+    if test_mode is False:
+        df.to_csv(file, index=False)
+
+    return df
+
+
+def fund_countries_as_list():
+    """
+    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
+
+    Raises:
+        IndexError: if `fund_countries.csv` was unavailable or not found.
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        countries = retrieve_fund_countries(test_mode=False)
+
+    if countries is None:
+        raise IOError("ERR#0040: fund countries list not found or unable to retrieve.")
+    else:
+        return countries['country'].tolist()
 
 
 def fund_information_as_json(df):
@@ -312,9 +416,8 @@ def funds_as_list():
 
 def funds_as_dict(columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and
-    returns them as a :obj:`dict` containing the `asset_class`, `id`, `issuer`,
-    `name`, `symbol` and `tag`. All the available funds can be found at:
+    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
+    `asset_class`, `id`, `issuer`, `name`, `symbol` and `tag`. All the available funds can be found at:
     https://es.investing.com/etfs/spain-etfs
 
     Args:
