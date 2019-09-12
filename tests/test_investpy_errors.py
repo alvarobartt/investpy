@@ -18,8 +18,15 @@ def test_equity_errors():
     This function raises errors on equity functions
     """
 
-    retrieve_equities(test_mode=None)
-    retrieve_equity_countries(test_mode=None)
+    try:
+        retrieve_equities(test_mode=None)
+    except:
+        pass
+
+    try:
+        retrieve_equity_countries(test_mode=None)
+    except:
+        pass
 
     params = [
         {
@@ -361,8 +368,15 @@ def test_fund_errors():
     This function raises errors on fund functions
     """
 
-    retrieve_funds(test_mode=None)
-    retrieve_fund_countries(test_mode=None)
+    try:
+        retrieve_funds(test_mode=None)
+    except:
+        pass
+
+    try:
+        retrieve_fund_countries(test_mode=None)
+    except:
+        pass
 
     params = [
         {
@@ -711,7 +725,10 @@ def test_etf_errors():
     This function raises errors on etf functions
     """
 
-    retrieve_etfs(test_mode=None)
+    try:
+        retrieve_etfs(test_mode=None)
+    except:
+        pass
 
     params = [
         {
