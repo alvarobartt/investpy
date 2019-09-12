@@ -1309,7 +1309,7 @@ def get_fund_information(fund, as_json=False):
             optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
-        :obj:`dict` - fund_information:
+        :obj:`dict`- fund_information:
             The resulting :obj:`dict` contains the information fields retrieved from Investing.com from the
             specified funds; it can also be returned as a :obj:`json`, if argument `as_json=True`.
 
@@ -1390,67 +1390,98 @@ def get_fund_information(fund, as_json=False):
 
             if title_ == 'Rating':
                 rating_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
-                result.at[0, 'Rating'] = rating_score
+
+                result.at[0, 'Rating'] = int(rating_score)
             elif title_ == 'Var. en un año':
                 oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
+
                 result.at[0, '1-Year Change'] = oneyear_variation
             elif title_ == 'Último cierre':
-                previous_close = float(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace('.', '').replace(',', '.'))
+                previous_close = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'Previous Close'] = previous_close
+
+                if previous_close != 'N/A':
+                    result.at[0, 'Previous Close'] = float(previous_close.replace('.', '').replace(',', '.'))
             elif title_ == 'Calificación de riesgo':
                 risk_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
-                result.at[0, 'Risk Rating'] = risk_score
+
+                result.at[0, 'Risk Rating'] = int(risk_score)
             elif title_ == 'Rendimiento año móvil':
                 ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'TTM Yield'] = ttm_percentage
             elif title_ == 'ROE':
                 roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'ROE'] = roe_percentage
             elif title_ == 'Emisor':
                 issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                result.at[0, 'Issuer'] = issuer_name
+
+                result.at[0, 'Issuer'] = issuer_name.strip()
             elif title_ == 'Volumen de ventas':
                 turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'Turnover'] = turnover_percentage
             elif title_ == 'ROA':
                 roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'ROA'] = roa_percentage
             elif title_ == 'Fecha de inicio':
                 value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
                 inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
-                result.at[0, 'Inception Date'] = inception_date
+
+                result.at[0, 'Inception Date'] = inception_date.strftime('%d/%m/%Y')
             elif title_ == 'Total activos':
-                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                total_assets = None
-                if value.__contains__('K'):
-                    total_assets = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                elif value.__contains__('M'):
-                    total_assets = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                elif value.__contains__('B'):
-                    total_assets = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                total_assets = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                if total_assets != 'N/A':
+                    if total_assets.__contains__('K'):
+                        total_assets = int(float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                    elif total_assets.__contains__('M'):
+                        total_assets = int(float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                    elif total_assets.__contains__('B'):
+                        total_assets = int(float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                    else:
+                        total_assets = int(float(total_assets.replace('.', '')))
+
                 result.at[0, 'Total Assets'] = total_assets
             elif title_ == 'Gastos':
                 expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'Expenses'] = expenses_percentage
             elif title_ == 'Inversión mínima':
-                min_investment = int(elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content())
+                min_investment = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'Min Investment'] = min_investment
+
+                if min_investment != 'N/A':
+                    result.at[0, 'Min Investment'] = int(float(min_investment.replace('.', '')))
             elif title_ == 'Cap. mercado':
-                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                market_cap = None
-                if value.__contains__('K'):
-                    market_cap = int(float(value.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                elif value.__contains__('M'):
-                    market_cap = int(float(value.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                elif value.__contains__('B'):
-                    market_cap = int(float(value.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                market_cap = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                if market_cap != 'N/A':
+                    if market_cap.__contains__('K'):
+                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                    elif market_cap.__contains__('M'):
+                        market_cap = int(float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                    elif market_cap.__contains__('B'):
+                        market_cap = int(float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                    else:
+                        market_cap = int(float(market_cap.replace('.', '')))
+
                 result.at[0, 'Market Cap'] = market_cap
             elif title_ == 'Categoría':
                 category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
                 result.at[0, 'Category'] = category_name
 
+        result.replace({'N/A': None}, inplace=True)
+
         if as_json is True:
-            json_ = fs.fund_information_as_json(result)
+            json_ = result.iloc[0].to_json()
+            json_ = json.dumps(json_, sort_keys=False)
+
             return json_
         elif as_json is False:
             return result
