@@ -227,7 +227,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['country'].unique().tolist()]:
+    if unidecode.unidecode(country.lower()) not in get_equity_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
     equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
@@ -480,7 +480,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['country'].unique().tolist()]:
+    if unidecode.unidecode(country.lower()) not in get_equity_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
     equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
@@ -767,11 +767,14 @@ def get_equity_company_profile(equity, country='spain', language='english'):
 """------------- FUNDS -------------"""
 
 
-def get_funds():
+def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
 
     Returns:
         :obj:`pandas.DataFrame` - funds_df:
@@ -792,13 +795,16 @@ def get_funds():
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
-    return fs.funds_as_df()
+    return fs.funds_as_df(country=country)
 
 
-def get_funds_list():
+def get_funds_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
 
     Returns:
         :obj:`list` - funds_list:
@@ -817,10 +823,10 @@ def get_funds_list():
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
-    return fs.funds_as_list()
+    return fs.funds_as_list(country=country)
 
 
-def get_funds_dict(columns=None, as_json=False):
+def get_funds_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and
     returns them as a :obj:`dict` containing the `asset_class`, `id`, `issuer`,
@@ -828,6 +834,7 @@ def get_funds_dict(columns=None, as_json=False):
     https://es.investing.com/etfs/spain-etfs
 
     Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
         columns (:obj:`list` of :obj:`str`, optional): description
             a `list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`bool`, optional): description
@@ -855,7 +862,7 @@ def get_funds_dict(columns=None, as_json=False):
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
-    return fs.funds_as_dict(columns=columns, as_json=as_json)
+    return fs.funds_as_dict(country=country, columns=columns, as_json=as_json)
 
 
 def get_fund_countries():
@@ -876,7 +883,7 @@ def get_fund_countries():
     return fs.fund_countries_as_list()
 
 
-def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
+def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced `fund` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -884,6 +891,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the introduced fund is.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -926,7 +934,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -937,6 +945,12 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
 
     if not isinstance(fund, str):
         raise ValueError("ERR#0028: fund argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -957,10 +971,16 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    fund = fund.strip()
+    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
+    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+
+    fund = fund.strip()
+    fund = fund.lower()
+
+    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -972,11 +992,22 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
 
     logger.info('Searching introduced fund on Investing.com')
 
-    tag = funds.loc[(funds['name'] == fund).idxmax(), 'tag']
+    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
 
     logger.info(str(fund) + ' found on Investing.com')
 
-    url = "https://es.investing.com/funds/" + tag + "-historical-data"
+    header = "Datos históricos " + symbol
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": "Daily",
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
 
     head = {
         "User-Agent": ua.get_random(),
@@ -986,9 +1017,11 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
         "Connection": "keep-alive",
     }
 
+    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
     logger.info('Request sent to Investing.com!')
 
-    req = requests.get(url, headers=head, timeout=5)
+    req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -1041,7 +1074,7 @@ def get_fund_recent_data(fund, as_json=False, order='ascending', debug=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced `fund` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -1049,6 +1082,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the introduced fund is.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`bool`, optional):
@@ -1094,7 +1128,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
             date || open | high | low | close
             -----||---------------------------
             xxxx || xxxx | xxxx | xxx | xxxxx
@@ -1106,6 +1140,12 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     if not isinstance(fund, str):
         raise ValueError("ERR#0028: fund argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -1175,10 +1215,16 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    fund = fund.strip()
+    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
+    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+
+    fund = fund.strip()
+    fund = fund.lower()
+
+    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1190,8 +1236,8 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     logger.info('Searching introduced fund on Investing.com')
 
-    symbol = funds.loc[(funds['name'] == fund).idxmax(), 'symbol']
-    id_ = funds.loc[(funds['name'] == fund).idxmax(), 'id']
+    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
 
     logger.info(str(fund) + ' found on Investing.com')
 
@@ -1199,9 +1245,9 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
 
     logger.info('Data parsing process starting...')
 
-    for index in range(len(date_interval['intervals'])):
-        header = "Datos históricos " + symbol
+    header = "Datos históricos " + symbol
 
+    for index in range(len(date_interval['intervals'])):
         params = {
             "curr_id": id_,
             "smlID": str(randint(1000000, 99999999)),
@@ -1294,7 +1340,7 @@ def get_fund_historical_data(fund, from_date, to_date, as_json=False, order='asc
         return pd.concat(final)
 
 
-def get_fund_information(fund, as_json=False):
+def get_fund_information(fund, country, as_json=False):
     """
     This function retrieves basic financial information from the specified fund.
     As the information is also provided by Investing.com, the tags and names remain the same so
@@ -1305,6 +1351,7 @@ def get_fund_information(fund, as_json=False):
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve the financial information from.
+        country (:obj:`str`): name of the country from where the introduced fund is.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
@@ -1342,6 +1389,12 @@ def get_fund_information(fund, as_json=False):
     if not isinstance(fund, str):
         raise ValueError("ERR#0028: fund argument needs to be a str.")
 
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
@@ -1355,12 +1408,18 @@ def get_fund_information(fund, as_json=False):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
+    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+
     fund = fund.strip()
+    fund = fund.lower()
 
-    if unidecode.unidecode(fund.lower()) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#0019: fund " + fund.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    tag = funds.loc[(funds['name'] == fund).idxmax(), 'tag']
+    tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
 
     url = "https://es.investing.com/funds/" + tag
 
@@ -1707,7 +1766,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['country'].unique().tolist()]:
+    if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
     etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
@@ -1952,7 +2011,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in [unidecode.unidecode(value.lower()) for value in etfs['country'].unique().tolist()]:
+    if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
     etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
@@ -2131,14 +2190,12 @@ def get_etfs_overview(country, as_json=False):
     else:
         raise FileNotFoundError("ERR#0024: etf_countries file not found")
 
-    countries = markets['country'].unique().tolist()
-
-    if unidecode.unidecode(country.lower()) not in countries:
+    if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
 
     url = "https://es.investing.com/etfs/" + unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
 
-    req = requests.get(url, headers=head, timeout=15)
+    req = requests.get(url, headers=head, timeout=5)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")

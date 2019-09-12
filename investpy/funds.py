@@ -9,6 +9,7 @@ import time
 import pandas as pd
 import pkg_resources
 import requests
+import unidecode
 from lxml.html import fromstring
 
 from investpy import user_agent as ua
@@ -231,7 +232,7 @@ def retrieve_fund_countries(test_mode=False):
     for element in path:
         if element.get('value') != '/funds/world-funds':
             obj = {
-                'country': element.get('value').replace('/funds/', '').replace('-funds', '').strip(),
+                'country': element.get('value').replace('/funds/', '').replace('-funds', '').replace('-', ' ').strip(),
                 'id': int(element.get('country_id')),
             }
 
@@ -277,11 +278,14 @@ def fund_countries_as_list():
         return countries['country'].tolist()
 
 
-def funds_as_df():
+def funds_as_df(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
 
     Returns:
         :obj:`pandas.DataFrame` - funds_df:
@@ -302,6 +306,9 @@ def funds_as_df():
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -311,14 +318,20 @@ def funds_as_df():
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
-    else:
+
+    if country is None:
         return funds
+    elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
+        return funds[funds['country'] == unidecode.unidecode(country.lower())]
 
 
-def funds_as_list():
+def funds_as_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
     All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
 
     Returns:
         :obj:`list` - funds_list:
@@ -337,6 +350,9 @@ def funds_as_list():
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -346,17 +362,21 @@ def funds_as_list():
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
-    else:
-        return funds['name'].tolist()
+
+    if country is None:
+        return funds
+    elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
+        return funds[funds['country'] == unidecode.unidecode(country.lower())]
 
 
-def funds_as_dict(columns=None, as_json=False):
+def funds_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
     `asset_class`, `id`, `issuer`, `name`, `symbol` and `tag`. All the available funds can be found at:
     https://es.investing.com/etfs/spain-etfs
 
     Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
         columns (:obj:`list` of :obj:`str`, optional): description
             a `list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`bool`, optional): description
@@ -384,11 +404,8 @@ def funds_as_dict(columns=None, as_json=False):
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
-    if columns is None:
-        columns = ['asset class', 'id', 'isin', 'issuer', 'name', 'symbol', 'tag']
-    else:
-        if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -403,11 +420,24 @@ def funds_as_dict(columns=None, as_json=False):
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
+    if columns is None:
+        columns = funds.columns.tolist()
+    else:
+        if not isinstance(columns, list):
+            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+
     if not all(column in funds.columns.tolist() for column in columns):
         raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<asset class, id, isin, issuer, name, symbol, tag>")
+                         "<country, asset class, id, isin, issuer, name, symbol, tag>")
 
-    if as_json:
-        return json.dumps(funds[columns].to_dict(orient='records'))
-    else:
-        return funds[columns].to_dict(orient='records')
+    if country is None:
+        if as_json:
+            return json.dumps(funds[columns].to_dict(orient='records'))
+        else:
+            return funds[columns].to_dict(orient='records')
+    elif country in fund_countries_as_list():
+        if as_json:
+            return json.dumps(funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+        else:
+            return funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+

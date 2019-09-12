@@ -104,15 +104,69 @@ def test_investpy():
     retrieve_equities(test_mode=True)
     retrieve_equity_countries(test_mode=True)
 
-    investpy.get_funds()
-    investpy.get_funds_list()
+    params = [
+        {
+            'country': 'spain',
+        },
+        {
+            'country': None,
+        },
+    ]
 
-    for value in [True, False]:
-        investpy.get_funds_dict(columns=['id', 'name'],
-                                as_json=value)
+    for param in params:
+        investpy.get_funds(country=param['country'])
+        investpy.get_funds_list(country=param['country'])
 
-        investpy.get_fund_information(fund='bbva multiactivo conservador pp',
-                                      as_json=value)
+    params = [
+        {
+            'country': None,
+            'columns': ['id', 'name'],
+            'as_json': True
+        },
+        {
+            'country': 'spain',
+            'columns': ['id', 'name'],
+            'as_json': True
+        },
+        {
+            'country': None,
+            'columns': ['id', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': ['id', 'name'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_funds_dict(country=param['country'],
+                                columns=param['columns'],
+                                as_json=param['as_json'])
+
+    params = [
+        {
+            'fund': 'bbva multiactivo conservador pp',
+            'country': 'spain',
+            'as_json': True,
+        },
+        {
+            'fund': 'bbva multiactivo conservador pp',
+            'country': 'spain',
+            'as_json': False,
+        },
+    ]
+
+    for param in params:
+        investpy.get_fund_information(fund=param['fund'],
+                                      country=param['country'],
+                                      as_json=param['as_json'])
 
     params = [
         {
@@ -139,16 +193,20 @@ def test_investpy():
 
     for param in params:
         investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp',
+                                      country='spain',
                                       as_json=param['as_json'],
                                       order=param['order'],
                                       debug=param['debug'])
 
         investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp',
+                                          country='spain',
                                           from_date='01/01/2010',
                                           to_date='01/01/2019',
                                           as_json=param['as_json'],
                                           order=param['order'],
                                           debug=param['debug'])
+
+    investpy.get_fund_countries()
 
     investpy.get_funds()
 

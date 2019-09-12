@@ -253,7 +253,7 @@ def retrieve_equity_countries(test_mode=False):
     for element in path:
         if element.get('id') != 'regionsSelectorContainer' and element.get('id') != 'cdregion0':
             for value in element.xpath(".//ul/li/a"):
-                countries.append(value.get('href').replace('/equities/', '').strip())
+                countries.append(value.get('href').replace('/equities/', '').replace('-', ' ').strip())
 
     results = list()
 
@@ -469,7 +469,7 @@ def equities_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in equities.columns.tolist() for column in columns):
         raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, name, full_name, tag, isin, id, currency>")
+                         "<country, name, full_name, tag, isin, id, symbol, currency>")
 
     if country is None:
         if as_json:

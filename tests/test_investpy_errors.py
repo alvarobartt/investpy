@@ -380,36 +380,70 @@ def test_fund_errors():
     params = [
         {
             'fund': None,
+            'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'germany',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
             'debug': True
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'as_json': True,
             'order': 'error',
             'debug': True
         },
         {
             'fund': 'error',
+            'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': True
         },
         {
             'fund': ['error'],
+            'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': True
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': 'error'
@@ -419,6 +453,7 @@ def test_fund_errors():
     for param in params:
         try:
             investpy.get_fund_recent_data(fund=param['fund'],
+                                          country=param['country'],
                                           as_json=param['as_json'],
                                           order=param['order'],
                                           debug=param['debug'])
@@ -428,6 +463,7 @@ def test_fund_errors():
     params = [
         {
             'fund': None,
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -436,6 +472,43 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'error',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'germany',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
@@ -444,6 +517,16 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': 'error',
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -452,6 +535,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': 'error',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -460,6 +544,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': 'error',
             'as_json': False,
@@ -468,6 +553,7 @@ def test_fund_errors():
         },
         {
             'fund': 'error',
+            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -476,6 +562,7 @@ def test_fund_errors():
         },
         {
             'fund': ['error'],
+            'country': 'spain',
             'from_date': '01/01/1998',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -484,6 +571,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/1998',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -492,6 +580,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/01/1998',
             'as_json': False,
@@ -500,6 +589,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/1900',
             'to_date': '01/01/1950',
             'as_json': False,
@@ -508,6 +598,7 @@ def test_fund_errors():
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -519,6 +610,7 @@ def test_fund_errors():
     for param in params:
         try:
             investpy.get_fund_historical_data(fund=param['fund'],
+                                              country=param['country'],
                                               from_date=param['from_date'],
                                               to_date=param['to_date'],
                                               as_json=param['as_json'],
@@ -530,18 +622,42 @@ def test_fund_errors():
     params = [
         {
             'fund': None,
+            'country': 'spain',
             'as_json': False
         },
         {
             'fund': 'quality inversion conservadora fi',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': ['error'],
+            'as_json': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'error',
+            'as_json': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'germany',
+            'as_json': False
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
             'as_json': 'error'
         },
         {
             'fund': 'error',
+            'country': 'spain',
             'as_json': True
         },
         {
             'fund': ['error'],
+            'country': 'spain',
             'as_json': True
         },
     ]
@@ -549,6 +665,7 @@ def test_fund_errors():
     for param in params:
         try:
             investpy.get_fund_information(fund=param['fund'],
+                                          country=param['country'],
                                           as_json=param['as_json'])
         except:
             pass

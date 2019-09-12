@@ -85,7 +85,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp', as_json=False, order='ascending', debug=False)
+df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp', country='spain', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -101,7 +101,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', country='spain', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
@@ -170,7 +170,7 @@ print(company_profile)
 ```python
 import investpy
 
-fund_information = investpy.get_fund_information(fund='bbva plan multiactivo moderado pp', as_json=True)
+fund_information = investpy.get_fund_information(fund='bbva plan multiactivo moderado pp', country='spain', as_json=True)
 print(fund_information)
 
 >>> {
