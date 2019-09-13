@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.9'
+__version__ = '0.9.1'
 
 import datetime
 import json
@@ -1013,6 +1013,8 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
 
+    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+
     logger.info(str(fund) + ' found on Investing.com')
 
     header = "Datos históricos " + symbol
@@ -1061,13 +1063,14 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
             if info[0] == 'No se encontraron resultados':
                 raise IndexError("ERR#0008: fund information unavailable or not found.")
 
-            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            stock_close = float(info[1].replace('.', '').replace(',', '.'))
-            stock_open = float(info[2].replace('.', '').replace(',', '.'))
-            stock_high = float(info[3].replace('.', '').replace(',', '.'))
-            stock_low = float(info[4].replace('.', '').replace(',', '.'))
+            fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            fund_close = float(info[1].replace('.', '').replace(',', '.'))
+            fund_open = float(info[2].replace('.', '').replace(',', '.'))
+            fund_high = float(info[3].replace('.', '').replace(',', '.'))
+            fund_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None, None))
+            result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
+                                            fund_close, None, fund_currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]

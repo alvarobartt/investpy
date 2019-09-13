@@ -4,7 +4,6 @@
 # See LICENSE for details.
 
 import json
-import time
 
 import pandas as pd
 import pkg_resources
@@ -58,6 +57,10 @@ def retrieve_funds(test_mode=False):
 
     results = list()
 
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
     for country in countries['country'].tolist():
         head = {
             "User-Agent": ua.get_random(),
@@ -85,22 +88,36 @@ def retrieve_funds(test_mode=False):
                 symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
                 nested = elements_.xpath(".//a")[0].get('title').rstrip()
-                info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
+                tag = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
 
-                info = retrieve_fund_info(info)
+                info = None
+
+                while info is None:
+                    try:
+                        info = retrieve_fund_info(tag)
+                    except:
+                        pass
 
                 obj = {
                     "country": country,
                     "name": nested.strip(),
                     "symbol": symbol,
-                    "tag": info,
+                    "tag": tag,
                     "id": id_,
                     "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
                     "isin": info['isin'],
-                    "asset class": info['asset class'].lower() if info['asset class'] is not None else info['asset class'],
+                    "asset_class": info['asset_class'].lower() if info['asset_class'] is not None else info['asset_class'],
+                    "currency": info['currency']
                 }
 
+                print(obj)
+
                 results.append(obj)
+
+                df = pd.DataFrame(results)
+
+                if test_mode is False:
+                    df.to_csv(file, index=False)
 
                 if test_mode is True:
                     break
@@ -158,17 +175,19 @@ def retrieve_fund_info(tag):
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+    result = {
+        'issuer': None,
+        'isin': None,
+        'asset_class': None,
+        'currency': None
+    }
+
     root_ = fromstring(req.text)
+
     path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
                         "/div[@id='quotes_summary_current_data']"
                         "/div[@class='right']"
                         "/div")
-
-    result = {
-        'issuer': None,
-        'isin': None,
-        'asset class': None,
-    }
 
     for p in path_:
         if p.xpath("span[not(@class)]")[0].text_content().__contains__('Issuer'):
@@ -178,8 +197,15 @@ def retrieve_fund_info(tag):
             result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
             continue
         elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
-            result['asset class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+            result['asset_class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
             continue
+
+    path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
+                        "/span[@class='bold']")
+
+    for element_ in path_:
+        if element_.text_content():
+            result['currency'] = element_.text_content()
 
     return result
 
@@ -439,3 +465,34 @@ def funds_as_dict(country=None, columns=None, as_json=False):
         else:
             return funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
 
+
+# def fill_missing_data():
+#     df = funds_as_df()
+#
+#     df = df.where((pd.notnull(df)), None)
+#
+#     resource_package = __name__
+#     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+#     file = pkg_resources.resource_filename(resource_package, resource_path)
+#
+#     for index, row in df.iterrows():
+#         if row['tag'] is None:
+#
+#         if row['currency'] is None:
+#             print('Retrieving currency of... ' + str(row['name']))
+#             currency = None
+#
+#             while currency is None:
+#                 try:
+#                     info = retrieve_fund_info(row['tag'])
+#                     currency = info['currency']
+#                 except Exception as e:
+#                     if str(e) == 'ERR#0015: error 404, try again later.':
+#                         df.drop(df.index[index], inplace=True)
+#                         break
+#                     pass
+#             df.loc[index, 'currency'] = currency
+#             print('Currency of ' + str(row['name']) + ' is ... ' + str(currency))
+#             print('\n----------------------------------------------------------\n')
+#
+#             df.to_csv(file, index=False)

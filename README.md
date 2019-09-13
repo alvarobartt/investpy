@@ -14,7 +14,7 @@
 
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **28.121 equities, 4.120 funds and 8.762 etfs**. Basically, 
+It provides historical data retrieval from up to **28.121 equities, 4.120 funds and 8.755 etfs**. Basically, 
 it allows you to download historical data from all the indexed equities, funds and etfs in Investing.com. Therefore,
 investpy is intended to wrap up all the available data from Investing, so that it can be retrieved via Python for 
 its further usage and/or analysis.
@@ -28,7 +28,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9``
+``$ pip install investpy==0.9.1``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
 file, which can also be installed via pip:
@@ -51,7 +51,8 @@ other function is additional.
 ```python
 import investpy
 
-df = investpy.get_recent_data(equity='bbva', country='spain', as_json=False, order='ascending', debug=False)
+df = investpy.get_recent_data(equity='bbva',
+                              country='spain')
 print(df.head())
 
 >>>
@@ -68,7 +69,10 @@ Date
 ```python
 import investpy
 
-df = investpy.get_historical_data(equity='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_historical_data(equity='bbva',
+                                  country='spain',
+                                  from_date='01/01/2010',
+                                  to_date='01/01/2019')
 print(df.head())
 
 >>>
@@ -87,7 +91,8 @@ Date
 ```python
 import investpy
 
-df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp', country='spain', as_json=False, order='ascending', debug=False)
+df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp',
+                                   country='spain')
 print(df.head())
 
 >>>
@@ -104,7 +109,10 @@ Date
 ```python
 import investpy
 
-df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp', country='spain', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp',
+                                       country='spain',
+                                       from_date='01/01/2010',
+                                       to_date='01/01/2019')
 print(df.head())
 
 >>>
@@ -123,7 +131,8 @@ Date
 ```python
 import investpy
 
-df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain', as_json=False, order='ascending', debug=False)
+df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50',
+                                  country='spain')
 print(df.head())
 
 >>>
@@ -140,7 +149,10 @@ Date
 ```python
 import investpy
 
-df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2018', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50',
+                                      country='spain',
+                                      from_date='01/01/2018',
+                                      to_date='01/01/2019')
 print(df.head())
 
 >>>
@@ -165,7 +177,8 @@ information is retrieved for both equities and funds, respectively as shown belo
 ```python
 import investpy
 
-company_profile = investpy.get_equity_company_profile(equity='bbva', country='spain', language='en')
+company_profile = investpy.get_equity_company_profile(equity='bbva',
+                                                      country='spain')
 print(company_profile)
 
 >>> "Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a diversified financial company engaged in retail banking ..."
@@ -176,7 +189,9 @@ print(company_profile)
 ```python
 import investpy
 
-fund_information = investpy.get_fund_information(fund='bbva plan multiactivo moderado pp', country='spain', as_json=True)
+fund_information = investpy.get_fund_information(fund='bbva plan multiactivo moderado pp',
+                                                 country='spain',
+                                                 as_json=True)
 print(fund_information)
 
 >>> {

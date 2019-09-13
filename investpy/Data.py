@@ -66,6 +66,7 @@ class Data(object):
             'High': self.high,
             'Low': self.low,
             'Close': self.close,
+            'Currency': self.currency,
         }
 
     def fund_as_json(self):
@@ -75,6 +76,7 @@ class Data(object):
             'high': self.high,
             'low': self.low,
             'close': self.close,
+            'currency': self.currency,
         }
 
     def etf_to_dict(self):
