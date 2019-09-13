@@ -28,13 +28,13 @@ first step is importing it at the top of your Python file as::
 
     import investpy
 
-Currently the main functions of `investpy <https://pypi.org/project/investpy/>`_ just cover historical data retrieval
-of equities, funds and ETFs of the Spanish Stock Market (all the ETFs in the world are listed). Additionally to
-historical data retrieval, investpy also offers the company profile retrieval of the listed companies.
+Currently the main functions of `investpy <https://pypi.org/project/investpy/>`_ support historical data retrieval
+of equities, funds and ETFs from all around the world (as indexed in Investing.com). Additionally to
+historical data retrieval, investpy also offers additional data retrieval related to the indexed financial products.
 
-For example, in order to clarify this concepts, some investpy functions are going to be tested, but all of them
-are going to be properly explained and sorted out on their respective appendix on the documentation or on the API
-Reference. So a block of code in order to get to test investpy usage is presented::
+In order to clarify this concepts, some investpy functions are going to be presented, even though all of them
+are going to be properly explained and sorted out on their respective appendix in the documentation or in the API
+Reference. For example, a block of code in order to get to test investpy usage is presented::
 
     import investpy
 
@@ -57,5 +57,5 @@ global financial portal and Internet brand owned by Fusion Media Ltd. which prov
 charts, technical data and financial tools about the global financial markets.
 
 So as, the decision of choosing Investing as the data source is based on its reliability and also because it is one of
-the few web pages that provides detailed data from spanish markets, as it was the main focus when determining to
+the few web pages that provide detailed data from spanish markets, as it was the main focus when determining to
 develop the package as explained previously.

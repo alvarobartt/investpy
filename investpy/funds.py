@@ -16,11 +16,11 @@ from investpy import user_agent as ua
 
 def retrieve_funds(test_mode=False):
     """
-    This function retrieves all the available `spanish funds` listed on Investing.com
-    (https://es.investing.com/funds/spain-funds?&issuer_filter=0). Retrieving all the meta-information attached to
-    them. Additionally when funds are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
-    and stored on a CSV file on a package folder containing all the available resources. Note that maybe some of the
-    information contained in the resulting :obj:`pandas.DataFrame` is useless.
+    This function retrieves all the available `funds` listed in Investing.com https://es.investing.com/funds. Retrieving
+    all the meta-information attached to them. Additionally when funds are retrieved all the meta-information
+    is both returned as a :obj:`pandas.DataFrame` and stored on a CSV file on a package folder containing all the
+    available resources. Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame`
+    is useless.
 
     Args:
         test_mode (:obj:`bool`):
@@ -29,10 +29,10 @@ def retrieve_funds(test_mode=False):
 
     Returns:
         :obj:`pandas.DataFrame` - funds:
-            The resulting :obj:`pandas.DataFrame` contains all the spanish fund meta-information if found, if not, an
+            The resulting :obj:`pandas.DataFrame` contains all the fund meta-information if found, if not, an
             empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
 
-            In the case that the retrieval process of spanish funds was successfully completed, the resulting
+            In the case that the retrieval process of funds was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
                 asset class | id | isin | issuer | name | symbol | tag
@@ -306,7 +306,7 @@ def funds_as_df(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
-    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+    All the available funds can be found at: https://es.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -352,7 +352,7 @@ def funds_as_df(country=None):
 def funds_as_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
-    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+    All the available funds can be found at: https://es.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -397,7 +397,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
     `asset_class`, `id`, `issuer`, `name`, `symbol` and `tag`. All the available funds can be found at:
-    https://es.investing.com/etfs/spain-etfs
+    https://es.investing.com/etfs/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.

@@ -18,9 +18,9 @@ from investpy import user_agent as ua
 
 def retrieve_equities(test_mode=False):
     """
-    This function retrieves all the available `spanish equities` indexed on Investing.com, so to
+    This function retrieves all the available `equities` indexed on Investing.com, so to
     retrieve data from them which will be used later for inner functions for data retrieval.
-    All the equities available can be found at: https://es.investing.com/equities/spain. Additionally,
+    All the equities available can be found at: https://es.investing.com/equities/. Additionally,
     when equities are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
     and stored on a CSV file on a package folder containing all the available resources.
     Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
@@ -33,10 +33,10 @@ def retrieve_equities(test_mode=False):
 
     Returns:
         :obj:`pandas.DataFrame` - equities:
-            The resulting :obj:`pandas.DataFrame` contains all the spanish equities meta-information if found, if not, an
+            The resulting :obj:`pandas.DataFrame` contains all the equities meta-information if found, if not, an
             empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
 
-            In the case that the retrieval process of spanish equities was successfully completed, the resulting
+            In the case that the retrieval process of equities was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
                 name | full name | tag | isin | id

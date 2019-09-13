@@ -953,7 +953,6 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
 
     Examples:
         >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain', as_json=False, order='ascending', debug=False)
-
                          Open   High    Low  Close Currency
             Date
             2019-08-13  1.110  1.110  1.110  1.110      EUR
@@ -1156,7 +1155,6 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
     Examples:
         >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
-
                          Open   High    Low  Close Currency
             Date
             2018-02-15  1.105  1.105  1.105  1.105      EUR

@@ -83,8 +83,7 @@ log information if True or  False, respectively; debug mode will display debug m
 the user know which is happening inside the function.
 
 Furthermore, when it comes to historical data retrieval, we also need to specify both ``from_date`` and ``to_date``
-values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/mm/yyyy*, as it is the format used to
-specify dates in Spain.
+values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/mm/yyyy*.
 
 .. tip::
 
