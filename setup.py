@@ -14,10 +14,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.9.1',
+    version='0.9.2',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.9.1.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.9.2.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -31,7 +31,7 @@ setup(
                       'requests>=2.22.0'],
     data_files=[
         ('equities', ['investpy/resources/equities/equities.csv', 'investpy/resources/equities/equity_countries.csv']),
-        ('funds', ['investpy/resources/funds/funds.csv']),
+        ('funds', ['investpy/resources/funds/funds.csv', 'investpy/resources/funds/fund_countries.csv']),
         ('etfs', ['investpy/resources/etfs/etfs.csv', 'investpy/resources/etfs/etf_countries.csv']),
         ('user_agents', ['investpy/resources/user_agent_list.txt'])
     ],

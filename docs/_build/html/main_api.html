@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy &mdash; investpy 0.9.1 documentation</title>
+  <title>investpy &mdash; investpy 0.9.2 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.1
+                0.9.2
               </div>
             
           
@@ -388,9 +388,9 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 recent data from the specified etf via argument. The dataset contains the open, high, low and close
 values for the selected etf on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span>
-<span class="o">-----||---------------------------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">-----||--------------------------------------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
@@ -402,7 +402,8 @@ values for the selected etf on market days.</p>
             <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">close</span><span class="p">:</span> <span class="n">x</span>
+            <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -426,9 +427,13 @@ values for the selected etf on market days.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">    date || open | high | low | close</span>
-<span class="go">    -----||---------------------------</span>
-<span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
+<span class="go">                 Open   High    Low  Close Currency</span>
+<span class="go">    Date</span>
+<span class="go">    2011-12-07  23.70  23.70  23.70  23.62      EUR</span>
+<span class="go">    2011-12-08  23.53  23.60  23.15  23.04      EUR</span>
+<span class="go">    2011-12-09  23.36  23.60  23.36  23.62      EUR</span>
+<span class="go">    2011-12-12  23.15  23.26  23.00  22.88      EUR</span>
+<span class="go">    2011-12-13  22.88  22.88  22.88  22.80      EUR</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -454,9 +459,9 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 recent data from the specified etf via argument. The dataset contains the open, high, low and close
 values for the selected etf on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span>
-<span class="o">-----||---------------------------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">-----||--------------------------------------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
@@ -468,7 +473,8 @@ values for the selected etf on market days.</p>
             <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">close</span><span class="p">:</span> <span class="n">x</span>
+            <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -492,9 +498,13 @@ values for the selected etf on market days.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">    date || open | high | low | close</span>
-<span class="go">    -----||---------------------------</span>
-<span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
+<span class="go">                  Open    High     Low   Close Currency</span>
+<span class="go">    Date</span>
+<span class="go">    2019-08-13  33.115  33.780  32.985  33.585      EUR</span>
+<span class="go">    2019-08-14  33.335  33.335  32.880  32.905      EUR</span>
+<span class="go">    2019-08-15  32.790  32.925  32.455  32.845      EUR</span>
+<span class="go">    2019-08-16  33.115  33.200  33.115  33.305      EUR</span>
+<span class="go">    2019-08-19  33.605  33.735  33.490  33.685      EUR</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -655,8 +665,28 @@ from a country in order to get an overview of it.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="investpy.get_fund_countries">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_countries</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_countries" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+from, via reading the <cite>fund_countries.csv</cite> file from the resources directory. So on, this function will display a
+listing containing a set of countries, in order to let the user know which countries are taken into account and also
+the return listing from this function can be used for country param check if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains all the available countries with funds as indexed in Investing.com</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - countries</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>IndexError</strong> – if <cite>fund_countries.csv</cite> was unavailable or not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.get_fund_historical_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_historical_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_historical_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced <cite>fund</cite> from Investing
 via Web Scraping on the introduced date range. The resulting data can it either be
 stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -664,6 +694,7 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve recent historical data from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the introduced fund is.</p></li>
 <li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, from where data is going to be retrieved.</p></li>
 <li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, until where data is going to be retrieved.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
@@ -713,7 +744,7 @@ values for the selected fund on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_historical_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_historical_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close</span>
 <span class="go">    -----||---------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
@@ -723,7 +754,7 @@ values for the selected fund on market days.</p>
 
 <dl class="function">
 <dt id="investpy.get_fund_information">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_information</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_information" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_information</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_information" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves basic financial information from the specified fund.
 As the information is also provided by Investing.com, the tags and names remain the same so
 a new Web Scraping process is not needed, the headers can be created with the existing information.
@@ -734,6 +765,7 @@ the specified fund.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve the financial information from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the introduced fund is.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
 </dd>
@@ -765,14 +797,14 @@ None values. If the retrieval process succeeded, the resulting <code class="xref
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> - fund_information</p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>- fund_information</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_fund_recent_data">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_recent_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_fund_recent_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>fund</cite> from Investing
 via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -780,6 +812,7 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve recent historical data from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the introduced fund is.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 <li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite>, <cite>asc</cite> or <cite>descending</cite>, <cite>desc</cite>).</p></li>
 <li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
@@ -826,7 +859,7 @@ values for the selected fund on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_recent_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_recent_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">    date || open | high | low | close</span>
 <span class="go">    -----||---------------------------</span>
 <span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx</span>
@@ -836,13 +869,16 @@ values for the selected fund on market days.</p>
 
 <dl class="function">
 <dt id="investpy.get_funds">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>funds</cite> from Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>,
 which contains not just the fund names, but all the fields contained on the funds file.
 All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the funds basic information retrieved from Investing.com,
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available funds from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the funds basic information retrieved from Investing.com,
 some of which is not useful for the user, but for the inner package functions, such as the <cite>id</cite> field,
 for example.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
@@ -855,18 +891,18 @@ xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
 CSV file, this function just reads it and loads it into a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> object.</p>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - funds_df</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - funds_df</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>IOError</strong> – if the funds file from <cite>investpy</cite> is missing or errored.</p>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>IOError</strong> – if the funds file from <cite>investpy</cite> is missing or errored.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="investpy.get_funds_dict">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds_dict</code><span class="sig-paren">(</span><em class="sig-param">columns</em>, <em class="sig-param">as_json</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_dict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds on Investing.com and
 returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the <cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>,
 <cite>name</cite>, <cite>symbol</cite> and <cite>tag</cite>. All the available funds can be found at:
@@ -874,6 +910,7 @@ returns them as a <code class="xref py py-obj docutils literal notranslate"><spa
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available funds from.</p></li>
 <li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – description
 a <cite>list</cite> containing the column names from which the data is going to be retrieved.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – description
@@ -911,12 +948,15 @@ fields are filled with <cite>None</cite> values.</p>
 
 <dl class="function">
 <dt id="investpy.get_funds_list">
-<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_funds_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_funds_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds and returns a list of each one of them.
 All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p><p>The resulting list contains the retrieved data, which corresponds to the fund names of
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available funds from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting list contains the retrieved data, which corresponds to the fund names of
 every fund listed on Investing.com.</p>
 <p>In case the information was successfully retrieved from the CSV file, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">funds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Blackrock Global Funds - Global Allocation Fund E2&#39;</span><span class="p">,</span>
@@ -927,11 +967,11 @@ every fund listed on Investing.com.</p>
 </div>
 </p>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - funds_list</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - funds_list</p>
 </dd>
-<dt class="field-odd">Raises</dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised when the introduced arguments are not correct.</p></li>
 <li><p><strong>IOError</strong> – if the funds file from <cite>investpy</cite> is missing or errored.</p></li>
 </ul>
@@ -962,9 +1002,9 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 recent data from the specified equity via argument. The dataset contains the open, high, low, close and
 volume values for the selected equity on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">volume</span>
-<span class="o">-----||-----------------------------------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">volume</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">-----||-----------------------------------------------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
@@ -977,7 +1017,8 @@ volume values for the selected equity on market days.</p>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span>
+            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -1001,9 +1042,13 @@ volume values for the selected equity on market days.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_historical_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">    date || open | high | low | close | volume</span>
-<span class="go">    -----||-----------------------------------</span>
-<span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx</span>
+<span class="go">                 Open   High    Low  Close  Volume Currency</span>
+<span class="go">    Date</span>
+<span class="go">    2010-01-04  12.73  12.96  12.73  12.96       0      EUR</span>
+<span class="go">    2010-01-05  13.00  13.11  12.97  13.09       0      EUR</span>
+<span class="go">    2010-01-06  13.03  13.17  13.02  13.12       0      EUR</span>
+<span class="go">    2010-01-07  13.02  13.11  12.93  13.05       0      EUR</span>
+<span class="go">    2010-01-08  13.12  13.22  13.04  13.18       0      EUR</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -1029,22 +1074,22 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 recent data from the specified equity via argument. The dataset contains the open, high, low, close and
 volume values for the selected equity on market days.</p>
 <p>The return data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">volume</span>
-<span class="o">-----||-----------------------------------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">volume</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">-----||-----------------------------------------------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="n">full_name</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
     <span class="n">recent</span><span class="p">:</span> <span class="p">[</span>
         <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">:</span> <span class="p">{</span>
             <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span>
+            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -1068,9 +1113,13 @@ volume values for the selected equity on market days.</p>
 </dl>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">    date || open | high | low | close | volume</span>
-<span class="go">    -----||-----------------------------------</span>
-<span class="go">    xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx</span>
+<span class="go">                 Open   High    Low  Close    Volume Currency</span>
+<span class="go">    Date</span>
+<span class="go">    2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR</span>
+<span class="go">    2019-08-14  4.322  4.325  4.215  4.244  36890000      EUR</span>
+<span class="go">    2019-08-15  4.281  4.298  4.187  4.234  21340000      EUR</span>
+<span class="go">    2019-08-16  4.234  4.375  4.208  4.365  46080000      EUR</span>
+<span class="go">    2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR</span>
 </pre></div>
 </div>
 </dd></dl>

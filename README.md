@@ -28,7 +28,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.1``
+``$ pip install investpy==0.9.2``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
 file, which can also be installed via pip:
@@ -96,13 +96,13 @@ df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp',
 print(df.head())
 
 >>>
-            Close   High    Low   Open
-Date                                  
-2019-07-12  1.128  1.128  1.128  1.128
-2019-07-15  1.130  1.130  1.130  1.130
-2019-07-16  1.130  1.130  1.130  1.130
-2019-07-17  1.129  1.129  1.129  1.129
-2019-07-18  1.126  1.126  1.126  1.126
+             Open   High    Low  Close Currency
+Date                                           
+2019-08-13  1.110  1.110  1.110  1.110      EUR
+2019-08-16  1.109  1.109  1.109  1.109      EUR
+2019-08-19  1.114  1.114  1.114  1.114      EUR
+2019-08-20  1.112  1.112  1.112  1.112      EUR
+2019-08-21  1.115  1.115  1.115  1.115      EUR
 
 ```
 
@@ -116,13 +116,13 @@ df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp',
 print(df.head())
 
 >>>
-            Close   High    Low   Open
-Date                                  
-2018-02-15  1.105  1.105  1.105  1.105
-2018-02-16  1.113  1.113  1.113  1.113
-2018-02-17  1.113  1.113  1.113  1.113
-2018-02-18  1.113  1.113  1.113  1.113
-2018-02-19  1.111  1.111  1.111  1.111
+             Open   High    Low  Close Currency
+Date                                           
+2018-02-15  1.105  1.105  1.105  1.105      EUR
+2018-02-16  1.113  1.113  1.113  1.113      EUR
+2018-02-17  1.113  1.113  1.113  1.113      EUR
+2018-02-18  1.113  1.113  1.113  1.113      EUR
+2018-02-19  1.111  1.111  1.111  1.111      EUR
 
 ```
 

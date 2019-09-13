@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.etfs &mdash; investpy 0.9.1 documentation</title>
+  <title>investpy.etfs &mdash; investpy 0.9.2 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.1
+                0.9.2
               </div>
             
           
@@ -313,6 +313,31 @@ retrieval functions as the name of the etf to retrieve data from needs to be spe
 </dd></dl>
 
 <dl class="function">
+<dt id="investpy.etfs.retrieve_etf_info">
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">retrieve_etf_info</code><span class="sig-paren">(</span><em class="sig-param">tag</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.retrieve_etf_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves additional information from the specified etf as indexed in Investing.com, in order to add
+more information to <cite>etfs.csv</cite> which can later be useful. Currently just the currency value is retrieved, since it
+is needed so to determine in which currency the historical data values are.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – is the tag of the etf to retrieve the information from as indexed by Investing.com.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the needed information for the etfs listing.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> - info</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – raised if the information from the etf was not found or unable to retrieve.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.etfs.retrieve_etfs">
 <code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">retrieve_etfs</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.retrieve_etfs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>world etfs</cite> indexed on Investing.com, so to
@@ -324,7 +349,7 @@ Note that maybe some of the information contained in the resulting <code class="
 just used for inner function purposes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
 coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>

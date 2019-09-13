@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 
 import datetime
 import json
@@ -925,9 +925,9 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
 
             The return data is case we use default arguments will look like::
 
-                date || open | high | low | close
-                -----||---------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx
+                date || open | high | low | close | currency
+                -----||--------------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -953,9 +953,15 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
 
     Examples:
         >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain', as_json=False, order='ascending', debug=False)
-            date || open | high | low | close
-            -----||---------------------------
-            xxxx || xxxx | xxxx | xxx | xxxxx
+
+                         Open   High    Low  Close Currency
+            Date
+            2019-08-13  1.110  1.110  1.110  1.110      EUR
+            2019-08-16  1.109  1.109  1.109  1.109      EUR
+            2019-08-19  1.114  1.114  1.114  1.114      EUR
+            2019-08-20  1.112  1.112  1.112  1.112      EUR
+            2019-08-21  1.115  1.115  1.115  1.115      EUR
+
     """
 
     if not fund:
@@ -1121,9 +1127,9 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close
-                -----||---------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx
+                date || open | high | low | close | currency
+                -----||--------------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -1150,9 +1156,14 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
     Examples:
         >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
-            date || open | high | low | close
-            -----||---------------------------
-            xxxx || xxxx | xxxx | xxx | xxxxx
+
+                         Open   High    Low  Close Currency
+            Date
+            2018-02-15  1.105  1.105  1.105  1.105      EUR
+            2018-02-16  1.113  1.113  1.113  1.113      EUR
+            2018-02-17  1.113  1.113  1.113  1.113      EUR
+            2018-02-18  1.113  1.113  1.113  1.113      EUR
+            2018-02-19  1.111  1.111  1.111  1.111      EUR
 
     """
 
@@ -1260,6 +1271,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
 
+    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+
     logger.info(str(fund) + ' found on Investing.com')
 
     final = list()
@@ -1323,13 +1336,14 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     data_flag = True
 
                 if data_flag is True:
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+                    fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    fund_close = float(info[1].replace('.', '').replace(',', '.'))
+                    fund_open = float(info[2].replace('.', '').replace(',', '.'))
+                    fund_high = float(info[3].replace('.', '').replace(',', '.'))
+                    fund_low = float(info[4].replace('.', '').replace(',', '.'))
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None, None))
+                    result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
+                                                    fund_close, None, fund_currency))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -1459,6 +1473,7 @@ def get_fund_information(fund, country, as_json=False):
 
     root_ = fromstring(req.text)
     path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
     result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
                                    'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
                                    'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])

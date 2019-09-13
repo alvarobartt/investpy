@@ -5,7 +5,7 @@ Installation
 
 .. note::
 
-    After installing the package you are now available to use it! As investpy's latest release is 0.9.1 the installation is
+    After installing the package you are now available to use it! As investpy's latest release is 0.9.2 the installation is
     optimized for it. If you try installing another investpy release, some features may not work.
 
 First Installation
@@ -48,7 +48,7 @@ If you already had `investpy <https://pypi.org/project/investpy/>`_ installed an
 All the dependencies are already listed on the setup file of the package, but to sum them up, when installing
 `investpy <https://pypi.org/project/investpy/>`_, it will install the following dependencies:
 
-* `pandas 0.24.2 <https://pypi.org/project/pandas/>`_
+* `pandas 0.25.1 <https://pypi.org/project/pandas/>`_
 * `requests 2.22.0 <https://pypi.org/project/requests/>`_
-* `lxml 4.3.3 <https://pypi.org/project/lxml/>`_
-* `unidecode 1.0.23 <https://pypi.org/project/unidecode/>`_
+* `lxml 4.4.1 <https://pypi.org/project/lxml/>`_
+* `unidecode 1.1.1 <https://pypi.org/project/unidecode/>`_

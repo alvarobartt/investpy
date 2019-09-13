@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.equities &mdash; investpy 0.9.1 documentation</title>
+  <title>investpy.equities &mdash; investpy 0.9.2 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.1
+                0.9.2
               </div>
             
           
@@ -306,7 +306,7 @@ Note that maybe some of the information contained in the resulting <code class="
 just used for inner function purposes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
 coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -327,6 +327,7 @@ empty <code class="xref py py-obj docutils literal notranslate"><span class="pre
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – if any of the introduced arguments is not valid.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised if <cite>equity_countries.csv</cite> file does not exists or is empty.</p></li>
 <li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
 <li><p><strong>IndexError</strong> – if equities information was unavailable or not found.</p></li>
 </ul>
@@ -343,7 +344,7 @@ names the specific equity website of every country is retrieved in order to get 
 when retrieving all the information from the available equities in every country.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to determine code
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
 coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -355,6 +356,7 @@ which will be used later by investpy.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if any of the introduced arguments is not valid.</p></li>
 <li><p><strong>ConnectionError</strong> – raised if connection to Investing.com could not be established.</p></li>
 <li><p><strong>RuntimeError</strong> – raised if no countries were retrieved from Investing.com equity listing.</p></li>
 </ul>
@@ -363,19 +365,20 @@ which will be used later by investpy.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.equities.retrieve_info">
-<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_info</code><span class="sig-paren">(</span><em class="sig-param">tag</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_info" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves both the ISIN code and the currency of an equity indexed in Investing.com, so to add
-additional information to the <cite>equities.csv</cite> file. The ISIN code will later be used in order to retrieve more
-information from the specified equity as the ISIN code is an unique identifier of every equity; and the currency
-which will be required in order to know which currency is the value in.</p>
+<dt id="investpy.equities.retrieve_equity_info">
+<code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_equity_info</code><span class="sig-paren">(</span><em class="sig-param">tag</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_equity_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves both the ISIN code, the currency and the symbol of an equity indexed in Investing.com, so
+to include additional information in <cite>equities.csv</cite> file. The ISIN code will later be used in order to retrieve more
+information from the specified equity, as the ISIN code is an unique identifier of each equity; the currency
+will be required in order to know which currency is the value in, and the symbol will be used for processing the
+request to HistoricalDataAjax to retrieve historical data from Investing.com.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>tag</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – is the tag of the equity to retrieve the information from as indexed by Investing.com.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the needed information for the equities listing, so on, both the the ISIN</dt><dd><p>code of the introduced equity and the currency of its values.</p>
+<dt>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the needed information for the equities listing, so on, the ISIN</dt><dd><p>code of the introduced equity, the currency of its values and the symbol of the equity.</p>
 </dd>
 </dl>
 </p>
