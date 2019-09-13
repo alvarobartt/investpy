@@ -21,7 +21,7 @@ australia,au,1117955,Perth Mint Gold,PMGOLD,perth-mint-gold
 australia,au,47720,Vanguard Australian Property Securities,VAP,vanguard-aus.-prop.-securities
 australia,au,986919,Vanguard Australian Corp Fixed Interest ,VACF,vanguard-australian-corporate-fixed
 australia,au,38961,Russell Australian Select Corporate Bond,RCB,russell-aus-select-corp.-bond
-australia,au,953176,VanEck Vectors MSCI World ex Australia Quality ,QUAL,market-vectors-msci-world-ex-austra
+australia,au,953176,VanEck Vectors MSCI World ex Australia Quality,QUAL,market-vectors-msci-world-ex-austra
 australia,au,1096233,Betashares Asia Technology Tigers,ASIA,betashares-asia-technology-tigers
 australia,au,1031753,VanEck Vectors Australian Floating Rate,FLOT,vaneck-vect-aust-floating-rate
 australia,au,1073662,VanEck Vectors MSCI Multifactor Emerging Markets E,EMKT,vaneck-vectors-msci-mltfctr-em-eq
@@ -65,7 +65,7 @@ australia,au,47698,iShares Core S&P 500,IVV,ishares-s-p-500-aus
 australia,au,38956,iShares S&P/ASX 20,ILC,ishares-s-p-asx-20
 australia,au,962168,VanEck Vectors Gold Miners AU,GDX,market-vectors-gold-miners-au
 australia,au,1031308,BetaShares Australian Ex-20 Portfolio Diversifier,EX20,betashares-australian-ex20-portf
-australia,au,38950,SPDR S&P/ASX Australian Government Bond ,GOVT,spdr-s-p-asx-aus-government-bond
+australia,au,38950,SPDR S&P/ASX Australian Government Bond,GOVT,spdr-s-p-asx-aus-government-bond
 australia,au,1013259,BetaShares Australian Small Companies Select Fund,SMLL,betashares-au-small-comp-select-fnd
 australia,au,985880,Betashares Global Energy Companies,FUEL,betashares-global-energy-companies
 australia,au,1031303,BetaShares Global Agriculture Companies,FOOD,betashares-global-agri-companies
@@ -74,7 +74,7 @@ australia,au,1052292,ETFS ROBO Global Robotics and Automation,ROBO,etfs-robo-glo
 australia,au,1055274,Vanguard Diversified High Growth,VDHG,vanguard-diversified-high-growth
 australia,au,953174,VanEck Vectors Australian Property,MVA,market-vectors-australian-property
 australia,au,959567,BetaShares Geared Australian Equity Hedge,GEAR,betashares-geared-australian-equity
-australia,au,38947,SPDR S&P/ASX Australian Bond ,BOND,spdr-s-p-asx-australian-bond-fund
+australia,au,38947,SPDR S&P/ASX Australian Bond,BOND,spdr-s-p-asx-australian-bond-fund
 australia,au,986920,Vanguard FTSE Asia ex Japan,VAE,vanguard-ftse-asia-ex-japan-shares
 australia,au,1052381,Vanguard Global Aggregate Bond Hedged,VBND,vanguard-global-aggr-bond-hedged
 australia,au,1112806,Betashares Legg Mason Australian Bond,BNDS,betashares-legg-mason-australian-b
@@ -449,7 +449,7 @@ canada,ca,976760,iShares MSCI Canada Minimum Volatil,XMV,ishares-msci-canada-min
 canada,ca,976682,First Asset Short Term Government B,FGB,first-asset-short-term-government-b
 canada,ca,1112798,TD Active Preferred Share Unit,TPRF,td-active-preferred-share-unit
 canada,ca,37481,BMO India Equity,ZID,bmo-india-equity-hedged-to-cad
-canada,ca,1030945,Mackenzie Maximum Diversification All World DM ex ,MXU,mackenzie-max-divers-world-dm-ex-na?cid=1030945
+canada,ca,1030945,Mackenzie Maximum Diversification All World DM ex,MXU,mackenzie-max-divers-world-dm-ex-na?cid=1030945
 canada,ca,48274,iShares US High Yield Fixed Income (CAD Hedged) Co,CHB,ishares-adv.-us-high-yield-bond
 canada,ca,48186,iShares Canadian Real Return Bond,XRB,ishares-dex-real-return-bond-fund
 canada,ca,976840,Vanguard US Div Appreciat,VGG,vanguard-us-div-appreciat
@@ -465,7 +465,7 @@ canada,ca,976804,RBC 1 5 Year Laddered Canadian Bond,RLB,rbc-1-5-year-laddered-c
 canada,ca,976618,BMO Mid Term US IG Corp Bond,ZIC,bmo-mid-term-us-ig-corp-bond
 canada,ca,976678,First Asset MSCI US Low Risk CAD,RWUb,first-asset-msci-us-low-risk-cad
 canada,ca,1122478,NBI Active Canadian Preferred Shares,NPRF,nbi-active-canadian-preferredshares
-canada,ca,48251,BMO Covered Call Dow Jones Industrial Average(CAD ,ZWA,bmo-cov.call-dj-ind.-ave.-cad-hed.
+canada,ca,48251,BMO Covered Call Dow Jones Industrial Average(CAD,ZWA,bmo-cov.call-dj-ind.-ave.-cad-hed.
 canada,ca,976791,Purpose Premium Yield,PYF,purpose-premium-yield
 canada,ca,48219,Vanguard FTSE Developed All Cap Ex US,VEF,vanguard-msci-eafe-index
 canada,ca,956449,Canadian Crude Oil,CCX,canadian-crude-oil
@@ -585,7 +585,7 @@ canada,ca,959576,iShares Edge MSCI Multifactor Canada,XFC,ishares-factorselect-m
 canada,ca,48285,PowerShares Senior Loan (CAD Hedged),BKLf,powershares-senior-loan-index
 canada,ca,1121216,CIBC Active Investment Grade Corporate Bond,CACB,cibc-active-inv-grade-corp-bond
 canada,ca,1096226,Coincapital STOXX B.R.AI.N.,THNK,coincapital-stoxx-brain
-canada,ca,48146,First Asset Morningstar Canada Dividend Target 30 ,DXM,firstasset-canada-div-target-30
+canada,ca,48146,First Asset Morningstar Canada Dividend Target 30,DXM,firstasset-canada-div-target-30
 canada,ca,1052205,Hamilton Capital U.S. Mid-Cap Financials,HFMUu,hamilton-capital-us-midcap-fin?cid=1052205
 canada,ca,976621,BMO MSCI All Country World High Qua,ZGQ,bmo-msci-all-country-world-high-qua
 canada,ca,1030936,Horizons Global Risk Parity,HRA,horizons-global-risk-parity
@@ -786,7 +786,7 @@ canada,ca,997605,PowerShares S&P Global ex Canada High Dividend Low,GHD,pwrshrs-
 canada,ca,997592,iShares EM Fundamental Fund C,CWO,ishares-em-fundamental-fund-c
 canada,ca,997604,PowerShares S&P 500 High Dividend Low Volatility,UHD,powershares-sp-500-high-div-low-vol
 canada,ca,997603,PowerShares DWA Global Momentum,DWG,powershares-dwa-global-momentum
-canada,ca,997602,Mackenzie Maximum Diversification All World DM ex ,MXU,mackenzie-max-divers-world-dm-ex-na
+canada,ca,997602,Mackenzie Maximum Diversification All World DM ex,MXU,mackenzie-max-divers-world-dm-ex-na
 canada,ca,997601,Mackenzie Floating Rate Income,MFT,mackenzie-floating-rate-income
 canada,ca,997600,Mackenzie Core Plus Canadian Fixed Income,MKB,mackenzie-core-plus-cnd-fxd-income
 canada,ca,997599,iShares US Fundamental Hedged C,CLU,ishares-us-fundamental-hedged-c
@@ -876,7 +876,7 @@ canada,ca,1073117,Mackenzie US Large Cap Equity CAD Hedged,QAH,mackenzie-us-larg
 canada,ca,1073120,Mackenzie Canadian Short Term Fixed Income,MCSB,mackenzie-ca-shortterm-fixed-income
 canada,ca,1073121,Mackenzie Canadian Short Term Bond,QSB,mackenzie-canadian-short-term-bond
 canada,ca,1086965,Horizons Blockchain Technology & Hardware,BKCH,horizons-blockchain-tech-hardware
-canada,ca,48284,PowerShares Fundamental High Yield Corporate Bond ,PFHf,powershares-fund.-hi-yld-corp-bond
+canada,ca,48284,PowerShares Fundamental High Yield Corporate Bond,PFHf,powershares-fund.-hi-yld-corp-bond
 canada,ca,1090661,Horizons Balanced Tri ETF Portfolio,HBAL,horizons-balanced-tri-etf-portfolio
 canada,ca,1090662,Horizons Conservative Tri ETF Portfolio,HCON,horizons-conservative-tri-etf-pflio
 canada,ca,1096094,Vanguard FTSE Developed ex North America High Divi,VIDY,vanguard-ftse-dev-x-n-ame-hidivy-u
@@ -1306,7 +1306,7 @@ france,fr,997030,Lyxor Fortune SG MSCI China A DR C,CNAA,lyxor-fortune-sg-msci-c
 france,fr,956376,PowerShares SP 500 High Dividend FR,HDLV,powershares-sp-500-high-dividend-fr
 france,fr,47499,Stoxx Europe 600 Banks THEAM Easy UCITS,EAEB,easyetf-stoxx-europe-600-banks
 france,fr,47589,Amundi ETF Japan Topix EUR Hedged Daily UCITS,TPXH,amundi-topix-hdg
-france,fr,47547,Lyxor UCITS Stoxx Europe 600 Personal & Household ,LYXPER,lyxor-stoxx600-per.--house.-goods
+france,fr,47547,Lyxor UCITS Stoxx Europe 600 Personal & Household,LYXPER,lyxor-stoxx600-per.--house.-goods
 france,fr,38887,Lyxor UCITS Stoxx Europe 600 Telecommunications,TELE,lyxor-stoxx-europe-600-telecom
 france,fr,1024451,Amundi Japan Topix,TPXE,amundi-japan-topix-pa
 france,fr,1122299,Amundi Index MSCI Emerging Markets SRI UCITS,EMSRI,amundi-index-msci-em-sri-ucits
@@ -1373,8 +1373,8 @@ france,fr,38823,Lyxor MSCI World Consumer Staples TR UCITS C-EUR,COSW,lyxor-msci
 france,fr,997075,Lyxor EuroMTS 5-7Y Invstmnt Grd C,LMTC,lyxor-euromts-5-7y-invstmnt-grd-c?cid=997075
 france,fr,47595,Amundi ETF MSCI Switzerland UCITS,CSW,amundi-msci-switzerland---eur
 france,fr,47539,Lyxor UCITS Stoxx Europe 600 Financial Services,FINS,lyxor-stoxx-euro-600-fin.-ser.
-france,fr,47521,Lyxor UCITS EuroMTS All-Maturity Investment Grade ,MTX,lyxor-euromts-global-invest-grade
-france,fr,997020,BNP Paribas Easy FTSE EPRA/NAREIT Eurozone Capped ,EEA,bnpprbs-ftse-epra-nareit-eu-capped
+france,fr,47521,Lyxor UCITS EuroMTS All-Maturity Investment Grade,MTX,lyxor-euromts-global-invest-grade
+france,fr,997020,BNP Paribas Easy FTSE EPRA/NAREIT Eurozone Capped,EEA,bnpprbs-ftse-epra-nareit-eu-capped
 france,fr,38842,Amundi ETF Euro Stoxx Small Cap UCITS,ESM,amundi-etf-euro-stoxx-smlcap
 france,fr,38870,Lyxor UCITS MSCI EMU,MFE,lyxor-msci-emu
 france,fr,47435,HSBC FTSE 100 UCITS,UKX,hsbc-ftse-100?cid=47435
@@ -1504,7 +1504,7 @@ france,fr,47617,Lyxor UCITS MSCI USA D-EUR,USA,lyxor-msci-usa
 france,fr,997719,Amundi FTSE 100 GBP Cap,FTSE,amundi-ftse-100-gbp-cap
 france,fr,47503,Stoxx Europe 600 Technology THEAM Easy UCITS,SYQ,easyetf-stoxx-europe-600-tech
 france,fr,47466,SPDR Barclays Cap US Treasury Bond,TSYE,spdr-barclays-us-treasury-bond-de?cid=47466
-france,fr,997083,Ossiam Risk Weighted Enhanced Commodity Ex Grains ,CRWE,ossiam-risk-weighted-enhanced-commo?cid=997083
+france,fr,997083,Ossiam Risk Weighted Enhanced Commodity Ex Grains,CRWE,ossiam-risk-weighted-enhanced-commo?cid=997083
 france,fr,47409,BNPP EasyNMX 30 Infrastructure Global,EENG,easyetf-nmx30-infr.-global?cid=47409
 france,fr,1052201,Lyxor MSCI EMU Value DR C EUR,LEMU,lyxor-msci-emu-value-dr-c-eur?cid=1052201
 france,fr,38813,Amundi ETF MSCI Japan UCITS,CJ1,amundi-etf-msci-japan---eur
@@ -1515,7 +1515,7 @@ france,fr,1013335,Amundi Index Solutions Global Infrastructure,GINF,ais-global-i
 france,fr,38801,Amundi ETF MSCI Eastern Europe Ex Russia UCITS,CE9U,amundi-etf-msci-east-europe-x-rus
 france,fr,47535,Lyxor UCITS SG Global Quality Income NTR D-EUR,LYSGQI,lyxor-sg-global-quality-income
 france,fr,38869,Lyxor UCITS MSCI World Materials TR C-EUR,MATW,lyxor-msci-world-materials-tr
-france,fr,47423,Ossiam Emerging Markets Minimum Variance NR UCITS ,EMMV,ossiam-em-min-variance-nr-(eur)-de?cid=47423
+france,fr,47423,Ossiam Emerging Markets Minimum Variance NR UCITS,EMMV,ossiam-em-min-variance-nr-(eur)-de?cid=47423
 france,fr,47485,Amundi ETF MSCI Pacific Ex Japan UCITS,CP9,amundi-msci-pacific-x-japan---eur
 france,fr,47599,Amundi ETF FTSE 100 UCITS,C1U,amundi-ftse-100-a
 france,fr,38780,Lyxor UCITS Australia (S&P ASX 200) D-EUR,AU2,lyxor-s-p-asx-200
@@ -1594,7 +1594,7 @@ france,fr,38785,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,C10,amundi-go
 france,fr,38786,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,C33,amundi-gov-bond-mts-invest-3-5
 france,fr,47517,Lyxor UCITS EuroMTS Highest Rated Macro-Weighted G,MA35,lyxor-euromts-aaa-gov-3-5-y
 france,fr,47518,Lyxor UCITS EuroMTS Highest Rated Macro-Weighted G,MA57,lyxor-euromts-aaa-gov-5-7-y
-france,fr,38787,Amundi ETF Cash 3 Months EuroMTS Investment Grade ,C3M,amundi-cash-3-months-mts-invest
+france,fr,38787,Amundi ETF Cash 3 Months EuroMTS Investment Grade,C3M,amundi-cash-3-months-mts-invest
 france,fr,47520,Lyxor UCITS EuroMTS Covered Bond Aggregate,ECB,lyxor-euromts-covered-bond-agg.
 france,fr,997089,Ossiam US Minimum Variance NR UCITS 1C,SPMV,ossiamus-minimum-variance-nr?cid=997089
 france,fr,47390,HSBC MSCI EM Far East UCITS,MEM,hsbc-msci-em-far-east?cid=47390
@@ -1752,7 +1752,7 @@ germany,de,46487,iShares MSCI World EUR Hedged UCITS,IBCH,ishares-msci-world-mon
 germany,de,994129,iShares JPM EM Bond EUR Hedged,IS3C,ishares-jpm-em-bond-eur-hedged?cid=994129
 germany,de,994118,iShares Edge MSCI Europe MF GBp,IBC0,ishares-edge-msci-europe-mf-gbp?cid=994118
 germany,de,45848,iShares Core EURO STOXX 50 UCITS,SXRT,cs-etf-(ie)-on-euro-stoxx-50?cid=45848
-germany,de,46460,iShares Dow Jones Asia Pacific Select Dividend 30 ,DJAPSDEEX,ishares-dj-asia-pac.-div.-30
+germany,de,46460,iShares Dow Jones Asia Pacific Select Dividend 30,DJAPSDEEX,ishares-dj-asia-pac.-div.-30
 germany,de,46491,iShares Global Water UCITS,IQQQ,ishares-s-p-glbl-water?cid=46491
 germany,de,45932,ETFS EUR Daily Hedged Brent Crude,00XT,etfs-brent-crude-eur-daily-hdg-de
 germany,de,46060,iShares MSCI Europe UCITS Acc,EUNK,ishares-msci-europe-(acc)-uk?cid=46060
@@ -1760,8 +1760,8 @@ germany,de,994135,iShares MSCI EM Minimum Volatility,ISEUNZ,ishares-msci-em-mini
 germany,de,46056,iShares STOXX Europe 50 UCITS,LSTXX,ishares-dj-stoxx-50?cid=46056
 germany,de,45808,db x-trackers FTSE China 50 UCITS DR,XX25,db-xtrackers-ftse-xinhua-china-25?cid=45808
 germany,de,46457,iShares Core Euro Government Bond UCITS,EUNH,ishares-barclays-euro-tr.-bond?cid=46457
-germany,de,38550,iShares STOXX Europe 600 Construction & Materials ,SXOPEX,ishares-stoxxeuro-600-cons.---mat.
-germany,de,46264,UBS ETF MSCI World Socially Responsible UCITS USD ,WSREUA,ubs-msci-world-socially-resp.-a-de
+germany,de,38550,iShares STOXX Europe 600 Construction & Materials,SXOPEX,ishares-stoxxeuro-600-cons.---mat.
+germany,de,46264,UBS ETF MSCI World Socially Responsible UCITS USD,WSREUA,ubs-msci-world-socially-resp.-a-de
 germany,de,46725,db x-trackers MSCI India UCITS 1C,XCS5,db-xtrackers-msci-india-trn-uk?cid=46725
 germany,de,46374,db x-trackers II iBoxx Sovereigns Eurozone 1-3 UCI,X13E,db-xtrackers-€-sov.-euro-1-3-tr-1c
 germany,de,1024395,db x-trackers SP 500 UCITS,XDPE,db-x-trackers-sp-500-ucits?cid=1024395
@@ -1979,7 +1979,7 @@ germany,de,46327,ComStage EURO STOXX Select Dividend 30 NR UCITS,CBSD3T,comstage
 germany,de,37538,iShares MSCI North America UCITS,IQQN,ishares-msci-north-america-gbp?cid=37538
 germany,de,45819,iShares FTSE 100 UCITS Acc,SXRW,cs-etf-(ie)-on-ftse-100?cid=45819
 germany,de,45937,PowerShares EuroMTS Cash 3 Months UCITS,PPEU,powershares-euromts-cash-3-months?cid=45937
-germany,de,37521,iShares MSCI Emerging Markets Latin America UCITS ,IUSC,ishares-msci-latin-america---gbp?cid=37521
+germany,de,37521,iShares MSCI Emerging Markets Latin America UCITS,IUSC,ishares-msci-latin-america---gbp?cid=37521
 germany,de,46136,Amundi ETF MSCI UK UCITS,CU1,amundi-msci-uk?cid=46136
 germany,de,1024392,SPDR MSCI World Small Cap,ZPRS,spdr-msci-world-small-cap?cid=1024392
 germany,de,38555,ETFS EUR Daily Hedged Agriculture,00XJ,etfs-agri.-dj-ubs-edsm-eur-hedged
@@ -2101,7 +2101,7 @@ germany,de,38622,iShares STOXX Europe Large 200 UCITS,LCXPEX,ishares-stoxx-europ
 germany,de,45978,Amundi MSCI India UCITS,CI2,amundi-msci-india---eur-de
 germany,de,46092,db Physical Platinum Euro Hedged,XAD3,db-physical-platinum-euro-hdg-de
 germany,de,45943,db Brent Crude Oil Booster Euro Hedged,XETC,db-brent-crude-oil-boost-hgd-de
-germany,de,959562,iShares $ Short DurationHigh Yield Corporate Bond ,IS3K,ishares-usd-short-duration-high-yie?cid=959562
+germany,de,959562,iShares $ Short DurationHigh Yield Corporate Bond,IS3K,ishares-usd-short-duration-high-yie?cid=959562
 germany,de,46687,Deka Deutsche Boerse EUROGOV Germany 10+ UCITS,ETFGS10,etflab-deutsche-borse-germany-10
 germany,de,46745,ComStage iBoxx EUR Sovereigns Inflation-Linked Eur,CBIESIILNT,comstage-iboxx-€-sov.-euro-inf.-tr
 germany,de,38645,iShares SLI UCITS DE,SSMIEX,ishares-smi
@@ -2188,7 +2188,7 @@ germany,de,46389,db x-trackers II iBoxx Sovereigns Eurozone AAA UCI,XBAT,db-xtra
 germany,de,46367,db x-trackers STOXX Europe 600 Basic Resources UCI,XSPR,db-stoxxeuro600-basic-res.
 germany,de,46569,Coba -4x WTI Oil Daily Short,X0B8,coba-etc--4x-wti-oil-daily-short
 germany,de,46720,Coba 4x HSCEIF Daily Long,X040,coba-4x-hsceif-daily-long
-germany,de,46612,SPDR BofA Merryl Lynch Emerging Markets Corporate ,SYBE,spdr-em-corporate-bond
+germany,de,46612,SPDR BofA Merryl Lynch Emerging Markets Corporate,SYBE,spdr-em-corporate-bond
 germany,de,46733,ComStage MSCI Japan TRN UCITS,CBMINJP,comstage-msci-japan-trn
 germany,de,46166,Lyxor MSCI Eastern Europe Ex Russia UCITS Acc,LEER,lyxor-eastern-europe-(cece-eur)-de
 germany,de,1011904,WisdomTree India Quality Acc,WTD0,wisdomtree-india-quality-acc-de
@@ -2235,7 +2235,7 @@ germany,de,46339,ComStage STOXX Europe 600 Technology NR UCITS,CBSX8R,comstage-s
 germany,de,46315,ComStage iBoxx EUR Liquid Sovereigns Diversified 7,CB3LD9,comstage-€-liquid-sov.-7-10-tr
 germany,de,46328,ComStage MSCI EM Eastern Europe TRN UCITS,CBMINEE,comstage-msci-em-eastern-europetr
 germany,de,45858,ETFS Grains,AIGR,etfs-grains-dj-ubsci-de
-germany,de,46538,UBS ETFs plc - MSCI AC Asia Ex Japan SF UCITS USD ,UIQI,ubss-msci-ac-asia-x-jap.-tr-usd-a
+germany,de,46538,UBS ETFs plc - MSCI AC Asia Ex Japan SF UCITS USD,UIQI,ubss-msci-ac-asia-x-jap.-tr-usd-a
 germany,de,46224,ETFS Daily Short Wheat,4RTK,etfs-short-wheat-de
 germany,de,38600,iShares Euro Government Bond 1-3Yr UCITS,IBCA,ishares-€-government-bond-1-3?cid=38600
 germany,de,46078,PowerShares FTSE RAFI US 1000 UCITS,PSRF,powershares-ftse-rafi-us-1000-fund?cid=46078
@@ -2300,7 +2300,7 @@ germany,de,46172,Lyxor UCITS Stoxx Europe 600 Health Care,LHTC,lyxor-stoxx-europ
 germany,de,46324,ComStage EURO STOXX 50 Daily Leverage UCITS,CBSX5EL,comstage-euro-stoxx-50-leverage
 germany,de,46744,ComStage Commerzbank EONIA TR UCITS,CBEONIA,comstage-commerzbank-eonia-tr
 germany,de,46317,ComStage Commerzbank FED Funds Effective Rate TR U,CBFEDFER,comstage-cbfeds-effective-rate-tr
-germany,de,46663,ComStage iBoxx EUR Sovereigns Germany Capped 5-10 ,CBIBOXSC5T,comstage-€-sov.-ger.-cap-5-10-tr
+germany,de,46663,ComStage iBoxx EUR Sovereigns Germany Capped 5-10,CBIBOXSC5T,comstage-€-sov.-ger.-cap-5-10-tr
 germany,de,46330,ComStage MSCI Europe Mid Cap TRN UCITS,CBMINEUM,comstage-msci-europe-mid-cap-trn
 germany,de,46201,ETFS Daily Daily Short Coffee,9GA3,etfs-short-coffee-de
 germany,de,38635,iShares eb.rexx Government Germany 2.5-5.5,RXP2EX,ishares-eb.rexx-gov-ger.-2.5-5.5
@@ -2310,7 +2310,7 @@ germany,de,38564,ComStage FTSE 100 TR UCITS,CBTFTSE,ftse-100-tr
 germany,de,46178,Lyxor UCITS EuroMTS Highest Rated Macro-Weighted G,LYS5,lyxor-euromts-aaa-gov-3-5-y?cid=46178
 germany,de,45948,Amundi S&P 500 EUR Hedged Daily UCITS,H1D5,amundi-s-p-500-eur-hedged-daily-de
 germany,de,38661,SSgA SPDR Barclays Cap Sterling Corporate Bond,SYBS,spdr-barclays-sterling-corp-bnd-uk?cid=38661
-germany,de,46662,ComStage iBoxx EUR Sovereigns Germany Capped 3m-2 ,CBIBOXSC3T,comstage-€-sov.-ger.-cap-3m-2-tr
+germany,de,46662,ComStage iBoxx EUR Sovereigns Germany Capped 3m-2,CBIBOXSC3T,comstage-€-sov.-ger.-cap-3m-2-tr
 germany,de,46207,ETFS Daily Short Lean Hogs,4RTB,etfs-short-lean-hogs-de
 germany,de,46037,Amundi ETF Short Govt Bond EuroMTS Broad Investmen,S10,amundi-short-gov-bond-mts-10-15?cid=46037
 germany,de,46109,Amundi CAC 40 UCITS,GC40,amundi-cac-40-de
@@ -2346,7 +2346,7 @@ germany,de,46334,ComStage STOXX Europe 600 Retail NR UCITS,CBSXRR,comstage-stoxx
 germany,de,46290,db x-trackers II Australia SSA Bonds UCITS 1C,XCS2,australia-ssa-bonds-tr-index
 germany,de,46145,Lyxor UCITS EuroMTS Covered Bond Aggregate,LCVB,lyxor-euromts-covered-bond-agg.?cid=46145
 germany,de,46010,Lyxor UCITS MSCI World Industrials TR C-EUR,LYXINDW,lyxor-msci-world-industrials-tr?cid=46010
-germany,de,46174,Lyxor UCITS Stoxx Europe 600 Personal & Household ,LPHG,lyxor-stoxx600-per.--house.-goods?cid=46174
+germany,de,46174,Lyxor UCITS Stoxx Europe 600 Personal & Household,LPHG,lyxor-stoxx600-per.--house.-goods?cid=46174
 germany,de,46386,db x trackers II Eur Gov Bd 15+,X15E,db-xtrackers-ii-€-sov.-euro-15-tr
 germany,de,38664,UBS ETF MSCI USA UCITS USD A-dis,USAEUA,ubs-etf-msci-usa
 germany,de,45899,PowerShares Dynamic US Market UCITS,PSWC,powershares-dynamic-us-mrkt-it?cid=45899
@@ -2366,7 +2366,7 @@ germany,de,46242,UBS ETF MSCI EMU Small Cap UCITS EUR A-dis,ESCEUA,ubs-etf-msci-
 germany,de,959564,Lyxor JP Morgan Multi-Factor Europe UCITS,LYX5,lyxor-jp-morgan-multi-factor-europe
 germany,de,45922,SSgA SPDR Barclays Cap US Aggregate Bond,USAG,spdr-barclays-us-aggregate-bond?cid=45922
 germany,de,38695,db x-trackers II Short iBoxx Sovereigns Eurozone U,XSGL,db-xtrackers-short-€-sov.-euro-tr
-germany,de,46660,ComStage iBOXX EUR Germany Covered Capped Overall ,CBIBOXGCA0,comstage-€-german-cov.-cap-oval-tr
+germany,de,46660,ComStage iBOXX EUR Germany Covered Capped Overall,CBIBOXGCA0,comstage-€-german-cov.-cap-oval-tr
 germany,de,949560,db x-trackers II iBoxx Sovereigns Eurozone 3-5 UCI,X03C,db-xtrackers-€-sov.-euro-3-5-tr-1d?cid=949560
 germany,de,45965,Amundi ETF Leveraged Euro Stoxx 50 Daily UCITS,C5L,amundi-leveraged-euro-stoxx-50?cid=45965
 germany,de,46578,ETFS EUR Daily Hedged All Commodities,00XK,etfs-all-comm.-dj-ubs-eur-hedged
@@ -2447,7 +2447,7 @@ germany,de,46313,ComStage iBoxx EUR Liquid Sovereigns Diversified 3,CBIBOXSD3T,c
 germany,de,45960,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,C10,amundi-gov-bond-mts-invest-10-15?cid=45960
 germany,de,45961,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,C33,amundi-gov-bond-mts-invest-3-5?cid=45961
 germany,de,46373,db x trackers II Eur Gov Bd 10 15,X105,db-xtrackers-€-sov.-euro-10-15-tr
-germany,de,45962,Amundi ETF Cash 3 Months EuroMTS Investment Grade ,18M1,amundi-cash-3-months-mts-invest?cid=45962
+germany,de,45962,Amundi ETF Cash 3 Months EuroMTS Investment Grade,18M1,amundi-cash-3-months-mts-invest?cid=45962
 germany,de,45964,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,C53,amundi-gov-bond-mts-nvest-5-7?cid=45964
 germany,de,45966,Amundi ETF Short Euro Stoxx 50 Daily UCITS,C5S,amundi-short-euro-stoxx-50-daily?cid=45966
 germany,de,45969,Amundi MSCI Europe Banks UCITS,CB5,amundi-msci-europe-banks-de
@@ -2477,7 +2477,7 @@ germany,de,45916,UBS Irl ETF plc - MSCI USA UCITS USD A-dis,UBU3,ubs-(irl)-plc--
 germany,de,45951,Amundi Euro Corporate Financials IBOXX UCITS,AFIN,amundi-euro-corp-fina.-iboxx-de
 germany,de,45933,ETFS EUR Daily Hedged Gold,00XN,etfs-gold-eur-daily-hedged-de
 germany,de,45934,ETFS EUR Daily Hedged Copper,00XL,etfs-copper-eur-daily-hedged-de
-germany,de,45935,Ossiam Emerging Markets Minimum Variance NR UCITS ,OSX9,ossiam-em-min-variance-nr-(eur)-de
+germany,de,45935,Ossiam Emerging Markets Minimum Variance NR UCITS,OSX9,ossiam-em-min-variance-nr-(eur)-de
 germany,de,45941,ETFS Daily Short Live Cattle,4RTC,etfs-short-live-cattle-de
 germany,de,46440,ETFS EUR Daily Hedged Precious Metals,00XQ,etfs-pre.-metals-dj-ubs-eur-hedged
 germany,de,46438,ETFS Longer Dated Energy,OD76,etfs-foward-energy-dj-ubsci-f3
@@ -2533,7 +2533,7 @@ germany,de,46769,ComStage PSI 20 Leverage,CBPSILV,comstage-psi-20-leverage-ls?ci
 germany,de,46656,Coba 5x SCHATZF Daily Long,X0CX,coba-5x-schatzf-daily-long
 germany,de,46699,Coba 3x Gold Daily Long,X0CI,coba-etc-3x-gold-daily-long
 germany,de,46695,UBS ETF Markit iBoxx Germany 1-3 UCITS EUR A-dis,UEFL,ubs-markit-eur-germany-1-3-a-de
-germany,de,46690,Deka Deutsche Boerse EUROGOV Germany Money Market ,ETFGSMM,etflab-deutscheb.-ger.-money-mar.
+germany,de,46690,Deka Deutsche Boerse EUROGOV Germany Money Market,ETFGSMM,etflab-deutscheb.-ger.-money-mar.
 germany,de,45837,ETFS Precious Metals,OD73,etfs-precious-metals-dj-ubsci-de
 germany,de,45838,ETFS Ex-Energy,OD7X,etfs-ex-energy-dj-ubsci-de
 germany,de,46667,ComStage Commerzbank Bund-Future Leveraged TR UCIT,CBBUND2L,comstage-bund-future-lev.-tr
@@ -2702,7 +2702,7 @@ hong kong,hk,986952,CUAM C-Shares CSI 300 CNY,83008,cuam-c-shares-csi-300-cny
 hong kong,hk,986956,E Fund CES China 120,3120,e-fund-ces-china-120
 hong kong,hk,986957,E Fund CES China 120 CNY,83120,e-fund-ces-china-120-cny
 hong kong,hk,986960,E Fund CSI 100 A-Share,3100,e-fund-csi-100-a-share
-hong kong,hk,1011906,Mirae Asset Horizons Hang Seng Daily 2x Leveraged ,7231,miraeasset-hor-hs-day2x-levprod
+hong kong,hk,1011906,Mirae Asset Horizons Hang Seng Daily 2x Leveraged,7231,miraeasset-hor-hs-day2x-levprod
 hong kong,hk,986962,GFI MSCI China A Int,3156,gfi-msci-china-a-international
 hong kong,hk,1054678,Premia CSI Caixin China Bedrock Economy,2803,premia-csi-caixin-cn-bedrock-econ
 hong kong,hk,986963,GFI MSCI China A Int CNY,83156,gfi-msci-china-a-international-cny
@@ -2989,7 +2989,7 @@ israel,il,1097446,MTF SAL Non Linked Fixed Interest Gov Bonds 2-5 Ye,MTFF2,mtf-n
 israel,il,1116403,Tachlit SAL 60 Short Leveraged x2 TA 35 Monthly,TCHF99,tachlit-sal-60-short-levx2-ta35-mnt
 israel,il,1115123,Harel Sal 4D Hang Seng,HRLF29,harel-sal-4d-hang-seng
 israel,il,1097653,Psagot Tel Bond CPI Linked AA-AAA,PSGF23,psagot-tel-bond-cpi-linked-aa-aaa
-israel,il,1097417,Tachlit SAL Non Linked Fixed Interest Gov Bonds 5 ,TCHF32,tachlitnonlinkedfixedintrstgov-b-5y
+israel,il,1097417,Tachlit SAL Non Linked Fixed Interest Gov Bonds 5,TCHF32,tachlitnonlinkedfixedintrstgov-b-5y
 israel,il,1097673,MTF SAL Tel Bond 60,MTFF4,mtf-sal-tel-bond-60
 israel,il,1097801,KSM Tel Bond Shekel,KSMF48,ksm-tel-bond-shekel
 israel,il,1097819,MTF SAL Tel Bond Shekel 50,MTFF15,mtf-sal-tel-bond-shekel-50
@@ -3147,7 +3147,7 @@ israel,il,1097815,Psagot Tel Bond Composite,PSGF25,psagot-tel-bond-composite
 israel,il,1116491,KSM 4A Insurance Shares and Convertibles,KSMF34,ksm-4a-insurance-sharesconvertibles
 israel,il,1097687,KSM Tel Bond CPI Linked SmallCap,KSMF108,ksm-tel-bond-cpi-linked-smallcap
 israel,il,1097686,KSM Tel Bond Yields,KSMF110,ksm-tel-bond-yields
-israel,il,1115941,Psagot 0A iBoxx US Liquid Investment Grade Top 30 ,PSGF63,psagot-0a-iboxx-usliqinvgrd30curhdg
+israel,il,1115941,Psagot 0A iBoxx US Liquid Investment Grade Top 30,PSGF63,psagot-0a-iboxx-usliqinvgrd30curhdg
 israel,il,1115969,Harel Sal 4D S&P Energy,HRLF96,harel-sal-4d-sp-energy
 israel,il,1115279,Psagot 4A S&P Regional Banks Currency Hedged,PSGF130,psagot-4a-sp-regionalbanks-currhdgd
 israel,il,1104625,Harel Sal (4A) TA Growth,HRLF18,harel-sal-4a-ta-growth
@@ -3215,9 +3215,9 @@ israel,il,1116526,KSM 00 Tel Bond Floating,KSMF154,ksm-00-tel-bond-floating
 israel,il,1115268,KSM 4A MSCI AC World Dollar Hedged,KSMF171,ksm-4a-msci-ac-world-dollar-hedged
 israel,il,1115240,Tachlit SAL 4A S&P Health Care Currency Hedged,TCHF49,tachlit-sal-4a-sp-healthcare-curhdg
 israel,il,1116541,Psagot 4A TA Growth,PSGF40,psagot-4a-ta-growth
-israel,il,1116474,Tachlit SAL 00 Non Linked Fixed Int Gov Bonds 0-2 ,TCHF88,tachlit-nonlinkfixedintgovbnd-0-2-y
+israel,il,1116474,Tachlit SAL 00 Non Linked Fixed Int Gov Bonds 0-2,TCHF88,tachlit-nonlinkfixedintgovbnd-0-2-y
 israel,il,1104645,KSM (4A) Tel Div,KSMF13,ksm-4a-tel-div
-israel,il,1116215,KSM 4A Composite Euro STOXX Sector Equity Monthly ,KSMF155,ksm-stoxx-sector-eq-mnth-euro-hdg
+israel,il,1116215,KSM 4A Composite Euro STOXX Sector Equity Monthly,KSMF155,ksm-stoxx-sector-eq-mnth-euro-hdg
 israel,il,1097688,KSM Tel Bond CPI Linked,KSMF107,ksm-tel-bond-cpi-linked
 israel,il,1115936,Psagot 4D S&P Consumer Discretionary,PSGF81,psagot-4d-sp-consumer-discretionary
 israel,il,1116564,Harel Sal 4A S&P 500 Equal Weight Currency Hedged,HRLF95,harel-sal-4a-sp-500-equalwit-curhdg
@@ -3458,7 +3458,7 @@ israel,il,1115912,KSM 0A iBOXX US Liquid Investment Grade Top 30 Cur,KSMF151,ksm
 israel,il,1115921,KSM ETF 4D Bloomberg Agriculture,KSMF81,ksm-etf-4d-bloomberg-agriculture
 israel,il,1116436,Psagot 0B Composite Israel Bonds 90% iBoxx $ 30 10,PSGF147,psagot-0b-comp-israelbnds-iboxx30-m
 israel,il,1116416,KSM 2A Composite Gen Bond Israel 90% Israel Equity,KSMF88,ksm-2a-composite-genbond-90-eq-10-m
-israel,il,1116391,Tachlit SAL 00 Composite Gov Bonds 70% Corp Bonds ,TCHF95,tachlit-comp-govbnd70corpbnd30mnt
+israel,il,1116391,Tachlit SAL 00 Composite Gov Bonds 70% Corp Bonds,TCHF95,tachlit-comp-govbnd70corpbnd30mnt
 israel,il,1116392,Tachlit SAL 40 Composite Gov Bonds 90% Tel Div 10%,TCHF13,tachlit-comp-govbnd90-teldiv10mnth
 israel,il,1116394,Tachlit SAL 00 Composite Gov Corp Bonds 90% Tel Di,TCHF111,tachlit-comp-govcorpbnd90teldiv10-m
 israel,il,1116396,Tachlit SAL 40 Composite Gov Corp Bonds 85% Equity,TCHF19,tachlit-comp-govcorpbnds85-eq15-mnt
@@ -3471,7 +3471,7 @@ israel,il,1116410,KSM 00 Comp Gov Bond Israel 65% Cor Bond Israel 35,KSMF85,ksm-
 israel,il,1116414,KSM 0A Comp iBoxx $ 3-7 Years 80% iBoxx HY 20% Mon,KSMF165,ksm-comp-iboxx3-7y-iboxxhy-mcurrhdg
 israel,il,1116415,KSM 2A Comp Gov Bond 35% Cor Bond 50% Equity 15% M,KSMF172,ksm-2a-compgovbndcorbndeq-m-curhdg
 israel,il,1116418,KSM 3B Composite Gen Bond Israel 65% Equity 35% Mo,KSMF87,ksm-3b-comp-gen-bond-equity-monthly
-israel,il,1116388,Tachlit SAL 00 Composite Gov Bonds 80% Corp Bonds ,TCHF22,tachlit-comp-govbondscorpbonds-mnth
+israel,il,1116388,Tachlit SAL 00 Composite Gov Bonds 80% Corp Bonds,TCHF22,tachlit-comp-govbondscorpbonds-mnth
 israel,il,1116419,KSM 2A Composite Gen Bond Israel 80% Equity 20% Mo,KSMF91,ksm-2a-comp-gen-bnd-eq-monthly
 israel,il,1116421,KSM 00 Short Tel Bond 40,KSMF50,ksm-00-short-tel-bond-40
 israel,il,1116422,KSM 00 Short Tel Bond 20,KSMF26,ksm-00-short-tel-bond-20
@@ -3482,7 +3482,7 @@ israel,il,1116429,Psagot 00 Composite Corp Bond 50% Gov Bond 50% Mon,PSGF140,psa
 israel,il,1116430,Psagot 2A Comp iBoxx $ 0-5 90% S&P 500 10% Monthly,PSGF152,psagot-2a-comp-iboxx-0-5-sp-m-cuhdg
 israel,il,1116431,Psagot 0A Comp Shahar 0-2 Yrs 50% iBoxx$30 50% Mon,PSGF150,psagot-compshahar02yiboxx30mcurhdg
 israel,il,1116432,Psagot 2A Comp Israel Bond 80% BuyBack Eq 20% Mont,PSGF149,psagot-2a-compbond-buybackeqmcurhdg
-israel,il,1116434,Psagot 2A Composite Israel Bond 80% Israel Equity ,PSGF138,psagot-2a-comp-israelbnd-israeleq-m
+israel,il,1116434,Psagot 2A Composite Israel Bond 80% Israel Equity,PSGF138,psagot-2a-comp-israelbnd-israeleq-m
 israel,il,1116435,Psagot 2A Composite Bond 90% TA 125 10% Monthly,PSGF139,psagot-2a-compbnd-ta-125-monthly
 israel,il,1116389,Tachlit SAL 00 Composite Gov Bonds 50% Corp Bond 5,TCHF35,tachlit-comp-govbonds50corpbond50mn
 israel,il,1116387,Tachlit SAL 00 Composite Gov Bonds Monthly,TCHF15,tachlit-sal-00-compgovbonds-monthly
@@ -3501,13 +3501,13 @@ israel,il,1115976,Harel Sal 0A DJ Equal Weight US Issued Corp Bond C,HRLF100,har
 israel,il,1115977,Harel Sal 0D DJ Equal Weight US Issued Corp Bond,HRLF31,harel-dj-eq-wght-us-issued-corpbond
 israel,il,1115989,KSM 4D ! MSCI Singapore,KSMF30,ksm-4d-msci-singapore
 israel,il,1115995,Tachlit SAL 4A S&P/TSX 60 Currency Hedged,TCHF86,tachlit-sal-4a-sp-tsx-60-cur-hdgd
-israel,il,1116383,Tachlit SAL 00 Composite Gov Bonds 85% Equity 15% ,TCHF38,tachlit-comp-govbonds-85-eq-15-mnt
+israel,il,1116383,Tachlit SAL 00 Composite Gov Bonds 85% Equity 15%,TCHF38,tachlit-comp-govbonds-85-eq-15-mnt
 israel,il,1116202,Tachlit SAL 4A Composite LARGECAP Developed Curren,TCHF48,tachlit-sal-complcap-dev-curhdgmnth
 israel,il,1116203,Tachlit SAL 4A Composite MIDCAP Developed Currency,TCHF47,tachlit-sal-commcap-devcurhdgmnth
 israel,il,1116205,Tachlit SAL 40 Composite Local Equity Monthly,TCHF23,tachlit-sal40-comp-local-eq-monthly
 israel,il,1116206,Tachlit SAL 4A Composite S&P 500 Dividend Aristocr,TCHF148,tachlit-cmpsp500divaristocurhdgmnth
 israel,il,1116207,Tachlit SAL 40 Composite Israel MIDCAP Equity Mont,TCHF135,tachlit-comp-israel-midcap-eq-mnth
-israel,il,1116212,Tachlit SAL 4A Comp S&P Health 70% NASDAQ Bio 30% ,TCHF53,tachlit-compsphlthnasbiocurhdgmnth
+israel,il,1116212,Tachlit SAL 4A Comp S&P Health 70% NASDAQ Bio 30%,TCHF53,tachlit-compsphlthnasbiocurhdgmnth
 israel,il,1116216,KSM 4D Composite US Equity Monthly,KSMF150,ksm-4d-composite-us-equity-monthly
 israel,il,1116218,KSM 4A Composite MidCap Equity Monthly Currency He,KSMF140,ksm-4a-comp-midcap-eq-mnth-curhdg
 israel,il,1116221,Psagot 4A Comp S&P Finance 70% Region Bank 30% Mon,PSGF158,psagot-spfin-regbank-mnth-curhdg
@@ -3521,7 +3521,7 @@ italy,it,1096442,Vonvmib7Sslfissae181220,DEVN9AAR,vonvmib7sslfissae181220
 italy,it,1013265,SG Issuer ZT WTI X7 Short 18 Jun 21,LU417034,sg-issuer-zt-wti-x7-short-18-jun-21
 italy,it,47098,ETFS Natural Gas,NGAS,etfs-natural-gas?cid=47098
 italy,it,945845,Boost WTI Oil 3X Leverage Daily,3OIL,boost-wti-oil-3x-leverage
-italy,it,1073125,Societe Generale Effekten ZT FTSE MIB Daily Ultra ,DESG409M,sg-zt-ftse-mibdailyultralvrgdrt-nt
+italy,it,1073125,Societe Generale Effekten ZT FTSE MIB Daily Ultra,DESG409M,sg-zt-ftse-mibdailyultralvrgdrt-nt
 italy,it,1013278,SG Issuer ZT WTI X7 Long 18 Jun 21,LU417018,sg-issuer-zt-wti-x7-long-18-jun-21
 italy,it,1073652,Societe Generale Effekten ZT FTSE MIB Total Return,DESG409N,sg-effekten-zt-ftse-mib-tr-21dec18
 italy,it,47059,ETFS Coffee,COFF,etfs-coffee?cid=47059
@@ -3693,7 +3693,7 @@ italy,it,47179,Lyxor UCITS Hong Kong (HSI) D-EUR,HK,lyxor-hong-kong---hsi?cid=47
 italy,it,46912,iShares MSCI Europe ex-UK UCITS,IEUX,ishares-msci-europe-ex-uk?cid=46912
 italy,it,47095,Lyxor UCITS DAX,DAXX,lyxor-dax-pa?cid=47095
 italy,it,949370,iShares $ High Yield Corporate Bond UCITS,IHYU,ishares-iboxx-$-hyld-cap.-bond?cid=949370
-italy,it,949414,PIMCO Short-Term High Yield Corporate Bond Source ,STHE,pimco-short-term-high-yield-corp-bo
+italy,it,949414,PIMCO Short-Term High Yield Corporate Bond Source,STHE,pimco-short-term-high-yield-corp-bo
 italy,it,46874,Amundi ETF Nasdaq-100 UCITS,ANX,amundi-etf-nasdaq-100---eur?cid=46874
 italy,it,46983,Amundi S&P 500 EUR Hedged Daily UCITS,500H,amundi-s-p-500-eur-hedged-daily-de?cid=46983
 italy,it,47083,iShares FTSE MIB UCITS Dist,IMIB,ishares-ftse-mib?cid=47083
@@ -3723,7 +3723,7 @@ italy,it,949379,Source RDX UCITS,RDXS,rdx-source?cid=949379
 italy,it,46880,ETFS DAX Daily 2x Short GO UCITS,DES2,etfx-dax-2x-short-fund-it
 italy,it,46898,ETFS Lean Hogs,HOGS,etfs-lean-hogs?cid=46898
 italy,it,47030,Lyxor UCITS World Water D-EUR,H2O,lyxor-world-water?cid=47030
-italy,it,47212,Lyxor UCITS EuroMTS All-Maturity Investment Grade ,MTX,lyxor-euromts-global-invest-grade?cid=47212
+italy,it,47212,Lyxor UCITS EuroMTS All-Maturity Investment Grade,MTX,lyxor-euromts-global-invest-grade?cid=47212
 italy,it,951554,Source Physical Gold P Certs,SGLD,source-physical-gold-p-etc-certs?cid=951554
 italy,it,951550,SG WTI Oil -3x Daily Short Collateralized,OIL3S,sg-wti-oil--3x-daily-short-collat
 italy,it,949522,UBS ETF Barclays Euro Area Liquid Corporates 1-5 Y,CBEU5,ubs-barclays-euro-area-liquid-corp?cid=949522
@@ -3777,7 +3777,7 @@ italy,it,949363,SPDR MSCI EM Asia UCITS,EMAE,spdr-msci-em-asia-de?cid=949363
 italy,it,46946,ETFS Sugar,SUGA,etfs-sugar?cid=46946
 italy,it,46922,iShares $ Treasury Bond 7-10Yr UCITS,IBTM,ishares-$-treasury-bond-7-10?cid=46922
 italy,it,1011061,Lyxor EuroMTS 7-10 Invest Grade DR C,EM710,lyxor-euromts-710-invest-grade-dr-c?cid=1011061
-italy,it,949357,UBS ETFs plc - MSCI Emerging Markets SF UCITS USD ,EMGEAS,ubs-emerg.-mkts-sf-a-acc-de?cid=949357
+italy,it,949357,UBS ETFs plc - MSCI Emerging Markets SF UCITS USD,EMGEAS,ubs-emerg.-mkts-sf-a-acc-de?cid=949357
 italy,it,1088679,SPDR MSCI EMU,EURO,spdr-msci-emu?cid=1088679
 italy,it,46990,Lyxor UCITS MSCI Asia Ex Japan C-EUR,LAPEX,lyxor-msci-asia-apex-50?cid=46990
 italy,it,46849,ETFS Physical Platinum,PHPT,etfs-physical-platinum?cid=46849
@@ -3797,7 +3797,7 @@ italy,it,949332,Lyxor UCITS Stoxx Banks C-EUR,BNKE,lyxor-eurostoxx-banks?cid=949
 italy,it,46920,iShares European Property Yield UCITS,IPRP,ishares-nareit-european-prop.-fund?cid=46920
 italy,it,46902,iShares $ Treasury Bond 1-3Yr UCITS,IBTS,ishares-$-treasury-bond-1-3?cid=46902
 italy,it,46835,SPDR S&P 500 UCITS,SPY5,spdr-s-p-500-uk?cid=46835
-italy,it,949410,iShares $ Short DurationHigh Yield Corporate Bond ,SDHY,ishares-usd-short-duration-high-yie
+italy,it,949410,iShares $ Short DurationHigh Yield Corporate Bond,SDHY,ishares-usd-short-duration-high-yie
 italy,it,1013341,iShares MSCI EMU Dist,CEUDIM,ishares-msci-emu-dist
 italy,it,47063,db x-trackers LevDAX Daily UCITS 1C,XLDX,db-x-trackers-levdax-daily?cid=47063
 italy,it,949389,iShares $ Emerging Markets Corporate Bond UCITS,EMCR,ishares-$-em-corp-bond?cid=949389
@@ -3824,7 +3824,7 @@ italy,it,949336,iShares Global Infrastructure UCITS,INFR,ishares-macquarie-globa
 italy,it,47057,iShares Nasdaq 100 UCITS,CSNDX,cs-(ie)-on-nasdaq-100?cid=47057
 italy,it,38723,ETFS EUR Daily Hedged Sugar,ESUG,etfs-sugar-eur-daily-hedged
 italy,it,1112796,Invesco Variable Rate Preferred Shares UCITS,VRPS,invesco-variableratepreferredshares
-italy,it,1013285,Amundi Index Solutions Barclays Euro Corp BBB 1-5 ,EBBB,ais-barclays-euro-corp-bbb-1-5-dr
+italy,it,1013285,Amundi Index Solutions Barclays Euro Corp BBB 1-5,EBBB,ais-barclays-euro-corp-bbb-1-5-dr
 italy,it,46851,ETFS Zinc,ZINC,etfs-zinc?cid=46851
 italy,it,949459,db x-trackers S&P Global Infrastructure UCITS 1C,XSGI,db-xtrackers-s-p-global-infr.-uk?cid=949459
 italy,it,1024602,ETFS 3x Daily Short Natural Gas,NG3S,etfs-3x-daily-short-natural-gas
@@ -3853,11 +3853,11 @@ italy,it,1072062,JPMorgan Ireland ICAV - USD Ultra-Short Income UCI,JPST,jpmrgni
 italy,it,994154,Amundi Eur High Yld Liq Bd IBOXX,AHYE,amundi-eur-high-yld-liq-bd-iboxx
 italy,it,945833,Boost Short USD Long EUR 5x Daily,5EUS,boost-short-usd-long-eur-5x
 italy,it,1096036,SPDR S&P U.S. Health Care Select Sector,SXLV,spdr-sp-us-hc-select-sector?cid=1096036
-italy,it,949490,UBS ETF MSCI World Socially Responsible UCITS USD ,WSREUA,ubs-msci-world-socially-resp.-a-de?cid=949490
-italy,it,47203,Lyxor UCITS Stoxx Europe 600 Personal & Household ,LYXPER,lyxor-stoxx600-per.--house.-goods?cid=47203
+italy,it,949490,UBS ETF MSCI World Socially Responsible UCITS USD,WSREUA,ubs-msci-world-socially-resp.-a-de?cid=949490
+italy,it,47203,Lyxor UCITS Stoxx Europe 600 Personal & Household,LYXPER,lyxor-stoxx600-per.--house.-goods?cid=47203
 italy,it,949501,db x-trackers Nikkei 225 UCITS DR,XDJP,db-x-trackers-nikkei-225?cid=949501
 italy,it,1120084,Vanguard FTSE Emerging Markets UCITS USD Inc,VFEM,vanguard-ftse---emerging-markets?cid=1120084
-italy,it,956350,PIMCO Short-Term High Yield Corporate Bond Source ,STHY,pimco-shterm-hyld-corp-bond-source?cid=956350
+italy,it,956350,PIMCO Short-Term High Yield Corporate Bond Source,STHY,pimco-shterm-hyld-corp-bond-source?cid=956350
 italy,it,951520,SG Natural Gas +3x Daily Leveraged Collateralized,GAS3L,sg-natural-gas-3x-daily-levr-coll
 italy,it,956342,iShares MSCI Europe Quality DE,IEQU,ishares-msci-europe-quality-de?cid=956342
 italy,it,1072347,UBS Irl ETF plc - Global Gender Equality UCITS ETF,GENDEE,ubs-glob-gender-eq-ucits-hdg-eur?cid=1072347
@@ -3871,7 +3871,7 @@ italy,it,46901,iShares Euro Government Bond 1-3Yr UCITS,IBGS,ishares-€-governm
 italy,it,47229,Lyxor UCITS Canada (S&P TSX 60) D-EUR,LYCAN,lyxor-s-p-tsx-60?cid=47229
 italy,it,47198,Lyxor UCITS EuroMTS 1-3Y Investment Grade DR,EM13,lyxor-euromts-1-3y-invest-grade?cid=47198
 italy,it,1131080,Franklin Liberty Euro Green Bond UCITS,FLRG,franklin-liberty-euro-green-bond-mi
-italy,it,1024459,Lyxor iBoxx $ Liquid EM Sovereigns Monthly Hedged ,EMBH,lyxoriboxx-liqem-sovrmonthly-hgd
+italy,it,1024459,Lyxor iBoxx $ Liquid EM Sovereigns Monthly Hedged,EMBH,lyxoriboxx-liqem-sovrmonthly-hgd
 italy,it,945830,Boost Levdax 3X Daily,3DEL,boost-levdax-3x-daily
 italy,it,46970,Xtrackers Euro Stoxx Quality Dividend UCITS,XD3E,db-xtrackers-dj-euro-stoxx-div30?cid=46970
 italy,it,1057224,db x-trackers II iBoxx Liquid Corporate UCITS 1C,XBLC,db-xtrackers-€-liquid-corp-100-tr?cid=1057224
@@ -4022,7 +4022,7 @@ italy,it,47007,Amundi ETF S&P Global Luxury UCITS,GLUX,amundi-etf-msci-europe-in
 italy,it,949510,db x-trackers II Global Sovereign EUR UCITS 5C,XG7S,db-x-trackers-ii-global-sovereign-5
 italy,it,949343,ETFX Russell 2000 US Small CAP GO UCITS,RTWO,etfx-russell-2000-us-smlcap-fund?cid=949343
 italy,it,46993,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,C10,amundi-gov-bond-mts-invest-10-15?cid=46993
-italy,it,46994,Amundi ETF Cash 3 Months EuroMTS Investment Grade ,C3M,amundi-cash-3-months-mts-invest?cid=46994
+italy,it,46994,Amundi ETF Cash 3 Months EuroMTS Investment Grade,C3M,amundi-cash-3-months-mts-invest?cid=46994
 italy,it,1115066,Amundi Stoxx Global Artificial Intelligence,GOAI,amundi-stoxx-global-artificial-int
 italy,it,47144,db x-trackers STOXX Europe 600 UCITS DR 1C,XSX6,db-stoxx-europe-600-uk?cid=47144
 italy,it,956362,WisdomTree EM Equity Income,WTDEM,wisdomtree-em-equity-income
@@ -4042,7 +4042,7 @@ italy,it,1122290,Invesco MSCI Europe ESG Leaders Catholic Principle,ICFP,invesco
 italy,it,46873,Lyxor UCITS South Africa (FTSE JSE Top 40),SAFRI,lyxor-south-africa-(ftse-jse)?cid=46873
 italy,it,47154,Amundi Euro Corporates UCITS,CC4,amundi-euro-corporates-de?cid=47154
 italy,it,47235,Lyxor UCITS iBoxx USD Treasuries 10Y+ DR,US10,lyxor-iboxx-$-treasuries-10y--usd?cid=47235
-italy,it,1126167,Amundi Index Solutions - Amundi Prime Euro Govies ,ETFGOV,amundi-prime-euro-govies-ucits-dr
+italy,it,1126167,Amundi Index Solutions - Amundi Prime Euro Govies,ETFGOV,amundi-prime-euro-govies-ucits-dr
 italy,it,46998,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,CB3,amundi-gov-bond-mts-broad-invest?cid=46998
 italy,it,951515,ETFS 5x Long USD Short EUR,EUS5,etfs-5x-long-gbp-short-eur
 italy,it,949466,UBS ETF MSCI Canada UCITS CAD A-dis,CANEUA,ubs-etf-msci-canada-de?cid=949466
@@ -4078,13 +4078,13 @@ italy,it,47115,db x-trackers S&P/ASX 200 UCITS DR 1C,XAUS,db-x-trackers-s-p-asx-
 italy,it,1128757,BNP Paribas Easy S&P 500 Hedge,ESEH,bnp-paribas-easy-sp-500-hedge?cid=1128757
 italy,it,945842,Boost Silver 3X Short Daily,3SIS,boost-silver-3x-short-daily
 italy,it,951527,SG Gold +3X Daily Leveraged Collateralized,GOLD3L,sg-gold-3x-daily-lever-collat
-italy,it,38720,Ossiam Emerging Markets Minimum Variance NR UCITS ,EMMV,ossiam-em-min-variance-nr-(eur)-de?cid=38720
+italy,it,38720,Ossiam Emerging Markets Minimum Variance NR UCITS,EMMV,ossiam-em-min-variance-nr-(eur)-de?cid=38720
 italy,it,1013336,Amundi Index Solutions MSCI North America DR,NRAM,ais-msci-north-america-dr
 italy,it,1052288,Lyxor EUR 2-10 Inflation Expectations C-EUR,INFL,lyxor-eur-2-10-inflation-exp-ceur
 italy,it,942312,db x trackers II Eur Gov Bd 15+,X15E,db-xtrackers-ii-€-sov.-euro-15-tr?cid=942312
 italy,it,38751,db Brent Crude Oil Booster Euro Hedged,XETC,db-brent-crude-oil-boost-hgd-de?cid=38751
 italy,it,949361,Source Consumer Discretionary S&P US Select Sector,XLYS,source-us-consumer-discretnry?cid=949361
-italy,it,949516,UBS ETF - MSCI Japan 100% hedged to EUR UCITS EUR ,JPEUBH,ubs-msci-japan-hedged-to-eur?cid=949516
+italy,it,949516,UBS ETF - MSCI Japan 100% hedged to EUR UCITS EUR,JPEUBH,ubs-msci-japan-hedged-to-eur?cid=949516
 italy,it,1024463,Boost WTI Oil,WTID,boost-wti-oil-mi
 italy,it,994163,iShares Edge MSCI World MF GBp,IFSW,ishares-edge-msci-world-mf-gbp?cid=994163
 italy,it,47176,Lyxor UCITS Dow Jones Industrial Average D-EUR,DJE,lyxor-dj-industrial-average?cid=47176
@@ -4121,7 +4121,7 @@ italy,it,46940,ETFS Leveraged Soybeans ETC,LSOB,etfs-leveraged-soybeans-it
 italy,it,1052593,Lyxor BofAML USD High Yield Bond UCITS Monthly Hed,USYH,lyxor-bofaml-usd-hiyld-bd-mi
 italy,it,949360,Source Energy S&P US Select Sector UCITS USD,XLES,energy-s-p-us-sel-sector-source?cid=949360
 italy,it,951512,ETFS Long GBP Short EUR,EUGB,etfs-long-gbp-short-eur-mi
-italy,it,1072061,JPMorgan Ireland ICAV - Managed Futures UCITS USD ,JPMF,jpmorgan-ie-icav-managedfutures-usd
+italy,it,1072061,JPMorgan Ireland ICAV - Managed Futures UCITS USD,JPMF,jpmorgan-ie-icav-managedfutures-usd
 italy,it,951513,ETFS Long JPY Short EUR,EUJP,etfs-long-jpy-short-eur-mi
 italy,it,46944,ETFS Short Cocoa,SCOC,etfs-short-cocoa?cid=46944
 italy,it,46965,iShares MSCI EMU Small Cap UCITS,CSEMUS,cs-(ie)-on-msci-emu-smlcap-uk?cid=46965
@@ -4185,8 +4185,8 @@ italy,it,949430,SPDR MSCI Europe Technology UCITS,STKX,spdr-msci-europe-info-tec
 italy,it,47010,Amundi ETF MSCI World Ex EMU UCITS,CM9,amundi-etf-msci-world-x-emu?cid=47010
 italy,it,1010881,Lyxor Italia Equity PIR C Acc,ITAPIR,lyxor-italia-equity-pir-c-acc
 italy,it,46947,ETFS Tin,TINM,etfs-tin?cid=46947
-italy,it,46941,iShares MSCI Emerging Markets Latin America UCITS ,LTAM,ishares-msci-latin-america---gbp?cid=46941
-italy,it,1126170,Amundi Index Solutions - Amundi Prime Japan UCITS ,ETFJAP,amundi-prime-japan-ucits-dr
+italy,it,46941,iShares MSCI Emerging Markets Latin America UCITS,LTAM,ishares-msci-latin-america---gbp?cid=46941
+italy,it,1126170,Amundi Index Solutions - Amundi Prime Japan UCITS,ETFJAP,amundi-prime-japan-ucits-dr
 italy,it,38712,ETFS 3x Long AUD Short EUR,EAU3,etfs-3x-long-aud-short-eur
 italy,it,1075600,PowerShares Preferred Shares UCITS EUR Hedged Dist,PRFE,powersharespreferredshareseuhdgdist
 italy,it,949451,db x-trackers II iTraxx Crossover 5y UCITS,XTXC,db-x-trackers-ii-crossover-5-y-tr?cid=949451
@@ -4319,7 +4319,7 @@ italy,it,1120080,Vanguard FTSE 100 UCITS GBP Inc,VUKE,vanguard-ftse-100?cid=1120
 italy,it,949401,SSga SPDR Dow Jones Global Real Estate UCITS,GLRE,spdr-dow-jones-global-real-estate?cid=949401
 italy,it,949500,db x-trackers Euro Stoxx 50 ex Financials UCITS DR,XD5F,db-x-trackers-euro-stoxx-50-ex-fina?cid=949500
 italy,it,949346,Source Utilities S&P US Select Sector UCITS,XLUS,source-utilities-s-p-us-select-sect
-italy,it,949506,Ossiam Risk Weighted Enhanced Commodity Ex Grains ,CRWE,ossiam-risk-weighted-enhanced-commo
+italy,it,949506,Ossiam Risk Weighted Enhanced Commodity Ex Grains,CRWE,ossiam-risk-weighted-enhanced-commo
 italy,it,1129276,Amundi Index MSCI Emerging Markets SRI UCITS,EMSRI,amundi-index-msci-em-sri-ucits?cid=1129276
 italy,it,949313,Amundi ETF MSCI Europe Ex EMU UCITS,CU9,amundi-etf-msci-europe-x-emu?cid=949313
 italy,it,1131071,UBS (Irl) ETF plc S&P 500 ESG UCITS A Cap USD,SPESGU,ubs-irl-plc-sp-500-esg-a-cap
@@ -4353,7 +4353,7 @@ italy,it,1138370,iShares MSCI Japan SRI UCITS,SUJP,ishares-msci-japan-sri-ucits
 italy,it,1138372,iShares € Corp Bond SRI 0-3yr UCITS EUR (Dist),SUSE,ishares-eur-crp-bd-sri-03y-eur-dist
 italy,it,1126172,Amundi Index Solutions - Amundi Prime Eurozone UCI,ETFEZ,amundi-prime-eurozone-ucits-dr
 italy,it,1089765,UBS Irl Factor MSCI USA Low Volatility UCITS (hedg,ULOVE,ubs-fctrmsciusalowvolhdgdeuraacceur
-italy,it,1126165,Amundi Index Solutions - Amundi Prime US Treasury ,ETFUST,amundi-prime-us-treasury-ucits-dr
+italy,it,1126165,Amundi Index Solutions - Amundi Prime US Treasury,ETFUST,amundi-prime-us-treasury-ucits-dr
 italy,it,1089766,UBS Irl Factor MSCI USA Quality UCITS (hedged to E,UQLTE,ubs-fctr-msciusaqultyhdgdeur-aacc
 italy,it,1138368,iShares Digital Security UCITS USD Acc,LOCK,ishares-digitalsec-ucits-usd-acc
 italy,it,37441,ETFS EUR Daily Hedged Forward Agriculture,EFAG,etfs-for.-agri-eur-daily-hedged
@@ -4586,7 +4586,7 @@ japan,jp,1080059,NEXT FUNDS MSCI Japan Empowering Women Select,2518,next-funds-m
 japan,jp,953280,Mitsubishi Japan Physical Silver,1542,mitsubishi-japan-physical-silver
 japan,jp,953351,Simplex China Bear -1x H-share,1573,simplex-china-bear-1x-h-share
 japan,jp,953318,NEXT NOTES F-KOSPI 200 Inverse,2034,next-notes-f-kospi-200-inverse
-japan,jp,953329,NEXT NOTES S&P 500 Dividend Aristocrats Net Total ,2044,next-notes-sp-500-dividend-aristoc
+japan,jp,953329,NEXT NOTES S&P 500 Dividend Aristocrats Net Total,2044,next-notes-sp-500-dividend-aristoc
 japan,jp,953246,JASDAQ-Top20,1551,jasdaq-top20
 japan,jp,953298,NEXT FUNDS Thai Stock SET50,1559,next-funds-thai-stock-set50
 japan,jp,953254,Listed Index Fund International Bond (Citi WGBI) M,1677,listed-index-fund-international-bon
@@ -5119,13 +5119,13 @@ netherlands,nl,47304,iShares EURO Total Market Growth Large UCITS,IDJG,ishares-d
 netherlands,nl,986911,Vanguard FTSE Dev World,VEVE,vanguard-ftse-developed-world-l?cid=986911
 netherlands,nl,47283,iShares $ Tips UCITS,TPSA,ishares-$-tips?cid=47283
 netherlands,nl,1097871,SPDR MSCI World Consumer Discretionary UCITS,WCOD,spdr-msci-world-consumer-disc-ucits
-netherlands,nl,962095,iShares $ Short DurationHigh Yield Corporate Bond ,SDHY,ishares-usd-short-duration-high-yie?cid=962095
+netherlands,nl,962095,iShares $ Short DurationHigh Yield Corporate Bond,SDHY,ishares-usd-short-duration-high-yie?cid=962095
 netherlands,nl,962097,iShares USD Ultrashort Bond UCITS,ERND,ishares-usd-ultrashort-bond-ucits?cid=962097
 netherlands,nl,47279,iShares Core FTSE 100 UCITS,ISFA,ishares-ftse-100?cid=47279
 netherlands,nl,47326,ETFS Physical Palladium,PHPD,etfs-physical-palladium?cid=47326
 netherlands,nl,38768,Think Total Market Offensief,TOF,thinktotal-market-tracker-offens.
 netherlands,nl,47374,iShares MSCI Russia Adr/Gdr UCITS,CSRU,cs-etf-(ie)-on-msci-russia?cid=47374
-netherlands,nl,47291,iShares MSCI Emerging Markets Latin America UCITS ,ILTAM,ishares-msci-latin-america---gbp?cid=47291
+netherlands,nl,47291,iShares MSCI Emerging Markets Latin America UCITS,ILTAM,ishares-msci-latin-america---gbp?cid=47291
 netherlands,nl,47298,iShares Euro Government Bond 5-7Yr UCITS,IEGY,ishares-euro-gov-bond-5-7-eur-uk?cid=47298
 netherlands,nl,986917,Vanguard USD Corp Bd,VUCP,vanguard-usd-corporate-bd-l?cid=986917
 netherlands,nl,986915,Vanguard Global Momentum Factor,VMOM,vanguard-global-momentum-factor-l?cid=986915
@@ -5492,7 +5492,7 @@ south korea,kr,980508,Kiwoom KOSEF Synth USD Futures Inv,230480,kiwoom-kosef-syn
 south korea,kr,1075593,Shinhan BNPP SMART 200 Total Return,295040,shinhan-bnpp-smart-200-total-return
 south korea,kr,953445,MiraeAsset TIGER Consumer Staples,139280,miraeasset-tiger-consumer-staples
 south korea,kr,1073406,Mirae Asset TIGER Top 10,292150,mirae-asset-tiger-top-10
-south korea,kr,1055050,Shinhan Investment Shinhan Inverse 2X Natural Gas ,Q500032,shinhan-inverse-2x-nat-gas-fut-h-32
+south korea,kr,1055050,Shinhan Investment Shinhan Inverse 2X Natural Gas,Q500032,shinhan-inverse-2x-nat-gas-fut-h-32
 south korea,kr,953464,MiraeAsset TIGER Media & Telecommunication,098560,miraeasset-tiger-media-telecommun
 south korea,kr,1096223,NH-Amundi HANARO KOSDAQ150 Futures Leverage,306530,nh-amundihanaro-kosdaq150futleverag
 south korea,kr,953497,Samsung KODEX Insurance,140700,samsung-kodex-insurance
@@ -5533,7 +5533,7 @@ south korea,kr,1045781,Korea Investment & Securities TRUE KOSPI Covered P,Q57002
 south korea,kr,1115215,KB KBSTAR MSCI China Futures,310080,kb-kbstar-msci-china-futures
 south korea,kr,953414,Kiwoom KOSEF 10Y Treasury Bond Leverage,167860,kiwoom-kosef-10y-treasury-bond-leve
 south korea,kr,1031365,Mirae Asset TIGER Consumer Goods Balance,237440,ma-tiger-consumer-goods-balance
-south korea,kr,953406,KIM KINDEX Short-term Monetary Stabilization Bond ,190620,kim-kindex-short-term-monetary-stab
+south korea,kr,953406,KIM KINDEX Short-term Monetary Stabilization Bond,190620,kim-kindex-short-term-monetary-stab
 south korea,kr,953455,MiraeAsset TIGER Korea Treasury Bond 3,114820,miraeasset-tiger-korea-treasury-bon
 south korea,kr,1075243,Mirae Asset Tiger JPY KRW Futures,292560,mirae-asset-tiger-jpy-krw-futures
 south korea,kr,953478,MiraeAsset TIGER Software,157490,miraeasset-tiger-software
@@ -5557,7 +5557,7 @@ south korea,kr,980503,Samsung KODEX 200 Mid Small,226980,samsung-kodex-200-mid-s
 south korea,kr,953415,Kiwoom KOSEF Bluechip,104520,kiwoom-kosef-bluechip
 south korea,kr,1073393,KB KBSTAR KRX300,292050,kb-kbstar-krx300
 south korea,kr,953383,KB KSTAR Equity Balanced Equity-Derivatives ,183710,kb-kstar-equity-balanced-equity-der
-south korea,kr,1055052,Samsung Securities Samsung Inverse 2X Natural GAS ,Q530038,samsung-inverse-2x-nat-gas-fut-b38
+south korea,kr,1055052,Samsung Securities Samsung Inverse 2X Natural GAS,Q530038,samsung-inverse-2x-nat-gas-fut-b38
 south korea,kr,1031346,KB KBSTAR KQ High Dividend,270800,kb-kbstar-kq-high-dividend
 south korea,kr,1084293,Daishin Securities Daishin 2X Inverse Nickel Futur,Q510010,daishin-2x-invrs-nickelfutures-h-10
 south korea,kr,1045801,NH QV -2X WTI Crude Oil Futures ETN(H) 43,Q550043,nh-qv-2x-wti-crude-oil-fut-43
@@ -5692,7 +5692,7 @@ south korea,kr,1089536,KB KBSTAR Mid-Small Cap Momentum Value,300290,kb-kbstar-m
 south korea,kr,1073663,Samsung KODEX 3Y F KTB Inverse,292770,samsung-kodex-3y-f-ktb-inverse
 south korea,kr,953432,MIDAS KOSPI 200 Covered Call,137930,midas-kospi-200-covered-call
 south korea,kr,1084303,Korea Investment & Securities TRUE Inverse HSCEI H,Q570028,korea-invsec-trueinverse-hscei-hb28
-south korea,kr,1138389,Shinhan Investment K200 Monthly Short Strangle 3% ,Q500046,shinhan-k200mnthshortstrangle3otm46
+south korea,kr,1138389,Shinhan Investment K200 Monthly Short Strangle 3%,Q500046,shinhan-k200mnthshortstrangle3otm46
 south korea,kr,1097569,MiraeAsset TIGER KRX300 Futures Inverse,307620,miraeasset-tiger-krx300-fut-inverse
 south korea,kr,953429,KyoboAXA POWER Korea Treasury Bond,176710,kyoboaxa-power-korea-treasury-bond
 south korea,kr,953410,KIM KINDEX Treasury Bond,114460,kim-kindex-treasury-bond
@@ -5712,7 +5712,7 @@ south korea,kr,953468,MiraeAsset TIGER Nasdaq 100,133690,miraeasset-tiger-nasdaq
 south korea,kr,953481,MiraeAsset TIGER Synth-IBOXX Short Term High Yield,182490,miraeasset-tiger-synth-iboxx-short
 south korea,kr,953400,KIM KINDEX Japan Leverage (H),196030,kim-kindex-japan-leverage-h
 south korea,kr,1138391,Shinhan Investment Shinhan K200 Monthly Short Stra,Q500048,shinhan-k200mnthshrtstrngl3otm01-48
-south korea,kr,1138390,Shinhan Investment K200 Monthly Short Strangle 5% ,Q500047,shinhan-k200mnthshortstrangle5otm47
+south korea,kr,1138390,Shinhan Investment K200 Monthly Short Strangle 5%,Q500047,shinhan-k200mnthshortstrangle5otm47
 south korea,kr,953369,Hanwha ARIRANG Barbell Bond,190150,hanwha-arirang-barbell-bond
 south korea,kr,953377,Hanwha ARIRANG Synth-HSCEI Leverage (H) ,204420,hanwha-arirang-synth-hscei-leverage
 south korea,kr,953378,Hanwha ARIRANG Synth-MSCI AC World (H),189400,hanwha-arirang-synth-msci-ac-world
@@ -5783,7 +5783,7 @@ south korea,kr,1014032,KB KBSTAR US Treasury Long Bond Futures,267440,kbstar-us-
 south korea,kr,1014022,KIM KINDEX MSCI Russia Synth,265690,kim-kindex-msci-russia-synth
 south korea,kr,1056187,Samsung KODEX 200 US Treasury Notes Balanced,284430,samsung-kodex-200-us-trs-notes-bal
 south korea,kr,1056191,Samsung Securities Samsung K200 Call 1811-02 ETN 4,Q530040,samsung-secs-k200-call-1811-02-40
-south korea,kr,1077021,Shinhan Investment Shinhan S&P500 VIX S/T Futures ,Q500034,shinhan-sp500-vix-st-futures-34
+south korea,kr,1077021,Shinhan Investment Shinhan S&P500 VIX S/T Futures,Q500034,shinhan-sp500-vix-st-futures-34
 south korea,kr,956457,Samsung Kodex Gold Futures Special,132030,samsung-kodex-gold-futures-special
 south korea,kr,956466,MiraeAsset TIGER WTI Inverse,217770,miraeasset-tiger-wti-inverse
 south korea,kr,956464,Hanwha ARIRANG Synth-DJ US Select,213630,hanwha-arirang-synth-dj-us-select
@@ -5800,7 +5800,7 @@ south korea,kr,953514,Samsung KODEX Synth-US Industrial,200030,samsung-kodex-syn
 south korea,kr,953513,Samsung KODEX Synth-US Financials,200040,samsung-kodex-synth-us-financials
 south korea,kr,953512,Samsung KODEX Synth-US Biotech,185680,samsung-kodex-synth-us-biotech
 south korea,kr,1077019,MiraeAssetDaewoo MiraeAsset S&P500 VIX S/T Futures,Q520025,miraeassetdaewoo-sp500-vixstfutures
-south korea,kr,1077020,Samsung Securities Samsung S&P500 VIX S/T Futures ,Q530052,samsung-sp500-vix-st-ftrsh52
+south korea,kr,1077020,Samsung Securities Samsung S&P500 VIX S/T Futures,Q530052,samsung-sp500-vix-st-ftrsh52
 south korea,kr,956467,Samsung KODEX SP500 Futures,219480,samsung-kodex-sp500-futures
 south korea,kr,956469,SHBNPP SMART Synth-China Mainland,220130,shbnpp-smart-synth-china-mainland
 south korea,kr,997380,MiraeAsset TIGER Euro STOXX Dividend 30,245350,miraeasset-tiger-euro-stoxx-div-30
@@ -5925,7 +5925,7 @@ switzerland,ch,995396,iShares Core EURO STOXX 50 UCITS,CSSX5E,cs-etf-(ie)-on-eur
 switzerland,ch,995509,iShares EURO Dividend UCITS,IDVY,ishares-dj-euro-stoxx-select-div.?cid=995509
 switzerland,ch,949290,UBS ETF - MSCI United Kingdom 100% hedged to EUR U,UKEUBH,ubs-msci-uk-hedged-to-eur
 switzerland,ch,1057722,UBS Irl ETF plc - MSCI ACWI ESG Universal UCITS ET,AWESGW,ubs-msci-acwi-esg-uni-ucits
-switzerland,ch,46253,UBS ETFs plc - MSCI Emerging Markets SF UCITS USD ,EGUSAS,ubs-emerg.-mkts-sf-a-acc-de
+switzerland,ch,46253,UBS ETFs plc - MSCI Emerging Markets SF UCITS USD,EGUSAS,ubs-emerg.-mkts-sf-a-acc-de
 switzerland,ch,996790,db x-trackers FTSE China 50 UCITS DR,XXXI,db-xtrackers-ftse-xinhua-china-25?cid=996790
 switzerland,ch,996789,UBS MSCI United Kingdom hedged A-acc,UKCHBH,ubs-msci-united-kingdom-hdgd-aacc
 switzerland,ch,996822,UBS ETF MSCI Japan UCITS JPY A-dis,JPNJPA,ubs-etf-msci-japan-a?cid=996822
@@ -5949,7 +5949,7 @@ switzerland,ch,995446,iShares US Property Yield UCITS,IUSP,ishares-ftse-nareit-u
 switzerland,ch,986898,Vanguard S&P 500 UCITS USD Inc,VUSA,vanguard-s-p-500-uk?cid=986898
 switzerland,ch,995649,iShares Edge MSCI World MF GBp,IFSW,ishares-edge-msci-world-mf-gbp?cid=995649
 switzerland,ch,995860,Lyxor UCITS Commodities Thomson Reuters/Corecommod,LYCRN,lyxor-commodity-crb-x-energy-tr?cid=995860
-switzerland,ch,1024467,UBS Irl plc Factor MSCI USA Low Volatility hedged ,ULOVS,ubs-irl-plc-fact-msci-lwvl-hgd-aacc
+switzerland,ch,1024467,UBS Irl plc Factor MSCI USA Low Volatility hedged,ULOVS,ubs-irl-plc-fact-msci-lwvl-hgd-aacc
 switzerland,ch,996863,HSBC MSCI Pacific ex Japan UCITS,HMXJ,hsbc-msci-pacific-x-japan?cid=996863
 switzerland,ch,996795,db x-trackers MSCI Europe UCITS DR,XMEU,db-xtrackers-msci-europe-trn?cid=996795
 switzerland,ch,995490,iShares MSCI Emerging Markets UCITS Dist,IEEM,ishares-msci-emerging-market?cid=995490
@@ -6001,7 +6001,7 @@ switzerland,ch,995904,UBS SMIM CHF A-dis,SMMCHA,ubs-smim-chf-adis
 switzerland,ch,995634,iShares MSCI World Momentum Factor UCITS,IWMO,ishares-msci-world-momentum-factor?cid=995634
 switzerland,ch,995765,UBS Gold USD,AUUSI,ubs-gold-usd
 switzerland,ch,995909,ZKB Gold AA CHF,ZGLD,zkb-gold-aa-chf
-switzerland,ch,1057739,UBS ETF - MSCI EMU Socially Responsible UCITS ETF ,EMUSRI,ubs-msci-emu-socrsp-ucits-eur-aacc
+switzerland,ch,1057739,UBS ETF - MSCI EMU Socially Responsible UCITS ETF,EMUSRI,ubs-msci-emu-socrsp-ucits-eur-aacc
 switzerland,ch,1057723,UBS Irl ETF plc - MSCI ACWI ESG Universal UCITS ET,AWESGE,ubs-msci-acwi-esg-uni-ucits-hdg-eur
 switzerland,ch,956326,UBS MSCI Canada UCITS EUR,CAHEUA,ubs-msci-canada-ucits-eur
 switzerland,ch,995869,PowerShares EQQQ Nasdaq-100 UCITS,EQQQ,powershares-eqqq?cid=995869
@@ -6127,7 +6127,7 @@ switzerland,ch,995513,iShares Euro Corporate Bond Large Cap UCITS,IBCX,ishares-e
 switzerland,ch,995342,iShares Swiss Domestic Govt Bond 3-7 CHF,CSBGC7,ishares-swiss-dom-govt-bd-3-7
 switzerland,ch,956327,UBS MSCI Canada UCITS USD,CAHUSA,ubs-msci-canada-ucits-usd
 switzerland,ch,956333,iShares MSCI EMU UCITS,EMUC,ishares-msci-emu-ucits
-switzerland,ch,949291,UBS ETF - MSCI Japan 100% hedged to EUR UCITS EUR ,JPEUBH,ubs-msci-japan-hedged-to-eur
+switzerland,ch,949291,UBS ETF - MSCI Japan 100% hedged to EUR UCITS EUR,JPEUBH,ubs-msci-japan-hedged-to-eur
 switzerland,ch,995586,iShares EURO STOXX Banks 30-15 UCITS,SX7EEX,ishares-euro-stoxx-banks---de?cid=995586
 switzerland,ch,996818,SSgA SPDR S&P US Dividend Aristocrats,USDV,spdr-s-p-us-dividend-aristocrats?cid=996818
 switzerland,ch,953164,S&P GSCI Energy&Metals THEAM Easy UCITS C,GSCID,sp-gsci-capped-component-35-20-usd
@@ -6146,7 +6146,7 @@ switzerland,ch,956331,iShares Core GBP Corporate Bond UCITS,SLXX,ishares-gbp-cor
 switzerland,ch,995890,UBS ETF MSCI USA UCITS USD A-dis,USACHA,ubs-etf-msci-usa?cid=995890
 switzerland,ch,996889,UBS ETF MSCI EMU UCITS EUR A-dis,EMUEUA,ubs-etf-msci-emu-de?cid=996889
 switzerland,ch,996894,UBS ETF MSCI Pacific Socially Responsible UCITS US,PSRCHA,ubs-msci-pacific-soc.-resp.-a-de?cid=996894
-switzerland,ch,995457,iShares MSCI Emerging Markets Latin America UCITS ,LTAM,ishares-msci-latin-america---gbp?cid=995457
+switzerland,ch,995457,iShares MSCI Emerging Markets Latin America UCITS,LTAM,ishares-msci-latin-america---gbp?cid=995457
 switzerland,ch,995916,ZKB Platinum AA CHF,ZPLA,zkb-platinum-aa-chf
 switzerland,ch,996784,UBS MSCI Switzerland 20/35 A-dis,SW2CHA,ubs-msci-switzerland-20-35-adis
 switzerland,ch,949289,UBS ETF MSCI World UCITS USD A-dis,WRDCHA,ubs-etf-msci-world-a?cid=949289
@@ -6184,7 +6184,7 @@ switzerland,ch,996827,UBS ETF MSCI USA UCITS USD A-dis,USAUSA,ubs-etf-msci-usa?c
 switzerland,ch,995540,iShares Emerging Markets Dividend UCITS,IEDY,ishares-dj-em-select-dividend-£?cid=995540
 switzerland,ch,996764,Source Materials S&P US Select Sector,XLBS,source-mat-s-p-us-select
 switzerland,ch,1024758,UBS Bloomberg Barclays TIPS 1-10 hedged A-acc CHF,TIP1S,ubs-bbg-brcls-tips-110-hgd-aacc-chf
-switzerland,ch,1024466,PIMCO Short-Term High Yield Corporate Bond Source ,STHC,pimco-shrttrm-hiyld-crpbd-srchgdacc
+switzerland,ch,1024466,PIMCO Short-Term High Yield Corporate Bond Source,STHC,pimco-shrttrm-hiyld-crpbd-srchgdacc
 switzerland,ch,996964,ComStage Nasdaq-100 UCITS,CBNDX,comstage-nasdaq-100?cid=996964
 switzerland,ch,995767,UBS Barclays US Liquid Corp USD,CBUS,ubs-barclays-us-liquid-corp-usd
 switzerland,ch,995521,iShares Global High Yield Corporate Bond UCITS,HYLD,ishares-global-high-yield-bond?cid=995521
@@ -6224,7 +6224,7 @@ switzerland,ch,996832,Amundi ETF Euro Stoxx 50 UCITS,C50,amundi-etf-euro-stoxx-5
 switzerland,ch,995485,iShares TecDAX UCITS,TDXPEX,ishares-tecdax-(de)-de?cid=995485
 switzerland,ch,995908,ZKB Gold AA GBP,ZGLDGB,zkb-gold-aa-gbp
 switzerland,ch,995483,iShares Euro Government Bond 3-7Yr UCITS Acc,CSBGE7,cs-etf-(ie)-on-iboxx-eur-govt-3-7?cid=995483
-switzerland,ch,996903,UBS ETF MSCI World Socially Responsible UCITS USD ,WSRUSA,ubs-msci-world-socially-resp.-a-de?cid=996903
+switzerland,ch,996903,UBS ETF MSCI World Socially Responsible UCITS USD,WSRUSA,ubs-msci-world-socially-resp.-a-de?cid=996903
 switzerland,ch,995400,iShares Euro Inflation Linked Government Bond UCIT,IBCI,ishares-eur-inflation-linked-bond?cid=995400
 switzerland,ch,996867,Lyxor UCITS MSCI World Health Care TR C-USD,LYHLTW,lyxor-msci-world-health-care-tr-c?cid=996867
 switzerland,ch,996860,db x-trackers STOXX Global Select Dividend 100 UCI,XGSD,db-xtrackers-stoxx-glbl-div-100?cid=996860
@@ -6287,7 +6287,7 @@ switzerland,ch,47025,Lyxor UCITS EuroMTS 5-7Y Investment Grade DR,LYMTC,lyxor-eu
 switzerland,ch,995523,iShares Global Inflation Linked Government Bond UC,IGIL,ishares-global-infl.-link-bond-$?cid=995523
 switzerland,ch,995871,Raiffeisen Solid Gold CHF Hedged,RGLDSH,raiffeisen-solid-gold-chf-hedged
 switzerland,ch,1024561,UBS plc MSCI ACWI SF hedged A-Ukdis,ACCUKD,ubs-plc-msci-acwi-sf-hedged-a-ukdis
-switzerland,ch,996902,UBS ETF MSCI World Socially Responsible UCITS USD ,WSRCHA,ubs-msci-world-socially-resp.-a-de?cid=996902
+switzerland,ch,996902,UBS ETF MSCI World Socially Responsible UCITS USD,WSRCHA,ubs-msci-world-socially-resp.-a-de?cid=996902
 switzerland,ch,995423,iShares Core UK Gilts UCITS,IGLT,ishares-ftse-uk-all-stks-gilt?cid=995423
 switzerland,ch,995579,iShares MSCI Korea UCITS Acc,CSKR,cs-(ie)-on-msci-korea-de?cid=995579
 switzerland,ch,995840,ETFX Longer Dated All Commodities GO UCITS,COMF,etfs-longer-dated-all-commodities-g?cid=995840
@@ -6321,7 +6321,7 @@ switzerland,ch,1138383,Lyxor Core Global Inflation-Linked 1-10Y Bond (DR),GIST,l
 switzerland,ch,1137527,iShares Glb High Yld Corp Bd UCITS CHF Hdg Acc,HYLC,ishares-glbhiyld-corpbd-chf-hdg-acc
 switzerland,ch,1137523,iShares Global Corp Bond UCITS CHF Hdg Acc,CORC,ishares-global-corp-bnd-chf-hdg-acc
 switzerland,ch,996915,ComStage MSCI EM Eastern Europe TRN UCITS,CBMINEE,comstage-msci-em-eastern-europetr?cid=996915
-switzerland,ch,1136321,UBS (Irl) ETF plc - MSCI ACWI ESG Universal UCITS ,AWESGWCHF,ubs-msci-acwi-esg-univ-hdgusd-a-acc
+switzerland,ch,1136321,UBS (Irl) ETF plc - MSCI ACWI ESG Universal UCITS,AWESGWCHF,ubs-msci-acwi-esg-univ-hdgusd-a-acc
 switzerland,ch,996916,ComStage MSCI EM Eastern Europe TRN UCITS,CBMINEEUS,comstage-msci-em-eastern-europetr?cid=996916
 switzerland,ch,996917,ComStage MSCI Europe Mid Cap TRN UCITS,CBMINEUM,comstage-msci-europe-mid-cap-trn?cid=996917
 switzerland,ch,1128890,Vanguard USD Treasury Bond UCITS USD Accumulation,VUTATR,vanguard-usd-treasurybond-ucits-acc
@@ -6336,7 +6336,7 @@ switzerland,ch,996924,ComStage STOXX Europe 600 Basic Resources NR UCITS,CBSXPRE
 switzerland,ch,996925,ComStage STOXX Europe 600 Basic Resources NR UCITS,CBSXPR,comstage-stoxx600-basic-res.-nr?cid=996925
 switzerland,ch,1123025,Invesco US Treasury Bond 1-3 Year UCITS,TRE3,invesco-us-treasury-bond-1-3-y?cid=1123025
 switzerland,ch,996926,ComStage STOXX Europe 600 Construction & Materials,CBSXOREU,comstage-stoxx600-cons.---mat.-nr?cid=996926
-switzerland,ch,1120036,JPMorgan Global Emerging Markets Research Enh Idx ,JREM,jpmorgan-glbl-em-rsrchenhidxeq-esg
+switzerland,ch,1120036,JPMorgan Global Emerging Markets Research Enh Idx,JREM,jpmorgan-glbl-em-rsrchenhidxeq-esg
 switzerland,ch,996927,ComStage STOXX Europe 600 Health Care NR UCITS,CBSXDR,comstage-stoxx600-health-care-nr?cid=996927
 switzerland,ch,1072261,UBS - MSCI World Socially Responsible UCITS,WSRUS,ubs-msci-world-soc-resp-ucits
 switzerland,ch,1056431,Lyxor USD Floating Rate Note Monthly Hedged D-CHF,LYFLOTH,lyxor-usd-float-rate-note-mnth-h
@@ -6422,7 +6422,7 @@ switzerland,ch,995788,Amundi ETF Govt Bond EuroMTS Broad Investment Grad,CB3,amu
 switzerland,ch,995787,Amundi ETF Global Emerging Bond Markit iBoxx UCITS,AGEB,amundi-global-emrg-bond-iboxx?cid=995787
 switzerland,ch,995786,db x-trackers II iBoxx Global Inflation-Linked UCI,XGIN,db-global-inflation-tr---eur?cid=995786
 switzerland,ch,995782,iShares STOXX Europe 600 Food & Beverage UCITS,SX3PEX,ishares-dj-stoxx600-food-beverage?cid=995782
-switzerland,ch,995781,PIMCO Short-Term High Yield Corporate Bond Source ,STHY,pimco-shterm-hyld-corp-bond-source?cid=995781
+switzerland,ch,995781,PIMCO Short-Term High Yield Corporate Bond Source,STHY,pimco-shterm-hyld-corp-bond-source?cid=995781
 switzerland,ch,995779,iShares Euro Government Bond 1-3Yr UCITS,IBGS,ishares-€-government-bond-1-3?cid=995779
 switzerland,ch,995778,PIMCO Emerging Markets Advantage Local Bond Source,EMLB,pimco-emerging-markets-bond-index?cid=995778
 switzerland,ch,995806,UBS Barclays Cap US 5-7 Treasury Bond U USD,UT5USA,ubs-barclays-cap-us-5-7-trsrbd-usd
@@ -6443,7 +6443,7 @@ switzerland,ch,995836,Amundi MSCI World Energy USD,CWEUSD,amundi-msci-world-ener
 switzerland,ch,995832,db xtrackers II iBoxx US Treasurie,XUTD,db-xtrackers-ii-iboxx-us-treasurie?cid=995832
 switzerland,ch,995831,iShares USD Ultrashort Bond UCITS,ERND,ishares-usd-ultrashort-bond-ucits?cid=995831
 switzerland,ch,995829,iShares MSCI Europe Size Factor,IESZ,ishares-msci-europe-size-factor?cid=995829
-switzerland,ch,995823,PIMCO Short-Term High Yield Corporate Bond Source ,STHE,pimco-short-term-high-yield-corp-bo?cid=995823
+switzerland,ch,995823,PIMCO Short-Term High Yield Corporate Bond Source,STHE,pimco-short-term-high-yield-corp-bo?cid=995823
 switzerland,ch,995821,UBS ETF Barclays Euro Area Liquid Corporates 1-5 Y,CBEU5,ubs-barclays-euro-area-liquid-corp?cid=995821
 switzerland,ch,995820,Lyxor UCITS iBoxx USD Treasuries 5-7Y DR,LYUS57,lyxor-iboxx-$-treasuries-5-7y--usd?cid=995820
 switzerland,ch,995819,Lyxor UCITS iBoxx USD Treasuries 1-3Y DR,LYUS13,lyxor-iboxx-$-treasuries-1-3y--usd?cid=995819
@@ -6471,7 +6471,7 @@ switzerland,ch,995484,iShares Euro Government Bond 7-10Yr UCITS Acc,CSBGE0,cs-et
 switzerland,ch,995476,iShares MSCI UK Small Cap UCITS,CSUKS,cs-etf-(ie)-on-msci-uk-small-cap?cid=995476
 switzerland,ch,995471,iShares MDAX UCITS DE,MDAXEX,ishares-mdax-(de)-de?cid=995471
 switzerland,ch,995470,iShares MSCI Japan Small Cap UCITS Dist,ISJP,ishares-msci-japan-small-cap?cid=995470
-switzerland,ch,995608,iShares $ Short DurationHigh Yield Corporate Bond ,SDHY,ishares-usd-short-duration-high-yie?cid=995608
+switzerland,ch,995608,iShares $ Short DurationHigh Yield Corporate Bond,SDHY,ishares-usd-short-duration-high-yie?cid=995608
 switzerland,ch,995433,iShares MSCI Poland UCITS,SPOL,ishares-msci-poland?cid=995433
 switzerland,ch,995769,Julius Baer Physical Palladium USD,JBPAUA,julius-baer-physical-palladium-usd
 switzerland,ch,995428,iShares MSCI Japan EUR Hedged UCITS,IJPE,ishares-msci-japan-mon.-euro-hed.?cid=995428
@@ -6700,7 +6700,7 @@ taiwan,tw,1129284,CTBC U.S. Treasury 20+ Year Bond,00795B,ctbc-us-treasury-20-ye
 taiwan,tw,1129285,CTBC China Corporate 5+ Year USD IG Bond,00797B,ctbc-china-corp-5-year-usd-ig-bond
 taiwan,tw,1128764,Fubon FTSE Asian Broad Bond Index China Investment,00784B,fubon-ftse-asianbroadbnd-cninvgrade
 taiwan,tw,1128766,Fubon FTSE World Broad Investment-Grade USD Bank B,00785B,fubon-ftsewrldbrdinvgrade-bank-b10y
-taiwan,tw,1138359,KGI 15+ Year US Investment Grade Corporate Select ,00840B,kgi-15y-us-inv-grade-corp-select-bd
+taiwan,tw,1138359,KGI 15+ Year US Investment Grade Corporate Select,00840B,kgi-15y-us-inv-grade-corp-select-bd
 taiwan,tw,1131083,Cathay Chinese USD IG Bond 7+,00798B,cathay-chinese-usd-ig-bond-7
 taiwan,tw,1131084,Cathay 15+ Year Healthcare Bond,00799B,cathay-15-yr-healthcare-bond
 taiwan,tw,1065347,Cathay High Yield ex China Cash pay 1-5 Year 2% Is,00727B,cathay-hiyld-exchina-15yr2issurcppd
@@ -6710,7 +6710,7 @@ taiwan,tw,1065345,Cathay BBB Corporate bond ex China Coupon 4.5%10Yr,00725B,cath
 taiwan,tw,1123710,Cathay Bloomberg Barclays 15+ Year Technology Bond,00781B,cathay-bbg-barclays-15y-tech-bd-sel
 taiwan,tw,1057101,Capital BofA Merrill Lynch 15+ Year US Telecommuni,00722B,capbofa-merrill-lynch-15-us-telecom
 taiwan,tw,1123718,Cathay Bloomberg Barclays 15+ Year Utility Bond Se,00782B,cathay-bbg-barclays-15y-util-bd-sel
-taiwan,tw,1057105,Capital BofA Merrill Lynch 15+ Year US Technology ,00723B,cap-bofa-merrill-lynch-15-us-tech
+taiwan,tw,1057105,Capital BofA Merrill Lynch 15+ Year US Technology,00723B,cap-bofa-merrill-lynch-15-us-tech
 taiwan,tw,1097694,Capital ICE 15+ Year AAA-AA US Corporate,00754B,capital-ice-15-y-aaa-aa-us-corp
 taiwan,tw,1065346,Cathay EM USD Investment Grade ex China Coupon 5.5,00726B,cathayem-usd-invgr55-5yr10cntrycppd
 taiwan,tw,1094043,Fubon China Policy Bank Bond 0-1,00745B,fubon-china-policy-bank-bond-0-1
@@ -6871,7 +6871,7 @@ uk,uk,995633,iShares MSCI World Momentum Factor UCITS,IWMO,ishares-msci-world-mo
 uk,uk,45653,iShares MSCI ACWI UCITS,ISACI,ishares-v-msci-acwi
 uk,uk,45659,SSgA SPDR MSCI ACWI,ACWD,spdr-msci-acwi
 uk,uk,962082,Solutions Ise Cyber Security Go,ISPY,solutions-ise-cyber-security-go
-uk,uk,951486,iShares $ Short DurationHigh Yield Corporate Bond ,SDHY,ishares-usd-short-duration-high-yie?cid=951486
+uk,uk,951486,iShares $ Short DurationHigh Yield Corporate Bond,SDHY,ishares-usd-short-duration-high-yie?cid=951486
 uk,uk,995689,iShares Euro Corp Bnd Sustain Screen 0-3y,SUSE,ishares-euro-corp-bnd-sus-scrn-0-3y?cid=995689
 uk,uk,38379,HSBC MSCI World UCITS,HMWO,hsbc-msci-world-$
 uk,uk,45662,db x-trackers CSI300 UCITS 1C,XCHA,db-x-trackers-csi-300-index
@@ -7007,7 +7007,7 @@ uk,uk,1045820,UBS MSCI EMU A-dis,UB0F,ubs-msci-emu-ucits-a-dis
 uk,uk,1024376,iShares OMX Stockholm Capped,OMXS,ishares-omx-stockholm-capped
 uk,uk,38406,iShares Italy Government Bond UCITS,IITB,ishares-barclays-italy-tr.bond
 uk,uk,997706,Boost FTSE 100 3x Short Daily,3UKS,boost-ftse-100-3x-short-daily-l
-uk,uk,995456,iShares MSCI Emerging Markets Latin America UCITS ,DLTM,ishares-msci-latin-america---gbp?cid=995456
+uk,uk,995456,iShares MSCI Emerging Markets Latin America UCITS,DLTM,ishares-msci-latin-america---gbp?cid=995456
 uk,uk,949262,Powershares Global Buyback Achievers UCITS,BUYB,powershares-global-buyback-achiever
 uk,uk,38522,DB Physical Gold,XGLD,db-physical-gold-etc
 uk,uk,45675,HSBC MSCI Emerging Markets UCITS,HMEF,hsbc-msci-emerging-markets
@@ -7026,14 +7026,14 @@ uk,uk,1024393,PowerShares SP 500 High Dividend FR,HDLV,powershares-sp-500-high-d
 uk,uk,949251,SPDR S&P Pan Asia Dividend Aristocrats UCITS,ASDV,spdr-s-p-pan-asia-dividend-aristocr?cid=949251
 uk,uk,45771,Source S&P 500 UCITS,SPXS,s---p-500-source
 uk,uk,986863,Vanguard FTSE All-World High Div Yld,VHYD,vanguard-ftse-all-wld-high-div-yd-l?cid=986863
-uk,uk,1013266,VanEck Vectors J.P. Morgan EM Local Currency Bond ,EMLC,vaneck-vect-jpm-em-lcl-currbd-a-acc
+uk,uk,1013266,VanEck Vectors J.P. Morgan EM Local Currency Bond,EMLC,vaneck-vect-jpm-em-lcl-currbd-a-acc
 uk,uk,995561,iShares Listed Private Equity UCITS,IDPE,ishares-s-p-listed-private-eqty?cid=995561
 uk,uk,45635,iShares STOXX Europe 50 UCITS,EUN,ishares-dj-stoxx-50
 uk,uk,45552,SSgA SPDR Barclays Capital UK Gilt,GLTY,spdr-barclays-capital-uk-gilt-uk
 uk,uk,980291,iShares JPM EM Bond EUR Hedged,EMBE,ishares-jpm-em-bond-eur-hedged
 uk,uk,1011925,Lyxor US TIPS DR Monthly Hedged D-GBP,TIPH,lyxor-us-tips-dr-mon-hgd
 uk,uk,956258,db x-trackers JPX-Nikkei 400,XDNG,db-x-trackers-jpx-nikkei-400
-uk,uk,1024524,PIMCO Short-Term High Yield Corporate Bond Source ,STHS,pimco-short-term-high-yield-corp-bd
+uk,uk,1024524,PIMCO Short-Term High Yield Corporate Bond Source,STHS,pimco-short-term-high-yield-corp-bd
 uk,uk,986878,Vanguard Global Min Volatility,VDMV,vanguard-global-min-volatility-l?cid=986878
 uk,uk,37500,db x-trackers Euro Stoxx 50 UCITS DR 1D,XESX,db-x-trackers-dj-euro-stoxx-50-etf
 uk,uk,949236,iShares MSCI Japan Small Cap UCITS Dist,IDJP,ishares-msci-japan-small-cap?cid=949236
@@ -7141,7 +7141,7 @@ uk,uk,45543,iShares MSCI Japan Small Cap UCITS Dist,ISJP,ishares-msci-japan-smal
 uk,uk,995368,iShares Asia Property Yield UCITS,IDAR,ishares-ftse-nareit-asia-fd?cid=995368
 uk,uk,37486,db x-trackers MSCI Bangladesh IM UCITS 1C,XBAN,db-x-trackers-msci-bangladesh-imtr
 uk,uk,1024643,db x-trackers MSCI EMU DR 2C,XD5S,dbxtrck-msci-emu-dr-2c
-uk,uk,38452,iShares MSCI Emerging Markets Latin America UCITS ,LTAM,ishares-msci-latin-america---gbp
+uk,uk,38452,iShares MSCI Emerging Markets Latin America UCITS,LTAM,ishares-msci-latin-america---gbp
 uk,uk,37465,ETFS Silver,SLVR,etfs-silver
 uk,uk,45657,Source MSCI World UCITS,MXWO,msci-world-source
 uk,uk,38460,Source MSCI Emerging Markets UCITS,MXFS,msci-emerging-markets-source
@@ -7317,7 +7317,7 @@ uk,uk,45638,iShares Euro Corporate Bond ex-Financials UCITS,IEXF,ishares-euro-co
 uk,uk,1013281,Boost Euro Stoxx50 3X Short Daily,3LES,boost-euro-stoxx-50-3x-short?cid=1013281
 uk,uk,1024525,BMO Barclays 1-3 Global Corporate Bond Hedged Dist,ZC1G,bmo-barclays-1-3-global-crpbd-hdg
 uk,uk,956268,Lyxor UCITSo Cash,CSHD,lyxor-euro-cash-eonia?cid=956268
-uk,uk,949258,PIMCO Short-Term High Yield Corporate Bond Source ,STHE,pimco-short-term-high-yield-corp-bo?cid=949258
+uk,uk,949258,PIMCO Short-Term High Yield Corporate Bond Source,STHE,pimco-short-term-high-yield-corp-bo?cid=949258
 uk,uk,45569,Amundi MSCI EMU UCITS,CMU,amundi-msci-emu-de?cid=45569
 uk,uk,980286,iShares Edge MSCI USA MF GBp,FSUS,ishares-edge-msci-usa-mf-gbp
 uk,uk,45611,ETFS Commodity Securities Cotton,SCTON,etfs-cotton-de?cid=45611
@@ -7383,7 +7383,7 @@ uk,uk,45551,iShares $ Treasury Bond 1-3Yr UCITS Acc,CBU3,cs-(ie)-iboxx-usd-govt-
 uk,uk,1054699,Vanguard Euro STOXX 50,VX5E,vanguard-euro-stoxx-50
 uk,uk,45767,Source Consumer Discretionary S&P US Select Sector,XLYS,source-us-consumer-discretnry
 uk,uk,1073275,SG WTI X5 Daily Short GBP,SG29,sg-wti-x5-daily-short-gbp
-uk,uk,38486,PIMCO Short-Term High Yield Corporate Bond Source ,STHY,pimco-shterm-hyld-corp-bond-source
+uk,uk,38486,PIMCO Short-Term High Yield Corporate Bond Source,STHY,pimco-shterm-hyld-corp-bond-source
 uk,uk,45596,db x-trackers MSCI Pacific Ex Japan UCITS 1C DR,XPXJ,msci-pacific-x-japan-trn-£-uk
 uk,uk,976556,db xtrackers II iBoxx US 1 3 Treas,XUT3,db-xtrackers-ii-iboxx-us-1-3-treas
 uk,uk,1024346,Boost Copper 3x Short Daily,3HCS,boost-copper-3x-short?cid=1024346
@@ -7426,7 +7426,7 @@ uk,uk,45749,iShares Dow Jones Industrial Average UCITS,CIND,cs-(ie)-dow-jones-in
 uk,uk,38534,DB Physical Silver,XSIL,db-physical-silver-etc
 uk,uk,995496,iShares MSCI EMU Small Cap UCITS,CES1,cs-(ie)-on-msci-emu-smlcap-uk?cid=995496
 uk,uk,45598,db x-trackers STOXX Europe 600 Food & Beverage UCI,XS3R,db-stoxxeuro600-food--beverage?cid=45598
-uk,uk,1055269,Lyxor UCITS EuroMTS All-Maturity Investment Grade ,MTXX,lyxor-euromts-global-invest-grade?cid=1055269
+uk,uk,1055269,Lyxor UCITS EuroMTS All-Maturity Investment Grade,MTXX,lyxor-euromts-global-invest-grade?cid=1055269
 uk,uk,37432,iShares Euro Government Bond 1-3Yr UCITS Acc,CBE3,cs-etf-(ie)-on-iboxx-eur-govt-1-3
 uk,uk,995646,iShares USD Ultrashort Bond UCITS,ERNU,ishares-usd-ultrashort-bond-ucits?cid=995646
 uk,uk,45570,Amundi ETF MSCI Spain UCITS,CS1,amundi-etf-msci-spain?cid=45570
@@ -7476,7 +7476,7 @@ uk,uk,1013330,Lyxor Green Bond DR C-EUR,LYCLIM,lyxor-green-bond-dr-c-eur?cid=101
 uk,uk,45568,iShares MSCI Mexico Capped UCITS,CMXC0,cs-(ie)-on-msci-mexico-cap-uk
 uk,uk,38374,HSBC MSCI EUROPE UCITS,HMEU,hsbc-msci-europe
 uk,uk,1055061,Fidelity Europe Quality Income UCITS Acc,FEQD,fidelity-europe-qual-incacc
-uk,uk,1055267,JPMorgan Ireland ICAV - Managed Futures UCITS USD ,JPFM,jpmorgan-ie-icav-managedfutures-usd?cid=1055267
+uk,uk,1055267,JPMorgan Ireland ICAV - Managed Futures UCITS USD,JPFM,jpmorgan-ie-icav-managedfutures-usd?cid=1055267
 uk,uk,1024529,BMO MSCI USA Income Leaders Hedged Distributing Sh,ZISG,bmo-msci-usa-income-lead-hedg
 uk,uk,38376,HSBC MSCI Japan UCITS,HMJP,hsbc-msci-japan
 uk,uk,1024627,db x-trackers II Barclays Global Aggregate Bond 3D,XBGG,dbxtrck-ii-barclays-glbl-aggr-bd-3d
@@ -7631,7 +7631,7 @@ uk,uk,956286,db x-trackers MSCI EMU UCITS USD,XD5D,db-x-trackers-msci-emu-ucits-
 uk,uk,998415,ETFS DAX Daily 2x Short GO UCITS,DES2,etfx-dax-2x-short-fund-it?cid=998415
 uk,uk,956298,Ossiam Shiller Barclays Cape UK,LCPE,ossiam-shiller-barclays-cape-uk
 uk,uk,1009145,PowerShares EURO STOXX High Dividend Low Volatilit,HDEU,powshr-euro-stoxx-highdiv-lowvol-f?cid=1009145
-uk,uk,949256,iShares $ Short DurationHigh Yield Corporate Bond ,SDHG,ishares-usd-short-duration-high-yie?cid=949256
+uk,uk,949256,iShares $ Short DurationHigh Yield Corporate Bond,SDHG,ishares-usd-short-duration-high-yie?cid=949256
 uk,uk,997710,Lyxor FTSE 100 Monthly Hedged C-USD,LY100H,lyxor-ftse-100-monthly-hedged-cusd
 uk,uk,1011901,Lyxor UK£ 10Y Inflation Expectations C-GBP,UKBE,lyxor-uk-10y-inflat-expect-c-gbp
 uk,uk,47450,ETFS Livestock,AIGL,etfs-livestock-dj-aigci-pa
@@ -7682,7 +7682,7 @@ uk,uk,995393,iShares MSCI USA UCITS,CSU1,cs-etf-(ie)-on-msci-usa?cid=995393
 uk,uk,995401,iShares Euro Inflation Linked Government Bond UCIT,ISIBC1,ishares-eur-inflation-linked-bond?cid=995401
 uk,uk,995413,iShares Euro Government Bond 0-1Yr UCITS,IBGE,ishares-barclays-euro-tr.-bd-0-1?cid=995413
 uk,uk,995698,iShares Fallen Angels HY Corp Bnd,ISWING,ishares-fallen-angels-hy-corp-bnd?cid=995698
-uk,uk,995463,iShares STOXX Europe 600 Construction & Materials ,SXOPEX,ishares-stoxxeuro-600-cons.---mat.?cid=995463
+uk,uk,995463,iShares STOXX Europe 600 Construction & Materials,SXOPEX,ishares-stoxxeuro-600-cons.---mat.?cid=995463
 uk,uk,995467,iShares Diversified Commodity Swap UCITS DE,DJAIGEX,ishares-dj-ubs-commodity-swap?cid=995467
 uk,uk,995473,iShares STOXX Europe Small 200 UCITS,SCXPEX,ishares-stoxx-europe-small-200?cid=995473
 uk,uk,46214,ETFS Short Tin,STIM,etfs-short-tin-de
@@ -8113,7 +8113,7 @@ usa,us,45373,SPDR S&P 400 Mid Cap Growth,MDYG,spdr-s-p-400-mid-cap-growth
 usa,us,956182,iShares Currency Hedged MSCI Eurozo,HEZU,ishares-currency-hedged-msci-eurozo
 usa,us,45287,ProShares Ultra MidCap400,MVV,proshares-ultra-midcap400
 usa,us,45434,WisdomTree SmallCap Dividend,DES,wisdomtree-trust-smallcap-dividend
-usa,us,45081,UBS E-TRACS Alerian MLP Infrastructure Exp 02 Apr ,MLPI,etracs-alerian-mlp-infrastructure
+usa,us,45081,UBS E-TRACS Alerian MLP Infrastructure Exp 02 Apr,MLPI,etracs-alerian-mlp-infrastructure
 usa,us,941529,SPDR Russell 1000 Low Volatility,LGLV,spdr-russell-1000-low-vol
 usa,us,45098,First Trust US IPO,FPX,firsttrust-ipox-100
 usa,us,956216,iShares Edge MSCI Multifactor USA,LRGF,ishares-factorselect-msci-usa
@@ -8293,7 +8293,7 @@ usa,us,45333,Guggenheim Invest S&P 500 Equal Weight Utilities,RYU,rydex-s-p-equa
 usa,us,44557,iShares US Basic Materials,IYM,ishares-djsu-basic-materials-index
 usa,us,45190,iShares Short-Term National AMT-Free Muni Bond,SUB,ishares-s-p-sh.term-nat.-muni-bond
 usa,us,45188,iShares North American Natural Resources,IGE,ishares-s-p-north-amer.-nat.-res.
-usa,us,45079,UBS E-TRACS 2xLeveraged Long Wells Fargo Business ,BDCL,etracs-2x-long-business-dev.-co
+usa,us,45079,UBS E-TRACS 2xLeveraged Long Wells Fargo Business,BDCL,etracs-2x-long-business-dev.-co
 usa,us,44931,PowerShares India Portfolio,PIN,powershares-india-portfolio
 usa,us,956188,JPMorgan Diversified Return Emergin,JPEM,jpmorgan-diversified-return-emergin
 usa,us,38167,Vanguard Materials,VAW,vanguard-materials
@@ -8594,7 +8594,7 @@ usa,us,45230,PowerShares Dynamic Leisure & Entertainment,PEJ,powershares-dynamic
 usa,us,45392,ProShares UltraPro MidCap400,UMDD,ultrapro-midcap400
 usa,us,941489,ALPS Alerian Energy Infrastructure,ENFR,alps-alerian-energy-infra
 usa,us,44687,iShares MSCI Global Energy Producers,FILL,ishares-msci-global-energy-prod.
-usa,us,37550,Morgan Stanley Cushing MLP High Income Exp 21 Mar ,MLPY,morgan-st.-cushing-mlp-high-income
+usa,us,37550,Morgan Stanley Cushing MLP High Income Exp 21 Mar,MLPY,morgan-st.-cushing-mlp-high-income
 usa,us,45315,Oppenheimer Mid Cap Revenue,RWK,revenueshares-mid-cap
 usa,us,45114,Guggenheim Invest Raymond James SB-1 Equity,RYJ,guggenheim-raymond-james-sb-1-eq
 usa,us,45352,PIMCO Short Term Municipal Bond Active Exchange-Tr,SMMU,short-term-municipal-bond-strategy
@@ -8731,7 +8731,7 @@ usa,us,44713,DB Base Metals Double Long Exp 01 Jun 2038,BDD,powershares-db-base-
 usa,us,44712,DB Agriculture Long Exp 01 Apr 2038,AGF,powershares-db-agriculture-long
 usa,us,45388,ELEMENTS SPECTRUM Large CAP US Momentum,EEH,spectrum-lg-cap-us-sector-etn
 usa,us,44711,DB Agriculture Double Long Exp 01 Apr 2038,DAG,powershares-db-agriculture-2x-long
-usa,us,45076,ELEMENTS Dogs of the Dow Linked to Dow Jones High ,DOD,dj-high-yield-select-10-etn
+usa,us,45076,ELEMENTS Dogs of the Dow Linked to Dow Jones High,DOD,dj-high-yield-select-10-etn
 usa,us,45063,Direxion Daily Total Bond Market Bear 1X Shares,SAGG,direxion-daily-bond-mtkt-bear-1x
 usa,us,45017,UBS E-TRACS Bloomberg CMCI Silver,USV,ubs-etracs-cmci-silver-tr
 usa,us,941551,QuantShares US Market Neutral Size,SIZ,quantshares-us-mrkt-neut-size

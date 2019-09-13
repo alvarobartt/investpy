@@ -251,6 +251,8 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
     id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
 
+    stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
+
     logger.info(str(equity) + ' found on Investing.com')
 
     header = "Datos históricos " + symbol
@@ -314,7 +316,9 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
             elif info[5].__contains__('B'):
                 stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
 
-            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
+            result.insert(len(result),
+                          Data(stock_date, stock_open, stock_high, stock_low,
+                               stock_close, stock_volume, stock_currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -503,6 +507,8 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
     id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
 
+    stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
+
     logger.info(str(equity) + ' found on Investing.com')
 
     final = list()
@@ -579,7 +585,9 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                     elif info[5].__contains__('B'):
                         stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, stock_volume,))
+                    result.insert(len(result),
+                                  Data(stock_date, stock_open, stock_high, stock_low,
+                                       stock_close, stock_volume, stock_currency))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -1049,7 +1057,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
             stock_high = float(info[3].replace('.', '').replace(',', '.'))
             stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -1308,7 +1316,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     stock_high = float(info[3].replace('.', '').replace(',', '.'))
                     stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -1844,7 +1852,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
             stock_high = float(info[3].replace('.', '').replace(',', '.'))
             stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+            result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -2106,7 +2114,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     stock_high = float(info[3].replace('.', '').replace(',', '.'))
                     stock_low = float(info[4].replace('.', '').replace(',', '.'))
 
-                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None,))
+                    result.insert(len(result), Data(stock_date, stock_open, stock_high, stock_low, stock_close, None, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

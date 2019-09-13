@@ -14,7 +14,7 @@
 
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **28.121 equities, 8.762 etfs and much more**. Basically, 
+It provides historical data retrieval from up to **28.121 equities, 4.120 funds and 8.762 etfs**. Basically, 
 it allows you to download historical data from all the indexed equities, funds and etfs in Investing.com. Therefore,
 investpy is intended to wrap up all the available data from Investing, so that it can be retrieved via Python for 
 its further usage and/or analysis.
@@ -182,11 +182,11 @@ print(fund_information)
  'TTM Yield': '0%',
  'ROE': '14,02%',
  'Issuer': 'BBVA Pensiones EGFP',
- 'Turnover': 'N/A',
+ 'Turnover': None,
  'ROA': '4,97%',
  'Inception Date': '16/10/2012',
  'Total Assets': 1670000000,
- 'Expenses': 'N/A',
+ 'Expenses': None,
  'Min Investment': 30,
  'Market Cap': 34820000000,
  'Category': 'Mixtos Euros Moderados PP'
