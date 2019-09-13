@@ -87,7 +87,7 @@ def retrieve_funds(test_mode=False):
                 nested = elements_.xpath(".//a")[0].get('title').rstrip()
                 info = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
 
-                data = retrieve_fund_data(info)
+                info = retrieve_fund_info(info)
 
                 obj = {
                     "country": country,
@@ -95,9 +95,9 @@ def retrieve_funds(test_mode=False):
                     "symbol": symbol,
                     "tag": info,
                     "id": id_,
-                    "issuer": data['issuer'].strip() if data['issuer'] is not None else data['issuer'],
-                    "isin": data['isin'],
-                    "asset class": data['asset class'].lower() if data['asset class'] is not None else data['asset class'],
+                    "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
+                    "isin": info['isin'],
+                    "asset class": info['asset class'].lower() if info['asset class'] is not None else info['asset class'],
                 }
 
                 results.append(obj)
@@ -117,7 +117,7 @@ def retrieve_funds(test_mode=False):
     return df
 
 
-def retrieve_fund_data(tag):
+def retrieve_fund_info(tag):
     """
     This function retrieves additional information from a fund as listed in Investing.com. Every fund data is retrieved
     and stored in a CSV in order to get all the possible information from a fund.

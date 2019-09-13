@@ -55,29 +55,31 @@ df = investpy.get_recent_data(equity='bbva', country='spain', as_json=False, ord
 print(df.head())
 
 >>>
-            Close   High    Low   Open    Volume
-Date                                            
-2019-07-12  4.897  4.985  4.897  4.952  22930000
-2019-07-15  4.926  4.941  4.873  4.915  14830000
-2019-07-16  4.971  5.008  4.913  4.947  30730000
-2019-07-17  4.905  4.965  4.900  4.952  22410000
-2019-07-18  4.856  4.894  4.812  4.879  35820000
+             Open   High    Low  Close    Volume Currency
+Date                                                     
+2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
+2019-08-14  4.322  4.325  4.215  4.244  36890000      EUR
+2019-08-15  4.281  4.298  4.187  4.234  21340000      EUR
+2019-08-16  4.234  4.375  4.208  4.365  46080000      EUR
+2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR
+
 ```
 
 ```python
 import investpy
 
-df = investpy.get_historical_data(equity='bbva', country='spain', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_historical_data(equity='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
-            Close   High    Low   Open    Volume
-Date                                            
-2018-01-02  7.082  7.169  7.050  7.139  15960000
-2018-01-03  7.094  7.120  7.055  7.113  13320000
-2018-01-04  7.221  7.274  7.104  7.113  20790000
-2018-01-05  7.253  7.282  7.203  7.259  13580000
-2018-01-08  7.235  7.293  7.220  7.274  13420000
+             Open   High    Low  Close  Volume Currency
+Date                                                   
+2010-01-04  12.73  12.96  12.73  12.96       0      EUR
+2010-01-05  13.00  13.11  12.97  13.09       0      EUR
+2010-01-06  13.03  13.17  13.02  13.12       0      EUR
+2010-01-07  13.02  13.11  12.93  13.05       0      EUR
+2010-01-08  13.12  13.22  13.04  13.18       0      EUR
+
 ```
 
 #### Fund Data Retrieval
@@ -96,6 +98,7 @@ Date
 2019-07-16  1.130  1.130  1.130  1.130
 2019-07-17  1.129  1.129  1.129  1.129
 2019-07-18  1.126  1.126  1.126  1.126
+
 ```
 
 ```python
@@ -112,6 +115,7 @@ Date
 2018-02-17  1.113  1.113  1.113  1.113
 2018-02-18  1.113  1.113  1.113  1.113
 2018-02-19  1.111  1.111  1.111  1.111
+
 ```
 
 #### ETF Data Retrieval
@@ -123,29 +127,31 @@ df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='sp
 print(df.head())
 
 >>>
-             Close    High     Low    Open
-Date                                      
-2019-07-12  35.795  35.870  35.825  35.825
-2019-07-15  35.855  35.930  35.760  35.875
-2019-07-16  36.040  36.085  35.835  35.845
-2019-07-17  35.830  36.080  35.810  35.965
-2019-07-18  35.640  35.785  35.515  35.515
+              Open    High     Low   Close Currency
+Date                                               
+2019-08-13  33.115  33.780  32.985  33.585      EUR
+2019-08-14  33.335  33.335  32.880  32.905      EUR
+2019-08-15  32.790  32.925  32.455  32.845      EUR
+2019-08-16  33.115  33.200  33.115  33.305      EUR
+2019-08-19  33.605  33.735  33.490  33.685      EUR
+
 ```
 
 ```python
 import investpy
 
-df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2018', to_date='12/08/2019', as_json=False, order='ascending', debug=False)
+df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2018', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
 print(df.head())
 
 >>>
-             Close    High     Low    Open
-Date                                      
-2018-01-02  34.995  35.155  34.860  35.155
-2018-01-03  35.210  35.305  35.020  35.105
-2018-01-04  35.825  35.710  35.465  35.465
-2018-01-05  36.185  36.180  35.900  35.900
-2018-01-08  36.280  36.370  36.240  36.325
+             Open   High    Low  Close Currency
+Date                                           
+2011-12-07  23.70  23.70  23.70  23.62      EUR
+2011-12-08  23.53  23.60  23.15  23.04      EUR
+2011-12-09  23.36  23.60  23.36  23.62      EUR
+2011-12-12  23.15  23.26  23.00  22.88      EUR
+2011-12-13  22.88  22.88  22.88  22.80      EUR
+
 ```
 
 ### Additional Data

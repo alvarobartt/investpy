@@ -91,15 +91,18 @@ def retrieve_etfs(test_mode=False):
                 symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
                 nested = elements_.xpath(".//a")[0]
-                info = nested.get('href').replace('/etfs/', '')
+                tag = nested.get('href').replace('/etfs/', '')
+
+                info = retrieve_etf_info(tag)
 
                 data = {
                     "country": country,
                     "country_code": country_code,
-                    "name": nested.text,
+                    "name": nested.text.strip(),
                     "symbol": symbol,
-                    "tag": info,
-                    "id": id_
+                    "tag": tag,
+                    "id": id_,
+                    "currency": info['currency'],
                 }
 
                 results.append(data)
@@ -122,6 +125,56 @@ def retrieve_etfs(test_mode=False):
         df.to_csv(file, index=False)
 
     return df
+
+
+def retrieve_etf_info(tag):
+    """
+    This function retrieves additional information from the specified etf as indexed in Investing.com, in order to add
+    more information to `etfs.csv` which can later be useful. Currently just the currency value is retrieved, since it
+    is needed so to determine in which currency the historical data values are.
+
+    Args:
+       tag (:obj:`str`): is the tag of the etf to retrieve the information from as indexed by Investing.com.
+
+    Returns:
+       :obj:`dict` - info:
+           The resulting :obj:`dict` contains the needed information for the etfs listing.
+
+    Raises:
+       ConnectionError: raised if GET requests does not return 200 status code.
+       IndexError: raised if the information from the etf was not found or unable to retrieve.
+    """
+
+    url = "https://es.investing.com/etfs/" + tag
+
+    head = {
+        "User-Agent": ua.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    result = {
+        'currency': None,
+    }
+
+    root_ = fromstring(req.text)
+
+    path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
+                        "/span[@class='bold']")
+
+    for element_ in path_:
+        if element_.text_content():
+            print(element_.text_content())
+            result['currency'] = element_.text_content()
+
+    return result
 
 
 def etf_countries_as_list():
@@ -323,3 +376,41 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+
+
+# Aux Function to Fill Missing etfs.csv Data
+# ------------------------------------------
+def fill_missing_data():
+    df = etfs_as_df()
+
+    df = df.where((pd.notnull(df)), None)
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    file = pkg_resources.resource_filename(resource_package, resource_path)
+
+    for index, row in df.iterrows():
+        if row['currency'] is None:
+            print('Retrieving currency of... ' + str(row['name']))
+            currency = None
+
+            print(row['tag'])
+
+            while currency is None:
+                try:
+                    info = retrieve_etf_info(row['tag'])
+                    currency = info['currency']
+                except Exception as e:
+                    if str(e) == 'ERR#0015: error 404, try again later.':
+                        df.drop(df.index[index], inplace=True)
+                        break
+                    pass
+            df.loc[index, 'currency'] = currency
+            print('Currency of ' + str(row['name']) + ' is ... ' + str(currency))
+            print('\n----------------------------------------------------------\n')
+
+            df.to_csv(file, index=False)
+
+
+if __name__ == '__main__':
+    fill_missing_data()

@@ -103,7 +103,7 @@ def retrieve_equities(test_mode=False):
 
                         full_name_ = element_.get('title').replace(' (CFD)', '')
 
-                        info = retrieve_info(tag_)
+                        info = retrieve_equity_info(tag_)
 
                         data = {
                             'country': str(row['country']),
@@ -135,7 +135,7 @@ def retrieve_equities(test_mode=False):
     return df
 
 
-def retrieve_info(tag):
+def retrieve_equity_info(tag):
     """
     This function retrieves both the ISIN code, the currency and the symbol of an equity indexed in Investing.com, so
     to include additional information in `equities.csv` file. The ISIN code will later be used in order to retrieve more
