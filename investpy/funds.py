@@ -344,9 +344,12 @@ def funds_as_df(country=None):
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
     if country is None:
+        funds.reset_index(drop=True, inplace=True)
         return funds
     elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
-        return funds[funds['country'] == unidecode.unidecode(country.lower())]
+        funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+        funds.reset_index(drop=True, inplace=True)
+        return funds
 
 
 def funds_as_list(country=None):
@@ -388,9 +391,9 @@ def funds_as_list(country=None):
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
     if country is None:
-        return funds
+        return funds['name'].tolist()
     elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
-        return funds[funds['country'] == unidecode.unidecode(country.lower())]
+        return funds[funds['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
 
 
 def funds_as_dict(country=None, columns=None, as_json=False):

@@ -360,9 +360,12 @@ def equities_as_df(country=None):
         raise IOError("ERR#0001: equities list not found or unable to retrieve.")
 
     if country is None:
+        equities.reset_index(drop=True, inplace=True)
         return equities
     elif unidecode.unidecode(country.lower()) in equity_countries_as_list():
-        return equities[equities['country'] == unidecode.unidecode(country.lower())]
+        equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+        equities.reset_index(drop=True, inplace=True)
+        return equities
 
 
 def equities_as_list(country=None):
@@ -403,9 +406,9 @@ def equities_as_list(country=None):
         raise IOError("ERR#0001: equities list not found or unable to retrieve.")
 
     if country is None:
-        return equities
+        return equities['name'].tolist()
     elif unidecode.unidecode(country.lower()) in equity_countries_as_list():
-        return equities[equities['country'] == unidecode.unidecode(country.lower())]
+        return equities[equities['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
 
 
 def equities_as_dict(country=None, columns=None, as_json=False):
