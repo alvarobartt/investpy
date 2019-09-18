@@ -2233,13 +2233,6 @@ def get_etfs_overview(country, as_json=False):
         "Connection": "keep-alive",
     }
 
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0024: etf_countries file not found")
-
     if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
 

@@ -10,6 +10,10 @@
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
 [![Downloads](https://img.shields.io/pypi/dm/investpy.svg?maxAge=2592000&label=installs&color=%2327B1FF)](https://pypistats.org/packages/investpy)
 
+<div>
+  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy.png"><br>
+</div>
+
 ## Introduction
 
 
