@@ -6,6 +6,9 @@
 Welcome to investpy's documentation!
 ====================================
 
+.. image:: https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png
+    :align: center
+
 .. toctree::
    :maxdepth: 3
    :caption: Contents:
@@ -14,6 +17,7 @@ Welcome to investpy's documentation!
    installation.rst
    model.rst
    equities.rst
+   funds.rst
    api.rst
    information.md
    disclaimer.md

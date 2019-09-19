@@ -11,11 +11,10 @@
 [![Downloads](https://img.shields.io/pypi/dm/investpy.svg?maxAge=2592000&label=installs&color=%2327B1FF)](https://pypistats.org/packages/investpy)
 
 <div>
-  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy.png"><br>
+  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png"><br>
 </div>
 
 ## Introduction
-
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
 It provides historical data retrieval from up to **28.121 equities, 4.120 funds and 8.755 etfs**. Basically, 
@@ -32,7 +31,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.2``
+``$ pip install investpy==0.9.3``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
 file, which can also be installed via pip:

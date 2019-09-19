@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.9.2'
+__version__ = '0.9.3'
 
 import datetime
 import json
@@ -255,6 +255,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
 
     symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
     id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
+    name = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'name']
 
     stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
 
@@ -333,7 +334,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
         logger.info('Data parsing process finished...')
 
         if as_json is True:
-            json_ = {'name': equity,
+            json_ = {'name': name,
                      'recent':
                          [value.equity_as_json() for value in result]
                      }
@@ -516,6 +517,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
 
     symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
     id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
+    name = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'name']
 
     stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
 
@@ -606,7 +608,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': equity,
+                    json_ = {'name': name,
                              'historical':
                                  [value.equity_as_json() for value in result]
                              }
@@ -745,7 +747,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
 
             text = ''.join(text)
 
-            company_profile = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
+            company_profile['desc'] = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
 
             return company_profile
         else:
@@ -1017,6 +1019,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
 
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
@@ -1085,7 +1088,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
         logger.info('Data parsing process finished...')
 
         if as_json is True:
-            json_ = {'name': fund,
+            json_ = {'name': name,
                      'recent':
                          [value.fund_as_json() for value in result]
                      }
@@ -1268,6 +1271,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
 
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
@@ -1350,7 +1354,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': fund,
+                    json_ = {'name': name,
                              'historical':
                                  [value.fund_as_json() for value in result]
                              }
@@ -1829,6 +1833,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
     symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
+    name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
 
     etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
 
@@ -1896,7 +1901,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         logger.info('Data parsing process finished...')
 
         if as_json is True:
-            json_ = {'name': etf,
+            json_ = {'name': name,
                      'recent':
                          [value.etf_as_json() for value in result]
                      }
@@ -2081,6 +2086,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
+    name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
 
     etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
 
@@ -2165,7 +2171,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': etf,
+                    json_ = {'name': name,
                              'historical':
                                  [value.etf_as_json() for value in result]
                              }
