@@ -501,9 +501,10 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
 
     equity = equity.strip()
+    equity = equity.lower()
 
-    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(equity) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
+        raise RuntimeError("ERR#0018: equity " + equity + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
