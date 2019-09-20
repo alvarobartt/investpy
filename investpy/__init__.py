@@ -2296,3 +2296,39 @@ def get_etfs_overview(country, as_json=False):
         return df.to_json(orient='records')
     else:
         return df
+
+
+"""------------- INDICES -------------"""
+
+
+def get_indices(country=None):
+    """
+    This function retrieves all the available countries to retrieve indices from, as the listed countries are the ones
+    indexed on Investing.com. This function is intended to show the user the data contained in `indices.csv` in order
+    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
+    parameter is applied so just the indices from the specified country are retrieved.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
+
+    Returns:
+        :obj:`pandas.DataFrame` - indices:
+            The resulting :obj:`pandas.DataFrame` contains all the indices basic information stored on `indices.csv`,
+            since it was previously retrieved in `investpy.indices.retrieve_indices()`. Unless the country is
+            specified, all the available indices indexed on Investing.com is returned, but if it is specified, just the
+            indices from that country are returned.
+
+            In the case that the file reading of `indices.csv` or the retrieval process from Investing.com was
+            successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
+
+                country | name | symbol | tag | id
+                --------|------|--------|-----|----
+                xxxxxxx | xxxx | xxxxxx | xxx | xx
+
+    Raises:
+        ValueError: raised when any of the input arguments is not valid.
+        IOError: raised when `indices.csv` file is missing.
+    """
+
+    # return es.etfs_as_df(country=country)
+    return True

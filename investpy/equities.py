@@ -3,8 +3,6 @@
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
 
-import time
-
 import unidecode
 import json
 
