@@ -12,7 +12,7 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_indices_countries(test_mode=False):
+def retrieve_index_countries(test_mode=False):
     """
     This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
     from, via Web Scraping https://www.investing.com/equities/ where the available countries are listed, and from their
@@ -71,7 +71,7 @@ def retrieve_indices_countries(test_mode=False):
         raise RuntimeError('ERR#0035: no countries could be retrieved!')
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'indices', 'indices_countries.csv'))
+    resource_path = '/'.join(('resources', 'indices', 'index_countries.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(countries)
@@ -82,7 +82,7 @@ def retrieve_indices_countries(test_mode=False):
     return df
 
 
-def indices_countries_as_list():
+def index_countries_as_list():
     """
     This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
     from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
@@ -98,11 +98,11 @@ def indices_countries_as_list():
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'indices', 'indices_countries.csv'))
+    resource_path = '/'.join(('resources', 'indices', 'index_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        countries = retrieve_indices_countries(test_mode=False)
+        countries = retrieve_index_countries(test_mode=False)
 
     if countries is None:
         raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")

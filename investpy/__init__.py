@@ -785,6 +785,69 @@ def get_equity_company_profile(equity, country='spain', language='english'):
             return company_profile
 
 
+def search_equities(by, value):
+    """
+    This function searches equities by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced value for the specified field which is the
+    `equities.csv` column name to search in. Available fields to search equities are 'name', 'full_name' and 'isin'.
+
+    Args:
+        by (:obj:`str`): name of the field to search for, which is the column name ('name', 'full_name' or 'isin').
+        value (:obj:`str`): value of the field to search for, which is the str that is going to be seached.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting `pandas.DataFrame` contains the search results from the given query (the specified value
+            in the specified field). If there are no results and error will be raised, but otherwise this
+            `pandas.DataFrame` will contain all the available field values that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced params is not valid or errored.
+        IOError: if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    """
+
+    available_search_fields = ['name', 'full_name', 'isin']
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        equities = ts.retrieve_equities()
+
+    if equities is None:
+        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+
+    equities['matches'] = equities[by].str.contains(value, case=False)
+
+    search_result = equities[equities['matches'] is True]
+
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+
+    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
+
+    return search_result
+
+
 """------------- FUNDS -------------"""
 
 
