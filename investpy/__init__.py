@@ -837,7 +837,7 @@ def search_equities(by, value):
 
     equities['matches'] = equities[by].str.contains(value, case=False)
 
-    search_result = equities[equities['matches'] is True]
+    search_result = equities.loc[equities['matches'] == True].copy()
 
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
