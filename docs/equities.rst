@@ -9,13 +9,14 @@ foundation of nearly every portfolio. These transactions have to conform to gove
 protect investors from fraudulent practices. Historically, they have outperformed most other investments over the long
 run. These investments can be purchased from most online stock brokers.
 
+Source: *Investopedia*
 
 Getting Started
 ---------------
 
 To get started using `investpy <https://pypi.org/project/investpy/>`_ you first need to install it as described on
-:ref:`installation-label`. Once you have it installed you can proceed to use it and retrieve data from stocks/equities,
-after importing the package as it follows:
+:ref:`installation-label`. Once you have it installed you can proceed to use it in order to retrieve data from
+stocks/equities, after importing the package as it follows:
 
 .. code-block:: python
 

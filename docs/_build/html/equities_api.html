@@ -298,9 +298,9 @@ the return listing from this function can be used for country param check if nee
 <dl class="function">
 <dt id="investpy.equities.retrieve_equities">
 <code class="sig-prename descclassname">investpy.equities.</code><code class="sig-name descname">retrieve_equities</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.equities.retrieve_equities" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available <cite>spanish equities</cite> indexed on Investing.com, so to
+<dd><p>This function retrieves all the available <cite>equities</cite> indexed on Investing.com, so to
 retrieve data from them which will be used later for inner functions for data retrieval.
-All the equities available can be found at: <a class="reference external" href="https://es.investing.com/equities/spain">https://es.investing.com/equities/spain</a>. Additionally,
+All the equities available can be found at: <a class="reference external" href="https://es.investing.com/equities/">https://es.investing.com/equities/</a>. Additionally,
 when equities are retrieved all the meta-information is both returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>
 and stored on a CSV file on a package folder containing all the available resources.
 Note that maybe some of the information contained in the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> is useless as it is
@@ -311,9 +311,9 @@ just used for inner function purposes.</p>
 coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the spanish equities meta-information if found, if not, an
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the equities meta-information if found, if not, an
 empty <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will be returned and no CSV file will be stored.</p>
-<p>In the case that the retrieval process of spanish equities was successfully completed, the resulting
+<p>In the case that the retrieval process of equities was successfully completed, the resulting
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">|</span> <span class="n">full</span> <span class="n">name</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="nb">id</span>
 <span class="o">-----|-----------|-----|------|----</span>
