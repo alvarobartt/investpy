@@ -101,6 +101,8 @@ def test_investpy():
                                             country='spain',
                                             language=value)
 
+    investpy.search_equities(by='name', value='bbva')
+
     retrieve_equities(test_mode=True)
     retrieve_equity_countries(test_mode=True)
 
@@ -210,6 +212,8 @@ def test_investpy():
 
     investpy.get_funds()
 
+    investpy.search_funds(by='name', value='bbva')
+
     retrieve_funds(test_mode=True)
     retrieve_fund_countries(test_mode=True)
 
@@ -303,6 +307,8 @@ def test_investpy():
 
     for param in params:
         investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'])
+
+    investpy.search_etfs(by='name', value='bbva')
 
     retrieve_etfs(test_mode=True)
 

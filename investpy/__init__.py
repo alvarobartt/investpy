@@ -793,7 +793,7 @@ def search_equities(by, value):
 
     Args:
         by (:obj:`str`): name of the field to search for, which is the column name ('name', 'full_name' or 'isin').
-        value (:obj:`str`): value of the field to search for, which is the str that is going to be seached.
+        value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
 
     Returns:
         :obj:`pandas.DataFrame` - search_result:
@@ -803,7 +803,7 @@ def search_equities(by, value):
 
     Raises:
         ValueError: raised if any of the introduced params is not valid or errored.
-        IOError: if data could not be retrieved due to file error.
+        IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
     """
 
@@ -1650,6 +1650,70 @@ def get_fund_information(fund, country, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
+def search_funds(by, value):
+    """
+    This function searches funds by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced value for the specified field which is the
+    `funds.csv` column name to search in. Available fields to search funds are 'name', 'symbol', 'issuer' and 'isin'.
+
+    Args:
+        by (:obj:`str`):
+            name of the field to search for, which is the column name ('name', 'symbol', 'issuer' or 'isin').
+        value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting `pandas.DataFrame` contains the search results from the given query (the specified value
+            in the specified field). If there are no results and error will be raised, but otherwise this
+            `pandas.DataFrame` will contain all the available field values that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced params is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    """
+
+    available_search_fields = ['name', 'symbol', 'issuer', 'isin']
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        funds = get_funds()
+
+    if funds is None:
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
+    funds['matches'] = funds[by].str.contains(value, case=False)
+
+    search_result = funds.loc[funds['matches'] == True].copy()
+
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+
+    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
+
+    return search_result
+
+
 """------------- ETFS -------------"""
 
 
@@ -2361,6 +2425,69 @@ def get_etfs_overview(country, as_json=False):
         return df
 
 
+def search_etfs(by, value):
+    """
+    This function searches etfs by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced value for the specified field which is the
+    `etfs.csv` column name to search in. Available fields to search etfs are 'name' and 'symbol'.
+
+    Args:
+        by (:obj:`str`): name of the field to search for, which is the column name ('name' or 'symbol').
+        value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting `pandas.DataFrame` contains the search results from the given query (the specified value
+            in the specified field). If there are no results and error will be raised, but otherwise this
+            `pandas.DataFrame` will contain all the available field values that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced params is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    """
+
+    available_search_fields = ['name', 'full_name', 'isin']
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        etfs = es.retrieve_etfs()
+
+    if etfs is None:
+        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
+
+    etfs['matches'] = etfs[by].str.contains(value, case=False)
+
+    search_result = etfs.loc[etfs['matches'] == True].copy()
+
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+
+    search_result.drop(columns=['country_code', 'tag', 'id', 'matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
+
+    return search_result
+
+
 """------------- INDICES -------------"""
 
 
@@ -2395,3 +2522,7 @@ def get_indices(country=None):
 
     # return es.etfs_as_df(country=country)
     return True
+
+
+if __name__ == '__main__':
+    print(search_equities(by='name', value='error'))

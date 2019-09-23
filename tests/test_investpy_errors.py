@@ -362,6 +362,39 @@ def test_equity_errors():
         except:
             pass
 
+    params = [
+        {
+            'by': None,
+            'value': 'bbva',
+        },
+        {
+            'by': ['error'],
+            'value': 'bbva',
+        },
+        {
+            'by': 'error',
+            'value': 'bbva',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'isin',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_equities(by=param['by'], value=param['value'])
+        except:
+            pass
+
 
 def test_fund_errors():
     """
@@ -719,6 +752,39 @@ def test_fund_errors():
         except:
             pass
 
+    params = [
+        {
+            'by': None,
+            'value': 'bbva',
+        },
+        {
+            'by': ['error'],
+            'value': 'bbva',
+        },
+        {
+            'by': 'error',
+            'value': 'bbva',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'isin',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_funds(by=param['by'], value=param['value'])
+        except:
+            pass
+
 
 def test_etf_errors():
     """
@@ -1047,6 +1113,39 @@ def test_etf_errors():
     for param in params:
         try:
             investpy.get_etfs_overview(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'bbva',
+        },
+        {
+            'by': ['error'],
+            'value': 'bbva',
+        },
+        {
+            'by': 'error',
+            'value': 'bbva',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'isin',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_etfs(by=param['by'], value=param['value'])
         except:
             pass
 
