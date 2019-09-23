@@ -379,37 +379,3 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
-
-
-# Aux Function to Fill Missing etfs.csv Data
-# ------------------------------------------
-# def fill_missing_data():
-#     df = etfs_as_df()
-#
-#     df = df.where((pd.notnull(df)), None)
-#
-#     resource_package = __name__
-#     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
-#     file = pkg_resources.resource_filename(resource_package, resource_path)
-#
-#     for index, row in df.iterrows():
-#         if row['currency'] is None:
-#             print('Retrieving currency of... ' + str(row['name']))
-#             currency = None
-#
-#             print(row['tag'])
-#
-#             while currency is None:
-#                 try:
-#                     info = retrieve_etf_info(row['tag'])
-#                     currency = info['currency']
-#                 except Exception as e:
-#                     if str(e) == 'ERR#0015: error 404, try again later.':
-#                         df.drop(df.index[index], inplace=True)
-#                         break
-#                     pass
-#             df.loc[index, 'currency'] = currency
-#             print('Currency of ' + str(row['name']) + ' is ... ' + str(currency))
-#             print('\n----------------------------------------------------------\n')
-#
-#             df.to_csv(file, index=False)

@@ -17,7 +17,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy import user_agent as ua, equities as ts, funds as fs, etfs as es
+from investpy import user_agent, equities as eq, funds as fs, etfs as es, indices as ic
 from investpy.Data import Data
 
 
@@ -49,7 +49,7 @@ def get_equities(country=None):
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
-    return ts.equities_as_df(country)
+    return eq.equities_as_df(country)
 
 
 def get_equities_list(country=None):
@@ -76,7 +76,7 @@ def get_equities_list(country=None):
         IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
-    return ts.equities_as_list(country)
+    return eq.equities_as_list(country)
 
 
 def get_equities_dict(country=None, columns=None, as_json=False):
@@ -116,7 +116,7 @@ def get_equities_dict(country=None, columns=None, as_json=False):
         IOError: raised when `equities.csv` file is missing or empty.
     """
 
-    return ts.equities_as_dict(country=country, columns=columns, as_json=as_json)
+    return eq.equities_as_dict(country=country, columns=columns, as_json=as_json)
 
 
 def get_equity_countries():
@@ -134,7 +134,7 @@ def get_equity_countries():
         IndexError: if `equity_countries.csv` was unavailable or not found.
     """
 
-    return ts.equity_countries_as_list()
+    return eq.equity_countries_as_list()
 
 
 def get_recent_data(equity, country, as_json=False, order='ascending', debug=False):
@@ -274,7 +274,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     }
 
     head = {
-        "User-Agent": ua.get_random(),
+        "User-Agent": user_agent.get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -490,7 +490,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = ts.retrieve_equities()
+        equities = eq.retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -546,7 +546,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
         }
 
         head = {
-            "User-Agent": ua.get_random(),
+            "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -699,7 +699,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = ts.retrieve_equities()
+        equities = eq.retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -724,7 +724,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": ua.get_random(),
+            "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -761,7 +761,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": ua.get_random(),
+            "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -830,7 +830,7 @@ def search_equities(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = ts.retrieve_equities()
+        equities = eq.retrieve_equities()
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -1102,7 +1102,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     }
 
     head = {
-        "User-Agent": ua.get_random(),
+        "User-Agent": user_agent.get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -1361,7 +1361,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         }
 
         head = {
-            "User-Agent": ua.get_random(),
+            "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -1525,7 +1525,7 @@ def get_fund_information(fund, country, as_json=False):
     url = "https://es.investing.com/funds/" + tag
 
     head = {
-        "User-Agent": ua.get_random(),
+        "User-Agent": user_agent.get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -1980,7 +1980,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     }
 
     head = {
-        "User-Agent": ua.get_random(),
+        "User-Agent": user_agent.get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -2242,7 +2242,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         }
 
         head = {
-            "User-Agent": ua.get_random(),
+            "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -2360,7 +2360,7 @@ def get_etfs_overview(country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     head = {
-        "User-Agent": ua.get_random(),
+        "User-Agent": user_agent.get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -2447,7 +2447,7 @@ def search_etfs(by, value):
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
     """
 
-    available_search_fields = ['name', 'full_name', 'isin']
+    available_search_fields = ['name', 'symbol']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
@@ -2520,9 +2520,148 @@ def get_indices(country=None):
         IOError: raised when `indices.csv` file is missing.
     """
 
-    # return es.etfs_as_df(country=country)
-    return True
+    return ic.indices_as_df(country=country)
 
 
-if __name__ == '__main__':
-    print(search_equities(by='name', value='error'))
+def get_indices_list(country=None):
+    """
+    This function retrieves all the available indices and returns a list of each one of them.
+    All the available indices can be found at: https://es.investing.com/indices/
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
+
+    Returns:
+        :obj:`list` - indices_list:
+            The resulting :obj:`list` contains the retrieved data, which corresponds to the index names of
+            every index listed on Investing.com.
+
+            In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
+
+                indices = [...]
+
+    Raises:
+        ValueError: raised when the introduced arguments are not correct.
+        IOError: raised if the indices file from `investpy` is missing or errored.
+    """
+
+    return ic.indices_as_list(country=country)
+
+
+def get_indices_dict(country=None, columns=None, as_json=False):
+    """
+    This function retrieves all the available indices on Investing.com and returns them as a :obj:`dict` containing the
+    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available indices can be found at:
+    https://es.investing.com/indices/
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
+        columns (:obj:`list` of :obj:`str`, optional): description
+            a :obj:`list` containing the column names from which the data is going to be retrieved.
+        as_json (:obj:`bool`, optional): description
+            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`dict` or :obj:`json` - indices_dict:
+            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
+            fields are filled with `None` values.
+
+            In case the information was successfully retrieved, the :obj:`dict` will look like::
+
+                {
+                    'country': country,
+                    'name': name,
+                    'full_name': full_name,
+                    'symbol': symbol,
+                    'tag': tag
+                    'currency': currency
+                }
+
+    Raises:
+        ValueError: raised when the introduced arguments are not correct.
+        IOError: raised if the indices file from `investpy` is missing or errored.
+    """
+
+    return ic.indices_as_dict(country=country, columns=columns, as_json=as_json)
+
+
+def get_index_countries():
+    """
+    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+
+    Raises:
+        IndexError: if `equity_countries.csv` was unavailable or not found.
+    """
+
+    return ic.index_countries_as_list()
+
+
+def search_indices(by, value):
+    """
+    This function searches indices by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced value for the specified field which is the
+    `indices.csv` column name to search in. Available fields to search indices are 'name' and 'full_name'.
+
+    Args:
+       by (:obj:`str`): name of the field to search for, which is the column name ('name' or 'full_name').
+       value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
+
+    Returns:
+       :obj:`pandas.DataFrame` - search_result:
+           The resulting `pandas.DataFrame` contains the search results from the given query (the specified value
+           in the specified field). If there are no results and error will be raised, but otherwise this
+           `pandas.DataFrame` will contain all the available field values that match the introduced query.
+
+    Raises:
+       ValueError: raised if any of the introduced params is not valid or errored.
+       IOError: raised if data could not be retrieved due to file error.
+       RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    """
+
+    available_search_fields = ['name', 'full_name']
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        indices = ic.retrieve_indices()
+
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
+
+    indices['matches'] = indices[by].str.contains(value, case=False)
+
+    search_result = indices.loc[indices['matches'] == True].copy()
+
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+
+    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
+
+    return search_result
+

@@ -2,6 +2,7 @@
 
 # Copyright 2018-2019 Alvaro Bartolome
 # See LICENSE for details.
+
 import json
 
 import pandas as pd
