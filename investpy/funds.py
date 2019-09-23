@@ -400,12 +400,12 @@ def funds_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
     `asset_class`, `id`, `issuer`, `name`, `symbol` and `tag`. All the available funds can be found at:
-    https://es.investing.com/etfs/
+    https://es.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
         columns (:obj:`list` of :obj:`str`, optional): description
-            a `list` containing the column names from which the data is going to be retrieved.
+            a :obj:`list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`bool`, optional): description
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
@@ -428,7 +428,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when the introduced arguments are not correct.
-        IOError: if the funds file from `investpy` is missing or errored.
+        IOError: raised if the funds file from `investpy` is missing or errored.
     """
 
     if country is not None and not isinstance(country, str):
