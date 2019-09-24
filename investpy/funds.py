@@ -57,10 +57,6 @@ def retrieve_funds(test_mode=False):
 
     results = list()
 
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
-
     for country in countries['country'].tolist():
         head = {
             "User-Agent": ua.get_random(),
@@ -110,14 +106,7 @@ def retrieve_funds(test_mode=False):
                     "currency": info['currency']
                 }
 
-                print(obj)
-
                 results.append(obj)
-
-                df = pd.DataFrame(results)
-
-                if test_mode is False:
-                    df.to_csv(file, index=False)
 
                 if test_mode is True:
                     break

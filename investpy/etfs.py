@@ -204,7 +204,7 @@ def etf_countries_as_list():
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0028: etf_countries file not found")
+        raise FileNotFoundError("ERR#0044: etf_countries file not found")
 
     return markets['country'].tolist()
 

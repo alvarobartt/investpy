@@ -10,12 +10,14 @@ import investpy
 from investpy.equities import retrieve_equities, retrieve_equity_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
+from investpy.indices import retrieve_indices, retrieve_index_countries
+
 from investpy.user_agent import get_random, clear_file, delete_file
 
 
-def test_equity_errors():
+def test_equities_errors():
     """
-    This function raises errors on equity functions
+    This function raises errors on equity retrieval functions
     """
 
     try:
@@ -396,9 +398,9 @@ def test_equity_errors():
             pass
 
 
-def test_fund_errors():
+def test_funds_errors():
     """
-    This function raises errors on fund functions
+    This function raises errors on fund retrieval functions
     """
 
     try:
@@ -786,9 +788,9 @@ def test_fund_errors():
             pass
 
 
-def test_etf_errors():
+def test_etfs_errors():
     """
-    This function raises errors on etf functions
+    This function raises errors on etf retrieval functions
     """
 
     try:
@@ -1150,6 +1152,346 @@ def test_etf_errors():
             pass
 
 
+def test_indices_errors():
+    """
+    This function raises errors on index retrieval functions
+    """
+
+    try:
+        retrieve_indices(test_mode=None)
+    except:
+        pass
+
+    try:
+        retrieve_index_countries(test_mode=None)
+    except:
+        pass
+
+    params = [
+        {
+            'country': ['error']
+        },
+        {
+            'country': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_indices(country=param['country'])
+        except:
+            pass
+
+        try:
+            investpy.get_indices_list(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': ['error'],
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': None,
+            'as_json': 'error'
+        },
+        {
+            'country': 'spain',
+            'columns': 0,
+            'as_json': True
+        },
+        {
+            'country': 'spain',
+            'columns': ['error'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_indices_dict(country=param['country'],
+                                      columns=param['columns'],
+                                      as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'index': None,
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': ['error'],
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'netherlands',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': 'error',
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'error',
+            'debug': True
+        },
+        {
+            'index': 'error',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': ['error'],
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_index_recent_data(index=param['index'],
+                                           country=param['country'],
+                                           as_json=param['as_json'],
+                                           order=param['order'],
+                                           debug=param['debug'])
+        except:
+            pass
+
+    params = [
+        {
+            'index': None,
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'error',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'netherlands',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': 'error',
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'error',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': ['error'],
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/1998',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/1998',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/1900',
+            'to_date': '01/01/1950',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_index_historical_data(index=param['index'],
+                                               country=param['country'],
+                                               from_date=param['from_date'],
+                                               to_date=param['to_date'],
+                                               as_json=param['as_json'],
+                                               order=param['order'],
+                                               debug=param['debug'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'ibex',
+        },
+        {
+            'by': ['error'],
+            'value': 'ibex',
+        },
+        {
+            'by': 'error',
+            'value': 'ibex',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'name',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_indices(by=param['by'], value=param['value'])
+        except:
+            pass
+
+
 def test_user_agent_errors():
     """
     This function raises errors on user_agent functions
@@ -1169,7 +1511,8 @@ def test_user_agent_errors():
 
 
 if __name__ == '__main__':
-    test_equity_errors()
-    test_fund_errors()
-    test_etf_errors()
+    test_equities_errors()
+    test_funds_errors()
+    test_etfs_errors()
+    test_indices_errors()
     test_user_agent_errors()
