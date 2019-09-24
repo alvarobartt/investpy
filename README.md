@@ -17,7 +17,7 @@
 ## Introduction
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **28.121 equities, 4.120 funds and 8.755 etfs**. Basically, 
+It provides historical data retrieval from up to **28.121 equities, 4.120 funds, 8.755 etfs and 385 indices**. Basically, 
 it allows you to download historical data from all the indexed equities, funds and etfs in Investing.com. Therefore,
 investpy is intended to wrap up all the available data from Investing, so that it can be retrieved via Python for 
 its further usage and/or analysis.
@@ -31,7 +31,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.3``
+``$ pip install investpy==0.9.4``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
 file, which can also be installed via pip:
@@ -57,8 +57,8 @@ import investpy
 df = investpy.get_recent_data(equity='bbva',
                               country='spain')
 print(df.head())
-
->>>
+```
+```{r, engine='python', count_lines}
              Open   High    Low  Close    Volume Currency
 Date                                                     
 2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
@@ -77,8 +77,8 @@ df = investpy.get_historical_data(equity='bbva',
                                   from_date='01/01/2010',
                                   to_date='01/01/2019')
 print(df.head())
-
->>>
+```
+```{r, engine='python', count_lines}
              Open   High    Low  Close  Volume Currency
 Date                                                   
 2010-01-04  12.73  12.96  12.73  12.96       0      EUR
@@ -86,7 +86,6 @@ Date
 2010-01-06  13.03  13.17  13.02  13.12       0      EUR
 2010-01-07  13.02  13.11  12.93  13.05       0      EUR
 2010-01-08  13.12  13.22  13.04  13.18       0      EUR
-
 ```
 
 #### Fund Data Retrieval
@@ -97,8 +96,8 @@ import investpy
 df = investpy.get_fund_recent_data(fund='bbva plan multiactivo moderado pp',
                                    country='spain')
 print(df.head())
-
->>>
+```
+```{r, engine='python', count_lines}
              Open   High    Low  Close Currency
 Date                                           
 2019-08-13  1.110  1.110  1.110  1.110      EUR
@@ -117,8 +116,8 @@ df = investpy.get_fund_historical_data(fund='bbva plan multiactivo moderado pp',
                                        from_date='01/01/2010',
                                        to_date='01/01/2019')
 print(df.head())
-
->>>
+```
+```{r, engine='python', count_lines}
              Open   High    Low  Close Currency
 Date                                           
 2018-02-15  1.105  1.105  1.105  1.105      EUR
@@ -137,8 +136,8 @@ import investpy
 df = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50',
                                   country='spain')
 print(df.head())
-
->>>
+```
+```{r, engine='python', count_lines}
               Open    High     Low   Close Currency
 Date                                               
 2019-08-13  33.115  33.780  32.985  33.585      EUR
@@ -157,8 +156,8 @@ df = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50',
                                       from_date='01/01/2018',
                                       to_date='01/01/2019')
 print(df.head())
-
->>>
+```
+```{r, engine='python', count_lines}
              Open   High    Low  Close Currency
 Date                                           
 2011-12-07  23.70  23.70  23.70  23.62      EUR
@@ -166,6 +165,46 @@ Date
 2011-12-09  23.36  23.60  23.36  23.62      EUR
 2011-12-12  23.15  23.26  23.00  22.88      EUR
 2011-12-13  22.88  22.88  22.88  22.80      EUR
+
+```
+
+#### Index Data Retrieval
+
+```python
+import investpy
+
+df = investpy.get_index_recent_data(index='ibex 35',
+                                    country='spain')
+print(df.head())
+```
+```{r, engine='python', count_lines}
+               Open     High      Low    Close   Volume Currency
+Date
+2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR
+2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR
+2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR
+2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR
+2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR
+
+```
+
+```python
+import investpy
+
+df = investpy.get_index_historical_data(index='ibex 35',
+                                        country='spain',
+                                        from_date='01/01/2018',
+                                        to_date='01/01/2019')
+print(df.head())
+```
+```{r, engine='python', count_lines}
+               Open     High      Low    Close    Volume Currency
+Date
+2018-01-02  15128.2  15136.7  14996.6  15096.8  10340000      EUR
+2018-01-03  15145.0  15186.9  15091.9  15106.9  12800000      EUR
+2018-01-04  15105.5  15368.7  15103.7  15368.7  17070000      EUR
+2018-01-05  15353.9  15407.5  15348.6  15398.9  11180000      EUR
+2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR
 
 ```
 
@@ -183,8 +222,9 @@ import investpy
 company_profile = investpy.get_equity_company_profile(equity='bbva',
                                                       country='spain')
 print(company_profile)
-
->>> "Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a diversified financial company engaged in retail banking ..."
+```
+```{r, engine='python', count_lines}
+"Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a diversified financial company engaged in retail banking ..."
 ```
 
 #### Fund Additional Information Retrieval
@@ -196,8 +236,9 @@ fund_information = investpy.get_fund_information(fund='bbva plan multiactivo mod
                                                  country='spain',
                                                  as_json=True)
 print(fund_information)
-
->>> {
+```
+```{r, engine='python', count_lines}
+{
  'Fund Name': 'Bbva Plan Multiactivo Moderado Pp',
  'Rating': 4,
  '1-Year Change': '-1,19%',

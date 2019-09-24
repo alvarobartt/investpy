@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.9.3'
+__version__ = '0.9.4'
 
 import datetime
 import json
