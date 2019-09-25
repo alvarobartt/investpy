@@ -28,7 +28,7 @@ class Data(object):
         currency_ (:obj:`str`): currency in which the data is displayed.
     """
 
-    def __init__(self, date_, open_, high_, low_, close_, volume_, currency_=None):
+    def __init__(self, date_, open_, high_, low_, close_, volume_, currency_):
         self.date = date_
         self.open = open_
         self.high = high_
@@ -129,6 +129,7 @@ class Data(object):
             'low': self.low,
             'close': self.close,
             'volume': self.volume,
+            'Currency': self.currency,
         }
 
     def currency_cross_to_dict(self):
@@ -139,4 +140,5 @@ class Data(object):
             'Low': self.low,
             'Close': self.close,
             'Volume': self.volume,
+            'Currency': self.currency,
         }
