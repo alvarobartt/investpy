@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.9.4'
+__version__ = '0.9.5'
 
 import datetime
 import json
@@ -17,7 +17,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy import user_agent, equities as eq, funds as fs, etfs as es, indices as ic
+from investpy import user_agent, equities as eq, funds as fs, etfs as es, indices as ic, currency_crosses as cc
 from investpy.Data import Data
 
 
@@ -202,46 +202,56 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     """
 
     if not equity:
-        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+        raise ValueError(
+            "ERR#0013: equity parameter is mandatory and must be a valid equity name.")
 
     if not isinstance(equity, str):
         raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        equities = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         equities = get_equities()
 
     if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0001: equities object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_equity_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
-    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+    equities = equities[equities['country'] ==
+                        unidecode.unidecode(country.lower())]
 
     equity = equity.strip()
     equity = equity.lower()
 
     if unidecode.unidecode(equity) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0018: equity " + equity +
+                           " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -253,11 +263,14 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
 
     logger.info('Searching introduced equity on Investing.com')
 
-    symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
+    symbol = equities.loc[(equities['name'].str.lower()
+                           == equity).idxmax(), 'symbol']
     id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
-    name = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'name']
+    name = equities.loc[(equities['name'].str.lower()
+                         == equity).idxmax(), 'name']
 
-    stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
+    stock_currency = equities.loc[(
+        equities['name'].str.lower() == equity).idxmax(), 'currency']
 
     logger.info(str(equity) + ' found on Investing.com')
 
@@ -288,9 +301,11 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " +
+                              str(req.status_code) + ", try again later.")
 
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    logger.info('Request to Investing.com data succeeded with code ' +
+                str(req.status_code) + '!')
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -305,9 +320,11 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
                 info.append(nested_.text_content())
 
             if info[0] == 'No se encontraron resultados':
-                raise IndexError("ERR#0007: equity information unavailable or not found.")
+                raise IndexError(
+                    "ERR#0007: equity information unavailable or not found.")
 
-            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            stock_date = datetime.datetime.strptime(
+                info[0].replace('.', '-'), '%d-%m-%Y')
             stock_close = float(info[1].replace('.', '').replace(',', '.'))
             stock_open = float(info[2].replace('.', '').replace(',', '.'))
             stock_high = float(info[3].replace('.', '').replace(',', '.'))
@@ -316,11 +333,14 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
             stock_volume = 0
 
             if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                stock_volume = int(float(info[5].replace(
+                    'K', '').replace('.', '').replace(',', '.')) * 1000)
             elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                stock_volume = int(float(info[5].replace('M', '').replace(
+                    '.', '').replace(',', '.')) * 1000000)
             elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                stock_volume = int(float(info[5].replace('B', '').replace(
+                    '.', '').replace(',', '.')) * 1000000000)
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
@@ -341,7 +361,8 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
-            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+            df = pd.DataFrame.from_records(
+                [value.equity_to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df
@@ -416,41 +437,49 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     """
 
     if not equity:
-        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+        raise ValueError(
+            "ERR#0013: equity parameter is mandatory and must be a valid equity name.")
 
     if not isinstance(equity, str):
         raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -488,23 +517,28 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        equities = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         equities = eq.retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0001: equities object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_equity_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
-    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+    equities = equities[equities['country'] ==
+                        unidecode.unidecode(country.lower())]
 
     equity = equity.strip()
     equity = equity.lower()
 
     if unidecode.unidecode(equity) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0018: equity " + equity +
+                           " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -516,11 +550,14 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
 
     logger.info('Searching introduced equity on Investing.com')
 
-    symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
+    symbol = equities.loc[(equities['name'].str.lower()
+                           == equity).idxmax(), 'symbol']
     id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
-    name = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'name']
+    name = equities.loc[(equities['name'].str.lower()
+                         == equity).idxmax(), 'name']
 
-    stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
+    stock_currency = equities.loc[(
+        equities['name'].str.lower() == equity).idxmax(), 'currency']
 
     logger.info(str(equity) + ' found on Investing.com')
 
@@ -558,7 +595,8 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " +
+                                  str(req.status_code) + ", try again later.")
 
         if not req.text:
             continue
@@ -578,25 +616,34 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
-                        raise IndexError("ERR#0007: equity information unavailable or not found.")
+                        raise IndexError(
+                            "ERR#0007: equity information unavailable or not found.")
                 else:
                     data_flag = True
 
                 if data_flag is True:
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+                    stock_date = datetime.datetime.strptime(
+                        info[0].replace('.', '-'), '%d-%m-%Y')
+                    stock_close = float(info[1].replace(
+                        '.', '').replace(',', '.'))
+                    stock_open = float(info[2].replace(
+                        '.', '').replace(',', '.'))
+                    stock_high = float(info[3].replace(
+                        '.', '').replace(',', '.'))
+                    stock_low = float(info[4].replace(
+                        '.', '').replace(',', '.'))
 
                     stock_volume = 0
 
                     if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        stock_volume = int(float(info[5].replace(
+                            'K', '').replace('.', '').replace(',', '.')) * 1000)
                     elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        stock_volume = int(float(info[5].replace('M', '').replace(
+                            '.', '').replace(',', '.')) * 1000000)
                     elif info[5].__contains__('B'):
-                        stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                        stock_volume = int(float(info[5].replace('B', '').replace(
+                            '.', '').replace(',', '.')) * 1000000000)
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,
@@ -615,13 +662,15 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                              }
                     final.append(json_)
                 elif as_json is False:
-                    df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+                    df = pd.DataFrame.from_records(
+                        [value.equity_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
 
         else:
-            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            raise RuntimeError(
+                "ERR#0004: data retrieval error while scraping.")
 
     logger.info('Data parsing process finished...')
 
@@ -675,41 +724,49 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     }
 
     if not equity:
-        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+        raise ValueError(
+            "ERR#0013: equity parameter is mandatory and must be a valid equity name.")
 
     if not isinstance(equity, str):
         raise ValueError("ERR#0027: equity argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if language.lower() not in available_sources.keys():
-        raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
+        raise ValueError(
+            "ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
 
     if unidecode.unidecode(country.lower()) not in ['spain']:
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
     selected_source = available_sources[language.lower()]
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        equities = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         equities = eq.retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0001: equities object not found or unable to retrieve.")
 
-    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+    equities = equities[equities['country'] ==
+                        unidecode.unidecode(country.lower())]
 
     equity = equity.strip()
 
     if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0018: equity " + equity.lower() +
+                           " not found, check if it is correct.")
 
     company_profile = {
         'url': None,
@@ -717,7 +774,8 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     }
 
     if selected_source == 'Bolsa de Madrid':
-        isin = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'isin']
+        isin = equities.loc[(equities['name'].str.lower()
+                             == equity).idxmax(), 'isin']
 
         url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + isin
 
@@ -734,7 +792,8 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         req = requests.get(url, headers=head)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " +
+                                  str(req.status_code) + ", try again later.")
 
         root_ = fromstring(req.text)
 
@@ -748,13 +807,15 @@ def get_equity_company_profile(equity, country='spain', language='english'):
 
             text = ''.join(text)
 
-            company_profile['desc'] = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
+            company_profile['desc'] = ' '.join(
+                text.replace('\n', ' ').replace('\xa0', ' ').split())
 
             return company_profile
         else:
             return company_profile
     elif selected_source == 'Investing':
-        tag = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'tag']
+        tag = equities.loc[(equities['name'].str.lower()
+                            == equity).idxmax(), 'tag']
 
         url = "https://www.investing.com/equities/" + tag + "-company-profile"
 
@@ -771,7 +832,8 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         req = requests.get(url, headers=head)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " +
+                                  str(req.status_code) + ", try again later.")
 
         root_ = fromstring(req.text)
 
@@ -810,37 +872,44 @@ def search_equities(by, value):
     available_search_fields = ['name', 'full_name', 'isin']
 
     if not by:
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if isinstance(by, str) and by not in available_search_fields:
         raise ValueError('ERR#0026: the introduced field to search can either just be '
                          + ' or '.join(available_search_fields))
 
     if not value:
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     if not isinstance(value, str):
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        equities = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         equities = eq.retrieve_equities()
 
     if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0001: equities object not found or unable to retrieve.")
 
     equities['matches'] = equities[by].str.contains(value, case=False)
 
     search_result = equities.loc[equities['matches'] == True].copy()
 
     if len(search_result) == 0:
-        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+        raise RuntimeError(
+            'ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
     search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
@@ -1030,38 +1099,46 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     """
 
     if not fund:
-        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+        raise ValueError(
+            "ERR#0029: fund parameter is mandatory and must be a valid fund name.")
 
     if not isinstance(fund, str):
         raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0005: funds object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
     funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
 
@@ -1069,7 +1146,8 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     fund = fund.lower()
 
     if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: fund " + fund +
+                           " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1085,7 +1163,8 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
     name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
 
-    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+    fund_currency = funds.loc[(
+        funds['name'].str.lower() == fund).idxmax(), 'currency']
 
     logger.info(str(fund) + ' found on Investing.com')
 
@@ -1116,9 +1195,11 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " +
+                              str(req.status_code) + ", try again later.")
 
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    logger.info('Request to Investing.com data succeeded with code ' +
+                str(req.status_code) + '!')
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -1133,9 +1214,11 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
                 info.append(nested_.text_content())
 
             if info[0] == 'No se encontraron resultados':
-                raise IndexError("ERR#0008: fund information unavailable or not found.")
+                raise IndexError(
+                    "ERR#0008: fund information unavailable or not found.")
 
-            fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            fund_date = datetime.datetime.strptime(
+                info[0].replace('.', '-'), '%d-%m-%Y')
             fund_close = float(info[1].replace('.', '').replace(',', '.'))
             fund_open = float(info[2].replace('.', '').replace(',', '.'))
             fund_high = float(info[3].replace('.', '').replace(',', '.'))
@@ -1159,7 +1242,8 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
-            df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+            df = pd.DataFrame.from_records(
+                [value.fund_to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df
@@ -1233,41 +1317,49 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     """
 
     if not fund:
-        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+        raise ValueError(
+            "ERR#0029: fund parameter is mandatory and must be a valid fund name.")
 
     if not isinstance(fund, str):
         raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -1305,15 +1397,18 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0005: funds object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
     funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
 
@@ -1321,7 +1416,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     fund = fund.lower()
 
     if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: fund " + fund +
+                           " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1337,7 +1433,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
     name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
 
-    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+    fund_currency = funds.loc[(
+        funds['name'].str.lower() == fund).idxmax(), 'currency']
 
     logger.info(str(fund) + ' found on Investing.com')
 
@@ -1375,9 +1472,11 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " +
+                                  str(req.status_code) + ", try again later.")
 
-        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+        logger.info(
+            'Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         if not req.text:
             continue
@@ -1396,17 +1495,23 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
-                        raise IndexError("ERR#0008: fund information unavailable or not found.")
+                        raise IndexError(
+                            "ERR#0008: fund information unavailable or not found.")
 
                 else:
                     data_flag = True
 
                 if data_flag is True:
-                    fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    fund_close = float(info[1].replace('.', '').replace(',', '.'))
-                    fund_open = float(info[2].replace('.', '').replace(',', '.'))
-                    fund_high = float(info[3].replace('.', '').replace(',', '.'))
-                    fund_low = float(info[4].replace('.', '').replace(',', '.'))
+                    fund_date = datetime.datetime.strptime(
+                        info[0].replace('.', '-'), '%d-%m-%Y')
+                    fund_close = float(info[1].replace(
+                        '.', '').replace(',', '.'))
+                    fund_open = float(info[2].replace(
+                        '.', '').replace(',', '.'))
+                    fund_high = float(info[3].replace(
+                        '.', '').replace(',', '.'))
+                    fund_low = float(info[4].replace(
+                        '.', '').replace(',', '.'))
 
                     result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                                     fund_close, None, fund_currency))
@@ -1425,13 +1530,15 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
                     final.append(json_)
                 elif as_json is False:
-                    df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+                    df = pd.DataFrame.from_records(
+                        [value.fund_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
 
         else:
-            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            raise RuntimeError(
+                "ERR#0004: data retrieval error while scraping.")
 
     logger.info('Data parsing process finished...')
 
@@ -1485,32 +1592,38 @@ def get_fund_information(fund, country, as_json=False):
     """
 
     if not fund:
-        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+        raise ValueError(
+            "ERR#0029: fund parameter is mandatory and must be a valid fund name.")
 
     if not isinstance(fund, str):
         raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0005: funds object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
     funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
 
@@ -1518,7 +1631,8 @@ def get_fund_information(fund, country, as_json=False):
     fund = fund.lower()
 
     if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
-        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: fund " + fund +
+                           " not found, check if it is correct.")
 
     tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
 
@@ -1535,7 +1649,8 @@ def get_fund_information(fund, country, as_json=False):
     req = requests.get(url, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " +
+                              str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
@@ -1547,93 +1662,122 @@ def get_fund_information(fund, country, as_json=False):
 
     if path_:
         for elements_ in path_:
-            title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
+            title_ = elements_.xpath(
+                ".//span[@class='float_lang_base_1']")[0].text_content()
 
             if title_ == 'Rating':
-                rating_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+                rating_score = 5 - \
+                    len(elements_.xpath(
+                        ".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
 
                 result.at[0, 'Rating'] = int(rating_score)
             elif title_ == 'Var. en un año':
-                oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
+                oneyear_variation = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content().replace(" ", "")
 
                 result.at[0, '1-Year Change'] = oneyear_variation
             elif title_ == 'Último cierre':
-                previous_close = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                previous_close = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'Previous Close'] = previous_close
 
                 if previous_close != 'N/A':
-                    result.at[0, 'Previous Close'] = float(previous_close.replace('.', '').replace(',', '.'))
+                    result.at[0, 'Previous Close'] = float(
+                        previous_close.replace('.', '').replace(',', '.'))
             elif title_ == 'Calificación de riesgo':
-                risk_score = 5 - len(elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+                risk_score = 5 - \
+                    len(elements_.xpath(
+                        ".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
 
                 result.at[0, 'Risk Rating'] = int(risk_score)
             elif title_ == 'Rendimiento año móvil':
-                ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                ttm_percentage = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'TTM Yield'] = ttm_percentage
             elif title_ == 'ROE':
-                roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                roe_percentage = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'ROE'] = roe_percentage
             elif title_ == 'Emisor':
-                issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                issuer_name = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'Issuer'] = issuer_name.strip()
             elif title_ == 'Volumen de ventas':
-                turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                turnover_percentage = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'Turnover'] = turnover_percentage
             elif title_ == 'ROA':
-                roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                roa_percentage = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'ROA'] = roa_percentage
             elif title_ == 'Fecha de inicio':
-                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
+                value = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                inception_date = datetime.datetime.strptime(
+                    value.replace('.', '/'), '%d/%m/%Y')
 
-                result.at[0, 'Inception Date'] = inception_date.strftime('%d/%m/%Y')
+                result.at[0, 'Inception Date'] = inception_date.strftime(
+                    '%d/%m/%Y')
             elif title_ == 'Total activos':
-                total_assets = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                total_assets = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 if total_assets != 'N/A':
                     if total_assets.__contains__('K'):
-                        total_assets = int(float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        total_assets = int(float(total_assets.replace(
+                            'K', '').replace('.', '').replace(',', '.')) * 1000)
                     elif total_assets.__contains__('M'):
-                        total_assets = int(float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        total_assets = int(float(total_assets.replace(
+                            'M', '').replace('.', '').replace(',', '.')) * 1000000)
                     elif total_assets.__contains__('B'):
-                        total_assets = int(float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                        total_assets = int(float(total_assets.replace(
+                            'B', '').replace('.', '').replace(',', '.')) * 1000000000)
                     else:
-                        total_assets = int(float(total_assets.replace('.', '')))
+                        total_assets = int(
+                            float(total_assets.replace('.', '')))
 
                 result.at[0, 'Total Assets'] = total_assets
             elif title_ == 'Gastos':
-                expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                expenses_percentage = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'Expenses'] = expenses_percentage
             elif title_ == 'Inversión mínima':
-                min_investment = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                min_investment = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'Min Investment'] = min_investment
 
                 if min_investment != 'N/A':
-                    result.at[0, 'Min Investment'] = int(float(min_investment.replace('.', '')))
+                    result.at[0, 'Min Investment'] = int(
+                        float(min_investment.replace('.', '')))
             elif title_ == 'Cap. mercado':
-                market_cap = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                market_cap = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 if market_cap != 'N/A':
                     if market_cap.__contains__('K'):
-                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        market_cap = int(float(market_cap.replace(
+                            'K', '').replace('.', '').replace(',', '.')) * 1000)
                     elif market_cap.__contains__('M'):
-                        market_cap = int(float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        market_cap = int(float(market_cap.replace(
+                            'M', '').replace('.', '').replace(',', '.')) * 1000000)
                     elif market_cap.__contains__('B'):
-                        market_cap = int(float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                        market_cap = int(float(market_cap.replace('B', '').replace(
+                            '.', '').replace(',', '.')) * 1000000000)
                     else:
                         market_cap = int(float(market_cap.replace('.', '')))
 
                 result.at[0, 'Market Cap'] = market_cap
             elif title_ == 'Categoría':
-                category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                category_name = elements_.xpath(
+                    ".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
 
                 result.at[0, 'Category'] = category_name
 
@@ -1676,37 +1820,44 @@ def search_funds(by, value):
     available_search_fields = ['name', 'symbol', 'issuer', 'isin']
 
     if not by:
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if isinstance(by, str) and by not in available_search_fields:
         raise ValueError('ERR#0026: the introduced field to search can either just be '
                          + ' or '.join(available_search_fields))
 
     if not value:
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     if not isinstance(value, str):
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         funds = get_funds()
 
     if funds is None:
-        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+        raise IOError(
+            "ERR#0005: funds object not found or unable to retrieve.")
 
     funds['matches'] = funds[by].str.contains(value, case=False)
 
     search_result = funds.loc[funds['matches'] == True].copy()
 
     if len(search_result) == 0:
-        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+        raise RuntimeError(
+            'ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
     search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
@@ -1908,30 +2059,36 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     """
 
     if not etf:
-        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+        raise ValueError(
+            "ERR#0031: etf parameter is mandatory and must be a valid etf name.")
 
     if not isinstance(etf, str):
         raise ValueError("ERR#0030: etf argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         etfs = es.retrieve_etfs()
 
@@ -1939,7 +2096,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_etf_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
     etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
@@ -1947,7 +2105,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     etf = etf.lower()
 
     if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0019: etf " + etf +
+                           " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -1963,7 +2122,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
 
-    etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
+    etf_currency = etfs.loc[(etfs['name'].str.lower()
+                             == etf).idxmax(), 'currency']
 
     logger.info(str(etf) + ' found on Investing.com')
 
@@ -1994,9 +2154,11 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " +
+                              str(req.status_code) + ", try again later.")
 
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+    logger.info('Request to Investing.com data succeeded with code ' +
+                str(req.status_code) + '!')
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -2011,15 +2173,18 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
                 info.append(nested_.text_content())
 
             if info[0] == 'No se encontraron resultados':
-                raise IndexError("ERR#0010: etf information unavailable or not found.")
+                raise IndexError(
+                    "ERR#0010: etf information unavailable or not found.")
 
-            etf_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            etf_date = datetime.datetime.strptime(
+                info[0].replace('.', '-'), '%d-%m-%Y')
             etf_close = float(info[1].replace('.', '').replace(',', '.'))
             etf_open = float(info[2].replace('.', '').replace(',', '.'))
             etf_high = float(info[3].replace('.', '').replace(',', '.'))
             etf_low = float(info[4].replace('.', '').replace(',', '.'))
 
-            result.insert(len(result), Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency))
+            result.insert(len(result), Data(etf_date, etf_open,
+                                            etf_high, etf_low, etf_close, None, etf_currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -2036,7 +2201,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
-            df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
+            df = pd.DataFrame.from_records(
+                [value.etf_to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df
@@ -2112,41 +2278,49 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     """
 
     if not etf:
-        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+        raise ValueError(
+            "ERR#0031: etf parameter is mandatory and must be a valid etf name.")
 
     if not isinstance(etf, str):
         raise ValueError("ERR#0030: etf argument needs to be a str.")
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
-        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -2184,7 +2358,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         etfs = es.retrieve_etfs()
 
@@ -2192,7 +2367,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
     if unidecode.unidecode(country.lower()) not in get_etf_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        raise RuntimeError("ERR#0034: country " + country.lower() +
+                           " not found, check if it is correct.")
 
     etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
 
@@ -2200,7 +2376,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     etf = etf.lower()
 
     if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
-        raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
+        raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " +
+                           str(country.lower()) + ", check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -2216,7 +2393,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
 
-    etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
+    etf_currency = etfs.loc[(etfs['name'].str.lower()
+                             == etf).idxmax(), 'currency']
 
     logger.info(str(etf) + ' found on Investing.com')
 
@@ -2254,9 +2432,11 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " +
+                                  str(req.status_code) + ", try again later.")
 
-        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+        logger.info(
+            'Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         if not req.text:
             continue
@@ -2278,15 +2458,20 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
-                        raise IndexError("ERR#0010: etf information unavailable or not found.")
+                        raise IndexError(
+                            "ERR#0010: etf information unavailable or not found.")
                 else:
                     data_flag = True
 
                 if data_flag is True:
-                    etf_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    etf_close = float(info[1].replace('.', '').replace(',', '.'))
-                    etf_open = float(info[2].replace('.', '').replace(',', '.'))
-                    etf_high = float(info[3].replace('.', '').replace(',', '.'))
+                    etf_date = datetime.datetime.strptime(
+                        info[0].replace('.', '-'), '%d-%m-%Y')
+                    etf_close = float(info[1].replace(
+                        '.', '').replace(',', '.'))
+                    etf_open = float(info[2].replace(
+                        '.', '').replace(',', '.'))
+                    etf_high = float(info[3].replace(
+                        '.', '').replace(',', '.'))
                     etf_low = float(info[4].replace('.', '').replace(',', '.'))
 
                     result.insert(len(result),
@@ -2306,13 +2491,15 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
                     final.append(json_)
                 elif as_json is False:
-                    df = pd.DataFrame.from_records([value.etf_to_dict() for value in result])
+                    df = pd.DataFrame.from_records(
+                        [value.etf_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
 
         else:
-            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            raise RuntimeError(
+                "ERR#0004: data retrieval error while scraping.")
 
     logger.info('Data parsing process finished...')
 
@@ -2351,13 +2538,15 @@ def get_etfs_overview(country, as_json=False):
     """
 
     if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+        raise ValueError(
+            "ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
 
     head = {
         "User-Agent": user_agent.get_random(),
@@ -2370,12 +2559,14 @@ def get_etfs_overview(country, as_json=False):
     if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
 
-    url = "https://es.investing.com/etfs/" + unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
+    url = "https://es.investing.com/etfs/" + \
+        unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
 
     req = requests.get(url, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " +
+                              str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='etfs']"
@@ -2387,25 +2578,31 @@ def get_etfs_overview(country, as_json=False):
     if path_:
         for element_ in path_:
             id_ = element_.get('id').replace('pair_', '')
-            symbol = element_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+            symbol = element_.xpath(
+                ".//td[contains(@class, 'symbol')]")[0].get('title')
 
             name = element_.xpath(".//a")[0]
 
             last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
             last = element_.xpath(last_path)[0].text_content()
 
-            change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+            change_path = ".//td[contains(@class, '" + \
+                'pid-' + str(id_) + '-pcp' + "')]"
             change = element_.xpath(change_path)[0].text_content()
 
-            turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
+            turnover_path = ".//td[contains(@class, '" + \
+                'pid-' + str(id_) + '-turnover' + "')]"
             turnover = element_.xpath(turnover_path)[0].text_content()
 
             if turnover.__contains__('K'):
-                turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                turnover = int(float(turnover.replace('K', '').replace(
+                    '.', '').replace(',', '.')) * 1000)
             elif turnover.__contains__('M'):
-                turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                turnover = int(float(turnover.replace('M', '').replace(
+                    '.', '').replace(',', '.')) * 1000000)
             else:
-                turnover = int(float(turnover.replace('.', '').replace(',', '.')))
+                turnover = int(
+                    float(turnover.replace('.', '').replace(',', '.')))
 
             data = {
                 "name": name.text.strip(),
@@ -2450,25 +2647,30 @@ def search_etfs(by, value):
     available_search_fields = ['name', 'symbol']
 
     if not by:
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if isinstance(by, str) and by not in available_search_fields:
         raise ValueError('ERR#0026: the introduced field to search can either just be '
                          + ' or '.join(available_search_fields))
 
     if not value:
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     if not isinstance(value, str):
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         etfs = es.retrieve_etfs()
 
@@ -2480,9 +2682,11 @@ def search_etfs(by, value):
     search_result = etfs.loc[etfs['matches'] == True].copy()
 
     if len(search_result) == 0:
-        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+        raise RuntimeError(
+            'ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['country_code', 'tag', 'id', 'matches'], inplace=True)
+    search_result.drop(
+        columns=['country_code', 'tag', 'id', 'matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
@@ -3131,25 +3335,30 @@ def search_indices(by, value):
     available_search_fields = ['name', 'full_name']
 
     if not by:
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if isinstance(by, str) and by not in available_search_fields:
         raise ValueError('ERR#0026: the introduced field to search can either just be '
                          + ' or '.join(available_search_fields))
 
     if not value:
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     if not isinstance(value, str):
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            'ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
     else:
         indices = ic.retrieve_indices()
 
@@ -3161,9 +3370,588 @@ def search_indices(by, value):
     search_result = indices.loc[indices['matches'] == True].copy()
 
     if len(search_result) == 0:
-        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+        raise RuntimeError(
+            'ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
     search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
+
+
+"""------------- currency_crosses -------------"""
+
+
+def get_currency_crosses():
+    """
+    This function retrieves all the available countries to retrieve indices from, as the listed countries are the ones
+    indexed on Investing.com. This function is intended to show the user the data contained in `indices.csv` in order
+    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
+    parameter is applied so just the indices from the specified country are retrieved.
+
+    Args:
+        None
+
+    Returns:
+        :obj:`pandas.DataFrame` - indices:
+            The resulting :obj:`pandas.DataFrame` contains all the indices basic information stored on `indices.csv`,
+            since it was previously retrieved in `investpy.indices.retrieve_indices()`. Unless the country is
+            specified, all the available indices indexed on Investing.com is returned, but if it is specified, just the
+            indices from that country are returned.
+
+            In the case that the file reading of `indices.csv` or the retrieval process from Investing.com was
+            successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
+
+                country | name | symbol | tag | id
+                --------|------|--------|-----|----
+                xxxxxxx | xxxx | xxxxxx | xxx | xx
+
+    Raises:
+        ValueError: raised when any of the input arguments is not valid.
+        IOError: raised when `indices.csv` file is missing.
+    """
+
+    return cc.currency_crosses_as_df()
+
+
+def get_currency_crosses_list():
+    """
+    This function retrieves all the available countries to retrieve currencies from, as the listed countries are the ones
+    indexed on Investing.com. This function is intended to show the user the data contained in `currencies.csv` in order
+    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
+    parameter is applied so just the currencies from the specified country are retrieved.
+
+    Args:
+        None
+    Returns:
+        :obj:`list` - currencies:
+            The resulting :obj:`pandas.DataFrame` contains all the currencies basic information stored on `currencies.csv`,
+            since it was previously retrieved in `investpy.currencies.retrieve_currencies()`. Unless the country is
+            specified, all the available currencies indexed on Investing.com is returned, but if it is specified, just the
+            currencies from that country are returned.
+
+            In the case that the file reading of `currency_crosses.csv` or the retrieval process from Investing.com was
+            successfully completed, the resulting :obj:`list` will look like::
+
+            currencies = [...]
+
+    Raises:
+        ValueError: raised when any of the input arguments is not valid.
+        IOError: raised when `currencies.csv` file is missing.
+    """
+
+    return cc.currency_crosses_as_list()
+
+
+def get_currency_crosses_dict():
+    """
+    This function retrieves all the available countries to retrieve currencies from, as the listed countries are the ones
+    indexed on Investing.com. This function is intended to show the user the data contained in `currencies.csv` in order
+    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
+    parameter is applied so just the currencies from the specified country are retrieved.
+
+    Args:
+        None
+    Returns:
+        :obj:`dict` - currencies:
+            The resulting :obj:`pandas.DataFrame` contains all the currencies basic information stored on `currencies.csv`,
+            since it was previously retrieved in `investpy.currencies.retrieve_currencies()`. Unless the country is
+            specified, all the available currencies indexed on Investing.com is returned, but if it is specified, just the
+            currencies from that country are returned.
+
+            In the case that the file reading of `currency_crosses.csv` or the retrieval process from Investing.com was
+            successfully completed, the resulting :obj:`dict` will look like::
+
+            currencies = {
+
+            }
+
+    Raises:
+        ValueError: raised when any of the input arguments is not valid.
+        IOError: raised when `currencies.csv` file is missing.
+    """
+
+    return cc.currency_crosses_as_dict()
+
+
+def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascending', debug=False):
+    """
+    This function retrieves recent historical data from the introduced `currency` from Investing
+    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
+    :obj:`json` file, with `ascending` or `descending` order.
+
+    Args:
+        currency (:obj:`str`): name of the currency to retrieve recent historical data from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified currency_cross via argument. The dataset contains the open, high, low, close and
+            volume values for the selected currency_cross on market days.
+
+            The return data is case we use default arguments will look like::
+
+                date || open | high | low | close | volume
+                -----||------------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        dd/mm/yyyy: {
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            volume: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: equities object/file not found or unable to retrieve.
+        RuntimeError: introduced currency_cross does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if currency_cross information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD', as_json=False, order='ascending', debug=False)
+                         Open   High    Low  Close    Volume
+            Date
+            2019-08-13  4.263  4.395  4.230  4.353  27250000
+            2019-08-14  4.322  4.325  4.215  4.244  36890000
+            2019-08-15  4.281  4.298  4.187  4.234  21340000
+            2019-08-16  4.234  4.375  4.208  4.365  46080000
+            2019-08-19  4.396  4.425  4.269  4.269  18950000
+
+    """
+
+    if not currency_cross:
+        raise ValueError(
+            "ERR#0013: currency_cross parameter is mandatory and must be a valid currency_cross name.")
+
+    if not isinstance(currency_cross, str):
+        raise ValueError("ERR#0027: currency_cross argument needs to be a str.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
+    else:
+        currency_crosses = get_currency_crosses()
+
+    if currency_crosses is None:
+        raise IOError(
+            "ERR#0001: currency_crosses object not found or unable to retrieve.")
+
+    currency_cross = currency_cross.strip()
+    currency_cross = currency_cross.lower()
+
+    if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
+        raise RuntimeError("ERR#0018: currency_cross " + currency_cross +
+                           " not found, check if it is correct.")
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced currency_cross on Investing.com')
+
+    id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
+    name = currency_crosses.loc[(currency_crosses['name'].str.lower()
+                         == currency_cross).idxmax(), 'name']
+
+    logger.info(str(currency_cross) + ' found on Investing.com')
+
+    header = "Datos históricos " + name
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": "Daily",
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
+
+    head = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
+    logger.info('Request sent to Investing.com!')
+
+    req = requests.post(url, headers=head, data=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " +
+                              str(req.status_code) + ", try again later.")
+
+    logger.info('Request to Investing.com data succeeded with code ' +
+                str(req.status_code) + '!')
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
+
+    if path_:
+        logger.info('Data parsing process starting...')
+
+        for elements_ in path_:
+            info = []
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.text_content())
+
+            if info[0] == 'No se encontraron resultados':
+                raise IndexError(
+                    "ERR#0007: currency_cross information unavailable or not found.")
+
+            stock_date = datetime.datetime.strptime(
+                info[0].replace('.', '-'), '%d-%m-%Y')
+            stock_close = float(info[1].replace('.', '').replace(',', '.'))
+            stock_open = float(info[2].replace('.', '').replace(',', '.'))
+            stock_high = float(info[3].replace('.', '').replace(',', '.'))
+            stock_low = float(info[4].replace('.', '').replace(',', '.'))
+
+            stock_volume = 0
+
+            if info[5].__contains__('K'):
+                stock_volume = int(float(info[5].replace(
+                    'K', '').replace('.', '').replace(',', '.')) * 1000)
+            elif info[5].__contains__('M'):
+                stock_volume = int(float(info[5].replace('M', '').replace(
+                    '.', '').replace(',', '.')) * 1000000)
+            elif info[5].__contains__('B'):
+                stock_volume = int(float(info[5].replace('B', '').replace(
+                    '.', '').replace(',', '.')) * 1000000000)
+
+            result.insert(len(result),
+                          Data(stock_date, stock_open, stock_high, stock_low,
+                               stock_close, stock_volume))
+
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
+
+        logger.info('Data parsing process finished...')
+
+        if as_json is True:
+            json_ = {'name': name,
+                     'recent':
+                         [value.currency_cross_as_json() for value in result]
+                     }
+
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records(
+                [value.currency_cross_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending', debug=False):
+    """
+    This function retrieves recent historical data from the introduced `currency` from Investing
+    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
+    :obj:`json` file, with `ascending` or `descending` order.
+
+    Args:
+        currency (:obj:`str`): name of the currency to retrieve recent historical data from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified currency_cross via argument. The dataset contains the open, high, low, close and
+            volume values for the selected currency_cross on market days.
+
+            The return data is case we use default arguments will look like::
+
+                date || open | high | low | close | volume
+                -----||------------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        dd/mm/yyyy: {
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            volume: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: equities object/file not found or unable to retrieve.
+        RuntimeError: introduced currency_cross does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if currency_cross information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD', as_json=False, order='ascending', debug=False)
+                         Open   High    Low  Close    Volume
+            Date
+            2019-08-13  4.263  4.395  4.230  4.353  27250000
+            2019-08-14  4.322  4.325  4.215  4.244  36890000
+            2019-08-15  4.281  4.298  4.187  4.234  21340000
+            2019-08-16  4.234  4.375  4.208  4.365  46080000
+            2019-08-19  4.396  4.425  4.269  4.269  18950000
+
+    """
+
+    if not currency_cross:
+        raise ValueError(
+            "ERR#0013: currency_cross parameter is mandatory and must be a valid currency_cross name.")
+
+    if not isinstance(currency_cross, str):
+        raise ValueError("ERR#0027: currency_cross argument needs to be a str.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError(
+            "ERR#0033: debug argument can just be a boolean value, either True or False.")
+
+    try:
+        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError(
+            "ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
+
+    try:
+        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError(
+            "ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+
+    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError(
+            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+
+    date_interval = {
+        'intervals': [],
+    }
+
+    flag = True
+
+    while flag is True:
+        diff = end_date.year - start_date.year
+
+        if diff > 20:
+            obj = {
+                'start': start_date.strftime('%d/%m/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%d/%m/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            start_date = start_date.replace(year=start_date.year + 20)
+        else:
+            obj = {
+                'start': start_date.strftime('%d/%m/%Y'),
+                'end': end_date.strftime('%d/%m/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            flag = False
+
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(
+            resource_package, resource_path))
+    else:
+        currency_crosses = get_currency_crosses()
+
+    if currency_crosses is None:
+        raise IOError(
+            "ERR#0001: currency_crosses object not found or unable to retrieve.")
+
+    currency_cross = currency_cross.strip()
+    currency_cross = currency_cross.lower()
+
+    if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
+        raise RuntimeError("ERR#0018: currency_cross " + currency_cross +
+                           " not found, check if it is correct.")
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced currency_cross on Investing.com')
+
+    id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
+    name = currency_crosses.loc[(currency_crosses['name'].str.lower()
+                         == currency_cross).idxmax(), 'name']
+
+    logger.info(str(currency_cross) + ' found on Investing.com')
+
+    header = "Datos históricos " + name#symbol
+
+    for index in range(len(date_interval['intervals'])):
+        interval_counter += 1
+
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": "Daily",
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
+
+        head = {
+            "User-Agent": user_agent.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
+        logger.info('Request sent to Investing.com!')
+
+        req = requests.post(url, headers=head, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " +
+                                  str(req.status_code) + ", try again later.")
+
+        logger.info('Request to Investing.com data succeeded with code ' +
+                    str(req.status_code) + '!')
+
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        result = list()
+
+        if path_:
+            logger.info('Data parsing process starting...')
+
+            for elements_ in path_:
+                info = []
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.text_content())
+
+                if info[0] == 'No se encontraron resultados':
+                    raise IndexError(
+                        "ERR#0007: currency_cross information unavailable or not found.")
+
+                stock_date = datetime.datetime.strptime(
+                    info[0].replace('.', '-'), '%d-%m-%Y')
+                stock_close = float(info[1].replace('.', '').replace(',', '.'))
+                stock_open = float(info[2].replace('.', '').replace(',', '.'))
+                stock_high = float(info[3].replace('.', '').replace(',', '.'))
+                stock_low = float(info[4].replace('.', '').replace(',', '.'))
+
+                stock_volume = 0
+
+                if info[5].__contains__('K'):
+                    stock_volume = int(float(info[5].replace(
+                        'K', '').replace('.', '').replace(',', '.')) * 1000)
+                elif info[5].__contains__('M'):
+                    stock_volume = int(float(info[5].replace('M', '').replace(
+                        '.', '').replace(',', '.')) * 1000000)
+                elif info[5].__contains__('B'):
+                    stock_volume = int(float(info[5].replace('B', '').replace(
+                        '.', '').replace(',', '.')) * 1000000000)
+
+                result.insert(len(result),
+                              Data(stock_date, stock_open, stock_high, stock_low,
+                                   stock_close, stock_volume))
+
+            if order in ['ascending', 'asc']:
+                result = result[::-1]
+            elif order in ['descending', 'desc']:
+                result = result
+
+            logger.info('Data parsing process finished...')
+
+            if as_json is True:
+                json_ = {'name': name,
+                         'recent':
+                             [value.currency_cross_as_json() for value in result]
+                         }
+
+                return json.dumps(json_, sort_keys=False)
+            elif as_json is False:
+                df = pd.DataFrame.from_records(
+                    [value.currency_cross_to_dict() for value in result])
+                df.set_index('Date', inplace=True)
+
+                return df
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    logger.info('Data parsing process finished...')
