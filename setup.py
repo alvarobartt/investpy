@@ -14,10 +14,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.9.4',
+    version='0.9.5',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.9.4.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.9.5.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -33,6 +33,7 @@ setup(
         ('equities', ['investpy/resources/equities/equities.csv', 'investpy/resources/equities/equity_countries.csv']),
         ('funds', ['investpy/resources/funds/funds.csv', 'investpy/resources/funds/fund_countries.csv']),
         ('etfs', ['investpy/resources/etfs/etfs.csv', 'investpy/resources/etfs/etf_countries.csv']),
+        ('indices', ['investpy/resources/indices/indices.csv', 'investpy/resources/indices/index_countries.csv']),
         ('user_agents', ['investpy/resources/user_agent_list.txt'])
     ],
     include_package_data=True,
@@ -49,7 +50,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing, investing-api, stock-market, scraper, historical-data, financial-data, finance',
+    keywords='investing, investing-api, historical-data, financial-data, stocks, funds, etfs, indices',
     python_requires='>=3',
     project_urls={
         'Bug Reports': 'https://github.com/alvarob96/investpy/issues',
