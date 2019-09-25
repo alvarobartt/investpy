@@ -445,9 +445,27 @@ def test_investpy_indices():
     retrieve_index_countries(test_mode=True)
 
 
+def test_investpy_currencies():
+    investpy.get_currency_crosses()
+
+    params = [
+        {
+            'currency_cross': 'EUR/USD',
+            'as_json': True,
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'as_json': False,
+        }]
+
+    for param in params:
+        investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'], as_json=param['as_json'])
+
+
 if __name__ == '__main__':
     test_investpy()
     test_investpy_equities()
     test_investpy_funds()
     test_investpy_etfs()
     test_investpy_indices()
+    test_investpy_currencies()
