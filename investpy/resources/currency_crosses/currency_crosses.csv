@@ -1,0 +1,192 @@
+name,full_name,tag,id
+EUR/USD,EUR/USD - Euro US Dollar,eur-usd,1
+GBP/USD,GBP/USD - British Pound US Dollar,gbp-usd,2
+USD/JPY,USD/JPY - US Dollar Japanese Yen,usd-jpy,3
+USD/CHF,USD/CHF - US Dollar Swiss Franc,usd-chf,4
+AUD/USD,AUD/USD - Australian Dollar US Dollar,aud-usd,5
+USD/CAD,USD/CAD - US Dollar Canadian Dollar,usd-cad,7
+NZD/USD,NZD/USD - New Zealand Dollar US Dollar,nzd-usd,8
+USD/ZAR,USD/ZAR - US Dollar South African Rand,usd-zar,17
+USD/TRY,USD/TRY - US Dollar Turkish Lira,usd-try,18
+USD/MXN,USD/MXN - US Dollar Mexican Peso,usd-mxn,39
+USD/PLN,USD/PLN - US Dollar Polish Zloty,usd-pln,40
+USD/SEK,USD/SEK - US Dollar Swedish Krona,usd-sek,41
+USD/SGD,USD/SGD - US Dollar Singapore Dollar,usd-sgd,42
+USD/DKK,USD/DKK - US Dollar Danish Krone,usd-dkk,43
+USD/NOK,USD/NOK - US Dollar Norwegian Krone,usd-nok,59
+USD/ILS,USD/ILS - US Dollar Israeli Shekel,usd-ils,63
+USD/HUF,USD/HUF - US Dollar Hungarian Forint,usd-huf,91
+USD/CZK,USD/CZK - US Dollar Czech Koruna,usd-czk,103
+USD/THB,USD/THB - US Dollar Thai Baht,usd-thb,147
+USD/AED,USD/AED - US Dollar UAE Dirham,usd-aed,152
+USD/JOD,USD/JOD - US Dollar Jordan Dinar,usd-jod,153
+USD/KWD,USD/KWD - US Dollar Kuwaiti Dinar,usd-kwd,154
+USD/HKD,USD/HKD - US Dollar Hong Kong Dollar,usd-hkd,155
+USD/SAR,USD/SAR - US Dollar Saudi Riyal,usd-sar,157
+USD/INR,USD/INR - US Dollar Indian Rupee,usd-inr,160
+USD/KRW,USD/KRW - US Dollar Korean Won,usd-krw,650
+BRL/USD,BRL/USD - Brazil Real US Dollar,brl-usd,1516
+CAD/USD,CAD/USD - Canadian Dollar US Dollar,cad-usd,1538
+CHF/USD,CHF/USD - Swiss Franc US Dollar,chf-usd,1560
+FJD/USD,FJD/USD - Fiji Dollar US Dollar,fjd-usd,1726
+GHS/USD,GHS/USD - Ghanaian Cedi US Dollar,ghs-usd,1809
+JPY/USD,JPY/USD - Japanese Yen US Dollar,jpy-usd,1910
+KYD/USD,KYD/USD - Cayman Islands Dollar US Dollar,kyd-usd,1932
+SGD/USD,SGD/USD - Singapore Dollar US Dollar,sgd-usd,2044
+USD/ALL,USD/ALL - US Dollar Albanian Lek,usd-all,2086
+USD/AMD,USD/AMD - US Dollar Armenian Dram,usd-amd,2087
+USD/ANG,USD/ANG - US Dollar Antilles Guilder,usd-ang,2088
+USD/ARS,USD/ARS - US Dollar Argentinian Peso,usd-ars,2090
+USD/AUD,USD/AUD - US Dollar Australian Dollar,usd-aud,2091
+USD/BBD,USD/BBD - US Dollar Barbadian Dollar,usd-bbd,2095
+USD/BDT,USD/BDT - US Dollar Bangladeshi Taka,usd-bdt,2096
+USD/BGN,USD/BGN - US Dollar Bulgarian Lev,usd-bgn,2097
+USD/BHD,USD/BHD - US Dollar Baharain Dinar,usd-bhd,2098
+USD/BIF,USD/BIF - US Dollar Burundian Franc,usd-bif,2099
+USD/BND,USD/BND - US Dollar Brunei Dollar,usd-bnd,2101
+USD/BOB,USD/BOB - US Dollar Bolivian Boliviano,usd-bob,2102
+USD/BRL,USD/BRL - US Dollar Brazil Real,usd-brl,2103
+USD/BSD,USD/BSD - US Dollar Bahamas Dollar,usd-bsd,2104
+USD/BWP,USD/BWP - US Dollar Botswana Pula,usd-bwp,2106
+USD/BZD,USD/BZD - US Dollar Belize Dollar,usd-bzd,2108
+USD/CLP,USD/CLP - US Dollar Chilean Peso,usd-clp,2110
+USD/CNY,USD/CNY - US Dollar Chinese Yuan,usd-cny,2111
+USD/COP,USD/COP - US Dollar Colombian Peso,usd-cop,2112
+USD/CRC,USD/CRC - US Dollar Costa Rican Colon,usd-crc,2113
+USD/CUP,USD/CUP - US Dollar Cuban Peso,usd-cup,2114
+USD/DJF,USD/DJF - US Dollar Djiboutian Franc,usd-djf,2117
+USD/DOP,USD/DOP - US Dollar Dominican Peso,usd-dop,2118
+USD/DZD,USD/DZD - US Dollar Algerian Dinar,usd-dzd,2119
+USD/EGP,USD/EGP - US Dollar Egyptian Pound,usd-egp,2122
+USD/ETB,USD/ETB - US Dollar Ethiopian Birr,usd-etb,2123
+USD/EUR,USD/EUR - US Dollar Euro,usd-eur,2124
+USD/FJD,USD/FJD - US Dollar Fiji Dollar,usd-fjd,2125
+USD/GBP,USD/GBP - US Dollar British Pound,usd-gbp,2126
+USD/GEL,USD/GEL - US Dollar Georgian lari,usd-gel,2127
+USD/GHS,USD/GHS - US Dollar Ghanaian Cedi,usd-ghs,2129
+USD/GMD,USD/GMD - US Dollar Gambian Dalasi,usd-gmd,2131
+USD/GNF,USD/GNF - US Dollar Guinean Franc,usd-gnf,2132
+USD/GTQ,USD/GTQ - US Dollar Guatemalan Quetzal,usd-gtq,2133
+USD/HNL,USD/HNL - US Dollar Honduran Lempira,usd-hnl,2135
+USD/HRK,USD/HRK - US Dollar Croatian Kuna,usd-hrk,2136
+USD/HTG,USD/HTG - US Dollar Haitian Gourde,usd-htg,2137
+USD/IDR,USD/IDR - US Dollar Indonesian Rupiah,usd-idr,2138
+USD/IQD,USD/IQD - US Dollar Iraqi Dinar,usd-iqd,2139
+USD/IRR,USD/IRR - US Dollar Iranian Rial,usd-irr,2140
+USD/ISK,USD/ISK - US Dollar Icelandic Kr,usd-isk,2141
+USD/JMD,USD/JMD - US Dollar Jamaican Dollar,usd-jmd,2142
+USD/KES,USD/KES - US Dollar Kenyan Shilling,usd-kes,2143
+USD/KHR,USD/KHR - US Dollar Cambodian Riel,usd-khr,2145
+USD/KMF,USD/KMF - US Dollar Comorian Franc,usd-kmf,2146
+USD/KZT,USD/KZT - US Dollar Kazakh Tenge,usd-kzt,2148
+USD/LAK,USD/LAK - US Dollar Lao Kip,usd-lak,2149
+USD/LBP,USD/LBP - US Dollar Lebanese Pound,usd-lbp,2150
+USD/LKR,USD/LKR - US Dollar Sri Lankan Rupee,usd-lkr,2151
+USD/LSL,USD/LSL - US Dollar Lesotho loti,usd-lsl,2152
+USD/LYD,USD/LYD - US Dollar Libyan Dinar,usd-lyd,2155
+USD/MAD,USD/MAD - US Dollar Moroccan Dirham,usd-mad,2156
+USD/MDL,USD/MDL - US Dollar Moldovan Leu,usd-mdl,2157
+USD/MGA,USD/MGA - US Dollar Malagasy Ariary,usd-mga,2158
+USD/MKD,USD/MKD - US Dollar Macedonian Denar,usd-mkd,2160
+USD/MMK,USD/MMK - US Dollar Myanmar kyat,usd-mmk,2161
+USD/MOP,USD/MOP - US Dollar Macanese Pataca,usd-mop,2162
+USD/MRO,USD/MRO - US Dollar Mauritanian ouguiya,usd-mro,2163
+USD/MUR,USD/MUR - US Dollar Mauritian Rupee,usd-mur,2165
+USD/MVR,USD/MVR - US Dollar Maldivian Rufiyaa,usd-mvr,2166
+USD/MWK,USD/MWK - US Dollar Malawian Kwacha,usd-mwk,2167
+USD/MYR,USD/MYR - US Dollar Malaysian Ringgit,usd-myr,2168
+USD/NAD,USD/NAD - US Dollar Namibian Dollar,usd-nad,2170
+USD/NGN,USD/NGN - US Dollar Nigerian Naira,usd-ngn,2171
+USD/NIO,USD/NIO - US Dollar Nicaraguan Córdoba,usd-nio,2172
+USD/NPR,USD/NPR - US Dollar Nepalese Rupee,usd-npr,2173
+USD/NZD,USD/NZD - US Dollar New Zealand Dollar,usd-nzd,2174
+USD/OMR,USD/OMR - US Dollar Omani Rial,usd-omr,2175
+USD/PAB,USD/PAB - US Dollar Panamanian Balboa,usd-pab,2176
+USD/PEN,USD/PEN - US Dollar Peru Sol,usd-pen,2177
+USD/PGK,USD/PGK - US Dollar Papua New Guinean Kina,usd-pgk,2178
+USD/PHP,USD/PHP - US Dollar Philippine Peso,usd-php,2179
+USD/PKR,USD/PKR - US Dollar Pakistani Rupee,usd-pkr,2180
+USD/PYG,USD/PYG - US Dollar Paraguayan Guarani,usd-pyg,2181
+USD/QAR,USD/QAR - US Dollar Qatari Riyal,usd-qar,2182
+USD/RON,USD/RON - US Dollar Romanian Leu,usd-ron,2184
+USD/RSD,USD/RSD - US Dollar Serbian Dinar,usd-rsd,2185
+USD/RUB,USD/RUB - US Dollar Russian Ruble,usd-rub,2186
+USD/RWF,USD/RWF - US Dollar Rwandan Franc,usd-rwf,2187
+USD/SCR,USD/SCR - US Dollar Seychelles Rupee,usd-scr,2189
+USD/SDG,USD/SDG - US Dollar Sudanese Pound,usd-sdg,2191
+USD/SOS,USD/SOS - US Dollar Somali Shilling,usd-sos,2195
+USD/STD,USD/STD - US Dollar São Tomé/Príncipe Dobra,usd-std,2198
+USD/SVC,USD/SVC - US Dollar El Salvador Colon,usd-svc,2199
+USD/SYP,USD/SYP - US Dollar Syrian Pound,usd-syp,2200
+USD/SZL,USD/SZL - US Dollar Swazi Lilangeni,usd-szl,2201
+USD/TND,USD/TND - US Dollar Tunisian Dinar,usd-tnd,2203
+USD/TTD,USD/TTD - US Dollar Trinidad Dollar,usd-ttd,2205
+USD/TWD,USD/TWD - US Dollar Taiwan Dollar,usd-twd,2206
+USD/TZS,USD/TZS - US Dollar Tanzanian Shilling,usd-tzs,2207
+USD/UAH,USD/UAH - US Dollar Ukrainian Hryvnia,usd-uah,2208
+USD/UGX,USD/UGX - US Dollar Ugandan Shilling,usd-ugx,2209
+USD/UYU,USD/UYU - US Dollar Uruguayan Peso,usd-uyu,2210
+USD/UZS,USD/UZS - US Dollar Uzbekistani Sum,usd-uzs,2211
+USD/VEF,USD/VEF - US Dollar Venezuelan Bolivar,usd-vef,2213
+USD/VND,USD/VND - US Dollar Vietnamese Dong,usd-vnd,2214
+USD/VUV,USD/VUV - US Dollar Vanuatu vatu,usd-vuv,2215
+USD/XAF,USD/XAF - US Dollar Central African Franc,usd-xaf,2217
+USD/XCD,USD/XCD - US Dollar East Caribbean Dollar,usd-xcd,2218
+USD/XOF,USD/XOF - US Dollar West African CFA franc,usd-xof,2220
+USD/XPF,USD/XPF - US Dollar French Pacific Franc,usd-xpf,2221
+USD/YER,USD/YER - US Dollar Yemeni Rial,usd-yer,2222
+USD/ZMK,USD/ZMK - US Dollar Zambia Kwacha,usd-zmk,2224
+AED/USD,AED/USD - UAE Dirham US Dollar,aed-usd,9304
+ARS/USD,ARS/USD - Argentinian Peso US Dollar,ars-usd,9357
+CNY/USD,CNY/USD - Chinese Yuan US Dollar,cny-usd,9536
+DKK/USD,DKK/USD - Danish Krone US Dollar,dkk-usd,9604
+HKD/USD,HKD/USD - Hong Kong Dollar US Dollar,hkd-usd,9651
+ILS/USD,ILS/USD - Israeli Shekel US Dollar,ils-usd,9723
+MXN/USD,MXN/USD - Mexican Peso US Dollar,mxn-usd,9831
+NOK/USD,NOK/USD - Norwegian Krone US Dollar,nok-usd,9882
+PLN/USD,PLN/USD - Polish Zloty US Dollar,pln-usd,10018
+RUB/USD,RUB/USD - Russian Ruble US Dollar,rub-usd,10064
+SAR/USD,SAR/USD - Saudi Riyal US Dollar,sar-usd,10119
+SEK/USD,SEK/USD - Swedish Krona US Dollar,sek-usd,10168
+TRY/USD,TRY/USD - Turkish Lira US Dollar,try-usd,10290
+TWD/USD,TWD/USD - Taiwan Dollar US Dollar,twd-usd,10339
+VEF/USD,VEF/USD - Venezuelan Bolivar US Dollar,vef-usd,10397
+ZAR/USD,ZAR/USD - South African Rand US Dollar,zar-usd,10441
+UYU/USD,UYU/USD - Uruguayan Peso US Dollar,uyu-usd,11756
+PYG/USD,PYG/USD - Paraguayan Guarani US Dollar,pyg-usd,11757
+CLP/USD,CLP/USD - Chilean Peso US Dollar,clp-usd,11758
+COP/USD,COP/USD - Colombian Peso US Dollar,cop-usd,11759
+PEN/USD,PEN/USD - Peru Sol US Dollar,pen-usd,11760
+NIO/USD,NIO/USD - Nicaraguan Córdoba US Dollar,nio-usd,11761
+BOB/USD,BOB/USD - Bolivian Boliviano US Dollar,bob-usd,11762
+KRW/USD,KRW/USD - Korean Won US Dollar,krw-usd,13922
+EGP/USD,EGP/USD - Egyptian Pound US Dollar,egp-usd,14478
+USD/BYN,USD/BYN - US Dollar Belarusian Ruble,usd-byn,53085
+USD/MZN,USD/MZN - US Dollar Mozambican Metical,usd-mzn,941146
+INR/USD,INR/USD - Indian Rupee US Dollar,inr-usd,941148
+JOD/USD,JOD/USD - Jordan Dinar US Dollar,jod-usd,950989
+KWD/USD,KWD/USD - Kuwaiti Dinar US Dollar,kwd-usd,950994
+USD/AZN,USD/AZN - US Dollar Azerbaijani Manat,usd-azn,950996
+USD/CNH,USD/CNH - US Dollar Chinese Yuan Offshore,usd-cnh,961728
+USD/KGS,USD/KGS - US Dollar Kyrgyzstan som,usd-kgs,962660
+USD/TJS,USD/TJS - US Dollar Tajikistani somoni,usd-tjs,962663
+USD/RUB,USD/RUB - US Dollar Russian Ruble,usd-rub?cid=962711,962711
+US Dollar/Brazilian Real PTAX,US Dollar/Brazilian Real PTAX - US Dollar Brazil Real,usd-brl?cid=965081,965081
+USD/JPY RTS,USD/JPY RTS - US Dollar Japanese Yen,usd-jpy?cid=993162,993162
+USD/CHF RTS,USD/CHF RTS - US Dollar Swiss Franc,usd-chf?cid=993164,993164
+MYR/USD,MYR/USD - Malaysian Ringgit US Dollar,myr-usd,993166
+UAH/USD,UAH/USD - Ukrainian Hryvnia US Dollar,uah-usd,993168
+HUF/USD,HUF/USD - Hungarian Forint US Dollar,huf-usd,993169
+IDR/USD,IDR/USD - Indonesian Rupiah US Dollar,idr-usd,1031289
+USD/AOA,USD/AOA - US Dollar Angolan kwanza,usd-aoa,1059868
+VND/USD,VND/USD - Vietnamese Dong US Dollar,vnd-usd,1062759
+BYN/USD,BYN/USD - Belarusian Ruble US Dollar,byn-usd,1073358
+XBR/USD,XBR/USD - Brent Spot US Dollar,xbr-usd,1081628
+THB/USD,THB/USD - Thai Baht US Dollar,thb-usd,1086989
+PHP/USD,PHP/USD - Philippine Peso US Dollar,php-usd,1088699
+USD/TMT,USD/TMT - US Dollar Turkmenistan manat,usd-tmt,1089299
+USDRUBFIX=,USDRUBFIX= - US Dollar Russian Ruble,usd-rub?cid=1089835,1089835
+XAGg/USD,XAGg/USD - Gram Silver US Dollar,xagg-usd,1097522
+USD/RUB TOM,USD/RUB TOM - US Dollar Russian Ruble,usd-rub?cid=1112836,1112836
+USD/BRLT,USD/BRLT - US Dollar Brazilian Real Tourism,usd-brlt,1121152
+USD/MNT,USD/MNT - US Dollar Mongolian Tugrik,usd-mnt,1141714
