@@ -11,6 +11,7 @@ from investpy.equities import retrieve_equities, retrieve_equity_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
 from investpy.indices import retrieve_indices, retrieve_index_countries
+from investpy.currency_crosses import retrieve_currency_crosses
 
 
 def test_investpy():
@@ -446,6 +447,7 @@ def test_investpy_indices():
 
 
 def test_investpy_currencies():
+    retrieve_currency_crosses()
     investpy.get_currency_crosses()
     investpy.get_currency_crosses_list()
     investpy.get_currency_crosses_dict()
