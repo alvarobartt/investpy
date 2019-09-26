@@ -3173,31 +3173,28 @@ def search_indices(by, value):
 
 def get_currency_crosses():
     """
-    This function retrieves all the available countries to retrieve indices from, as the listed countries are the ones
-    indexed on Investing.com. This function is intended to show the user the data contained in `indices.csv` in order
-    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
-    parameter is applied so just the indices from the specified country are retrieved.
+    This function retrieves all the available MAJOR currency crosses as listed on Investing.com.
+    This function is intended to show the user the data contained in `currency_crosses.csv` in order
+    to help him to later use that data in order to retrieve historical data.
 
     Args:
         None
 
     Returns:
-        :obj:`pandas.DataFrame` - indices:
-            The resulting :obj:`pandas.DataFrame` contains all the indices basic information stored on `indices.csv`,
-            since it was previously retrieved in `investpy.indices.retrieve_indices()`. Unless the country is
-            specified, all the available indices indexed on Investing.com is returned, but if it is specified, just the
-            indices from that country are returned.
+        :obj:`pandas.DataFrame` - currency_crosses:
+            The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information stored on `currency_crosses.csv`,
+            since it was previously retrieved in `investpy.currency_crosses.retrieve_currency_crosses()`.
 
-            In the case that the file reading of `indices.csv` or the retrieval process from Investing.com was
+            In the case that the file reading of `currency_crosses.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | symbol | tag | id
-                --------|------|--------|-----|----
-                xxxxxxx | xxxx | xxxxxx | xxx | xx
+                name | full_name | tag | id
+                -----|-----------|-----|----
+                xxxx | xxxxxxxxx | xxx | xx
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `indices.csv` file is missing.
+        IOError: raised when `currency_crosses.csv` file is missing.
     """
 
     return cc.currency_crosses_as_df()
@@ -3205,19 +3202,17 @@ def get_currency_crosses():
 
 def get_currency_crosses_list():
     """
-    This function retrieves all the available countries to retrieve currencies from, as the listed countries are the ones
-    indexed on Investing.com. This function is intended to show the user the data contained in `currencies.csv` in order
-    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
-    parameter is applied so just the currencies from the specified country are retrieved.
+    This function retrieves all the available MAJOR currency crosses from Investing.com.
+    This function is intended to show the user the data contained in `currency_crosses.csv` in order
+    to help him to later use that data in order to retrieve historical data.
 
     Args:
         None
     Returns:
         :obj:`list` - currencies:
-            The resulting :obj:`pandas.DataFrame` contains all the currencies basic information stored on `currencies.csv`,
-            since it was previously retrieved in `investpy.currencies.retrieve_currencies()`. Unless the country is
-            specified, all the available currencies indexed on Investing.com is returned, but if it is specified, just the
-            currencies from that country are returned.
+            The resulting :obj:`pandas.DataFrame` contains all the currencies basic information stored on `currency_crosses.csv`,
+            since it was previously retrieved in `investpy.currency_crosses.retrieve_currencies()`.
+            All the available MAJOR currencies indexed on Investing.com is returned.
 
             In the case that the file reading of `currency_crosses.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`list` will look like::
@@ -3234,10 +3229,9 @@ def get_currency_crosses_list():
 
 def get_currency_crosses_dict():
     """
-    This function retrieves all the available countries to retrieve currencies from, as the listed countries are the ones
-    indexed on Investing.com. This function is intended to show the user the data contained in `currencies.csv` in order
-    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
-    parameter is applied so just the currencies from the specified country are retrieved.
+    This function retrieves all the available MAJOR currency crosses from Investing.com.
+    This function is intended to show the user the data contained in `currency_crosses.csv` in order
+    to help him to later use that data in order to retrieve historical data.
 
     Args:
         None
@@ -3265,12 +3259,12 @@ def get_currency_crosses_dict():
 
 def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves recent historical data from the introduced `currency` from Investing
+    This function retrieves recent historical data from the introduced `currency_cross` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
     :obj:`json` file, with `ascending` or `descending` order.
 
     Args:
-        currency (:obj:`str`): name of the currency to retrieve recent historical data from.
+        currency_cross (:obj:`str`): name of the currency_cross to retrieve recent historical data from.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -3281,14 +3275,14 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
             The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
-            recent data from the specified currency_cross via argument. The dataset contains the open, high, low, close and
-            volume values for the selected currency_cross on market days.
+            recent data from the specified currency_cross via argument. The dataset contains the open, high, low, close,
+            volume and currency values for the selected currency_cross on market days.
 
-            The return data is case we use default arguments will look like::
+            The return data is in case we use default arguments will look like::
 
-                date || open | high | low | close | volume
-                -----||------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+                date || open | high | low | close | volume | currency
+                -----||------------------------------------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -3296,11 +3290,12 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
                     name: name,
                     recent: [
                         dd/mm/yyyy: {
-                            open: x,
-                            high: x,
-                            low: x,
-                            close: x,
-                            volume: x
+                            'open': x,
+                            'high': x,
+                            'low': x,
+                            'close': x,
+                            'volume': x,
+                            'currency' : x
                         },
                         ...
                     ]
@@ -3315,34 +3310,34 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     Examples:
         >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD', as_json=False, order='ascending', debug=False)
-                         Open   High    Low  Close    Volume
+                         Open   High    Low  Close    Volume Currency
             Date
-            2019-08-13  4.263  4.395  4.230  4.353  27250000
-            2019-08-14  4.322  4.325  4.215  4.244  36890000
-            2019-08-15  4.281  4.298  4.187  4.234  21340000
-            2019-08-16  4.234  4.375  4.208  4.365  46080000
-            2019-08-19  4.396  4.425  4.269  4.269  18950000
+            2019-08-13  4.263  4.395  4.230  4.353  27250000 USD
+            2019-08-14  4.322  4.325  4.215  4.244  36890000 USD
+            2019-08-15  4.281  4.298  4.187  4.234  21340000 USD
+            2019-08-16  4.234  4.375  4.208  4.365  46080000 USD
+            2019-08-19  4.396  4.425  4.269  4.269  18950000 USD
 
     """
 
     if not currency_cross:
         raise ValueError(
-            "ERR#0013: currency_cross parameter is mandatory and must be a valid currency_cross name.")
+            "ERR#0056: currency_cross parameter is mandatory and must be a valid currency_cross name.")
 
     if not isinstance(currency_cross, str):
-        raise ValueError("ERR#0027: currency_cross argument needs to be a str.")
+        raise ValueError("ERR#0057: currency_cross argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError(
-            "ERR#0002: as_json argument can just be True or False, bool type.")
+            "ERR#0058: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+            "ERR#0059: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError(
-            "ERR#0033: debug argument can just be a boolean value, either True or False.")
+            "ERR#0060: debug argument can just be a boolean value, either True or False.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
@@ -3354,14 +3349,13 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     if currency_crosses is None:
         raise IOError(
-            "ERR#0001: currency_crosses object not found or unable to retrieve.")
+            "ERR#0061: currency_crosses object not found or unable to retrieve.")
 
     currency_cross = currency_cross.strip()
     currency_cross = currency_cross.lower()
 
     if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
-        raise RuntimeError("ERR#0018: currency_cross " + currency_cross +
-                           " not found, check if it is correct.")
+        raise RuntimeError("ERR#0062: currency_cross " + currency_cross + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -3374,8 +3368,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     logger.info('Searching introduced currency_cross on Investing.com')
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
-    name = currency_crosses.loc[(currency_crosses['name'].str.lower()
-                         == currency_cross).idxmax(), 'name']
+    name = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
 
     logger.info(str(currency_cross) + ' found on Investing.com')
 
@@ -3406,8 +3399,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " +
-                              str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     logger.info('Request to Investing.com data succeeded with code ' +
                 str(req.status_code) + '!')
@@ -3425,8 +3417,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
                 info.append(nested_.text_content())
 
             if info[0] == 'No se encontraron resultados':
-                raise IndexError(
-                    "ERR#0007: currency_cross information unavailable or not found.")
+                raise IndexError("ERR#0063: currency_cross information unavailable or not found.")
 
             stock_date = datetime.datetime.strptime(
                 info[0].replace('.', '-'), '%d-%m-%Y')
@@ -3438,18 +3429,17 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             stock_volume = 0
 
             if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace(
-                    'K', '').replace('.', '').replace(',', '.')) * 1000)
+                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
             elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace(
-                    '.', '').replace(',', '.')) * 1000000)
+                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
             elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace(
-                    '.', '').replace(',', '.')) * 1000000000)
+                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+
+            currency = currency_cross.split("/")[1].upper()
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
-                               stock_close, stock_volume))
+                               stock_close, stock_volume, currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -3472,17 +3462,17 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
             return df
     else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+        raise RuntimeError("ERR#0064: data retrieval error while scraping.")
 
 
 def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves recent historical data from the introduced `currency` from Investing
+    This function retrieves recent historical data from the introduced `currency_cross` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
     :obj:`json` file, with `ascending` or `descending` order.
 
     Args:
-        currency (:obj:`str`): name of the currency to retrieve recent historical data from.
+        currency_cross (:obj:`str`): name of the currency cross to retrieve recent historical data from.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -3498,9 +3488,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
             The return data is case we use default arguments will look like::
 
-                date || open | high | low | close | volume
-                -----||------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx
+                date || open | high | low | close | volume | currency
+                -----||------------------------------------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -3508,11 +3498,12 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     name: name,
                     recent: [
                         dd/mm/yyyy: {
-                            open: x,
-                            high: x,
-                            low: x,
-                            close: x,
-                            volume: x
+                            'open': x,
+                            'high': x,
+                            'low': x,
+                            'close': x,
+                            'volume': x,
+                            'currency' : x
                         },
                         ...
                     ]
@@ -3527,40 +3518,40 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     Examples:
         >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD', as_json=False, order='ascending', debug=False)
-                         Open   High    Low  Close    Volume
+                         Open   High    Low  Close    Volume Currency
             Date
-            2019-08-13  4.263  4.395  4.230  4.353  27250000
-            2019-08-14  4.322  4.325  4.215  4.244  36890000
-            2019-08-15  4.281  4.298  4.187  4.234  21340000
-            2019-08-16  4.234  4.375  4.208  4.365  46080000
-            2019-08-19  4.396  4.425  4.269  4.269  18950000
+            2019-08-13  4.263  4.395  4.230  4.353  27250000 USD
+            2019-08-14  4.322  4.325  4.215  4.244  36890000 USD
+            2019-08-15  4.281  4.298  4.187  4.234  21340000 USD
+            2019-08-16  4.234  4.375  4.208  4.365  46080000 USD
+            2019-08-19  4.396  4.425  4.269  4.269  18950000 USD
 
     """
 
     if not currency_cross:
         raise ValueError(
-            "ERR#0013: currency_cross parameter is mandatory and must be a valid currency_cross name.")
+            "ERR#0065: currency_cross parameter is mandatory and must be a valid currency_cross name.")
 
     if not isinstance(currency_cross, str):
-        raise ValueError("ERR#0027: currency_cross argument needs to be a str.")
+        raise ValueError("ERR#0066: currency_cross argument needs to be a str.")
 
     if not isinstance(as_json, bool):
         raise ValueError(
-            "ERR#0002: as_json argument can just be True or False, bool type.")
+            "ERR#0067: as_json argument can just be True or False, bool type.")
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+            "ERR#0068: order argument can just be ascending (asc) or descending (desc), str type.")
 
     if not isinstance(debug, bool):
         raise ValueError(
-            "ERR#0033: debug argument can just be a boolean value, either True or False.")
+            "ERR#0068: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError(
-            "ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
+            "ERR#0069: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
 
     try:
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
@@ -3573,7 +3564,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     if start_date >= end_date:
         raise ValueError(
-            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+            "ERR#0070: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
     date_interval = {
         'intervals': [],
@@ -3617,15 +3608,13 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         currency_crosses = get_currency_crosses()
 
     if currency_crosses is None:
-        raise IOError(
-            "ERR#0001: currency_crosses object not found or unable to retrieve.")
+        raise IOError("ERR#0071: currency_crosses object not found or unable to retrieve.")
 
     currency_cross = currency_cross.strip()
     currency_cross = currency_cross.lower()
 
     if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
-        raise RuntimeError("ERR#0018: currency_cross " + currency_cross +
-                           " not found, check if it is correct.")
+        raise RuntimeError("ERR#0072: currency_cross " + currency_cross + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -3675,11 +3664,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " +
-                                  str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0073: error " + str(req.status_code) + ", try again later.")
 
-        logger.info('Request to Investing.com data succeeded with code ' +
-                    str(req.status_code) + '!')
+        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -3694,11 +3681,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     info.append(nested_.text_content())
 
                 if info[0] == 'No se encontraron resultados':
-                    raise IndexError(
-                        "ERR#0007: currency_cross information unavailable or not found.")
+                    raise IndexError("ERR#0074: currency_cross information unavailable or not found.")
 
-                stock_date = datetime.datetime.strptime(
-                    info[0].replace('.', '-'), '%d-%m-%Y')
+                stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
                 stock_close = float(info[1].replace('.', '').replace(',', '.'))
                 stock_open = float(info[2].replace('.', '').replace(',', '.'))
                 stock_high = float(info[3].replace('.', '').replace(',', '.'))
@@ -3707,18 +3692,17 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                 stock_volume = 0
 
                 if info[5].__contains__('K'):
-                    stock_volume = int(float(info[5].replace(
-                        'K', '').replace('.', '').replace(',', '.')) * 1000)
+                    stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
                 elif info[5].__contains__('M'):
-                    stock_volume = int(float(info[5].replace('M', '').replace(
-                        '.', '').replace(',', '.')) * 1000000)
+                    stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
                 elif info[5].__contains__('B'):
-                    stock_volume = int(float(info[5].replace('B', '').replace(
-                        '.', '').replace(',', '.')) * 1000000000)
+                    stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+
+                currency = currency_cross.split("/")[1].upper()
 
                 result.insert(len(result),
                               Data(stock_date, stock_open, stock_high, stock_low,
-                                   stock_close, stock_volume))
+                                   stock_close, stock_volume, currency))
 
             if order in ['ascending', 'asc']:
                 result = result[::-1]
@@ -3741,6 +3725,6 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
                 return df
         else:
-            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            raise RuntimeError("ERR#0074: data retrieval error while scraping.")
 
     logger.info('Data parsing process finished...')
