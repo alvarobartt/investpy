@@ -17,10 +17,10 @@ from investpy import user_agent as ua
 
 def retrieve_currency_crosses(test_mode=False):
     """
-    This function retrieves all the available `currency crosses` indexed on Investing.com, so to
+    This function retrieves all the available MAJOR `currency crosses` indexed on Investing.com, so to
     retrieve data from them which will be used later for inner functions for data retrieval.
-    All the currency crosses available can be found at: https://es.investing.com/currencies/. Additionally,
-    when currency crosses are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
+    All the currency crosses available can be found at: https://es.investing.com/currencies/streaming-forex-rates-majors.
+    Additionally, when currency crosses are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
     and stored on a CSV file on a package folder containing all the available resources.
     Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
     just used for inner function purposes.
@@ -38,19 +38,19 @@ def retrieve_currency_crosses(test_mode=False):
             In the case that the retrieval process of currencies was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id
-                --------|------|-----------|-----|----
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx
+                name | full_name | tag | id
+                -----|-----------|-----|----
+                xxxx | xxxxxxxxx | xxx | xx
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid.
-        FileNotFoundError: raised if `index_countries.csv` file does not exists or is empty.
+        FileNotFoundError: raised if `currency_crosses.csv` file does not exists or is empty.
         ConnectionError: raised if GET requests did not return 200 status code.
         IndexError: raised if currencies information was unavailable or not found.
     """
 
     if not isinstance(test_mode, bool):
-        raise ValueError('ERR#0041: test_mode can just be either True or False')
+        raise ValueError('ERR#0048: test_mode can just be either True or False')
 
     results = list()
 
@@ -68,7 +68,7 @@ def retrieve_currency_crosses(test_mode=False):
     req = requests.get(url, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError("ERR#0049: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='cr1']/tbody/tr")
@@ -82,7 +82,7 @@ def retrieve_currency_crosses(test_mode=False):
 
                 if str(tag_).__contains__('/currencies/'):
                     tag_ = tag_.replace('/currencies/', '')
-                    full_name_ = element_.get('title').replace(' (CFD)', '').strip()
+                    full_name_ = element_.get('title').strip()
                     name = element_.text.strip()
 
                     data = {
@@ -111,12 +111,12 @@ def retrieve_currency_crosses(test_mode=False):
 
 def currency_crosses_as_df():
     """
-    This function retrieves all the available `currencies` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the index names, but all the fields contained on the currencies file.
-    All the available currencies can be found at: https://es.investing.com/currencies/
+    This function retrieves all the available MAJOR `currencies` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
+    which contains not just the currency crosses full names, but all the fields contained on the currencies file.
+    All the available currencies can be found at: https://es.investing.com/currencies/streaming-forex-rates-majors
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available currencies from.
+        None
 
     Returns:
         :obj:`pandas.DataFrame` - currencies_df:
@@ -126,16 +126,16 @@ def currency_crosses_as_df():
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id
-                --------|------|-----------|-----|----
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx
+                name | full_name | tag | id
+                -----|-----------|-----|----
+                xxxx | xxxxxxxxx | xxx | xx
 
-            Just like `investpy.currencies.retrieve_currencies()`, the output of this function is a :obj:`pandas.DataFrame`,
+            Just like `investpy.currency_crosses.retrieve_currencies()`, the output of this function is a :obj:`pandas.DataFrame`,
             but instead of generating the CSV file, this function just reads it and loads it into a
             :obj:`pandas.DataFrame` object.
 
     Raises:
-        IOError: raised if the currencies file from `investpy` is missing or errored.
+        IOError: raised if the currency_crosses file from `investpy` is missing or errored.
     """
 
     resource_package = __name__
@@ -146,23 +146,23 @@ def currency_crosses_as_df():
         currencies = retrieve_currency_crosses()
 
     if currencies is None:
-        raise IOError("ERR#0037: currencies not found or unable to retrieve.")
+        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
 
     return currencies
 
 
 def currency_crosses_as_list():
     """
-    This function retrieves all the available currencies and returns a list of each one of them.
-    All the available currencies can be found at: https://es.investing.com/currencies/
+    This function retrieves all the available MAJOR currencies and returns a list of each one of them.
+    All the available currencies can be found at: https://es.investing.com/currencies/streaming-forex-rates-majors
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available currencies from.
+        None
 
     Returns:
         :obj:`list` - currencies_list:
-            The resulting :obj:`list` contains the retrieved data, which corresponds to the index names of
-            every index listed on Investing.com.
+            The resulting :obj:`list` contains the retrieved data, which corresponds to the currency_crosses names of
+            every MAJOR currency_cross listed on Investing.com.
 
             In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
 
@@ -170,7 +170,7 @@ def currency_crosses_as_list():
 
     Raises:
         ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the currencies file from `investpy` is missing or errored.
+        IOError: raised if the currency_crosses file from `investpy` is missing or errored.
     """
 
     resource_package = __name__
@@ -181,7 +181,7 @@ def currency_crosses_as_list():
         currencies = retrieve_currency_crosses()
 
     if currencies is None:
-        raise IOError("ERR#0037: currencies not found or unable to retrieve.")
+        raise IOError("ERR#0051: currencies not found or unable to retrieve.")
 
     return currencies['name'].tolist()
 
@@ -190,10 +190,9 @@ def currency_crosses_as_dict(columns=None, as_json=False):
     """
     This function retrieves all the available currencies on Investing.com and returns them as a :obj:`dict` containing the
     `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available currencies can be found at:
-    https://es.investing.com/currencies/
+    https://es.investing.com/currencies/streaming-forex-rates-majors
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available currencies from.
         columns (:obj:`list` of :obj:`str`, optional): description
             a :obj:`list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`bool`, optional): description
@@ -207,11 +206,10 @@ def currency_crosses_as_dict(columns=None, as_json=False):
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
                 {
-                    'country': country,
                     'name': name,
                     'full_name': full_name,
-                    'symbol': symbol,
-                    'tag': tag
+                    'tag': tag,
+                    'id': id,
                 }
 
     Raises:
@@ -220,7 +218,7 @@ def currency_crosses_as_dict(columns=None, as_json=False):
     """
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError("ERR#0052: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
@@ -230,17 +228,17 @@ def currency_crosses_as_dict(columns=None, as_json=False):
         currencies = retrieve_currency_crosses()
 
     if currencies is None:
-        raise IOError("ERR#0037: currencies not found or unable to retrieve.")
+        raise IOError("ERR#0053: currencies not found or unable to retrieve.")
 
     if columns is None:
         columns = currencies.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError("ERR#0054: specified columns argument is not a list, it can just be list type.")
 
     if not all(column in currencies.columns.tolist() for column in columns):
-        raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<country, name, full_name, symbol, tag, currency>")
+        raise ValueError("ERR#0055: specified columns does not exist, available columns are "
+                         "<name, full_name, tag, id>")
 
     if as_json:
         return json.dumps(currencies[columns].to_dict(orient='records'))
