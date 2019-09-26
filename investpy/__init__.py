@@ -3473,6 +3473,8 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     Args:
         currency_cross (:obj:`str`): name of the currency cross to retrieve recent historical data from.
+        from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
+        to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -3517,7 +3519,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         IndexError: if currency_cross information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_currency_cross_historical_data(currency_cross='EUR/USD', from_date='13/08/2018', to_date='13/08/2019', as_json=False, order='ascending', debug=False)
                          Open   High    Low  Close    Volume Currency
             Date
             2019-08-13  4.263  4.395  4.230  4.353  27250000 USD
@@ -3557,7 +3559,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         datetime.datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError(
-            "ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+            "ERR#0075: incorrect to_date date format, it should be 'dd/mm/yyyy'.")
 
     start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
     end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
@@ -3632,7 +3634,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     logger.info(str(currency_cross) + ' found on Investing.com')
 
-    header = "Datos históricos " + name#symbol
+    header = "Datos históricos " + name
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
