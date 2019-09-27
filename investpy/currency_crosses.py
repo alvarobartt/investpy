@@ -4,10 +4,12 @@
 # See LICENSE for details.
 
 import json
-import time
+import operator
 
 import pandas as pd
 import pkg_resources
+
+import numpy as np
 
 import requests
 import unidecode
@@ -17,48 +19,46 @@ from investpy import user_agent as ua
 
 
 def retrieve_currency_crosses(test_mode=False):
-    # """
-    # This function retrieves all the available `currency_crosses` indexed on Investing.com, so to
-    # retrieve data from them which will be used later for inner functions for data retrieval.
-    # Additionally, when currency crosses are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
-    # and stored on a CSV file on a package folder containing all the available resources.
-    # Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
-    # just used for inner function purposes. All the currency crosses available can be found at:
-    # https://es.investing.com/currencies/ plus the name of the country
-    #
-    # Args:
-    #     test_mode (:obj:`bool`):
-    #         variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
-    #         coverage.
-    #
-    # Returns:
-    #     :obj:`pandas.DataFrame` - currencies:
-    #         The resulting :obj:`pandas.DataFrame` contains all the currencies meta-information if found, if not, an
-    #         empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
-    #
-    #         In the case that the retrieval process of currencies was successfully completed, the resulting
-    #         :obj:`pandas.DataFrame` will look like::
-    #
-    #             name | full_name | tag | id
-    #             -----|-----------|-----|----
-    #             xxxx | xxxxxxxxx | xxx | xx
-    #
-    # Raises:
-    #     ValueError: raised if any of the introduced arguments is not valid.
-    #     FileNotFoundError: raised if `currency_crosses.csv` file does not exists or is empty.
-    #     ConnectionError: raised if GET requests did not return 200 status code.
-    #     IndexError: raised if currencies information was unavailable or not found.
-    # """
+    """
+    This function retrieves all the available `currency_crosses` indexed on Investing.com, so to retrieve data from
+    them which will be used later for inner functions for data retrieval. Additionally, when currency crosses are
+    retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame` and stored on a CSV file on a
+    package folder containing all the available resources. Note that maybe some of the information contained in the
+    resulting :obj:`pandas.DataFrame` is useless as it is just used for inner function purposes. All the currency
+    crosses available can be found at: https://es.investing.com/currencies/ plus the name of the country
+
+    Args:
+        test_mode (:obj:`bool`):
+            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
+            coverage.
+
+    Returns:
+        :obj:`pandas.DataFrame` - currency_crosses:
+            The resulting :obj:`pandas.DataFrame` contains all the currency crosses meta-information if found, if not,
+            an empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
+
+            In the case that the retrieval process of currencies was successfully completed, the resulting
+            :obj:`pandas.DataFrame` will look like::
+
+                name | full_name | tag | id | base | second | base_name | second_name
+                -----|-----------|-----|----|------|--------|-----------|-------------
+                xxxx | xxxxxxxxx | xxx | xx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid.
+        FileNotFoundError: raised if `currency_crosses.csv` file does not exists or is empty.
+        ConnectionError: raised if GET requests did not return 200 status code.
+    """
 
     if not isinstance(test_mode, bool):
         raise ValueError('ERR#0041: test_mode can just be either True or False')
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_cross_countries.csv'))
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_cross_continents.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0048: currency_cross_countries.csv file not found")
+        raise FileNotFoundError("ERR#0048: currency_cross_continents.csv file not found")
 
     results = list()
 
@@ -92,46 +92,33 @@ def retrieve_currency_crosses(test_mode=False):
 
                             name = values.text.strip()
 
-                            base = None
-                            second = None
+                            if name in list(map(operator.itemgetter('name'), results)):
+                                continue
 
-                            if name.__contains__('/'):
-                                base = name.split('/')[0]
-                                second = name.split('/')[1]
+                            base = name.split('/')[0]
+                            second = name.split('/')[1]
 
-                            try:
-                                time.sleep(1.5)
-                                info = retrieve_currency_cross_info(tag_)
+                            info = retrieve_currency_cross_info(tag_)
 
-                                data = {
-                                    'name': name,
-                                    'full_name': info['full_name'],
-                                    'tag': tag_,
-                                    'id': info['id'],
-                                    'base': base,
-                                    'base_name': info['base_name'],
-                                    'second': second,
-                                    'second_name': info['second_name'],
-                                }
+                            if info is None:
+                                continue
 
-                                print(data)
+                            if info['second_name'].__contains__("..."):
+                                info['second_name'] = info['full_name'].replace(name, '').\
+                                    replace(info['base_name'], '').replace(' -  ', '')
 
-                                results.append(data)
-                            except:
-                                data = {
-                                    'name': name,
-                                    'full_name': None,
-                                    'tag': tag_,
-                                    'id': None,
-                                    'base': '',
-                                    'base_name': None,
-                                    'second': '',
-                                    'second_name': None,
-                                }
+                            data = {
+                                'name': name,
+                                'full_name': info['full_name'],
+                                'tag': tag_,
+                                'id': info['id'],
+                                'base': base,
+                                'base_name': info['base_name'],
+                                'second': second,
+                                'second_name': info['second_name'],
+                            }
 
-                                print(data)
-
-                                results.append(data)
+                            results.append(data)
 
                     if test_mode is True:
                         break
@@ -153,25 +140,27 @@ def retrieve_currency_crosses(test_mode=False):
 
 
 def retrieve_currency_cross_info(tag):
-    # """
-    # This function retrieves both the ISIN code, the currency and the symbol of an equity indexed in Investing.com, so
-    # to include additional information in `equities.csv` file. The ISIN code will later be used in order to retrieve more
-    # information from the specified equity, as the ISIN code is an unique identifier of each equity; the currency
-    # will be required in order to know which currency is the value in, and the symbol will be used for processing the
-    # request to HistoricalDataAjax to retrieve historical data from Investing.com.
-    #
-    # Args:
-    #     tag (:obj:`str`): is the tag of the equity to retrieve the information from as indexed by Investing.com.
-    #
-    # Returns:
-    #     :obj:`dict` - info:
-    #         The resulting :obj:`dict` contains the needed information for the equities listing, so on, the ISIN
-    #          code of the introduced equity, the currency of its values and the symbol of the equity.
-    #
-    # Raises:
-    #     ConnectionError: raised if GET requests does not return 200 status code.
-    #     IndexError: raised if either the isin code or the currency were unable to retrieve.
-    # """
+    """
+    This function retrieves additional information that should be included in every currency cross details such as the
+    base currency name or the full name of the currency cross. Additionally, this function is intended to retrieve the
+    id which will later be used when retrieving historical data from currency crosses since the id is required in the
+    request headers. As Investing.com currency crosses listing has some minor mistakes, if the request errors with a
+    404 code, the information won't be retrieved and so on the currency cross won't be added to the currency_crosses.csv
+    file.
+
+    Args:
+        tag (:obj:`str`):
+            is the tag of the currency cross to retrieve the information from, as indexed in Investing.com.
+
+    Returns:
+        :obj:`dict` - info:
+            The resulting :obj:`dict` contains the needed information for the currency crosses listing. And the id of
+            the currency cross which is required to send the request to Investing.com when it comes to historical data
+            retrieval.
+
+    Raises:
+        ConnectionError: raised if GET requests does not return 200 status code.
+    """
 
     url = "https://www.investing.com/currencies/" + tag
 
@@ -185,6 +174,8 @@ def retrieve_currency_cross_info(tag):
 
     req = requests.get(url, headers=head)
 
+    if req.status_code == 404:
+        return None
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
@@ -220,23 +211,23 @@ def retrieve_currency_cross_info(tag):
     return result
 
 
-def retrieve_currency_cross_countries():
-    # """
-    # This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
-    # from, via Web Scraping https://www.investing.com/equities/ where the available countries are listed, and from their
-    # names the specific equity website of every country is retrieved in order to get the ID which will later be used
-    # when retrieving all the information from the available equities in every country.
-    #
-    # Returns:
-    #     :obj:`pandas.DataFrame` - equity_countries:
-    #         The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding ID,
-    #         which will be used later by investpy.
-    #
-    # Raises:
-    #     ValueError: raised if any of the introduced arguments is not valid.
-    #     ConnectionError: raised if connection to Investing.com could not be established.
-    #     RuntimeError: raised if no countries were retrieved from Investing.com equity listing.
-    # """
+def retrieve_currency_cross_continents():
+    """
+    This function retrieves all the continents/regions with available currency crosses as indexed in Investing.com, so
+    on, this continent or region listing will be retrieved via Web Scraping from https://www.investing.com/currencies/.
+    This listing will be used to retrieve all the currency crosses, because the retrieved tag for every country will be
+    used to generate the URL to retrieve the data from.
+
+    Returns:
+        :obj:`pandas.DataFrame` - currency_cross_continents:
+            The resulting :obj:`pandas.DataFrame` contains all the available continents/regions with their
+            corresponding tag, which will be used later by investpy.
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        RuntimeError: raised if no countries were retrieved from Investing.com equity listing.
+    """
 
     headers = {
         "User-Agent": ua.get_random(),
@@ -272,7 +263,7 @@ def retrieve_currency_cross_countries():
         raise RuntimeError('ERR#0035: no countries could be retrieved!')
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_cross_countries.csv'))
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_cross_continents.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(countries)
@@ -281,154 +272,350 @@ def retrieve_currency_cross_countries():
     return df
 
 
-# def available_currencies():
-#     return None
-#
-#
-# def currency_crosses_as_df(currency=None):
-#     """
-#     This function retrieves all the available `currency_crosses` from Investing.com and returns them as a
-#     :obj:`pandas.DataFrame`, which contains not just the currency crosses names, but all the fields contained on
-#     the currency_crosses file. All the available currency crosses can be found at: https://es.investing.com/currencies/
-#
-#     Returns:
-#         :obj:`pandas.DataFrame` - currency_crosses_df:
-#             The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information retrieved from
-#             Investing.com, some of which is not useful for the user, but for the inner package functions, such as the
-#             `tag` or `id` fields.
-#
-#             In case the information was successfully retrieved, the resulting :obj:`pandas.DataFrame` will look like::
-#
-#                 name | full_name | base | second | tag | id
-#                 -----|-----------|------|--------|-----|----
-#                 xxxx | xxxxxxxxx | xxxx | xxxxxx | xxx | xx
-#
-#             Just like `investpy.currency_crosses.retrieve_currencies()`, the output of this function is a
-#             :obj:`pandas.DataFrame` containing all the currency crosses as indexed in Investing.com, but instead of
-#             scraping the web in order to retrieve them and then generating the CSV file, this function just reads it
-#             and loads it into a :obj:`pandas.DataFrame`.
-#
-#     Raises:
-#         IOError: raised if the currency_crosses file from `investpy` is missing or errored.
-#     """
-#
-#     if currency is not None and not isinstance(currency, str):
-#         raise ValueError("ERR#00xx: specified currency value not valid.")
-#
-#     resource_package = __name__
-#     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
-#     if pkg_resources.resource_exists(resource_package, resource_path):
-#         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-#     else:
-#         currency_crosses = retrieve_currency_crosses()
-#
-#     if currency_crosses is None:
-#         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
-#
-#     if currency is None:
-#         currency_crosses.reset_index(drop=True, inplace=True)
-#
-#         return currency_crosses
-#     elif unidecode.unidecode(currency.lower()) in available_currencies():
-#         currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(currency.lower()) or
-#                                             currency_crosses['second'] == unidecode.unidecode(currency.lower())]
-#         currency_crosses.reset_index(drop=True, inplace=True)
-#
-#         return currency_crosses
-#
-#
-# def currency_crosses_as_list(currency=None):
-#     """
-#     This function retrieves all the available MAJOR currencies and returns a list of each one of them.
-#     All the available currencies can be found at: https://es.investing.com/currencies/streaming-forex-rates-majors
-#
-#     Returns:
-#         :obj:`list` - currencies_list:
-#             The resulting :obj:`list` contains the retrieved data, which corresponds to the currency_crosses names of
-#             every MAJOR currency_cross listed on Investing.com.
-#
-#             In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
-#
-#                 currencies = [...]
-#
-#     Raises:
-#         ValueError: raised when the introduced arguments are not correct.
-#         IOError: raised if the currency_crosses file from `investpy` is missing or errored.
-#     """
-#
-#     resource_package = __name__
-#     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
-#     if pkg_resources.resource_exists(resource_package, resource_path):
-#         currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-#     else:
-#         currencies = retrieve_currency_crosses()
-#
-#     if currencies is None:
-#         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
-#
-#     return currencies['name'].tolist()
-#
-#
-# def currency_crosses_as_dict(currency=None, columns=None, as_json=False):
-#     """
-#     This function retrieves all the available currencies on Investing.com and returns them as a :obj:`dict` containing the
-#     `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available currencies can be found at:
-#     https://es.investing.com/currencies/streaming-forex-rates-majors
-#
-#     Args:
-#         columns (:obj:`list` of :obj:`str`, optional): description
-#             a :obj:`list` containing the column names from which the data is going to be retrieved.
-#         as_json (:obj:`bool`, optional): description
-#             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
-#
-#     Returns:
-#         :obj:`dict` or :obj:`json` - currencies_dict:
-#             The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
-#             fields are filled with `None` values.
-#
-#             In case the information was successfully retrieved, the :obj:`dict` will look like::
-#
-#                 {
-#                     'name': name,
-#                     'full_name': full_name,
-#                     'tag': tag,
-#                     'id': id,
-#                 }
-#
-#     Raises:
-#         ValueError: raised when the introduced arguments are not correct.
-#         IOError: raised if the currencies file from `investpy` is missing or errored.
-#     """
-#
-#     if not isinstance(as_json, bool):
-#         raise ValueError("ERR#0052: as_json argument can just be True or False, bool type.")
-#
-#     resource_package = __name__
-#     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
-#     if pkg_resources.resource_exists(resource_package, resource_path):
-#         currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-#     else:
-#         currencies = retrieve_currency_crosses()
-#
-#     if currencies is None:
-#         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
-#
-#     if columns is None:
-#         columns = currencies.columns.tolist()
-#     else:
-#         if not isinstance(columns, list):
-#             raise ValueError("ERR#0054: specified columns argument is not a list, it can just be list type.")
-#
-#     if not all(column in currencies.columns.tolist() for column in columns):
-#         raise ValueError("ERR#0055: specified columns does not exist, available columns are "
-#                          "<name, full_name, tag, id>")
-#
-#     if as_json:
-#         return json.dumps(currencies[columns].to_dict(orient='records'))
-#     else:
-#         return currencies[columns].to_dict(orient='records')
+def available_currencies_as_list():
+    """
+    This function retrieves a listing with all the available currencies with indexed currency crosses in order to
+    get to know which are the available currencies. The currencies listed in this function, so on, can be used to
+    search currency crosses and used the retrieved data to get historical data of those currency crosses, so to
+    determine which is the value of one base currency in the second currency.
+
+    Returns:
+        :obj:`list` - available_currencies:
+            The resulting :obj:`list` contains all the available currencies with currency crosses being either the base
+            or the second value of the cross, as listed in Investing.com.
+
+            In case the listing was successfully retrieved, the :obj:`list` will look like::
+
+                available_currencies = [
+                    'AED', 'AFN', 'ALL', 'AMD', 'ANG', ...
+                ]
+
+    Raises:
+        IndexError: raised if `currency_crosses.csv` file was unavailable or not found.
+    """
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        currency_crosses = retrieve_currency_crosses(test_mode=False)
+
+    if currency_crosses is None:
+        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
+    else:
+        return np.unique(currency_crosses['base'].unique().tolist() + currency_crosses['second'].unique().tolist())
 
 
-# if __name__ == '__main__':
-#     retrieve_currency_crosses()
+def currency_crosses_as_df(base=None, second=None):
+    """
+    This function retrieves all the available currency crosses from Investing.com and returns them as a
+    :obj:`pandas.DataFrame`, which contains not just the currency crosses names, but all the fields contained on
+    the currency_crosses file. Note that the filtering params are both base and second, which mean the base and the
+    second currency of the currency cross, for example, in the currency cross `EUR/USD` the base currency is EUR and
+    the second currency is USD. These are optional parameters, so specifying one of them means that all the currency
+    crosses where the introduced currency is either base or second will be returned; if both are specified,
+    just the introduced currency cross will be returned if it exists. All the available currency crosses can be found
+    at: https://es.investing.com/currencies/
 
+    Args:
+        base (:obj:`str`, optional):
+            symbol of the base currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
+            all the currency crosses where the base currency matches the introduced one.
+        second (:obj:`str`):
+            symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
+            all the currency crosses where the second currency matches the introduced one.
+
+    Returns:
+        :obj:`pandas.DataFrame` - currency_crosses_df:
+            The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information retrieved from
+            Investing.com, some of which is not useful for the user, but for the inner package functions, such as the
+            `tag` or `id` fields.
+
+            In case the information was successfully retrieved, the resulting :obj:`pandas.DataFrame` will look like::
+
+                name | full_name | tag | id | base | second | base_name | second_name
+                -----|-----------|-----|----|------|--------|-----------|-------------
+                xxxx | xxxxxxxxx | xxx | xx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
+
+            Just like `investpy.currency_crosses.retrieve_currencies()`, the output of this function is a
+            :obj:`pandas.DataFrame` containing all the currency crosses as indexed in Investing.com, but instead of
+            scraping the web in order to retrieve them and then generating the CSV file, this function just reads it
+            and loads it into a :obj:`pandas.DataFrame`.
+
+    Raises:
+        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+    """
+
+    if base is not None and not isinstance(base, str):
+        raise ValueError("ERR#0049: specified base currency value is not valid.")
+
+    if second is not None and not isinstance(second, str):
+        raise ValueError("ERR#0051: specified second currency value is not valid.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        currency_crosses = retrieve_currency_crosses()
+
+    if currency_crosses is None:
+        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
+
+    available_currencies = available_currencies_as_list()
+
+    if base is None and second is None:
+        currency_crosses.reset_index(drop=True, inplace=True)
+
+        return currency_crosses
+    elif base is not None:
+        if unidecode.unidecode(base.upper()) in available_currencies:
+            if second is not None:
+                if unidecode.unidecode(second.upper()) in available_currencies:
+                    currency_crosses = currency_crosses[
+                        currency_crosses['base'] == unidecode.unidecode(base.upper()) and
+                        currency_crosses['second'] == unidecode.unidecode(second.upper())
+                    ]
+                    currency_crosses.reset_index(drop=True, inplace=True)
+
+                    if len(currency_crosses) > 0:
+                        return currency_crosses
+                    else:
+                        raise ValueError("ERR#0054: the introduced currency cross " + str(base) + "/" +
+                                         str(second) + " does not exists.")
+                else:
+                    raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+            else:
+                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
+                currency_crosses.reset_index(drop=True, inplace=True)
+
+                return currency_crosses
+        else:
+            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+    elif second is not None:
+        if unidecode.unidecode(second.upper()) in available_currencies:
+            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode.unidecode(second.upper())]
+            currency_crosses.reset_index(drop=True, inplace=True)
+
+            return currency_crosses
+        else:
+            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+    else:
+        return currency_crosses
+
+
+def currency_crosses_as_list(base=None, second=None):
+    """
+    This function retrieves all the available currency crosses from Investing.com and returns them as a
+    :obj:`dict`, which contains not just the currency crosses names, but all the fields contained on
+    the currency_crosses file is columns is None, otherwise, just the specified column values will be returned. Note
+    that the filtering params are both base and second, which mean the base and the second currency of the currency
+    cross, for example, in the currency cross `EUR/USD` the base currency is EUR and the second currency is USD. These
+    are optional parameters, so specifying one of them means that all the currency crosses where the introduced
+    currency is either base or second will be returned; if both are specified, just the introduced currency cross will
+    be returned if it exists. All the available currency crosses can be found at: https://es.investing.com/currencies/
+
+    Args:
+        base (:obj:`str`, optional):
+            symbol of the base currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
+            all the currency crosses where the base currency matches the introduced one.
+        second (:obj:`str`):
+            symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
+            all the currency crosses where the second currency matches the introduced one.
+
+    Returns:
+        :obj:`list` - currency_crosses_list:
+            The resulting :obj:`list` contains the retrieved data from the `currency_crosses.csv` file, which is
+            a listing of the names of the currency crosses listed in Investing.com, which is the input for data
+            retrieval functions as the name of the currency cross to retrieve data from needs to be specified.
+
+            In case the listing was successfully retrieved, the :obj:`list` will look like::
+
+                currency_crosses_list = [
+                    'USD/BRLT', 'CAD/CHF', 'CHF/CAD', 'CAD/PLN', 'PLN/CAD', ...
+                ]
+
+    Raises:
+        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+    """
+
+    if base is not None and not isinstance(base, str):
+        raise ValueError("ERR#0049: specified base currency value is not valid.")
+
+    if second is not None and not isinstance(second, str):
+        raise ValueError("ERR#0051: specified second currency value is not valid.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        currency_crosses = retrieve_currency_crosses()
+
+    if currency_crosses is None:
+        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
+
+    available_currencies = available_currencies_as_list()
+
+    if base is None and second is None:
+        currency_crosses.reset_index(drop=True, inplace=True)
+
+        return currency_crosses['name'].tolist()
+    elif base is not None:
+        if unidecode.unidecode(base.upper()) in available_currencies:
+            if second is not None:
+                if unidecode.unidecode(second.upper()) in available_currencies:
+                    currency_crosses = currency_crosses[
+                        currency_crosses['base'] == unidecode.unidecode(base.upper()) and
+                        currency_crosses['second'] == unidecode.unidecode(second.upper())
+                    ]
+                    currency_crosses.reset_index(drop=True, inplace=True)
+
+                    if len(currency_crosses) > 0:
+                        return currency_crosses['name'].tolist()
+                    else:
+                        raise ValueError("ERR#0054: the introduced currency cross " + str(base) + "/" +
+                                         str(second) + " does not exists.")
+                else:
+                    raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+            else:
+                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
+                currency_crosses.reset_index(drop=True, inplace=True)
+
+                return currency_crosses['name'].tolist()
+        else:
+            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+    elif second is not None:
+        if unidecode.unidecode(second.upper()) in available_currencies:
+            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode.unidecode(second.upper())]
+            currency_crosses.reset_index(drop=True, inplace=True)
+
+            return currency_crosses['name'].tolist()
+        else:
+            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+
+
+def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False):
+    """
+    This function retrieves all the available currency crosses from Investing.com and returns them as a
+    :obj:`dict`, which contains not just the currency crosses names, but all the fields contained on
+    the currency_crosses file is columns is None, otherwise, just the specified column values will be returned. Note
+    that the filtering params are both base and second, which mean the base and the second currency of the currency
+    cross, for example, in the currency cross `EUR/USD` the base currency is EUR and the second currency is USD. These
+    are optional parameters, so specifying one of them means that all the currency crosses where the introduced
+    currency is either base or second will be returned; if both are specified, just the introduced currency cross will
+    be returned if it exists. All the available currency crosses can be found at: https://es.investing.com/currencies/
+
+    Args:
+        base (:obj:`str`, optional):
+            symbol of the base currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
+            all the currency crosses where the base currency matches the introduced one.
+        second (:obj:`str`):
+            symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
+            all the currency crosses where the second currency matches the introduced one.
+        columns (:obj:`list`, optional):
+            names of the columns of the equity data to retrieve <name, full_name, tag, id, base, base_name,
+            second, second_name>
+        as_json (:obj:`bool`, optional):
+            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
+
+    Returns:
+        :obj:`dict` or :obj:`json` - currency_crosses_dict:
+            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
+            fields are filled with `None` values.
+
+            In case the information was successfully retrieved, the :obj:`dict` will look like::
+
+                {
+                    'name': name,
+                    'full_name': full_name,
+                    'tag': tag,
+                    'id': id,
+                    'base': base,
+                    'base_name': base_name,
+                    'second': second,
+                    'second_name': second_name
+                }
+
+    Raises:
+        ValueError: raised when any of the input arguments is not valid.
+       IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+    """
+
+    if base is not None and not isinstance(base, str):
+        raise ValueError("ERR#0049: specified base currency value is not valid.")
+
+    if second is not None and not isinstance(second, str):
+        raise ValueError("ERR#0051: specified second currency value is not valid.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        currency_crosses = retrieve_currency_crosses()
+
+    if currency_crosses is None:
+        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
+
+    available_currencies = available_currencies_as_list()
+
+    if columns is None:
+        columns = currency_crosses.columns.tolist()
+    else:
+        if not isinstance(columns, list):
+            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+
+    if not all(column in currency_crosses.columns.tolist() for column in columns):
+        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
+                         "<name, full_name, tag, id, base, base_name, second, second_name>")
+
+    if base is None and second is None:
+        currency_crosses.reset_index(drop=True, inplace=True)
+
+        if as_json:
+            return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+        else:
+            return currency_crosses[columns].to_dict(orient='records')
+    elif base is not None:
+        if unidecode.unidecode(base.upper()) in available_currencies:
+            if second is not None:
+                if unidecode.unidecode(second.upper()) in available_currencies:
+                    currency_crosses = currency_crosses[
+                        currency_crosses['base'] == unidecode.unidecode(base.upper()) and
+                        currency_crosses['second'] == unidecode.unidecode(second.upper())
+                    ]
+                    currency_crosses.reset_index(drop=True, inplace=True)
+
+                    if len(currency_crosses) > 0:
+                        if as_json:
+                            return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+                        else:
+                            return currency_crosses[columns].to_dict(orient='records')
+                    else:
+                        raise ValueError("ERR#0054: the introduced currency cross " + str(base) + "/" +
+                                         str(second) + " does not exists.")
+                else:
+                    raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+            else:
+                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
+                currency_crosses.reset_index(drop=True, inplace=True)
+
+                if as_json:
+                    return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+                else:
+                    return currency_crosses[columns].to_dict(orient='records')
+        else:
+            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+    elif second is not None:
+        if unidecode.unidecode(second.upper()) in available_currencies:
+            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode.unidecode(second.upper())]
+            currency_crosses.reset_index(drop=True, inplace=True)
+
+            if as_json:
+                return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+            else:
+                return currency_crosses[columns].to_dict(orient='records')
+        else:
+            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")

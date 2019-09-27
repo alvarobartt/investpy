@@ -1063,6 +1063,286 @@ volume values for the selected equity on market days.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="investpy.get_index_countries">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_index_countries</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_index_countries" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+from, via reading the <cite>equity_countries.csv</cite> file from the resources directory. So on, this function will display a
+listing containing a set of countries, in order to let the user know which countries are taken into account and also
+the return listing from this function can be used for country param check if needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains all the available countries with equities as indexed in Investing.com</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - countries</p>
+</dd>
+<dt class="field-odd">Raises</dt>
+<dd class="field-odd"><p><strong>IndexError</strong> – if <cite>equity_countries.csv</cite> was unavailable or not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_index_historical_data">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_index_historical_data</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_index_historical_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves historical data of the introduced <cite>index</cite> (from the specified country, note that both
+index and country should match since if the introduced index is not listed in the indices of that country, the
+function will raise an error). The retrieved historical data are the OHLC values plus the Volume and the Currency in
+which those values are specified, from the introduced data range if valid. So on, the resulting data can it either be
+stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the index to retrieve recent historical data from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the index is.</p></li>
+<li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, from where data is going to be retrieved.</p></li>
+<li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, until where data is going to be retrieved.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite>, <cite>asc</cite> or <cite>descending</cite>, <cite>desc</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The function returns either a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file containing the retrieved
+historical data from the specified index via argument. The dataset contains the open, high, low, close and
+volume values for the selected index on market days, additionally the currency in which those values are
+specified is returned.</p>
+<p>The returned data is case we use default arguments will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Volume</span> <span class="o">|</span> <span class="n">Currency</span>
+<span class="o">-----||------------------------------------|----------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
+</pre></div>
+</div>
+<p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">historical</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="n">date</span><span class="p">:</span> <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">,</span>
+            <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
+        <span class="p">},</span>
+        <span class="o">...</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if there was an argument error.</p></li>
+<li><p><strong>IOError</strong> – raised if indices object/file was not found or unable to retrieve.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if the introduced index does not match any of the indexed ones.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – raised if index information was unavailable or not found.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_index_historical_data</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;ibex 35&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2018&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
+<span class="go">                   Open     High      Low    Close    Volume Currency</span>
+<span class="go">    Date</span>
+<span class="go">    2018-01-02  15128.2  15136.7  14996.6  15096.8  10340000      EUR</span>
+<span class="go">    2018-01-03  15145.0  15186.9  15091.9  15106.9  12800000      EUR</span>
+<span class="go">    2018-01-04  15105.5  15368.7  15103.7  15368.7  17070000      EUR</span>
+<span class="go">    2018-01-05  15353.9  15407.5  15348.6  15398.9  11180000      EUR</span>
+<span class="go">    2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_index_recent_data">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_index_recent_data</code><span class="sig-paren">(</span><em class="sig-param">index</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_index_recent_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves recent historical data from the introduced <cite>index</cite> from Investing
+via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the index to retrieve recent historical data from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the index is.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite>, <cite>asc</cite> or <cite>descending</cite>, <cite>desc</cite>).</p></li>
+<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The function returns either a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file containing the retrieved
+recent data from the specified index via argument. The dataset contains the open, high, low, close and volume
+values for the selected index on market days, additionally the currency value is returned.</p>
+<p>The returned data is case we use default arguments will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Volume</span> <span class="o">|</span> <span class="n">Currency</span>
+<span class="o">-----||------------------------------------|----------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
+</pre></div>
+</div>
+<p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+    <span class="n">recent</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span>
+            <span class="n">date</span><span class="p">:</span> <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">,</span>
+            <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
+        <span class="p">},</span>
+        <span class="o">...</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if there was an argument error.</p></li>
+<li><p><strong>IOError</strong> – raised if indices object/file was not found or unable to retrieve.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if the introduced index does not match any of the indexed ones.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – raised if index information was unavailable or not found.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_index_recent_data</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;ibex 35&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
+<span class="go">                   Open     High      Low    Close   Volume Currency</span>
+<span class="go">    Date</span>
+<span class="go">    2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR</span>
+<span class="go">    2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR</span>
+<span class="go">    2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR</span>
+<span class="go">    2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR</span>
+<span class="go">    2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_indices">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_indices</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available countries to retrieve indices from, as the listed countries are the ones
+indexed on Investing.com. This function is intended to show the user the data contained in <cite>indices.csv</cite> in order
+to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
+parameter is applied so just the indices from the specified country are retrieved.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available indices from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the indices basic information stored on <cite>indices.csv</cite>,
+since it was previously retrieved in <cite>investpy.indices.retrieve_indices()</cite>. Unless the country is
+specified, all the available indices indexed on Investing.com is returned, but if it is specified, just the
+indices from that country are returned.</p>
+<p>In the case that the file reading of <cite>indices.csv</cite> or the retrieval process from Investing.com was
+successfully completed, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span>
+<span class="o">--------|------|--------|-----|----</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - indices</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised when any of the input arguments is not valid.</p></li>
+<li><p><strong>IOError</strong> – raised when <cite>indices.csv</cite> file is missing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_indices_dict">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_indices_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_indices_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available indices on Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the
+<cite>country</cite>, <cite>name</cite>, <cite>full_name</cite>, <cite>symbol</cite>, <cite>tag</cite> and <cite>currency</cite>. All the available indices can be found at:
+<a class="reference external" href="https://es.investing.com/indices/">https://es.investing.com/indices/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available indices from.</p></li>
+<li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – description
+a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> containing the column names from which the data is going to be retrieved.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – description
+value to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the retrieved data if found, if not, the corresponding
+fields are filled with <cite>None</cite> values.</p>
+<p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+    <span class="s1">&#39;full_name&#39;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
+    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
+    <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span>
+    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> - indices_dict</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised when the introduced arguments are not correct.</p></li>
+<li><p><strong>IOError</strong> – raised if the indices file from <cite>investpy</cite> is missing or errored.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.get_indices_list">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_indices_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_indices_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available indices and returns a list of each one of them.
+All the available indices can be found at: <a class="reference external" href="https://es.investing.com/indices/">https://es.investing.com/indices/</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available indices from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains the retrieved data, which corresponds to the index names of
+every index listed on Investing.com.</p>
+<p>In case the information was successfully retrieved from the CSV file, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">indices</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - indices_list</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised when the introduced arguments are not correct.</p></li>
+<li><p><strong>IOError</strong> – raised if the indices file from <cite>investpy</cite> is missing or errored.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="investpy.get_recent_data">
 <code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_recent_data</code><span class="sig-paren">(</span><em class="sig-param">equity</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>equity</cite> from Investing
@@ -1131,6 +1411,130 @@ volume values for the selected equity on market days.</p>
 <span class="go">    2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.search_equities">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">search_equities</code><span class="sig-paren">(</span><em class="sig-param">by</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.search_equities" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function searches equities by the introduced value for the specified field. This means that this function
+is going to search if there is a value that matches the introduced value for the specified field which is the
+<cite>equities.csv</cite> column name to search in. Available fields to search equities are ‘name’, ‘full_name’ and ‘isin’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>by</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the field to search for, which is the column name (‘name’, ‘full_name’ or ‘isin’).</p></li>
+<li><p><strong>value</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – value of the field to search for, which is the str that is going to be searched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The resulting <cite>pandas.DataFrame</cite> contains the search results from the given query (the specified value
+in the specified field). If there are no results and error will be raised, but otherwise this
+<cite>pandas.DataFrame</cite> will contain all the available field values that match the introduced query.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - search_result</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.search_etfs">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">search_etfs</code><span class="sig-paren">(</span><em class="sig-param">by</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.search_etfs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function searches etfs by the introduced value for the specified field. This means that this function
+is going to search if there is a value that matches the introduced value for the specified field which is the
+<cite>etfs.csv</cite> column name to search in. Available fields to search etfs are ‘name’ and ‘symbol’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>by</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the field to search for, which is the column name (‘name’ or ‘symbol’).</p></li>
+<li><p><strong>value</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – value of the field to search for, which is the str that is going to be searched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The resulting <cite>pandas.DataFrame</cite> contains the search results from the given query (the specified value
+in the specified field). If there are no results and error will be raised, but otherwise this
+<cite>pandas.DataFrame</cite> will contain all the available field values that match the introduced query.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - search_result</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.search_funds">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">search_funds</code><span class="sig-paren">(</span><em class="sig-param">by</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.search_funds" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function searches funds by the introduced value for the specified field. This means that this function
+is going to search if there is a value that matches the introduced value for the specified field which is the
+<cite>funds.csv</cite> column name to search in. Available fields to search funds are ‘name’, ‘symbol’, ‘issuer’ and ‘isin’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>by</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the field to search for, which is the column name (‘name’, ‘symbol’, ‘issuer’ or ‘isin’).</p></li>
+<li><p><strong>value</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – value of the field to search for, which is the str that is going to be searched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The resulting <cite>pandas.DataFrame</cite> contains the search results from the given query (the specified value
+in the specified field). If there are no results and error will be raised, but otherwise this
+<cite>pandas.DataFrame</cite> will contain all the available field values that match the introduced query.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - search_result</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.search_indices">
+<code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">search_indices</code><span class="sig-paren">(</span><em class="sig-param">by</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.search_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function searches indices by the introduced value for the specified field. This means that this function
+is going to search if there is a value that matches the introduced value for the specified field which is the
+<cite>indices.csv</cite> column name to search in. Available fields to search indices are ‘name’ and ‘full_name’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>by</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the field to search for, which is the column name (‘name’ or ‘full_name’).</p></li>
+<li><p><strong>value</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – value of the field to search for, which is the str that is going to be searched.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The resulting <cite>pandas.DataFrame</cite> contains the search results from the given query (the specified value
+in the specified field). If there are no results and error will be raised, but otherwise this
+<cite>pandas.DataFrame</cite> will contain all the available field values that match the introduced query.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - search_result</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 </div>

@@ -227,13 +227,13 @@ CSV file, this function just reads it and loads it into a <code class="xref py p
 <code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">funds_as_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.funds_as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds on Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the
 <cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>, <cite>name</cite>, <cite>symbol</cite> and <cite>tag</cite>. All the available funds can be found at:
-<a class="reference external" href="https://es.investing.com/etfs/">https://es.investing.com/etfs/</a></p>
+<a class="reference external" href="https://es.investing.com/funds/">https://es.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available funds from.</p></li>
 <li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – description
-a <cite>list</cite> containing the column names from which the data is going to be retrieved.</p></li>
+a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> containing the column names from which the data is going to be retrieved.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – description
 value to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
@@ -261,7 +261,7 @@ fields are filled with <cite>None</cite> values.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised when the introduced arguments are not correct.</p></li>
-<li><p><strong>IOError</strong> – if the funds file from <cite>investpy</cite> is missing or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if the funds file from <cite>investpy</cite> is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
