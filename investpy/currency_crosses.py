@@ -385,7 +385,7 @@ def currency_crosses_as_df(base=None, second=None):
                         raise ValueError("ERR#0054: the introduced currency cross " + str(base) + "/" +
                                          str(second) + " does not exists.")
                 else:
-                    raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+                    raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
             else:
                 currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
                 currency_crosses.reset_index(drop=True, inplace=True)
@@ -400,7 +400,7 @@ def currency_crosses_as_df(base=None, second=None):
 
             return currency_crosses
         else:
-            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+            raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
     else:
         return currency_crosses
 
@@ -478,7 +478,7 @@ def currency_crosses_as_list(base=None, second=None):
                         raise ValueError("ERR#0054: the introduced currency cross " + str(base) + "/" +
                                          str(second) + " does not exists.")
                 else:
-                    raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+                    raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
             else:
                 currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
                 currency_crosses.reset_index(drop=True, inplace=True)
@@ -493,7 +493,7 @@ def currency_crosses_as_list(base=None, second=None):
 
             return currency_crosses['name'].tolist()
         else:
-            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+            raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
 
 
 def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False):
@@ -597,7 +597,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
                         raise ValueError("ERR#0054: the introduced currency cross " + str(base) + "/" +
                                          str(second) + " does not exists.")
                 else:
-                    raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+                    raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
             else:
                 currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
                 currency_crosses.reset_index(drop=True, inplace=True)
@@ -618,4 +618,4 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
             else:
                 return currency_crosses[columns].to_dict(orient='records')
         else:
-            raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
+            raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
