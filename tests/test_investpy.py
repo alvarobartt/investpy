@@ -446,32 +446,32 @@ def test_investpy_indices():
     retrieve_index_countries(test_mode=True)
 
 
-def test_investpy_currencies():
-    retrieve_currency_crosses()
-    investpy.get_currency_crosses()
-    investpy.get_currency_crosses_list()
-    investpy.get_currency_crosses_dict()
-
-    params = [
-        {
-            'currency_cross': 'EUR/USD',
-            'from_date': '08/07/2019',
-            'to_date': '08/08/2019',
-            'as_json': True,
-        },
-        {
-            'currency_cross': 'EUR/USD',
-            'from_date': '08/07/2019',
-            'to_date': '08/08/2019',
-            'as_json': False,
-        }]
-
-    for param in params:
-        investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'], as_json=param['as_json'])
-        investpy.get_currency_cross_historical_data(currency_cross=param['currency_cross'],
-                                                    from_date=param['from_date'],
-                                                    to_date=param['to_date'],
-                                                    as_json=param['as_json'])
+# def test_investpy_currencies():
+#     retrieve_currency_crosses()
+#     investpy.get_currency_crosses()
+#     investpy.get_currency_crosses_list()
+#     investpy.get_currency_crosses_dict()
+#
+#     params = [
+#         {
+#             'currency_cross': 'EUR/USD',
+#             'from_date': '08/07/2019',
+#             'to_date': '08/08/2019',
+#             'as_json': True,
+#         },
+#         {
+#             'currency_cross': 'EUR/USD',
+#             'from_date': '08/07/2019',
+#             'to_date': '08/08/2019',
+#             'as_json': False,
+#         }]
+#
+#     for param in params:
+#         investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'], as_json=param['as_json'])
+#         investpy.get_currency_cross_historical_data(currency_cross=param['currency_cross'],
+#                                                     from_date=param['from_date'],
+#                                                     to_date=param['to_date'],
+#                                                     as_json=param['as_json'])
 
 
 if __name__ == '__main__':
@@ -480,4 +480,4 @@ if __name__ == '__main__':
     test_investpy_funds()
     test_investpy_etfs()
     test_investpy_indices()
-    test_investpy_currencies()
+    # test_investpy_currencies()

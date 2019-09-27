@@ -3168,7 +3168,8 @@ def search_indices(by, value):
 
     return search_result
 
-"""------------- currency_crosses -------------"""
+
+"""------------- CURRENCY CROSSES -------------"""
 
 
 def get_currency_crosses():
@@ -3177,13 +3178,11 @@ def get_currency_crosses():
     This function is intended to show the user the data contained in `currency_crosses.csv` in order
     to help him to later use that data in order to retrieve historical data.
 
-    Args:
-        None
-
     Returns:
         :obj:`pandas.DataFrame` - currency_crosses:
-            The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information stored on `currency_crosses.csv`,
-            since it was previously retrieved in `investpy.currency_crosses.retrieve_currency_crosses()`.
+            The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information stored on
+            `currency_crosses.csv`, since it was previously retrieved in
+            `investpy.currency_crosses.retrieve_currency_crosses()`.
 
             In the case that the file reading of `currency_crosses.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
@@ -3666,7 +3665,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0073: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
         logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 

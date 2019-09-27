@@ -1,20 +1,8 @@
+<a>
+  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" align="right">
+</a>
+
 # investpy — a Python package for financial historical data extraction from Investing
-
-[![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
-[![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
-[![Anaconda Cloud Version](https://anaconda.org/alvarob96/investpy/badges/version.svg)](https://anaconda.org/alvarob96/investpy)
-[![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://dev.azure.com/alvarob96/alvarob96/_apis/build/status/alvarob96.investpy?branchName=master)](https://dev.azure.com/alvarob96/alvarob96/_build?definitionId=1&_a=summary)
-[![Build Status](https://img.shields.io/travis/alvarob96/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarob96/investpy)
-[![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
-[![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
-[![Downloads](https://img.shields.io/pypi/dm/investpy.svg?maxAge=2592000&label=installs&color=%2327B1FF)](https://pypistats.org/packages/investpy)
-
-<div>
-  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png"><br>
-</div>
-
-## Introduction
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
 It provides historical data retrieval from up to **28.121 equities, 4.120 funds, 8.755 etfs and 385 indices**. Basically, 
@@ -25,6 +13,16 @@ its further usage and/or analysis.
 investpy seeks to be one of the most complete Python packages when it comes to historical data extraction of financial
 products in order to stop relying on public/private APIs, as investpy is **FREE** and has **NO LIMITATIONS**. These
 are some of the features that currently lead investpy to be one of the most consistent packages of financial data retrieval.
+
+[![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
+[![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
+[![Anaconda Cloud Version](https://anaconda.org/alvarob96/investpy/badges/version.svg)](https://anaconda.org/alvarob96/investpy)
+[![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
+[![Build Status](https://dev.azure.com/alvarob96/alvarob96/_apis/build/status/alvarob96.investpy?branchName=master)](https://dev.azure.com/alvarob96/alvarob96/_build?definitionId=1&_a=summary)
+[![Build Status](https://img.shields.io/travis/alvarob96/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarob96/investpy)
+[![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
+[![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
+[![Downloads](https://img.shields.io/pypi/dm/investpy.svg?maxAge=2592000&label=installs&color=%2327B1FF)](https://pypistats.org/packages/investpy)
 
 ## Installation
 
