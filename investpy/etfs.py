@@ -171,7 +171,6 @@ def retrieve_etf_info(tag):
 
     for element_ in path_:
         if element_.text_content():
-            print(element_.text_content())
             result['currency'] = element_.text_content()
 
     return result

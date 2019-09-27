@@ -11,7 +11,7 @@ from investpy.equities import retrieve_equities, retrieve_equity_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
 from investpy.indices import retrieve_indices, retrieve_index_countries
-from investpy.currency_crosses import retrieve_currency_crosses
+from investpy.currency_crosses import retrieve_currency_crosses, retrieve_currency_cross_continents
 
 
 def test_investpy():
@@ -446,32 +446,135 @@ def test_investpy_indices():
     retrieve_index_countries(test_mode=True)
 
 
-# def test_investpy_currencies():
-#     retrieve_currency_crosses()
-#     investpy.get_currency_crosses()
-#     investpy.get_currency_crosses_list()
-#     investpy.get_currency_crosses_dict()
-#
-#     params = [
-#         {
-#             'currency_cross': 'EUR/USD',
-#             'from_date': '08/07/2019',
-#             'to_date': '08/08/2019',
-#             'as_json': True,
-#         },
-#         {
-#             'currency_cross': 'EUR/USD',
-#             'from_date': '08/07/2019',
-#             'to_date': '08/08/2019',
-#             'as_json': False,
-#         }]
-#
-#     for param in params:
-#         investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'], as_json=param['as_json'])
-#         investpy.get_currency_cross_historical_data(currency_cross=param['currency_cross'],
-#                                                     from_date=param['from_date'],
-#                                                     to_date=param['to_date'],
-#                                                     as_json=param['as_json'])
+def test_investpy_currency_crosses():
+    """
+    This function checks that currency cross data retrieval functions listed in investpy work properly.
+    """
+
+    params = [
+        {
+            'base': None,
+            'second': None,
+        },
+        {
+            'base': 'EUR',
+            'second': None,
+        },
+        {
+            'base': None,
+            'second': 'EUR',
+        },
+        {
+            'base': 'EUR',
+            'second': 'USD',
+        },
+    ]
+
+    for param in params:
+        investpy.get_currency_crosses(base=param['base'], second=param['second'])
+        investpy.get_currency_crosses_list(base=param['base'], second=param['second'])
+
+    params = [
+        {
+            'base': None,
+            'second': None,
+            'columns': None,
+            'as_json': True
+        },
+        {
+            'base': None,
+            'second': None,
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'base': 'EUR',
+            'second': None,
+            'columns': None,
+            'as_json': True
+        },
+        {
+            'base': 'EUR',
+            'second': None,
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'base': None,
+            'second': 'USD',
+            'columns': None,
+            'as_json': True
+        },
+        {
+            'base': None,
+            'second': 'USD',
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'base': 'EUR',
+            'second': 'USD',
+            'columns': None,
+            'as_json': True
+        },
+        {
+            'base': 'EUR',
+            'second': 'USD',
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'base': 'EUR',
+            'second': 'USD',
+            'columns': ['name', 'full_name'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_currency_crosses_dict(base=param['base'],
+                                           second=param['second'],
+                                           columns=param['columns'],
+                                           as_json=param['as_json'])
+
+    investpy.get_available_currencies()
+
+    params = [
+        {
+            'currency_cross': 'EUR/USD',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'descending',
+            'debug': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'],
+                                                as_json=param['as_json'],
+                                                order=param['order'],
+                                                debug=param['debug'])
+
+        investpy.get_currency_cross_historical_data(currency_cross=param['currency_cross'],
+                                                    from_date=param['from_date'],
+                                                    to_date=param['to_date'],
+                                                    as_json=param['as_json'],
+                                                    order=param['order'],
+                                                    debug=param['debug'])
+
+    investpy.search_currency_crosses(by='base', value='EUR')
+
+    retrieve_currency_crosses(test_mode=True)
+    retrieve_currency_cross_continents()
 
 
 if __name__ == '__main__':
@@ -480,4 +583,4 @@ if __name__ == '__main__':
     test_investpy_funds()
     test_investpy_etfs()
     test_investpy_indices()
-    # test_investpy_currencies()
+    test_investpy_currency_crosses()

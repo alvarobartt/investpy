@@ -255,8 +255,6 @@ def retrieve_currency_cross_continents():
             'tag': element.xpath(".//a")[0].get("href").replace('/currencies/', ''),
         }
 
-        print(obj)
-
         countries.append(obj)
 
     if len(countries) < 1:
@@ -374,8 +372,8 @@ def currency_crosses_as_df(base=None, second=None):
             if second is not None:
                 if unidecode.unidecode(second.upper()) in available_currencies:
                     currency_crosses = currency_crosses[
-                        currency_crosses['base'] == unidecode.unidecode(base.upper()) and
-                        currency_crosses['second'] == unidecode.unidecode(second.upper())
+                        (currency_crosses['base'] == unidecode.unidecode(base.upper())) &
+                        (currency_crosses['second'] == unidecode.unidecode(second.upper()))
                     ]
                     currency_crosses.reset_index(drop=True, inplace=True)
 
@@ -467,8 +465,8 @@ def currency_crosses_as_list(base=None, second=None):
             if second is not None:
                 if unidecode.unidecode(second.upper()) in available_currencies:
                     currency_crosses = currency_crosses[
-                        currency_crosses['base'] == unidecode.unidecode(base.upper()) and
-                        currency_crosses['second'] == unidecode.unidecode(second.upper())
+                        (currency_crosses['base'] == unidecode.unidecode(base.upper())) &
+                        (currency_crosses['second'] == unidecode.unidecode(second.upper()))
                     ]
                     currency_crosses.reset_index(drop=True, inplace=True)
 
@@ -583,8 +581,8 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
             if second is not None:
                 if unidecode.unidecode(second.upper()) in available_currencies:
                     currency_crosses = currency_crosses[
-                        currency_crosses['base'] == unidecode.unidecode(base.upper()) and
-                        currency_crosses['second'] == unidecode.unidecode(second.upper())
+                        (currency_crosses['base'] == unidecode.unidecode(base.upper())) &
+                        (currency_crosses['second'] == unidecode.unidecode(second.upper()))
                     ]
                     currency_crosses.reset_index(drop=True, inplace=True)
 
