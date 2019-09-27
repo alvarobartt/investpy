@@ -5,7 +5,7 @@ Installation
 
 .. note::
 
-    After installing the package you are now available to use it! As investpy's latest release is 0.9.5 the installation is
+    After installing the package you are now available to use it! As investpy's latest release is 0.9.6 the installation is
     optimized for it. If you try installing another investpy release, some features may not work.
 
 First Installation

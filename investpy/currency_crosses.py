@@ -547,6 +547,9 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
     if second is not None and not isinstance(second, str):
         raise ValueError("ERR#0051: specified second currency value is not valid.")
 
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):

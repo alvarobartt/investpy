@@ -30,7 +30,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.5``
+``$ pip install investpy==0.9.6``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
 file, which can also be installed via pip:
@@ -206,6 +206,43 @@ Date
 2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR
 
 ```
+#### Currency Crosses Data Retrieval
+
+```python
+import investpy
+
+df = investpy.get_currency_cross_recent_data(currency_cross='EUR/USD')
+print(df.head())
+```
+```{r, engine='python', count_lines}
+              Open    High     Low   Close  Volume Currency
+Date
+2019-08-27  1.1101  1.1116  1.1084  1.1091       0      USD
+2019-08-28  1.1090  1.1099  1.1072  1.1078       0      USD
+2019-08-29  1.1078  1.1093  1.1042  1.1057       0      USD
+2019-08-30  1.1058  1.1062  1.0963  1.0991       0      USD
+2019-09-02  1.0990  1.1000  1.0958  1.0968       0      USD
+
+```
+
+```python
+import investpy
+
+df = investpy.get_currency_cross_historical_data(currency_cross='EUR/USD',
+                                                 from_date='01/01/2018',
+                                                 to_date='01/01/2019')
+print(df.head())
+```
+```{r, engine='python', count_lines}
+              Open    High     Low   Close  Volume Currency
+Date
+2018-01-01  1.2003  1.2014  1.1995  1.2010       0      USD
+2018-01-02  1.2013  1.2084  1.2003  1.2059       0      USD
+2018-01-03  1.2058  1.2070  1.2001  1.2014       0      USD
+2018-01-04  1.2015  1.2090  1.2004  1.2068       0      USD
+2018-01-05  1.2068  1.2085  1.2021  1.2030       0      USD
+
+```
 
 ### Additional Data
 
@@ -256,6 +293,8 @@ print(fund_information)
  'Category': 'Mixtos Euros Moderados PP'
 }
 ```
+
+And much more! All the functions usage can be found in the [Documentation](https://investpy.readthedocs.io/)!
 
 ## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 
