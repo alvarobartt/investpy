@@ -4,6 +4,7 @@
 # See LICENSE for details.
 
 import json
+import re
 
 import pandas as pd
 import pkg_resources
@@ -38,9 +39,9 @@ def retrieve_indices(test_mode=False):
             In the case that the retrieval process of indices was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id | currency
-                --------|------|-----------|-----|----|----------
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxxxx
+                country | name | full_name | tag | id | symbol | currency
+                --------|------|-----------|-----|----|--------|----------
+                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid.
@@ -93,6 +94,7 @@ def retrieve_indices(test_mode=False):
                             'full_name': full_name_,
                             'tag': tag_,
                             'id': id_,
+                            'symbol': info['symbol'],
                             'currency': info['currency'],
                         }
 
@@ -132,7 +134,8 @@ def retrieve_index_info(tag):
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
                 {
-                    'currency': currency
+                    'currency': currency,
+                    'symbol': symbol,
                 }
 
     Raises:
@@ -156,10 +159,24 @@ def retrieve_index_info(tag):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     result = {
-        'currency': None
+        'currency': None,
+        'symbol': None,
     }
 
     root_ = fromstring(req.text)
+
+    path_ = root_.xpath(".//div[@class='instrumentHead']"
+                        "/h1")
+
+    for element_ in path_:
+        if element_.text_content():
+            pattern = re.compile(r"\([a-zA-Z0-9]*?\)$")
+            val = element_.text_content().strip()
+            res = pattern.search(val)
+
+            if res is not None:
+                symbol = res.group()
+                result['symbol'] = symbol.replace('(', '').replace(')', '')
 
     path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
                         "/span[@class='bold']")
@@ -286,9 +303,9 @@ def indices_as_df(country=None):
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id | currency
-                --------|------|-----------|-----|----|----------
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxxxx
+                country | name | full_name | tag | id | symbol | currency
+                --------|------|-----------|-----|----|--------|----------
+                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
 
             Just like `investpy.indices.retrieve_indices()`, the output of this function is a :obj:`pandas.DataFrame`,
             but instead of generating the CSV file, this function just reads it and loads it into a
@@ -335,7 +352,7 @@ def indices_as_list(country=None):
 
             In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
 
-                indices = [...]
+                indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
     Raises:
         ValueError: raised when the introduced arguments are not correct.
@@ -386,7 +403,8 @@ def indices_as_dict(country=None, columns=None, as_json=False):
                     'name': name,
                     'full_name': full_name,
                     'symbol': symbol,
-                    'tag': tag
+                    'tag': tag,
+                    'id': id,
                     'currency': currency
                 }
 
@@ -419,7 +437,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in indices.columns.tolist() for column in columns):
         raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<country, name, full_name, symbol, tag, currency>")
+                         "<country, name, full_name, symbol, tag, id, currency>")
 
     if country is None:
         if as_json:

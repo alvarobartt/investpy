@@ -1,385 +1,385 @@
-country,name,full_name,tag,id,currency
-argentina,S&P Merval,S&P Merval,merv,13376,ARS
-argentina,S&P Merval Argentina,S&P Merval Argentina,mar,13374,ARS
-argentina,S&P/BYMA Argentina General,S&P/BYMA Argentina General,ibg,13317,ARS
-australia,S&P/ASX 200,S&P/ASX 200,aus-200,171,AUD
-australia,ASX All Ordinaries,ASX All Ordinaries,all-ordinaries,14499,AUD
-australia,ASX Small Ordinaries,ASX Small Ordinaries,s-p-asx-small-ord,14497,AUD
-australia,S&P/ASX 100,S&P/ASX 100,s-p-asx-100,14496,AUD
-australia,S&P/ASX 20,S&P/ASX 20,s-p-asx-20,14493,AUD
-australia,S&P/ASX 300,S&P/ASX 300,s-p-asx-300,14498,AUD
-australia,S&P/ASX 50,S&P/ASX 50,s-p-asx-50,14494,AUD
-australia,S&P/ASX All Australian 200,S&P/ASX All Australian 200,s-p-asx-all-australian-200,14503,AUD
-australia,S&P/ASX All Australian 50,S&P/ASX All Australian 50,s-p-asx-all-australian-50,14502,AUD
-australia,S&P/ASX Midcap 50,S&P/ASX Midcap 50,s-p-asx-midcap50,14495,AUD
-austria,ATX,ATX,atx,1016254,EUR
-austria,ATX 5,ATX 5,atx-5,49519,EUR
-austria,ATX Prime,ATX Prime,atx-prime,49520,EUR
-austria,FTSE Austria,FTSE Austria,ftse-austria,28856,EUR
-austria,Immobilien ATX EUR,Immobilien ATX EUR,immobilien---atx,49521,EUR
-austria,New Europe Blue Chip EUR,New Europe Blue Chip EUR,ntx,49522,EUR
-bahrain,Bahrain All Share,Bahrain All Share,bax,13518,BHD
-bangladesh,DSE 30,Dhaka Stock Exchange 30,dhaka-stock-exchange-30,989440,BDT
-bangladesh,DSE Broad,Dhaka Stock Exchange Broad,dhaka-stock-exchange-broad,989441,BDT
-belgium,BEL 20,BEL 20,bel-20,14601,EUR
-belgium,BEL 20 GR,BEL 20 Gross Return,bel-20-institutional,49513,EUR
-belgium,BEL 20 Net Return,BEL 20 Net Return,bel-20-private,49514,EUR
-belgium,BEL Mid,BEL Mid,bel-mid,14836,EUR
-belgium,BEL Small,BEL Small,bel-small,14837,EUR
-bosnia,BIRS,BIRS,birs,945507,BAM
-bosnia,Sarajevo 10,Sarajevo 10,sarajevo-10,945505,BAM
-bosnia,Sarajevo 30,Sarajevo 30,sarajevo-30,945506,BAM
-botswana,BSE Domestic Company,BSE Domestic Company,bse-domestic-company,41115,BWP
-botswana,BSE Foreign Company,BSE Foreign Company,bse-foreign-company,41116,BWP
-brazil,Bovespa,Bovespa,bovespa,17920,BRL
-brazil,Brazil 50,Bovespa Brazil 50,brazil-index-50,17921,BRL
-brazil,Tag Along,Bovespa Tag Along,tag-along-index,17937,BRL
-brazil,Brazil broad-Based,Brazil broad-Based,brazil-broad-based,17923,BRL
-brazil,Brazil Index,Brazil Index,brazil-index,17922,BRL
-brazil,Mid-Large Cap Index,Mid-Large Cap Index,mid-large-cap-index,17924,BRL
-brazil,Small Cap Index,Small Cap Index,small-cap-index,17925,BRL
-bulgaria,BSE SOFIX,BSE SOFIX,bse-sofia,49629,BGN
-bulgaria,BGBX40,BGBX40,bg-40,14771,BGN
-bulgaria,BGTR30,BGTR30,bg-tr30,14773,BGN
-canada,S&P/TSX,S&P/TSX Composite,s-p-tsx-composite,24441,CAD
-canada,S&P/TSX 60,S&P/TSX 60,s-p-tsx-60,25282,CAD
-canada,S&P/TSX MidCap,S&P/TSX Canadian MidCap,s-p-tsx-completion,25280,CAD
-canada,S&P/TSX Small Cap,S&P/TSX Canadian Small Cap,s-p-tsx-canadian-small-cap,25278,CAD
-canada,S&P/TSX Equity,S&P/TSX Equity,s-p-tsx-equity,25281,CAD
-canada,S&P/TSX Venture,S&P/TSX Venture Composite,s-p-tsx-venture-composite,25279,CAD
-chile,S&P CLX IPSA,S&P CLX IPSA,ipsa,14767,CLP
-chile,Inter 10,Inter 10,inter-10,14768,CLP
-chile,S&P CLX IGPA,S&P CLX IGPA,igpa,14769,CLP
-china,Shanghai,Shanghai Composite,shanghai-composite,40820,CNY
-china,SZSE Component,SZSE Component,szse-component,942630,CNY
-china,China A50,FTSE China A50,ftse-china-a50,28930,CNY
-china,S&P/CITIC300,S&P/CITIC300,s-p-citic300,28931,CNY
-china,S&P/CITIC50,S&P/CITIC50,s-p-citic50,28932,CNY
-china,Shanghai SE A Share,Shanghai SE A Share,shanghai-se-a-share,995201,CNY
-china,SSE 100,SSE 100,sse-100,995240,CNY
-colombia,COLCAP,COLCAP,colcap,49642,COP
-colombia,COL General,COL General,col-general,49635,COP
-colombia,COL20,COL20,col20,49643,COP
-colombia,COLEQTY,COLEQTY,coleqty,945499,COP
-colombia,FTSE Colombia,FTSE Colombia,ftse-colombia,29043,COP
-costa rica,Costa Rica Indice Accionario,Costa Rica Indice Accionario,costa-rica-indice-accionario,41169,CRC
-ivory coast,BRVM 10,BRVM 10,brvm-10,980229,XOF
-ivory coast,BRVM Composite,BRVM Composite,brvm-composite,980228,XOF
-croatia,CROBEX,CROBEX,crobex,14774,HRK
-croatia,CROBEX10,CROBEX10,crobex10,14775,HRK
-cyprus,Cyprus Main Market,Cyprus Main Market,cyprus-main-market,49753,EUR
-cyprus,Cyprus Alternative Market,Cyprus Alternative Market,cyprus-alternative-market,49755,EUR
-cyprus,Cyprus Main and Parallel Market,Cyprus Main and Parallel Market,cyprus-main-and-parallel-market,49752,EUR
-czech republic,PX,PX,px,50647,CZK
-czech republic,FTSE Czech Republic,FTSE Czech Republic,ftse-czech-republic,29044,CZK
-czech republic,OETOB Czech Traded (CZK),OETOB Czech Traded (CZK),oetob-czech-traded-(czk),49645,CZK
-czech republic,OETOB Czech Traded (EUR),OETOB Czech Traded (EUR),oetob-czech-traded-(eur),49646,CZK
-czech republic,OETOB Czech Traded (USD),OETOB Czech Traded (USD),oetob-czech-traded-(usd),49644,CZK
-czech republic,PX-GLOB,PX-GLOB,px-glob,945502,CZK
-denmark,OMXC20,OMX Copenhagen 20,omx-copenhagen-20,25760,DKK
-denmark,OMXC25,OMX Copenhagen 25,omx-copenhagen-25,1073055,DKK
-denmark,OMX Copenhagen All shares,OMX Copenhagen All shares,omx-copenhagen-all-shares,25756,DKK
-denmark,OMX Copenhagen Benchmark,OMX Copenhagen Benchmark,omx-copenhagen-benchmark,25757,DKK
-denmark,OMX Copenhagen Mid Cap,OMX Copenhagen Mid Cap,omx-copenhagen-mid-cap,25759,DKK
-denmark,OMX Copenhagen Small Cap,OMX Copenhagen Small Cap,omx-copenhagen-small-cap,25758,DKK
-ecuador,Guayaquil Select,Guayaquil Select,guayaquil-select,41173,USD
-ecuador,Ecuador General Adj,Ecuador General Adj,ecuador-general-adj,41170,USD
-egypt,EGX 30,EGX 30,egx30,12860,EGP
-egypt,EGX 100,EGX 100,egx-100,40524,EGP
-egypt,EGX 30 Capped,EGX 30 Capped,egx-20-capped,40525,EGP
-egypt,EGX 70,EGX 70,egx70,12891,EGP
-estonia,DJ Estonia Total Market (EUR),DJ Estonia Total Market (EUR),dj-estonia-total-market-(eur),41121,EUR
-finland,OMX Helsinki 25,OMX Helsinki 25,omx-helsinki-25,25823,EUR
-finland,OMX Helsinki,OMX Helsinki,omx-helsinki,25824,EUR
-finland,OMX Helsinki Benchmark,OMX Helsinki Benchmark,omx-helsinki-benchmark,25820,EUR
-finland,OMX Helsinki Cap PI,OMX Helsinki Cap PI,omx-helsinki-cap-pi,25822,EUR
-finland,OMX Helsinki Mid Cap,OMX Helsinki Mid Cap,omx-helsinki-mid-cap,25821,EUR
-finland,OMX Helsinki Small Cap PI,OMX Helsinki Small Cap PI,omx-helsinki-small-cap-pi,25819,EUR
-france,CAC 40,CAC 40,france-40,167,EUR
-france,CAC All Shares,CAC All Shares,cac-allshares,14796,EUR
-france,CAC All-Tradable,CAC All-Tradable,cac-all-tradable,14791,EUR
-france,CAC Large 60,CAC Large 60,cac-large-60,19643,EUR
-france,CAC Mid & Small,CAC Mid & Small,cac-mid---small-190,14795,EUR
-france,CAC Mid 60,CAC Mid 60,cac-mid-100,14794,EUR
-france,CAC Next 20,CAC Next 20,cac-next-20,14792,EUR
-france,CAC Small,CAC Small,cac-small,14793,EUR
-france,EuroNext 100,EuroNext 100,euronext-100,14865,EUR
-france,Next 150,Next 150,next-150-index,14866,EUR
-france,SBF 120,SBF 120,sbf-120,14790,EUR
-germany,DAX,DAX,germany-30,172,EUR
-germany,Euro Stoxx 50,Euro Stoxx 50,eu-stoxx50,175,EUR
-germany,Classic All Share,Classic All Share,classic-all-share,19128,EUR
-germany,Midcap,DAX Midcap,mdaxi,13782,EUR
-germany,Technology All Share,DAX Technology All Share,dax-technology-all-share,19131,EUR
-germany,HDAX,HDAX,hdax,19118,EUR
-germany,Prime All Share,Prime All Share,prime-all-share,19126,EUR
-germany,SDAX,SDAX,sdaxi,13783,EUR
-germany,TecDAX,TecDAX,tecdax,13784,EUR
-germany,XETRA DAX Price,XETRA DAX Price,xetra-dax-price,951163,EUR
-greece,Athens General Composite,Athens General Composite,athens-general,961613,EUR
-greece,FTSE/Athex 20,FTSE/ATHEX Large Cap,ftse-ase---20,49610,EUR
-hong kong,Hang Seng,Hang Seng,hang-sen-40,179,HKD
-hong kong,FTSE CHI Hong Kong,FTSE CHI Hong Kong,ftse-chi-hong-kong,28881,HKD
-hong kong,FTSE China 50,FTSE China 50,ftse-china-25,28933,HKD
-hong kong,FTSE EPRA/NAREIT Hong Kong,FTSE EPRA/NAREIT Hong Kong,ftse-epra-nareit-hong-kong,28882,HKD
-hong kong,Hang Seng CCI,Hang Seng China Affiliated Corps (CCI),hang-seng-china-affiliated,38013,HKD
-hong kong,Hang Seng CEI,Hang Seng China Enterprise (CEI),hang-seng-china-enterprises,38012,HKD
-hungary,Budapest SE,Budapest SE,hungary-stock-market,38014,HUF
-hungary,BUMIX,BUMIX,bumix,49598,HUF
-hungary,FTSE Hungary,FTSE Hungary,ftse-hungary,28888,HUF
-hungary,HTX (EUR),HTX (EUR),htx-(eur),49601,HUF
-hungary,HTX (HUF),HTX (HUF),htx-(huf),49600,HUF
-hungary,HTX (USD),HTX (USD),htx-(usd),49599,HUF
-iceland,ICEX Main,ICEX Main,omx-iceland-all-share,25887,ISK
-iceland,ICEX All Share Total Return,ICEX All Share Total Return,icex-all-share-total-return,49634,ISK
-iceland,OMX Iceland 6 PI ISK,OMX Iceland 6 PI ISK,omx-iceland-6-pi-isk,25885,ISK
-iceland,OMX Iceland Mid Cap PI,OMX Iceland Mid Cap PI,omx-iceland-mid-cap-pi,25884,ISK
-iceland,OMX Iceland Small Cap PI,OMX Iceland Small Cap PI,omx-iceland-small-cap-pi,25883,ISK
-india,BSE Sensex,BSE Sensex 30,sensex,39929,INR
-india,Nifty 50,Nifty 50,s-p-cnx-nifty,17940,INR
-india,India VIX,India VIX,india-vix,17942,INR
-india,Nifty 100,Nifty 100,cnx-100,17943,INR
-india,Nifty 200,Nifty 200,cnx-200,17949,INR
-india,Nifty 50 USD,Nifty 50 USD,s-p-cnx-defty,17944,INR
-india,Nifty 50 Value 20,Nifty 50 Value 20,nv20,954869,INR
-india,Nifty 500,Nifty 500,s-p-cnx-500,17945,INR
-india,NIFTY Midcap 100,NIFTY Midcap 100,cnx-midcap,17946,INR
-india,Nifty Midcap 50,Nifty Midcap 50,nifty-midcap-50,17947,INR
-india,Nifty Next 50,Nifty Next 50,cnx-nifty-junior,17941,INR
-india,NIFTY Smallcap 100,NIFTY Smallcap 100,cnx-smallcap,17948,INR
-india,Nifty Smallcap 250,Nifty Smallcap 250,nifty-smallcap-250,1141645,INR
-india,S&P BSE ALLCAP,S&P BSE ALLCAP,s-p-bse-allcap,1116121,INR
-india,BSE MidCap,S&P BSE Mid Cap,s-p-bse-mid-cap,39936,INR
-india,BSE SmallCap,S&P BSE SmallCap,s-p-bse-smallcap,39937,INR
-india,S&P BSE-100,S&P BSE-100,s-p-bse-100,39933,INR
-india,S&P BSE-200,S&P BSE-200,s-p-bse-200,39934,INR
-india,S&P BSE-500,S&P BSE-500,s-p-bse-500,39935,INR
-indonesia,IDX Composite,Jakarta Stock Exchange Composite Index,idx-composite,29049,IDR
-indonesia,FTSE Indonesia,FTSE Indonesia,ftse-indonesia,29045,IDR
-indonesia,IDX Kompas 100,IDX Kompas 100,kompas-100,29047,IDR
-indonesia,IDX PEFINDO-25,IDX PEFINDO-25,pefindo-25,29048,IDR
-indonesia,IDX LQ45,Jakarta Stock Exchange LQ45,jakarta-lq45,29046,IDR
-iraq,ISX Main 60,ISX Main 60,isx-main-60,993158,IQD
-ireland,ISEQ Overall,ISEQ Overall,iseq-overall,49648,EUR
-ireland,FTSE Ireland,FTSE Ireland,ftse-ireland,29067,EUR
-ireland,ISEQ 20 Price,ISEQ 20 Price,iseq-20-price,49653,EUR
-ireland,ISEQ General,ISEQ General,iseq-general,49650,EUR
-ireland,ISEQ Small Capital,ISEQ Small Capital,iseq-small-capital,49651,EUR
-israeli,TA 35,TA 35,ta25,10529,ILS
-israeli,TA 125,TA 125,ta100,10527,ILS
-israeli,TA 60 SME,TA 60 SME,ta50ytr,10530,ILS
-israeli,TA 90,TA 90,ta75,10531,ILS
-israeli,TA Allshare,TA Allshare,ta-composite,15291,ILS
-israeli,TA Growth,TA Growth,taytr,10528,ILS
-israeli,TASE VIX VTA35,Tel Aviv Volatility Index VTA35,tase-vta35,1141703,ILS
-italy,FTSE MIB,FTSE MIB,it-mib-40,177,EUR
-italy,FTSE Italia All Share,FTSE Italia All Share,ftse-italia-all-share,27487,EUR
-italy,FTSE IT Mid Cap,FTSE Italia Mid Cap,ftse-italia-mid-cap,27485,EUR
-italy,FTSE IT Small Cap,FTSE Italia Small Cap,ftse-italia-small-cap,27486,EUR
-italy,FTSE MIB TR EUR,FTSE MIB TR EUR,ftse-mib-tr-eur,951248,EUR
-italy,Italy 40,Investing.com Italy 40,investing.com-italy-40,956499,EUR
-jamaica,JSE Market,JSE Market,jse-market,995078,JMD
-jamaica,JSE All Jamaican Composite,JSE All Jamaican Composite,jse-all-jamaican-composite,995081,JMD
-japan,Nikkei 225,Nikkei 225,japan-ni225,178,JPY
-japan,JASDAQ,JASDAQ,jasdaq,976388,JPY
-japan,JASDAQ 20,JASDAQ 20,jasdaq-20,976389,JPY
-japan,JPX-Nikkei 400,JPX-Nikkei 400,jpx-nikkei-400,50641,JPY
-japan,Nikkei 1000,Nikkei 1000,nikkei-1000,50632,JPY
-japan,Nikkei 300,Nikkei 300,nikkei-300,50630,JPY
-japan,Nikkei 500,Nikkei 500,nikkei-500,50631,JPY
-japan,Nikkei JQ Average,Nikkei JQ Average,nikkei-jq-average,28870,JPY
-japan,Nikkei Volatility,Nikkei Volatility,nikkei-volatility,28878,JPY
-japan,TOPIX,TOPIX,topix,41042,JPY
-japan,Topix 100,Topix 100,topix-100,976402,JPY
-japan,Topix 1000,Topix 1000,topix-1000,976403,JPY
-japan,Topix 500,Topix 500,topix-500,976406,JPY
-japan,TOPIX Composite,TOPIX Composite,topix-composite,976415,JPY
-jordan,Amman SE General,Amman SE General,amgnrlx,12259,JOD
-jordan,Amman SE AllShare,Amman SE AllShare,amman-se-allshare,29090,JOD
-kazakhstan,KASE,KASE,kase,993152,KZT
-kenya,Kenya NSE 20,Kenya NSE 20,kenya-nse-20,37428,KES
-kenya,FTSE NSE Kenya 15,FTSE NSE Kenya 15,ftse-nse-kenya-15,29070,KES
-kenya,FTSE NSE Kenya 25,FTSE NSE Kenya 25,ftse-nse-kenya-25,29071,KES
-kenya,Nairobi All Share,Nairobi All Share,nairobi-all-share,37429,KES
-latvia,DJ Latvia Total Market,DJ Latvia Total Market,dj-latvia-total-market-(lvl),41125,
-lebanon,BLOM Stock,BLOM Stock,blom-stk-idx,14523,USD
-lebanon,BDL STOCK IX,BDL STOCK IX,bdl-stock-ix,14524,USD
-lebanon,Beirut Stock,Beirut Stock,beirut-stk-ix,14525,USD
-lithuania,DJ Lithuania Total Market (EUR),DJ Lithuania Total Market (EUR),dj-lithuania-total-market-(eur),41129,LTL
-malaysia,KLCI,FTSE Malaysia KLCI,ftse-malaysia-klci,29078,MYR
-malaysia,Malaysia ACE,FTSE Bursa Malaysia ACE,ftse-malaysia-ace,29075,MYR
-malaysia,FTSE BM Mid 70,FTSE Bursa Malaysia Mid 70,ftse-malaysia-mid-70,29076,MYR
-malaysia,Malaysia Top 100,FTSE Bursa Malaysia Top 100,ftse-malaysia-top-100,29077,MYR
-malaysia,FTSE Malaysia,FTSE Malaysia,ftse-malaysia,29074,MYR
-malta,MSE,MSE,mse,1029190,EUR
-mauritius,Semdex,Semdex,semdex,41159,MUR
-mexico,FTSE BIVA Real Time Price,FTSE BIVA Real Time Price Index,ftse-biva-real-time-price-index,1089645,MXN
-mexico,S&P/BMV IPC,S&P/BMV IPC,ipc,27254,MXN
-mexico,S&P/BMV INMEX,S&P/BMV INMEX,inmex,27268,MXN
-mexico,S&P/BMV IPC CompMx,S&P/BMV IPC CompMx,mxse--ipc-composite,27269,MXN
-mexico,S&P/BMV IMC30,S&P/BMV MidCap Select 30,mxse-midcap-30,27277,MXN
-mongolia,MNE Top 20,MNE Top 20,mne-top-20,1006455,MNT
-montenegro,MNSE 10,MNSE 10,mnse-10,1006456,EUR
-montenegro,MONEX,MONEX,monex,1006457,EUR
-morocco,Moroccan All Shares,Moroccan All Shares,masi,13228,MAD
-morocco,FTSE CSE Morocco 15,FTSE CSE Morocco 15,ftse-cse-morocco-15,28904,MAD
-morocco,FTSE CSE Morocco All-Liquid,FTSE CSE Morocco All-Liquid,ftse-cse-morocco-all-liquid,28905,MAD
-morocco,MADEX,MADEX,madex,19115,MAD
-namibia,NSX,FTSE NSX Overall,ftse-namibian-overall,961537,NAD
-namibia,NSX Local,FTSE NSX Local,ftse-namibian-local,961538,NAD
-netherlands,AEX,AEX,netherlands-25,168,EUR
-netherlands,AEX All Share,AEX All Share,ams-all-share-index,14861,EUR
-netherlands,AEX Volatility,AEX Volatility,aex-volatility,19629,EUR
-netherlands,AMS Small Cap,AMS Small Cap,ams-small-cap-index,14863,EUR
-netherlands,AMX,AMX,amx-index,14862,EUR
-new zealand,NZX 50,NZX 50,nzx-50,41146,NZD
-new zealand,NZX MidCap,NZX MidCap,nzx-midcap,41148,NZD
-new zealand,DJ New Zealand,Dow Jones New Zealand,dow-jones-new-zealand,41141,NZD
-new zealand,DJ New Zealand (USD),Dow Jones New Zealand (USD),dow-jones-new-zealand-(usd),41142,NZD
-new zealand,NZX All,NZX All,nzx-all,41147,NZD
-new zealand,NZX SmallCap,NZX SmallCap,nzx-smallcap,41150,NZD
-new zealand,S&P/NZAX All Price,S&P/NZAX All Price,nzax-all-price,1096456,NZD
-nigeria,NSE 30,NSE 30,nse-30,101797,NGN
-nigeria,NSE All Share,NSE All Share,nse-all-share,101796,NGN
-norway,OSE Benchmark,OSE Benchmark,ose-benchamrk,14603,NOK
-norway,Oslo OBX,Oslo OBX,oslo-obx,44400,NOK
-norway,OBX Price,OBX Price,obx-price,49476,NOK
-norway,OMX Oslo 20,OMX Oslo 20,omx-oslo-20,40040,NOK
-norway,Oslo All Share,Oslo All Share,oslo-all-share,49497,NOK
-oman,MSM 30,MSM 30,msi,13384,OMR
-pakistan,Karachi 100,Karachi 100,karachi-100,49677,PKR
-pakistan,KMI All Shares,All Shares Islamic Index of Pakistan,kmi-all-shares,977729,PKR
-pakistan,FTSE Pakistan,FTSE Pakistan,ftse-pakistan,29146,PKR
-pakistan,Karachi 30,Karachi 30,karachi-30,49679,PKR
-pakistan,Karachi All Share,Karachi All Share,karachi-all-share,49678,PKR
-pakistan,Karachi Meezan 30,Karachi Meezan 30,karachi-meezan-30,945503,PKR
-palestine,Al-Quds,Al-Quds,ple,13009,JOD
-peru,S&P Lima General,S&P Lima General,lima-stock-exchange-general,49680,PEN
-peru,FTSE Peru,FTSE Peru,ftse-peru,29147,PEN
-peru,S&P Lima Corporate Gov,S&P Lima Corporate Gov,s-p-lima-corporate-gov,951728,PEN
-peru,S&P Lima Select,S&P Lima Select,lima-stock-exchange-select,49681,PEN
-peru,S&P Peru Select,S&P Peru Select,s-p-peru-select,953153,PEN
-philippines,PSEi Composite,PSEi Composite,psei-composite,49692,PHP
-philippines,FTSE Philippines,FTSE Philippines,ftse-philippines,29148,PHP
-philippines,PHS All Shares,PHS All Shares,phs-all-shares,49693,PHP
-poland,WIG20,WIG20,wig-20,14602,PLN
-poland,WIG30,WIG30,wig30,41044,PLN
-poland,mWIG40,mWIG40,wig-40,37656,PLN
-poland,sWIG80,sWIG80,wig-80,37660,PLN
-poland,WIG,WIG,wig,37662,PLN
-portugal,PSI 20,PSI 20,psi-20,14600,EUR
-portugal,PSI All Share GR,PSI All Share Gross Return,psi-general,14823,EUR
-qatar,QE General,QE General,qsi,13185,QAR
-qatar,FTSE NASDAQ Qatar 10,FTSE NASDAQ Qatar 10,ftse-nasdaq-dubai-10,28894,USD
-qatar,QE All Shares,QE All Shares,qe-all-shares,40038,QAR
-romania,BET,BET,bet,14770,RON
-romania,Bucharest BET-XT,Bucharest BET-XT,bucharest-bet-xt,28916,RON
-russia,MOEX,MOEX Russia,mcx,13666,RUB
-russia,RTSI,RTSI,rtsi,13665,USD
-russia,MOEX 10,MOEX 10,mcx10,13667,RUB
-russia,MOEX Blue Chip,MOEX Blue Chip,rts-standard,19689,RUB
-russia,Russian VIX,Russian VIX,russian-vix,946030,RUB
-rwanda,Rwanda All Share,Rwanda All Share,rwanda-all-share,41167,RWF
-rwanda,Rwanda Share,Rwanda Share,rwanda-share,41168,RWF
-saudi arabia,Tadawul All Share,Tadawul All Share,tasi,11319,SAR
-serbia,Belex 15,Belex 15,belex-15,945510,RSD
-singapore,STI Index,FTSE Straits Times Singapore,singapore-straits-time,40006,SGD
-singapore,FTSE Singapore,FTSE Singapore,ftse-singapore,28869,SGD
-singapore,MSCI Singapore,MSCI Singapore,simsci,100148,SGD
-slovakia,SAX,SAX,sax,41155,EUR
-slovenia,Blue-Chip SBITOP,Blue-Chip SBITOP,blue-chip-sbitop,29149,EUR
-south africa,FTSE/JSE Top 40,FTSE/JSE Top 40,ftse-jse-top-40,41043,ZAR
-south africa,South Africa 40,Investing.com South Africa 40,investing.com-south-africa-40,956501,ZAR
-south africa,FTSE South Africa,FTSE South Africa,ftse-south-africa,28887,ZAR
-south africa,FTSE/JSE All Share,FTSE/JSE All Share,ftse-jse-all-share,49580,ZAR
-south korea,KOSPI,KOSPI,kospi,37426,KRW
-south korea,KOSPI 50,KOSPI 50,kospi-50,49661,KRW
-south korea,FTSE Korea,FTSE Korea,ftse-korea,29072,KRW
-south korea,KOSDAQ,KOSDAQ,kosdaq,38016,KRW
-south korea,KQ 100,KOSDAQ 100,kosdaq-100,980237,KRW
-south korea,KOSPI 100,KOSPI 100,kospi-100,49660,KRW
-south korea,KOSPI 200,KOSPI 200,kospi-200,37427,KRW
-south korea,KOSPI Large Sized,KOSPI Large Sized,kospi-large-sized,49664,KRW
-south korea,KOSPI Medium Sized,KOSPI Medium Sized,kospi-medium-sized,49665,KRW
-south korea,KOSPI Small Sized,KOSPI Small Sized,kospi-small-sized,49662,KRW
-south korea,KRX 100,KRX 100,krx-100,49659,KRW
-spain,IBEX 35,IBEX 35,spain-35,174,EUR
-spain,FTSE Latibex,FTSE Latibex,ftse-latibex,24227,EUR
-spain,General Madrid,General Madrid,general-madrid,24228,EUR
-spain,IBEX Medium Cap,IBEX Medium Cap,ibex-medium-cap,24226,EUR
-spain,IBEX Small Cap,IBEX Small Cap,ibex-small-cap,24229,EUR
-sri lanka,CSE All-Share,CSE All-Share,cse-all-share,29151,LKR
-sweden,OMXS30,OMX Stockholm 30,omx-stockholm-30,25685,SEK
-sweden,OMX Nordic 40,OMX Nordic 40,omx-nordic-40,25684,EUR
-sweden,OMX Stockholm,OMX Stockholm,omx-stockholm,25683,SEK
-sweden,OMX Stockholm Benchmark,OMX Stockholm Benchmark,omx-stockholm-benchmark,25681,SEK
-sweden,OMX Stockholm Mid Cap,OMX Stockholm Mid Cap,omx-stockholm-mid-cap,25682,SEK
-sweden,OMX Stockholm Small Cap,OMX Stockholm Small Cap,omx-stockholm-small-cap,25680,SEK
-switzerland,SMI,SMI,switzerland-20,176,CHF
-switzerland,FTSE Switzerland,FTSE Switzerland,ftse-switzerland,28826,CHF
-switzerland,Swiss All Share Cumulative Dividend,Swiss All Share Cumulative Dividend,swiss-allshare,49474,CHF
-switzerland,Swiss Mid Price,Swiss Mid Price,swiss-mid,49472,CHF
-taiwan,Taiwan Weighted,Taiwan Weighted,taiwan-weighted,38017,TWD
-taiwan,TPEx 50,TPEx 50,tpex-50,1013367,TWD
-taiwan,FTSE TWSE Taiwan MidCap 100,FTSE TWSE Taiwan Mid Cap 100,ftse-twse-taiwan-mid-cap-100,29172,TWD
-taiwan,MSCI Taiwan,MSCI Taiwan,msci-taiwan,100150,TWD
-taiwan,TPEx,TPEx,tpex,1013366,TWD
-taiwan,TSEC Taiwan 50,TSEC Taiwan 50,tsec-taiwan-50,29181,TWD
-tanzania,Tanzania All Share,Tanzania All Share,tanzania-all-share,41164,TZS
-thailand,SET,SET Index,thailand-set,38015,THB
-thailand,FTSE SET All-Share,FTSE SET All-Share,ftse-set-all-share,29182,THB
-thailand,FTSE SET Large Cap,FTSE SET Large Cap,ftse-set-large-cap,29186,THB
-thailand,FTSE SET Mid Cap,FTSE SET Mid Cap,ftse-set-mid-cap,29183,THB
-thailand,FTSE SET Mid Small Cap,FTSE SET Mid Small Cap,ftse-set-mid-small-cap,29184,THB
-thailand,FTSE SET Shariah,FTSE SET Shariah,ftse-set-shariah,29185,THB
-thailand,MAI,MAI,mai,41045,THB
-thailand,SET 100,SET 100,set-100,41047,THB
-thailand,SET 50,SET 50,set-50,41049,THB
-tunisia,Tunindex,Tunindex,tunindex,18823,TND
-tunisia,Tunindex20,Tunindex20,tunindex20,948432,TND
-turkey,BIST 100,BIST 100,ise-100,19155,TRY
-turkey,BIST 100-30,BIST 100-30,ise-100-30,19160,TRY
-turkey,BIST 30,BIST 30,ise-30,19158,TRY
-turkey,BIST 50,BIST 50,ise-50,19157,TRY
-turkey,BIST All Shares,BIST All Shares,ise-all-shares,19162,TRY
-turkey,BIST All-100,BIST All-100,ise-all-100,19163,TRY
-uganda,Uganda All Share,Uganda All Share,uganda-all-share,41111,UGX
-ukraine,PFTS,PFTS,pfts,29191,UAH
-dubai,ADX General,ADX General,adx-general,941336,AED
-dubai,DFM General,DFM General,dfmgi,12522,AED
-uk,FTSE 100,FTSE 100,uk-100,27,GBP
-uk,FTSE 250,FTSE 250,uk-250,11763,GBP
-uk,FTSE 350,FTSE 350,ftse-350,27399,GBP
-uk,FTSE AIM All Share,FTSE AIM All Share,ftse-aim-all-share,27376,GBP
-uk,FTSE All-Share,FTSE All-Share,ftse-all-share,27322,GBP
-uk,FTSE SmallCap,FTSE SmallCap,ftse-smallcap,27454,GBP
-uk,FTSE TechMARK Focus,FTSE TechMARK Focus,ftse-techmark-100,27458,GBP
-uk,UK 100,Investing.com United Kingdom 100,investing.com-uk-100,956500,GBP
-usa,Dow 30,Dow Jones Industrial Average,us-30,169,USD
-usa,Nasdaq 100,Nasdaq 100,nq-100,20,USD
-usa,Nasdaq,NASDAQ Composite,nasdaq-composite,14958,USD
-usa,S&P 500,S&P 500,us-spx-500,166,USD
-usa,S&P 500 VIX,CBOE Volatility Index,volatility-s-p-500,44336,USD
-usa,DJ Composite,Dow Jones Composite,dj-composite-average,19943,USD
-usa,DJ Transportation,Dow Jones Transportation,dj-transportation-average,19941,USD
-usa,DJ Utility,Dow Jones Utility,dj-utility-average,19942,USD
-usa,NYSE AMEX Composite,NYSE AMEX Composite,nyse-market-composite,27652,USD
-usa,NYSE Composite,NYSE Composite,nyse-composite,27604,USD
-usa,OTCM ADR,OTCM ADR,otcm-adr,941623,USD
-usa,OTCM QX ADR 30,OTCM QX ADR 30,otcm-qx-adr-30,941622,USD
-usa,S&P 100,S&P 100,s-p-100,40821,USD
-usa,SmallCap 2000,US SmallCap 2000,smallcap-2000,170,USD
-venezuela,Bursatil,Bursatil,bursatil,49748,VES
-venezuela,Merinvest Composite,Merinvest Composite,merinvest-composite,29193,VES
-vietnam,HNX 30,HNX 30,hnx-30,995072,VND
-vietnam,VN 30,VN 30,vn-30,41064,VND
-vietnam,FTSE Vietnam,FTSE Vietnam,ftse-vietnam,29196,VND
-vietnam,FTSE Vietnam All,FTSE Vietnam All,ftse-vietnam-all,29197,VND
-vietnam,HNX,HNX,hnx,41062,VND
-vietnam,VN,VN,vn,41063,VND
-vietnam,VN100,VN100,vn100,995068,VND
-zambia,LSE All Share,LSE All Share,lse-all-share,941333,ZMW
-zambia,LSE EN,LSE EN,lse-en,941335,ZMW
-zambia,LSE Inv,LSE Inv,lse-inv,941334,ZMW
-zimbabwe,Zimbabwe Industrial,Zimbabwe Industrial,zimbabwe-industrial,41165,ZWD
-zimbabwe,Zimbabwe Mining,Zimbabwe Mining,zimbabwe-mining,41166,ZWD
+country,name,full_name,tag,id,symbol,currency
+argentina,S&P Merval,S&P Merval,merv,13376,MERV,ARS
+argentina,S&P Merval Argentina,S&P Merval Argentina,mar,13374,MAR,ARS
+argentina,S&P/BYMA Argentina General,S&P/BYMA Argentina General,ibg,13317,IBG,ARS
+australia,S&P/ASX 200,S&P/ASX 200,aus-200,171,AXJO,AUD
+australia,ASX All Ordinaries,ASX All Ordinaries,all-ordinaries,14499,AORD,AUD
+australia,ASX Small Ordinaries,ASX Small Ordinaries,s-p-asx-small-ord,14497,AXSO,AUD
+australia,S&P/ASX 100,S&P/ASX 100,s-p-asx-100,14496,ATOI,AUD
+australia,S&P/ASX 20,S&P/ASX 20,s-p-asx-20,14493,ATLI,AUD
+australia,S&P/ASX 300,S&P/ASX 300,s-p-asx-300,14498,AXKO,AUD
+australia,S&P/ASX 50,S&P/ASX 50,s-p-asx-50,14494,AFLI,AUD
+australia,S&P/ASX All Australian 200,S&P/ASX All Australian 200,s-p-asx-all-australian-200,14503,AXAT,AUD
+australia,S&P/ASX All Australian 50,S&P/ASX All Australian 50,s-p-asx-all-australian-50,14502,AXAF,AUD
+australia,S&P/ASX Midcap 50,S&P/ASX Midcap 50,s-p-asx-midcap50,14495,AXMD,AUD
+austria,ATX,ATX,atx,1016254,ATX,EUR
+austria,ATX 5,ATX 5,atx-5,49519,ATX5,EUR
+austria,ATX Prime,ATX Prime,atx-prime,49520,ATXPRIME,EUR
+austria,FTSE Austria,FTSE Austria,ftse-austria,28856,FTWIAUTE,EUR
+austria,Immobilien ATX EUR,Immobilien ATX EUR,immobilien---atx,49521,IATX,EUR
+austria,New Europe Blue Chip EUR,New Europe Blue Chip EUR,ntx,49522,NTX,EUR
+bahrain,Bahrain All Share,Bahrain All Share,bax,13518,BAX,BHD
+bangladesh,DSE 30,Dhaka Stock Exchange 30,dhaka-stock-exchange-30,989440,DS30,BDT
+bangladesh,DSE Broad,Dhaka Stock Exchange Broad,dhaka-stock-exchange-broad,989441,DSEX,BDT
+belgium,BEL 20,BEL 20,bel-20,14601,BFX,EUR
+belgium,BEL 20 GR,BEL 20 Gross Return,bel-20-institutional,49513,BFXI,EUR
+belgium,BEL 20 Net Return,BEL 20 Net Return,bel-20-private,49514,BFXP,EUR
+belgium,BEL Mid,BEL Mid,bel-mid,14836,BELM,EUR
+belgium,BEL Small,BEL Small,bel-small,14837,BELS,EUR
+bosnia,BIRS,BIRS,birs,945507,BIRS1,BAM
+bosnia,Sarajevo 10,Sarajevo 10,sarajevo-10,945505,SASX10,BAM
+bosnia,Sarajevo 30,Sarajevo 30,sarajevo-30,945506,SASX30,BAM
+botswana,BSE Domestic Company,BSE Domestic Company,bse-domestic-company,41115,DCIBT,BWP
+botswana,BSE Foreign Company,BSE Foreign Company,bse-foreign-company,41116,FCIBT,BWP
+brazil,Bovespa,Bovespa,bovespa,17920,BVSP,BRL
+brazil,Brazil 50,Bovespa Brazil 50,brazil-index-50,17921,IBX50,BRL
+brazil,Tag Along,Bovespa Tag Along,tag-along-index,17937,ITAG,BRL
+brazil,Brazil broad-Based,Brazil broad-Based,brazil-broad-based,17923,IBRA,BRL
+brazil,Brazil Index,Brazil Index,brazil-index,17922,IBRX,BRL
+brazil,Mid-Large Cap Index,Mid-Large Cap Index,mid-large-cap-index,17924,MLCX,BRL
+brazil,Small Cap Index,Small Cap Index,small-cap-index,17925,SMLL,BRL
+bulgaria,BSE SOFIX,BSE SOFIX,bse-sofia,49629,SOFIX,BGN
+bulgaria,BGBX40,BGBX40,bg-40,14771,BGBX40,BGN
+bulgaria,BGTR30,BGTR30,bg-tr30,14773,BGTR30,BGN
+canada,S&P/TSX,S&P/TSX Composite,s-p-tsx-composite,24441,GSPTSE,CAD
+canada,S&P/TSX 60,S&P/TSX 60,s-p-tsx-60,25282,SPTSE,CAD
+canada,S&P/TSX MidCap,S&P/TSX Canadian MidCap,s-p-tsx-completion,25280,SPTSEM,CAD
+canada,S&P/TSX Small Cap,S&P/TSX Canadian Small Cap,s-p-tsx-canadian-small-cap,25278,SPTSES,CAD
+canada,S&P/TSX Equity,S&P/TSX Equity,s-p-tsx-equity,25281,GSPTXEQ,CAD
+canada,S&P/TSX Venture,S&P/TSX Venture Composite,s-p-tsx-venture-composite,25279,SPCDNX,CAD
+chile,S&P CLX IPSA,S&P CLX IPSA,ipsa,14767,SPIPSA,CLP
+chile,Inter 10,Inter 10,inter-10,14768,INTER10,CLP
+chile,S&P CLX IGPA,S&P CLX IGPA,igpa,14769,SPCLXIGPA,CLP
+china,Shanghai,Shanghai Composite,shanghai-composite,40820,SSEC,CNY
+china,SZSE Component,SZSE Component,szse-component,942630,SZI,CNY
+china,China A50,FTSE China A50,ftse-china-a50,28930,FTXIN9,CNY
+china,S&P/CITIC300,S&P/CITIC300,s-p-citic300,28931,SPCITIC300,CNY
+china,S&P/CITIC50,S&P/CITIC50,s-p-citic50,28932,SPCITIC50,CNY
+china,Shanghai SE A Share,Shanghai SE A Share,shanghai-se-a-share,995201,SSEA,CNY
+china,SSE 100,SSE 100,sse-100,995240,SSE100I,CNY
+colombia,COLCAP,COLCAP,colcap,49642,COLCAP,COP
+colombia,COL General,COL General,col-general,49635,IGBC,COP
+colombia,COL20,COL20,col20,49643,COL20,COP
+colombia,COLEQTY,COLEQTY,coleqty,945499,COLEQTY,COP
+colombia,FTSE Colombia,FTSE Colombia,ftse-colombia,29043,FTWICOLL,COP
+costa rica,Costa Rica Indice Accionario,Costa Rica Indice Accionario,costa-rica-indice-accionario,41169,IACR,CRC
+ivory coast,BRVM 10,BRVM 10,brvm-10,980229,BRVM10CI,XOF
+ivory coast,BRVM Composite,BRVM Composite,brvm-composite,980228,BRVMCI,XOF
+croatia,CROBEX,CROBEX,crobex,14774,CRBEX,HRK
+croatia,CROBEX10,CROBEX10,crobex10,14775,CRBEX10,HRK
+cyprus,Cyprus Main Market,Cyprus Main Market,cyprus-main-market,49753,CYMAIN,EUR
+cyprus,Cyprus Alternative Market,Cyprus Alternative Market,cyprus-alternative-market,49755,CYALTRN,EUR
+cyprus,Cyprus Main and Parallel Market,Cyprus Main and Parallel Market,cyprus-main-and-parallel-market,49752,CYMNPRL,EUR
+czech republic,PX,PX,px,50647,PX,CZK
+czech republic,FTSE Czech Republic,FTSE Czech Republic,ftse-czech-republic,29044,FTWICZHL,CZK
+czech republic,OETOB Czech Traded (CZK),OETOB Czech Traded (CZK),oetob-czech-traded-(czk),49645,CTL,CZK
+czech republic,OETOB Czech Traded (EUR),OETOB Czech Traded (EUR),oetob-czech-traded-(eur),49646,CTXEUR,CZK
+czech republic,OETOB Czech Traded (USD),OETOB Czech Traded (USD),oetob-czech-traded-(usd),49644,CTXUSD,CZK
+czech republic,PX-GLOB,PX-GLOB,px-glob,945502,,CZK
+denmark,OMXC20,OMX Copenhagen 20,omx-copenhagen-20,25760,OMXC20,DKK
+denmark,OMXC25,OMX Copenhagen 25,omx-copenhagen-25,1073055,OMXC25CAP,DKK
+denmark,OMX Copenhagen All shares,OMX Copenhagen All shares,omx-copenhagen-all-shares,25756,OMXCGI,DKK
+denmark,OMX Copenhagen Benchmark,OMX Copenhagen Benchmark,omx-copenhagen-benchmark,25757,OMXCBGI,DKK
+denmark,OMX Copenhagen Mid Cap,OMX Copenhagen Mid Cap,omx-copenhagen-mid-cap,25759,OMXCMCPI,DKK
+denmark,OMX Copenhagen Small Cap,OMX Copenhagen Small Cap,omx-copenhagen-small-cap,25758,OMXCSCPI,DKK
+ecuador,Guayaquil Select,Guayaquil Select,guayaquil-select,41173,BVG,USD
+ecuador,Ecuador General Adj,Ecuador General Adj,ecuador-general-adj,41170,BVQA,USD
+egypt,EGX 30,EGX 30,egx30,12860,EGX30,EGP
+egypt,EGX 100,EGX 100,egx-100,40524,EGX100,EGP
+egypt,EGX 30 Capped,EGX 30 Capped,egx-20-capped,40525,EGX30CAP,EGP
+egypt,EGX 70,EGX 70,egx70,12891,EGX70,EGP
+estonia,DJ Estonia Total Market (EUR),DJ Estonia Total Market (EUR),dj-estonia-total-market-(eur),41121,DWEE,EUR
+finland,OMX Helsinki 25,OMX Helsinki 25,omx-helsinki-25,25823,OMXH25,EUR
+finland,OMX Helsinki,OMX Helsinki,omx-helsinki,25824,OMXHPI,EUR
+finland,OMX Helsinki Benchmark,OMX Helsinki Benchmark,omx-helsinki-benchmark,25820,OMXHBPI,EUR
+finland,OMX Helsinki Cap PI,OMX Helsinki Cap PI,omx-helsinki-cap-pi,25822,OMXHCAPPI,EUR
+finland,OMX Helsinki Mid Cap,OMX Helsinki Mid Cap,omx-helsinki-mid-cap,25821,OMXHMCPI,EUR
+finland,OMX Helsinki Small Cap PI,OMX Helsinki Small Cap PI,omx-helsinki-small-cap-pi,25819,OMXHSCPI,EUR
+france,CAC 40,CAC 40,france-40,167,FCHI,EUR
+france,CAC All Shares,CAC All Shares,cac-allshares,14796,PAX,EUR
+france,CAC All-Tradable,CAC All-Tradable,cac-all-tradable,14791,CACT,EUR
+france,CAC Large 60,CAC Large 60,cac-large-60,19643,CACLG,EUR
+france,CAC Mid & Small,CAC Mid & Small,cac-mid---small-190,14795,CACMS,EUR
+france,CAC Mid 60,CAC Mid 60,cac-mid-100,14794,CACMD,EUR
+france,CAC Next 20,CAC Next 20,cac-next-20,14792,CN20,EUR
+france,CAC Small,CAC Small,cac-small,14793,CACS,EUR
+france,EuroNext 100,EuroNext 100,euronext-100,14865,N100,EUR
+france,Next 150,Next 150,next-150-index,14866,N150,EUR
+france,SBF 120,SBF 120,sbf-120,14790,SBF120,EUR
+germany,DAX,DAX,germany-30,172,GDAXI,EUR
+germany,Euro Stoxx 50,Euro Stoxx 50,eu-stoxx50,175,STOXX50E,EUR
+germany,Classic All Share,Classic All Share,classic-all-share,19128,CLALL,EUR
+germany,Midcap,DAX Midcap,mdaxi,13782,MDAXI,EUR
+germany,Technology All Share,DAX Technology All Share,dax-technology-all-share,19131,TECALL,EUR
+germany,HDAX,HDAX,hdax,19118,GDAXHI,EUR
+germany,Prime All Share,Prime All Share,prime-all-share,19126,PRIME,EUR
+germany,SDAX,SDAX,sdaxi,13783,SDAXI,EUR
+germany,TecDAX,TecDAX,tecdax,13784,TECDAX,EUR
+germany,XETRA DAX Price,XETRA DAX Price,xetra-dax-price,951163,DAX,EUR
+greece,Athens General Composite,Athens General Composite,athens-general,961613,ATG,EUR
+greece,FTSE/Athex 20,FTSE/ATHEX Large Cap,ftse-ase---20,49610,ATF,EUR
+hong kong,Hang Seng,Hang Seng,hang-sen-40,179,HSI,HKD
+hong kong,FTSE CHI Hong Kong,FTSE CHI Hong Kong,ftse-chi-hong-kong,28881,FTQDII1,HKD
+hong kong,FTSE China 50,FTSE China 50,ftse-china-25,28933,FTXIN25,HKD
+hong kong,FTSE EPRA/NAREIT Hong Kong,FTSE EPRA/NAREIT Hong Kong,ftse-epra-nareit-hong-kong,28882,FTELHK,HKD
+hong kong,Hang Seng CCI,Hang Seng China Affiliated Corps (CCI),hang-seng-china-affiliated,38013,HSCC,HKD
+hong kong,Hang Seng CEI,Hang Seng China Enterprise (CEI),hang-seng-china-enterprises,38012,HSCE,HKD
+hungary,Budapest SE,Budapest SE,hungary-stock-market,38014,BUX,HUF
+hungary,BUMIX,BUMIX,bumix,49598,BUMIX,HUF
+hungary,FTSE Hungary,FTSE Hungary,ftse-hungary,28888,FTWIHUNL,HUF
+hungary,HTX (EUR),HTX (EUR),htx-(eur),49601,HTXEUR,HUF
+hungary,HTX (HUF),HTX (HUF),htx-(huf),49600,HTL,HUF
+hungary,HTX (USD),HTX (USD),htx-(usd),49599,HTXUSD,HUF
+iceland,ICEX Main,ICEX Main,omx-iceland-all-share,25887,OMXIPI,ISK
+iceland,ICEX All Share Total Return,ICEX All Share Total Return,icex-all-share-total-return,49634,OMXIGI,ISK
+iceland,OMX Iceland 6 PI ISK,OMX Iceland 6 PI ISK,omx-iceland-6-pi-isk,25885,OMXI8,ISK
+iceland,OMX Iceland Mid Cap PI,OMX Iceland Mid Cap PI,omx-iceland-mid-cap-pi,25884,OMXIMCPI,ISK
+iceland,OMX Iceland Small Cap PI,OMX Iceland Small Cap PI,omx-iceland-small-cap-pi,25883,OMXISCPI,ISK
+india,BSE Sensex,BSE Sensex 30,sensex,39929,BSESN,INR
+india,Nifty 50,Nifty 50,s-p-cnx-nifty,17940,NSEI,INR
+india,India VIX,India VIX,india-vix,17942,NIFVIX,INR
+india,Nifty 100,Nifty 100,cnx-100,17943,NIFTY100,INR
+india,Nifty 200,Nifty 200,cnx-200,17949,NIFTY200,INR
+india,Nifty 50 USD,Nifty 50 USD,s-p-cnx-defty,17944,NSED,INR
+india,Nifty 50 Value 20,Nifty 50 Value 20,nv20,954869,NV20,INR
+india,Nifty 500,Nifty 500,s-p-cnx-500,17945,NIFTY500,INR
+india,NIFTY Midcap 100,NIFTY Midcap 100,cnx-midcap,17946,NIFMDCP100,INR
+india,Nifty Midcap 50,Nifty Midcap 50,nifty-midcap-50,17947,NIMDCP50,INR
+india,Nifty Next 50,Nifty Next 50,cnx-nifty-junior,17941,NN50,INR
+india,NIFTY Smallcap 100,NIFTY Smallcap 100,cnx-smallcap,17948,NIFSMCP100,INR
+india,Nifty Smallcap 250,Nifty Smallcap 250,nifty-smallcap-250,1141645,NISM250,INR
+india,S&P BSE ALLCAP,S&P BSE ALLCAP,s-p-bse-allcap,1116121,SPBSAIP,INR
+india,BSE MidCap,S&P BSE Mid Cap,s-p-bse-mid-cap,39936,SPBSEMC,INR
+india,BSE SmallCap,S&P BSE SmallCap,s-p-bse-smallcap,39937,SPBSESC,INR
+india,S&P BSE-100,S&P BSE-100,s-p-bse-100,39933,BSE100,INR
+india,S&P BSE-200,S&P BSE-200,s-p-bse-200,39934,BSE200,INR
+india,S&P BSE-500,S&P BSE-500,s-p-bse-500,39935,BSE500,INR
+indonesia,IDX Composite,Jakarta Stock Exchange Composite Index,idx-composite,29049,JKSE,IDR
+indonesia,FTSE Indonesia,FTSE Indonesia,ftse-indonesia,29045,FTWIIDNL,IDR
+indonesia,IDX Kompas 100,IDX Kompas 100,kompas-100,29047,JKKM100,IDR
+indonesia,IDX PEFINDO-25,IDX PEFINDO-25,pefindo-25,29048,JKPEF25,IDR
+indonesia,IDX LQ45,Jakarta Stock Exchange LQ45,jakarta-lq45,29046,JKLQ45,IDR
+iraq,ISX Main 60,ISX Main 60,isx-main-60,993158,ISX60,IQD
+ireland,ISEQ Overall,ISEQ Overall,iseq-overall,49648,ISEQ,EUR
+ireland,FTSE Ireland,FTSE Ireland,ftse-ireland,29067,FTWIIRLE,EUR
+ireland,ISEQ 20 Price,ISEQ 20 Price,iseq-20-price,49653,IETP,EUR
+ireland,ISEQ General,ISEQ General,iseq-general,49650,IGEN,EUR
+ireland,ISEQ Small Capital,ISEQ Small Capital,iseq-small-capital,49651,ISCI,EUR
+israeli,TA 35,TA 35,ta25,10529,TA35,ILS
+israeli,TA 125,TA 125,ta100,10527,TA125,ILS
+israeli,TA 60 SME,TA 60 SME,ta50ytr,10530,TA60SME,ILS
+israeli,TA 90,TA 90,ta75,10531,TA90,ILS
+israeli,TA Allshare,TA Allshare,ta-composite,15291,TAALLSHARE,ILS
+israeli,TA Growth,TA Growth,taytr,10528,TAGROWTH,ILS
+israeli,TASE VIX VTA35,Tel Aviv Volatility Index VTA35,tase-vta35,1141703,VTA35,ILS
+italy,FTSE MIB,FTSE MIB,it-mib-40,177,FTMIB,EUR
+italy,FTSE Italia All Share,FTSE Italia All Share,ftse-italia-all-share,27487,FTITLMS,EUR
+italy,FTSE IT Mid Cap,FTSE Italia Mid Cap,ftse-italia-mid-cap,27485,FTITMC,EUR
+italy,FTSE IT Small Cap,FTSE Italia Small Cap,ftse-italia-small-cap,27486,FTITSC,EUR
+italy,FTSE MIB TR EUR,FTSE MIB TR EUR,ftse-mib-tr-eur,951248,TFTMIBE,EUR
+italy,Italy 40,Investing.com Italy 40,investing.com-italy-40,956499,invit40,EUR
+jamaica,JSE Market,JSE Market,jse-market,995078,JSEMI,JMD
+jamaica,JSE All Jamaican Composite,JSE All Jamaican Composite,jse-all-jamaican-composite,995081,JSEAJC,JMD
+japan,Nikkei 225,Nikkei 225,japan-ni225,178,N225,JPY
+japan,JASDAQ,JASDAQ,jasdaq,976388,JSD,JPY
+japan,JASDAQ 20,JASDAQ 20,jasdaq-20,976389,JSD20,JPY
+japan,JPX-Nikkei 400,JPX-Nikkei 400,jpx-nikkei-400,50641,JPXNK400,JPY
+japan,Nikkei 1000,Nikkei 1000,nikkei-1000,50632,N1000,JPY
+japan,Nikkei 300,Nikkei 300,nikkei-300,50630,N300,JPY
+japan,Nikkei 500,Nikkei 500,nikkei-500,50631,N500,JPY
+japan,Nikkei JQ Average,Nikkei JQ Average,nikkei-jq-average,28870,NOTC,JPY
+japan,Nikkei Volatility,Nikkei Volatility,nikkei-volatility,28878,JNIV,JPY
+japan,TOPIX,TOPIX,topix,41042,TOPX,JPY
+japan,Topix 100,Topix 100,topix-100,976402,TOPX100,JPY
+japan,Topix 1000,Topix 1000,topix-1000,976403,TOPX1000,JPY
+japan,Topix 500,Topix 500,topix-500,976406,TOPX500,JPY
+japan,TOPIX Composite,TOPIX Composite,topix-composite,976415,TOPXCOM,JPY
+jordan,Amman SE General,Amman SE General,amgnrlx,12259,AMGNRLX,JOD
+jordan,Amman SE AllShare,Amman SE AllShare,amman-se-allshare,29090,AMMAN,JOD
+kazakhstan,KASE,KASE,kase,993152,KASE,KZT
+kenya,Kenya NSE 20,Kenya NSE 20,kenya-nse-20,37428,NSE20,KES
+kenya,FTSE NSE Kenya 15,FTSE NSE Kenya 15,ftse-nse-kenya-15,29070,FTFNKEN1,KES
+kenya,FTSE NSE Kenya 25,FTSE NSE Kenya 25,ftse-nse-kenya-25,29071,FTFNKEN2,KES
+kenya,Nairobi All Share,Nairobi All Share,nairobi-all-share,37429,NASI,KES
+latvia,DJ Latvia Total Market,DJ Latvia Total Market,dj-latvia-total-market-(lvl),41125,DWLI,
+lebanon,BLOM Stock,BLOM Stock,blom-stk-idx,14523,BLSI,USD
+lebanon,BDL STOCK IX,BDL STOCK IX,bdl-stock-ix,14524,BDLSI,USD
+lebanon,Beirut Stock,Beirut Stock,beirut-stk-ix,14525,BPSI,USD
+lithuania,DJ Lithuania Total Market (EUR),DJ Lithuania Total Market (EUR),dj-lithuania-total-market-(eur),41129,DWLU,LTL
+malaysia,KLCI,FTSE Malaysia KLCI,ftse-malaysia-klci,29078,KLSE,MYR
+malaysia,Malaysia ACE,FTSE Bursa Malaysia ACE,ftse-malaysia-ace,29075,FTFBMMES,MYR
+malaysia,FTSE BM Mid 70,FTSE Bursa Malaysia Mid 70,ftse-malaysia-mid-70,29076,FTFBM70,MYR
+malaysia,Malaysia Top 100,FTSE Bursa Malaysia Top 100,ftse-malaysia-top-100,29077,FTFBM100,MYR
+malaysia,FTSE Malaysia,FTSE Malaysia,ftse-malaysia,29074,FTWIMALL,MYR
+malta,MSE,MSE,mse,1029190,MSE,EUR
+mauritius,Semdex,Semdex,semdex,41159,MDEX,MUR
+mexico,FTSE BIVA Real Time Price,FTSE BIVA Real Time Price Index,ftse-biva-real-time-price-index,1089645,FTFTBIVA,MXN
+mexico,S&P/BMV IPC,S&P/BMV IPC,ipc,27254,MXX,MXN
+mexico,S&P/BMV INMEX,S&P/BMV INMEX,inmex,27268,INMX,MXN
+mexico,S&P/BMV IPC CompMx,S&P/BMV IPC CompMx,mxse--ipc-composite,27269,MXXCP,MXN
+mexico,S&P/BMV IMC30,S&P/BMV MidCap Select 30,mxse-midcap-30,27277,IMC30,MXN
+mongolia,MNE Top 20,MNE Top 20,mne-top-20,1006455,MNETOP20,MNT
+montenegro,MNSE 10,MNSE 10,mnse-10,1006456,MNSE10,EUR
+montenegro,MONEX,MONEX,monex,1006457,MONEX,EUR
+morocco,Moroccan All Shares,Moroccan All Shares,masi,13228,MASI,MAD
+morocco,FTSE CSE Morocco 15,FTSE CSE Morocco 15,ftse-cse-morocco-15,28904,FTFCSE,MAD
+morocco,FTSE CSE Morocco All-Liquid,FTSE CSE Morocco All-Liquid,ftse-cse-morocco-all-liquid,28905,FTFCSELIQ,MAD
+morocco,MADEX,MADEX,madex,19115,MADX,MAD
+namibia,NSX,FTSE NSX Overall,ftse-namibian-overall,961537,FTN098,NAD
+namibia,NSX Local,FTSE NSX Local,ftse-namibian-local,961538,FTN099,NAD
+netherlands,AEX,AEX,netherlands-25,168,AEX,EUR
+netherlands,AEX All Share,AEX All Share,ams-all-share-index,14861,AAX,EUR
+netherlands,AEX Volatility,AEX Volatility,aex-volatility,19629,VAEX,EUR
+netherlands,AMS Small Cap,AMS Small Cap,ams-small-cap-index,14863,ASCX,EUR
+netherlands,AMX,AMX,amx-index,14862,AMX,EUR
+new zealand,NZX 50,NZX 50,nzx-50,41146,NZ50,NZD
+new zealand,NZX MidCap,NZX MidCap,nzx-midcap,41148,NZMC,NZD
+new zealand,DJ New Zealand,Dow Jones New Zealand,dow-jones-new-zealand,41141,NZDOW,NZD
+new zealand,DJ New Zealand (USD),Dow Jones New Zealand (USD),dow-jones-new-zealand-(usd),41142,NZDOWD,NZD
+new zealand,NZX All,NZX All,nzx-all,41147,NZCI,NZD
+new zealand,NZX SmallCap,NZX SmallCap,nzx-smallcap,41150,NZSC,NZD
+new zealand,S&P/NZAX All Price,S&P/NZAX All Price,nzax-all-price,1096456,NZAUC,NZD
+nigeria,NSE 30,NSE 30,nse-30,101797,NGSE30,NGN
+nigeria,NSE All Share,NSE All Share,nse-all-share,101796,NGSEINDEX,NGN
+norway,OSE Benchmark,OSE Benchmark,ose-benchamrk,14603,OSEBX,NOK
+norway,Oslo OBX,Oslo OBX,oslo-obx,44400,OBX,NOK
+norway,OBX Price,OBX Price,obx-price,49476,OBXP,NOK
+norway,OMX Oslo 20,OMX Oslo 20,omx-oslo-20,40040,OMXO20PI,NOK
+norway,Oslo All Share,Oslo All Share,oslo-all-share,49497,OSEAX,NOK
+oman,MSM 30,MSM 30,msi,13384,MSI,OMR
+pakistan,Karachi 100,Karachi 100,karachi-100,49677,KSE,PKR
+pakistan,KMI All Shares,All Shares Islamic Index of Pakistan,kmi-all-shares,977729,KMIAS,PKR
+pakistan,FTSE Pakistan,FTSE Pakistan,ftse-pakistan,29146,FTWIPAKL,PKR
+pakistan,Karachi 30,Karachi 30,karachi-30,49679,KSE30,PKR
+pakistan,Karachi All Share,Karachi All Share,karachi-all-share,49678,KSI,PKR
+pakistan,Karachi Meezan 30,Karachi Meezan 30,karachi-meezan-30,945503,KMI30,PKR
+palestine,Al-Quds,Al-Quds,ple,13009,PLE,JOD
+peru,S&P Lima General,S&P Lima General,lima-stock-exchange-general,49680,SPBLPGPT,PEN
+peru,FTSE Peru,FTSE Peru,ftse-peru,29147,FTWIPERL,PEN
+peru,S&P Lima Corporate Gov,S&P Lima Corporate Gov,s-p-lima-corporate-gov,951728,SPBLBGPT,PEN
+peru,S&P Lima Select,S&P Lima Select,lima-stock-exchange-select,49681,SPBL25PT,PEN
+peru,S&P Peru Select,S&P Peru Select,s-p-peru-select,953153,SPBLPSPT,PEN
+philippines,PSEi Composite,PSEi Composite,psei-composite,49692,PSI,PHP
+philippines,FTSE Philippines,FTSE Philippines,ftse-philippines,29148,FTWIPHLL,PHP
+philippines,PHS All Shares,PHS All Shares,phs-all-shares,49693,PSAL,PHP
+poland,WIG20,WIG20,wig-20,14602,WIG20,PLN
+poland,WIG30,WIG30,wig30,41044,WIG30,PLN
+poland,mWIG40,mWIG40,wig-40,37656,MWIG40,PLN
+poland,sWIG80,sWIG80,wig-80,37660,SWIG80,PLN
+poland,WIG,WIG,wig,37662,WIG,PLN
+portugal,PSI 20,PSI 20,psi-20,14600,PSI20,EUR
+portugal,PSI All Share GR,PSI All Share Gross Return,psi-general,14823,BVLG,EUR
+qatar,QE General,QE General,qsi,13185,QSI,QAR
+qatar,FTSE NASDAQ Qatar 10,FTSE NASDAQ Qatar 10,ftse-nasdaq-dubai-10,28894,FTDQAT,USD
+qatar,QE All Shares,QE All Shares,qe-all-shares,40038,QEAS,QAR
+romania,BET,BET,bet,14770,BETI,RON
+romania,Bucharest BET-XT,Bucharest BET-XT,bucharest-bet-xt,28916,BETXT,RON
+russia,MOEX,MOEX Russia,mcx,13666,IMOEX,RUB
+russia,RTSI,RTSI,rtsi,13665,IRTS,USD
+russia,MOEX 10,MOEX 10,mcx10,13667,MOEX10,RUB
+russia,MOEX Blue Chip,MOEX Blue Chip,rts-standard,19689,MOEXBC,RUB
+russia,Russian VIX,Russian VIX,russian-vix,946030,RVI,RUB
+rwanda,Rwanda All Share,Rwanda All Share,rwanda-all-share,41167,ALSIRW,RWF
+rwanda,Rwanda Share,Rwanda Share,rwanda-share,41168,RSIRW,RWF
+saudi arabia,Tadawul All Share,Tadawul All Share,tasi,11319,TASI,SAR
+serbia,Belex 15,Belex 15,belex-15,945510,BELEX15,RSD
+singapore,STI Index,FTSE Straits Times Singapore,singapore-straits-time,40006,STI,SGD
+singapore,FTSE Singapore,FTSE Singapore,ftse-singapore,28869,FTWISGPL,SGD
+singapore,MSCI Singapore,MSCI Singapore,simsci,100148,MISG0000FPSG,SGD
+slovakia,SAX,SAX,sax,41155,SAX,EUR
+slovenia,Blue-Chip SBITOP,Blue-Chip SBITOP,blue-chip-sbitop,29149,SBITOP,EUR
+south africa,FTSE/JSE Top 40,FTSE/JSE Top 40,ftse-jse-top-40,41043,JTOPI,ZAR
+south africa,South Africa 40,Investing.com South Africa 40,investing.com-south-africa-40,956501,invsaf40,ZAR
+south africa,FTSE South Africa,FTSE South Africa,ftse-south-africa,28887,FTWIZAFL,ZAR
+south africa,FTSE/JSE All Share,FTSE/JSE All Share,ftse-jse-all-share,49580,JALSH,ZAR
+south korea,KOSPI,KOSPI,kospi,37426,KS11,KRW
+south korea,KOSPI 50,KOSPI 50,kospi-50,49661,KS50,KRW
+south korea,FTSE Korea,FTSE Korea,ftse-korea,29072,FTWIKORL,KRW
+south korea,KOSDAQ,KOSDAQ,kosdaq,38016,KQ11,KRW
+south korea,KQ 100,KOSDAQ 100,kosdaq-100,980237,KQ100,KRW
+south korea,KOSPI 100,KOSPI 100,kospi-100,49660,KS100,KRW
+south korea,KOSPI 200,KOSPI 200,kospi-200,37427,KS200,KRW
+south korea,KOSPI Large Sized,KOSPI Large Sized,kospi-large-sized,49664,KS61,KRW
+south korea,KOSPI Medium Sized,KOSPI Medium Sized,kospi-medium-sized,49665,KS62,KRW
+south korea,KOSPI Small Sized,KOSPI Small Sized,kospi-small-sized,49662,KS63,KRW
+south korea,KRX 100,KRX 100,krx-100,49659,KRX100,KRW
+spain,IBEX 35,IBEX 35,spain-35,174,IBEX,EUR
+spain,FTSE Latibex,FTSE Latibex,ftse-latibex,24227,IBEXL,EUR
+spain,General Madrid,General Madrid,general-madrid,24228,SMSI,EUR
+spain,IBEX Medium Cap,IBEX Medium Cap,ibex-medium-cap,24226,IBEXC,EUR
+spain,IBEX Small Cap,IBEX Small Cap,ibex-small-cap,24229,IBEXS,EUR
+sri lanka,CSE All-Share,CSE All-Share,cse-all-share,29151,CSE,LKR
+sweden,OMXS30,OMX Stockholm 30,omx-stockholm-30,25685,OMXS30,SEK
+sweden,OMX Nordic 40,OMX Nordic 40,omx-nordic-40,25684,OMXN40,EUR
+sweden,OMX Stockholm,OMX Stockholm,omx-stockholm,25683,OMXSPI,SEK
+sweden,OMX Stockholm Benchmark,OMX Stockholm Benchmark,omx-stockholm-benchmark,25681,OMXSBPI,SEK
+sweden,OMX Stockholm Mid Cap,OMX Stockholm Mid Cap,omx-stockholm-mid-cap,25682,OMXSMCPI,SEK
+sweden,OMX Stockholm Small Cap,OMX Stockholm Small Cap,omx-stockholm-small-cap,25680,OMXSSCPI,SEK
+switzerland,SMI,SMI,switzerland-20,176,SSMI,CHF
+switzerland,FTSE Switzerland,FTSE Switzerland,ftse-switzerland,28826,FTWICHEL,CHF
+switzerland,Swiss All Share Cumulative Dividend,Swiss All Share Cumulative Dividend,swiss-allshare,49474,SSIR,CHF
+switzerland,Swiss Mid Price,Swiss Mid Price,swiss-mid,49472,SMIM,CHF
+taiwan,Taiwan Weighted,Taiwan Weighted,taiwan-weighted,38017,TWII,TWD
+taiwan,TPEx 50,TPEx 50,tpex-50,1013367,GTSM50,TWD
+taiwan,FTSE TWSE Taiwan MidCap 100,FTSE TWSE Taiwan Mid Cap 100,ftse-twse-taiwan-mid-cap-100,29172,TSE100M,TWD
+taiwan,MSCI Taiwan,MSCI Taiwan,msci-taiwan,100150,MSCITW,TWD
+taiwan,TPEx,TPEx,tpex,1013366,TWOII,TWD
+taiwan,TSEC Taiwan 50,TSEC Taiwan 50,tsec-taiwan-50,29181,TSE50,TWD
+tanzania,Tanzania All Share,Tanzania All Share,tanzania-all-share,41164,DSEI,TZS
+thailand,SET,SET Index,thailand-set,38015,SETI,THB
+thailand,FTSE SET All-Share,FTSE SET All-Share,ftse-set-all-share,29182,FTFSTHA,THB
+thailand,FTSE SET Large Cap,FTSE SET Large Cap,ftse-set-large-cap,29186,FTFSTHL,THB
+thailand,FTSE SET Mid Cap,FTSE SET Mid Cap,ftse-set-mid-cap,29183,FTFSTHM,THB
+thailand,FTSE SET Mid Small Cap,FTSE SET Mid Small Cap,ftse-set-mid-small-cap,29184,FTFSTHMS,THB
+thailand,FTSE SET Shariah,FTSE SET Shariah,ftse-set-shariah,29185,FTFSTSH,THB
+thailand,MAI,MAI,mai,41045,MAII,THB
+thailand,SET 100,SET 100,set-100,41047,SET100,THB
+thailand,SET 50,SET 50,set-50,41049,SET50,THB
+tunisia,Tunindex,Tunindex,tunindex,18823,TUNINDEX,TND
+tunisia,Tunindex20,Tunindex20,tunindex20,948432,TUNINDEX20,TND
+turkey,BIST 100,BIST 100,ise-100,19155,XU100,TRY
+turkey,BIST 100-30,BIST 100-30,ise-100-30,19160,XYUZO,TRY
+turkey,BIST 30,BIST 30,ise-30,19158,XU030,TRY
+turkey,BIST 50,BIST 50,ise-50,19157,XU050,TRY
+turkey,BIST All Shares,BIST All Shares,ise-all-shares,19162,XUTUM,TRY
+turkey,BIST All-100,BIST All-100,ise-all-100,19163,XTUMY,TRY
+uganda,Uganda All Share,Uganda All Share,uganda-all-share,41111,ALSIUG,UGX
+ukraine,PFTS,PFTS,pfts,29191,PFTSI,UAH
+dubai,ADX General,ADX General,adx-general,941336,ADI,AED
+dubai,DFM General,DFM General,dfmgi,12522,DFMGI,AED
+uk,FTSE 100,FTSE 100,uk-100,27,FTSE,GBP
+uk,FTSE 250,FTSE 250,uk-250,11763,FTMC,GBP
+uk,FTSE 350,FTSE 350,ftse-350,27399,FTLC,GBP
+uk,FTSE AIM All Share,FTSE AIM All Share,ftse-aim-all-share,27376,FTAI,GBP
+uk,FTSE All-Share,FTSE All-Share,ftse-all-share,27322,FTAS,GBP
+uk,FTSE SmallCap,FTSE SmallCap,ftse-smallcap,27454,FTSC,GBP
+uk,FTSE TechMARK Focus,FTSE TechMARK Focus,ftse-techmark-100,27458,FTT1X,GBP
+uk,UK 100,Investing.com United Kingdom 100,investing.com-uk-100,956500,invuk100,GBP
+usa,Dow 30,Dow Jones Industrial Average,us-30,169,DJI,USD
+usa,Nasdaq 100,Nasdaq 100,nq-100,20,NDX,USD
+usa,Nasdaq,NASDAQ Composite,nasdaq-composite,14958,IXIC,USD
+usa,S&P 500,S&P 500,us-spx-500,166,SPX,USD
+usa,S&P 500 VIX,CBOE Volatility Index,volatility-s-p-500,44336,VIX,USD
+usa,DJ Composite,Dow Jones Composite,dj-composite-average,19943,DJA,USD
+usa,DJ Transportation,Dow Jones Transportation,dj-transportation-average,19941,DJT,USD
+usa,DJ Utility,Dow Jones Utility,dj-utility-average,19942,DJU,USD
+usa,NYSE AMEX Composite,NYSE AMEX Composite,nyse-market-composite,27652,XAX,USD
+usa,NYSE Composite,NYSE Composite,nyse-composite,27604,NYA,USD
+usa,OTCM ADR,OTCM ADR,otcm-adr,941623,OTCDR,USD
+usa,OTCM QX ADR 30,OTCM QX ADR 30,otcm-qx-adr-30,941622,OTCQX30,USD
+usa,S&P 100,S&P 100,s-p-100,40821,OEX,USD
+usa,SmallCap 2000,US SmallCap 2000,smallcap-2000,170,RUT,USD
+venezuela,Bursatil,Bursatil,bursatil,49748,IBC,VES
+venezuela,Merinvest Composite,Merinvest Composite,merinvest-composite,29193,MRCP,VES
+vietnam,HNX 30,HNX 30,hnx-30,995072,HNX30,VND
+vietnam,VN 30,VN 30,vn-30,41064,VNI30,VND
+vietnam,FTSE Vietnam,FTSE Vietnam,ftse-vietnam,29196,FTFVTT,VND
+vietnam,FTSE Vietnam All,FTSE Vietnam All,ftse-vietnam-all,29197,FTFVAS,VND
+vietnam,HNX,HNX,hnx,41062,HNXI,VND
+vietnam,VN,VN,vn,41063,VNI,VND
+vietnam,VN100,VN100,vn100,995068,VNI100,VND
+zambia,LSE All Share,LSE All Share,lse-all-share,941333,LASILZ,ZMW
+zambia,LSE EN,LSE EN,lse-en,941335,ENLZ,ZMW
+zambia,LSE Inv,LSE Inv,lse-inv,941334,INVLZ,ZMW
+zimbabwe,Zimbabwe Industrial,Zimbabwe Industrial,zimbabwe-industrial,41165,INDZI,ZWD
+zimbabwe,Zimbabwe Mining,Zimbabwe Mining,zimbabwe-mining,41166,MINZI,ZWD
