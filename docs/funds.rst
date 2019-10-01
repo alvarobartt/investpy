@@ -99,8 +99,8 @@ in order to make it more easy to use. Note that you can either select the value 
 
     # Get both name and country via pandas.DataFrame index
     index = 0
-    name = search_result.iloc[index]['name']
-    country = search_result.iloc[index]['country']
+    name = search_result.loc[index, 'name']
+    country = search_result.loc[index, 'country']
 
     # Get both name and country via unique field such as isin
     isin = 'ES0113211835'

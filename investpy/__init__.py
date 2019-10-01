@@ -2482,7 +2482,7 @@ def search_etfs(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['country_code', 'tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

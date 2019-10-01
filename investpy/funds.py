@@ -290,9 +290,9 @@ def fund_countries_as_list():
 
     for index, row in countries.iterrows():
         if row['country'] == 'uk':
-            countries.iloc[index, 'country'] = 'united kingdom'
+            countries.loc[index, 'country'] = 'united kingdom'
         elif row['country'] == 'usa':
-            countries.iloc[index, 'country'] = 'united states'
+            countries.loc[index, 'country'] = 'united states'
 
     return countries['country'].tolist()
 

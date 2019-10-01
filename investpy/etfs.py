@@ -204,9 +204,9 @@ def etf_countries_as_list():
 
     for index, row in markets.iterrows():
         if row['country'] == 'uk':
-            markets.iloc[index, 'country'] = 'united kingdom'
+            markets.loc[index, 'country'] = 'united kingdom'
         elif row['country'] == 'usa':
-            markets.iloc[index, 'country'] = 'united states'
+            markets.loc[index, 'country'] = 'united states'
 
     return markets['country'].tolist()
 
