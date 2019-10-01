@@ -55,7 +55,14 @@ def retrieve_indices(test_mode=False):
 
     results = list()
 
-    for country in index_countries_as_list():
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'indices', 'index_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
+
+    for country in countries['country'].tolist():
         head = {
             "User-Agent": ua.get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -89,7 +96,7 @@ def retrieve_indices(test_mode=False):
                         info = retrieve_index_info(tag_)
 
                         data = {
-                            'country': country,
+                            'country': 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
                             'name': name,
                             'full_name': full_name_,
                             'tag': tag_,
@@ -479,6 +486,12 @@ def index_countries_as_list():
     if countries is None:
         raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
     else:
+        for index, row in countries.iterrows():
+            if row['country'] == 'uk':
+                countries.iloc[index, 'country'] = 'united kingdom'
+            elif row['country'] == 'usa':
+                countries.iloc[index, 'country'] = 'united states'
+
         return countries['country'].tolist()
 
 

@@ -4,6 +4,7 @@
 # See LICENSE for details.
 
 import json
+
 import unidecode
 
 import pandas as pd
@@ -37,9 +38,9 @@ def retrieve_etfs(test_mode=False):
             In the case that the retrieval process of world etfs was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
-                country | country_code | name | symbol | tag | id
-                --------|--------------|------|--------|-----|----
-                xxxxxxx | xxxxxxxxxxxx | xxxx | xxxxxx | xxx | xx
+                country | name | symbol | tag | id | currency
+                --------|------|--------|-----|----|----------
+                xxxxxxx | xxxx | xxxxxx | xxx | xx | xxxxxxxx
 
     Raises:
         ValueError: if any of the introduced arguments is not valid.
@@ -63,14 +64,11 @@ def retrieve_etfs(test_mode=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0024: etf_countries file not found")
+        raise FileNotFoundError("ERR#0044: etf_countries file not found")
 
     final = list()
 
     for index, row in markets.iterrows():
-        country = row['country']
-        country_code = row['code']
-
         url = "https://es.investing.com/etfs/" + row['country'].replace(" ", "-") + "-etfs"
 
         req = requests.get(url, headers=head)
@@ -96,8 +94,7 @@ def retrieve_etfs(test_mode=False):
                 info = retrieve_etf_info(tag)
 
                 data = {
-                    "country": country,
-                    "country_code": country_code,
+                    "country": 'united kingdom' if row['country'] == 'uk' else 'united states' if row['country'] == 'usa' else row['country'],
                     "name": nested.text.strip(),
                     "symbol": symbol,
                     "tag": tag,
@@ -205,6 +202,12 @@ def etf_countries_as_list():
     else:
         raise FileNotFoundError("ERR#0044: etf_countries file not found")
 
+    for index, row in markets.iterrows():
+        if row['country'] == 'uk':
+            markets.iloc[index, 'country'] = 'united kingdom'
+        elif row['country'] == 'usa':
+            markets.iloc[index, 'country'] = 'united states'
+
     return markets['country'].tolist()
 
 
@@ -228,9 +231,9 @@ def etfs_as_df(country=None):
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | country_code | name | symbol | tag | id
-                --------|--------------|------|--------|-----|----
-                xxxxxxx | xxxxxxxxxxxx | xxxx | xxxxxx | xxx | xx
+                country | name | symbol | tag | id | currency
+                --------|------|--------|-----|----|----------
+                xxxxxxx | xxxx | xxxxxx | xxx | xx | xxxxxxxx
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
@@ -330,11 +333,11 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 
                 {
                     'country': country,
-                    'country_code': country_code,
                     'id': id,
                     'tag': tag,
                     'name': name,
-                    'symbol': symbol
+                    'symbol': symbol,
+                    'currency': currency
                 }
 
     Raises:
@@ -366,7 +369,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in etfs.columns.tolist() for column in columns):
         raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, country_code, id, name, symbol, tag>")
+                         "<country, id, name, symbol, tag, currency>")
 
     if country is None:
         if as_json:

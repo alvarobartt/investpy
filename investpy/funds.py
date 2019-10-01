@@ -95,7 +95,7 @@ def retrieve_funds(test_mode=False):
                         pass
 
                 obj = {
-                    "country": country,
+                    "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
                     "name": nested.strip(),
                     "symbol": symbol,
                     "tag": tag,
@@ -287,8 +287,14 @@ def fund_countries_as_list():
 
     if countries is None:
         raise IOError("ERR#0040: fund countries list not found or unable to retrieve.")
-    else:
-        return countries['country'].tolist()
+
+    for index, row in countries.iterrows():
+        if row['country'] == 'uk':
+            countries.iloc[index, 'country'] = 'united kingdom'
+        elif row['country'] == 'usa':
+            countries.iloc[index, 'country'] = 'united states'
+
+    return countries['country'].tolist()
 
 
 def funds_as_df(country=None):
@@ -308,9 +314,9 @@ def funds_as_df(country=None):
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                asset class | id | isin | issuer | name | symbol | tag
-                ------------|----|------|--------|------|--------|-----
-                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
+                asset class | id | isin | issuer | name | symbol | tag | currrency
+                ------------|----|------|--------|------|--------|-----|-----------
+                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
 
             Just like `investpy.funds.retrieve_funds()` :obj:`pandas.DataFrame` output, but instead of generating the
             CSV file, this function just reads it and loads it into a :obj:`pandas.DataFrame` object.
@@ -388,7 +394,7 @@ def funds_as_list(country=None):
 def funds_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
-    `asset_class`, `id`, `issuer`, `name`, `symbol` and `tag`. All the available funds can be found at:
+    `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
     https://es.investing.com/funds/
 
     Args:
@@ -412,7 +418,8 @@ def funds_as_dict(country=None, columns=None, as_json=False):
                     'issuer': issuer,
                     'name': name,
                     'symbol': symbol,
-                    'tag': tag
+                    'tag': tag,
+                    'currency': currency
                 }
 
     Raises:
@@ -444,7 +451,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in funds.columns.tolist() for column in columns):
         raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<country, asset class, id, isin, issuer, name, symbol, tag>")
+                         "<country, asset class, id, isin, issuer, name, symbol, tag, currency>")
 
     if country is None:
         if as_json:

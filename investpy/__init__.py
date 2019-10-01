@@ -1737,9 +1737,9 @@ def get_etfs(country=None):
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | country_code | name | symbol | tag | id
-                --------|--------------|------|--------|-----|----
-                xxxxxxx | xxxxxxxxxxxx | xxxx | xxxxxx | xxx | xx
+                country | name | symbol | tag | id | currency
+                --------|------|--------|-----|----|----------
+                xxxxxxx | xxxx | xxxxxx | xxx | xx | xxxxxxxx
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
@@ -1804,11 +1804,11 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
 
                 {
                     'country': country,
-                    'country_code': country_code,
                     'id': id,
                     'tag': tag,
                     'name': name,
-                    'symbol': symbol
+                    'symbol': symbol,
+                    'currency': currency
                 }
 
     Raises:
