@@ -46,7 +46,8 @@ setup(
         ]),
         ('indices', [
             'investpy/resources/indices/indices.csv',
-            'investpy/resources/indices/index_countries.csv'
+            'investpy/resources/indices/index_countries.csv',
+            'investpy/resources/indices/global_indices_countries.csv',
         ]),
         ('currency_crosses', [
             'investpy/resources/currency_crosses/currency_crosses.csv',

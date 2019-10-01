@@ -2587,20 +2587,38 @@ def get_indices_dict(country=None, columns=None, as_json=False):
 
 def get_index_countries():
     """
-    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
-    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
+    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
+    from, via reading the `index_countries.csv` file from the resources directory. So on, this function will
+    display a listing containing a set of countries, in order to let the user know which countries are taken into
+    consideration and also the return listing from this function can be used for country param check if needed.
 
     Returns:
         :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+            The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        IndexError: if `equity_countries.csv` was unavailable or not found.
+        IndexError: if `index_countries.csv` was unavailable or not found.
     """
 
     return ic.index_countries_as_list()
+
+
+def get_global_indices_countries():
+    """
+    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
+    from, via reading the `global_indices_countries.csv` file from the resources directory. So on, this function will
+    display a listing containing a set of countries, in order to let the user know which countries are taken into
+    consideration and also the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with global indices as indexed in Investing.com
+
+    Raises:
+        IndexError: if `global_indices_countries.csv` was unavailable or not found.
+    """
+
+    return ic.global_indices_countries_as_list()
 
 
 def get_index_recent_data(index, country, as_json=False, order='ascending', debug=False):
