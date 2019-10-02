@@ -446,6 +446,9 @@ def retrieve_global_indices_countries(test_mode=False):
 
             countries.append(obj)
 
+            if test_mode is True:
+                break
+
     if len(countries) <= 0:
         raise RuntimeError('ERR#0035: no countries could be retrieved!')
 

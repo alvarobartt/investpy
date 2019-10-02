@@ -10,7 +10,7 @@ import investpy
 from investpy.equities import retrieve_equities, retrieve_equity_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
-from investpy.indices import retrieve_indices, retrieve_index_countries
+from investpy.indices import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
 from investpy.currency_crosses import retrieve_currency_crosses
 
 from investpy.user_agent import get_random, clear_file, delete_file
@@ -1168,6 +1168,11 @@ def test_indices_errors():
     except:
         pass
 
+    try:
+        retrieve_global_indices_countries(test_mode=None)
+    except:
+        pass
+
     params = [
         {
             'country': ['error']
@@ -1524,6 +1529,10 @@ def test_currency_crosses_errors():
             'base': None,
             'second': 'error'
         },
+        {
+            'base': 'EUR',
+            'second': 'EUR',
+        }
     ]
 
     for param in params:
@@ -1585,6 +1594,12 @@ def test_currency_crosses_errors():
         {
             'base': None,
             'second': 'error',
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'base': 'EUR',
+            'second': 'Eur',
             'columns': None,
             'as_json': False
         },
