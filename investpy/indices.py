@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2018-2019 Alvaro Bartolome
+# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import json
@@ -18,13 +18,13 @@ from investpy import user_agent as ua
 
 def retrieve_indices(test_mode=False):
     """
-    This function retrieves all the available `equities` indexed on Investing.com, so to
-    retrieve data from them which will be used later for inner functions for data retrieval.
-    All the equities available can be found at: https://es.investing.com/equities/. Additionally,
-    when equities are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
-    and stored on a CSV file on a package folder containing all the available resources.
-    Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
-    just used for inner function purposes.
+    This function retrieves all the available `indices` indexed on Investing.com, so to retrieve data from them which
+    will be used later in inner functions for data retrieval. All the world indices available can be found at:
+    https://es.investing.com/indices/, and the global indices at: https://es.investing.com/global-indices/.
+    Additionally, when indices are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
+    and stored on a CSV file on a package folder containing all the available resources. Note that maybe some of the
+    information contained in the resulting :obj:`pandas.DataFrame` is useless as it is just used for inner function
+    purposes.
 
     Args:
         test_mode (:obj:`bool`):
@@ -45,7 +45,8 @@ def retrieve_indices(test_mode=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid.
-        FileNotFoundError: raised if `index_countries.csv` file does not exists or is empty.
+        FileNotFoundError:
+            raised if `index_countries.csv` or `global_indices_countries.csv` files do not exist or are empty.
         ConnectionError: raised if GET requests did not return 200 status code.
         IndexError: raised if indices information was unavailable or not found.
     """
@@ -275,7 +276,7 @@ def retrieve_index_info(tag):
 
     Raises:
         ConnectionError: raised if GET requests does not return 200 status code.
-        IndexError: raised if fund information was unavailable or not found.
+        IndexError: raised if index information was unavailable or not found.
     """
 
     url = "https://www.investing.com/indices/" + tag
@@ -394,8 +395,8 @@ def retrieve_index_countries(test_mode=False):
 def retrieve_global_indices_countries(test_mode=False):
     """
     This function retrieves all the country names & tags indexed in Investing.com with available indices to
-    retrieve data from, via Web Scraping https://www.investing.com/global-indices/ where the available countries are
-    listed, and from their names the specific indices website of every country is retrieved in order to get the tag
+    retrieve data from, via Web Scraping https://www.investing.com/indices/global-indices. where the available countries
+    are listed, and from their names the specific indices website of every country is retrieved in order to get the tag
     which will later be used when retrieving all the information from the available indices in every country.
 
     Args:
@@ -446,6 +447,9 @@ def retrieve_global_indices_countries(test_mode=False):
 
             countries.append(obj)
 
+            if test_mode is True:
+                break
+
     if len(countries) <= 0:
         raise RuntimeError('ERR#0035: no countries could be retrieved!')
 
@@ -463,7 +467,7 @@ def retrieve_global_indices_countries(test_mode=False):
 
 def index_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
+    This function retrieves all the country names indexed in Investing.com with available world indices to retrieve data
     from, via reading the `index_countries.csv` file from the resources directory. So on, this function will
     display a listing containing a set of countries, in order to let the user know which countries are taken into
     consideration and also the return listing from this function can be used for country param check if needed.
@@ -527,7 +531,8 @@ def indices_as_df(country=None):
     """
     This function retrieves all the available `indices` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the index names, but all the fields contained on the indices file.
-    All the available indices can be found at: https://es.investing.com/indices/
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -549,6 +554,7 @@ def indices_as_df(country=None):
             :obj:`pandas.DataFrame` object.
 
     Raises:
+        ValueError: raised if any of the introduced parameters is missing or errored.
         IOError: raised if the indices file from `investpy` is missing or errored.
     """
 
@@ -577,7 +583,8 @@ def indices_as_df(country=None):
 def indices_as_list(country=None):
     """
     This function retrieves all the available indices and returns a list of each one of them.
-    All the available indices can be found at: https://es.investing.com/indices/
+    All the available world indices can be found at: https://es.investing.com/indices/world-indices, and the global
+    ones can be foud at: https://es.investing.com/indices/world-indices.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -618,8 +625,9 @@ def indices_as_list(country=None):
 def indices_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available indices on Investing.com and returns them as a :obj:`dict` containing the
-    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available indices can be found at:
-    https://es.investing.com/indices/
+    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available world indices can be found at:
+    https://es.investing.com/indices/world-indices, and the global ones can be foud at:
+    https://es.investing.com/indices/global-indices.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.

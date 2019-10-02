@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2018-2019 Alvaro Bartolome
+# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import pytest
@@ -10,7 +10,7 @@ import investpy
 from investpy.equities import retrieve_equities, retrieve_equity_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
-from investpy.indices import retrieve_indices, retrieve_index_countries
+from investpy.indices import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
 from investpy.currency_crosses import retrieve_currency_crosses, retrieve_currency_cross_continents
 
 
@@ -401,6 +401,7 @@ def test_investpy_indices():
                                   as_json=param['as_json'])
 
     investpy.get_index_countries()
+    investpy.get_global_indices_countries()
 
     params = [
         {
@@ -444,6 +445,7 @@ def test_investpy_indices():
 
     retrieve_indices(test_mode=True)
     retrieve_index_countries(test_mode=True)
+    retrieve_global_indices_countries(test_mode=True)
 
 
 def test_investpy_currency_crosses():

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2018-2019 Alvaro Bartolome
+# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import json
@@ -399,8 +399,6 @@ def currency_crosses_as_df(base=None, second=None):
             return currency_crosses
         else:
             raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
-    else:
-        return currency_crosses
 
 
 def currency_crosses_as_list(base=None, second=None):
