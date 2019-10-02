@@ -2389,7 +2389,7 @@ def get_etfs_overview(country, as_json=False):
             id_ = element_.get('id').replace('pair_', '')
             symbol = element_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-            name = element_.xpath(".//a")[0]
+            name = element_.xpath(".//a")[0].text.strip()
 
             last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
             last = element_.xpath(last_path)[0].text_content()
@@ -2400,6 +2400,9 @@ def get_etfs_overview(country, as_json=False):
             turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
             turnover = element_.xpath(turnover_path)[0].text_content()
 
+            if turnover == '':
+                continue
+
             if turnover.__contains__('K'):
                 turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
             elif turnover.__contains__('M'):
@@ -2408,7 +2411,7 @@ def get_etfs_overview(country, as_json=False):
                 turnover = int(float(turnover.replace('.', '').replace(',', '.')))
 
             data = {
-                "name": name.text.strip(),
+                "name": name,
                 "symbol": symbol,
                 "last": float(last.replace('.', '').replace(',', '.')),
                 "change": change,
