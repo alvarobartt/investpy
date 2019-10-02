@@ -244,6 +244,66 @@ Date
 
 ```
 
+### Search Data
+
+As financial data is really complex and sometimes both the product name and the country are unknown for the user, in 
+terms of what does investpy expect, every financial product listed in investpy (which currently includes equities,
+funds, etfs, indices and currency crosses) has its own search function. Search functions allow the user to search among
+all the available equities for example, whenever just one field is known (even though it is not the exact match). So on,
+the usage of this functions is presented below with some samples:
+
+#### The user just knows the ISIN code of an Equity
+
+````python
+import investpy
+
+search_results = investpy.search_equities(by='isin', value='ES0113211835')
+
+print(search_results.head())
+````
+```{r, engine='python', count_lines}
+          country  name                             full_name          isin  currency symbol  
+0          mexico  BBVA    Banco Bilbao Vizcaya Argentaria SA  ES0113211835       MXN   BBVA  
+1          mexico  BBVA  Banco Bilbao Vizcaya Argentaria S.A.  ES0113211835       MXN   BBVA  
+2         belgium  BBVA    Banco Bilbao Vizcaya Argentaria SA  ES0113211835       EUR   BBVA  
+3           spain  BBVA  Banco Bilbao Vizcaya Argentaria S.A.  ES0113211835       EUR   BBVA  
+4  united kingdom  BBVA    Banco Bilbao Vizcaya Argentaria Sa  ES0113211835       EUR   BVAB
+```
+
+#### The user just knows the Symbol of an Index
+
+````python
+import investpy
+
+search_results = investpy.search_indices(by='name', value='IBEX')
+
+print(search_results.head())
+````
+```{r, engine='python', count_lines}
+  country             name        full_name  symbol currency         market
+0   spain          IBEX 35          IBEX 35    IBEX      EUR  world_indices
+1   spain     FTSE Latibex     FTSE Latibex   IBEXL      EUR  world_indices
+2   spain  IBEX Medium Cap  IBEX Medium Cap   IBEXC      EUR  world_indices
+3   spain   IBEX Small Cap   IBEX Small Cap   IBEXS      EUR  world_indices
+4   spain    IBEX 35 Banks    IBEX 35 Banks  IBEXIB      EUR  world_indices
+```
+
+#### The user just knows a keyword contained in the name of an ETF
+
+````python
+import investpy
+
+search_results = investpy.search_etfs(by='name', value='bbva')
+
+print(search_results.head())
+````
+```{r, engine='python', count_lines}
+  country                                       name     symbol currency
+0  mexico  BBVA-BMV Mexico Consumo Frecuente RT TRAC  CONSUMO10      MXN
+1  mexico             BBVA-BMV Mexico Enlace RT TRAC   ENLACE10      MXN
+2   spain                BBVA Accion DJ Eurostoxx 50      BBVAE      EUR
+```
+
 ### Additional Data
 
 As Investing provides more data besides the historical one, some of that additional data can be fetched via investpy. 

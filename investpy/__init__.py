@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright 2018-2019 Alvaro Bartolome
+# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
@@ -2493,31 +2493,33 @@ def search_etfs(by, value):
 
 def get_indices(country=None):
     """
-    This function retrieves all the available countries to retrieve indices from, as the listed countries are the ones
-    indexed on Investing.com. This function is intended to show the user the data contained in `indices.csv` in order
-    to help him to later use that data in order to retrieve historical data, if the country is specified a filtering
-    parameter is applied so just the indices from the specified country are retrieved.
+    This function retrieves all the available `indices` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
+    which contains not just the index names, but all the fields contained on the indices file.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
 
     Returns:
-        :obj:`pandas.DataFrame` - indices:
-            The resulting :obj:`pandas.DataFrame` contains all the indices basic information stored on `indices.csv`,
-            since it was previously retrieved in `investpy.indices.retrieve_indices()`. Unless the country is
-            specified, all the available indices indexed on Investing.com is returned, but if it is specified, just the
-            indices from that country are returned.
+        :obj:`pandas.DataFrame` - indices_df:
+            The resulting :obj:`pandas.DataFrame` contains all the indices basic information retrieved from Investing.com,
+            some of which is not useful for the user, but for the inner package functions, such as the `tag` field,
+            for example.
 
-            In the case that the file reading of `indices.csv` or the retrieval process from Investing.com was
-            successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
+            In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                country | name | symbol | tag | id
-                --------|------|--------|-----|----
-                xxxxxxx | xxxx | xxxxxx | xxx | xx
+                country | name | full_name | tag | id | symbol | currency
+                --------|------|-----------|-----|----|--------|----------
+                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
+
+            Just like `investpy.indices.retrieve_indices()`, the output of this function is a :obj:`pandas.DataFrame`,
+            but instead of generating the CSV file, this function just reads it and loads it into a
+            :obj:`pandas.DataFrame` object.
 
     Raises:
-        ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `indices.csv` file is missing.
+        ValueError: raised if any of the introduced parameters is missing or errored.
+        IOError: raised if the indices file from `investpy` is missing or errored.
     """
 
     return ic.indices_as_df(country=country)
@@ -2526,7 +2528,8 @@ def get_indices(country=None):
 def get_indices_list(country=None):
     """
     This function retrieves all the available indices and returns a list of each one of them.
-    All the available indices can be found at: https://es.investing.com/indices/
+    All the available world indices can be found at: https://es.investing.com/indices/world-indices, and the global
+    ones can be foud at: https://es.investing.com/indices/world-indices.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -2538,7 +2541,7 @@ def get_indices_list(country=None):
 
             In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
 
-                indices = [...]
+                indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
     Raises:
         ValueError: raised when the introduced arguments are not correct.
@@ -2551,8 +2554,9 @@ def get_indices_list(country=None):
 def get_indices_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available indices on Investing.com and returns them as a :obj:`dict` containing the
-    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available indices can be found at:
-    https://es.investing.com/indices/
+    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available world indices can be found at:
+    https://es.investing.com/indices/world-indices, and the global ones can be foud at:
+    https://es.investing.com/indices/global-indices.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -2573,7 +2577,8 @@ def get_indices_dict(country=None, columns=None, as_json=False):
                     'name': name,
                     'full_name': full_name,
                     'symbol': symbol,
-                    'tag': tag
+                    'tag': tag,
+                    'id': id,
                     'currency': currency
                 }
 
@@ -2587,7 +2592,7 @@ def get_indices_dict(country=None, columns=None, as_json=False):
 
 def get_index_countries():
     """
-    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
+    This function retrieves all the country names indexed in Investing.com with available world indices to retrieve data
     from, via reading the `index_countries.csv` file from the resources directory. So on, this function will
     display a listing containing a set of countries, in order to let the user know which countries are taken into
     consideration and also the return listing from this function can be used for country param check if needed.
