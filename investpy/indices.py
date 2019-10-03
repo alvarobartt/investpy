@@ -128,8 +128,6 @@ def retrieve_indices(test_mode=False):
                                 'market': 'world_indices'
                             }
 
-                            print(data)
-
                             results.append(data)
 
         if test_mode is True:
@@ -214,8 +212,6 @@ def retrieve_indices(test_mode=False):
                                 'class': indices_filter['class'],
                                 'market': 'global_indices'
                             }
-
-                            print(data)
 
                             results.append(data)
 
@@ -310,8 +306,6 @@ def retrieve_indices(test_mode=False):
                             'class': indices_filter['class'],
                             'market': 'global_indices'
                         }
-
-                        print(data)
 
                         results.append(data)
 
