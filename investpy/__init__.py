@@ -3,7 +3,7 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
+__author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
 __version__ = '0.9.6'
 
 import datetime
@@ -2496,8 +2496,9 @@ def search_etfs(by, value):
 
 def get_indices(country=None):
     """
-    This function retrieves all the available `indices` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the index names, but all the fields contained on the indices file.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`pandas.DataFrame` with all the information of every available index. If the country
+    filtering is applied, just the indices from the introduced country are going to be returned.
     All the available indices can be found at: https://es.investing.com/indices/world-indices and at
     https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
@@ -2506,19 +2507,14 @@ def get_indices(country=None):
 
     Returns:
         :obj:`pandas.DataFrame` - indices_df:
-            The resulting :obj:`pandas.DataFrame` contains all the indices basic information retrieved from Investing.com,
-            some of which is not useful for the user, but for the inner package functions, such as the `tag` field,
-            for example.
+            The resulting :obj:`pandas.DataFrame` contains all the indices information retrieved from Investing.com,
+            as previously listed by investpy.
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id | symbol | currency
-                --------|------|-----------|-----|----|--------|----------
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
-
-            Just like `investpy.indices.retrieve_indices()`, the output of this function is a :obj:`pandas.DataFrame`,
-            but instead of generating the CSV file, this function just reads it and loads it into a
-            :obj:`pandas.DataFrame` object.
+                country | name | full_name | symbol | currency | class | market
+                --------|------|-----------|--------|----------|-------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxxxxxx | xxxxx | xxxxxx
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
@@ -2530,9 +2526,11 @@ def get_indices(country=None):
 
 def get_indices_list(country=None):
     """
-    This function retrieves all the available indices and returns a list of each one of them.
-    All the available world indices can be found at: https://es.investing.com/indices/world-indices, and the global
-    ones can be foud at: https://es.investing.com/indices/world-indices.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`list` with the names of every available index. If the country filtering is applied, just
+    the indices from the introduced country are going to be returned.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -2540,9 +2538,9 @@ def get_indices_list(country=None):
     Returns:
         :obj:`list` - indices_list:
             The resulting :obj:`list` contains the retrieved data, which corresponds to the index names of
-            every index listed on Investing.com.
+            every index listed in Investing.com.
 
-            In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
+            In case the information was successfully retrieved, the :obj:`list` will look like::
 
                 indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
@@ -2556,10 +2554,12 @@ def get_indices_list(country=None):
 
 def get_indices_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available indices on Investing.com and returns them as a :obj:`dict` containing the
-    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available world indices can be found at:
-    https://es.investing.com/indices/world-indices, and the global ones can be foud at:
-    https://es.investing.com/indices/global-indices.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`dict` with all the information of every available index. If the country
+    filtering is applied, just the indices from the introduced country are going to be returned. Additionally, the
+    columns to retrieve data from can be specified as a parameter formatted as a :obj:`list`.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -2654,7 +2654,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
             The returned data is case we use default arguments will look like::
 
                 Date || Open | High | Low | Close | Volume | Currency
-                -----||------------------------------------|----------
+                -----||------|------|-----|-------|--------|----------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::

@@ -1,64 +1,64 @@
-tag,country
-global-indices?c_id=29,argentina
-global-indices?c_id=25,australia
-global-indices?c_id=54,austria
-global-indices?c_id=145,bahrain
-global-indices?c_id=34,belgium
-global-indices?c_id=32,brazil
-global-indices?c_id=70,bulgaria
-global-indices?c_id=6,canada
-global-indices?c_id=27,chile
-global-indices?c_id=37,china
-global-indices?c_id=122,colombia
-global-indices?c_id=107,cyprus
-global-indices?c_id=55,czech republic
-global-indices?c_id=24,denmark
-global-indices?c_id=59,egypt
-global-indices?c_id=71,finland
-global-indices?c_id=22,france
-global-indices?c_id=17,germany
-global-indices?c_id=51,greece
-global-indices?c_id=39,hong kong
-global-indices?c_id=93,hungary
-global-indices?c_id=106,iceland
-global-indices?c_id=14,india
-global-indices?c_id=48,indonesia
-global-indices?c_id=33,ireland
-global-indices?c_id=23,israel
-global-indices?c_id=10,italy
-global-indices?c_id=35,japan
-global-indices?c_id=92,jordan
-global-indices?c_id=94,kuwait
-global-indices?c_id=68,lebanon
-global-indices?c_id=42,malaysia
-global-indices?c_id=109,malta
-global-indices?c_id=7,mexico
-global-indices?c_id=105,morocco
-global-indices?c_id=172,namibia
-global-indices?c_id=21,netherlands
-global-indices?c_id=43,new zealand
-global-indices?c_id=20,nigeria
-global-indices?c_id=60,norway
-global-indices?c_id=87,oman
-global-indices?c_id=44,pakistan
-global-indices?c_id=125,peru
-global-indices?c_id=45,philippines
-global-indices?c_id=53,poland
-global-indices?c_id=38,portugal
-global-indices?c_id=170,qatar
-global-indices?c_id=56,russia
-global-indices?c_id=52,saudi arabia
-global-indices?c_id=36,singapore
-global-indices?c_id=110,south africa
-global-indices?c_id=11,south korea
-global-indices?c_id=26,spain
-global-indices?c_id=162,sri lanka
-global-indices?c_id=9,sweden
-global-indices?c_id=12,switzerland
-global-indices?c_id=46,taiwan
-global-indices?c_id=41,thailand
-global-indices?c_id=63,turkey
-global-indices?c_id=61,ukraine
-global-indices?c_id=143,united arab emirates
-global-indices?c_id=4,united kingdom
-global-indices?c_id=5,united states
+id,country
+29,argentina
+25,australia
+54,austria
+145,bahrain
+34,belgium
+32,brazil
+70,bulgaria
+6,canada
+27,chile
+37,china
+122,colombia
+107,cyprus
+55,czech republic
+24,denmark
+59,egypt
+71,finland
+22,france
+17,germany
+51,greece
+39,hong kong
+93,hungary
+106,iceland
+14,india
+48,indonesia
+33,ireland
+23,israel
+10,italy
+35,japan
+92,jordan
+94,kuwait
+68,lebanon
+42,malaysia
+109,malta
+7,mexico
+105,morocco
+172,namibia
+21,netherlands
+43,new zealand
+20,nigeria
+60,norway
+87,oman
+44,pakistan
+125,peru
+45,philippines
+53,poland
+38,portugal
+170,qatar
+56,russia
+52,saudi arabia
+36,singapore
+110,south africa
+11,south korea
+26,spain
+162,sri lanka
+9,sweden
+12,switzerland
+46,taiwan
+41,thailand
+63,turkey
+61,ukraine
+143,united arab emirates
+4,united kingdom
+5,united states
