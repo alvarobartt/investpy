@@ -66,7 +66,7 @@ def retrieve_funds(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        url = 'https://es.investing.com/funds/' + country.replace(' ', '-') + '-funds?&issuer_filter=0'
+        url = 'https://es.investing.com/funds/' + country.replace(' ', '-') + '-funds?issuer_filter=0'
 
         req = requests.get(url, headers=head)
 
@@ -74,48 +74,77 @@ def retrieve_funds(test_mode=False):
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
         root_ = fromstring(req.text)
-        path_ = root_.xpath(".//table[@id='etfs']"
-                            "/tbody"
-                            "/tr")
+        path_ = root_.xpath(".//select[@name='asset_filter']/option")
+
+        values = list()
 
         if path_:
             for elements_ in path_:
-                id_ = elements_.get('id').replace('pair_', '')
-                symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+                values.append(elements_.get("value"))
 
-                nested = elements_.xpath(".//a")[0].get('title').rstrip()
-                tag = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
+        for value in values:
+            url = f"https://es.investing.com/funds/{country.replace(' ', '-')}-funds?asset={value}&issuer_filter=0"
 
-                info = None
+            req = requests.get(url, headers=head)
 
-                while info is None:
-                    try:
-                        info = retrieve_fund_info(tag)
-                    except:
-                        pass
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                obj = {
-                    "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
-                    "name": nested.strip(),
-                    "symbol": symbol,
-                    "tag": tag,
-                    "id": id_,
-                    "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
-                    "isin": info['isin'],
-                    "asset_class": info['asset_class'].lower() if info['asset_class'] is not None else info['asset_class'],
-                    "currency": info['currency']
-                }
+            root_ = fromstring(req.text)
+            path_ = root_.xpath(".//table[@id='etfs']"
+                                "/tbody"
+                                "/tr")
 
-                results.append(obj)
+            if path_:
+                for elements_ in path_:
+                    id_ = elements_.get('id').replace('pair_', '')
+                    symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-                if test_mode is True:
-                    break
+                    nested = elements_.xpath(".//a")[0].get('title').rstrip()
+                    tag = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
+
+                    if not any(result['tag'] == tag for result in results):
+                        info = None
+
+                        while info is None:
+                            try:
+                                info = retrieve_fund_info(tag)
+                            except:
+                                pass
+
+                        obj = {
+                            "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
+                            "name": nested.strip().replace(u"\N{REGISTERED SIGN}", ''),
+                            "symbol": symbol,
+                            "tag": tag,
+                            "id": id_,
+                            "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
+                            "isin": info['isin'],
+                            "asset_class": info['asset_class'].lower() if info['asset_class'] is not None else info['asset_class'],
+                            "currency": info['currency']
+                        }
+
+                        results.append(obj)
+
+                    if test_mode is True:
+                        break
+
+            if test_mode is True:
+                break
+
+        if test_mode is True:
+            break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
+
+    df = df.where((pd.notnull(df)), None)
+    df.drop_duplicates(subset="tag", keep='first', inplace=True)
+    df.sort_values('country', ascending=True, inplace=True)
+    df.reset_index(drop=True, inplace=True)
 
     if test_mode is False:
         df.to_csv(file, index=False)

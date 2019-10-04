@@ -19,7 +19,8 @@ def test_investpy():
     This function checks that both the investpy's author and version are the correct ones.
     """
 
-    print(investpy.__author__, investpy.__version__)
+    print(investpy.__author__)
+    print(investpy.__version__)
 
 
 def test_investpy_equities():

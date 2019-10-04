@@ -214,9 +214,9 @@ available etfs indexed on Investing.com is returned, but if it is specified, jus
 are returned.</p>
 <p>In the case that the file reading of <cite>etfs.csv</cite> or the retrieval process from Investing.com was
 successfully completed, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">country_code</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span>
-<span class="o">--------|--------------|------|--------|-----|----</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">--------|------|--------|-----|----|----------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -255,11 +255,11 @@ fields are filled with <cite>None</cite> values.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
-    <span class="s1">&#39;country_code&#39;</span><span class="p">:</span> <span class="n">country_code</span><span class="p">,</span>
     <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
     <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span>
+    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
+    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -358,9 +358,9 @@ coverage.</p>
 empty <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will be returned and no CSV file will be stored.</p>
 <p>In the case that the retrieval process of world etfs was successfully completed, the resulting
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">country_code</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span>
-<span class="o">--------|--------------|------|--------|-----|----</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">--------|------|--------|-----|----|----------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 </p>
