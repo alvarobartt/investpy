@@ -66,7 +66,7 @@ def retrieve_funds(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        url = 'https://es.investing.com/funds/' + country.replace(' ', '-') + '-funds?issuer_filter=0'
+        url = 'https://www.investing.com/funds/' + country.replace(' ', '-') + '-funds?issuer_filter=0'
 
         req = requests.get(url, headers=head)
 
@@ -76,14 +76,15 @@ def retrieve_funds(test_mode=False):
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//select[@name='asset_filter']/option")
 
-        values = list()
+        assets = list()
 
         if path_:
             for elements_ in path_:
-                values.append(elements_.get("value"))
+                assets.append(elements_.get("value"))
 
-        for value in values:
-            url = f"https://es.investing.com/funds/{country.replace(' ', '-')}-funds?asset={value}&issuer_filter=0"
+        for asset in assets:
+            url = "https://www.investing.com/funds/" + country.replace(' ', '-') + "-funds?asset=" \
+                  + str(asset) + "&issuer_filter=0"
 
             req = requests.get(url, headers=head)
 
@@ -91,43 +92,69 @@ def retrieve_funds(test_mode=False):
                 raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
             root_ = fromstring(req.text)
-            path_ = root_.xpath(".//table[@id='etfs']"
-                                "/tbody"
-                                "/tr")
+            path_ = root_.xpath(".//select[@name='category_filter']/option")
+
+            categories = list()
 
             if path_:
                 for elements_ in path_:
-                    id_ = elements_.get('id').replace('pair_', '')
-                    symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
-
-                    nested = elements_.xpath(".//a")[0].get('title').rstrip()
-                    tag = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
-
-                    if not any(result['tag'] == tag for result in results):
-                        info = None
-
-                        while info is None:
-                            try:
-                                info = retrieve_fund_info(tag)
-                            except:
-                                pass
-
-                        obj = {
-                            "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
-                            "name": nested.strip().replace(u"\N{REGISTERED SIGN}", ''),
-                            "symbol": symbol,
-                            "tag": tag,
-                            "id": id_,
-                            "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
-                            "isin": info['isin'],
-                            "asset_class": info['asset_class'].lower() if info['asset_class'] is not None else info['asset_class'],
-                            "currency": info['currency']
+                    if elements_.get("value") != '0' and not any(category['id'] == elements_.get("value") for category in categories):
+                        data = {
+                            'name': elements_.text_content().lower(),
+                            'id': elements_.get("value"),
                         }
 
-                        results.append(obj)
+                        categories.append(data)
 
-                    if test_mode is True:
-                        break
+            for category in categories:
+                url = "https://es.investing.com/funds/" + country.replace(' ', '-') + "-funds?asset=" \
+                      + str(asset) + "&issuer_filter=0&fundCategory=" + str(category['id'])
+
+                req = requests.get(url, headers=head)
+
+                if req.status_code != 200:
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                root_ = fromstring(req.text)
+                path_ = root_.xpath(".//table[@id='etfs']"
+                                    "/tbody"
+                                    "/tr")
+
+                if path_:
+                    for elements_ in path_:
+                        id_ = elements_.get('id').replace('pair_', '')
+                        symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+
+                        nested = elements_.xpath(".//a")[0].get('title').rstrip()
+                        tag = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
+
+                        if not any(result['tag'] == tag for result in results):
+                            info = None
+
+                            while info is None:
+                                try:
+                                    info = retrieve_fund_info(tag)
+                                except:
+                                    pass
+
+                            obj = {
+                                "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
+                                "name": nested.strip().replace(u"\N{REGISTERED SIGN}", ''),
+                                "symbol": symbol,
+                                "tag": tag,
+                                "id": id_,
+                                "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
+                                "isin": info['isin'],
+                                "asset_class": info['asset_class'].lower() if info['asset_class'] is not None else info['asset_class'],
+                                "currency": info['currency']
+                            }
+
+                            results.append(obj)
+
+                        if test_mode is True:
+                            break
+                if test_mode is True:
+                    break
 
             if test_mode is True:
                 break
