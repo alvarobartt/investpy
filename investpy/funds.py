@@ -151,14 +151,6 @@ def retrieve_funds(test_mode=False):
 
                             results.append(obj)
 
-                        if test_mode is True:
-                            break
-                if test_mode is True:
-                    break
-
-            if test_mode is True:
-                break
-
         if test_mode is True:
             break
 
