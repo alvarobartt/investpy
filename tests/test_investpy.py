@@ -402,7 +402,6 @@ def test_investpy_indices():
                                   as_json=param['as_json'])
 
     investpy.get_index_countries()
-    investpy.get_global_indices_countries()
 
     params = [
         {

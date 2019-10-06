@@ -143,7 +143,7 @@ def retrieve_indices(test_mode=False):
     if countries is None:
         raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
 
-    for index, row in countries.iterrows():
+    for _, row in countries.iterrows():
         indices_filters = [
             {
                 'class': 'major_indices',
@@ -542,64 +542,30 @@ def retrieve_global_indices_countries(test_mode=False):
 
 def index_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available world indices to retrieve data
-    from, via reading the `index_countries.csv` file from the resources directory. So on, this function will
-    display a listing containing a set of countries, in order to let the user know which countries are taken into
-    consideration and also the return listing from this function can be used for country param check if needed.
+    This function retrieves all the country names indexed in Investing.com with available indices to retrieve data
+    from, via reading the `indices.csv` file from the resources directory. So on, this function will display a listing 
+    containing a set of countries, in order to let the user know which countries are available for indices data retrieval.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        IndexError: if `index_countries.csv` was unavailable or not found.
+        FileNotFoundError: raised if `indices.csv` file was unavailable or not found.
+        IOError: raised if indices were not found.
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'indices', 'index_countries.csv'))
+    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        countries = retrieve_index_countries(test_mode=False)
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
-    if countries is None:
-        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
     else:
-        for index, row in countries.iterrows():
-            if row['country'] == 'uk':
-                countries.loc[index, 'country'] = 'united kingdom'
-            elif row['country'] == 'usa':
-                countries.loc[index, 'country'] = 'united states'
-
-        return countries['country'].tolist()
-
-
-def global_indices_countries_as_list():
-    """
-    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
-    from, via reading the `global_indices_countries.csv` file from the resources directory. So on, this function will
-    display a listing containing a set of countries, in order to let the user know which countries are taken into
-    consideration and also the return listing from this function can be used for country param check if needed.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with global indices as indexed in Investing.com
-
-    Raises:
-        IndexError: if `global_indices_countries.csv` was unavailable or not found.
-    """
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'indices', 'global_indices_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        countries = retrieve_index_countries(test_mode=False)
-
-    if countries is None:
-        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
-    else:
-        return countries['country'].tolist()
+        return indices['country'].unique().tolist()
 
 
 def indices_as_df(country=None):

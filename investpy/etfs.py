@@ -203,6 +203,9 @@ def retrieve_etfs(test_mode=False):
 
                                 time.sleep(.5)
 
+        if test_mode is True:
+            break
+
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
