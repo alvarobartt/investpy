@@ -193,8 +193,8 @@ def retrieve_fund_info(tag):
                 }
 
     Raises:
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if fund information was unavailable or not found.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if fund information was unavailable or not found.
     """
 
     url = "https://www.investing.com/funds/" + tag

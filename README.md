@@ -365,7 +365,9 @@ Also there is an open tab of [issues](https://github.com/alvarob96/investpy/issu
 new issues if needed or navigate through them in order to solve them or contribute to its solving. Remember that issues
 are not threads to describe multiple issues, this does not mean that issues can't be discussed, but if new issues are 
 reported, a new issue should be open so to keep a structured project management. Note that issues should be formatted as 
-the description specified in ISSUE_TEMPLATES.
+the description specified in [ISSUE_TEMPLATE](https://github.com/alvarob96/investpy/tree/master/.github/ISSUE_TEMPLATE),
+which is automatically launched whenever you want to open an issue, but if you prefer you can open a custom issue, trying
+to give all the information to identify the issue and solve it if possible.
 
 Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarob96/investpy) so you can 
 provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new 

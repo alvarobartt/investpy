@@ -60,7 +60,7 @@ def retrieve_equities(test_mode=False):
 
     results = list()
 
-    for index, row in countries.iterrows():
+    for _, row in countries.iterrows():
         head = {
             "User-Agent": ua.get_random(),
             "X-Requested-With": "XMLHttpRequest",

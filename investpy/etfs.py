@@ -6,6 +6,7 @@
 import json
 
 import unidecode
+import time
 
 import pandas as pd
 import pkg_resources
@@ -62,14 +63,14 @@ def retrieve_etfs(test_mode=False):
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        markets = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
         raise FileNotFoundError("ERR#0044: etf_countries file not found")
 
-    final = list()
+    results = list()
 
-    for index, row in markets.iterrows():
-        url = "https://es.investing.com/etfs/" + row['country'].replace(" ", "-") + "-etfs"
+    for country in countries['country'].tolist():
+        url = "https://www.investing.com/etfs/" + country.replace(" ", "-") + "-etfs?issuer_filter=0"
 
         req = requests.get(url, headers=head)
 
@@ -77,46 +78,136 @@ def retrieve_etfs(test_mode=False):
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
         root_ = fromstring(req.text)
-        path_ = root_.xpath(".//table[@id='etfs']"
-                            "/tbody"
-                            "/tr")
+        path_ = root_.xpath(".//select[@name='asset_filter']/option")
 
-        results = list()
+        assets = list()
 
         if path_:
             for elements_ in path_:
-                id_ = elements_.get('id').replace('pair_', '')
-                symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+                assets.append(elements_.get("value"))
 
-                nested = elements_.xpath(".//a")[0]
-                tag = nested.get('href').replace('/etfs/', '')
+        for asset in assets:
+            url = "https://www.investing.com/etfs/" + country.replace(' ', '-') + "-etfs?asset=" \
+                  + str(asset) + "&issuer_filter=0"
 
-                info = retrieve_etf_info(tag)
+            req = requests.get(url, headers=head)
 
-                data = {
-                    "country": 'united kingdom' if row['country'] == 'uk' else 'united states' if row['country'] == 'usa' else row['country'],
-                    "name": nested.text.strip(),
-                    "symbol": symbol,
-                    "tag": tag,
-                    "id": id_,
-                    "currency": info['currency'],
-                }
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                results.append(data)
+            root_ = fromstring(req.text)
+            path_ = root_.xpath(".//table[@id='etfs']"
+                                "/tbody"
+                                "/tr")
 
-                if test_mode is True:
-                    break
+            if path_:
+                if len(path_) == 1000:
+                    root_ = fromstring(req.text)
+                    path_ = root_.xpath(".//select[@name='etf_filter']/optgroup")
 
-        final.extend(results)
+                    etf_filters = list()
 
-        if test_mode is True:
-            break
+                    if path_:
+                        for elements_ in path_:
+                            element_ = elements_.xpath(".//option")
+                            for value_ in element_:
+                                etf_filters.append(value_.get("value"))
+                    
+                    for etf_filter in etf_filters:
+                        url = "https://www.investing.com/etfs/" + country.replace(' ', '-') + "-etfs?asset=" \
+                        + str(asset) + "&filter=" + str(etf_filter) + "&issuer_filter=0"
+
+                        req = requests.get(url, headers=head)
+
+                        if req.status_code != 200:
+                            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                        root_ = fromstring(req.text)
+                        path_ = root_.xpath(".//table[@id='etfs']"
+                                            "/tbody"
+                                            "/tr")
+
+                        if path_:
+                            for elements_ in path_:
+                                id_ = elements_.get('id').replace('pair_', '')
+                                symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+
+                                nested = elements_.xpath(".//a")[0]
+                                tag = nested.get('href').replace('/etfs/', '')
+                                full_name = nested.get('title').rstrip()
+
+                                if not any(result['tag'] == tag for result in results):
+                                    info = None
+
+                                    while info is None:
+                                        try:
+                                            info = retrieve_etf_info(tag)
+                                        except:
+                                            pass
+
+                                    print(info)
+
+                                    data = {
+                                        "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
+                                        "name": nested.text.strip(),
+                                        "full_name": full_name,
+                                        "symbol": symbol,
+                                        "tag": tag,
+                                        "id": id_,
+                                        "isin": info['isin'],
+                                        "asset_class": info['asset_class'],
+                                        "currency": info['currency'],
+                                    }
+
+                                    print(data)
+
+                                    results.append(data)
+
+                                    time.sleep(.5)
+                else:
+                    if path_:
+                        for elements_ in path_:
+                            id_ = elements_.get('id').replace('pair_', '')
+                            symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+
+                            nested = elements_.xpath(".//a")[0]
+                            tag = nested.get('href').replace('/etfs/', '')
+                            full_name = nested.get('title').rstrip()
+
+                            if not any(result['tag'] == tag for result in results):
+                                info = None
+
+                                while info is None:
+                                    try:
+                                        info = retrieve_etf_info(tag)
+                                    except:
+                                        pass
+
+                                print(info)
+
+                                data = {
+                                    "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
+                                    "name": nested.text.strip(),
+                                    "full_name": full_name,
+                                    "symbol": symbol,
+                                    "tag": tag,
+                                    "id": id_,
+                                    "isin": info['isin'],
+                                    "asset_class": info['asset_class'],
+                                    "currency": info['currency'],
+                                }
+
+                                print(data)
+
+                                results.append(data)
+
+                                time.sleep(.5)
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
-    df = pd.DataFrame(final)
+    df = pd.DataFrame(results)
 
     if test_mode is False:
         df.to_csv(file, index=False)
@@ -142,7 +233,7 @@ def retrieve_etf_info(tag):
        IndexError: raised if the information from the etf was not found or unable to retrieve.
     """
 
-    url = "https://es.investing.com/etfs/" + tag
+    url = "https://www.investing.com/etfs/" + tag
 
     head = {
         "User-Agent": ua.get_random(),
@@ -158,10 +249,25 @@ def retrieve_etf_info(tag):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     result = {
-        'currency': None,
+        'isin': None,
+        'asset_class': None,
+        'currency': None
     }
 
     root_ = fromstring(req.text)
+
+    path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
+                        "/div[@id='quotes_summary_current_data']"
+                        "/div[@class='right']"
+                        "/div")
+
+    for p in path_:
+        if p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
+            result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
+            continue
+        elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
+            result['asset_class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip().lower()
+            continue
 
     path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
                         "/span[@class='bold']")

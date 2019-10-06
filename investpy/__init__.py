@@ -227,7 +227,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = get_equities()
+        raise FileNotFoundError("ERR#0056: equities file not found or errored.")
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -490,7 +490,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = eq.retrieve_equities()
+        raise FileNotFoundError("ERR#0056: equities file not found or errored.")
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -699,7 +699,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = eq.retrieve_equities()
+        raise FileNotFoundError("ERR#0056: equities file not found or errored.")
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -830,7 +830,7 @@ def search_equities(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = eq.retrieve_equities()
+        raise FileNotFoundError("ERR#0056: equities file not found or errored.")
 
     if equities is None:
         raise IOError("ERR#0001: equities object not found or unable to retrieve.")
@@ -1055,7 +1055,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1307,7 +1307,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1504,7 +1504,7 @@ def get_fund_information(fund, country, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1696,7 +1696,7 @@ def search_funds(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1933,7 +1933,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = es.retrieve_etfs()
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
@@ -2186,7 +2186,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = es.retrieve_etfs()
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
@@ -2473,7 +2473,7 @@ def search_etfs(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = es.retrieve_etfs()
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
@@ -2720,7 +2720,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = ic.retrieve_indices()
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -2988,7 +2988,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = ic.retrieve_indices()
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -3176,7 +3176,7 @@ def search_indices(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = ic.retrieve_indices()
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -3436,7 +3436,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = get_currency_crosses()
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -3685,7 +3685,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = get_currency_crosses()
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -3868,7 +3868,7 @@ def search_currency_crosses(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = cc.retrieve_currency_crosses()
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
