@@ -56,13 +56,13 @@ def retrieve_currency_crosses(test_mode=False):
     resource_package = __name__
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_cross_continents.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        continents = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
         raise FileNotFoundError("ERR#0048: currency_cross_continents.csv file not found")
 
     results = list()
 
-    for index, row in countries.iterrows():
+    for continent in continents['tag'].tolist():
         head = {
             "User-Agent": ua.get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -71,7 +71,7 @@ def retrieve_currency_crosses(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        url = "https://www.investing.com/currencies/" + row['tag']
+        url = "https://www.investing.com/currencies/" + continent
 
         req = requests.get(url, headers=head)
 
