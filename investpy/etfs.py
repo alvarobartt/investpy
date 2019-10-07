@@ -6,7 +6,6 @@
 import json
 
 import unidecode
-import time
 
 import pandas as pd
 import pkg_resources
@@ -145,8 +144,6 @@ def retrieve_etfs(test_mode=False):
                                         except:
                                             pass
 
-                                    print(info)
-
                                     data = {
                                         "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
                                         "name": nested.text.strip(),
@@ -159,11 +156,13 @@ def retrieve_etfs(test_mode=False):
                                         "currency": info['currency'],
                                     }
 
-                                    print(data)
-
                                     results.append(data)
 
-                                    time.sleep(.5)
+                                    if test_mode is True:
+                                        break
+
+                        if test_mode is True:
+                            break
                 else:
                     if path_:
                         for elements_ in path_:
@@ -183,8 +182,6 @@ def retrieve_etfs(test_mode=False):
                                     except:
                                         pass
 
-                                print(info)
-
                                 data = {
                                     "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
                                     "name": nested.text.strip(),
@@ -197,14 +194,13 @@ def retrieve_etfs(test_mode=False):
                                     "currency": info['currency'],
                                 }
 
-                                print(data)
-
                                 results.append(data)
 
-                                time.sleep(.5)
+                                if test_mode is True:
+                                    break
 
-        if test_mode is True:
-            break
+            if test_mode is True:
+                break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))

@@ -5,7 +5,7 @@
 # investpy — a Python package for financial historical data extraction from Investing
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **28.120 equities, 81.024 funds, 8.864 etfs, 1.889 currency crosses 
+It provides historical data retrieval from up to **28.120 equities, 81.024 funds, 11.366 etfs, 1.889 currency crosses 
 and 7.797 indices**. Basically, investpy allows you to download historical data from all the indexed equities, funds, 
 currency crosses and etfs in Investing.com. All the data that can be retrieved includes data from all over the world, 
 from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, 
