@@ -14,12 +14,12 @@ from lxml.html import fromstring
 from investpy import user_agent as ua
 
 
-def retrieve_equities(test_mode=False):
+def retrieve_stocks(test_mode=False):
     """
-    This function retrieves all the available `equities` indexed on Investing.com, so to
+    This function retrieves all the available `stocks` indexed on Investing.com, so to
     retrieve data from them which will be used later for inner functions for data retrieval.
-    All the equities available can be found at: https://es.investing.com/equities/. Additionally,
-    when equities are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
+    All the stocks available can be found at: https://es.investing.com/equities/. Additionally,
+    when stocks are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
     and stored on a CSV file on a package folder containing all the available resources.
     Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
     just used for inner function purposes.
@@ -30,11 +30,11 @@ def retrieve_equities(test_mode=False):
             coverage.
 
     Returns:
-        :obj:`pandas.DataFrame` - equities:
-            The resulting :obj:`pandas.DataFrame` contains all the equities meta-information if found, if not, an
+        :obj:`pandas.DataFrame` - stocks:
+            The resulting :obj:`pandas.DataFrame` contains all the stocks meta-information if found, if not, an
             empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
 
-            In the case that the retrieval process of equities was successfully completed, the resulting
+            In the case that the retrieval process of stocks was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
                 name | full name | tag | isin | id
@@ -43,20 +43,20 @@ def retrieve_equities(test_mode=False):
 
     Raises:
         ValueError: if any of the introduced arguments is not valid.
-        FileNotFoundError: raised if `equity_countries.csv` file does not exists or is empty.
+        FileNotFoundError: raised if `stock_countries.csv` file does not exists or is empty.
         ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if equities information was unavailable or not found.
+        IndexError: if stocks information was unavailable or not found.
     """
 
     if not isinstance(test_mode, bool):
         raise ValueError('ERR#0041: test_mode can just be either True or False')
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0038: equity_countries.csv file not found")
+        raise FileNotFoundError("ERR#0038: stock_countries.csv file not found")
 
     results = list()
 
@@ -96,12 +96,12 @@ def retrieve_equities(test_mode=False):
                 for element_ in elements_.xpath('.//a'):
                     tag_ = element_.get('href')
 
-                    if str(tag_).__contains__('/equities/'):
-                        tag_ = tag_.replace('/equities/', '')
+                    if str(tag_).__contains__('/stocks/'):
+                        tag_ = tag_.replace('/stocks/', '')
 
                         full_name_ = element_.get('title').replace(' (CFD)', '')
 
-                        info = retrieve_equity_info(tag_)
+                        info = retrieve_stock_info(tag_)
 
                         data = {
                             'country': str(row['country']),
@@ -122,7 +122,7 @@ def retrieve_equities(test_mode=False):
             break
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
@@ -133,21 +133,21 @@ def retrieve_equities(test_mode=False):
     return df
 
 
-def retrieve_equity_info(tag):
+def retrieve_stock_info(tag):
     """
-    This function retrieves both the ISIN code, the currency and the symbol of an equity indexed in Investing.com, so
-    to include additional information in `equities.csv` file. The ISIN code will later be used in order to retrieve more
-    information from the specified equity, as the ISIN code is an unique identifier of each equity; the currency
+    This function retrieves both the ISIN code, the currency and the symbol of an stock indexed in Investing.com, so
+    to include additional information in `stocks.csv` file. The ISIN code will later be used in order to retrieve more
+    information from the specified stock, as the ISIN code is an unique identifier of each stock; the currency
     will be required in order to know which currency is the value in, and the symbol will be used for processing the
     request to HistoricalDataAjax to retrieve historical data from Investing.com.
 
     Args:
-        tag (:obj:`str`): is the tag of the equity to retrieve the information from as indexed by Investing.com.
+        tag (:obj:`str`): is the tag of the stock to retrieve the information from as indexed by Investing.com.
 
     Returns:
         :obj:`dict` - info:
-            The resulting :obj:`dict` contains the needed information for the equities listing, so on, the ISIN
-             code of the introduced equity, the currency of its values and the symbol of the equity.
+            The resulting :obj:`dict` contains the needed information for the stocks listing, so on, the ISIN
+             code of the introduced stock, the currency of its values and the symbol of the stock.
 
     Raises:
         ConnectionError: raised if GET requests does not return 200 status code.
@@ -202,12 +202,12 @@ def retrieve_equity_info(tag):
     return result
 
 
-def retrieve_equity_countries(test_mode=False):
+def retrieve_stock_countries(test_mode=False):
     """
-    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
+    This function retrieves all the country names indexed in Investing.com with available stocks to retrieve data
     from, via Web Scraping https://www.investing.com/equities/ where the available countries are listed, and from their
-    names the specific equity website of every country is retrieved in order to get the ID which will later be used
-    when retrieving all the information from the available equities in every country.
+    names the specific stock website of every country is retrieved in order to get the ID which will later be used
+    when retrieving all the information from the available stocks in every country.
 
     Args:
         test_mode (:obj:`bool`):
@@ -222,7 +222,7 @@ def retrieve_equity_countries(test_mode=False):
     Raises:
         ValueError: raised if any of the introduced arguments is not valid.
         ConnectionError: raised if connection to Investing.com could not be established.
-        RuntimeError: raised if no countries were retrieved from Investing.com equity listing.
+        RuntimeError: raised if no countries were retrieved from Investing.com stock listing.
     """
 
     if not isinstance(test_mode, bool):
@@ -280,7 +280,7 @@ def retrieve_equity_countries(test_mode=False):
         raise RuntimeError('ERR#0035: no countries could be retrieved!')
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
     file = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
@@ -291,46 +291,46 @@ def retrieve_equity_countries(test_mode=False):
     return df
 
 
-def equity_countries_as_list():
+def stock_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
-    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
+    This function retrieves all the country names indexed in Investing.com with available stocks to retrieve data
+    from, via reading the `stock_countries.csv` file from the resources directory. So on, this function will display a
     listing containing a set of countries, in order to let the user know which countries are taken into account and also
     the return listing from this function can be used for country param check if needed.
 
     Returns:
         :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+            The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        IndexError: if `equity_countries.csv` was unavailable or not found.
+        IndexError: if `stock_countries.csv` was unavailable or not found.
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equity_countries.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        countries = retrieve_equity_countries(test_mode=False)
+        countries = retrieve_stock_countries(test_mode=False)
 
     if countries is None:
-        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
+        raise IOError("ERR#0036: stock countries list not found or unable to retrieve.")
     else:
         return countries['country'].tolist()
 
 
-def equities_as_df(country=None):
+def stocks_as_df(country=None):
     """
-    This function retrieves all the equities previously stored on `equities.csv` file, via
-    `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
+    This function retrieves all the stocks previously stored on `stocks.csv` file, via
+    `investpy.stocks.retrieve_equities()`. The CSV file is read and if it does not exists,
     it is created again; but if it does exists, it is loaded into a :obj:`pandas.DataFrame`.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
 
     Returns:
         :obj:`pandas.DataFrame` - equities_df:
-            The resulting :obj:`pandas.DataFrame` contains the `equities.csv` file content if
+            The resulting :obj:`pandas.DataFrame` contains the `stocks.csv` file content if
             it was properly read or retrieved in case it did not exist in the moment when the
             function was first called.
 
@@ -341,86 +341,86 @@ def equities_as_df(country=None):
                 xxxx | xxxxxxxxx | xxx | xxxx | xx
 
     Raises:
-        IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
+        IOError: raised if stocks retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = retrieve_equities()
+        stocks = retrieve_stocks()
 
-    if equities is None:
-        raise IOError("ERR#0001: equities list not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
     if country is None:
-        equities.reset_index(drop=True, inplace=True)
-        return equities
-    elif unidecode.unidecode(country.lower()) in equity_countries_as_list():
-        equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
-        equities.reset_index(drop=True, inplace=True)
-        return equities
+        stocks.reset_index(drop=True, inplace=True)
+        return stocks
+    elif unidecode.unidecode(country.lower()) in stock_countries_as_list():
+        stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+        stocks.reset_index(drop=True, inplace=True)
+        return stocks
 
 
-def equities_as_list(country=None):
+def stocks_as_list(country=None):
     """
-    This function retrieves all the equities previously stored on `equities.csv` file, via
-    `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
-    it is created again; but if it does exists, equity names are loaded into a :obj:`list`.
+    This function retrieves all the stocks previously stored on `stocks.csv` file, via
+    `investpy.stocks.retrieve_equities()`. The CSV file is read and if it does not exists,
+    it is created again; but if it does exists, stock names are loaded into a :obj:`list`.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
 
     Returns:
         :obj:`list` - equities_list:
-            The resulting :obj:`list` contains the `equities.csv` file content if
+            The resulting :obj:`list` contains the `stocks.csv` file content if
             it was properly read or retrieved in case it did not exist in the moment when the
-            function was first called, as a :obj:`list` containing all the equity names.
+            function was first called, as a :obj:`list` containing all the stock names.
 
-            So on the listing will contain the equity names listed on Investing.com and will
+            So on the listing will contain the stock names listed on Investing.com and will
             look like the following::
 
                 equities_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
 
     Raises:
-        IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
+        IOError: raised if stocks retrieval failed, both for missing file or empty file, after and before retrieval.
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = retrieve_equities()
+        stocks = retrieve_stocks()
 
-    if equities is None:
-        raise IOError("ERR#0001: equities list not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
     if country is None:
-        return equities['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in equity_countries_as_list():
-        return equities[equities['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+        return stocks['name'].tolist()
+    elif unidecode.unidecode(country.lower()) in stock_countries_as_list():
+        return stocks[stocks['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
 
 
-def equities_as_dict(country=None, columns=None, as_json=False):
+def stocks_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available equities indexed in Investing.com, already
-    stored on `equities.csv`, which if does not exists, will be created by `investpy.equities.retrieve_equities()`.
+    This function retrieves all the available stocks indexed in Investing.com, already
+    stored on `stocks.csv`, which if does not exists, will be created by `investpy.stocks.retrieve_equities()`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
     :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
         columns (:obj:`list`, optional):
-            names of the columns of the equity data to retrieve <country, name, full_name, tag, isin, id, currency>
+            names of the columns of the stock data to retrieve <country, name, full_name, tag, isin, id, currency>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
 
@@ -443,7 +443,7 @@ def equities_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `equities.csv` file is missing or empty.
+        IOError: raised when `stocks.csv` file is missing or empty.
     """
 
     if country is not None and not isinstance(country, str):
@@ -453,32 +453,32 @@ def equities_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = retrieve_equities()
+        stocks = retrieve_stocks()
 
-    if equities is None:
-        raise IOError("ERR#0001: equities list not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
     if columns is None:
-        columns = equities.columns.tolist()
+        columns = stocks.columns.tolist()
     else:
         if not isinstance(columns, list):
             raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
 
-    if not all(column in equities.columns.tolist() for column in columns):
+    if not all(column in stocks.columns.tolist() for column in columns):
         raise ValueError("ERR#0021: specified columns does not exist, available columns are "
                          "<country, name, full_name, tag, isin, id, symbol, currency>")
 
     if country is None:
         if as_json:
-            return json.dumps(equities[columns].to_dict(orient='records'))
+            return json.dumps(stocks[columns].to_dict(orient='records'))
         else:
-            return equities[columns].to_dict(orient='records')
-    elif country in equity_countries_as_list():
+            return stocks[columns].to_dict(orient='records')
+    elif country in stock_countries_as_list():
         if as_json:
-            return json.dumps(equities[equities['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(stocks[stocks['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return equities[equities['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return stocks[stocks['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')

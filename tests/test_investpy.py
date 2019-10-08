@@ -7,7 +7,7 @@ import pytest
 
 import investpy
 
-from investpy.equities import retrieve_equities, retrieve_equity_countries
+from investpy.stocks import retrieve_stocks, retrieve_stock_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
 from investpy.indices import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
@@ -23,9 +23,9 @@ def test_investpy():
     print(investpy.__version__)
 
 
-def test_investpy_equities():
+def test_investpy_stocks():
     """
-    This function checks that equity data retrieval functions listed in investpy work properly.
+    This function checks that stock data retrieval functions listed in investpy work properly.
     """
 
     params = [
@@ -38,8 +38,8 @@ def test_investpy_equities():
     ]
 
     for param in params:
-        investpy.get_equities(country=param['country'])
-        investpy.get_equities_list(country=param['country'])
+        investpy.get_stocks(country=param['country'])
+        investpy.get_stocks_list(country=param['country'])
 
     params = [
         {
@@ -70,11 +70,11 @@ def test_investpy_equities():
     ]
 
     for param in params:
-        investpy.get_equities_dict(country=param['country'],
-                                   columns=param['columns'],
-                                   as_json=param['as_json'])
+        investpy.get_stocks_dict(country=param['country'],
+                                 columns=param['columns'],
+                                 as_json=param['as_json'])
 
-    investpy.get_equity_countries()
+    investpy.get_stock_countries()
 
     params = [
         {
@@ -100,29 +100,29 @@ def test_investpy_equities():
     ]
 
     for param in params:
-        investpy.get_recent_data(equity='enagás',
-                                 country='spain',
-                                 as_json=param['as_json'],
-                                 order=param['order'],
-                                 debug=param['debug'])
+        investpy.get_stock_recent_data(stock='enagás',
+                                       country='spain',
+                                       as_json=param['as_json'],
+                                       order=param['order'],
+                                       debug=param['debug'])
 
-        investpy.get_historical_data(equity='enagás',
-                                     country='spain',
-                                     from_date='01/01/1990',
-                                     to_date='01/01/2019',
-                                     as_json=param['as_json'],
-                                     order=param['order'],
-                                     debug=param['debug'])
+        investpy.get_stock_historical_data(stock='enagás',
+                                           country='spain',
+                                           from_date='01/01/1990',
+                                           to_date='01/01/2019',
+                                           as_json=param['as_json'],
+                                           order=param['order'],
+                                           debug=param['debug'])
 
     for value in ['spanish', 'english']:
-        investpy.get_equity_company_profile(equity='enagás',
-                                            country='spain',
-                                            language=value)
+        investpy.get_stock_company_profile(stock='enagás',
+                                           country='spain',
+                                           language=value)
 
-    investpy.search_equities(by='name', value='bbva')
+    investpy.search_stocks(by='name', value='bbva')
 
-    retrieve_equities(test_mode=True)
-    retrieve_equity_countries(test_mode=True)
+    retrieve_stocks(test_mode=True)
+    retrieve_stock_countries(test_mode=True)
 
 
 def test_investpy_funds():
@@ -581,7 +581,7 @@ def test_investpy_currency_crosses():
 
 if __name__ == '__main__':
     test_investpy()
-    test_investpy_equities()
+    test_investpy_stocks()
     test_investpy_funds()
     test_investpy_etfs()
     test_investpy_indices()

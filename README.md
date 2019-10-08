@@ -5,8 +5,8 @@
 # investpy — a Python package for financial historical data extraction from Investing
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **28.120 equities, 81.024 funds, 11.366 etfs, 1.889 currency crosses 
-and 7.797 indices**. Basically, investpy allows you to download historical data from all the indexed equities, funds, 
+It provides historical data retrieval from up to **28.120 stocks, 81.024 funds, 11.366 etfs, 1.889 currency crosses 
+and 7.797 indices**. Basically, investpy allows you to download historical data from all the indexed stocks, funds, 
 currency crosses and etfs in Investing.com. All the data that can be retrieved includes data from all over the world, 
 from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, 
 investpy is intended to wrap up all the available data from Investing.com, so that it can be retrieved via Python for 
@@ -39,7 +39,7 @@ file, which can also be installed via pip:
 
 ## Usage
 
-Even though some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/equities.html), 
+Even though some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/stocks.html), 
 some basic functionality will be sorted out with sample Python code blocks.
 
 ### Recent/Historical Data
@@ -53,7 +53,7 @@ other function is additional.
 ```python
 import investpy
 
-df = investpy.get_recent_data(equity='bbva',
+df = investpy.get_recent_data(stock='bbva',
                               country='spain')
 print(df.head())
 ```
@@ -71,7 +71,7 @@ Date
 ```python
 import investpy
 
-df = investpy.get_historical_data(equity='bbva',
+df = investpy.get_historical_data(stock='bbva',
                                   country='spain',
                                   from_date='01/01/2010',
                                   to_date='01/01/2019')
@@ -247,9 +247,9 @@ Date
 ### Search Data
 
 As financial data is really complex and sometimes both the product name and the country are unknown for the user, in 
-terms of what does investpy expect, every financial product listed in investpy (which currently includes equities,
+terms of what does investpy expect, every financial product listed in investpy (which currently includes stocks,
 funds, etfs, indices and currency crosses) has its own search function. Search functions allow the user to search among
-all the available equities for example, whenever just one field is known (even though it is not the exact match). So on,
+all the available stocks for example, whenever just one field is known (even though it is not the exact match). So on,
 the usage of this functions is presented below with some samples:
 
 #### The user just knows the ISIN code of an Equity
@@ -308,14 +308,14 @@ print(search_results.head())
 
 As Investing provides more data besides the historical one, some of that additional data can be fetched via investpy. 
 Currently, as the package is under-development, some additional information such as company profiles or inner basic 
-information is retrieved for both equities and funds, respectively as shown below.
+information is retrieved for both stocks and funds, respectively as shown below.
 
 #### Equity Company Profile Retrieval
 
 ```python
 import investpy
 
-company_profile = investpy.get_equity_company_profile(equity='bbva',
+company_profile = investpy.get_equity_company_profile(stock='bbva',
                                                       country='spain')
 print(company_profile)
 ```

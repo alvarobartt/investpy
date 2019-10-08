@@ -1,13 +1,13 @@
 Introduction
 ============
 
-investpy is a Python package developed in order to retrieve all the available historical data from equities/stocks,
+investpy is a Python package developed in order to retrieve all the available historical data from stocks/stocks,
 funds and ETFs from Investing.com. As Investing.com does not have any API to retrieve historical data, the main goal
 of this package is to allow users retrieve information from all the available financial products.
 
 investpy came to life due to the need of covering the existing shortcomings in terms of real time data retrieval from
-equities of the companies that make up the Spanish Stock Market, until the date there was no other package that provided
-a data extraction model for equities from the Spanish Stock Market.
+stocks of the companies that make up the Spanish Stock Market, until the date there was no other package that provided
+a data extraction model for stocks from the Spanish Stock Market.
 
 As time passed by, a decision was made on how investpy could be improved, and as the package was expected to have a high
 scalability and thus cover all the data possibilities offered by Investing to the public, investpy is now trying to
@@ -29,7 +29,7 @@ first step is importing it at the top of your Python file as::
     import investpy
 
 Currently the main functions of `investpy <https://pypi.org/project/investpy/>`_ support historical data retrieval
-of equities, funds and ETFs from all around the world (as indexed in Investing.com). Additionally to
+of stocks, funds and ETFs from all around the world (as indexed in Investing.com). Additionally to
 historical data retrieval, investpy also offers additional data retrieval related to the indexed financial products.
 
 In order to clarify this concepts, some investpy functions are going to be presented, even though all of them
@@ -39,14 +39,14 @@ Reference. For example, a block of code in order to get to test investpy usage i
     import investpy
 
 
-    # Retrieve all the available equities as a Python list
-    equities = investpy.get_equities_list()
+    # Retrieve all the available stocks as a Python list
+    stocks = investpy.get_equities_list()
 
-    # Retrieve the recent historical data (past month) of an equity as a pandas.DataFrame on ascending date order
-    df = investpy.get_recent_data(equity='bbva', country='spain', as_json=False, order='ascending', debug=False)
+    # Retrieve the recent historical data (past month) of a stock as a pandas.DataFrame on ascending date order
+    df = investpy.get_recent_data(stock='bbva', country='spain', as_json=False, order='ascending', debug=False)
 
-    # Retrieve the company profile of the introduced equity on english
-    profile = investpy.get_company_profile(equity='bbva', country='spain', language='english')
+    # Retrieve the company profile of the introduced stock on english
+    profile = investpy.get_company_profile(stock='bbva', country='spain', language='english')
 
 
 Data Source

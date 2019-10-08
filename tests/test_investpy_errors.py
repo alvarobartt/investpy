@@ -7,7 +7,7 @@ import pytest
 
 import investpy
 
-from investpy.equities import retrieve_equities, retrieve_equity_countries
+from investpy.stocks import retrieve_stocks, retrieve_stock_countries
 from investpy.funds import retrieve_funds, retrieve_fund_countries
 from investpy.etfs import retrieve_etfs
 from investpy.indices import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
@@ -16,18 +16,18 @@ from investpy.currency_crosses import retrieve_currency_crosses
 from investpy.user_agent import get_random, clear_file, delete_file
 
 
-def test_equities_errors():
+def test_stocks_errors():
     """
-    This function raises errors on equity retrieval functions
+    This function raises errors on stock retrieval functions
     """
 
     try:
-        retrieve_equities(test_mode=None)
+        retrieve_stocks(test_mode=None)
     except:
         pass
 
     try:
-        retrieve_equity_countries(test_mode=None)
+        retrieve_stock_countries(test_mode=None)
     except:
         pass
 
@@ -42,12 +42,12 @@ def test_equities_errors():
 
     for param in params:
         try:
-            investpy.get_equities(country=param['country'])
+            investpy.get_stocks(country=param['country'])
         except:
             pass
 
         try:
-            investpy.get_equities_list(country=param['country'])
+            investpy.get_stocks_list(country=param['country'])
         except:
             pass
 
@@ -76,78 +76,78 @@ def test_equities_errors():
 
     for param in params:
         try:
-            investpy.get_equities_dict(country=param['country'],
-                                       columns=param['columns'],
-                                       as_json=param['as_json'])
+            investpy.get_stocks_dict(country=param['country'],
+                                     columns=param['columns'],
+                                     as_json=param['as_json'])
         except:
             pass
 
     params = [
         {
-            'equity': 'Euripo Properties Socimi',
+            'stock': 'Euripo Properties Socimi',
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': None,
+            'stock': None,
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': None,
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'greece',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'as_json': True,
             'order': 'error',
             'debug': True
         },
         {
-            'equity': 'error',
+            'stock': 'error',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': ['error'],
+            'stock': ['error'],
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
@@ -157,17 +157,17 @@ def test_equities_errors():
 
     for param in params:
         try:
-            investpy.get_recent_data(equity=param['equity'],
-                                     country=param['country'],
-                                     as_json=param['as_json'],
-                                     order=param['order'],
-                                     debug=param['debug'])
+            investpy.get_stock_recent_data(stock=param['stock'],
+                                           country=param['country'],
+                                           as_json=param['as_json'],
+                                           order=param['order'],
+                                           debug=param['debug'])
         except:
             pass
 
     params = [
         {
-            'equity': 'Euripo Properties Socimi',
+            'stock': 'Euripo Properties Socimi',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -176,7 +176,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': None,
+            'stock': None,
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -185,7 +185,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': None,
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -194,7 +194,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': ['error'],
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -203,7 +203,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'greece',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -212,7 +212,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -221,7 +221,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -230,7 +230,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': 'error',
             'to_date': '01/01/2019',
@@ -239,7 +239,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': 'error',
@@ -248,7 +248,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'error',
+            'stock': 'error',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -257,7 +257,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': ['error'],
+            'stock': ['error'],
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -266,7 +266,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/1999',
             'to_date': '01/01/2019',
@@ -275,7 +275,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/1900',
             'to_date': '01/01/1950',
@@ -284,7 +284,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/1950',
             'to_date': '01/01/2019',
@@ -293,7 +293,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/01/1999',
@@ -302,7 +302,7 @@ def test_equities_errors():
             'debug': True
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
@@ -314,44 +314,44 @@ def test_equities_errors():
 
     for param in params:
         try:
-            investpy.get_historical_data(equity=param['equity'],
-                                         country=param['country'],
-                                         from_date=param['from_date'],
-                                         to_date=param['to_date'],
-                                         as_json=param['as_json'],
-                                         order=param['order'],
-                                         debug=param['debug'])
+            investpy.get_stock_historical_data(stock=param['stock'],
+                                               country=param['country'],
+                                               from_date=param['from_date'],
+                                               to_date=param['to_date'],
+                                               as_json=param['as_json'],
+                                               order=param['order'],
+                                               debug=param['debug'])
         except:
             pass
 
     params = [
         {
-            'equity': None,
+            'stock': None,
             'country': 'spain',
             'language': 'spanish'
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': None,
             'language': 'spanish'
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'greece',
             'language': 'spanish'
         },
         {
-            'equity': 'bbva',
+            'stock': 'bbva',
             'country': 'spain',
             'language': 'error'
         },
         {
-            'equity': 'error',
+            'stock': 'error',
             'country': 'spain',
             'language': 'spanish'
         },
         {
-            'equity': ['error'],
+            'stock': ['error'],
             'country': 'spain',
             'language': 'spanish'
         },
@@ -359,9 +359,9 @@ def test_equities_errors():
 
     for param in params:
         try:
-            investpy.get_equity_company_profile(equity=param['equity'],
-                                                country=param['country'],
-                                                language=param['language'])
+            investpy.get_stock_company_profile(stock=param['stock'],
+                                               country=param['country'],
+                                               language=param['language'])
         except:
             pass
 
@@ -394,7 +394,7 @@ def test_equities_errors():
 
     for param in params:
         try:
-            investpy.search_equities(by=param['by'], value=param['value'])
+            investpy.search_stocks(by=param['by'], value=param['value'])
         except:
             pass
 
@@ -1815,7 +1815,7 @@ def test_user_agent_errors():
 
 
 if __name__ == '__main__':
-    test_equities_errors()
+    test_stocks_errors()
     test_funds_errors()
     test_etfs_errors()
     test_indices_errors()

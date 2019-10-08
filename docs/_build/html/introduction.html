@@ -93,7 +93,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="equities.html">Stocks/Equities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stocks.html">Stocks/Equities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funds.html">Funds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
 <li class="toctree-l1"><a class="reference internal" href="information.html">Additional Information</a></li>
@@ -164,12 +164,12 @@
             
   <div class="section" id="introduction">
 <h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>investpy is a Python package developed in order to retrieve all the available historical data from equities/stocks,
+<p>investpy is a Python package developed in order to retrieve all the available historical data from stocks/stocks,
 funds and ETFs from Investing.com. As Investing.com does not have any API to retrieve historical data, the main goal
 of this package is to allow users retrieve information from all the available financial products.</p>
 <p>investpy came to life due to the need of covering the existing shortcomings in terms of real time data retrieval from
-equities of the companies that make up the Spanish Stock Market, until the date there was no other package that provided
-a data extraction model for equities from the Spanish Stock Market.</p>
+stocks of the companies that make up the Spanish Stock Market, until the date there was no other package that provided
+a data extraction model for stocks from the Spanish Stock Market.</p>
 <p>As time passed by, a decision was made on how investpy could be improved, and as the package was expected to have a high
 scalability and thus cover all the data possibilities offered by Investing to the public, investpy is now trying to
 expand the data it retrieves to make it more useful.</p>
@@ -188,7 +188,7 @@ first step is importing it at the top of your Python file as:</p>
 </pre></div>
 </div>
 <p>Currently the main functions of <a class="reference external" href="https://pypi.org/project/investpy/">investpy</a> support historical data retrieval
-of equities, funds and ETFs from all around the world (as indexed in Investing.com). Additionally to
+of stocks, funds and ETFs from all around the world (as indexed in Investing.com). Additionally to
 historical data retrieval, investpy also offers additional data retrieval related to the indexed financial products.</p>
 <p>In order to clarify this concepts, some investpy functions are going to be presented, even though all of them
 are going to be properly explained and sorted out on their respective appendix in the documentation or in the API
@@ -196,14 +196,14 @@ Reference. For example, a block of code in order to get to test investpy usage i
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">investpy</span>
 
 
-<span class="c1"># Retrieve all the available equities as a Python list</span>
-<span class="n">equities</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_equities_list</span><span class="p">()</span>
+<span class="c1"># Retrieve all the available stocks as a Python list</span>
+<span class="n">stocks</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_equities_list</span><span class="p">()</span>
 
-<span class="c1"># Retrieve the recent historical data (past month) of an equity as a pandas.DataFrame on ascending date order</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="c1"># Retrieve the recent historical data (past month) of a stock as a pandas.DataFrame on ascending date order</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 
-<span class="c1"># Retrieve the company profile of the introduced equity on english</span>
-<span class="n">profile</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_company_profile</span><span class="p">(</span><span class="n">equity</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+<span class="c1"># Retrieve the company profile of the introduced stock on english</span>
+<span class="n">profile</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_company_profile</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

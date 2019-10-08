@@ -1,7 +1,7 @@
-:mod:`investpy.equities`
+:mod:`investpy.stocks`
 ========================
 
-.. automodule:: investpy.equities
+.. automodule:: investpy.stocks
    :special-members:
    :exclude-members:
    :members:

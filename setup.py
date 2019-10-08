@@ -32,9 +32,9 @@ setup(
         'requests>=2.22.0'
     ],
     data_files=[
-        ('equities', [
-            'investpy/resources/equities/equities.csv',
-            'investpy/resources/equities/equity_countries.csv'
+        ('stocks', [
+            'investpy/resources/stocks/stocks.csv',
+            'investpy/resources/stocks/stock_countries.csv'
         ]),
         ('funds', [
             'investpy/resources/funds/funds.csv',

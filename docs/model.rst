@@ -5,7 +5,7 @@ As the retrieved historical data is common to every financial product that inves
 class has been created in order to store the day-a-day historical data.
 
 So in we define a model in where every value corresponds to each value of the OHLC (Open-High-Low-Close) nomenclature
-(except on equities, that it also includes the volume) and it looks like::
+(except on stocks, that it also includes the volume) and it looks like::
 
     def __init__(self, date_, open_, high_, low_, close_, volume_):
         self.date = date_

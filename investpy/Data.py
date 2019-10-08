@@ -6,8 +6,8 @@
 
 class Data(object):
     """
-    This class is used to store the historical data of an equity, fund or etf either as a :obj:`json` or as a
-    :obj:`dict`.
+    This class is used to store the historical data of avery financial product retrieved from Investing.com either as
+    a :obj:`json` or as a :obj:`dict`.
 
     Args:
         date_ (:obj:`str`): date in dd/mm/yyyy format.
