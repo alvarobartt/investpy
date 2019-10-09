@@ -351,12 +351,12 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
         if as_json is True:
             json_ = {'name': name,
                      'recent':
-                         [value.equity_as_json() for value in result]
+                         [value.stock_as_json() for value in result]
                      }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
-            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+            df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df
@@ -629,11 +629,11 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                 if as_json is True:
                     json_ = {'name': name,
                              'historical':
-                                 [value.equity_as_json() for value in result]
+                                 [value.stock_as_json() for value in result]
                              }
                     final.append(json_)
                 elif as_json is False:
-                    df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+                    df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
@@ -811,6 +811,139 @@ def get_stock_company_profile(stock, country='spain', language='english'):
             return company_profile
         else:
             return company_profile
+
+
+def get_stock_dividends(stock, country):
+    """
+    This function ...
+    """
+
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
+
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+
+    stock = stock.strip()
+    stock = stock.lower()
+
+    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+
+    tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
+
+    headers = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://es.investing.com/equities/' + str(tag_) + '-dividends'
+
+    req = requests.get(url=url, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[contains(@id, 'dividendsHistoryData')]")
+
+    more_results_id = path_[0].get('id').replace('dividendsHistoryData', '')
+
+    path_ = root_.xpath(".//table[@id='dividendsHistoryData" + str(more_results_id) + "']/tbody/tr")
+
+    objs = list()
+
+    if path_:
+        last_timestamp = path_[-1].get('event_timestamp')
+
+        for elements_ in path_:
+            for element_ in elements_.xpath(".//td"):
+                if element_.get('class'):
+                    if element_.get('class').__contains__('first'):
+                        dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                        dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+
+                        obj = {
+                            'Date': dividend_date,
+                            'Dividend': dividend_value,
+                        }
+
+                        objs.append(obj)
+        
+        flag = True
+
+        while flag is True:
+            headers = {
+                "User-Agent": user_agent.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+            }
+
+            params = {
+                'pairID': int(more_results_id),
+                'last_timestamp': int(last_timestamp)
+            }
+
+            url = 'https://es.investing.com/equities/MoreDividendsHistory'
+
+            req = requests.post(url=url, headers=headers, params=params)
+
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            res = req.json()
+
+            if res['hasMoreHistory'] is False:
+                flag = False
+
+            root_ = fromstring(res['historyRows'])
+            path_ = root_.xpath(".//tr")
+
+            if path_:
+                last_timestamp = path_[-1].get('event_timestamp')
+
+                for elements_ in path_:
+                    for element_ in elements_.xpath(".//td"):
+                        if element_.get('class'):
+                            if element_.get('class').__contains__('first'):
+                                dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+
+                                obj = {
+                                    'Date': dividend_date,
+                                    'Dividend': dividend_value,
+                                }
+
+                                objs.append(obj)
+
+    df = pd.DataFrame(objs)
+    return df
 
 
 def search_stocks(by, value):
