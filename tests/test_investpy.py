@@ -44,22 +44,22 @@ def test_investpy_stocks():
     params = [
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['full_name', 'name'],
             'as_json': True
         },
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['full_name', 'name'],
             'as_json': False
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['full_name', 'name'],
             'as_json': True
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['full_name', 'name'],
             'as_json': False
         },
         {

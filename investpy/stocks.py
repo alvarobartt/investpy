@@ -16,13 +16,10 @@ from investpy import user_agent as ua
 
 def retrieve_stocks(test_mode=False):
     """
-    This function retrieves all the available `stocks` indexed on Investing.com, so to
-    retrieve data from them which will be used later for inner functions for data retrieval.
-    All the stocks available can be found at: https://es.investing.com/equities/. Additionally,
-    when stocks are retrieved all the meta-information is both returned as a :obj:`pandas.DataFrame`
-    and stored on a CSV file on a package folder containing all the available resources.
-    Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame` is useless as it is
-    just used for inner function purposes.
+    This function retrieves all the available `stocks` indexed in Investing.com, which includes the retrieval
+    of every stock information such as the full name or the symbol. Additionally, when stocks are retrieved 
+    alongside all the meta-information is both returned as a :obj:`pandas.DataFrame` and stored on a CSV file as
+    an investpy resource. All the available stocks can be found at: https://es.investing.com/equities/
 
     Args:
         test_mode (:obj:`bool`):
@@ -31,21 +28,22 @@ def retrieve_stocks(test_mode=False):
 
     Returns:
         :obj:`pandas.DataFrame` - stocks:
-            The resulting :obj:`pandas.DataFrame` contains all the stocks meta-information if found, if not, an
-            empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
+            The resulting :obj:`pandas.DataFrame` contains all the stocks and their meta-information if found, if not,
+            an empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored. Which will lead to an error
+            whenever the stocks.csv file is found empty, raising an IOError exception.
 
-            In the case that the retrieval process of stocks was successfully completed, the resulting
-            :obj:`pandas.DataFrame` will look like::
+            In the case that the stock retrieval process was successfully completed, the resulting :obj:`pandas.DataFrame` 
+            will look like the one presented below::
 
-                name | full name | tag | isin | id
-                -----|-----------|-----|------|----
-                xxxx | xxxxxxxxx | xxx | xxxx | xx
+                name | full name | tag | isin | id | class | currency | symbol 
+                -----|-----------|-----|------|----|-------|----------|--------
+                xxxx | xxxxxxxxx | xxx | xxxx | xx | xxxxx | xxxxxxxx | xxxxxx  
 
     Raises:
-        ValueError: if any of the introduced arguments is not valid.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        ConnectionError: raised if connection to Investing.com could not be established.
         FileNotFoundError: raised if `stock_countries.csv` file does not exists or is empty.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if stocks information was unavailable or not found.
+
     """
 
     if not isinstance(test_mode, bool):
@@ -69,89 +67,133 @@ def retrieve_stocks(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        params = {
-            "noconstruct": "1",
-            "smlID": str(row['id']),
-            "sid": "",
-            "tabletype": "price",
-            "index_id": "all"
-        }
+        url = "https://www.investing.com/equities/" + row['country'].replace(' ', '-')
 
-        url = "https://es.investing.com/equities/StocksFilter"
-
-        req = requests.get(url, params=params, headers=head)
+        req = requests.get(url, headers=head)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
         root_ = fromstring(req.text)
-        path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
-                            "/tbody"
-                            "/tr")
+        path_ = root_.xpath(".//select[@id='stocksFilter']/option")
+
+        filters = list()
 
         if path_:
             for elements_ in path_:
-                id_ = elements_.get('id').replace('pair_', '')
+                if elements_.get('id') != 'all':
+                    filter_ = {
+                        'id': elements_.get('id'),
+                        'class': elements_.text_content(),
+                    }
 
-                for element_ in elements_.xpath('.//a'):
-                    tag_ = element_.get('href')
+                    filters.append(filter_)
 
-                    if str(tag_).__contains__('/stocks/'):
-                        tag_ = tag_.replace('/stocks/', '')
+        for filter_ in filters:
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+            }
 
-                        full_name_ = element_.get('title').replace(' (CFD)', '')
+            params = {
+                "noconstruct": "1",
+                "smlID": str(row['id']),
+                "sid": "",
+                "tabletype": "price",
+                "index_id": str(filter_['id'])
+            }
 
-                        info = retrieve_stock_info(tag_)
+            url = "https://es.investing.com/equities/StocksFilter"
 
-                        data = {
-                            'country': str(row['country']),
-                            'name': element_.text.strip(),
-                            'full_name': full_name_.rstrip(),
-                            'tag': tag_,
-                            'isin': info['isin'],
-                            'id': id_,
-                            'currency': info['currency'],
-                            'symbol': info['symbol']
-                        }
+            req = requests.get(url, params=params, headers=head)
 
-                        results.append(data)
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                if test_mode is True:
-                    break
+            root_ = fromstring(req.text)
+            path_ = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']"
+                                "/tbody"
+                                "/tr")
+
+            if path_:
+                for elements_ in path_:
+                    id_ = elements_.get('id').replace('pair_', '')
+
+                    for element_ in elements_.xpath('.//a'):
+                        tag_ = element_.get('href')
+
+                        if str(tag_).__contains__('/equities/'):
+                            tag_ = tag_.replace('/equities/', '')
+
+                            full_name_ = element_.get('title').replace(' (CFD)', '')
+
+                            info = None
+
+                            while info is None:
+                                try:
+                                    info = retrieve_stock_info(tag_)
+                                except:
+                                    pass
+
+                            data = {
+                                'country': str(row['country']),
+                                'name': element_.text.strip(),
+                                'full_name': full_name_.rstrip(),
+                                'tag': tag_,
+                                'isin': info['isin'],
+                                'id': id_,
+                                'class': filter_['class'],
+                                'currency': info['currency'],
+                                'symbol': info['symbol']
+                            }
+
+                            results.append(data)
+                    
+                    if test_mode is True:
+                        break
+
+            if test_mode is True:
+                break
+
         if test_mode is True:
             break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
 
 def retrieve_stock_info(tag):
     """
-    This function retrieves both the ISIN code, the currency and the symbol of an stock indexed in Investing.com, so
-    to include additional information in `stocks.csv` file. The ISIN code will later be used in order to retrieve more
-    information from the specified stock, as the ISIN code is an unique identifier of each stock; the currency
-    will be required in order to know which currency is the value in, and the symbol will be used for processing the
-    request to HistoricalDataAjax to retrieve historical data from Investing.com.
+    This function retrieves additional information from every stock as listed in Investing.com. This information will
+    be added to the stocks file, which is `stocks.csv` file. So on, that file will contain not only the basic information
+    from every stock, but additional information in order to add details to the stocks information. Note that by adding 
+    more parameters to every stock, it will help whenever a user wants to retrieve a stock or a group of stocks or search
+    them when they do not have all the information. The more information, the more valuable the data is.
 
     Args:
         tag (:obj:`str`): is the tag of the stock to retrieve the information from as indexed by Investing.com.
 
     Returns:
         :obj:`dict` - info:
-            The resulting :obj:`dict` contains the needed information for the stocks listing, so on, the ISIN
-             code of the introduced stock, the currency of its values and the symbol of the stock.
+            The resulting :obj:`dict` contains the retrieved stock information, such as the ISIN code, the symbol of the
+            stock or the currency in which its values are presented.
 
     Raises:
-        ConnectionError: raised if GET requests does not return 200 status code.
-        IndexError: raised if either the isin code or the currency were unable to retrieve.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if stock information was not found or unable to retrieve.
+
     """
 
     url = "https://es.investing.com/equities/" + tag
@@ -205,9 +247,9 @@ def retrieve_stock_info(tag):
 def retrieve_stock_countries(test_mode=False):
     """
     This function retrieves all the country names indexed in Investing.com with available stocks to retrieve data
-    from, via Web Scraping https://www.investing.com/equities/ where the available countries are listed, and from their
-    names the specific stock website of every country is retrieved in order to get the ID which will later be used
-    when retrieving all the information from the available stocks in every country.
+    from. This process is made in order to dispose of a listing with all the countries from where stock information
+    can be retrieved from Investing.com. So on, the retrieved country listing will be used whenever the stocks are
+    retrieved, while looping over it.
 
     Args:
         test_mode (:obj:`bool`):
@@ -216,13 +258,14 @@ def retrieve_stock_countries(test_mode=False):
 
     Returns:
         :obj:`pandas.DataFrame` - equity_countries:
-            The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding ID,
-            which will be used later by investpy.
+            The resulting :obj:`pandas.DataFrame` contains all the available countries which have available stocks as
+            indexed in Investing.com, from which stock data is going to be retrieved.
 
     Raises:
-        ValueError: raised if any of the introduced arguments is not valid.
+        ValueError: raised whenever any of the introduced arguments is not valid.
         ConnectionError: raised if connection to Investing.com could not be established.
-        RuntimeError: raised if no countries were retrieved from Investing.com stock listing.
+        RuntimeError: raised if no countries were found in the Investing.com stock listing.
+
     """
 
     if not isinstance(test_mode, bool):
@@ -281,29 +324,30 @@ def retrieve_stock_countries(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
 
 def stock_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available stocks to retrieve data
-    from, via reading the `stock_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
+    This function returns a listing with all the available countries from where stocks can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        IndexError: if `stock_countries.csv` was unavailable or not found.
+        IOError: raised when `stock_countries.csv` file is missing or empty.
+
     """
 
     resource_package = __name__
@@ -321,27 +365,31 @@ def stock_countries_as_list():
 
 def stocks_as_df(country=None):
     """
-    This function retrieves all the stocks previously stored on `stocks.csv` file, via
-    `investpy.stocks.retrieve_equities()`. The CSV file is read and if it does not exists,
-    it is created again; but if it does exists, it is loaded into a :obj:`pandas.DataFrame`.
+    This function retrieves all the stock data stored in `stocks.csv` file, which previously was
+    retrieved from Investing.com. Since the resulting object is a matrix of data, the stock data is properly
+    structured in rows and columns, where columns are the stock data attribute names. Additionally, country 
+    filtering can be specified, which will make this function return not all the stored stock data, but just 
+    the stock data of the stocks from the introduced country.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
 
     Returns:
-        :obj:`pandas.DataFrame` - equities_df:
-            The resulting :obj:`pandas.DataFrame` contains the `stocks.csv` file content if
-            it was properly read or retrieved in case it did not exist in the moment when the
-            function was first called.
+        :obj:`pandas.DataFrame` - stocks_df:
+            The resulting :obj:`pandas.DataFrame` contains all the stock data from the introduced country if specified, 
+            or from every country if None was specified, as indexed in Investing.com from the information previously 
+            retrieved by investpy and stored on a csv file.
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                name | full name | tag | isin | id
-                -----|-----------|-----|------|----
-                xxxx | xxxxxxxxx | xxx | xxxx | xx
+                country | name | full name | isin | class | currency | symbol 
+                --------|------|-----------|------|-------|----------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxx | xxxxxxxx | xxxxxx 
 
     Raises:
-        IOError: raised if stocks retrieval failed, both for missing file or empty file, after and before retrieval.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `stocks.csv` file is missing or empty.
+
     """
 
     if country is not None and not isinstance(country, str):
@@ -356,6 +404,8 @@ def stocks_as_df(country=None):
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
+
+    stocks.drop(columns=['tag', 'id'], inplace=True)
 
     if country is None:
         stocks.reset_index(drop=True, inplace=True)
@@ -368,26 +418,30 @@ def stocks_as_df(country=None):
 
 def stocks_as_list(country=None):
     """
-    This function retrieves all the stocks previously stored on `stocks.csv` file, via
-    `investpy.stocks.retrieve_equities()`. The CSV file is read and if it does not exists,
-    it is created again; but if it does exists, stock names are loaded into a :obj:`list`.
+    This function retrieves all the stock names stored in `stocks.csv` file, which contains all the 
+    data from the stocks as previously retrieved from Investing.com. So on, this function will just return
+    the stock names which will be one of the input parameters when it comes to stock data retrieval functions
+    from investpy. Additionally, note that the country filtering can be applied, which is really useful since
+    this function just returns the names and in stock data retrieval functions both the name and the country
+    must be specified and they must match.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
 
     Returns:
-        :obj:`list` - equities_list:
-            The resulting :obj:`list` contains the `stocks.csv` file content if
-            it was properly read or retrieved in case it did not exist in the moment when the
-            function was first called, as a :obj:`list` containing all the stock names.
+        :obj:`list` - stocks_list:
+            The resulting :obj:`list` contains the all the stock names from the introduced country if specified, 
+            or from every country if None was specified, as indexed in Investing.com from the information previously 
+            retrieved by investpy and stored on a csv file.
 
-            So on the listing will contain the stock names listed on Investing.com and will
-            look like the following::
+            In case the information was successfully retrieved, the :obj:`list` of stock names will look like::
 
-                equities_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
+                stocks_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
 
     Raises:
-        IOError: raised if stocks retrieval failed, both for missing file or empty file, after and before retrieval.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `stocks.csv` file is missing or empty.
+
     """
 
     if country is not None and not isinstance(country, str):
@@ -403,6 +457,8 @@ def stocks_as_list(country=None):
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
+    stocks.drop(columns=['tag', 'id'], inplace=True)
+
     if country is None:
         return stocks['name'].tolist()
     elif unidecode.unidecode(country.lower()) in stock_countries_as_list():
@@ -411,25 +467,25 @@ def stocks_as_list(country=None):
 
 def stocks_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available stocks indexed in Investing.com, already
-    stored on `stocks.csv`, which if does not exists, will be created by `investpy.stocks.retrieve_equities()`.
-    This function also allows the user to specify which country do they want to retrieve data from,
-    or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
+    This function retrieves all the stock information stored in the `stocks.csv` file and formats it as a 
+    Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and 
+    all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the 
+    JSON structure. Some optional paramaters can be specified such as the country, columns or as_json, which 
+    are a filtering by country so not to return all the stocks but just the ones from the introduced country, 
+    the column names that want to be retrieved in case of needing just some columns to avoid unnecessary information
+    load, and whether the information wants to be returned as a JSON object or as a dictionary; respectively.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
-        columns (:obj:`list`, optional):
-            names of the columns of the stock data to retrieve <country, name, full_name, tag, isin, id, currency>
-        as_json (:obj:`bool`, optional):
-            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
+        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, class, symbol>
+        as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`dict` or :obj:`json` - equities_dict:
-            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
-            fields are filled with `None` values.
+        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
+            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
+            the information previously retrieved by investpy and stored on a csv file.
 
-            In case the information was successfully retrieved, the :obj:`dict` will look like::
+            In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
                 {
                     'country': country,
@@ -439,11 +495,14 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
                     'isin': isin,
                     'id': id,
                     'currency': currency,
+                    'class': class,
+                    'symbol': symbol,
                 }
 
     Raises:
-        ValueError: raised when any of the input arguments is not valid.
+        ValueError: raised whenever any of the introduced arguments is not valid.
         IOError: raised when `stocks.csv` file is missing or empty.
+
     """
 
     if country is not None and not isinstance(country, str):
@@ -461,6 +520,8 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
+
+    stocks.drop(columns=['tag', 'id'], inplace=True)
 
     if columns is None:
         columns = stocks.columns.tolist()
