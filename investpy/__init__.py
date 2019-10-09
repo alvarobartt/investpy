@@ -815,7 +815,29 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
 def get_stock_dividends(stock, country):
     """
-    This function ...
+    This function retrieves the stock dividends from the introduced stocks, which are token rewards paid to
+    the shareholders for their investment in a company's stock/equity. Dividends data include date of the 
+    dividend, dividend value, type, payment date and yield. This information is really useful when it comes
+    to creating portfolios.
+
+    Args:
+        stock (:obj:`str`): symbol of the stock to retrieve its dividends from.
+        country (:obj:`country`): name of the country from where the stock is from.
+
+    Returns:
+        :obj:`pandas.DataFrame` - stock_dividends:
+            Returns a :obj:`pandas.DataFrame` containing the retrieved information of stock dividends for every stock
+            symbol introduced as parameter.
+
+            So on, the resulting :obj:`pandas.DataFrame` will look like::
+
+                         Date  Dividend                    Type Payment Date  Yield
+                0  2019-10-11    0.2600  trailing_twelve_months   2019-10-15  5,67%
+                1  2019-04-08    0.2600  trailing_twelve_months   2019-04-10  5,53%
+                2  2018-06-11    0.3839  trailing_twelve_months   2018-06-13  3,96%
+                3  2018-04-06    0.2400  trailing_twelve_months   2018-04-10  4,41%
+                4  2017-10-06    0.3786  trailing_twelve_months   2017-10-10  4,45%
+
     """
 
     if not stock:
@@ -877,22 +899,39 @@ def get_stock_dividends(stock, country):
 
     objs = list()
 
+    type_values = {
+        '1': 'monthly',
+        '2': 'quarterly',
+        '3': 'semi_annual',
+        '4': 'annual',
+        '5': 'trailing_twelve_months',
+    }
+
     if path_:
         last_timestamp = path_[-1].get('event_timestamp')
 
         for elements_ in path_:
+            dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
             for element_ in elements_.xpath(".//td"):
                 if element_.get('class'):
                     if element_.get('class').__contains__('first'):
                         dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
                         dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                    if element_.get('data-value') in type_values.keys():
+                        dividend_type = type_values[element_.get('data-value')]
+                        dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                        next_element_ = element_.getnext()
+                        dividend_yield = next_element_.getnext().text_content()
+                        
+            obj = {
+                'Date': dividend_date,
+                'Dividend': dividend_value,
+                'Type': dividend_type,
+                'Payment Date': dividend_payment_date,
+                'Yield': dividend_yield,
+            }
 
-                        obj = {
-                            'Date': dividend_date,
-                            'Dividend': dividend_value,
-                        }
-
-                        objs.append(obj)
+            objs.append(obj)
         
         flag = True
 
@@ -929,18 +968,26 @@ def get_stock_dividends(stock, country):
                 last_timestamp = path_[-1].get('event_timestamp')
 
                 for elements_ in path_:
+                    dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
                     for element_ in elements_.xpath(".//td"):
                         if element_.get('class'):
                             if element_.get('class').__contains__('first'):
                                 dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
                                 dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                            if element_.get('data-value') in type_values.keys():
+                                dividend_type = type_values[element_.get('data-value')]
+                                dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                next_element_ = element_.getnext()
+                                dividend_yield = next_element_.getnext().text_content()
+                    obj = {
+                        'Date': dividend_date,
+                        'Dividend': dividend_value,
+                        'Type': dividend_type,
+                        'Payment Date': dividend_payment_date,
+                        'Yield': dividend_yield,
+                    }
 
-                                obj = {
-                                    'Date': dividend_date,
-                                    'Dividend': dividend_value,
-                                }
-
-                                objs.append(obj)
+                    objs.append(obj)
 
     df = pd.DataFrame(objs)
     return df

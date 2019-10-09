@@ -367,6 +367,35 @@ def test_stocks_errors():
 
     params = [
         {
+            'stock': None,
+            'country': 'spain',
+        },
+        {
+            'stock': ['error'],
+            'country': 'spain',
+        },
+        {
+            'stock': 'bbva',
+            'country': ['error'],
+        },
+        {
+            'stock': 'bbva',
+            'country': 'error',
+        },
+        {
+            'stock': 'error',
+            'country': 'spain',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_stock_dividends(stock=param['stock'], country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
             'by': None,
             'value': 'bbva',
         },

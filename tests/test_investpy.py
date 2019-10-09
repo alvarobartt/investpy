@@ -119,6 +119,8 @@ def test_investpy_stocks():
                                            country='spain',
                                            language=value)
 
+    investpy.get_stock_dividends(stock='bbva', country='spain')
+
     investpy.search_stocks(by='name', value='bbva')
 
     retrieve_stocks(test_mode=True)
