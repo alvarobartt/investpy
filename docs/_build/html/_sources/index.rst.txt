@@ -15,6 +15,7 @@ Welcome to investpy's documentation!
 
    introduction.rst
    installation.rst
+   usage.rst
    model.rst
    stocks.rst
    funds.rst

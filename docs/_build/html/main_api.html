@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy &mdash; investpy 0.9.6 documentation</title>
+  <title>investpy &mdash; investpy 0.9.7 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.6
+                0.9.7
               </div>
             
           
@@ -88,6 +88,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stocks.html">Stocks/Equities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funds.html">Funds</a></li>
@@ -1427,7 +1428,7 @@ the function will raise an exception.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stock</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the stock to retrieve its company profile from.</p></li>
+<li><p><strong>stock</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – symbol of the stock to retrieve its company profile from.</p></li>
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the stock is.</p></li>
 <li><p><strong>language</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – language in which the company profile is going to be retrieved, can either be english or spanish.</p></li>
 </ul>
@@ -1527,7 +1528,7 @@ symbol introduced as parameter.</p>
 <dt id="investpy.get_stock_historical_data">
 <code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_stock_historical_data</code><span class="sig-paren">(</span><em class="sig-param">stock</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_stock_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
-of the introduced stock from the specified coutry in the specified data range will be retrieved and returned as
+of the introduced stock from the specified country in the specified data range will be retrieved and returned as
 a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> if the parameters are valid and the request to Investing.com succeeds. Note that additionally
 some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to
 be returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> or not, if the historical data is going to be ordered ascending or descending (where the
@@ -1535,7 +1536,7 @@ index is the date) and whether debug messages are going to be printed or not, re
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stock</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the stock to retrieve historical data from.</p></li>
+<li><p><strong>stock</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – symbol of the stock to retrieve historical data from.</p></li>
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the stock is.</p></li>
 <li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date formatted as <cite>dd/mm/yyyy</cite>, since when data is going to be retrieved.</p></li>
 <li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date formatted as <cite>dd/mm/yyyy</cite>, until when data is going to be retrieved.</p></li>
@@ -1557,7 +1558,6 @@ volume values for the selected stock on market days.</p>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="n">full_name</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
     <span class="n">historical</span><span class="p">:</span> <span class="p">[</span>
         <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">:</span> <span class="p">{</span>
             <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
@@ -1604,7 +1604,7 @@ volume values for the selected stock on market days.</p>
 <dt id="investpy.get_stock_recent_data">
 <code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_stock_recent_data</code><span class="sig-paren">(</span><em class="sig-param">stock</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_stock_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
-of the introduced stock from the specified coutry will be retrieved and returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> if
+of the introduced stock from the specified country will be retrieved and returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> if
 the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
 can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> or not, if the historical data is going to be ordered ascending or descending (where the index is the date)
@@ -1612,7 +1612,7 @@ and whether debug messages are going to be printed or not, respectively.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>stock</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the stock to retrieve recent historical data from.</p></li>
+<li><p><strong>stock</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – symbol of the stock to retrieve recent historical data from.</p></li>
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the stock is.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – to determine the format of the output data, either a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> if False and a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> if True.</p></li>
 <li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – to define the order of the retrieved data which can either be ascending or descending.</p></li>
@@ -1763,22 +1763,22 @@ the information previously retrieved by investpy and stored on a csv file.</p>
 <dl class="function">
 <dt id="investpy.get_stocks_list">
 <code class="sig-prename descclassname">investpy.</code><code class="sig-name descname">get_stocks_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.get_stocks_list" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the stock names stored in <cite>stocks.csv</cite> file, which contains all the
+<dd><p>This function retrieves all the stock symbols stored in <cite>stocks.csv</cite> file, which contains all the
 data from the stocks as previously retrieved from Investing.com. So on, this function will just return
-the stock names which will be one of the input parameters when it comes to stock data retrieval functions
+the stock symbols which will be one of the input parameters when it comes to stock data retrieval functions
 from investpy. Additionally, note that the country filtering can be applied, which is really useful since
-this function just returns the names and in stock data retrieval functions both the name and the country
+this function just returns the symbols and in stock data retrieval functions both the symbol and the country
 must be specified and they must match.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available stocks from.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains the all the stock names from the introduced country if specified,
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> contains the all the stock symbols from the introduced country if specified,
 or from every country if None was specified, as indexed in Investing.com from the information previously
 retrieved by investpy and stored on a csv file.</p>
-<p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of stock names will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stocks_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ACS&#39;</span><span class="p">,</span> <span class="s1">&#39;Abengoa&#39;</span><span class="p">,</span> <span class="s1">&#39;Atresmedia&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of stock symbols will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">stocks_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;TS&#39;</span><span class="p">,</span> <span class="s1">&#39;APBR&#39;</span><span class="p">,</span> <span class="s1">&#39;GGAL&#39;</span><span class="p">,</span> <span class="s1">&#39;TXAR&#39;</span><span class="p">,</span> <span class="s1">&#39;PAMP&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
 </pre></div>
 </div>
 </p>

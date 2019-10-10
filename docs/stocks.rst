@@ -30,7 +30,7 @@ information of the indexed stocks on `Investing <https://es.investing.com/>`_ as
 stored on CSV files generated automatically on the package installation.
 
 We can either retrieve the whole :obj:`pandas.DataFrame` containing all the information stored on the CSV file or a
-:obj:`list` containing just the names of the stocks, which are the input parameters for the data retrieval functions.
+:obj:`list` containing just the symbols of the stocks, which are the input parameters for the data retrieval functions.
 
 Also there is a param called ``country`` which by default is None, which means that the stock listing to be retrieved
 will include all the available countries (indexed in Investing.com); on the contrary, if the param ``country`` is an
@@ -38,21 +38,16 @@ available country, the returned stock information will be filtered by country.
 
 .. tip::
 
-    To get a listing of all the available countries you can use the function ``investpy.get_equity_countries()`` which
+    To get a listing of all the available countries you can use the function ``investpy.get_stock_countries()`` which
     will return a :obj:`list` containing all the available country names which have stocks as indexed on Investing.com.
 
 
 .. code-block:: python
 
     # Retrieve all available stocks information as a pandas.DataFrame
-    equities_df = investpy.get_equities(country=None)
-    # Retrieve a listing of all the available stock names
-    equities_list = investpy.get_equities_list(country=None)
-
-.. note::
-
-    The stock :obj:`pandas.DataFrame` contains internal package information that is useless for users, but it is provided
-    anyways. On a future release stocks listing functions will be improved in order to provide just useful data.
+    stocks_df = investpy.get_stocks(country=None)
+    # Retrieve a listing of all the available stock symbols
+    stocks_list = investpy.get_stocks_list(country=None)
 
 Recent & Historical Data
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -64,16 +59,16 @@ some functions have been developed in order to retrieve both recent and historic
 As to explain its usage an example is proposed to present historical data retrieval functions::
 
     # Retrieves the recent data of BBVA (last month) a spanish stock, as a pandas.DataFrame on ascending order
-    df = investpy.get_recent_data(stock='bbva', country='spain', as_json=False, order='ascending', debug=False)
+    df = investpy.get_stock_recent_data(stock='bbva', country='spain', as_json=False, order='ascending', debug=False)
 
     # Retrieves the historical data of BBVA, a spanish stock, on the specified date range as a pandas.DataFrame on ascending order
-    df = investpy.get_historical_data(stock='bbva', country='spain', from_date='01/01/2018', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+    df = investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2018', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
 
 As we already saw, both functions take some parameters, but some of them are *optional*, which means that the function
 does not need the user to specify them as they already have a default value.
 
 Both parameters ``stock`` and ``country`` are mandatory, since they are the ones that specify which information should be
-retrieved from Investing.com. Consider that both parameters should match, which means that the name of the stock should
+retrieved from Investing.com. Consider that both parameters should match, which means that the symbols of the stock should
 be an stock from the specified country, if the stock is not found on the specified country, an error will be raised.
 
 When retrieving recent data from an stock, we can additionally specify if we want the output as a json object or not, by
@@ -100,7 +95,7 @@ is a self-made description of the company.
 
 .. code-block:: python
 
-    investpy.get_equity_company_profile(stock='bbva', country='spain', language='english')
+    investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
 
 As explained before, when it comes to data retrieval, both ``stock`` and ``country`` parameters are mandatory, and
 should match; as the default value for the ``language`` of the retrieved company profile is *english* (as `Investing <https://es.investing.com/>`_
@@ -111,7 +106,7 @@ which is the additional resource used along this package.
 .. warning::
 
     This function is just available for spanish stocks, since `investpy <https://pypi.org/project/investpy/>`_ was
-    first created just for Spanish Equities, Funds and ETFs retrieval. Future coverage for world stocks company
+    first created just for Spanish Stocks, Funds and ETFs retrieval. Future coverage for world stocks company
     profiles is intended, but currently just the spanish ones are available.
 
 Samples

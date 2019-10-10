@@ -100,13 +100,13 @@ def test_investpy_stocks():
     ]
 
     for param in params:
-        investpy.get_stock_recent_data(stock='enagás',
+        investpy.get_stock_recent_data(stock='BBVA',
                                        country='spain',
                                        as_json=param['as_json'],
                                        order=param['order'],
                                        debug=param['debug'])
 
-        investpy.get_stock_historical_data(stock='enagás',
+        investpy.get_stock_historical_data(stock='BBVA',
                                            country='spain',
                                            from_date='01/01/1990',
                                            to_date='01/01/2019',
@@ -115,13 +115,13 @@ def test_investpy_stocks():
                                            debug=param['debug'])
 
     for value in ['spanish', 'english']:
-        investpy.get_stock_company_profile(stock='enagás',
+        investpy.get_stock_company_profile(stock='BBVA',
                                            country='spain',
                                            language=value)
 
-    investpy.get_stock_dividends(stock='bbva', country='spain')
+    investpy.get_stock_dividends(stock='BBVA', country='spain')
 
-    investpy.search_stocks(by='name', value='bbva')
+    investpy.search_stocks(by='name', value='BBVA')
 
     retrieve_stocks(test_mode=True)
     retrieve_stock_countries(test_mode=True)

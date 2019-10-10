@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
-__version__ = '0.9.6'
+__version__ = '0.9.7'
 
 import datetime
 import json
@@ -58,11 +58,11 @@ def get_stocks(country=None):
 
 def get_stocks_list(country=None):
     """
-    This function retrieves all the stock names stored in `stocks.csv` file, which contains all the 
+    This function retrieves all the stock symbols stored in `stocks.csv` file, which contains all the 
     data from the stocks as previously retrieved from Investing.com. So on, this function will just return
-    the stock names which will be one of the input parameters when it comes to stock data retrieval functions
+    the stock symbols which will be one of the input parameters when it comes to stock data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
-    this function just returns the names and in stock data retrieval functions both the name and the country
+    this function just returns the symbols and in stock data retrieval functions both the symbol and the country
     must be specified and they must match.
 
     Args:
@@ -70,18 +70,17 @@ def get_stocks_list(country=None):
 
     Returns:
         :obj:`list` - stocks_list:
-            The resulting :obj:`list` contains the all the stock names from the introduced country if specified, 
+            The resulting :obj:`list` contains the all the stock symbols from the introduced country if specified, 
             or from every country if None was specified, as indexed in Investing.com from the information previously 
             retrieved by investpy and stored on a csv file.
 
-            In case the information was successfully retrieved, the :obj:`list` of stock names will look like::
+            In case the information was successfully retrieved, the :obj:`list` of stock symbols will look like::
 
-                stocks_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
+                stocks_list = ['TS', 'APBR', 'GGAL', 'TXAR', 'PAMP', ...]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
         IOError: raised when `stocks.csv` file is missing or empty.
-
     """
 
     return eq.stocks_as_list(country)
@@ -152,14 +151,14 @@ def get_stock_countries():
 def get_stock_recent_data(stock, country, as_json=False, order='ascending', debug=False):
     """
     This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
-    of the introduced stock from the specified coutry will be retrieved and returned as a :obj:`pandas.DataFrame` if 
+    of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if 
     the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters 
     can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a 
     :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the index is the date) 
     and whether debug messages are going to be printed or not, respectively.
 
     Args:
-        stock (:obj:`str`): name of the stock to retrieve recent historical data from.
+        stock (:obj:`str`): symbol of the stock to retrieve recent historical data from.
         country (:obj:`str`): name of the country from where the stock is.
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
@@ -255,7 +254,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
     stock = stock.strip()
     stock = stock.lower()
 
-    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['name'].tolist()]:
+    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
@@ -268,11 +267,11 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
 
     logger.info('Searching introduced stock on Investing.com')
 
-    symbol = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'symbol']
-    id_ = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'id']
-    name = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'name']
+    symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
+    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+    name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
 
-    stock_currency = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'currency']
+    stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
     logger.info(str(stock) + ' found on Investing.com')
 
@@ -367,14 +366,14 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
 def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
     This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
-    of the introduced stock from the specified coutry in the specified data range will be retrieved and returned as 
+    of the introduced stock from the specified country in the specified data range will be retrieved and returned as 
     a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally 
     some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to 
     be returned as a :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the 
     index is the date) and whether debug messages are going to be printed or not, respectively.
 
     Args:
-        stock (:obj:`str`): name of the stock to retrieve historical data from.
+        stock (:obj:`str`): symbol of the stock to retrieve historical data from.
         country (:obj:`str`): name of the country from where the stock is.
         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
@@ -400,7 +399,6 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
                 {
                     name: name,
-                    full_name: full_name,
                     historical: [
                         dd/mm/yyyy: {
                             open: x,
@@ -521,7 +519,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     stock = stock.strip()
     stock = stock.lower()
 
-    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['name'].tolist()]:
+    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
@@ -534,11 +532,11 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
     logger.info('Searching introduced stock on Investing.com')
 
-    symbol = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'symbol']
-    id_ = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'id']
-    name = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'name']
+    symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
+    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+    name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
 
-    stock_currency = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'currency']
+    stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
     logger.info(str(stock) + ' found on Investing.com')
 
@@ -661,7 +659,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     the function will raise an exception.
 
     Args:
-        stock (:obj:`str`): name of the stock to retrieve its company profile from.
+        stock (:obj:`str`): symbol of the stock to retrieve its company profile from.
         country (:obj:`str`): name of the country from where the stock is.
         language (:obj:`str`, optional): language in which the company profile is going to be retrieved, can either be english or spanish.
 
@@ -736,7 +734,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
     stock = stock.strip()
 
-    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in stocks['name'].tolist()]:
+    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
 
     company_profile = {
@@ -745,7 +743,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     }
 
     if selected_source == 'Bolsa de Madrid':
-        isin = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'isin']
+        isin = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'isin']
 
         url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + isin
 
@@ -782,7 +780,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         else:
             return company_profile
     elif selected_source == 'Investing':
-        tag = stocks.loc[(stocks['name'].str.lower() == stock).idxmax(), 'tag']
+        tag = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
         url = "https://www.investing.com/equities/" + tag + "-company-profile"
 
@@ -1692,6 +1690,7 @@ def get_fund_information(fund, country, as_json=False):
                     'Market Cap': market_cap,
                     'Category': category
                 }
+    
     """
 
     if not fund:

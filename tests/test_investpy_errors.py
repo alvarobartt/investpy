@@ -84,7 +84,7 @@ def test_stocks_errors():
 
     params = [
         {
-            'stock': 'Euripo Properties Socimi',
+            'stock': 'FERR',
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
@@ -98,35 +98,35 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': None,
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'greece',
             'as_json': False,
             'order': 'ascending',
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'as_json': True,
             'order': 'error',
@@ -147,7 +147,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
@@ -167,7 +167,7 @@ def test_stocks_errors():
 
     params = [
         {
-            'stock': 'Euripo Properties Socimi',
+            'stock': 'FERR',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -185,7 +185,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': None,
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -194,7 +194,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': ['error'],
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -203,7 +203,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'greece',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -212,7 +212,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -221,7 +221,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -230,7 +230,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': 'error',
             'to_date': '01/01/2019',
@@ -239,7 +239,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': 'error',
@@ -266,7 +266,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/1999',
             'to_date': '01/01/2019',
@@ -275,7 +275,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/1900',
             'to_date': '01/01/1950',
@@ -284,7 +284,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/1950',
             'to_date': '01/01/2019',
@@ -293,7 +293,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/01/1999',
@@ -302,7 +302,7 @@ def test_stocks_errors():
             'debug': True
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
@@ -331,17 +331,17 @@ def test_stocks_errors():
             'language': 'spanish'
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': None,
             'language': 'spanish'
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'greece',
             'language': 'spanish'
         },
         {
-            'stock': 'bbva',
+            'stock': 'BBVA',
             'country': 'spain',
             'language': 'error'
         },
@@ -397,15 +397,15 @@ def test_stocks_errors():
     params = [
         {
             'by': None,
-            'value': 'bbva',
+            'value': 'BBVA',
         },
         {
             'by': ['error'],
-            'value': 'bbva',
+            'value': 'BBVA',
         },
         {
             'by': 'error',
-            'value': 'bbva',
+            'value': 'BBVA',
         },
         {
             'by': 'name',
@@ -417,7 +417,7 @@ def test_stocks_errors():
         },
         {
             'by': 'isin',
-            'value': 'error',
+            'value': 'BBVA',
         },
     ]
 

@@ -128,29 +128,29 @@ def retrieve_stocks(test_mode=False):
                         if str(tag_).__contains__('/equities/'):
                             tag_ = tag_.replace('/equities/', '')
 
-                            full_name_ = element_.get('title').replace(' (CFD)', '')
+                            if not any(result['tag'] == tag_ for result in results):
+                                full_name_ = element_.get('title').replace(' (CFD)', '')
 
-                            info = None
+                                info = None
 
-                            while info is None:
-                                try:
-                                    info = retrieve_stock_info(tag_)
-                                except:
-                                    pass
+                                while info is None:
+                                    try:
+                                        info = retrieve_stock_info(tag_)
+                                    except:
+                                        pass
 
-                            data = {
-                                'country': str(row['country']),
-                                'name': element_.text.strip(),
-                                'full_name': full_name_.rstrip(),
-                                'tag': tag_,
-                                'isin': info['isin'],
-                                'id': id_,
-                                'class': filter_['class'],
-                                'currency': info['currency'],
-                                'symbol': info['symbol']
-                            }
+                                data = {
+                                    'country': str(row['country']),
+                                    'name': element_.text.strip(),
+                                    'full_name': full_name_.rstrip(),
+                                    'tag': tag_,
+                                    'isin': info['isin'],
+                                    'id': str(id_),
+                                    'currency': info['currency'],
+                                    'symbol': info['symbol']
+                                }
 
-                            results.append(data)
+                                results.append(data)
                     
                     if test_mode is True:
                         break
@@ -418,11 +418,11 @@ def stocks_as_df(country=None):
 
 def stocks_as_list(country=None):
     """
-    This function retrieves all the stock names stored in `stocks.csv` file, which contains all the 
+    This function retrieves all the stock symbols stored in `stocks.csv` file, which contains all the 
     data from the stocks as previously retrieved from Investing.com. So on, this function will just return
-    the stock names which will be one of the input parameters when it comes to stock data retrieval functions
+    the stock symbols which will be one of the input parameters when it comes to stock data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
-    this function just returns the names and in stock data retrieval functions both the name and the country
+    this function just returns the symbols and in stock data retrieval functions both the symbol and the country
     must be specified and they must match.
 
     Args:
@@ -430,18 +430,17 @@ def stocks_as_list(country=None):
 
     Returns:
         :obj:`list` - stocks_list:
-            The resulting :obj:`list` contains the all the stock names from the introduced country if specified, 
+            The resulting :obj:`list` contains the all the stock symbols from the introduced country if specified, 
             or from every country if None was specified, as indexed in Investing.com from the information previously 
             retrieved by investpy and stored on a csv file.
 
-            In case the information was successfully retrieved, the :obj:`list` of stock names will look like::
+            In case the information was successfully retrieved, the :obj:`list` of stock symbols will look like::
 
-                stocks_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
+                stocks_list = ['TS', 'APBR', 'GGAL', 'TXAR', 'PAMP', ...]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
         IOError: raised when `stocks.csv` file is missing or empty.
-
     """
 
     if country is not None and not isinstance(country, str):
@@ -460,9 +459,9 @@ def stocks_as_list(country=None):
     stocks.drop(columns=['tag', 'id'], inplace=True)
 
     if country is None:
-        return stocks['name'].tolist()
+        return stocks['symbol'].tolist()
     elif unidecode.unidecode(country.lower()) in stock_countries_as_list():
-        return stocks[stocks['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+        return stocks[stocks['country'] == unidecode.unidecode(country.lower())]['symbol'].tolist()
 
 
 def stocks_as_dict(country=None, columns=None, as_json=False):
