@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.etfs &mdash; investpy 0.9.6 documentation</title>
+  <title>investpy.etfs &mdash; investpy 0.9.7 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.6
+                0.9.7
               </div>
             
           
@@ -88,12 +88,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="equities.html">Stocks/Equities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stocks.html">Stocks/Equities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funds.html">Funds</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="main_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="equities_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.equities</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="stocks_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.stocks</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="funds_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.funds</span></code></a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.etfs</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_agent.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.user_agent</span></code></a></li>
@@ -214,9 +215,9 @@ available etfs indexed on Investing.com is returned, but if it is specified, jus
 are returned.</p>
 <p>In the case that the file reading of <cite>etfs.csv</cite> or the retrieval process from Investing.com was
 successfully completed, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">country_code</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span>
-<span class="o">--------|--------------|------|--------|-----|----</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">--------|------|--------|-----|----|----------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -255,11 +256,11 @@ fields are filled with <cite>None</cite> values.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
-    <span class="s1">&#39;country_code&#39;</span><span class="p">:</span> <span class="n">country_code</span><span class="p">,</span>
     <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
     <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span>
+    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
+    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -358,9 +359,9 @@ coverage.</p>
 empty <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will be returned and no CSV file will be stored.</p>
 <p>In the case that the retrieval process of world etfs was successfully completed, the resulting
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">country_code</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span>
-<span class="o">--------|--------------|------|--------|-----|----</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">currency</span>
+<span class="o">--------|------|--------|-----|----|----------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 </p>

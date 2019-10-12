@@ -3,8 +3,8 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-__author__ = 'Alvaro Bartolome <alvarob96@usal.es>'
-__version__ = '0.9.6'
+__author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
+__version__ = '0.9.7'
 
 import datetime
 import json
@@ -17,89 +17,96 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy import user_agent, equities as eq, funds as fs, etfs as es, indices as ic, currency_crosses as cc
+from investpy import user_agent, stocks as eq, funds as fs, etfs as es, indices as ic, currency_crosses as cc
 from investpy.Data import Data
 
 
-"""------------- EQUITIES -------------"""
+"""------------- STOCKS -------------"""
 
 
-def get_equities(country=None):
+def get_stocks(country=None):
     """
-    This function retrieves all the equities previously stored on `equities.csv` file, via
-    `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
-    it is created again; but if it does exists, it is loaded into a :obj:`pandas.DataFrame`.
+    This function retrieves all the stock data stored in `stocks.csv` file, which previously was
+    retrieved from Investing.com. Since the resulting object is a matrix of data, the stock data is properly
+    structured in rows and columns, where columns are the stock data attribute names. Additionally, country 
+    filtering can be specified, which will make this function return not all the stored stock data, but just 
+    the stock data of the stocks from the introduced country.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
 
     Returns:
-        :obj:`pandas.DataFrame` - equities:
-            The resulting :obj:`pandas.DataFrame` contains the `equities.csv` file content if
-            it was properly read or retrieved in case it did not exist in the moment when the
-            function was first called.
+        :obj:`pandas.DataFrame` - stocks_df:
+            The resulting :obj:`pandas.DataFrame` contains all the stock data from the introduced country if specified, 
+            or from every country if None was specified, as indexed in Investing.com from the information previously 
+            retrieved by investpy and stored on a csv file.
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                name | full name | tag | isin | id
-                -----|-----------|-----|------|----
-                xxxx | xxxxxxxxx | xxx | xxxx | xx
+                country | name | full name | isin | currency | symbol 
+                --------|------|-----------|------|----------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxxxxx | xxxxxx 
 
     Raises:
-        IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `stocks.csv` file is missing or empty.
+
     """
 
-    return eq.equities_as_df(country)
+    return eq.stocks_as_df(country)
 
 
-def get_equities_list(country=None):
+def get_stocks_list(country=None):
     """
-    This function retrieves all the equities previously stored on `equities.csv` file, via
-    `investpy.equities.retrieve_equities()`. The CSV file is read and if it does not exists,
-    it is created again; but if it does exists, equity names are loaded into a :obj:`list`.
+    This function retrieves all the stock symbols stored in `stocks.csv` file, which contains all the 
+    data from the stocks as previously retrieved from Investing.com. So on, this function will just return
+    the stock symbols which will be one of the input parameters when it comes to stock data retrieval functions
+    from investpy. Additionally, note that the country filtering can be applied, which is really useful since
+    this function just returns the symbols and in stock data retrieval functions both the symbol and the country
+    must be specified and they must match.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
 
     Returns:
-        :obj:`list` - equities_list:
-            The resulting :obj:`list` contains the `equities.csv` file content if
-            it was properly read or retrieved in case it did not exist in the moment when the
-            function was first called, as a :obj:`list` containing all the equity names.
+        :obj:`list` - stocks_list:
+            The resulting :obj:`list` contains the all the stock symbols from the introduced country if specified, 
+            or from every country if None was specified, as indexed in Investing.com from the information previously 
+            retrieved by investpy and stored on a csv file.
 
-            So on the listing will contain the equity names listed on Investing.com and will
-            look like the following::
+            In case the information was successfully retrieved, the :obj:`list` of stock symbols will look like::
 
-                equities_list = ['ACS', 'Abengoa', 'Atresmedia', ...]
+                stocks_list = ['TS', 'APBR', 'GGAL', 'TXAR', 'PAMP', ...]
 
     Raises:
-        IOError: raised if equities retrieval failed, both for missing file or empty file, after and before retrieval.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `stocks.csv` file is missing or empty.
     """
 
-    return eq.equities_as_list(country)
+    return eq.stocks_as_list(country)
 
 
-def get_equities_dict(country=None, columns=None, as_json=False):
+def get_stocks_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available equities indexed in Investing.com, already
-    stored on `equities.csv`, which if does not exists, will be created by `investpy.equities.retrieve_equities()`.
-    This function also allows the user to specify which country do they want to retrieve data from,
-    or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
+    This function retrieves all the stock information stored in the `stocks.csv` file and formats it as a 
+    Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and 
+    all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the 
+    JSON structure. Some optional paramaters can be specified such as the country, columns or as_json, which 
+    are a filtering by country so not to return all the stocks but just the ones from the introduced country, 
+    the column names that want to be retrieved in case of needing just some columns to avoid unnecessary information
+    load, and whether the information wants to be returned as a JSON object or as a dictionary; respectively.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available equities from.
-        columns (:obj:`list`, optional):
-            names of the columns of the equity data to retrieve <country, name, full_name, tag, isin, id, currency>
-        as_json (:obj:`bool`, optional):
-            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
+        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
+        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, symbol>
+        as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`dict` or :obj:`json` - equities_dict:
-            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
-            fields are filled with `None` values.
+        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
+            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
+            the information previously retrieved by investpy and stored on a csv file.
 
-            In case the information was successfully retrieved, the :obj:`dict` will look like::
+            In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
                 {
                     'country': country,
@@ -109,63 +116,69 @@ def get_equities_dict(country=None, columns=None, as_json=False):
                     'isin': isin,
                     'id': id,
                     'currency': currency,
+                    'symbol': symbol,
                 }
 
     Raises:
-        ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `equities.csv` file is missing or empty.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `stocks.csv` file is missing or empty.
+
     """
 
-    return eq.equities_as_dict(country=country, columns=columns, as_json=as_json)
+    return eq.stocks_as_dict(country=country, columns=columns, as_json=as_json)
 
 
-def get_equity_countries():
+def get_stock_countries():
     """
-    This function retrieves all the country names indexed in Investing.com with available equities to retrieve data
-    from, via reading the `equity_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
+    This function returns a listing with all the available countries from where stocks can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
 
     Returns:
         :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with equities as indexed in Investing.com
+            The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        IndexError: if `equity_countries.csv` was unavailable or not found.
+        IOError: raised when `stock_countries.csv` file is missing or empty.
+
     """
 
-    return eq.equity_countries_as_list()
+    return eq.stock_countries_as_list()
 
 
-def get_recent_data(equity, country, as_json=False, order='ascending', debug=False):
+def get_stock_recent_data(stock, country, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves recent historical data from the introduced `equity` from Investing
-    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
-    :obj:`json` file, with `ascending` or `descending` order.
+    This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
+    of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if 
+    the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters 
+    can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a 
+    :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the index is the date) 
+    and whether debug messages are going to be printed or not, respectively.
 
     Args:
-        equity (:obj:`str`): name of the equity to retrieve recent historical data from.
-        country (:obj:`str`): name of the country from where the equity is.
+        stock (:obj:`str`): symbol of the stock to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the stock is.
         as_json (:obj:`bool`, optional):
-            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
-        order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
         debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+            optional argument to either show or hide debug messages on log, either True or False, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
-            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
-            recent data from the specified equity via argument. The dataset contains the open, high, low, close and
-            volume values for the selected equity on market days.
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            recent data of the specified stock from the specified country. So on, the resulting dataframe contains the 
+            open, high, low, close and volume values for the selected stock on market days and the currency in which those
+            values are presented.
 
-            The return data is case we use default arguments will look like::
+            The resulting recent data, in case that the default parameters were applied, will look like::
 
                 date || open | high | low | close | volume | currency
                 -----||-----------------------------------------------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
-            but if we define `as_json=True`, then the output will be::
+            but in case that as_json parameter was defined as True, then the output will be::
 
                 {
                     name: name,
@@ -183,14 +196,14 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
                 }
 
     Raises:
-        ValueError: argument error.
-        IOError: equities object/file not found or unable to retrieve.
-        RuntimeError: introduced equity does not match any of the indexed ones.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if equity information was unavailable or not found.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if stocks object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if stock recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_recent_data(equity='bbva', country='spain', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_recent_data(stock='bbva', country='spain')
                          Open   High    Low  Close    Volume Currency
             Date
             2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
@@ -201,11 +214,11 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
 
     """
 
-    if not equity:
-        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
 
-    if not isinstance(equity, str):
-        raise ValueError("ERR#0027: equity argument needs to be a str.")
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
 
     if country is None:
         raise ValueError("ERR#0039: country can not be None, it should be a str.")
@@ -223,25 +236,25 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
         raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = get_equities()
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
-    if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_equity_countries():
+    if unidecode.unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
 
-    equity = equity.strip()
-    equity = equity.lower()
+    stock = stock.strip()
+    stock = stock.lower()
 
-    if unidecode.unidecode(equity) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity + " not found, check if it is correct.")
+    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -251,15 +264,15 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
     else:
         logger.disabled = False
 
-    logger.info('Searching introduced equity on Investing.com')
+    logger.info('Searching introduced stock on Investing.com')
 
-    symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
-    id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
-    name = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'name']
+    symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
+    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+    name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
 
-    stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
+    stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
-    logger.info(str(equity) + ' found on Investing.com')
+    logger.info(str(stock) + ' found on Investing.com')
 
     header = "Datos históricos " + symbol
 
@@ -305,7 +318,7 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
                 info.append(nested_.text_content())
 
             if info[0] == 'No se encontraron resultados':
-                raise IndexError("ERR#0007: equity information unavailable or not found.")
+                raise IndexError("ERR#0007: stock information unavailable or not found.")
 
             stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
             stock_close = float(info[1].replace('.', '').replace(',', '.'))
@@ -336,12 +349,12 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
         if as_json is True:
             json_ = {'name': name,
                      'recent':
-                         [value.equity_as_json() for value in result]
+                         [value.stock_as_json() for value in result]
                      }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
-            df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+            df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
             df.set_index('Date', inplace=True)
 
             return df
@@ -349,28 +362,31 @@ def get_recent_data(equity, country, as_json=False, order='ascending', debug=Fal
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_historical_data(equity, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves historical data from the introduced `equity` from Investing
-    via Web Scraping on the introduced date range. The resulting data can it either be
-    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
+    This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
+    of the introduced stock from the specified country in the specified data range will be retrieved and returned as 
+    a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally 
+    some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to 
+    be returned as a :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the 
+    index is the date) and whether debug messages are going to be printed or not, respectively.
 
     Args:
-        equity (:obj:`str`): name of the equity to retrieve historical data from.
-        country (:obj:`str`): name of the country from where the equity is.
-        from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
-        to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
+        stock (:obj:`str`): symbol of the stock to retrieve historical data from.
+        country (:obj:`str`): name of the country from where the stock is.
+        from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
+        to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
         as_json (:obj:`bool`, optional):
-            to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
-        order (:obj:`str`, optional): to define the order of the retrieved data (`ascending` or `descending`).
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
         debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+            optional argument to either show or hide debug messages on log, either True or False, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
             The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
-            recent data from the specified equity via argument. The dataset contains the open, high, low, close and
-            volume values for the selected equity on market days.
+            recent data from the specified stock via argument. The dataset contains the open, high, low, close and
+            volume values for the selected stock on market days.
 
             The returned data is case we use default arguments will look like::
 
@@ -382,7 +398,6 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
 
                 {
                     name: name,
-                    full_name: full_name,
                     historical: [
                         dd/mm/yyyy: {
                             open: x,
@@ -397,14 +412,14 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                 }
 
     Raises:
-        ValueError: argument error.
-        IOError: equities object/file not found or unable to retrieve.
-        RuntimeError: introduced equity does not match any of the indexed ones.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if equity information was unavailable or not found.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if stocks object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if stock historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(equity='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
                          Open   High    Low  Close  Volume Currency
             Date
             2010-01-04  12.73  12.96  12.73  12.96       0      EUR
@@ -415,11 +430,11 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
 
     """
 
-    if not equity:
-        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
 
-    if not isinstance(equity, str):
-        raise ValueError("ERR#0027: equity argument needs to be a str.")
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
 
     if country is None:
         raise ValueError("ERR#0039: country can not be None, it should be a str.")
@@ -486,25 +501,25 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     data_flag = False
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = eq.retrieve_equities()
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
-    if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_equity_countries():
+    if unidecode.unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
 
-    equity = equity.strip()
-    equity = equity.lower()
+    stock = stock.strip()
+    stock = stock.lower()
 
-    if unidecode.unidecode(equity) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity + " not found, check if it is correct.")
+    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
@@ -514,15 +529,15 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
     else:
         logger.disabled = False
 
-    logger.info('Searching introduced equity on Investing.com')
+    logger.info('Searching introduced stock on Investing.com')
 
-    symbol = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'symbol']
-    id_ = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'id']
-    name = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'name']
+    symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
+    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+    name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
 
-    stock_currency = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'currency']
+    stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
-    logger.info(str(equity) + ' found on Investing.com')
+    logger.info(str(stock) + ' found on Investing.com')
 
     final = list()
 
@@ -578,7 +593,7 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
-                        raise IndexError("ERR#0007: equity information unavailable or not found.")
+                        raise IndexError("ERR#0007: stock information unavailable or not found.")
                 else:
                     data_flag = True
 
@@ -611,11 +626,11 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
                 if as_json is True:
                     json_ = {'name': name,
                              'historical':
-                                 [value.equity_as_json() for value in result]
+                                 [value.stock_as_json() for value in result]
                              }
                     final.append(json_)
                 elif as_json is False:
-                    df = pd.DataFrame.from_records([value.equity_to_dict() for value in result])
+                    df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
@@ -631,22 +646,28 @@ def get_historical_data(equity, country, from_date, to_date, as_json=False, orde
         return pd.concat(final)
 
 
-def get_equity_company_profile(equity, country='spain', language='english'):
+def get_stock_company_profile(stock, country='spain', language='english'):
     """
-    This function retrieves the company profile from an `equity` in the specified language
-    from different sources. Currently just the company profile of spanish equities in english
-    and spanish is available for retrieval.
+    This function retrieves the company profile of a stock company in the specified language. This
+    function is really useful if NLP techniques want to be applied to stocks, since the company profile
+    is a short description of what the company does and since it is written by the company, it can give
+    the user an overview on what does the company do. The company profile can be retrieved either in english
+    or in spanish, the only thing that changes is the source from where the data is retrieved, but the 
+    resulting object will be the same. Note that this functionalliy as described in the docs is just supported
+    for spanish stocks currently, so on, if any other stock from any other country is introduced as parameter, 
+    the function will raise an exception.
 
     Args:
-        equity (:obj:`str`): name of the equity to retrieve its company profile from.
-        country (:obj:`str`): name of the country from where the equity is.
-        language (:obj:`str`, optional): language of the company profile to be retrieved (english or spanish).
+        stock (:obj:`str`): symbol of the stock to retrieve its company profile from.
+        country (:obj:`str`): name of the country from where the stock is.
+        language (:obj:`str`, optional): language in which the company profile is going to be retrieved, can either be english or spanish.
 
     Returns:
         :obj:`dict` - company_profile:
-            The resulting :obj:`dict` contains the retrieved company profile from the selected source by language,
-            which can be either Investing.com (english) or Bolsa de Madrid (spanish); and its respective url
-            from where it was retrieved, so to have both the source and the description fo the company_profile.
+            The resulting :obj:`dict` contains the retrieved company profile from the selected source depending
+            on the specified language in the function parameters, which can be either Investing.com (english) 
+            or Bolsa de Madrid (spanish); and the URL from where it was retrieved, so to have both the source 
+            and the description of the company_profile.
 
             So the resulting :obj:`dict` should look like::
 
@@ -656,10 +677,14 @@ def get_equity_company_profile(equity, country='spain', language='english'):
                 }
 
     Raises:
-        IOError: if data could not be retrieved due to file error.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFound: raised if the `stocks.csv` file was not found or unable to retrieve.
+        IOError: raised if stocks object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
 
     Examples:
-        >>> investpy.get_equity_company_profile(equity='bbva', country='spain', language='english')
+        >>> investpy.get_equity_company_profile(stock='bbva', country='spain', language='english')
             company_profile = {
                 url: 'https://www.investing.com/equities/bbva-company-profile',
                 desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a ...'
@@ -674,11 +699,11 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         'es': 'Bolsa de Madrid',
     }
 
-    if not equity:
-        raise ValueError("ERR#0013: equity parameter is mandatory and must be a valid equity name.")
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
 
-    if not isinstance(equity, str):
-        raise ValueError("ERR#0027: equity argument needs to be a str.")
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
 
     if country is None:
         raise ValueError("ERR#0039: country can not be None, it should be a str.")
@@ -695,21 +720,21 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     selected_source = available_sources[language.lower()]
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = eq.retrieve_equities()
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
-    if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    equities = equities[equities['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
 
-    equity = equity.strip()
+    stock = stock.strip()
 
-    if unidecode.unidecode(equity.lower()) not in [unidecode.unidecode(value.lower()) for value in equities['name'].tolist()]:
-        raise RuntimeError("ERR#0018: equity " + equity.lower() + " not found, check if it is correct.")
+    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
 
     company_profile = {
         'url': None,
@@ -717,7 +742,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
     }
 
     if selected_source == 'Bolsa de Madrid':
-        isin = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'isin']
+        isin = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'isin']
 
         url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + isin
 
@@ -754,7 +779,7 @@ def get_equity_company_profile(equity, country='spain', language='english'):
         else:
             return company_profile
     elif selected_source == 'Investing':
-        tag = equities.loc[(equities['name'].str.lower() == equity).idxmax(), 'tag']
+        tag = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
         url = "https://www.investing.com/equities/" + tag + "-company-profile"
 
@@ -785,26 +810,211 @@ def get_equity_company_profile(equity, country='spain', language='english'):
             return company_profile
 
 
-def search_equities(by, value):
+def get_stock_dividends(stock, country):
     """
-    This function searches equities by the introduced value for the specified field. This means that this function
-    is going to search if there is a value that matches the introduced value for the specified field which is the
-    `equities.csv` column name to search in. Available fields to search equities are 'name', 'full_name' and 'isin'.
+    This function retrieves the stock dividends from the introduced stocks, which are token rewards paid to
+    the shareholders for their investment in a company's stock/equity. Dividends data include date of the 
+    dividend, dividend value, type, payment date and yield. This information is really useful when it comes
+    to creating portfolios.
 
     Args:
-        by (:obj:`str`): name of the field to search for, which is the column name ('name', 'full_name' or 'isin').
-        value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
+        stock (:obj:`str`): symbol of the stock to retrieve its dividends from.
+        country (:obj:`country`): name of the country from where the stock is from.
+
+    Returns:
+        :obj:`pandas.DataFrame` - stock_dividends:
+            Returns a :obj:`pandas.DataFrame` containing the retrieved information of stock dividends for every stock
+            symbol introduced as parameter.
+
+            So on, the resulting :obj:`pandas.DataFrame` will look like::
+
+                         Date  Dividend                    Type Payment Date  Yield
+                0  2019-10-11    0.2600  trailing_twelve_months   2019-10-15  5,67%
+                1  2019-04-08    0.2600  trailing_twelve_months   2019-04-10  5,53%
+                2  2018-06-11    0.3839  trailing_twelve_months   2018-06-13  3,96%
+                3  2018-04-06    0.2400  trailing_twelve_months   2018-04-10  4,41%
+                4  2017-10-06    0.3786  trailing_twelve_months   2017-10-10  4,45%
+
+    """
+
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
+
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    resource_package = __name__
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    stocks = stocks[stocks['country'].str.lower() == unidecode.unidecode(country.lower())]
+
+    stock = stock.strip()
+    stock = stock.lower()
+
+    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+
+    tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
+
+    headers = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://es.investing.com/equities/' + str(tag_) + '-dividends'
+
+    req = requests.get(url=url, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[contains(@id, 'dividendsHistoryData')]")
+
+    if path_:
+        more_results_id = path_[0].get('id').replace('dividendsHistoryData', '')
+
+        path_ = root_.xpath(".//table[@id='dividendsHistoryData" + str(more_results_id) + "']/tbody/tr")
+
+        objs = list()
+
+        type_values = {
+            '1': 'monthly',
+            '2': 'quarterly',
+            '3': 'semi_annual',
+            '4': 'annual',
+            '5': 'trailing_twelve_months',
+        }
+
+        if path_:
+            last_timestamp = path_[-1].get('event_timestamp')
+
+            for elements_ in path_:
+                dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
+                for element_ in elements_.xpath(".//td"):
+                    if element_.get('class'):
+                        if element_.get('class').__contains__('first'):
+                            dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                        if element_.get('data-value') in type_values.keys():
+                            dividend_type = type_values[element_.get('data-value')]
+                            dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            next_element_ = element_.getnext()
+                            dividend_yield = next_element_.getnext().text_content()
+                            
+                obj = {
+                    'Date': dividend_date,
+                    'Dividend': dividend_value,
+                    'Type': dividend_type,
+                    'Payment Date': dividend_payment_date,
+                    'Yield': dividend_yield,
+                }
+
+                objs.append(obj)
+            
+            flag = True
+
+            while flag is True:
+                headers = {
+                    "User-Agent": user_agent.get_random(),
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "text/html",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Connection": "keep-alive",
+                }
+
+                params = {
+                    'pairID': int(more_results_id),
+                    'last_timestamp': int(last_timestamp)
+                }
+
+                url = 'https://es.investing.com/equities/MoreDividendsHistory'
+
+                req = requests.post(url=url, headers=headers, params=params)
+
+                if req.status_code != 200:
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+                res = req.json()
+
+                if res['hasMoreHistory'] is False:
+                    flag = False
+
+                root_ = fromstring(res['historyRows'])
+                path_ = root_.xpath(".//tr")
+
+                if path_:
+                    last_timestamp = path_[-1].get('event_timestamp')
+
+                    for elements_ in path_:
+                        dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
+                        for element_ in elements_.xpath(".//td"):
+                            if element_.get('class'):
+                                if element_.get('class').__contains__('first'):
+                                    dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                                if element_.get('data-value') in type_values.keys():
+                                    dividend_type = type_values[element_.get('data-value')]
+                                    dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    next_element_ = element_.getnext()
+                                    dividend_yield = next_element_.getnext().text_content()
+                        obj = {
+                            'Date': dividend_date,
+                            'Dividend': dividend_value,
+                            'Type': dividend_type,
+                            'Payment Date': dividend_payment_date,
+                            'Yield': dividend_yield,
+                        }
+
+                        objs.append(obj)
+
+        df = pd.DataFrame(objs)
+        return df
+    else:
+        raise RuntimeError("ERR#0061: introduced stock has no dividend's data to display.")
+
+
+def search_stocks(by, value):
+    """
+    This function searches stocks by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced one for the specified field which is the
+    `stocks.csv` column name to search in. Available fields to search stocks are 'name', 'full_name' and 'isin'.
+
+    Args:
+        by (:obj:`str`): name of the field to search for, which is the column name which can be: 'name', 'full_name' or 'isin'.
+        value (:obj:`str`): value of the field to search for, which is the value that is going to be searched.
 
     Returns:
         :obj:`pandas.DataFrame` - search_result:
-            The resulting `pandas.DataFrame` contains the search results from the given query (the specified value
-            in the specified field). If there are no results and error will be raised, but otherwise this
-            `pandas.DataFrame` will contain all the available field values that match the introduced query.
+            The resulting :obj:`pandas.DataFrame` contains the search results from the given query, which is
+            any match of the specified value in the specified field. If there are no results for the given query, 
+            an error will be raised, but otherwise the resulting :obj:`pandas.DataFrame` will contain all the 
+            available stocks that match the introduced query.
 
     Raises:
-        ValueError: raised if any of the introduced params is not valid or errored.
+        ValueError: raised if any of the introduced parameters is not valid or errored.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
+
     """
 
     available_search_fields = ['name', 'full_name', 'isin']
@@ -826,18 +1036,18 @@ def search_equities(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'equities', 'equities.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        equities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        equities = eq.retrieve_equities()
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
-    if equities is None:
-        raise IOError("ERR#0001: equities object not found or unable to retrieve.")
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    equities['matches'] = equities[by].str.contains(value, case=False)
+    stocks['matches'] = stocks[by].str.contains(value, case=False)
 
-    search_result = equities.loc[equities['matches'] == True].copy()
+    search_result = stocks.loc[stocks['matches'] == True].copy()
 
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
@@ -1055,7 +1265,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1307,7 +1517,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1482,6 +1692,7 @@ def get_fund_information(fund, country, as_json=False):
                     'Market Cap': market_cap,
                     'Category': category
                 }
+    
     """
 
     if not fund:
@@ -1504,7 +1715,7 @@ def get_fund_information(fund, country, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1696,7 +1907,7 @@ def search_funds(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = get_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
@@ -1933,7 +2144,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = es.retrieve_etfs()
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
@@ -2186,7 +2397,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = es.retrieve_etfs()
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
@@ -2473,7 +2684,7 @@ def search_etfs(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = es.retrieve_etfs()
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
@@ -2496,8 +2707,9 @@ def search_etfs(by, value):
 
 def get_indices(country=None):
     """
-    This function retrieves all the available `indices` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the index names, but all the fields contained on the indices file.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`pandas.DataFrame` with all the information of every available index. If the country
+    filtering is applied, just the indices from the introduced country are going to be returned.
     All the available indices can be found at: https://es.investing.com/indices/world-indices and at
     https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
@@ -2506,19 +2718,14 @@ def get_indices(country=None):
 
     Returns:
         :obj:`pandas.DataFrame` - indices_df:
-            The resulting :obj:`pandas.DataFrame` contains all the indices basic information retrieved from Investing.com,
-            some of which is not useful for the user, but for the inner package functions, such as the `tag` field,
-            for example.
+            The resulting :obj:`pandas.DataFrame` contains all the indices information retrieved from Investing.com,
+            as previously listed by investpy.
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id | symbol | currency
-                --------|------|-----------|-----|----|--------|----------
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
-
-            Just like `investpy.indices.retrieve_indices()`, the output of this function is a :obj:`pandas.DataFrame`,
-            but instead of generating the CSV file, this function just reads it and loads it into a
-            :obj:`pandas.DataFrame` object.
+                country | name | full_name | symbol | currency | class | market
+                --------|------|-----------|--------|----------|-------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxxxxxx | xxxxx | xxxxxx
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
@@ -2530,9 +2737,11 @@ def get_indices(country=None):
 
 def get_indices_list(country=None):
     """
-    This function retrieves all the available indices and returns a list of each one of them.
-    All the available world indices can be found at: https://es.investing.com/indices/world-indices, and the global
-    ones can be foud at: https://es.investing.com/indices/world-indices.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`list` with the names of every available index. If the country filtering is applied, just
+    the indices from the introduced country are going to be returned.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -2540,9 +2749,9 @@ def get_indices_list(country=None):
     Returns:
         :obj:`list` - indices_list:
             The resulting :obj:`list` contains the retrieved data, which corresponds to the index names of
-            every index listed on Investing.com.
+            every index listed in Investing.com.
 
-            In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
+            In case the information was successfully retrieved, the :obj:`list` will look like::
 
                 indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
@@ -2556,10 +2765,12 @@ def get_indices_list(country=None):
 
 def get_indices_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available indices on Investing.com and returns them as a :obj:`dict` containing the
-    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available world indices can be found at:
-    https://es.investing.com/indices/world-indices, and the global ones can be foud at:
-    https://es.investing.com/indices/global-indices.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`dict` with all the information of every available index. If the country
+    filtering is applied, just the indices from the introduced country are going to be returned. Additionally, the
+    columns to retrieve data from can be specified as a parameter formatted as a :obj:`list`.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -2595,38 +2806,20 @@ def get_indices_dict(country=None, columns=None, as_json=False):
 
 def get_index_countries():
     """
-    This function retrieves all the country names indexed in Investing.com with available world indices to retrieve data
-    from, via reading the `index_countries.csv` file from the resources directory. So on, this function will
-    display a listing containing a set of countries, in order to let the user know which countries are taken into
-    consideration and also the return listing from this function can be used for country param check if needed.
+    This function retrieves all the country names indexed in Investing.com with available indices to retrieve data
+    from, via reading the `indices.csv` file from the resources directory. So on, this function will display a listing 
+    containing a set of countries, in order to let the user know which countries are available for indices data retrieval.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        IndexError: if `index_countries.csv` was unavailable or not found.
+        FileNotFoundError: raised if `indices.csv` file was unavailable or not found.
+        IOError: raised if indices were not found.
     """
 
     return ic.index_countries_as_list()
-
-
-def get_global_indices_countries():
-    """
-    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
-    from, via reading the `global_indices_countries.csv` file from the resources directory. So on, this function will
-    display a listing containing a set of countries, in order to let the user know which countries are taken into
-    consideration and also the return listing from this function can be used for country param check if needed.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with global indices as indexed in Investing.com
-
-    Raises:
-        IndexError: if `global_indices_countries.csv` was unavailable or not found.
-    """
-
-    return ic.global_indices_countries_as_list()
 
 
 def get_index_recent_data(index, country, as_json=False, order='ascending', debug=False):
@@ -2654,7 +2847,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
             The returned data is case we use default arguments will look like::
 
                 Date || Open | High | Low | Close | Volume | Currency
-                -----||------------------------------------|----------
+                -----||------|------|-----|-------|--------|----------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
@@ -2720,7 +2913,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = ic.retrieve_indices()
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -2988,7 +3181,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = ic.retrieve_indices()
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -3176,7 +3369,7 @@ def search_indices(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = ic.retrieve_indices()
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -3297,7 +3490,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
             symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
             all the currency crosses where the second currency matches the introduced one.
         columns (:obj:`list`, optional):
-            names of the columns of the equity data to retrieve <name, full_name, tag, id, base, base_name,
+            names of the columns of the stock data to retrieve <name, full_name, tag, id, base, base_name,
             second, second_name>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
@@ -3436,7 +3629,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = get_currency_crosses()
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -3599,7 +3792,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     Raises:
         ValueError: argument error.
-        IOError: equities object/file not found or unable to retrieve.
+        IOError: stocks object/file not found or unable to retrieve.
         RuntimeError: introduced currency_cross does not match any of the indexed ones.
         ConnectionError: if GET requests does not return 200 status code.
         IndexError: if currency_cross information was unavailable or not found.
@@ -3685,7 +3878,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = get_currency_crosses()
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -3868,7 +4061,7 @@ def search_currency_crosses(by, value):
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = cc.retrieve_currency_crosses()
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")

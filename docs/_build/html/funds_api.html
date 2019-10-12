@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.funds &mdash; investpy 0.9.6 documentation</title>
+  <title>investpy.funds &mdash; investpy 0.9.7 documentation</title>
   
 
   
@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="investpy.etfs" href="etfs_api.html" />
-    <link rel="prev" title="investpy.equities" href="equities_api.html" /> 
+    <link rel="prev" title="investpy.stocks" href="stocks_api.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.6
+                0.9.7
               </div>
             
           
@@ -88,12 +88,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
-<li class="toctree-l1"><a class="reference internal" href="equities.html">Stocks/Equities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stocks.html">Stocks/Equities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funds.html">Funds</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="api.html">API Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="main_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy</span></code></a></li>
-<li class="toctree-l2"><a class="reference internal" href="equities_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.equities</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="stocks_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.stocks</span></code></a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.funds</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="etfs_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.etfs</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="user_agent.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.user_agent</span></code></a></li>
@@ -204,9 +205,9 @@ All the available funds can be found at: <a class="reference external" href="htt
 some of which is not useful for the user, but for the inner package functions, such as the <cite>id</cite> field,
 for example.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>asset class | id | isin | issuer | name | symbol | tag
-------------|----|------|--------|------|--------|-----
-xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>asset class | id | isin | issuer | name | symbol | tag | currrency
+------------|----|------|--------|------|--------|-----|-----------
+xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
 </pre></div>
 </div>
 <p>Just like <cite>investpy.funds.retrieve_funds()</cite> <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> output, but instead of generating the
@@ -226,7 +227,7 @@ CSV file, this function just reads it and loads it into a <code class="xref py p
 <dt id="investpy.funds.funds_as_dict">
 <code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">funds_as_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.funds_as_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds on Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the
-<cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>, <cite>name</cite>, <cite>symbol</cite> and <cite>tag</cite>. All the available funds can be found at:
+<cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>, <cite>name</cite>, <cite>symbol</cite>, <cite>tag</cite> and <cite>currency</cite>. All the available funds can be found at:
 <a class="reference external" href="https://es.investing.com/funds/">https://es.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -249,7 +250,8 @@ fields are filled with <cite>None</cite> values.</p>
     <span class="s1">&#39;issuer&#39;</span><span class="p">:</span> <span class="n">issuer</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
     <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
-    <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span>
+    <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
+    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -353,8 +355,8 @@ fields are filled with <cite>None</cite> values.</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
-<li><p><strong>IndexError</strong> – if fund information was unavailable or not found.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – raised if fund information was unavailable or not found.</p></li>
 </ul>
 </dd>
 </dl>
@@ -411,7 +413,7 @@ xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
         <a href="etfs_api.html" class="btn btn-neutral float-right" title="investpy.etfs" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="equities_api.html" class="btn btn-neutral float-left" title="investpy.equities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="stocks_api.html" class="btn btn-neutral float-left" title="investpy.stocks" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -6,8 +6,8 @@
 
 class Data(object):
     """
-    This class is used to store the historical data of an equity, fund or etf either as a :obj:`json` or as a
-    :obj:`dict`.
+    This class is used to store the historical data of avery financial product retrieved from Investing.com either as
+    a :obj:`json` or as a :obj:`dict`.
 
     Args:
         date_ (:obj:`str`): date in dd/mm/yyyy format.
@@ -37,7 +37,7 @@ class Data(object):
         self.volume = volume_
         self.currency = currency_
 
-    def equity_to_dict(self):
+    def stock_to_dict(self):
         return {
             'Date': self.date,
             'Open': self.open,
@@ -48,7 +48,7 @@ class Data(object):
             'Currency': self.currency,
         }
 
-    def equity_as_json(self):
+    def stock_as_json(self):
         return {
             'date': self.date.strftime('%d/%m/%Y'),
             'open': self.open,

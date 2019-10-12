@@ -39,9 +39,9 @@ def retrieve_indices(test_mode=False):
             In the case that the retrieval process of indices was successfully completed, the resulting
             :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id | symbol | currency
-                --------|------|-----------|-----|----|--------|----------
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
+                country | name | full_name | tag | id | symbol | currency | class | market
+                --------|------|-----------|-----|----|--------|----------|-------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx | xxxxx | xxxxxx
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid.
@@ -64,53 +64,71 @@ def retrieve_indices(test_mode=False):
         raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
 
     for country in countries['country'].tolist():
-        head = {
-            "User-Agent": ua.get_random(),
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "text/html",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive",
-        }
+        indices_filters = [
+            {
+                'class': 'major_indices',
+                'filter': 'majorIndices=on'
+            },
+            {
+                'class': 'primary_sectors',
+                'filter': 'primarySectors=on'
+            },
+            {
+                'class': 'additional_indices',
+                'filter': 'additionalIndices=on'
+            },
+            {
+                'class': 'other_indices',
+                'filter': 'otherIndices=on'
+            },
+        ]
 
-        url = "https://www.investing.com/indices/" + country.replace(' ', '-') + "-indices?&majorIndices=on&primarySectors=on&additionalIndices=on&otherIndices=on"
+        for indices_filter in indices_filters:
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+            }
 
-        req = requests.get(url, headers=head)
+            url = "https://www.investing.com/indices/" + country.replace(' ', '-') + "-indices?&" + indices_filter['filter']
 
-        if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            req = requests.get(url, headers=head)
 
-        root_ = fromstring(req.text)
-        path_ = root_.xpath(".//table[@id='cr1']/tbody/tr")
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-        if path_:
-            for elements_ in path_:
-                id_ = elements_.get('id').replace('pair_', '')
+            root_ = fromstring(req.text)
+            path_ = root_.xpath(".//table[@id='cr1']/tbody/tr")
 
-                for element_ in elements_.xpath('.//a'):
-                    tag_ = element_.get('href')
+            if path_:
+                for elements_ in path_:
+                    id_ = elements_.get('id').replace('pair_', '')
 
-                    if str(tag_).__contains__('/indices/'):
-                        tag_ = tag_.replace('/indices/', '')
-                        full_name_ = element_.get('title').replace(' (CFD)', '').strip()
-                        name = element_.text.strip()
+                    for element_ in elements_.xpath('.//a'):
+                        tag_ = element_.get('href')
 
-                        info = retrieve_index_info(tag_)
+                        if str(tag_).__contains__('/indices/'):
+                            tag_ = tag_.replace('/indices/', '')
+                            full_name_ = element_.get('title').replace(' (CFD)', '').strip()
+                            name = element_.text.strip()
 
-                        data = {
-                            'country': 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
-                            'name': name,
-                            'full_name': full_name_,
-                            'tag': tag_,
-                            'id': id_,
-                            'symbol': info['symbol'],
-                            'currency': info['currency'],
-                            'market': 'world_indices'
-                        }
+                            info = retrieve_index_info(tag_)
 
-                        results.append(data)
+                            data = {
+                                'country': 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
+                                'name': name,
+                                'full_name': full_name_,
+                                'tag': tag_,
+                                'id': id_,
+                                'symbol': info['symbol'],
+                                'currency': info['currency'],
+                                'class': indices_filter['class'],
+                                'market': 'world_indices'
+                            }
 
-                if test_mode is True:
-                    break
+                            results.append(data)
 
         if test_mode is True:
             break
@@ -125,7 +143,112 @@ def retrieve_indices(test_mode=False):
     if countries is None:
         raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
 
-    for index, row in countries.iterrows():
+    for _, row in countries.iterrows():
+        indices_filters = [
+            {
+                'class': 'major_indices',
+                'filter': 'majorIndices=on'
+            },
+            {
+                'class': 'primary_sectors',
+                'filter': 'primarySectors=on'
+            },
+            {
+                'class': 'bonds',
+                'filter': 'bonds=on'
+            },
+            {
+                'class': 'additional_indices',
+                'filter': 'additionalIndices=on'
+            },
+            {
+                'class': 'other_indices',
+                'filter': 'otherIndices=on'
+            },
+        ]
+
+        for indices_filter in indices_filters:
+            head = {
+                "User-Agent": ua.get_random(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+            }
+
+            url = "https://www.investing.com/indices/global-indices?" + indices_filter['filter'] +\
+                  "&c_id=" + str(row['id'])
+
+            req = requests.get(url, headers=head)
+
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            root_ = fromstring(req.text)
+            path_ = root_.xpath(".//table[@id='cr_12']/tbody/tr")
+
+            if path_:
+                for elements_ in path_:
+                    id_ = elements_.get('id').replace('pair_', '')
+
+                    for element_ in elements_.xpath('.//a'):
+                        tag_ = element_.get('href')
+
+                        if str(tag_).__contains__('/indices/'):
+                            tag_ = tag_.replace('/indices/', '')
+                            full_name_ = element_.get('title').replace(' (CFD)', '').strip()
+                            name = element_.text.strip()
+
+                            info = retrieve_index_info(tag_)
+
+                            data = {
+                                'country': row['country'],
+                                'name': name,
+                                'full_name': full_name_,
+                                'tag': tag_,
+                                'id': id_,
+                                'symbol': info['symbol'],
+                                'currency': info['currency'],
+                                'class': indices_filter['class'],
+                                'market': 'global_indices'
+                            }
+
+                            results.append(data)
+
+                    if test_mode is True:
+                        break
+
+        if test_mode is True:
+            break
+
+    indices_filters = [
+        {
+            'class': 'major_indices',
+            'filter': 'majorIndices=on'
+        },
+        {
+            'class': 'primary_sectors',
+            'filter': 'primarySectors=on'
+        },
+        {
+            'class': 'bonds',
+            'filter': 'bonds=on'
+        },
+        {
+            'class': 'additional_indices',
+            'filter': 'additionalIndices=on'
+        },
+        {
+            'class': 'other_indices',
+            'filter': 'otherIndices=on'
+        },
+        {
+            'class': 'commodities',
+            'filter': 'commodities=on'
+        },
+    ]
+
+    for indices_filter in indices_filters:
         head = {
             "User-Agent": ua.get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -134,10 +257,7 @@ def retrieve_indices(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        tag = row['tag'].replace('?',
-                                 '?majorIndices=on&primarySectors=on&bonds=on&additionalIndices=on&otherIndices=on&')
-
-        url = "https://www.investing.com/indices/" + tag
+        url = "https://www.investing.com/indices/global-indices?" + indices_filter['filter'] + "&r_id="
 
         req = requests.get(url, headers=head)
 
@@ -151,6 +271,20 @@ def retrieve_indices(test_mode=False):
             for elements_ in path_:
                 id_ = elements_.get('id').replace('pair_', '')
 
+                flags = elements_.xpath(".//td[@class='flag']/span")
+
+                region = None
+
+                for flag in flags:
+                    region = flag.get('title')
+
+                if region == '':
+                    region = 'world'
+                elif region == 'Euro Zone':
+                    region = region.lower()
+                else:
+                    region = unidecode.unidecode(region.strip().lower())
+
                 for element_ in elements_.xpath('.//a'):
                     tag_ = element_.get('href')
 
@@ -162,94 +296,35 @@ def retrieve_indices(test_mode=False):
                         info = retrieve_index_info(tag_)
 
                         data = {
-                            'country': row['country'],
+                            'country': region,
                             'name': name,
                             'full_name': full_name_,
                             'tag': tag_,
                             'id': id_,
                             'symbol': info['symbol'],
                             'currency': info['currency'],
+                            'class': indices_filter['class'],
                             'market': 'global_indices'
                         }
 
                         results.append(data)
-
-                if test_mode is True:
-                    break
-
-        if test_mode is True:
-            break
-
-    head = {
-        "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
-    url = "https://www.investing.com/indices/global-indices?majorIndices=on&primarySectors=on&bonds=on&additionalIndices=on&otherIndices=on&commodities=on"
-
-    req = requests.get(url, headers=head)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='cr_12']/tbody/tr")
-
-    if path_:
-        for elements_ in path_:
-            id_ = elements_.get('id').replace('pair_', '')
-
-            flags = elements_.xpath(".//td[@class='flag']/span")
-
-            region = None
-
-            for flag in flags:
-                region = flag.get('title')
-
-            if region == '':
-                region = 'world'
-            elif region == 'Euro Zone':
-                region = region.lower()
-            else:
-                continue
-
-            for element_ in elements_.xpath('.//a'):
-                tag_ = element_.get('href')
-
-                if str(tag_).__contains__('/indices/'):
-                    tag_ = tag_.replace('/indices/', '')
-                    full_name_ = element_.get('title').replace(' (CFD)', '').strip()
-                    name = element_.text.strip()
-
-                    info = retrieve_index_info(tag_)
-
-                    data = {
-                        'country': region,
-                        'name': name,
-                        'full_name': full_name_,
-                        'tag': tag_,
-                        'id': id_,
-                        'symbol': info['symbol'],
-                        'currency': info['currency'],
-                        'market': 'global_indices'
-                    }
-
-                    results.append(data)
 
             if test_mode is True:
                 break
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
 
+    df = df.where((pd.notnull(df)), None)
+    df.drop_duplicates(subset="tag", keep='first', inplace=True)
+    df.sort_values('country', ascending=True, inplace=True)
+    df.reset_index(drop=True, inplace=True)
+
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
@@ -382,12 +457,12 @@ def retrieve_index_countries(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'indices', 'index_countries.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(countries)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
@@ -406,7 +481,7 @@ def retrieve_global_indices_countries(test_mode=False):
 
     Returns:
         :obj:`pandas.DataFrame` - equity_countries:
-            The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding tag,
+            The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding id,
             which will be used later by investpy.
 
     Raises:
@@ -441,7 +516,7 @@ def retrieve_global_indices_countries(test_mode=False):
     for element in path:
         if element.get('value') != '/indices/global-indices':
             obj = {
-                'tag': element.get('value').replace('/indices/', ''),
+                'id': element.get('value').replace('/indices/global-indices?c_id=', ''),
                 'country': unidecode.unidecode(element.text_content().strip().lower()),
             }
 
@@ -455,82 +530,49 @@ def retrieve_global_indices_countries(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'indices', 'global_indices_countries.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(countries)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
 
 def index_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available world indices to retrieve data
-    from, via reading the `index_countries.csv` file from the resources directory. So on, this function will
-    display a listing containing a set of countries, in order to let the user know which countries are taken into
-    consideration and also the return listing from this function can be used for country param check if needed.
+    This function retrieves all the country names indexed in Investing.com with available indices to retrieve data
+    from, via reading the `indices.csv` file from the resources directory. So on, this function will display a listing 
+    containing a set of countries, in order to let the user know which countries are available for indices data retrieval.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        IndexError: if `index_countries.csv` was unavailable or not found.
+        FileNotFoundError: raised if `indices.csv` file was unavailable or not found.
+        IOError: raised if indices were not found.
     """
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'indices', 'index_countries.csv'))
+    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        countries = retrieve_index_countries(test_mode=False)
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
-    if countries is None:
-        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
     else:
-        for index, row in countries.iterrows():
-            if row['country'] == 'uk':
-                countries.loc[index, 'country'] = 'united kingdom'
-            elif row['country'] == 'usa':
-                countries.loc[index, 'country'] = 'united states'
-
-        return countries['country'].tolist()
-
-
-def global_indices_countries_as_list():
-    """
-    This function retrieves all the country names indexed in Investing.com with available global indices to retrieve data
-    from, via reading the `global_indices_countries.csv` file from the resources directory. So on, this function will
-    display a listing containing a set of countries, in order to let the user know which countries are taken into
-    consideration and also the return listing from this function can be used for country param check if needed.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with global indices as indexed in Investing.com
-
-    Raises:
-        IndexError: if `global_indices_countries.csv` was unavailable or not found.
-    """
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'indices', 'global_indices_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        countries = retrieve_index_countries(test_mode=False)
-
-    if countries is None:
-        raise IOError("ERR#0036: equity countries list not found or unable to retrieve.")
-    else:
-        return countries['country'].tolist()
+        return indices['country'].unique().tolist()
 
 
 def indices_as_df(country=None):
     """
-    This function retrieves all the available `indices` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the index names, but all the fields contained on the indices file.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`pandas.DataFrame` with all the information of every available index. If the country
+    filtering is applied, just the indices from the introduced country are going to be returned.
     All the available indices can be found at: https://es.investing.com/indices/world-indices and at
     https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
@@ -539,19 +581,14 @@ def indices_as_df(country=None):
 
     Returns:
         :obj:`pandas.DataFrame` - indices_df:
-            The resulting :obj:`pandas.DataFrame` contains all the indices basic information retrieved from Investing.com,
-            some of which is not useful for the user, but for the inner package functions, such as the `tag` field,
-            for example.
+            The resulting :obj:`pandas.DataFrame` contains all the indices information retrieved from Investing.com,
+            as previously listed by investpy.
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id | symbol | currency
-                --------|------|-----------|-----|----|--------|----------
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx | xxxxxx | xxxxxxxx
-
-            Just like `investpy.indices.retrieve_indices()`, the output of this function is a :obj:`pandas.DataFrame`,
-            but instead of generating the CSV file, this function just reads it and loads it into a
-            :obj:`pandas.DataFrame` object.
+                country | name | full_name | symbol | currency | class | market
+                --------|------|-----------|--------|----------|-------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxxxxxx | xxxxx | xxxxxx
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
@@ -571,6 +608,8 @@ def indices_as_df(country=None):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
+    indices.drop(columns=['tag', 'id'], inplace=True)
+
     if country is None:
         indices.reset_index(drop=True, inplace=True)
         return indices
@@ -582,9 +621,11 @@ def indices_as_df(country=None):
 
 def indices_as_list(country=None):
     """
-    This function retrieves all the available indices and returns a list of each one of them.
-    All the available world indices can be found at: https://es.investing.com/indices/world-indices, and the global
-    ones can be foud at: https://es.investing.com/indices/world-indices.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`list` with the names of every available index. If the country filtering is applied, just
+    the indices from the introduced country are going to be returned.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -592,9 +633,9 @@ def indices_as_list(country=None):
     Returns:
         :obj:`list` - indices_list:
             The resulting :obj:`list` contains the retrieved data, which corresponds to the index names of
-            every index listed on Investing.com.
+            every index listed in Investing.com.
 
-            In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
+            In case the information was successfully retrieved, the :obj:`list` will look like::
 
                 indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
@@ -616,6 +657,8 @@ def indices_as_list(country=None):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
+    indices.drop(columns=['tag', 'id'], inplace=True)
+
     if country is None:
         return indices['name'].tolist()
     elif unidecode.unidecode(country.lower()) in index_countries_as_list():
@@ -624,10 +667,12 @@ def indices_as_list(country=None):
 
 def indices_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available indices on Investing.com and returns them as a :obj:`dict` containing the
-    `country`, `name`, `full_name`, `symbol`, `tag` and `currency`. All the available world indices can be found at:
-    https://es.investing.com/indices/world-indices, and the global ones can be foud at:
-    https://es.investing.com/indices/global-indices.
+    This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
+    returns them as a :obj:`dict` with all the information of every available index. If the country
+    filtering is applied, just the indices from the introduced country are going to be returned. Additionally, the
+    columns to retrieve data from can be specified as a parameter formatted as a :obj:`list`.
+    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
+    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -674,6 +719,8 @@ def indices_as_dict(country=None, columns=None, as_json=False):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
+    indices.drop(columns=['tag', 'id'], inplace=True)
+
     if columns is None:
         columns = indices.columns.tolist()
     else:
@@ -682,7 +729,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in indices.columns.tolist() for column in columns):
         raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<country, name, full_name, symbol, tag, id, currency>")
+                         "<country, name, full_name, symbol, currency, class, market>")
 
     if country is None:
         if as_json:
