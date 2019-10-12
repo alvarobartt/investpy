@@ -1692,9 +1692,9 @@ the stock data of the stocks from the introduced country.</p>
 or from every country if None was specified, as indexed in Investing.com from the information previously
 retrieved by investpy and stored on a csv file.</p>
 <p>So on, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>country | name | full name | isin | class | currency | symbol
---------|------|-----------|------|-------|----------|--------
-xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxx | xxxxxxxx | xxxxxx
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full</span> <span class="n">name</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">symbol</span>
+<span class="o">--------|------|-----------|------|----------|--------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -1725,7 +1725,7 @@ load, and whether the information wants to be returned as a JSON object or as a 
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available stocks from.</p></li>
-<li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – column names of the stock data to retrieve, can be: &lt;country, name, full_name, isin, currency, class, symbol&gt;</p></li>
+<li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – column names of the stock data to retrieve, can be: &lt;country, name, full_name, isin, currency, symbol&gt;</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – if True the returned data will be a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object, if False, a <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>.</p></li>
 </ul>
 </dd>
@@ -1741,7 +1741,6 @@ the information previously retrieved by investpy and stored on a csv file.</p>
     <span class="s1">&#39;isin&#39;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
     <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
     <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span><span class="p">,</span>
-    <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="n">class</span><span class="p">,</span>
     <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
 <span class="p">}</span>
 </pre></div>

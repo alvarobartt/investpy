@@ -204,12 +204,12 @@ def retrieve_etfs(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 

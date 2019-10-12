@@ -30,10 +30,10 @@ def get_random():
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
-    if os.path.exists(file):
-        with open(file, 'r') as f:
+    if os.path.exists(file_):
+        with open(file_, 'r') as f:
             content = f.read(1)
 
             if content:
@@ -57,10 +57,10 @@ def clear_file():
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
-    if os.path.exists(file):
-        with open(file, 'w') as f:
+    if os.path.exists(file_):
+        with open(file_, 'w') as f:
             f.close()
 
 
@@ -74,7 +74,7 @@ def delete_file():
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
-    if os.path.exists(file):
-        os.remove(file)
+    if os.path.exists(file_):
+        os.remove(file_)

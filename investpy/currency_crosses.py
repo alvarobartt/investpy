@@ -129,12 +129,12 @@ def retrieve_currency_crosses(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
@@ -262,10 +262,10 @@ def retrieve_currency_cross_continents():
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_cross_continents.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(countries)
-    df.to_csv(file, index=False)
+    df.to_csv(file_, index=False)
 
     return df
 

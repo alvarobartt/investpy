@@ -386,6 +386,10 @@ def test_stocks_errors():
             'stock': 'error',
             'country': 'spain',
         },
+        {
+            'stock': 'ALUA',
+            'country': 'argentina',
+        },
     ]
 
     for param in params:

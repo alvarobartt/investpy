@@ -156,7 +156,7 @@ def retrieve_funds(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)
 
@@ -166,7 +166,7 @@ def retrieve_funds(test_mode=False):
     df.reset_index(drop=True, inplace=True)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 
@@ -301,12 +301,12 @@ def retrieve_fund_countries(test_mode=False):
 
     resource_package = __name__
     resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
-    file = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(countries)
 
     if test_mode is False:
-        df.to_csv(file, index=False)
+        df.to_csv(file_, index=False)
 
     return df
 

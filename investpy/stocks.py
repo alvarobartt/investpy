@@ -5,6 +5,7 @@
 
 import unidecode
 import json
+import time
 
 import pandas as pd
 import pkg_resources
@@ -35,9 +36,9 @@ def retrieve_stocks(test_mode=False):
             In the case that the stock retrieval process was successfully completed, the resulting :obj:`pandas.DataFrame` 
             will look like the one presented below::
 
-                name | full name | tag | isin | id | class | currency | symbol 
-                -----|-----------|-----|------|----|-------|----------|--------
-                xxxx | xxxxxxxxx | xxx | xxxx | xx | xxxxx | xxxxxxxx | xxxxxx  
+                name | full name | tag | isin | id | currency | symbol 
+                -----|-----------|-----|------|----|----------|--------
+                xxxx | xxxxxxxxx | xxx | xxxx | xx | xxxxxxxx | xxxxxx  
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
@@ -106,7 +107,7 @@ def retrieve_stocks(test_mode=False):
                 "index_id": str(filter_['id'])
             }
 
-            url = "https://es.investing.com/equities/StocksFilter"
+            url = "https://www.investing.com/equities/StocksFilter"
 
             req = requests.get(url, params=params, headers=head)
 
@@ -122,35 +123,39 @@ def retrieve_stocks(test_mode=False):
                 for elements_ in path_:
                     id_ = elements_.get('id').replace('pair_', '')
 
-                    for element_ in elements_.xpath('.//a'):
-                        tag_ = element_.get('href')
+                    country_check = elements_.xpath(".//td[@class='flag']/span")[0].get('title').lower()
 
-                        if str(tag_).__contains__('/equities/'):
-                            tag_ = tag_.replace('/equities/', '')
+                    if row['country'] == country_check:
+                        for element_ in elements_.xpath('.//a'):
+                            tag_ = element_.get('href')
 
-                            if not any(result['tag'] == tag_ for result in results):
-                                full_name_ = element_.get('title').replace(' (CFD)', '')
+                            if str(tag_).__contains__('/equities/'):
+                                tag_ = tag_.replace('/equities/', '')
 
-                                info = None
+                                if not any(result['tag'] == tag_ for result in results):
+                                    full_name_ = element_.get('title').replace(' (CFD)', '')
 
-                                while info is None:
-                                    try:
-                                        info = retrieve_stock_info(tag_)
-                                    except:
-                                        pass
+                                    info = None
 
-                                data = {
-                                    'country': str(row['country']),
-                                    'name': element_.text.strip(),
-                                    'full_name': full_name_.rstrip(),
-                                    'tag': tag_,
-                                    'isin': info['isin'],
-                                    'id': str(id_),
-                                    'currency': info['currency'],
-                                    'symbol': info['symbol']
-                                }
+                                    while info is None:
+                                        try:
+                                            info = retrieve_stock_info(tag_)
+                                        except:
+                                            time.sleep(1)
+                                            pass
 
-                                results.append(data)
+                                    data = {
+                                        'country': str(row['country']),
+                                        'name': element_.text.strip(),
+                                        'full_name': full_name_.rstrip(),
+                                        'tag': tag_,
+                                        'isin': info['isin'],
+                                        'id': str(id_),
+                                        'currency': info['currency'],
+                                        'symbol': str(info['symbol']),
+                                    }
+
+                                    results.append(data)
                     
                     if test_mode is True:
                         break
@@ -158,6 +163,15 @@ def retrieve_stocks(test_mode=False):
             if test_mode is True:
                 break
 
+        resource_package = __name__
+        resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+        file_ = pkg_resources.resource_filename(resource_package, resource_path)
+
+        df = pd.DataFrame(results)
+
+        if test_mode is False:
+            df.to_csv(file_, index=False)
+        
         if test_mode is True:
             break
 
@@ -382,9 +396,9 @@ def stocks_as_df(country=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full name | isin | class | currency | symbol 
-                --------|------|-----------|------|-------|----------|--------
-                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxx | xxxxxxxx | xxxxxx 
+                country | name | full name | isin | currency | symbol 
+                --------|------|-----------|------|----------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxxxxx | xxxxxx 
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
@@ -476,7 +490,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
-        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, class, symbol>
+        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, symbol>
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
@@ -494,7 +508,6 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
                     'isin': isin,
                     'id': id,
                     'currency': currency,
-                    'class': class,
                     'symbol': symbol,
                 }
 

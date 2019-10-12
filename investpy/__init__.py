@@ -43,9 +43,9 @@ def get_stocks(country=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full name | isin | class | currency | symbol 
-                --------|------|-----------|------|-------|----------|--------
-                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxx | xxxxxxxx | xxxxxx 
+                country | name | full name | isin | currency | symbol 
+                --------|------|-----------|------|----------|--------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxxxxx | xxxxxx 
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
@@ -98,7 +98,7 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
-        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, class, symbol>
+        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, symbol>
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
@@ -116,7 +116,6 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
                     'isin': isin,
                     'id': id,
                     'currency': currency,
-                    'class': class,
                     'symbol': symbol,
                 }
 
@@ -863,7 +862,7 @@ def get_stock_dividends(stock, country):
     if unidecode.unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'].str.lower() == unidecode.unidecode(country.lower())]
 
     stock = stock.strip()
     stock = stock.lower()
@@ -891,104 +890,107 @@ def get_stock_dividends(stock, country):
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[contains(@id, 'dividendsHistoryData')]")
 
-    more_results_id = path_[0].get('id').replace('dividendsHistoryData', '')
-
-    path_ = root_.xpath(".//table[@id='dividendsHistoryData" + str(more_results_id) + "']/tbody/tr")
-
-    objs = list()
-
-    type_values = {
-        '1': 'monthly',
-        '2': 'quarterly',
-        '3': 'semi_annual',
-        '4': 'annual',
-        '5': 'trailing_twelve_months',
-    }
-
     if path_:
-        last_timestamp = path_[-1].get('event_timestamp')
+        more_results_id = path_[0].get('id').replace('dividendsHistoryData', '')
 
-        for elements_ in path_:
-            dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
-            for element_ in elements_.xpath(".//td"):
-                if element_.get('class'):
-                    if element_.get('class').__contains__('first'):
-                        dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
-                        dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
-                    if element_.get('data-value') in type_values.keys():
-                        dividend_type = type_values[element_.get('data-value')]
-                        dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
-                        next_element_ = element_.getnext()
-                        dividend_yield = next_element_.getnext().text_content()
-                        
-            obj = {
-                'Date': dividend_date,
-                'Dividend': dividend_value,
-                'Type': dividend_type,
-                'Payment Date': dividend_payment_date,
-                'Yield': dividend_yield,
-            }
+        path_ = root_.xpath(".//table[@id='dividendsHistoryData" + str(more_results_id) + "']/tbody/tr")
 
-            objs.append(obj)
-        
-        flag = True
+        objs = list()
 
-        while flag is True:
-            headers = {
-                "User-Agent": user_agent.get_random(),
-                "X-Requested-With": "XMLHttpRequest",
-                "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
-                "Connection": "keep-alive",
-            }
+        type_values = {
+            '1': 'monthly',
+            '2': 'quarterly',
+            '3': 'semi_annual',
+            '4': 'annual',
+            '5': 'trailing_twelve_months',
+        }
 
-            params = {
-                'pairID': int(more_results_id),
-                'last_timestamp': int(last_timestamp)
-            }
+        if path_:
+            last_timestamp = path_[-1].get('event_timestamp')
 
-            url = 'https://es.investing.com/equities/MoreDividendsHistory'
+            for elements_ in path_:
+                dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
+                for element_ in elements_.xpath(".//td"):
+                    if element_.get('class'):
+                        if element_.get('class').__contains__('first'):
+                            dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                        if element_.get('data-value') in type_values.keys():
+                            dividend_type = type_values[element_.get('data-value')]
+                            dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            next_element_ = element_.getnext()
+                            dividend_yield = next_element_.getnext().text_content()
+                            
+                obj = {
+                    'Date': dividend_date,
+                    'Dividend': dividend_value,
+                    'Type': dividend_type,
+                    'Payment Date': dividend_payment_date,
+                    'Yield': dividend_yield,
+                }
 
-            req = requests.post(url=url, headers=headers, params=params)
+                objs.append(obj)
+            
+            flag = True
 
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            while flag is True:
+                headers = {
+                    "User-Agent": user_agent.get_random(),
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "text/html",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Connection": "keep-alive",
+                }
 
-            res = req.json()
+                params = {
+                    'pairID': int(more_results_id),
+                    'last_timestamp': int(last_timestamp)
+                }
 
-            if res['hasMoreHistory'] is False:
-                flag = False
+                url = 'https://es.investing.com/equities/MoreDividendsHistory'
 
-            root_ = fromstring(res['historyRows'])
-            path_ = root_.xpath(".//tr")
+                req = requests.post(url=url, headers=headers, params=params)
 
-            if path_:
-                last_timestamp = path_[-1].get('event_timestamp')
+                if req.status_code != 200:
+                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-                for elements_ in path_:
-                    dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
-                    for element_ in elements_.xpath(".//td"):
-                        if element_.get('class'):
-                            if element_.get('class').__contains__('first'):
-                                dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
-                                dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
-                            if element_.get('data-value') in type_values.keys():
-                                dividend_type = type_values[element_.get('data-value')]
-                                dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
-                                next_element_ = element_.getnext()
-                                dividend_yield = next_element_.getnext().text_content()
-                    obj = {
-                        'Date': dividend_date,
-                        'Dividend': dividend_value,
-                        'Type': dividend_type,
-                        'Payment Date': dividend_payment_date,
-                        'Yield': dividend_yield,
-                    }
+                res = req.json()
 
-                    objs.append(obj)
+                if res['hasMoreHistory'] is False:
+                    flag = False
 
-    df = pd.DataFrame(objs)
-    return df
+                root_ = fromstring(res['historyRows'])
+                path_ = root_.xpath(".//tr")
+
+                if path_:
+                    last_timestamp = path_[-1].get('event_timestamp')
+
+                    for elements_ in path_:
+                        dividend_date = dividend_value = dividend_type = dividend_payment_date = dividend_yield = None
+                        for element_ in elements_.xpath(".//td"):
+                            if element_.get('class'):
+                                if element_.get('class').__contains__('first'):
+                                    dividend_date = datetime.datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                                if element_.get('data-value') in type_values.keys():
+                                    dividend_type = type_values[element_.get('data-value')]
+                                    dividend_payment_date = datetime.datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    next_element_ = element_.getnext()
+                                    dividend_yield = next_element_.getnext().text_content()
+                        obj = {
+                            'Date': dividend_date,
+                            'Dividend': dividend_value,
+                            'Type': dividend_type,
+                            'Payment Date': dividend_payment_date,
+                            'Yield': dividend_yield,
+                        }
+
+                        objs.append(obj)
+
+        df = pd.DataFrame(objs)
+        return df
+    else:
+        raise RuntimeError("ERR#0061: introduced stock has no dividend's data to display.")
 
 
 def search_stocks(by, value):
