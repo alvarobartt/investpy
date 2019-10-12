@@ -18,8 +18,8 @@ Stock Data Retrieval
 
     import investpy
 
-    df = investpy.get_recent_data(stock='bbva',
-                                  country='spain')
+    df = investpy.get_stock_recent_data(stock='bbva',
+                                        country='spain')
     print(df.head())
     
                  Open   High    Low  Close    Volume Currency
@@ -35,10 +35,10 @@ Stock Data Retrieval
 
     import investpy
 
-    df = investpy.get_historical_data(stock='bbva',
-                                      country='spain',
-                                      from_date='01/01/2010',
-                                      to_date='01/01/2019')
+    df = investpy.get_stock_historical_data(stock='bbva',
+                                            country='spain',
+                                            from_date='01/01/2010',
+                                            to_date='01/01/2019')
     print(df.head())
     
                  Open   High    Low  Close  Volume Currency

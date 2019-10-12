@@ -5,8 +5,8 @@
 # investpy — a Python package for financial historical data extraction from Investing
 
 investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **29.628 STOCKS, 81.024 FUNDS, 11.366 ETFs, 1.889 CURRENCY CROSSES 
-and 7.797 INDICES from all over the world**. Basically, investpy allows you to download historical data from almost 
+It provides historical data retrieval from up to **29.628 stocks, 81.024 funds, 11.366 etfs, 1.889 currency crosses
+and 7.797 indices**. Basically, investpy allows you to download historical data from almost 
 all the financial products indexed in Investing.com. All the data that can be retrieved includes data from all over the world, 
 from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, 
 investpy is intended to wrap up all the available data from Investing.com, so that it can be retrieved via Python for 
@@ -51,8 +51,8 @@ means that every other function is additional.
 ```python
 import investpy
 
-df = investpy.get_recent_data(stock='bbva',
-                              country='spain')
+df = investpy.get_stock_recent_data(stock='BBVA',
+                                    country='spain')
 print(df.head())
 ```
 ```{r, engine='python', count_lines}
@@ -69,10 +69,10 @@ Date
 ```python
 import investpy
 
-df = investpy.get_historical_data(stock='bbva',
-                                  country='spain',
-                                  from_date='01/01/2010',
-                                  to_date='01/01/2019')
+df = investpy.get_stock_historical_data(stock='BBVA',
+                                        country='spain',
+                                        from_date='01/01/2010',
+                                        to_date='01/01/2019')
 print(df.head())
 ```
 ```{r, engine='python', count_lines}
@@ -119,6 +119,16 @@ as indexed in Investing.com.
 
 All the functions definitions and usage can be found in the [Documentation](https://investpy.readthedocs.io/)!
 
+## Utilites
+
+Since investpy is just intended to retrieva data from different financial products as indexed in Investing.com, 
+the development of support modules is presented, which implement an additional functionallity based on investpy data.
+Note that anyone can contribute to this section by creating any package, module or utility which uses this package. So on, the
+ones already created are going to be presented, since they are intended to be used combined with investpy:
+
+- [investpy_portfolio](https://github.com/alvarob96/investpy_portfolio/): is a Python package to generate stock portfolios.
+- [trendet](https://github.com/alvarob96/trendet/): is a Python package for trend detection on stock time series data.
+
 ## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 
 As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements, 
@@ -127,10 +137,7 @@ enhancements and ideas.
 Also there is an open tab of [issues](https://github.com/alvarob96/investpy/issues) where anyone can contribute opening 
 new issues if needed or navigate through them in order to solve them or contribute to its solving. Remember that issues
 are not threads to describe multiple issues, this does not mean that issues can't be discussed, but if new issues are 
-reported, a new issue should be open so to keep a structured project management. Note that issues should be formatted as 
-the description specified in [ISSUE_TEMPLATE](https://github.com/alvarob96/investpy/tree/master/.github/ISSUE_TEMPLATE),
-which is automatically launched whenever you want to open an issue, but if you prefer you can open a custom issue, trying
-to give all the information to identify the issue and solve it if possible.
+reported, a new issue should be open so to keep a structured project management.
 
 Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarob96/investpy) so you can 
 provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new 

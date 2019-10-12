@@ -68,7 +68,12 @@ def retrieve_etfs(test_mode=False):
 
     results = list()
 
-    for country in countries['country'].tolist():
+    if test_mode is False:
+        country_list = countries['country'].tolist()
+    else:
+        country_list = ['spain', 'usa']
+
+    for country in country_list:
         url = "https://www.investing.com/etfs/" + country.replace(" ", "-") + "-etfs?issuer_filter=0"
 
         req = requests.get(url, headers=head)
