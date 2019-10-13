@@ -89,6 +89,13 @@ def retrieve_stocks(test_mode=False):
                     }
 
                     filters.append(filter_)
+        else:
+            obj = {
+                'id': 'all',
+                'class': 'all'
+            }
+
+            filters = [obj]
 
         for filter_ in filters:
             head = {
@@ -124,6 +131,15 @@ def retrieve_stocks(test_mode=False):
                     id_ = elements_.get('id').replace('pair_', '')
 
                     country_check = elements_.xpath(".//td[@class='flag']/span")[0].get('title').lower()
+
+                    if country_check == 'bosnia-herzegovina':
+                        country_check = 'bosnia'
+                    elif country_check == 'palestinian territory':
+                        country_check = 'palestine'
+                    elif country_check == 'united arab emirates':
+                        country_check = 'dubai'
+                    elif country_check == "cote d'ivoire":
+                        country_check = 'ivory coast'
 
                     if row['country'] == country_check:
                         for element_ in elements_.xpath('.//a'):
@@ -162,15 +178,6 @@ def retrieve_stocks(test_mode=False):
 
             if test_mode is True:
                 break
-
-        resource_package = __name__
-        resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
-        file_ = pkg_resources.resource_filename(resource_package, resource_path)
-
-        df = pd.DataFrame(results)
-
-        if test_mode is False:
-            df.to_csv(file_, index=False)
         
         if test_mode is True:
             break
