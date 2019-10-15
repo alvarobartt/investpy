@@ -5,7 +5,6 @@
 
 import unidecode
 import json
-import time
 
 import pandas as pd
 import pkg_resources
@@ -157,7 +156,6 @@ def retrieve_stocks(test_mode=False):
                                         try:
                                             info = retrieve_stock_info(tag_)
                                         except:
-                                            time.sleep(1)
                                             pass
 
                                     data = {
@@ -183,7 +181,7 @@ def retrieve_stocks(test_mode=False):
             break
 
     resource_package = __name__
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks2.csv'))
     file_ = pkg_resources.resource_filename(resource_package, resource_path)
 
     df = pd.DataFrame(results)

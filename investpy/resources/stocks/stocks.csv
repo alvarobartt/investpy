@@ -29627,3 +29627,1175 @@ zimbabwe,Old Mutual,Old Mutual PLC,old-mutual?cid=42553,ZAE000255360,42553,USD,O
 zimbabwe,Bindura Nickel Corporation,Bindura Nickel Corporation Limited,bindura-nickel-corporation-limited,ZW0009011652,42512,USD,BIND
 zimbabwe,Hwange Colliery Company,Hwange Colliery Company Limited,hwange-colliery-company-limited,ZW0009011934,42532,USD,HCCL
 zimbabwe,Rio Zimbabwe,Rio Zimbabwe,rio-zimbabwe,ZW0009011959,42534,USD,RTNR
+bosnia,Elektrokrajina,Elektrokrajina,elektrokrajina,BA100EKBLRA7,945203,BAM,EKBL
+bosnia,Hidroelektrane Na Drini,Hidroelektrane Na Drini,hidroelektrane-na-drini,BA100HEDRRA6,945204,BAM,HEDR
+bosnia,Nova Banka,Nova Banka,nova-banka,BA100NOVBRE1,945205,BAM,NOVB
+bosnia,Rite Ugljevik,Rite Ugljevik,rite-ugljevik,BA100RTEURA5,945206,BAM,RTEU
+bosnia,Rite Gacko,Rite Gacko,rite-gacko,BA100RITERA0,945207,BAM,RITE
+bosnia,Telekom Srpske,Telekom Srpske,telekom-srpske,BA100TLKMRA2,945208,BAM,TLKM
+bosnia,Hidroelek Na T,Hidroelek Na T,hidroelek-na-t,BA100HETRRA2,945215,BAM,HETR
+bosnia,Elektro-Bijelj,Elektro-Bijelj,elektro-bijelj,BA100ELBJRA9,945221,BAM,ELBJ
+bosnia,Zeljeznice Rs,Zeljeznice Rs,zeljeznice-rs,BA100ZERSRA6,945223,BAM,ZERS
+bosnia,Ztc Banja Vruc,ZTC Banja Vrucica ad Teslic,ztc-banja-vruc,BA100BVRURA7,945224,BAM,BVRU
+bosnia,Cistoca ad Banja,Cistoca ad Banja Luka,cistoca-ad-ban,BA100CISTRA2,945226,BAM,CIST
+bosnia,Elektro Doboj,Elektro Doboj,elektro-doboj,BA100ELDORA5,945227,BAM,ELDO
+bosnia,Hidroelektrane Vrbasu Mrkonjic,Hidroelektrane Vrbasu Mrkonjic,hidroelektrane-vrbasu-mrkonjic,BA100HELVRA1,950740,BAM,HELV
+bosnia,Rafinerija Ulja ad Modrica,Rafinerija Ulja ad Modrica,rafinerija-ulja-ad-modrica,BA100RFUMRA7,953761,BAM,RFUM
+bosnia,Bosnalijek Sa,Bosnalijek Sa,bosnalijek-sa,BABSNLR00005,945209,BAM,BSNL
+bosnia,Elektropriv Bi,Elektropriv Bi,elektropriv-bi,BAJPESR00008,945210,BAM,JPES
+bosnia,Ik Banka Zenic,Ik Banka Zenic,ik-banka-zenic,BAIKBZRK2008,945212,BAM,IKBZ
+bosnia,Sarajevo Osig,Sarajevo Osig,sarajevo-osig,BASOSOR00001,945216,BAM,SOSO
+bosnia,Bh Telecom,Bh Telecom,bh-telecom,BABHTSR00000,945217,BAM,BHTS
+bosnia,Fabrika Duhana,Fabrika Duhana,fabrika-duhana,BAFDSSR00002,945218,BAM,FDSS
+bosnia,Tvornica Cemen,Tvornica Cemen,tvornica-cemen,BATCMKR00005,945220,BAM,TCMK
+bosnia,Elektropriv Hz,Elektropriv Hz,elektropriv-hz,BAJPEMR00001,945222,BAM,JPEM
+bosnia,Pobjeda dd Tesanj,Pobjeda dd Tesanj,pobjeda-dd-tesanj,BAPBJTRK1002,992710,BAM,PBJT
+bosnia,Centrotrans Tranzit,Centrotrans Tranzit dd Sarajevo,centrotrans-tranzit-dd-sarajevo,BACTRTR00005,992938,BAM,CTRT
+bosnia,Abs Banka,Abs Banka,abs-banka,BAABSBRK2006,945228,BAM,ABSB
+bosnia,Sipad Komerc,Sipad Komerc,sipad-komerc,BASPKMR00009,945229,BAM,SPKM
+bosnia,Energoinvest dd Sarajevo,Energoinvest dd Sarajevo,energoinvest-dd-sarajevo,BAENISR00005,950739,BAM,ENIS
+bosnia,RMU Banovici dd Banovici,RMU Banovici dd Banovici,rmu-banovici-dd-banovici,BARMUBR00000,950741,BAM,RMUB
+bosnia,Solana dd Tuzla,Solana dd Tuzla,solana-dd-tuzla,BASOLTRK3006,950743,BAM,SOLT
+bosnia,Saniteks dd Velika Kladusa,Saniteks dd Velika Kladusa,saniteks-dd-velika-kladusa,BASTVKRK4006,992713,BAM,STVK
+bosnia,IF BIG Investiciona grupa Sarajevo,IF BIG Investiciona grupa Sarajevo,if-big-investiciona-grupa-sarajevo,BABIGFRK3006,992704,BAM,BIGF
+bosnia,IF Bosfin Sarajevo,IF Bosfin Sarajevo,if-bosfin-sarajevo,BABSNFRK2007,992705,BAM,BSNF
+bosnia,IF Prof Plus Sarajevo,IF Prof Plus Sarajevo,if-prof-plus-sarajevo,BAPRPFRK2000,992712,BAM,PRPF
+bosnia,Eurofond 1 Tuzla,IF Eurofond 1 Tuzla,if-eurofond-1-tuzla,BAEFNFRK1001,992940,BAM,EFNF
+bosnia,Fortuna fond Bihac,IF Fortuna fond Bihac,if-fortuna-fond-bihac,BAFRTFRK1000,992941,BAM,FRTF
+bosnia,Naprijed Sarajevo,IF Naprijed Sarajevo,if-naprijed-sarajevo,BANPRFRK2002,992942,BAM,NPRF
+bosnia,INVEST Sarajevo,IF prevent INVEST Sarajevo,if-prevent-invest-sarajevo,BAPVNFRK3004,992943,BAM,PVNF
+bosnia,Elektrodistribucija ad Pale,Elektrodistribucija ad Pale,elektrodistribucija-ad-pale,BA100EDPLRA2,992939,BAM,EDPL
+luxembourg,Edify,Edify,edify,LU1129894801,943693,EUR,EDIFY
+luxembourg,Brederode,Brederode SA,brederode?cid=950069,LU1068091351,950069,EUR,BREL
+luxembourg,Orco Property,Orco Property Group SA,orco-property-group?cid=959131,LU0122624777,959131,EUR,ORCO
+luxembourg,Schaeffler AG,Schaeffler AG,schaeffler-ag,DE000SHA0159,959132,EUR,SHA
+luxembourg,Arista,Arista SA,arista-sa,LU0376142542,962601,EUR,ARIST
+luxembourg,Globant SA,Globant SA,globant-sa?cid=986425,LU0974299876,986425,USD,GLOB
+luxembourg,Fle Sicav Fis,Fle Sicav Fis SCA,fle-sicav-fis-sca,LU0386500333,991206,EUR,FLES
+luxembourg,RTL Group,RTL Group SA,rtl-group-lu,LU0061462528,1019680,EUR,AUDK
+luxembourg,SES,SES SA,ses-global?cid=1019682,LU0088087324,1019682,EUR,SESFg
+luxembourg,Brait,Brait SE,brait-lu,LU0011857645,1031400,EUR,BATJ
+luxembourg,Reinet Invest,Reinet Investments SCA,reinet-invest,LU0383812293,1031401,EUR,REIT
+luxembourg,MAS Real Estate,MAS Real Estate Inc,mas-real-estate-inc?cid=1036835,VGG5884M1041,1036835,EUR,MASPLC
+luxembourg,KTG ADR,KT&G Corp ADR,ktg-adr,US48268G1004,1054217,USD,KTGSF
+luxembourg,British Airways Finance Pref,British Airways Finance Jersey LP Pref,british-airways-finance-pref,GB0056794497,1061423,EUR,BAYpref
+luxembourg,Intercultures,Intercultures,socfinaf,LU0056569402,1061424,EUR,CULKe
+luxembourg,Fotex,Fotex Holding SE,fotex,HU0000096409,1061425,EUR,FOTH
+luxembourg,Luxempart,Luxempart SA,luxempart,LU0502900771,1061426,EUR,LUXP
+luxembourg,Fiducial RE,Fiducial Real Estate SA,fiducial-real?cid=1061427,FR0000060535,1061427,EUR,PADI
+luxembourg,Fiducial Office,Fiducial Office Solutions SA,fiducial-office-solutions?cid=1061428,FR0000061418,1061428,EUR,SACIL
+luxembourg,Societe Financiere Caoutchoucs,Societe Financiere des Caoutchoucs SA,societe-financiere-caoutchoucs,LU0027967834,1061429,EUR,SCFK
+luxembourg,Socfinasia,Socfinasia SA,socfinasia,LU0092047413,1061430,EUR,SOFI
+malta,Bank of Valletta,Bank of Valletta PLC,bank-of-vallet,MT0000020116,941694,EUR,BOV
+malta,GO PLC,GO PLC,go-plc,MT0000090101,941695,EUR,MLTAC
+malta,HSBC Bank Malta,HSBC Bank Malta PLC,hsbc-bank-malt,MT0000030107,941696,EUR,HSB
+malta,Lombard Bank Malta,Lombard Bank Malta PLC,lombard-bank-p,MT0000040106,941697,EUR,LOM
+malta,Malta International Airport,Malta International Airport PLC,mia-plc,MT0000250101,941698,EUR,MIA
+malta,MIDI,MIDI PLC,midi-plc,MT0000420126,941699,EUR,MID
+malta,Plaza Centres,Plaza Centres PLC,plaza-complex,MT0000120106,941700,EUR,PLAZA
+malta,FIM Bank plc,FIM Bank plc,fim-bank-plc,MT0000180100,951057,USD,FIM
+malta,International Hotel Investments,International Hotel Investments,international-hotel-investments,MT0000110107,951058,EUR,IHI
+malta,Medserv PLC,Medserv PLC,medserv-plc,MT0000310103,951059,EUR,MDS
+malta,Malita Investments PLC,Malita Investments PLC,malita-investments-plc,MT0000610106,951060,EUR,MLTI
+malta,Mapfre Middlesea,Mapfre Middlesea PLC,middlesea-insurance-plc,MT0000050105,951061,EUR,MMSA
+malta,Malta Post plc,Malta Post plc,malta-post-plc,MT0000390105,951062,EUR,MTPT
+malta,RS2 Software PLC,RS2 Software PLC,rs2-software-plc,MT0000400102,951063,EUR,RSOF
+malta,Simonds Farsons Cisk,Simonds Farsons Cisk PLC,simonds-farsons-cisk,MT0000070103,953148,EUR,SFC
+malta,Malta Properties Company PLC,Malta Properties Company PLC,malta-properties-company-plc,MT0000990102,961724,EUR,MPC
+malta,Tigne Mall,Tigne Mall PLC,tigne-mall-plc,MT0000740101,993216,EUR,TIML
+malta,Santumas,Santumas Shareholdings PLC,santumas-plc,MT0000290115,1024570,EUR,STSM
+malta,Grand Harbour Marina,Grand Harbour Marina PLC,grand-hrbr,MT0000320102,1024571,EUR,GHM
+malta,PG,PG PLC,pg-plc,MT0001410100,1024572,EUR,PGLC
+malta,Globe Financial,Globe Financial,globe-financial,MT0000170101,1024828,EUR,GFSG
+malta,Loqus Holdings,Loqus Holdings PLC,loqus-holdings,MT0000150103,1024829,EUR,LQS
+malta,Trident Estates,Trident Estates PLC,trident-estates,MT0001670109,1062233,EUR,TRID
+malta,Main Street Complex,Main Street Complex PLC,main-street-complex,MT0001850107,1082091,EUR,MSC
+malta,BMIT Tech,BMIT Technologies plc,bmit-tech,MT0002130103,1122512,EUR,BMIT
+singapore,Keppel Corp,Keppel Corporation Limited,keppel-corporation,SG1U68934629,8955,SGD,KPLM
+singapore,HK Land Holdings,Hong Kong Land Holdings Limited,hongkong-land-holdings,BMG4587L1090,8956,USD,HKLD
+singapore,Jardine C&C,Jardine Cycle & Carriage Ltd,jardine-cycle---carriage,SG1B51001017,8957,SGD,JCYC
+singapore,JSH,Jardine Strategic Holdings Ltd,jardine-strategic-holdings,BMG507641022,8958,USD,JSH
+singapore,City Development,City Developments Limited,city-developments,SG1R89002252,8959,SGD,CTDM
+singapore,Semb Corp,Sembcorp Industries Ltd,sembcorp-industries,SG1R50925390,8960,SGD,SCIL
+singapore,Singapore Airlines,Singapore Airlines Ltd,singapore-airlines,SG1V61937297,8961,SGD,SIAL
+singapore,Wilmar,Wilmar International Limited,wilmar-international,SG1T56930848,8962,SGD,WLIL
+singapore,ComfortDelGro,Comfortdelgro Corporation Ltd,comfortdelgro-corporation,SG1N31909426,8963,SGD,CMDG
+singapore,F & N,"Fraser And Neave, Limited",fraser-and-neave,SG1T58930911,8964,SGD,FRNM
+singapore,Noble,Noble Group Ltd,noble-group,BMG6542T1505,8965,SGD,NOBG
+singapore,OCBC Bank,Oversea-Chinese Banking Corp,oversea-chinese-banking-corp.,SG1S04926220,8966,SGD,OCBC
+singapore,Jardine Matheson,Jardine Matheson Holdings Ltd,jardine-matheson-holdings,BMG507361001,8967,USD,JARD
+singapore,Capitaland Mall,Capitaland Mall Trust,capitamall-trust,SG1M51904654,8968,SGD,CMLT
+singapore,DBS,DBS Group Holdings Ltd,dbs-group-holdings,SG1L01001701,8969,SGD,DBSM
+singapore,SembMar,Sembcorp Marine Ltd,sembcorp-marine,SG1H97877952,8971,SGD,SCMN
+singapore,Singapore Exchange,Singapore Exchange Ltd,singapore-exchange,SG1J26887955,8972,SGD,SGXL
+singapore,Olam,Olam International Limited,olam-international,SG1Q75923504,8974,SGD,OLAM
+singapore,SIA Engg,SIA Engineering Co Ltd,sia-engineering-company,SG1I53882771,8975,SGD,SIAE
+singapore,COSCO Corp,COSCO Corporation Ltd,cosco-corporation,SG1S76928401,8976,SGD,COSC
+singapore,Yanlord,Yanlord Land Group Limited,yanlord-land-group,SG1T57930854,8977,SGD,YNLG
+singapore,ST Engineering,Singapore Tech Engineering Ltd,singapore-technologies-engineering,SG1F60858221,8979,SGD,STEG
+singapore,Capitaland,Capitaland Limited,capitaland,SG1J27887962,9050,SGD,CATL
+singapore,GoldenAgr,Golden Agri-Resources Ltd,golden-agri-resources-ltd,MU0117U00026,9093,SGD,GAGR
+singapore,Genting Singapore,Genting Singapore Ltd,genting-international,SGXE21576413,9098,SGD,GENS
+singapore,SPH,Singapore Press Hldgs Ltd,singapore-press-hldg,SG1P66918738,9177,SGD,SPRM
+singapore,StarHub,Starhub Ltd,starhub,SG1V12936232,9178,SGD,STAR
+singapore,SingTel,Singapore Telecommunications Ltd,singapore-telecommunications,SG1T75931496,9179,SGD,STEL
+singapore,Thai Beverage,Thai Beverage Public Co Ltd,thai-beverage-pcl,TH0902010014,9184,SGD,TBEV
+singapore,UOB,United Overseas Bank Ltd,united-overseas-bank,SG1M31001969,9196,SGD,UOBH
+singapore,Yangzijiang,Yangzijiang Shipbldg Hldgs Ltd,yangzijiang-ship,SG1U76934819,9207,SGD,YAZG
+singapore,Linc Energy,Linc Energy Ltd,linc-energy,AU000XINEAA6,13824,SGD,LINC
+singapore,Hutchison Port Holdings Trust,Hutchison Port Holdings Trust,hutchison-port-holdings-trust,SG2D00968206,41357,USD,HPHT
+singapore,YuuZoo,YuuZoo Corporation Ltd,yuuzoo-corp,VGG9889R1001,941678,SGD,YUUZ
+singapore,Emas Offshore Construction Pte,Emas Offshore Construction Pte Ltd,emas-offshore-construction-pte-ltd,SG1AD2000008,942441,SGD,EMAS
+singapore,SHS Holdings,SHS Holdings Ltd,shs-holdings-ltd,SG1G33866144,942442,SGD,SEEH
+singapore,ISEC Healthcare,ISEC Healthcare Ltd,isec-healthcare-ltd,SG1AD9000001,942525,SGD,ISEC
+singapore,Serrano,Serrano Ltd,serrano-ltd,SG1AD7000003,942526,SGD,SERR
+singapore,MS Holdings,MS Holdings Ltd,ms-holdings-ltd,SG1AE1000007,942527,SGD,MSHO
+singapore,Ascendas Real Estate Inv,Ascendas Real Estate Inv,ascendas-real-estate-inv,SG1M77906915,942528,SGD,AEMN
+singapore,Capitaland Commercial Trust,Capitaland Commercial Trust,capitacommercial-trust,SG1P32918333,942529,SGD,CACT
+singapore,UOL Group,UOL Group Ltd,united-overseas-land,SG1S83002349,942530,SGD,UTOS
+singapore,Zicom Holdings Pvt,Zicom Holdings Pvt Ltd,zicom-holdings-pvt-ltd,MYA007968003,942741,SGD,ZICO
+singapore,Hour Glass,Hour Glass Ltd,hour-glass-ltd,SG1AE9000009,942742,SGD,HRGS
+singapore,Resources Prima Group,Resources Prima Group Ltd,resources-prima-group-ltd,SG1W50939246,942743,SGD,RESO
+singapore,MM2 Asia,MM2 Asia Ltd,mm2-asia-ltd,SG1DC0000006,943421,SGD,MM2A
+singapore,Huationg Global,Huationg Global Ltd,huationg-global-ltd,SG1AF2000003,943422,SGD,HUAT
+singapore,Raffles United Holdings,Raffles United Holdings Ltd,raffles-united-holdings-ltd,SG1C10012922,943423,SGD,RAFF
+singapore,iFAST Corporation,iFAST Corporation Ltd,ifast-corporation-ltd,SG1AF5000000,943424,SGD,IFAS
+singapore,IPS Securex Holdings Ltd,IPS Securex Holdings Ltd,ips-securex-holdings-ltd,SG1BJ0000005,945135,SGD,IPSS
+singapore,Amplefield Ltd,Amplefield Ltd,amplefield-ltd,SG1AG0000003,945703,SGD,AMPL
+singapore,Gss Energy Ltd,Gss Energy Ltd,gss-energy-ltd,SG1AG6000007,945704,SGD,GSSE
+singapore,USP Group Ltd,USP Group Ltd,usp-group-ltd,SG1CH0000007,945922,SGD,USPG
+singapore,Blackgold,Blackgold Natural Resources Ltd,nh-ceramics-ltd,SG1AH0000001,945923,SGD,BLAC
+singapore,Indofood Agri Resources Ltd,Indofood Agri Resources Ltd,indofood-agri-resources-ltd,SG1U47933908,949817,SGD,IFAR
+singapore,LHN,LHN Ltd,lhn-ltd,SG1AH9000002,949818,SGD,LHNL
+singapore,Magnus Energy Group Ltd,Magnus Energy Group Ltd,magnus-energy-group-ltd,SG1AI2000007,949819,SGD,MAGN
+singapore,Mercurius Capital Investment,Mercurius Capital Investment,mercurius-capital-investment,SG2B96959558,949820,SGD,MERC
+singapore,Stratech Group Ltd,Stratech Group Ltd,stratech-group-ltd,SG1CG9000000,949821,SGD,STRT
+singapore,Golden Energy,Golden Energy and Resources Ltd,united-fiber-system-ltd,SG1AI1000008,949822,SGD,GOLD
+singapore,AEI Corporation Ltd,AEI Corporation Ltd,aei-corporation-ltd,SG1AJ1000006,953085,SGD,AEIC
+singapore,A-Sonic Aerospace Ltd,A-Sonic Aerospace Ltd,a-sonic-aerospace-ltd,SG1CH8000009,953086,SGD,ASON
+singapore,Attilan Group Ltd,Attilan Group Ltd,attilan-group-ltd,SG1P94920060,953087,SGD,ATTI
+singapore,Boustead Projects Ltd,Boustead Projects Ltd,boustead-projects-ltd,SG1AI3000006,953088,SGD,BOUS
+singapore,Captii Ltd,Captii Ltd,captii-ltd,SG1BA0000004,953089,SGD,CAPT
+singapore,CEI,CEI Ltd,cei-contract-manufacturing,SG1AI5000004,953090,SGD,CEII
+singapore,Courage Invest,Courage Investment Group Ltd,courage-marine-group,BMG246371030,953091,SGD,COUA
+singapore,Dairy Farm Intl Holdings,Dairy Farm International Holdings Ltd,dairy-farm-intl-holdings,BMG2624N1535,953093,USD,DAIR
+singapore,Fuxing China Group Ltd,Fuxing China Group Ltd,fuxing-china-group-ltd,BMG3705H2069,953094,SGD,FXCG
+singapore,GCCP Resources Ltd,GCCP Resources Ltd,gccp-resources-ltd,KYG377411080,953095,SGD,GCCP
+singapore,GYP Properties,GYP Properties Ltd,global-yellow-pages,SG1AJ7000000,953097,SGD,GYPP
+singapore,Hl Global Enterprises,Hl Global Enterprises Ltd,hl-global-enterprises,SG1AI6000003,953098,SGD,HLGE
+singapore,Brook Crompton,Brook Crompton Holdings Ltd,lindeteves-jacoberg,SG1AI8000001,953099,SGD,BROO
+singapore,Multi Chem Ltd,Multi-Chem Ltd,multi-chem-ltd,SG1BA2000002,953100,SGD,MCHE
+singapore,Mirach Energy Ltd,Mirach Energy Ltd,mirach-energy-ltd,SG1AJ5000002,953101,SGD,MIEL
+singapore,Shanghai Turbo Enterprises,Shanghai Turbo Enterprises Ltd,shanghai-turbo-enterprises,KYG8064W1160,953102,SGD,SHTU
+singapore,SP Corporation Ltd,SP Corporation Ltd,sp-corporation-ltd,SG1AJ0000007,953103,SGD,SPPS
+singapore,Thakral Corporation Ltd,Thakral Corporation Ltd,thakral-corporation-ltd,SG1AJ2000005,953104,SGD,THAK
+singapore,Acma Ltd,Acma Ltd,acma-ltd,SG1BB6000006,953875,SGD,ACMA
+singapore,Raffles Infrastructure,Raffles Infrastructure Holdings Ltd,china-fibretech-ltd,BMG7354C1038,953878,SGD,RAFL
+singapore,Global Testing Corp Ltd,Global Testing Corp Ltd,global-testing-corp-ltd,SG1BB4000008,953880,SGD,GTCL
+singapore,IPC Corporation Ltd,IPC Corporation Ltd,ipc-corporation-ltd,SG1BB8000004,953881,SGD,IPCC
+singapore,Keppel Infra REIT,Keppel Infra REIT,keppel-infra-reit,SG1U48933923,953882,SGD,KEPL
+singapore,Lafe Corporation Ltd,Lafe Corporation Ltd,lafe-corporation-ltd,BMG5352E1479,953883,SGD,LAFE
+singapore,Plastoform Holdings Ltd,Plastoform Holdings Ltd,plastoform-holdings-ltd,BMG712312062,953885,SGD,PFML
+singapore,Singapore O&G,Singapore O&G Ltd,singapore-o---g-ltd,SG1DG2000005,953886,SGD,SINP
+singapore,Uni-Asia Holdings,Uni-Asia Holdings Ltd,uni-asia-holdings-ltd,SG1DG7000000,953887,SGD,UAFC
+singapore,Yongnam Holdings Ltd,Yongnam Holdings Ltd,yongnam-holdings-ltd,SG1BA3000001,953888,SGD,YNAM
+singapore,China Gaoxian Fibre Fabric Holdings,China Gaoxian Fibre Fabric Holdings Ltd,china-gaoxian-fibre-fabric-holdings,SG1BC7000003,954926,SGD,CGXF
+singapore,8Telecom International Holdings Co,8Telecom International Holdings Co Ltd,8telecom-international-holdings-co,BMG3087Y2074,954928,SGD,ETEL
+singapore,NutryFarm Int,NutryFarm International Ltd,lottvision-ltd,BMG6700D1048,954929,SGD,NUTR
+singapore,Sutl Enterprise,Sutl Enterprise,sutl-enterprise,SG1BJ4000001,954930,SGD,SUTL
+singapore,United Food Holdings Ltd,United Food Holdings Ltd,united-food-holdings-ltd,BMG9232V2045,954931,SGD,UTDF
+singapore,AA Group Holdings Ltd,AA Group Holdings Ltd,aa-group-holdings-ltd,SG1S12926576,955016,SGD,AAGH
+singapore,JCG Invest,JCG Investment Holdings Ltd,albedo-ltd,SGXE87511171,955017,SGD,JCGI
+singapore,Abterra Ltd,Abterra Ltd,abterra-ltd,SG2C12961455,955018,SGD,ABTR
+singapore,Advanced Systems Automation Ltd,Advanced Systems Automation Ltd,advanced-systems-automation-ltd,SG2E65980228,955020,SGD,ADSA
+singapore,Advanced Holdings Ltd,Advanced Holdings Ltd,advanced-holdings-ltd,SG1CD5000001,955021,SGD,ADVA
+singapore,Adventus Holdings Ltd,Adventus Holdings Ltd,adventus-holdings-ltd,SG1P24916816,955022,SGD,ADVE
+singapore,Asia Enterprises Holding Ltd,Asia Enterprises Holding Ltd,asia-enterprises-holding-ltd,SG1S11926551,955023,SGD,AEHL
+singapore,Aem Holdings Ltd,Aem Holdings Ltd,aem-holdings-ltd,SG1BA1000003,955024,SGD,AEM
+singapore,Alliance Mineral,Alita Resources Ltd,alliance-mineral?cid=955026,AU0000031270,955026,SGD,ALIT
+singapore,Allied Technologies Ltd,Allied Technologies Ltd,allied-technologies-ltd,SG1O07910928,955027,SGD,ALLT
+singapore,Alpha Energy Holdings Ltd,Alpha Energy Holdings Ltd,alpha-energy-holdings-ltd,SG2D85975506,955028,SGD,ALPH
+singapore,Amara Holdings Ltd,Amara Holdings Ltd,amara-holdings-ltd,SG1F08854688,955030,SGD,AMRA
+singapore,Annica Holdings Ltd,Annica Holdings Ltd,annica-holdings-ltd,SG1J70891671,955031,SGD,ANHL
+singapore,Anchun International Holdings Ltd,Anchun International Holdings Ltd,anchun-international-holdings-ltd,SG1CI5000000,955032,SGD,ANIH
+singapore,AP Oil International Ltd,AP Oil International Ltd,ap-oil-international-ltd,SG1K10892752,955033,SGD,AOIL
+singapore,China Real Estate,China Real Estate Grp Ltd,asia-pacific-strategic-investments,SG2B89959318,955034,SGD,CHIR
+singapore,SinoCloud Group,SinoCloud Group Ltd,armarda-group-ltd,BMG8191N1048,955036,SGD,SINL
+singapore,Artivision Technologies Ltd,Artivision Technologies Ltd,artivision-technologies-ltd,SG1X21941023,955037,SGD,ARTT
+singapore,Asia Fashion Holdings Ltd,Asia Fashion Holdings Ltd,asia-fashion-holdings-ltd,BMG0539Q1217,955038,SGD,ASFN
+singapore,AsiaMedic Ltd,AsiaMedic Ltd,asiamedic-ltd,SG0505000059,955039,SGD,ASIM
+singapore,AsiaPhos Ltd,AsiaPhos Ltd,asiaphos-ltd,SG2G24997246,955040,SGD,ASIP
+singapore,ASL Marine Holdings Ltd,ASL Marine Holdings Ltd,asl-marine-holdings-ltd,SG1N25909283,955041,SGD,ASLM
+singapore,Aspial Corporation Ltd,Aspial Corporation Ltd,aspial-corporation-ltd,SG1G71871634,955042,SGD,ASPA
+singapore,Asiatic Group Holdings Ltd,Asiatic Group Holdings Ltd,asiatic-group-holdings-ltd,SG1N86910089,955043,SGD,ATIC
+singapore,ASTI Holdings Ltd,ASTI Holdings Ltd,asti-holdings-ltd,SG1G77872271,955044,SGD,ATIH
+singapore,AusGroup Ltd,AusGroup Ltd,ausgroup-ltd,SG1R38924838,955047,SGD,AUSG
+singapore,Addvalue Technologies Ltd,Addvalue Technologies Ltd,addvalue-technologies-ltd,SG1I67883666,955048,SGD,AVAU
+singapore,Avic International Maritime,Avic International Maritime Holdings Ltd,avic-international-maritime,SG2D58973959,955049,SGD,AVIC
+singapore,Avi Tech Electronics Ltd,Avi Tech Electronics Ltd,avi-tech-electronics-ltd,SG1CC0000008,955050,SGD,AVTH
+singapore,Azeus Systems Holdings Ltd,Azeus Systems Holdings Ltd,azeus-systems-holdings-ltd,BMG075391109,955051,SGD,AZEU
+singapore,Ban Leong Technologies Ltd,Ban Leong Technologies Ltd,ban-leong-technologies-ltd,SG1R62925800,955052,SGD,BANL
+singapore,Banyan Tree Holdings Ltd,Banyan Tree Holdings Ltd,banyan-tree-holdings-ltd,SG1T49930665,955053,SGD,BANY
+singapore,Baker Technology Ltd,Baker Technology Ltd,baker-technology-ltd,SG1CI3000002,955054,SGD,BATE
+singapore,BBR Holdings S Ltd,BBR Holdings S Ltd,bbr-holdings-s-ltd,SG1Z42953799,955055,SGD,BBRS
+singapore,Bund Center Investment Ltd,Bund Center Investment Ltd,bund-center-investment-ltd,BMG1792W1367,955056,SGD,BCIL
+singapore,Beng Kuang Marine Ltd,Beng Kuang Marine Ltd,beng-kuang-marine-ltd,SG1BH2000007,955057,SGD,BENK
+singapore,Best World International,Best World International Ltd,best-world-international-ltd,SG1DG3000004,955058,SGD,BEST
+singapore,BH Global Corp Ltd,BH Global Corp Ltd,bh-global-corp-ltd,SG1CF8000003,955059,SGD,BHGC
+singapore,Blumont Group Ltd,Blumont Group Ltd,blumont-group-ltd,SG1I69883698,955061,SGD,BLUM
+singapore,BRC Asia Ltd,BRC Asia Ltd,brc-asia-ltd,SG1BG3000008,955062,SGD,BRCA
+singapore,BreadTalk,BreadTalk Group Ltd,breadtalk-group-ltd,SG1EE0000000,955063,SGD,BRET
+singapore,Broadway Industrial Group Ltd,Broadway Industrial Group Ltd,broadway-industrial-group-ltd,SG1B21008464,955064,SGD,BRWY
+singapore,Bukit Sembawang Estates Ltd,Bukit Sembawang Estates Ltd,bukit-sembawang-estates-ltd,SG1T88932077,955065,SGD,BSES
+singapore,Boustead Singapore Ltd,Boustead Singapore Ltd,boustead-singapore-ltd,SG1X13940751,955066,SGD,BTSS
+singapore,Bumitama Agri Ltd,Bumitama Agri Ltd,bumitama-agri-ltd,SG2E67980267,955067,SGD,BUMI
+singapore,Bonvests Holdings Ltd,Bonvests Holdings Ltd,bonvests-holdings-ltd,SG2R04002568,955068,SGD,BVHS
+singapore,Cacola Furniture International Ltd,Cacola Furniture International Ltd,cacola-furniture-international-ltd,KYG1745C1042,955069,SGD,CACF
+singapore,Casa Holdings Ltd,Casa Holdings Ltd,casa-holdings-ltd,SG1B93012089,955071,SGD,CASA
+singapore,Silkroad Nickel,Silkroad Nickel Ltd,china-bearing-singapore-ltd,SGXE31916740,955072,SGD,SILK
+singapore,CDW Holding,CDW Holding Ltd,cdw-holding-ltd,BMG2022E1104,955073,SGD,CDWH
+singapore,AnAn,AnAn International Ltd,cefc-international-ltd,BMG036111034,955074,SGD,ANAN
+singapore,China Environmental Resources Group,China Environmental Resources Group Ltd,china-environmental-resources-group,KYG215691430,955075,SGD,CERG
+singapore,Chip Eng Seng Corporation Ltd,Chip Eng Seng Corporation Ltd,chip-eng-seng-corporation-ltd,SG1H36875612,955076,SGD,CESE
+singapore,China Everbright Water Ltd,China Everbright Water Ltd,china-everbright-water-ltd,BMG2116Y1057,955077,SGD,CEWL
+singapore,C&G Environmental Protection,C&G Environmental Protection Holdings Ltd,c-g-environmental-protection,BMG1820V1000,955078,SGD,CGEP
+singapore,ChasWood Resources Holdings Ltd,ChasWood Resources Holdings Ltd,chaswood-resources-holdings-ltd,SG2E59979590,955080,SGD,CHAS
+singapore,Chemical Industries Far East Ltd,Chemical Industries Far East Ltd,chemical-industries-far-east-ltd,SG1B37000984,955082,SGD,CHEM
+singapore,China Environment Ltd,China Environment Ltd,china-environment-ltd,SG1Y42946521,955083,SGD,CHEN
+singapore,Chinese Global Investors Group Ltd,Chinese Global Investors Group Ltd,chinese-global-investors-group-ltd,SG1N00908623,955086,SGD,CHGI
+singapore,China Haida Ltd,China Haida Ltd,china-haida-ltd,SG1Q42922142,955087,SGD,CHHA
+singapore,Chasen Holdings Ltd,Chasen Holdings Ltd,chasen-holdings-ltd,SG1X55941717,955088,SGD,CHHL
+singapore,Chuan Hup Holdings Ltd,Chuan Hup Holdings Ltd,chuan-hup-holdings-ltd,SG1H43875910,955089,SGD,CHHS
+singapore,China International,China International Holdings Ltd,china-international-holdings-ltd,BMG2113G1151,955092,SGD,CHNA
+singapore,CH Offshore Ltd,CH Offshore Ltd,ch-offshore-ltd,SG1N22909146,955093,SGD,CHOF
+singapore,China Sunsine Chemical Holdings Ltd,China Sunsine Chemical Holdings Ltd,china-sunsine-chemical-holdings-ltd,SG1V17936401,955095,SGD,CHSN
+singapore,Cheung Woh Technologies Ltd,Cheung Woh Technologies Ltd,cheung-woh-technologies-ltd,SG1M94907805,955096,SGD,CHWO
+singapore,CPH Ltd,CPH Ltd,cph-ltd,SG1G40868794,955098,SGD,CIPH
+singapore,Civmec Ltd,Civmec Ltd,civmec-ltd,SG2E68980290,955099,SGD,CIVM
+singapore,China Jishan Holdings Ltd,China Jishan Holdings Ltd,china-jishan-holdings-ltd,SG1P40918440,955100,SGD,CJIS
+singapore,China Kangda Food Co Ltd,China Kangda Food Co Ltd,china-kangda-food-co-ltd,BMG2110F1023,955101,SGD,CKFC
+singapore,China Kunda Technology Holdings Ltd,China Kunda Technology Holdings Ltd,china-kunda-technology-holdings-ltd,SG1X41941300,955102,SGD,CKUN
+singapore,China Mining International Ltd,China Mining International Ltd,china-mining-international-ltd,KYG211721207,955104,SGD,CMIL
+singapore,China Aviation Oil Singapore Corp,China Aviation Oil Singapore Corp Ltd,china-aviation-oil-singapore-corp,SG1T06929205,955105,SGD,CNAO
+singapore,Centurion,Centurion Corporation Ltd,centurion-corporation-ltd,SG2D51973063,955106,SGD,CNCL
+singapore,CNA Group Ltd,CNA Group Ltd,cna-group-ltd,SG1Q82923885,955108,SGD,CNGR
+singapore,CNMC Goldmine Holdings Ltd,CNMC Goldmine Holdings Ltd,cnmc-goldmine-holdings-ltd,SG2D72974892,955109,SGD,CNMC
+singapore,Colex Holdings Ltd,Colex Holdings Ltd,colex-holdings-ltd,SG1G56870536,955112,SGD,COLX
+singapore,Compact Metal,Compact Metal Industries Ltd,compact-metal-industries-ltd,SGXE38602509,955113,SGD,INTN
+singapore,Cordlife Group Ltd,Cordlife Group Ltd,cordlife-group-ltd,SG2E64980112,955114,SGD,CORD
+singapore,CosmoSteel Holdings Ltd,CosmoSteel Holdings Ltd,cosmosteel-holdings-ltd,SG1V08936188,955115,SGD,COSM
+singapore,Abundance International,Abundance International Ltd,craft-print-international-ltd,SG1I02877971,955117,SGD,ABUN
+singapore,Creative Technology Ltd,Creative Technology Ltd,creative-technology-ltd,SG1A98006814,955118,SGD,CREA
+singapore,CSC Holdings Ltd,CSC Holdings Ltd,csc-holdings-ltd,SG1F84861094,955119,SGD,CSCH
+singapore,CSE Global Ltd,CSE Global Ltd,cse-global-ltd,SG1G47869290,955120,SGD,CSES
+singapore,China Sports International Ltd,China Sports International Ltd,china-sports-international-ltd,BMG215901155,955121,SGD,CSIL
+singapore,City Developments Ltd Pref,City Developments Ltd,city-developments-ltd-pref,SG1P70918864,955122,SGD,CTDM_p
+singapore,China Yuanbang Property Holdings,China Yuanbang Property Holdings Ltd,china-yuanbang-property-holdings,BMG2159Z2094,955124,SGD,CYBP
+singapore,Datapulse Technology Ltd,Datapulse Technology Ltd,datapulse-technology-ltd,SG1CB7000003,955126,SGD,DATA
+singapore,DBS Bank Ltd Pref,DBS Bank Ltd,dbs-bank-ltd-pref,SG2C54964409,955127,SGD,DBSM_pc
+singapore,Dukang Distillers Holdings Ltd,Dukang Distillers Holdings Ltd,dukang-distillers-holdings-ltd,BMG2860H2096,955128,SGD,DDHL
+singapore,Design Studio Group Ltd,Design Studio Group Ltd,design-studio-group-ltd,SG1O90915222,955130,SGD,DESS
+singapore,New Silkroutes,New Silkroutes Lts,digiland-international-ltd,SG1CE0000004,955131,SGD,NEWS
+singapore,Dyna Mac Holdings Ltd,Dyna Mac Holdings Ltd,dyna-mac-holdings-ltd,SG2C93967918,955132,SGD,DMHL
+singapore,Del Monte Pacific Ltd,Del Monte Pacific Ltd,del-monte-pacific-ltd,VGG270541169,955133,SGD,DMPL
+singapore,Debao Property Development Ltd,Debao Property Development Ltd,debao-property-development-ltd,SG1CH6000001,955134,SGD,DPDL
+singapore,Dragon Group International Ltd,Dragon Group International Ltd,dragon-group-international-ltd,SG2C50963991,955135,SGD,DRGN
+singapore,Darco Water Technologies Ltd,Darco Water Technologies Ltd,darco-water-technologies-ltd,SG1CC9000009,955136,SGD,DRWT
+singapore,Dutech Holdings Ltd,Dutech Holdings Ltd,dutech-holdings-ltd,SG1V37936969,955137,SGD,DTHL
+singapore,Duty Free International Ltd,Duty Free International Ltd,duty-free-international-ltd,SG2C70966271,955138,SGD,DUTY
+singapore,Astaka Holdings,Astaka Holdings Ltd,e2-capital-holdings-ltd,SG1CB5000005,955139,SGD,ASTA
+singapore,Ecowise Holdings Ltd,Ecowise Holdings Ltd,ecowise-holdings-ltd,SG1N88910129,955140,SGD,ECOW
+singapore,Edition Ltd,Edition Ltd,edition-ltd,SG1S42927578,955141,SGD,EDIT
+singapore,Elec & Eltek International Company,Elec & Eltek International Company Ltd,elec---eltek-international-company,SG1B09007736,955142,USD,EELT
+singapore,Shinvest Holding,Shinvest Holding Ltd,eastgate-technology-ltd,SG1CB0000000,955143,SGD,SHIN
+singapore,Enviro Hub Holdings Ltd,Enviro Hub Holdings Ltd,enviro-hub-holdings-ltd,SG1G27865383,955144,SGD,EHHL
+singapore,Ellipsiz Ltd,Ellipsiz Ltd,ellipsiz-ltd,SG1CA2000000,955145,SGD,ELPZ
+singapore,Arion Entertainment,Arion Entertainment Singapore Ltd,elektromotive-group-ltd,SGXE42663133,955146,SGD,ARIO
+singapore,EMS Energy Ltd,EMS Energy Ltd,ems-energy-ltd,SG1CA0000002,955147,SGD,EMSE
+singapore,Engro Corporation Ltd,Engro Corporation Ltd,engro-corporation-ltd,SG1H26001476,955148,SGD,ENGR
+singapore,DISA,DISA Ltd,equation-summit-ltd,SG0532000247,955149,SGD,DISA
+singapore,Envictus International Holdings Ltd,Envictus International Holdings Ltd,envictus-international-holdings-ltd,SG1CF4000007,955152,SGD,ETIK
+singapore,Place Holdings,Place Holdings Ltd,eucon-holding-ltd,SG1Q02920318,955153,SGD,THEP
+singapore,EuroSports Global Ltd,EuroSports Global Ltd,eurosports-global-ltd,SG2G55000001,955154,SGD,EURO
+singapore,Excelpoint Technology Ltd,Excelpoint Technology Ltd,excelpoint-technology-ltd,SG1BF4000009,955155,SGD,EXCE
+singapore,Ezion Holdings,Ezion Holdings Ltd,ezion-holdings,SG1W38939029,955157,SGD,EZHL
+singapore,Ezra Holdings Ltd,Ezra Holdings Ltd,ezra-holdings-ltd,SG1O34912152,955158,SGD,EZRA
+singapore,Far East Group Ltd,Far East Group Ltd,far-east-group-ltd,SG2D48972988,955159,SGD,FAEA
+singapore,Far East Hospitality Trust,Far East Hospitality Trust,far-east-hospitality-trust,SG2F08984575,955160,SGD,FAEH
+singapore,Far East Orchard Ltd,Far East Orchard Ltd,far-east-orchard-ltd,SG2P56002559,955161,SGD,FARE
+singapore,Federal International 2000 Ltd,Federal International 2000 Ltd,federal-international-2000-ltd,SG1BF9000004,955162,SGD,FEDL
+singapore,Falcon Energy Group Ltd,Falcon Energy Group Ltd,falcon-energy-group-ltd,SG1Q49922319,955163,SGD,FEGL
+singapore,Food Empire Holdings Ltd,Food Empire Holdings Ltd,food-empire-holdings-ltd,SG1I44882534,955164,SGD,FEMP
+singapore,Foreland Fabrictech Holdings Ltd,Foreland Fabrictech Holdings Ltd,foreland-fabrictech-holdings-ltd,BMG3658Z1041,955165,SGD,FFHL
+singapore,Figtree Holdings Ltd,Figtree Holdings Ltd,figtree-holdings-ltd,SG2G36998349,955166,SGD,FIGT
+singapore,F J Benjamin Holdings Ltd,F J Benjamin Holdings Ltd,f-j-benjamin-holdings-ltd,SG1D58018368,955168,SGD,FJBN
+singapore,Fragrance Group Ltd,Fragrance Group Ltd,fragrance-group-ltd,SG1Q67923454,955169,SGD,FRAG
+singapore,Frasers Property,Frasers Property Ltd,frasers-centrepoint-ltd,SG2G52000004,955170,SGD,FRPL
+singapore,Frencken Group Ltd,Frencken Group Ltd,frencken-group-ltd,SG1R43925234,955171,SGD,FREN
+singapore,Frasers Hospitality Trust,Frasers Hospitality Trust,frasers-hospitality-trust,SG1AA5000001,955172,SGD,FRHO
+singapore,First Resources Ltd,First Resources Ltd,first-resources-ltd,SG1W35938974,955173,SGD,FRLD
+singapore,First Sponsor Group Ltd,First Sponsor Group Ltd,first-sponsor-group-ltd,KYG3488W1078,955174,SGD,FSCA
+singapore,Fu Yu Corporation Ltd,Fu Yu Corporation Ltd,fu-yu-corporation-ltd,SG1B56010922,955175,SGD,FUYU
+singapore,Grand Banks Yachts Ltd,Grand Banks Yachts Ltd,grand-banks-yachts-ltd,SG0504000043,955176,SGD,GBYL
+singapore,Great Eastern Holdings Ltd,Great Eastern Holdings Ltd,great-eastern-holdings-ltd,SG1I55882803,955177,SGD,GELA
+singapore,Geo Energy Resources Ltd,Geo Energy Resources Ltd,geo-energy-resources-ltd,SG2F24986083,955179,SGD,GEOE
+singapore,GKE Corporation Ltd,GKE Corporation Ltd,gke-corporation-ltd,SG1N09908665,955180,SGD,GKEC
+singapore,G. K. Goh Holdings Ltd,G. K. Goh Holdings Ltd,g.-k.-goh-holdings-ltd,SG1M32001976,955181,SGD,GKHS
+singapore,Goodland Group Ltd,Goodland Group Ltd,goodland-group-ltd,SG1Y75948873,955182,SGD,GLGP
+singapore,Global Invest,Global Investments Ltd,global-investments-ltd,SGXC73602341,955183,SGD,GLNV
+singapore,Global Invacom Group Ltd,Global Invacom Group Ltd,global-invacom-group-ltd,SG2E91982768,955184,SGD,GLOB
+singapore,Gallant Venture Ltd,Gallant Venture Ltd,gallant-venture-ltd,SG1T37930313,955185,SGD,GLVT
+singapore,GP Industries Ltd,GP Industries Ltd,gp-industries-ltd,SG1C12012995,955187,SGD,GPEI
+singapore,Green Build Technology Ltd,Green Build Technology Ltd,green-build-technology-ltd,SG1Q40922128,955189,SGD,GREE
+singapore,Forise Int,Forise International Ltd,great-group-holdings-ltd,SG1Y70948001,955190,SGD,FOIL
+singapore,GRP,GRP Ltd,grp,SG1CD2000004,955191,SGD,GRPS
+singapore,GSH Corporation Ltd,GSH Corporation Ltd,gsh-corporation-ltd,SG1BG1000000,955192,SGD,GSHC
+singapore,Guoan International,Guoan International Ltd,global-tech-holdings-ltd,KYG4211E1098,955193,SGD,GUOA
+singapore,GL Ltd,GL Ltd,guocoleisure-ltd,BMG392401094,955194,SGD,GLLI
+singapore,GuocoLand Ltd,GuocoLand Ltd,guocoland-ltd,SG1R95002270,955195,SGD,GUOC
+singapore,HALCYON Agri Corp Ltd,HALCYON Agri Corp Ltd,halcyon-agri-corp-ltd,SG2F48989824,955197,SGD,HALC
+singapore,Hanwell Holdings Ltd,Hanwell Holdings Ltd,hanwell-holdings-ltd,SG1V81937806,955198,SGD,HANW
+singapore,Ho Bee Land Ltd,Ho Bee Land Ltd,ho-bee-land-ltd,SG1H41875896,955199,SGD,HBEE
+singapore,Healthway Medical Corp Ltd,Healthway Medical Corp Ltd,healthway-medical-corp-ltd,SG1X09940682,955200,SGD,HEMC
+singapore,Hafary Holdings Ltd,Hafary Holdings Ltd,hafary-holdings-ltd,SG2F75992345,955201,SGD,HFRY
+singapore,Hotel Grand Central Ltd,Hotel Grand Central Ltd,hotel-grand-central-ltd,SG1J41888780,955202,SGD,HGCS
+singapore,HG Metal Manufacturing Ltd,HG Metal Manufacturing Ltd,hg-metal-manufacturing-ltd,SG1CH7000000,955203,SGD,HGMM
+singapore,Hiap Hoe Ltd,Hiap Hoe Ltd,hiap-hoe-ltd,SG1U37933462,955204,SGD,HIAP
+singapore,Hi P International Ltd,Hi P International Ltd,hi-p-international-ltd,SG1O83915098,955205,SGD,HIPI
+singapore,Hor Kew Corporation Ltd,Hor Kew Corporation Ltd,hor-kew-corporation-ltd,SG1BE0000006,955206,SGD,HKEW
+singapore,Hong Leong Asia Ltd,Hong Leong Asia Ltd,hong-leong-asia-ltd,SG1F76860344,955207,SGD,HLAA
+singapore,Hoe Leong Corporation Ltd,Hoe Leong Corporation Ltd,hoe-leong-corporation-ltd,SG1S47927920,955208,SGD,HLEC
+singapore,HLH Group,HLH Group Ltd,hlh-group-ltd,SG1EE1000009,955209,SGD,HONL
+singapore,Hong Leong Finance Ltd,Hong Leong Finance Ltd,hong-leong-finance-ltd,SG1M04001939,955210,SGD,HLSF
+singapore,Hock Lian Seng Holdings Ltd,Hock Lian Seng Holdings Ltd,hock-lian-seng-holdings-ltd,SG1Z21951640,955211,SGD,HLSG
+singapore,Health Management International Ltd,Health Management International Ltd,health-management-international-ltd,SG1H18874567,955212,SGD,HMIH
+singapore,Hong Fok Corporation Ltd,Hong Fok Corporation Ltd,hong-fok-corporation-ltd,SG1J14885763,955214,SGD,HONG
+singapore,Hotung Investment Holdings Ltd,Hotung Investment Holdings Ltd,hotung-investment-holdings-ltd,BMG4612P2085,955215,SGD,HOTU
+singapore,Haw Par Corporation Ltd,Haw Par Corporation Ltd,haw-par-corporation-ltd,SG1D25001158,955216,SGD,HPAR
+singapore,Hotel Properties Ltd,Hotel Properties Ltd,hotel-properties-ltd,SG2P14002527,955217,SGD,HPPS
+singapore,Hiap Seng Engineering Ltd,Hiap Seng Engineering Ltd,hiap-seng-engineering-ltd,SG1G69871497,955218,SGD,HSEN
+singapore,Hosen Group Ltd,Hosen Group Ltd,hosen-group-ltd,SG1Q03920366,955219,SGD,HSNG
+singapore,Hiap Tong Corporation Ltd,Hiap Tong Corporation Ltd,hiap-tong-corporation-ltd,SG1Z16951381,955220,SGD,HTCL
+singapore,Hotel Royal Ltd,Hotel Royal Ltd,hotel-royal-ltd,SG1P12002132,955222,SGD,HTRS
+singapore,HupSteel Ltd,HupSteel Ltd,hupsteel-ltd,SG1CD8000008,955224,SGD,HUPS
+singapore,Hwa Hong Corporation Ltd,Hwa Hong Corporation Ltd,hwa-hong-corporation-ltd,SG1H85877246,955225,SGD,HWHS
+singapore,Hyflux,Hyflux Ltd,hyflux,SG1J47889782,955226,SGD,HYFL
+singapore,Hyflux Ltd Pref,Hyflux Ltd Pref,hyflux-ltd-pref,SG2D17969577,955227,SGD,HYFL_p
+singapore,ICP Ltd,ICP Ltd,icp-ltd,SG2G87000003,955228,SGD,ICPL
+singapore,IEV Holdings Ltd,IEV Holdings Ltd,iev-holdings-ltd,SG2D67974808,955229,SGD,IEVH
+singapore,IFS Capital Ltd,IFS Capital Ltd,ifs-capital-ltd,SG1A35000706,955230,SGD,IFAC
+singapore,IHH Healthcare,IHH Healthcare Bhd,ihh-healthcare-bhd?cid=955231,MYL5225OO007,955231,SGD,IHHH
+singapore,Rich Capital,Rich Capital Holdings Ltd,infinio-group-ltd,SG2G63000001,955232,SGD,RICH
+singapore,Informatics Education Ltd,Informatics Education Ltd,informatics-education-ltd,SG1CE8000006,955233,SGD,INFO
+singapore,Innopac Holdings Ltd,Innopac Holdings Ltd,innopac-holdings-ltd,SG2D65002396,955235,SGD,INPS
+singapore,Oue Lippo Healthcare,Oue Lippo Healthcare Ltd,international-healthway-corporation,SG2F86994413,955236,SGD,OUEL
+singapore,InnoTek Ltd,InnoTek Ltd,innotek-ltd,SG1F66858902,955237,SGD,INTK
+singapore,Interra Resources Ltd,Interra Resources Ltd,interra-resources-ltd,SG1R37924805,955238,SGD,INTR
+singapore,Renaissance United,Renaissance United Ltd,ipco-international-ltd,SG1C67001091,955239,SGD,RENA
+singapore,International Press Softcom Ltd,International Press Softcom Ltd,international-press-softcom-ltd,SG1G93873220,955240,SGD,IPSL
+singapore,ISDN Holdings Ltd,ISDN Holdings Ltd,isdn-holdings-ltd,SG1S48927937,955241,SGD,ISDN
+singapore,Isetan Singapore Ltd,Isetan Singapore Ltd,isetan-singapore-ltd,SG1D89001201,955242,SGD,ISET
+singapore,ISOteam Ltd,ISOteam Ltd,isoteam-ltd,SG2F95994529,955243,SGD,ISOT
+singapore,Reenova Investment Holding,Reenova Investment Holding Ltd,isr-capital-ltd,SG1P04916067,955244,SGD,REEN
+singapore,Sunrise Shares,Sunrise Shares Holdings Ltd,ite-electric-co-ltd,SG0581008505,955245,SGD,SUNR
+singapore,Intraco Ltd,Intraco Ltd,intraco-ltd,SG1D87001195,955246,SGD,ITRS
+singapore,Jackspeed Corporation Ltd,Jackspeed Corporation Ltd,jackspeed-corporation-ltd,SG1O75914679,955247,SGD,JACK
+singapore,Revez,Revez Corporation Ltd,jason-holdings-ltd,SGXE83751573,955248,SGD,REVE
+singapore,Japfa Ltd,Japfa Ltd,japfa-ltd,SG1AB9000005,955249,SGD,JAPF
+singapore,Jasper Investments Ltd,Jasper Investments Ltd,jasper-investments-ltd,SG1W79939920,955250,SGD,JASP
+singapore,JB Foods Ltd,JB Foods Ltd,jb-foods-ltd,SG1BH1000008,955252,SGD,JBFO
+singapore,JEP,JEP Holdings Ltd,jep-holdings-ltd,SG1EE3000007,955253,SGD,JEPH
+singapore,Joyas International Holdings Ltd,Joyas International Holdings Ltd,joyas-international-holdings-ltd,BMG518851461,955254,SGD,JIHL
+singapore,Jubilee Industries Holdings Ltd,Jubilee Industries Holdings Ltd,jubilee-industries-holdings-ltd,SGXE67467741,955255,SGD,JLJH
+singapore,Jason Marine Group Ltd,Jason Marine Group Ltd,jason-marine-group-ltd,SG1Y80949072,955256,SGD,JMGL
+singapore,Japan Foods Holding Ltd,Japan Foods Holding Ltd,japan-foods-holding-ltd,SG1X84942272,955257,SGD,JPFD
+singapore,Jiutian Chemical Group Ltd,Jiutian Chemical Group Ltd,jiutian-chemical-group-ltd,SG1V71937527,955258,SGD,JUTN
+singapore,Karin Technology Holdings Ltd,Karin Technology Holdings Ltd,karin-technology-holdings-ltd,BMG521971033,955259,SGD,KARI
+singapore,Koh Brothers Eco Engineering Ltd,Koh Brothers Eco Engineering Ltd,koh-brothers-eco-engineering-ltd,SG1S95928879,955260,SGD,KBEE
+singapore,Koh Brothers Group Ltd,Koh Brothers Group Ltd,koh-brothers-group-ltd,SG1B06007705,955261,SGD,KBRO
+singapore,Kencana Agri Ltd,Kencana Agri Ltd,kencana-agri-ltd,SG1CE4000000,955262,SGD,KCAL
+singapore,Kingboard Copper Foil Holdings Ltd,Kingboard Copper Foil Holdings Ltd,kingboard-copper-foil-holdings-ltd,BMG525671076,955263,SGD,KCFH
+singapore,Kitchen Culture Holdings Ltd,Kitchen Culture Holdings Ltd,kitchen-culture-holdings-ltd,SG2D45972171,955264,SGD,KCHL
+singapore,Keong Hong Holdings Ltd,Keong Hong Holdings Ltd,keong-hong-holdings-ltd,SG2D92977651,955265,SGD,KEHO
+singapore,Khong Guan Flour,Khong Guan Flour Milling Ltd,khong-guan-flour-milling-ltd,SG1E13001268,955266,SGD,KHON
+singapore,Kim Heng Offshore & Marine Holdings,Kim Heng Offshore & Marine Holdings Ltd,kim-heng-offshore---marine-holdings,SG2G57000009,955267,SGD,KIMH
+singapore,King Wan Corporation Ltd,King Wan Corporation Ltd,king-wan-corporation-ltd,SG1J32888328,955268,SGD,KIWC
+singapore,KLW Holdings Ltd,KLW Holdings Ltd,klw-holdings-ltd,SG1G23864448,955269,SGD,KLWH
+singapore,Kingsmen Creatives Ltd,Kingsmen Creatives Ltd,kingsmen-creatives-ltd,SG1W76939881,955271,SGD,KMEN
+singapore,Koda Ltd,Koda Ltd,koda-ltd,SG1CB1000009,955272,SGD,KODA
+singapore,KOP Ltd,KOP Ltd,kop-ltd,SG2G85000005,955273,SGD,KOPL
+singapore,KORI Holdings Ltd,KORI Holdings Ltd,kori-holdings-ltd,SG2F40988253,955274,SGD,KORI
+singapore,Koyo International Ltd,Koyo International Ltd,koyo-international-ltd,SG1X69942156,955275,SGD,KOYO
+singapore,KrisEnergy Ltd,KrisEnergy Ltd,krisenergy-ltd,KYG532261099,955276,SGD,KRIS
+singapore,KSH Holdings Ltd,KSH Holdings Ltd,ksh-holdings-ltd,SG1W44939146,955277,SGD,KSHH
+singapore,KS Energy Ltd,KS Energy Ltd,ks-energy-ltd,SG1G91873040,955278,SGD,KSTL
+singapore,KTL Global Ltd,KTL Global Ltd,ktl-global-ltd,SG1W37938998,955280,SGD,KTLG
+singapore,AF Global,AF Global Ltd,lcd-global-investments-ltd,SG1C01001033,955281,SGD,AFGL
+singapore,Leader Environmental Technologies,Leader Environmental Technologies Ltd,leader-environmental-technologies,SG2B93959478,955283,SGD,LETL
+singapore,Ley Choon Group Holdings Ltd,Ley Choon Group Holdings Ltd,ley-choon-group-holdings-ltd,SG2F02983607,955284,SGD,LEYC
+singapore,Pacific Star Development,Pacific Star Development Ltd,lh-group-ltd,SG1DE5000007,955285,SGD,PACS
+singapore,LHT Holdings Ltd,LHT Holdings Ltd,lht-holdings-ltd,SG1BG5000006,955286,SGD,LHTH
+singapore,Lion Asiapac Ltd,Lion Asiapac Ltd,lion-asiapac-ltd,SG1BD6000002,955287,SGD,LIAS
+singapore,Lian Beng Group Ltd,Lian Beng Group Ltd,lian-beng-group-ltd,SG1G55870362,955288,SGD,LIBG
+singapore,Lifebrandz,Lifebrandz Ltd,lifebrandz-ltd,SG1DF7000002,955289,SGD,LIFE
+singapore,Libra Group Ltd,Libra Group Ltd,libra-group-ltd,SG2D82975475,955290,SGD,LIGL
+singapore,LionGold Corp Ltd,LionGold Corp Ltd,liongold-corp-ltd,BMG5521X1092,955291,SGD,LION
+singapore,Low Keng Huat Singapore Ltd,Low Keng Huat Singapore Ltd,low-keng-huat-singapore-ltd,SG1W86940333,955292,SGD,LKH
+singapore,Longcheer Holdings,Longcheer Holdings Ltd,longcheer-holdings-ltd,BMG5376C1010,955294,SGD,LCTH
+singapore,Loyz Energy,Loyz Energy Ltd,loyz-energy-ltd,SG1H44875935,955295,SGD,CWXG
+singapore,KTMG,KTMG Ltd,lereno-bio-chem-ltd,SGXE61141383,955296,SGD,KTMG
+singapore,Lorenzo International Ltd,Lorenzo International Ltd,lorenzo-international-ltd,SG1T35930281,955297,SGD,LRZI
+singapore,Lum Chang Holdings Ltd,Lum Chang Holdings Ltd,lum-chang-holdings-ltd,SG1E20001293,955298,SGD,LUCS
+singapore,Luzhou Bio Chem Technology Ltd,Luzhou Bio Chem Technology Ltd,luzhou-bio-chem-technology-ltd,SG1S94928862,955299,SGD,LUZH
+singapore,Manhattan Resources Ltd,Manhattan Resources Ltd,manhattan-resources-ltd,SG1I14879601,955301,SGD,MANH
+singapore,Marco Polo Marine Ltd,Marco Polo Marine Ltd,marco-polo-marine-ltd,SG1W14938268,955302,SGD,MAPM
+singapore,Mary Chia Holdings Ltd,Mary Chia Holdings Ltd,mary-chia-holdings-ltd,SG1Y51946677,955303,SGD,MARY
+singapore,Maxi Cash Financial Services Corp,Maxi Cash Financial Services Corporation Ltd,maxi-cash-financial-services-corp,SG2E90982678,955304,SGD,MAXI
+singapore,Mencast Holdings Ltd,Mencast Holdings Ltd,mencast-holdings-ltd,SG1X07940643,955305,SGD,MCHL
+singapore,mDR Ltd,mDR Ltd,mdr-ltd,SG1N26909308,955306,SGD,MDRT
+singapore,MegaChem Ltd,MegaChem Ltd,megachem-ltd,SG1O60914015,955307,SGD,MEGA
+singapore,Meghmani Organics,Meghmani Organics Ltd,meghmani-organics,SG1P93919998,955308,SGD,MEGH
+singapore,Memtech International Ltd,Memtech International Ltd,memtech-international-ltd,SG1CE7000007,955309,SGD,MEMT
+singapore,Metal Component Engineering Ltd,Metal Component Engineering Ltd,metal-component-engineering-ltd,SG1O81915033,955310,SGD,META
+singapore,Metech,Metech International Ltd,metech-international-ltd,SGXE91187273,955311,SGD,METE
+singapore,Mewah International Inc,Mewah International Inc,mewah-international-inc,KYG6074A1085,955312,SGD,MEWI
+singapore,Moneymax Financial Services Ltd,Moneymax Financial Services Ltd,moneymax-financial-services-ltd,SG2G06995143,955313,SGD,MFSL
+singapore,Manufacturing Integration Tech,Manufacturing Integration Technology Ltd,manufacturing-integration-tech,SG1H45875967,955316,SGD,MITD
+singapore,Miyoshi Ltd,Miyoshi Ltd,miyoshi-ltd,SG1J04885492,955317,SGD,MIYO
+singapore,Micro Mechanics Holdings Ltd,Micro Mechanics Holdings Ltd,micro-mechanics-holdings-ltd,SG1O09910991,955318,SGD,MMEC
+singapore,Mermaid Maritime PCL,Mermaid Maritime PCL,mermaid-maritime-pcl,TH0955010002,955319,SGD,MMPC
+singapore,Mandarin Oriental International Ltd,Mandarin Oriental International Ltd,mandarin-oriental-international-ltd,BMG578481068,955320,USD,MOIL
+singapore,Moya Holdings Asia Ltd,Moya Holdings Asia Ltd,moya-holdings-asia-ltd,SG2F94994512,955322,SGD,MOYA
+singapore,Mun Siong Engineering Ltd,Mun Siong Engineering Ltd,mun-siong-engineering-ltd,SG2C34962861,955324,SGD,MSEL
+singapore,Medtecs International Corporation,Medtecs International Corporation Ltd,medtecs-international-corporation,BMG5958R1043,955325,SGD,MTCS
+singapore,Metro Holdings Ltd,Metro Holdings Ltd,metro-holdings-ltd,SG1I11878499,955326,SGD,MTHL
+singapore,MTQ Corporation Ltd,MTQ Corporation Ltd,mtq-corporation-ltd,SG0507000073,955327,SGD,MTLS
+singapore,MYP Ltd,MYP Ltd,myp-ltd,SG1S80928447,955328,SGD,MYPL
+singapore,NSL Ltd,NSL Ltd,nsl-ltd,SG1F87001375,955329,SGD,NATS
+singapore,Natural Cool Holdings Ltd,Natural Cool Holdings Ltd,natural-cool-holdings-ltd,SG1T36930298,955331,SGD,NCHL
+singapore,Neo Group Ltd,Neo Group Ltd,neo-group-ltd,SG2E97983414,955332,SGD,NEOG
+singapore,Nera Telecommunications Ltd,Nera Telecommunications Ltd,nera-telecommunications-ltd,SG1I64883495,955333,SGD,NERA
+singapore,New Wave Holdings Ltd,New Wave Holdings Ltd,new-wave-holdings-ltd,SG1Q78923675,955334,SGD,NEWW
+singapore,Next Generation Satellite,Next Generation Satellite Communications Ltd,next-generation-satellite-communic,SG1I31881119,955335,SGD,NGSC
+singapore,Nippecraft Ltd,Nippecraft Ltd,nippecraft-ltd,SG1A83000921,955336,SGD,NIPP
+singapore,Nam Lee Pressed Metal Industries,Nam Lee Pressed Metal Industries Ltd,nam-lee-pressed-metal-industries,SG1X43941639,955337,SGD,NLPM
+singapore,Nam Cheong,Nam Cheong Ltd,nam-cheong-ltd,BMG6361R2024,955338,SGD,NMCG
+singapore,Nordic Group Ltd,Nordic Group Ltd,nordic-group-ltd,SG2C45963924,955339,SGD,NRGL
+singapore,Ntegrator International Ltd,Ntegrator International Ltd,ntegrator-international-ltd,SG1S32927257,955340,SGD,NTOR
+singapore,New Toyo International Holdings Ltd,New Toyo International Holdings Ltd,new-toyo-international-holdings-ltd,SG1E32850828,955341,SGD,NTYO
+singapore,Yorkshine Holdings,Yorkshine Holdings Ltd,novo-group-ltd,SG2C46963931,955342,SGD,YORK
+singapore,Oceanus Group Ltd,Oceanus Group Ltd,oceanus-group-ltd,SG1M80907371,955345,SGD,OCGL
+singapore,Old Chang Kee Ltd,Old Chang Kee Ltd,old-chang-kee-ltd,SG1W49939232,955346,SGD,OCKL
+singapore,OEL Holdings Ltd,OEL Holdings Ltd,oel-holdings-ltd,SG0584008601,955347,SGD,OELH
+singapore,OKH Global Ltd,OKH Global Ltd,okh-global-ltd,BMG6730R1079,955348,SGD,OKHG
+singapore,OKP Holdings Ltd,OKP Holdings Ltd,okp-holdings-ltd,SG1M55904841,955349,SGD,OKPH
+singapore,Pine Capital,Pine Capital Group Ltd,ols-enterprise-ltd,SG1AA8000008,955350,SGD,PINC
+singapore,Ossia International Ltd,Ossia International Ltd,ossia-international-ltd,SG1D61018413,955353,SGD,OSSA
+singapore,Ouhua Energy Holdings Ltd,Ouhua Energy Holdings Ltd,ouhua-energy-holdings-ltd,BMG6843Q1033,955355,SGD,OUEH
+singapore,OUE Hospitality Trust,OUE Hospitality Trust,oue-hospitality-trust,SG2G03994610,955356,SGD,OUER
+singapore,Overseas Education Ltd,Overseas Education Ltd,overseas-education-ltd,SG2F49989922,955357,SGD,OVER
+singapore,OUE Ltd,OUE Ltd,oue-ltd,SG2B80958517,955358,SGD,OVES
+singapore,Oxley Holdings Ltd,Oxley Holdings Ltd,oxley-holdings-ltd,SG2F25986140,955359,SGD,OXHL
+singapore,PACC Offshore Services Holdings Ltd,PACC Offshore Services Holdings Ltd,pacc-offshore-services-holdings-ltd,SG2G83000007,955360,SGD,PACC
+singapore,Pacific Andes Resources Development,Pacific Andes Resources Development Ltd,pacific-andes-resources-development,BMG6845B1046,955361,SGD,PACF
+singapore,Pacific Radiance Ltd,Pacific Radiance Ltd,pacific-radiance-ltd,SG2G39998387,955362,SGD,PACI
+singapore,Pan United Corporation Ltd,Pan United Corporation Ltd,pan-united-corporation-ltd,SG1A67000830,955364,SGD,PANU
+singapore,Pacific Century Regional Develop,Pacific Century Regional Developments Ltd,pacific-century-regional-develop,SG1J17886040,955365,SGD,PCEN
+singapore,PEC Ltd,PEC Ltd,pec-ltd,SG1Y45946619,955367,SGD,PECL
+singapore,Delfi,Delfi Ltd,petra-foods-ltd,SG1Q25921608,955368,SGD,DELF
+singapore,Perennial Real Estate Holdings Ltd,Perennial Real Estate Holdings Ltd,perennial-real-estate-holdings-ltd,SG1AD8000002,955369,SGD,PERE
+singapore,Penguin International Ltd,Penguin International Ltd,penguin-international-ltd,SG1CI0000005,955370,SGD,PGUN
+singapore,Pharmesis International Ltd,Pharmesis International Ltd,pharmesis-international-ltd,SG1BH6000003,955371,SGD,PHAR
+singapore,Powermatic Data Systems Ltd,Powermatic Data Systems Ltd,powermatic-data-systems-ltd,SG1BF0000003,955373,SGD,PMDS
+singapore,PNE Industries Ltd,PNE Industries Ltd,pne-industries-ltd,SG1BF2000001,955374,SGD,PNEI
+singapore,Pan Hong Group Holdings,Pan Hong Group Holdings Ltd,pan-hong-property-group-ltd,BMG6900A1163,955375,SGD,PANH
+singapore,Sen Yue Holdings,Sen Yue Holdings Ltd,pne-micron-holdings-ltd,SG1M25902545,955376,SGD,SENY
+singapore,Progen Holdings Ltd,Progen Holdings Ltd,progen-holdings-ltd,SG1F48858053,955377,SGD,POGN
+singapore,Polaris Ltd,Polaris Ltd,polaris-ltd,SG1L96897898,955378,SGD,POLA
+singapore,Parkson Retail Asia Ltd,Parkson Retail Asia Ltd,parkson-retail-asia-ltd,SG2D81975377,955379,SGD,PRAL
+singapore,PS Group Holdings Ltd,PS Group Holdings Ltd,ps-group-holdings-ltd,SG2F90994508,955380,SGD,PSGH
+singapore,PetroChina ADR,PetroChina Co Ltd DRC,petrochina-co-ads-exch?cid=955383,US71646E1001,955383,USD,PTR
+singapore,QAF Ltd,QAF Ltd,qaf-ltd,SG1A49000759,955384,SGD,QAFS
+singapore,Qingmei Group Holdings Ltd,Qingmei Group Holdings Ltd,qingmei-group-holdings-ltd,KYG730441022,955385,SGD,QGMI
+singapore,Qian Hu Corporation Ltd,Qian Hu Corporation Ltd,qian-hu-corporation-ltd,SG1BE8000008,955386,SGD,QIAN
+singapore,Q & M Dental Group Singapore Ltd,Q & M Dental Group Singapore Ltd,q---m-dental-group-singapore-ltd,SG2E73981531,955387,SGD,QMDT
+singapore,QT Vascular Ltd,QT Vascular Ltd,qt-vascular-ltd,SG2G82000008,955388,SGD,QTVA
+singapore,Raffles Medical Group Ltd,Raffles Medical Group Ltd,raffles-medical-group-ltd,SG1CH4000003,955389,SGD,RAFG
+singapore,Eneco Energy,Eneco Energy Ltd,ramba-energy-ltd,SG1P35918371,955390,SGD,ENEC
+singapore,Renewable Energy Asia Group Ltd,Renewable Energy Asia Group Ltd,renewable-energy-asia-group-ltd,BMG7499U1099,955391,SGD,REAG
+singapore,Regal International Group Ltd,Regal International Group Ltd,regal-international-group-ltd,SG1AE0000008,955392,SGD,REGI
+singapore,Rex International Holding Ltd,Rex International Holding Ltd,rex-international-holding-ltd,SG2G04994999,955393,SGD,REXI
+singapore,RH Petrogas Ltd,RH Petrogas Ltd,rh-petrogas-ltd,SG1H00001443,955394,SGD,RHPG
+singapore,Raffles Education Corporation Ltd,Raffles Education Corporation Ltd,raffles-education-corporation-ltd,SG2C97968151,955395,SGD,RLSE
+singapore,Thomson Medical,Thomson Medical Group Ltd,rowsley-ltd,SG1M49904634,955397,SGD,THOS
+singapore,Riverstone Holdings Ltd,Riverstone Holdings Ltd,riverstone-holdings-ltd,SG1U22933048,955398,SGD,RVHL
+singapore,Roxy Pacific Holdings LTD,Roxy Pacific Holdings LTD,roxy-pacific-holdings-ltd,SG1W66939735,955399,SGD,RXYP
+singapore,Sakae Holdings Ltd,Sakae Holdings Ltd,sakae-holdings-ltd,SG1O42912715,955400,SGD,SAKA
+singapore,Samko Timber Ltd,Samko Timber Ltd,samko-timber-ltd,SG1W64939547,955401,SGD,SAMT
+singapore,Samudera Shipping Line Ltd,Samudera Shipping Line Ltd,samudera-shipping-line-ltd,SG1F29855813,955402,SGD,SAMU
+singapore,San Teh Ltd,San Teh Ltd,san-teh-ltd,SG0525000196,955403,SGD,SANS
+singapore,Sapphire Corporation Ltd,Sapphire Corporation Ltd,sapphire-corporation-ltd,SG1CG4000005,955404,SGD,SAPP
+singapore,Sarine Technologies Ltd,Sarine Technologies Ltd,sarine-technologies-ltd,IL0010927254,955405,SGD,SARI
+singapore,SATS Ltd,SATS Ltd,sats-ltd,SG1I52882764,955406,SGD,SATS
+singapore,Singapura Finance Ltd,Singapura Finance Ltd,singapura-finance-ltd,SG1M01001924,955407,SGD,SBDS
+singapore,SBI Offshore Ltd,SBI Offshore Ltd,sbi-offshore-ltd,SG1Y97950360,955408,SGD,SBIO
+singapore,SBS Transit Ltd,SBS Transit Ltd,sbs-transit-ltd,SG1F58858209,955409,SGD,SBVV
+singapore,Second Chance Properties Ltd,Second Chance Properties Ltd,second-chance-properties-ltd,SG1D93474618,955410,SGD,SECD
+singapore,Serial System Ltd,Serial System Ltd,serial-system-ltd,SG1E36851343,955412,SGD,SERL
+singapore,Seroja Investments Ltd,Seroja Investments Ltd,seroja-investments-ltd,SG1Y44946602,955413,SGD,SERO
+singapore,Stamford Land Corporation Ltd,Stamford Land Corporation Ltd,stamford-land-corporation-ltd,SG1I47882655,955414,SGD,SFLD
+singapore,Sin Ghee Huat Corp Ltd,Sin Ghee Huat Corp Ltd,sin-ghee-huat-corp-ltd,SG1V04936067,955415,SGD,SGHC
+singapore,Memories,Memories Group Ltd,shc-capital-asia-ltd,SG1EB7000009,955416,SGD,MEMO
+singapore,Sing Holdings Ltd,Sing Holdings Ltd,sing-holdings-ltd,SG1T28930090,955417,SGD,SHDS
+singapore,Sheng Siong Group Ltd,Sheng Siong Group Ltd,sheng-siong-group-ltd,SG2D54973185,955418,SGD,SHEN
+singapore,MMP Resources,MMP Resources Ltd,sino-construction-ltd,SG1W93940508,955419,SGD,MMPR
+singapore,SingHaiyi Group Ltd,SingHaiyi Group Ltd,singhaiyi-group-ltd,SG2G73000009,955420,SGD,SIHL
+singapore,Sin Heng Heavy Machinery Ltd,Sin Heng Heavy Machinery Ltd,sin-heng-heavy-machinery-ltd,SG1CB2000008,955421,SGD,SIHM
+singapore,SIIC Environment,SIIC Environment Holdings Ltd,siic-environment-holdings-ltd,SG1BI7000000,955422,SGD,SIIC
+singapore,Sinarmas Land Ltd,Sinarmas Land Ltd,sinarmas-land-ltd,SG1E97853881,955424,SGD,SINA
+singapore,Sincap Group Ltd,Sincap Group Ltd,sincap-group-ltd,SG2F03983689,955425,SGD,SINC
+singapore,Singapore eDevelopment Ltd,Singapore eDevelopment Ltd,singapore-edevelopment-ltd,SG1AE2000006,955426,SGD,SINE
+singapore,Sinjia Land Ltd,Sinjia Land Ltd,sinjia-land-ltd,SG1S49927944,955427,SGD,SINJ
+singapore,Sing Investments & Finance Ltd,Sing Investments & Finance Ltd,sing-investments---finance-ltd,SG1S02002305,955428,SGD,SINV
+singapore,Winas,Winas Ltd,sinwa-ltd,SG1N21908982,955429,SGD,WINA
+singapore,Silverlake Axis Ltd,Silverlake Axis Ltd,silverlake-axis-ltd,BMG8226U1071,955431,SGD,SLVX
+singapore,SunMoon Food Company Ltd,SunMoon Food Company Ltd,sunmoon-food-company-ltd,SG1AA2000004,955432,SGD,SMFC
+singapore,Asia Vets,Asia Vets Holdings Ltd,smartflex-holdings-ltd,SG2B95959500,955433,SGD,ASIV
+singapore,Singapore Medical Group Ltd,Singapore Medical Group Ltd,singapore-medical-group-ltd,SG1Y37945678,955434,SGD,SMGL
+singapore,HealthBank,HealthBank Holdings Ltd,smj-international-holdings-ltd,SG1AA4000002,955435,SGD,HEAL
+singapore,Spindex Industries Ltd,Spindex Industries Ltd,spindex-industries-ltd,SG1G32866137,955436,SGD,SNEX
+singapore,Soon Lian Holdings Ltd,Soon Lian Holdings Ltd,soon-lian-holdings-ltd,SG1W36938981,955437,SGD,SNLN
+singapore,Sunright Ltd,Sunright Ltd,sunright-ltd,SG1B17008288,955438,SGD,SNRT
+singapore,Sinostar PEC Holdings Ltd,Sinostar PEC Holdings Ltd,sinostar-pec-holdings-ltd,SG1V73937608,955439,SGD,SNSR
+singapore,Sino Grandness Food Industry Group,Sino Grandness Food Industry Group Ltd,sino-grandness-food-industry-group,SG2G19997136,955440,SGD,SOGF
+singapore,Soilbuild Construction Group Ltd,Soilbuild Construction Group Ltd,soilbuild-construction-group-ltd,SG2F78993043,955441,SGD,SOIL
+singapore,Spackman Entertainment Group Ltd,Spackman Entertainment Group Ltd,spackman-entertainment-group-ltd,SG1AB0000004,955442,SGD,SPAC
+singapore,Sevak,Sevak Ltd,s-i2i-ltd,SG1BD0000008,955445,SGD,SEVA
+singapore,Singapore Post Ltd,Singapore Post Ltd,singapore-post-ltd,SG1N89910219,955446,SGD,SPOS
+singapore,Singapore Reinsurance Corporation,Singapore Reinsurance Corporation Ltd,singapore-reinsurance-corporation,SG1J71891696,955447,SGD,SPRS
+singapore,Soup Restaurant Group Ltd,Soup Restaurant Group Ltd,soup-restaurant-group-ltd,SG1U97935860,955448,SGD,SRGL
+singapore,STAR Pharmaceutical Ltd,STAR Pharmaceutical Ltd,star-pharmaceutical-ltd,SG1BB3000009,955449,SGD,SRPT
+singapore,Sri Trang Agro Industry F,Sri Trang Agro Industry PCL F,sri-trang-agro-industry-pcl,TH0254A10Z14,955450,SGD,SRTA
+singapore,Singapore Shipping Corporation Ltd,Singapore Shipping Corporation Ltd,singapore-shipping-corporation-ltd,SG1J24887775,955451,SGD,SSHP
+singapore,Starburst Holdings Ltd,Starburst Holdings Ltd,starburst-holdings-ltd,SG1AA7000009,955452,SGD,STAB
+singapore,Stamford Tyres Corporation Ltd,Stamford Tyres Corporation Ltd,stamford-tyres-corporation-ltd,SG1O53913362,955453,SGD,STAS
+singapore,Straits Trading Company Ltd,Straits Trading Company Ltd,straits-trading-company-ltd,SG1J49001550,955454,SGD,STCM
+singapore,Starland Holdings Ltd,Starland Holdings Ltd,starland-holdings-ltd,SG2E72981474,955455,SGD,STHO
+singapore,Straco Corporation Ltd,Straco Corporation Ltd,straco-corporation-ltd,SG1P15916395,955456,SGD,STRA
+singapore,P5 Capital,P5 Capital Holdings Ltd,sunlight-group-hldg-ltd,SG1I98885227,955458,SGD,P5CA
+singapore,800 Super Holdings Ltd,800 Super Holdings Ltd,800-super-holdings-ltd,SG2D42972083,955459,SGD,SUHL
+singapore,Sunningdale Tech Ltd,Sunningdale Tech Ltd,sunningdale-tech-ltd,SG1BJ1000004,955460,SGD,SUND
+singapore,Sunpower Group Ltd,Sunpower Group Ltd,sunpower-group-ltd,BMG8585U1027,955461,SGD,SUNP
+singapore,Sunvic Chemical Holdings Ltd,Sunvic Chemical Holdings Ltd,sunvic-chemical-holdings-ltd,SG1U49933948,955462,SGD,SVCH
+singapore,Swiber Holdings Ltd,Swiber Holdings Ltd,swiber-holdings-ltd,SG1BI1000006,955463,SGD,SWBR
+singapore,Singapore Myanmar,Singapore Myanmar Investco Ltd,singapore-windsor-holdings-ltd,SG1T17929525,955465,SGD,SINO
+singapore,Swing Media Technology Group Ltd,Swing Media Technology Group Ltd,swing-media-technology-group-ltd,BMG8609Q2775,955466,SGD,SWMT
+singapore,Sysma Holdings Ltd,Sysma Holdings Ltd,sysma-holdings-ltd,SG2F06984247,955467,SGD,SYSM
+singapore,Tai Sin Electric Ltd,Tai Sin Electric Ltd,tai-sin-electric-ltd,SG1F88861140,955469,SGD,TAIS
+singapore,Talkmed Group Ltd,Talkmed Group Ltd,talkmed-group-ltd,SG2G61000003,955470,SGD,TALK
+singapore,Tat Seng Packaging Group Ltd,Tat Seng Packaging Group Ltd,tat-seng-packaging-group-ltd,SG1K31894969,955471,SGD,TASE
+singapore,Tan Chong International Ltd,Tan Chong International Ltd,tan-chong-international-ltd,BMG8667Z1023,955473,HKD,TCIL
+singapore,Telechoice International Ltd,Telechoice International Ltd,telechoice-international-ltd,SG1P75919099,955474,SGD,TCIN
+singapore,Technics Oil & Gas Ltd,Technics Oil & Gas Ltd,technics-oil---gas-ltd,SG1N85910015,955475,SGD,TECH
+singapore,TEE International Ltd,TEE International Ltd,tee-international-ltd,SG2C64965297,955476,SGD,TEEI
+singapore,TEE Land Ltd,TEE Land Ltd,tee-land-ltd,SG2F79993489,955477,SGD,TEEL
+singapore,Teho International Inc Ltd,Teho International Inc Ltd,teho-international-inc-ltd,SG1Y15944495,955478,SGD,TEHO
+singapore,Capital World,Capital World Ltd,terratech-group-ltd,KYG8763X1189,955479,SGD,CAPI
+singapore,Tung Lok Restaurants 2000 Ltd,Tung Lok Restaurants 2000 Ltd,tung-lok-restaurants-2000-ltd,SG1J65890803,955480,SGD,TGLK
+singapore,Tianjin Zhongxin Pharma Group,Tianjin Zhongxin Pharmaceutical Group Corp Ltd,tianjin-zhongxin-pharma-group,CNE100000924,955481,USD,TIAN
+singapore,TIH Ltd,TIH Ltd,tih-ltd,SG1A82000914,955482,SGD,TIHL
+singapore,TT International Ltd,TT International Ltd,tt-international-ltd,SG1I71883728,955483,SGD,TINL
+singapore,Tiong Woon Corporation Holding Ltd,Tiong Woon Corporation Holding Ltd,tiong-woon-corporation-holding-ltd,SG1CF7000004,955484,SGD,TION
+singapore,Tiong Seng Holdings Ltd,Tiong Seng Holdings Ltd,tiong-seng-holdings-ltd,SG1BH4000005,955485,SGD,TISE
+singapore,Transit Mixed Concrete Ltd,Transit Mixed Concrete Ltd,transit-mixed-concrete-ltd,SG1F41856716,955486,SGD,TMCL
+singapore,Top Global Ltd,Top Global Ltd,top-global-ltd,SG1BI9000008,955487,SGD,TPGB
+singapore,TPV Technology,TPV Technology Ltd,tpv-technology?cid=955488,BMG8984D1074,955488,SGD,TPVH
+singapore,Triyards Holdings Ltd,Triyards Holdings Ltd,triyards-holdings-ltd,SG2F20985956,955489,SGD,TRIY
+singapore,Trek 2000 International Ltd,Trek 2000 International Ltd,trek-2000-international-ltd,SG1I59882965,955490,SGD,TRKL
+singapore,Tshoration,Tsh Corporation Ltd,tsh-corporation-ltd,SGXE89604008,955491,SGD,TSHC
+singapore,Tuan Sing Holdings Ltd,Tuan Sing Holdings Ltd,tuan-sing-holdings-ltd,SG2D13002373,955492,SGD,TSHS
+singapore,Tritech Group Ltd,Tritech Group Ltd,tritech-group-ltd,SG2G71000001,955493,SGD,TTGL
+singapore,T T J Holdings Ltd,T T J Holdings Ltd,t-t-j-holdings-ltd,SG1Z68955660,955494,SGD,TTJH
+singapore,Tye Soon Ltd,Tye Soon Ltd,tye-soon-ltd,SG1BH8000001,955495,SGD,TYES
+singapore,UG Healthcare Corporation Ltd,UG Healthcare Corporation Ltd,ug-healthcare-corporation-ltd,SG1AF1000004,955496,SGD,UGHE
+singapore,United Industrial Corporation Ltd,United Industrial Corporation Ltd,united-industrial-corporation-ltd,SG1K37001643,955497,SGD,UICS
+singapore,UMS Holdings Ltd,UMS Holdings Ltd,ums-holdings-ltd,SG1J94892465,955498,SGD,UMSH
+singapore,Union Steel Holdings Ltd,Union Steel Holdings Ltd,union-steel-holdings-ltd,SG1CC2000006,955499,SGD,UNIS
+singapore,CITIC Envirotech,CITIC Envirotech Ltd,united-envirotech-ltd,SG1DE3000009,955500,SGD,CITI
+singapore,United Overseas Australia,United Overseas Australia Ltd,united-overseas-australia?cid=955501,AU000000UOS4,955501,SGD,UOAL
+singapore,UOB Kay Hian Holdings Ltd,UOB Kay Hian Holdings Ltd,uob-kay-hian-holdings-ltd,SG1J21887414,955502,SGD,UOKH
+singapore,UPP Holdings,UPP Holdings Ltd,upp-holdings-ltd,SG1K55001665,955503,SGD,AVAR
+singapore,United Engineers Ltd,United Engineers Ltd,united-engineers-ltd,SG1K25001639,955504,SGD,UTES
+singapore,Valuemax Group Ltd,Valuemax Group Ltd,valuemax-group-ltd,SG2G29997704,955505,SGD,VAMG
+singapore,Vicom Ltd,Vicom Ltd,vicom-ltd,SG1C06012761,955507,SGD,VCOM
+singapore,Venture Corporation Ltd,Venture Corporation Ltd,venture-corporation-ltd,SG0531000230,955508,SGD,VENM
+singapore,Versalink Holdings Ltd,Versalink Holdings Ltd,versalink-holdings-ltd,SG1AC9000003,955509,SGD,VERS
+singapore,Hatten Land,Hatten Land Ltd,vgo-corporation-ltd,SG2D90976473,955510,SGD,HATT
+singapore,Vallianz,Vallianz Holdings Ltd,vallianz-holdings-ltd,SGXE15078822,955511,SGD,VHLD
+singapore,Vibrant Group Ltd,Vibrant Group Ltd,vibrant-group-ltd,SG1BJ7000008,955512,SGD,VIBR
+singapore,Viking Offshore and Marine Ltd,Viking Offshore and Marine Ltd,viking-offshore-and-marine-ltd,SG1J35888424,955513,SGD,VIKO
+singapore,Valuetronics Holdings Ltd,Valuetronics Holdings Ltd,valuetronics-holdings-ltd,BMG9316Y1084,955515,SGD,VLUE
+singapore,Accrelist,Accrelist Ltd,we-holdings-ltd,SGXE69448095,955516,SGD,ACCR
+singapore,Wee Hur Holdings Ltd,Wee Hur Holdings Ltd,wee-hur-holdings-ltd,SG1W55939399,955518,SGD,WHHL
+singapore,Wilton Resources Corporation Ltd,Wilton Resources Corporation Ltd,wilton-resources-corporation-ltd,SG2G45999965,955519,SGD,WILT
+singapore,Willas Array Electronics Holdings,Willas Array Electronics Holdings Ltd,willas-array-electronics-holdings,BMG9643L1349,955520,SGD,WLAR
+singapore,World Precision Machinery Ltd,World Precision Machinery Ltd,world-precision-machinery-ltd,SG1T29930156,955521,SGD,WPML
+singapore,Wing Tai Holdings Ltd,Wing Tai Holdings Ltd,wing-tai-holdings-ltd,SG1K66001688,955523,SGD,WTHS
+singapore,XMH Holdings Ltd,XMH Holdings Ltd,xmh-holdings-ltd,SG1CF5000006,955525,SGD,XMHL
+singapore,A-Smart,A-Smart Holdings Ltd,xpress-holdings-ltd,SG1CF3000008,955526,SGD,ASMA
+singapore,Yamada Green Resources Ltd,Yamada Green Resources Ltd,yamada-green-resources-ltd,SG1CA8000004,955528,SGD,YAMR
+singapore,YHI International Ltd,YHI International Ltd,yhi-international-ltd,SG1CF1000000,955529,SGD,YHII
+singapore,Yeo Hiap Seng Ltd,Yeo Hiap Seng Ltd,yeo-hiap-seng-ltd,SG1I10878425,955530,SGD,YHSS
+singapore,Ying Li International Real Estate,Ying Li International Real Estate Ltd,ying-li-international-real-estate,SG1O24911883,955531,SGD,YING
+singapore,Yongmao Holdings Ltd,Yongmao Holdings Ltd,yongmao-holdings-ltd,SG1CB9000001,955532,SGD,YNMH
+singapore,Yoma Strategic Holdings Ltd,Yoma Strategic Holdings Ltd,yoma-strategic-holdings-ltd,SG1T74931364,955533,SGD,YOMA
+singapore,Zhongmin Baihui Retail Group Ltd,Zhongmin Baihui Retail Group Ltd,zhongmin-baihui-retail-group-ltd,SG2C76966531,955535,SGD,ZBRG
+singapore,Zhongxin Fruit and Juice Ltd,Zhongxin Fruit and Juice Ltd,zhongxin-fruit-and-juice-ltd,SG1P25916898,955536,SGD,ZHON
+singapore,Ziwo,Ziwo Holdings Ltd,ziwo-holdings-ltd,SG1Y74948866,955537,SGD,BMMO
+singapore,Imperium Crown,Imperium Crown,imperium-crown,SG1S82928544,955688,SGD,IMPE
+singapore,Choo Chiang Holdings Ltd,Choo Chiang Holdings Ltd,choo-chiang-holdings-ltd,SG1BE5000001,958295,SGD,CHOO
+singapore,Yinda Infocomm,Yinda Infocomm Ltd,cmc-infocomm-ltd,SG1BF8000005,958296,SGD,YIND
+singapore,IX Biopharma Ltd,IX Biopharma Ltd,ix-biopharma-ltd,SG1BD9000009,958297,SGD,IXBI
+singapore,NauticAWT Pte Ltd,NauticAWT Pte Ltd,nauticawt-pte-ltd,SG1BE2000004,958298,SGD,NAUT
+singapore,Travelite Holdings Ltd,Travelite Holdings Ltd,travelite-holdings-ltd,SG1BF1000002,958300,SGD,TRHL
+singapore,Soo Kee,Soo Kee Group Ltd,soo-kee-group-ltd,SG1BG2000009,959022,SGD,SKJE
+singapore,TLV Holdings Ltd,TLV Holdings Ltd,tlv-holdings-ltd,SG1BI4000003,959023,SGD,TLVH
+singapore,Acesian Partners Ltd,Acesian Partners Ltd,acesian-partners-ltd,SG1Q66923448,960733,SGD,ACES
+singapore,Fabchem China Ltd,Fabchem China Ltd,fabchem-china-ltd,SG1BH7000002,960734,SGD,FBCH
+singapore,Vibropower Corporation Ltd,Vibropower Corporation Ltd,vibropower-corporation-ltd,SG1CA3000009,960735,SGD,VIBO
+singapore,Hai Leck Holdings Ltd,Hai Leck Holdings Ltd,hai-leck-holdings-ltd,SG1CC4000004,961675,SGD,HLHL
+singapore,JUMBO Group Ltd,JUMBO Group Ltd,jumbo-group-ltd,SG1CA7000005,961676,SGD,JUMB
+singapore,Luxking Group Holdings Ltd,Luxking Group Holdings Ltd,luxking-group-holdings-ltd,BMG570141058,961677,SGD,LUKG
+singapore,PSL Holdings Ltd,PSL Holdings Ltd,psl-holdings-ltd,SG1CC8000000,961678,SGD,PSLL
+singapore,Suntar Eco-City Ltd,Suntar Eco-City Ltd,suntar-eco-city-ltd,SG1CC1000007,961679,SGD,SECL
+singapore,Global Palm Resources Holdings Ltd,Global Palm Resources Holdings Ltd,global-palm-resources-holdings-ltd,SG1CD3000003,961972,SGD,GPRL
+singapore,Trendlines Group Ltd,Trendlines Group Ltd,trendlines-group-ltd,IL0011328858,961973,SGD,THET
+singapore,Eindec,Eindec Corp Ltd,eindec-corp-ltd,SG1CE9000005,962541,SGD,EIND
+singapore,GS Holdings,GS Holdings Ltd,gs-holdings-ltd,SG1CF0000001,962542,SGD,GSHO
+singapore,Anchor Resources,Anchor Resources Ltd,anchor-resources-ltd,SG1CG7000002,969025,SGD,ANCH
+singapore,Asian Pay Television Trust,Asian Pay Television Trust,asian-pay-television-trust,SG2F77993036,969026,SGD,ASIA
+singapore,Delong Holdings,Delong Holdings Ltd,delong-holdings-ltd,SG1CF9000002,969027,SGD,DELO
+singapore,Secura,Secura Group Ltd,secura-group-ltd,SG1CF2000009,969028,SGD,SECU
+singapore,Southern Packaging,Southern Packaging Group Ltd,southern-packaging-group-ltd,SG1CG0000009,976094,SGD,SOUT
+singapore,ACROMEC,ACROMEC Ltd,acromec-ltd,SG1CH1000006,976478,SGD,ACRO
+singapore,Vashion,Vashion Group Ltd,vashion-group-ltd,SG1DI5000008,978755,SGD,VSHN
+singapore,Full Apex,Full Apex Holdings Ltd,full-apex-holdings,BMG3687W1148,980208,SGD,FULL
+singapore,Manulife US RE,Manulife US Real Estate Investment Trust,manulife-us-real-estate-investment,SG1CI1000004,980209,USD,MANU
+singapore,China Star Food,China Star Food Group Ltd,china-star-food-group-ltd,SG1CE1000003,985142,SGD,CHIA
+singapore,Frasers Logistics,Frasers Logistics and Industrial Trust,frasers-logistics-and-industrial-tr,SG1CI9000006,985814,SGD,FRAE
+singapore,Top Glove Corp,Top Glove Corporation Bhd,top-glove-corporation-bhd?cid=985815,MYL7113OO003,985815,SGD,TOPG
+singapore,Advancer Global,Advancer Global Ltd,advancer-global-ltd,SG1CJ7000006,985898,SGD,ADVN
+singapore,United Global,United Global Ltd,united-global-ltd,SG1CJ6000007,985899,SGD,UNIT
+singapore,Katrina Group,Katrina Group Ltd,katrina-group-ltd,SG1DA5000005,985997,SGD,KATR
+singapore,Procurri Corporation,Procurri Corporation Ltd,procurri-corporation-ltd,SG1DA4000006,985998,SGD,PROC
+singapore,China Jinjiang Environment,China Jinjiang Environment Holding Co Ltd,china-jinjiang-environment-holding,KYG2119H1092,986104,SGD,CJEH
+singapore,EC World REIT,EC World REIT,ec-world-reit,SG1DA7000003,986105,SGD,ECWO
+singapore,Wong Fong Industries,Wong Fong Industries Ltd,wong-fong-industries-ltd,SG1DA6000004,986106,SGD,WONG
+singapore,AGV Group,AGV Group Ltd,agv-group-ltd,SG1DB3000005,986629,SGD,AGVG
+singapore,AIMS AMP Capital,AIMS AMP Capital Industrial REIT,aims-amp-capital-industrial-reit,SG2D63974620,989619,SGD,AIMA
+singapore,Lippo Malls Indonesia,Lippo Malls Indonesia Retail Trust,lippo-malls-indonesia-retail-trust,SG1W27938677,989620,SGD,LMRT
+singapore,Annaik,Annaik Ltd,annaik-ltd,SG1O45913009,991245,SGD,AAIK
+singapore,ABR,ABR Holdings Ltd,abr-holdings-ltd,SG0533000253,991246,SGD,ABRH
+singapore,Accordia Golf Trust,Accordia Golf Trust,accordia-golf-trust,SG1AB5000009,991247,SGD,ACCO
+singapore,Ace Achieve Infocom,Ace Achieve Infocom Ltd,ace-achieve-infocom-ltd,BMG007FR1026,991248,SGD,ACEA
+singapore,Ascendas India Trust,Ascendas India Trust,ascendas-india-trust,SG1V35936920,991249,SGD,AINT
+singapore,Alibaba Pictures,Alibaba Pictures Group Ltd,alibaba-pictures-group-ltd?cid=991250,BMG0171W1055,991250,HKD,ALIB
+singapore,Ascott Residence Trust,Ascott Residence Trust,ascott-residence-trust,SG1T08929278,991251,SGD,ASRT
+singapore,Atlantic Navigation Singapore,Atlantic Navigation Holdings (Singapore) Ltd,atlantic-navigation-holdings-singap,SG2F00983534,991252,SGD,ATLA
+singapore,Avjennings,Avjennings Ltd,avjennings?cid=991253,AU000000AVJ0,991253,AUD,AVJH
+singapore,Axcelasia,Axcelasia Inc,axcelasia-inc,MYA012218006,991254,SGD,AXCE
+singapore,BHG Retail REIT,BHG Retail REIT,bhg-retail-reit,SG1CD7000009,991255,SGD,BHGR
+singapore,Boardroom,Boardroom Ltd,boardroom-ltd,SG1J08885589,991256,SGD,BRRM
+singapore,CDL Hospitality Trusts,CDL Hospitality Trusts,cdl-hospitality-trusts,SG1T66931158,991257,SGD,CDLT
+singapore,Emerging Towns Cities Singapore,Emerging Towns & Cities Singapore Ltd,cedar-strategic-holdings-ltd,SG1DD5000009,991258,SGD,EMER
+singapore,Challenger Tech,Challenger Technologies Ltd,challenger-technologies-ltd,SG1O97915910,991259,SGD,CHAL
+singapore,Oneapex,Oneapex Ltd,chews-group-ltd,SG2C90967473,991260,SGD,ONEA
+singapore,China Great Land,China Great Land Holdings Ltd,china-great-land-holdings-ltd,SG1Q76923560,991261,SGD,CHIG
+singapore,ESR-REIT,ESR-REIT,cambridge-industrial-trust,SG1T70931228,991262,SGD,ESRR
+singapore,CapitaLand Retail China Trust,CapitaLand Retail China Trust,capitaland-retail-china-trust,SG1U25933169,991264,SGD,CRCT
+singapore,Dynamic Colours,Dynamic Colours Ltd,dynamic-colours-ltd,SG1W32938860,991266,SGD,DYCL
+singapore,Frasers Centrepoint Trust,Frasers Centrepoint Trust,frasers-centrepoint-trust,SG1T60930966,991267,SGD,FCRT
+singapore,Fortune REIT,Fortune Real Estate Investment Trust,fortune-real-estate-investment-trus,SG1O33912138,991268,HKD,FORT
+singapore,Frasers Commercial Trust,Frasers Commercial Trust,frasers-commercial-trust,SG2C81967185,991269,SGD,FRCR
+singapore,First REIT,First Real Estate Investment Trust,first-real-estate-investment-trust,SG1U27933225,991270,SGD,FRET
+singapore,First Ship Lease Trust,First Ship Lease Trust,first-ship-lease-trust,SG1U66934613,991271,SGD,FSLT
+singapore,Amos,Amos Group Ltd,gaylin-holdings,SG2F28986253,991272,SGD,AMOS
+singapore,GDS Global,GDS Global Ltd,gds-global-ltd,SG2F65991521,991273,SGD,GDSG
+singapore,Heeton,Heeton Holdings Ltd,heeton-holdings-ltd?cid=991274,SG1O44912994,991274,SGD,HEET
+singapore,Hengyang Petrochemical,Hengyang Petrochemical Logistics Ltd,hengyang-petrochemical-logistics-lt?cid=991275,SG1Y78948920,991275,SGD,HNYG
+singapore,Heatec Jietong,Heatec Jietong Holdings Ltd,heatec-jietong-holdings-ltd,SG1Y31945526,991276,SGD,HTJT
+singapore,IREIT Global,IREIT Global,ireit-global,SG1AB8000006,991277,SGD,IREI
+singapore,Jadason Enterprises,Jadason Enterprises Ltd,jadason-enterprises-ltd,SG1I79884330,991278,SGD,JADA
+singapore,Keppel REIT,Keppel REIT,keppel-reit-si,SG1T22929874,991279,SGD,KASA
+singapore,Keppel DC REIT,Keppel DC REIT,keppel-dc-reit,SG1AF6000009,991280,SGD,KEPE
+singapore,Mapletree Commercial Trust,Mapletree Commercial Trust,mapletree-commercial-trust,SG2D18969584,991282,SGD,MACT
+singapore,Mapletree Industrial Trust,Mapletree Industrial Trust,mapletree-industrial-trust,SG2C32962814,991283,SGD,MAPI
+singapore,Mapletree Logistics Trust,Mapletree Logistics Trust,mapletree-logistics-trust,SG1S03926213,991284,SGD,MAPL
+singapore,M Development,M Development Ltd,m-development-ltd,SG1M54904800,991285,SGD,MDVT
+singapore,Malaysia Smelting,Malaysia Smelting Corporation Bhd,malaysia-smelting-corp?cid=991286,MYL5916OO001,991286,SGD,MYSC
+singapore,Nico Steel,Nico Steel Holdings Ltd,nico-steel-holdings-ltd,SG1R29924672,991287,SGD,NICO
+singapore,Ocean Sky Intl,Ocean Sky International Ltd,ocean-sky-international?cid=991288,SG1DD2000002,991288,SGD,OCEA
+singapore,Plato Capital,Plato Capital Ltd,plato-capital-ltd,SG1Y93950240,991289,SGD,PLAT
+singapore,Pollux Properties,Pollux Properties Ltd,pollux-properties-ltd,SG1I77884290,991290,SGD,PLPS
+singapore,Parkway Life REIT,Parkway Life Real Estate Investment Trust,parkway-life-real-estate-investment,SG1V52937132,991291,SGD,PWLR
+singapore,RHT Health Trust,RHT Health Trust,rht-health-trust,SG2F26986156,991292,SGD,RHTH
+singapore,Sabana Shariah Industrial REIT,Sabana Shariah Compliant Industrial Real Estate Investment Trust,sabana-shariah-compliant-industrial,SG2C57965205,991293,SGD,SABA
+singapore,Shangri-La Asia,Shangri-La Asia Ltd,shangri-la-asi?cid=991294,BMG8063F1068,991294,HKD,SHNG
+singapore,Sitra (International),Sitra Holdings (International) Ltd,sitra-holdings-(international)-ltd,SG1V70937494,991295,SGD,SITR
+singapore,Singapore Index Fund,Singapore Index Fund,singapore-index-fund,SG1D68018564,991296,SGD,SRIF
+singapore,SingTel,Singapore Telecommunications Ltd,singapore-telecommunications?cid=991297,SG1T75931496,991297,SGD,STELy
+singapore,Starhill Global REIT,Starhill Global Real Estate Investment Trust,starhill-global-real-estate-investm,SG1S18926810,991298,SGD,STHL
+singapore,Suntec REIT,Suntec Real Estate Investment Trust,suntec-real-estate-investment-trust,SG1Q52922370,991299,SGD,SUNT
+singapore,Swee Hong,Swee Hong Ltd,swee-hong-ltd,SG2E77981776,991300,SGD,SWEE
+singapore,TA Corp,TA Corporation Ltd,ta-corporation-ltd,SG2D87975520,991302,SGD,TACO
+singapore,Transcorp,Transcorp Holdings Ltd,transcorp-holdings-ltd,SG1J09885596,991303,SGD,TCHL
+singapore,Teckwah Industrialoration,Teckwah Industrial Corporation Ltd,teckwah-industrial-corporation-ltd,SG0561000464,991304,SGD,TECK
+singapore,TMC Education,TMC Education Corporation Ltd,tmc-education-corporation-ltd,SG1H06873795,991305,SGD,GLOL
+singapore,United Overseas Insurance,United Overseas Insurance Ltd,united-overseas-insurance-ltd,SG1M91002014,991306,SGD,UOIS
+singapore,Vicplas International,Vicplas International Ltd,vicplas-international-ltd,SG1G57870584,991307,SGD,VICP
+singapore,HC Surgical Specialists,HC Surgical Specialists Ltd,hc-surgical-specialists-ltd,SG1DC2000004,992979,SGD,HCSU
+singapore,SPH REIT,SPH REIT,sph-reit,SG2G02994595,994823,SGD,SPHR
+singapore,Samurai 2K Aerosol,Samurai 2K Aerosol Ltd,samurai-2k-aerosol-ltd,SG1DE0000002,995104,SGD,SAMR
+singapore,Dasin Retail,Dasin Retail Trust,dasin-retail-trust,SG1DE2000000,995712,SGD,DASI
+singapore,Kimly,Kimly Ltd,kimly-ltd,SG1DF1000008,998059,SGD,KIML
+singapore,Ascendas Hospitality,Ascendas Hospitality Trust,ascendas-hospitality-trust,SG2F05983695,999072,SGD,ASHP
+singapore,Cache Logistics,Cache Logistics Trust,cache-logistics-trust,SG1Z70955880,999073,SGD,CALT
+singapore,Mapletree North Asia,Mapletree North Asia Commercial Trust,mapletree-greater-china-commercial,SG2F55990442,999074,SGD,MAPE
+singapore,OUE Commercial,OUE Commercial REIT,oue-commercial-reit,SG2G60000004,999075,SGD,OUEC
+singapore,Pavillon Holdings,Pavillon Holdings Ltd,pavillon-holdings-ltd,SG1I46882631,999076,SGD,PAVI
+singapore,Soilbuild Business Space,Soilbuild Business Space REIT,soilbuild-business-space-reit,SG2G07995670,999077,SGD,SBSR
+singapore,Unusual,Unusual Ltd,unusual-ltd,SG1DF5000004,1008661,SGD,UNUS
+singapore,Aoxin Q & M Dental,Aoxin Q & M Dental Group Ltd,aoxin-q---m-dental-group-ltd,SG1DF9000000,1008989,SGD,AOXI
+singapore,Sanli Environmental,Sanli Environmental Ltd,sanli-environmental-ltd,SG1DG8000009,1011860,SGD,SANL
+singapore,HRnetGroup,HRnetGroup Ltd,hrnetgroup,SG1DH2000003,1031113,SGD,HRNE
+singapore,shopper360,shopper360 Ltd,shopper360,SG1DH4000001,1031114,SGD,SHOP
+singapore,World Class Global,World Class Global Ltd,world-class-global,SG1DH0000005,1031115,SGD,WORL
+singapore,Y Ventures,Y Ventures Group Ltd,y-ventures,SG1DH7000008,1031116,SGD,YVEN
+singapore,Aspen,Aspen Group Holdings Ltd,aspen,SG1DI2000001,1031247,SGD,ASPE
+singapore,Union Gas,Union Gas Holdings Ltd,union-gas,SG1DI1000002,1031287,SGD,UNIO
+singapore,APAC Realty,APAC Realty Ltd,apac-realty,SG1DJ0000001,1052694,SGD,APAC
+singapore,NetLink,NetLink NBN Trust,netlink,SG1DH9000006,1054657,SGD,NETL
+singapore,Cromwell European RE,Cromwell European Real Estate Investment Trust,cromwell-european-re,SG1EA8000000,1055964,EUR,CROM
+singapore,MindChamps PreSchool,MindChamps PreSchool Ltd,mindchamps-preschool,SG1EA6000002,1055965,SGD,MIND
+singapore,No Signboard,No Signboard Holdings Ltd,no-signboard,SG1EA9000009,1055966,SGD,NOSI
+singapore,RE&S,RE&S Holdings Ltd,re-s,SG1EA3000005,1055967,SGD,RESH
+singapore,Clearbridge Health,Clearbridge Health Ltd,clearbridge-health,SG1EB6000000,1057286,SGD,CLEA
+singapore,LY Corp,LY Corporation Ltd,ly-corporation-ltd,SG1EC1000003,1062245,SGD,LYCO
+singapore,Sasseur REIT Unit,Sasseur Real Estate Investment Trust,sasseur-reit-unit,SG1ED2000000,1073140,SGD,SASS
+singapore,Keppel Pacific Oak,Keppel Pacific Oak US REIT,keppel-kbs-us-reit,SG1EA1000007,1073141,SGD,KPEL
+singapore,Hyphens Pharma,Hyphens Pharma International Ltd,hyphens-pharma,SG1EE4000006,1089252,SGD,HYPH
+singapore,Asian Healthcare Specialists,Asian Healthcare Specialists Ltd,asian-healthcare-specialists,SG1ED9000003,1089253,SGD,ASAI
+singapore,SLB Develop,SLB Development Ltd,slb-develop,SG1ED7000005,1089254,SGD,SLBD
+singapore,Ayondo,Ayondo Ltd,ayondo,SG1ED1000001,1089649,SGD,AYON
+singapore,DLF Holdings,DLF Holdings Ltd,dlf-holdings,SGXE73993458,1095120,SGD,DLFH
+singapore,Koufu,Koufu Group Ltd,koufu,SGXE10224322,1095121,SGD,KOUF
+singapore,PropNex,PropNex Ltd,propnex,SGXE65086469,1095122,SGD,PROP
+singapore,Medinex,Medinex Ltd,medinex,SGXE82839874,1115819,SGD,MEDN
+singapore,Biolidics,Biolidics Ltd,biolidics,SGXE89830751,1117816,SGD,BIOL
+singapore,Citicode,Citicode Ltd,advance-sct,SG1Q38922098,1120704,SGD,CITC
+singapore,Cortina,Cortina Holdings Ltd,cortina,SG1M59904946,1120705,SGD,CORT
+singapore,EpiCentre,EpiCentre Holdings Ltd,epicentre,SG1W52939285,1120706,SGD,EPHL
+singapore,Grand Venture,Grand Venture Technology Ltd,grand-venture,SGXE82751350,1120707,SGD,GRAN
+singapore,Lung Kee Bermuda,Lung Kee Bermuda Holdings Ltd,lung-kee-bermuda-holdings-ltd?cid=1120708,BMG5697D1011,1120708,SGD,LKBH
+singapore,Noel Gifts,Noel Gifts International Ltd,noel-gifts,SG0543000335,1120709,SGD,NOEL
+singapore,Prudential,Prudential PLC,prudential?cid=1120710,GB0007099541,1120710,USD,PRTL
+singapore,Synagie,Synagie Corporation Ltd,synagie,SGXE31442804,1120711,SGD,SYNA
+singapore,Vividthree,Vividthree Holdings Ltd,vividthree,SGXE74791307,1120712,SGD,VIVI
+singapore,Asian Micro,Asian Micro Holdings Ltd,asian-micro,SG1H05873721,1122527,SGD,AMHL
+singapore,Boldtek,Boldtek Holdings Ltd,boldtek,SG2F47989262,1122528,SGD,BOLD
+singapore,Koon,Koon Holdings Ltd,koon,SG1O23911876,1122529,SGD,KOON
+singapore,Singapore Kitchen,Singapore Kitchen Equipment Ltd,singapore-kitchen,SG2F97994568,1122530,SGD,SING
+singapore,Sim Leisure,Sim Leisure Group Ltd,sim-leisure,SGXE75616446,1123348,SGD,SIMI
+singapore,Fortress Minerals,Fortress Minerals Ltd,fortress-minerals-ltd,SGXE46200569,1123814,SGD,FORR
+singapore,Jawala,Jawala Inc,jawala-inc,MYA013922002,1123815,SGD,JAWA
+singapore,MeGroup,MeGroup Ltd,megroup-ltd,SGXE43386122,1123816,SGD,MEGR
+singapore,Reclaims Global,Reclaims Global Ltd,reclaims-global-ltd,SGXE46584095,1123817,SGD,RECL
+singapore,ARA US Hospitality,ARA US Hospitality,ara-us-hospitality,SGXC80011726,1130940,SGD,ARAU
+singapore,Eagle Hospitality Trust,Eagle Hospitality Trust,eagle-hospitality-trust,SGXC28500103,1131248,USD,EAGL
+singapore,Alliance Healthcare Group,Alliance Healthcare Group Ltd,alliance-healthcare-group-ltd,SGXE65282837,1131575,SGD,ALLA
+singapore,TrickleStar,TrickleStar Ltd,tricklestar-ltd,SGXE45760753,1137429,SGD,TRIC
+singapore,ST Group Food Industries,ST Group Food Industries Holdings Ltd,st-group-food-industries-ltd,SGXE58705265,1138470,SGD,STGR
+singapore,Prime US REIT,Prime US REIT,kbs-us-prime-reit,SGXC75818630,1141606,USD,PRIE
+singapore,Lendlease,Lendlease Global Commercial Reit,lendlease-global-commercial-reit,SGXC61949712,1153025,SGD,LEND
+kuwait,Al-Ahli Bank Of Kuwait,Al-Ahli Bank Of Kuwait,al-ahli-bank,KW0EQ0100044,11103,KWD,ABKK
+kuwait,Ahli United Bank KSC,Ahli United Bank KSC,ahli-united-bank-bh,KW0EQ0100051,11104,KWD,BKME
+kuwait,Boubyan Bank K.S.C,Boubyan Bank K.S.C,boubyan-bank,KW0EQ0102065,11105,KWD,BOUK
+kuwait,Burgan Bank,Burgan Bank,burgan-bank,KW0EQ0100077,11106,KWD,BURG
+kuwait,Commercial Bank Of Kuwait,Commercial Bank Of Kuwait,commercial-bank,KW0EQ0100036,11107,KWD,CBKK
+kuwait,Gulf Bank Of Kuwait,Gulf Bank Of Kuwait,gulf-bank,KW0EQ0100028,11108,KWD,GBKK
+kuwait,Kuwait Finance,Kuwait Finance House KSCP,kwt-fin-house,KW0EQ0100085,11109,KWD,KFH
+kuwait,Kuwait Int Bank,Kuwait International Bank,kuwait-int-bank,KW0EQ0100069,11110,KWD,KIBK
+kuwait,National Bank Of Kuwait Sak,National Bank Of Kuwait Sak,national-bank-kt,KW0EQ0100010,11111,KWD,NBKK
+kuwait,Burgan Well Drilling,Burgan Well Drilling Trading & Maintenance,burgan-drilling,KW0EQ0601959,11112,KWD,ABAR
+kuwait,Arabi Holding Group,Arabi Holding Group Co KSCC,arabi-holding,KW0EQ0601124,11114,KWD,AGHC
+kuwait,Agility Public Warehousing,Agility Public Warehousing Company,agility-public-warehousing,KW0EQ0601041,11115,KWD,AGLT
+kuwait,Aviation Lease&Finance,Aviation Lease And Finance Co. KSCC,aviation-ls--fin,KW0EQ0602221,11116,KWD,ALAF
+kuwait,The Energy House,The Energy House Co,aref-energy-hldg,KW0EQ0601801,11118,KWD,ENER
+kuwait,Automated Systems,Automated Systems Co KSCC,automated-sys-co,KW0EQ0601165,11119,KWD,ASCK
+kuwait,Advanced Technology,Advanced Technology Company KSCC,adv-technology,KW0EQ0602387,11120,KWD,ATCK
+kuwait,Combined Group,Combined Group Contracting Co SAKC,combined-group,KW0EQ0602015,11121,KWD,CGCK
+kuwait,National Cleaning,National Cleaning Co SAK,nat-cleaning,KW0EQ0601108,11122,KWD,CLEA
+kuwait,Educational Holding,Educational Holding Group Ksc,edu-hlding-group,KW0EQ0601082,11123,KWD,EDUK
+kuwait,Gulf Franchising,Gulf Franchising Holding Co. KSCC,glf-franchising,KW0EQ0601843,11126,KWD,GFCI
+kuwait,Gulf Petroleum,Gulf Petroleum Investment,gulf-petrol-inv,KW0EQ0601827,11127,KWD,GPIK
+kuwait,Hayat Communications,Hayat Communications Co. KSCC,hayat-comms,KW0EQ0602312,11128,KWD,HAYK
+kuwait,AAN Digital Services,AAN Digital Services Co KSCP,hits-telecom-hld,KW0EQ0601405,11129,KWD,AAN
+kuwait,Human Soft Holding,Human Soft Holding Co. KSCC,human-soft-hldng,KW0EQ0601694,11130,KWD,HUMN
+kuwait,Ifa Hotels & Resorts,Ifa Hotels & Resorts Co. KSCC,ifa-htls-resorts,KW0EQ0602007,11131,KWD,IFAH
+kuwait,Independent Petroleum,Independent Petroleum Group,indepen.-petrol,KW0EQ0601090,11132,KWD,IPGK
+kuwait,Jazeera Airways,Jazeera Airways Co. K.S.C.,jazeera-airways,KW0EQ0602452,11133,KWD,JAZK
+kuwait,Kuwait National Cinema,Kuwait National Cinema,kwt-nat-cinema,KW0EQ0601025,11135,KWD,KCIN
+kuwait,Kuwait For Process Plant,Kuwait Co. For Process Plant Cons.,kw-co-proc-plant,KW0EQ0601314,11136,KWD,KCPC
+kuwait,Kuwait&Gulf Link Transport,Kuwait & Gulf Link Transport Co.,kt-and-gulf-link,KW0EQ0601140,11137,KWD,KGLK
+kuwait,Kuwait Hotels,Kuwait Hotels Company,kwt-hotels-co,KW0EQ0601033,11138,KWD,KHOT
+kuwait,Privatization Holding,Privatization Holding Co.,privatization,KW0EQ0601702,11140,KWD,KPPC
+kuwait,Kuwait Cable Vision Sak,Kuwait Cable Vision Sak,kwt-cable-vision,KW0EQ0601157,11142,KWD,KWTV
+kuwait,KGL Logistics,KGL Logistics Company KSCC,kgl-logistics-co,KW0EQ0602726,11143,KWD,LOGK
+kuwait,AWJ,AWJ Holding Company KSCP,mashaer-holding,KW0EQ0602247,11144,KWD,MASH
+kuwait,National Ranges,National Ranges Co KPSC,natl-ranges-co,KW0EQ0601884,11145,KWD,SHOT
+kuwait,Mubarrad Transport,Mubarrad Transport Co. KSCC,mubarrad-trans,KW0EQ0602338,11146,KWD,MBRD
+kuwait,Mushrif Trading,Mushrif Trading & Contracting Co.,mushrif-trd-cont,KW0EQ0602080,11148,KWD,MTCC
+kuwait,Kuwait Resorts,Kuwait Resorts Company KSCC,kwt-resorts,KW0EQ0602353,11149,KWD,MUNK
+kuwait,National Petroleum Svcs,National Petroleum Services Co KSCC,national-petroleum-svcs,KW0EQ0601272,11151,KWD,NAPS
+kuwait,National Mobile Telecom,National Mobile Telecommunications,nat-mobile-tele,KW0EQ0601132,11153,KWD,OORE
+kuwait,Oula Fuel Marketing,Oula Fuel Marketing Company K.S.C,oula-fuel,KW0EQ0602262,11155,KWD,OULA
+kuwait,Palms Agro Production,Palms Agro Production Co. KSCC,palms-agro-prod,KW0EQ0605026,11156,KWD,PAPK
+kuwait,Osos Holding Group,Osos Holding Group Co KSC,al-safat-tec-hld,KW0EQ0602056,11157,KWD,OSOS
+kuwait,Sultan Center,Sultan Center Food Products Company,sultan-cntr-food,KW0EQ0601116,11160,KWD,SCFK
+kuwait,Al Safat Energy,Al Safat Energy Holding Co. KSCC,al-safat-energy,KW0EQ0601074,11161,KWD,SENE
+kuwait,Soor Fuel Marketing,Soor Fuel Marketing Co. K.S.C,soor-fuel-mkt,KW0EQ0602569,11163,KWD,SOOR
+kuwait,Credit Rating &Collection,Credit Rating & Collection KSCC,credit-rating,KW0EQ0601850,11164,KWD,TAHS
+kuwait,United Projects Group,United Projects Group KSCC,united-proj-co,KW0EQ0602148,11166,KWD,UPAC
+kuwait,Yiaco Medical Co.,Yiaco Medical Co. KSCC,yiaco-medical-co,KW0EQ0602411,11168,KWD,YIAC
+kuwait,Mobile Telecom,Mobile Telecommunications Company,mobile-telecom,KW0EQ0601058,11169,KWD,ZAIN
+kuwait,Ahli United Bank,Ahli United Bank BSC,ahli-united-bank?cid=11171,BH0005508765,11171,KWD,AUBK
+kuwait,Egyptian Kuwaiti Hld,Egypt Kuwait Holding Co Sae,egypt-kuwait-h?cid=11174,EGS69082C013,11174,KWD,EKHK
+kuwait,Fujairah Cement Industries,Fujairah Cement Industries Co PSC,fujairah-cement,AEF000301018,11175,KWD,FCEM
+kuwait,Gulf Cement Co,Gulf Cement Co PSC,gulf-cement-co?cid=11176,AEG000101010,11176,KWD,GCEM
+kuwait,Gulf Finance Group,Gulf Finance Group BSC,gulf-fin-house?cid=11177,BH000A0CAQK6,11177,KWD,GFHK
+kuwait,INOVEST BSC,Inovest (B.S.C),inovest-bsc?cid=11178,BH000A0F5KT6,11178,KWD,INOV
+kuwait,Ithmaar,Ithmaar Bank B.S.C,ithmaar-bank?cid=11179,BH000A0J2499,11179,KWD,ITHMR
+kuwait,Al Qaiwain Cement,Umm Al Qaiwain Cement Industries Co PSC,al-qaiwain-cmn?cid=11180,AEU000701018,11180,KWD,QIC
+kuwait,Rak Cmt & Cons,Ras Al Khaimah for White Cement and Construction Materials Co PSC,rak-cmt---cons?cid=11181,AER000101017,11181,KWD,RKWC
+kuwait,Sharjah Cement AD,Sharjah Cement and Industrial Development Co PSC,sharjah-cement-ad?cid=11182,AES000401019,11182,KWD,SCEM
+kuwait,Livestock Transport&Trading,Livestock Transport & Trading Co.,livestock-t.t-co,KW0EQ0701213,11184,KWD,CATT
+kuwait,Danah Alsafat Foodstuff,Danah Alsafat Foodstuff Company,danah-alsafat,KW0EQ0701221,11185,KWD,DANK
+kuwait,Acico Industries,Acico Industries Co.[KSCC],acico-industries,KW0EQ0500953,11191,KWD,ACIC
+kuwait,Alkout Industrial,Alkout Industrial Projects Co. KSCC,alkout-ind-proj,KW0EQ0501001,11192,KWD,ALKK
+kuwait,Qurain Petrochemical,Qurain Petrochemical Industries Co.,qurain-petro-ind,KW0EQ0502348,11193,KWD,ALQK
+kuwait,Boubyan Petrochemical,Boubyan Petrochemical Co KSC,boubyan-petroch.,KW0EQ0500979,11194,KWD,BPCC
+kuwait,Gulf Cable&Electrical,Gulf Cable & Electrical Industries,gulf-cable-ind,KW0EQ0500862,11195,KWD,CABL
+kuwait,Equipment Holding,Equipment Holding Co. KSCC,equipment-hlding,KW0EQ0501357,11196,KWD,EQUI
+kuwait,Hilal Cement,Hilal Cement Co KSCP,hilal-cement-co,KW0EQ0500995,11199,KWD,HCCK
+kuwait,Kuwait Cement,Kuwait Cement Company,kwt-cement-co,KW0EQ0500839,11202,KWD,KCEM
+kuwait,Kuwait Foundry,Kuwait Foundry Co SAK,kuwait-foundry,KW0EQ0500946,11203,KWD,KFDC
+kuwait,Metal & Recycling,Metal & Recycling Co.,metal--recycling,KW0EQ0500938,11207,KWD,MRCK
+kuwait,National Industries Co,National Industries Company,natl-ind-co,KW0EQ0501266,11209,KWD,NIBM
+kuwait,National Industries,National Industries Group Holding SAK,nat-ind-group,KW0EQ0500813,11210,KWD,NIND
+kuwait,Shuaiba Industrial,Shuaiba Industrial Co KSC,shuaiba-ind-co,KW0EQ0500920,11211,KWD,PAPE
+kuwait,Portland Cement,Portland Cement Company,portland-cement,KW0EQ0500912,11212,KWD,PCEM
+kuwait,Salbookh Trading,Salbookh Trading Co. KSCC,salbookh-trading,KW0EQ0502439,11216,KWD,SALB
+kuwait,Heavy Engineering&Ship,Heavy Engineering&Ship Building Co.,heavy-eng---ship,KW0EQ0500888,11217,KWD,SHIP
+kuwait,Al-Ahleia Insurance,Al-Ahleia Insurance Company,ahleia-ins-co,KW0EQ0300438,11219,KWD,AINS
+kuwait,First Takaful Insurance,First Takaful Insurance Co. KCSC,first-takaful,KW0EQ0301386,11220,KWD,FTIK
+kuwait,Gulf Insurance,Gulf Insurance Company,gulf-ins-co,KW0EQ0300420,11221,KWD,GINS
+kuwait,Kuwait Insurance,Kuwait Insurance Company,kuwait-ins-co,KW0EQ0300412,11222,KWD,KINS
+kuwait,Kuwait Reinsurance,Kuwait Reinsurance Company KSCC,kwt-reinsurance,KW0EQ0300453,11223,KWD,KWRE
+kuwait,Wethaq Takaful,Wethaq Takaful Insurance Co. KCSC,wethaq-takaful,KW0EQ0301626,11224,KWD,WETH
+kuwait,Warba Insurance,Warba Insurance Company,warba-ins-co,KW0EQ0300446,11225,KWD,WINS
+kuwait,Aayan Leasing,Aayan Leasing & Investment Co. KSCC,aayan-leasing,KW0EQ0200786,11226,KWD,AAYA
+kuwait,Al Aman Investment,Al Aman Investment Co KSCC,al-aman-inv-co,KW0EQ0200208,11229,KWD,AMAN
+kuwait,Amwal Int Investment,Amwal International Investment Co.,amwal-int-inv,KW0EQ0202758,11230,KWD,AMWA
+kuwait,Bayan Investment,Bayan Investment Co. KSCC,bayan-invest-co,KW0EQ0200802,11231,KWD,BAYK
+kuwait,Coast Investment,Coast Investment & Development Co.,coast-inv---dev,KW0EQ0201453,11232,KWD,COAS
+kuwait,Al Deera Holding,Al Deera Holding Co KSCC,al-deera-hldg-co,KW0EQ0201891,11234,KWD,DEER
+kuwait,Ekttitab Holding,Ekttitab Holding Co. KSCC,ekttitab-hldg-co,KW0EQ0201974,11235,KWD,EKTT
+kuwait,Kuwait Bahrain Int Exchange,Kuwait Bahrain Int Exchange Co,kw-bah-intl-exch,KW0EQ0202162,11236,KWD,EXCH
+kuwait,Commercial Facilities,Commercial Facilities Company,com.-facilities,KW0EQ0200240,11237,KWD,FACI
+kuwait,Gulf Investment House,Gulf Investment House KSC,gulf-inv-house,KW0EQ0200760,11238,KWD,GIHK
+kuwait,Gulf North Africa,Gulf North Africa Holding Co. KSCC,gulf-nor-afr-hld,KW0EQ0202741,11240,KWD,GNAH
+kuwait,Int Financial Advisors,International Financial Advisors,int-fin-advisors,KW0EQ0200265,11242,KWD,IFIN
+kuwait,Arzan Financial,Arzan Financial Group For Financing & Investment KSE,intl-finance-co,KW0EQ0200331,11246,KWD,ARZA
+kuwait,UniCap Investment,UniCap Investment and Finance,housing-fin-co,KW0EQ0201792,11247,KWD,UNIC
+kuwait,Kipco Asset Management,Kipco Asset Management Co. KSCC,kipco-asset-mgmt,KW0EQ0201289,11248,KWD,KAMC
+kuwait,Asiya Capital Inv,Asiya Capital Investments Co KSC,kuwait-china-inv,KW0EQ0202709,11249,KWD,ASIYA
+kuwait,Kuwait Finance&Inv,Kuwait Finance & Investment Co. Ksc,kwt-fin---inv,KW0EQ0201198,11250,KWD,KFSK
+kuwait,Kuwait Investment,Kuwait Investment Company,kwt-invest-co,KW0EQ0200216,11251,KWD,KINV
+kuwait,Kuwait&Middle East Fin. Inv.,Kuwait & Middle East Fin. Inv. Co.,kuwait-middle-east-fin.-inv.,KW0EQ0200372,11252,KWD,KMEF
+kuwait,Kuwait Projects,Kuwait Projects Company KSCC,kwt-projects-co,KW0EQ0200653,11253,KWD,KPRO
+kuwait,Kuwait Syrian,Kuwait Syrian Holding Co KSC,kwt-syrian-hldg,KW0EQ0202527,11254,KWD,KSHC
+kuwait,Al Madina Finance,Al Madina For Finance & Investment,almadina-fin-inv,KW0EQ0202030,11256,KWD,MADI
+kuwait,Al-Madar Finance,Al-Madar Finance & Investment Co.,al-madar-fin-inv,KW0EQ0201834,11257,KWD,MADR
+kuwait,Al Mal Investment,Al Mal Investment Co KSCC,al-mal-inv-co,KW0EQ0200752,11258,KWD,MALK
+kuwait,Kuwait Financial Centre,Kuwait Financial Centre SAKC,kuwait-financial-centre,KW0EQ0200356,11260,KWD,MARKZ
+kuwait,National Int Co Hld,National International Co. Holding,nat-intl-holding,KW0EQ0201677,11262,KWD,NIHK
+kuwait,National Investments Co,National Investments Company,national-inv-co,KW0EQ0200281,11263,KWD,NINV
+kuwait,Noor Financial Inv,Noor Financial Investment KSCC,noor-fin-inv,KW0EQ0202048,11264,KWD,NOOR
+kuwait,First Investment,First Investment Co KSCC,first-investment,KW0EQ0203012,11265,KWD,OLAK
+kuwait,Osoul Investment,Osoul Investment Co. KSCC,osoul-invst-co,KW0EQ0200877,11266,KWD,OSUL
+kuwait,Al-Salam Group,Al-Salam Group Holding Co KSCC,al-salam-grp-hld,KW0EQ0201941,11269,KWD,SAGH
+kuwait,Securities House,Securities House KSCC,securities-house,KW0EQ0200307,11270,KWD,SECH
+kuwait,Sokouk Holding,Sokouk Holding Co. SAKC,sokouk-hlding,KW0EQ0201982,11272,KWD,SHCK
+kuwait,Al-Tamdeen Investment,Al-Tamdeen Investment Co. KSCC,al-tamdeen-inv,KW0EQ0202139,11274,KWD,TAMI
+kuwait,Abyaar Real Estate,Abyaar Real Estate Development Co.,abyaar-real-est,KW0EQ0402390,11277,KWD,ABYR
+kuwait,Kuwait Real Estate Hld,Kuwait Real Estate Holding Co. KSHC,kwt-r.e.holding,KW0EQ0401756,11279,KWD,ALAQ
+kuwait,Al Mudon Int RE,Al Mudon International RE Co. KSCC,al-mudon-intl,KW0EQ0402622,11280,KWD,ALMK
+kuwait,Amar Finance&Leasing,Amar For Finance & Leasing Co. KSCC,amar-finance-leasing,KW0EQ0401962,11281,KWD,AMAR
+kuwait,Aqar RE Investments,Aqar RE Investments Co. SAKC,aqar-real-est,KW0EQ0401749,11282,KWD,AQAR
+kuwait,Al Arabiya Real Estate,Al Arabiya Real Estate Co KSC,arab-real-est-co,KW0EQ0400691,11283,KWD,ARAB
+kuwait,Ajial RE Entertainment,Ajial Real Estate Entertainment Co.,ajial-real-est,KW0EQ0400360,11284,KWD,AREC
+kuwait,Alargan Int RE,Alargan International Real Estate,al-argan-intl,KW0EQ0402366,11285,KWD,ARGK
+kuwait,Arkan Al-Kuwait RE,Arkan Al-Kuwait Real Estate Co KSCC,arkan-alkwt-r.e.,KW0EQ0402259,11286,KWD,ARKK
+kuwait,Aayan Real Estate,Aayan Real Estate Co KSCC,aayan-real-est,KW0EQ0401731,11287,KWD,AYRE
+kuwait,Al Enmaa RE,Al Enmaa Real Estate Co KSCC,al-enmaa-rea-est,KW0EQ0400717,11288,KWD,ENMA
+kuwait,First Dubai RE Development,First Dubai For RE Development,first-dubai-r.e,KW0EQ0402440,11289,KWD,FIRST
+kuwait,Injazzat Real Estate,Injazzat Real Estate,injazzat-re-est,KW0EQ0400774,11291,KWD,INJA
+kuwait,Investors Hld Group,Investors Holding Group Co.KSCC,investors-hlding,KW0EQ0401293,11292,KWD,INVK
+kuwait,International Resorts,International Resorts Co. KSCC,intl-resorts,KW0EQ0401392,11293,KWD,IRCK
+kuwait,Kuwait Business Town RE,Kuwait Business Town Real Estate Co,kwt-bus-town,KW0EQ0402648,11295,KWD,KBTK
+kuwait,Future Kid,Future Kid Entertainment&RE Co KSCC,futurekid,KW0EQ0602668,11296,KWD,KIDK
+kuwait,Kuwait Real Estate Co,Kuwait Real Estate Company,kwt-real-est,KW0EQ0400618,11297,KWD,KREK
+kuwait,Mabanee,Mabanee Co SAK,mabanee-co,KW0EQ0400725,11298,KWD,MABK
+kuwait,Manazel Holding,Manazel Holding Co. K.S.C.Holding,manazel-holding,KW0EQ0402671,11299,KWD,MANK
+kuwait,Al-Mazaya Holding,Al-Mazaya Holding Co. SAKC,al-mazaya-hlding,KW0EQ0401764,11300,KWD,MAZA
+kuwait,Mena Real Estate,Mena Real Estate Company KSCC,mena-real-estate,KW0EQ0402549,11301,KWD,MENK
+kuwait,Al-Massaleh RE,Al-Massaleh Real Estate Co. [KSCC],al-massaleh-r.e.,KW0EQ0400683,11302,KWD,MREC
+kuwait,Munshaat RE,Munshaat Real Estate Projects KSCC,munshaat-real-es,KW0EQ0402408,11303,KWD,MUNS
+kuwait,National Real Estate,National Real Estate Company,natl-real-est,KW0EQ0400634,11304,KWD,NREK
+kuwait,RE Asset Management,Real Estate Asset Management Co,real-est-asset,KW0EQ0402424,11306,KWD,REAM
+kuwait,Tamkeen,Tamkeen Holding Co,safat-global,KW0EQ0402291,11307,KWD,TAMKE
+kuwait,Sanam Real Estate,Sanam Real Estate Co. KSCC,sanam-real-est,KW0EQ0401665,11308,KWD,SANK
+kuwait,Salhiah RE,Salhiah Real Estate Company,salhiah-real-est,KW0EQ0400642,11309,KWD,SREK
+kuwait,Tamdeen RE,Tamdeen Real Estate Company,tamdeen-real-est,KW0EQ0400675,11310,KWD,TAMK
+kuwait,Tijara & RE Investment,Tijara & Realestate Investment Co.,tijara--real-est,KW0EQ0401921,11312,KWD,TIJA
+kuwait,Commercial RE,Commercial Real Estate Co KSCC,commercial-r.e.,KW0EQ0401632,11313,KWD,TIJK
+kuwait,United Real Estate,United Real Estate Company,united-real-est,KW0EQ0400626,11315,KWD,UREK
+kuwait,Alimtiaz Investment,Alimtiaz Investment Group Co. KSCC,al-imtiaz-investment-company,KW0EQ0202832,19051,KWD,ALIMK
+kuwait,Alrai Media Group,Alrai Media Group Company K.S.C,al-rai-media-group,KW0EQ0602783,19052,KWD,ALRA
+kuwait,Warba Capital,Warba Capital Holding Co KSC,boubyan-int.-industries-holding,KW0EQ0502793,19053,KWD,WARBA
+kuwait,RE Trade Centers,Real Estate Trade Centers Co. KSCC,real-estate-trade-centers,KW0EQ0402804,19054,KWD,MARA
+kuwait,National Consumer Hld,National Consumer Holding Co.,national-company-for-consumer-ind.,KW0EQ0502157,19055,KWD,NCCI
+kuwait,Kuwait Remal RE,Kuwait Remal Real Estate Co. KSCC,kuwait-remal-real-estate,KW0EQ0402812,19056,KWD,REMAL
+kuwait,Jiyad,Jiyad Holding Co KSCP,zima-holding,KW0EQ0602825,19057,KWD,JIYAD
+kuwait,Warba Bank,Warba Bank,warba-bank,KW0EQB010944,102062,KWD,WARB
+kuwait,Specialities Gr.,Specialities Gr.,specialities-gr.,KW0EQ0502553,943611,KWD,SPEC
+kuwait,Kuwait Telecm Co,Kuwait Telecm Co,kuwait-telecm-co,KW0EQB010084,943612,KWD,VIVA
+kuwait,Mezzan Holding Co,Mezzan Holding Co KSCC,mezzan-holding-co,KW0EQB010837,954944,KWD,MEZZ
+kuwait,Ajwan Gulf Real Estate,Ajwan Gulf Real Estate Co KSCP,ajwan-gulf-real-estate-co-kscp,KW0EQ0402531,989488,KWD,AJWN
+kuwait,Amar Finance Leasing,Amar Finance and Leasing Company KSCP,amar-finance-and-leasing-company,KW0EQ0202717,989489,KWD,AMARF
+kuwait,Effect Real Estate,Effect Real Estate Co KSCC,effect-real-estate-co-kscc,KW0EQ0402499,992619,KWD,EFECT
+kuwait,Al Masaken Intl Real Estate Development,Al Masaken International Real Estate Development Co KSCP,al-masaken-international-real-estat,KW0EQ0402572,992621,KWD,MASKN
+kuwait,Integrated Holding,Integrated Holding Co KSCC,integrated-holding,KW0EQ0608889,1093993,KWD,INTG
+palestine,Arab Islamic Bank,Arab Islamic Bank,arab-islamic-bk,PS1003112957,13013,USD,AIB
+palestine,Bank Of Palestine,Bank Of Palestine,bank-of-palestin,PS1004112600,13020,USD,BOP
+palestine,Birzeit Pharma,Birzeit Pharmaceutical Co,birzeit-pharma,PS2015112738,13021,USD,BPC
+palestine,Palestine Islamic Bank,Palestine Islamic Bank,pal-islamic-bank,PS1007112953,13026,USD,ISBK
+palestine,Jerusalem Cigarette,Jerusalem Cigarette,jlm-cigarette,PS2003111643,13027,JOD,JCC
+palestine,Palestine Development&Inv,Palestine Development & Investment,pal-dev-inv,PS4002112937,13035,USD,PADICO
+palestine,Palestine Telecom,Palestine Telecommunications,pal-telecomms,PS5002111951,13036,JOD,PALTEL
+palestine,Palestine Electric,Palestine Electric,pal-electric,PS5006112997,13038,USD,PEC
+palestine,Palestine RE Investment,Palestine Real Estate Investment,pal-real-est-inv,PS4001111948,14577,JOD,PRICO
+palestine,Al Quds Bank,Al Quds Bank,al-quds-bank,PS1002112958,943616,USD,QUDS
+palestine,National Bank PL,National Bank PL,national-bank-pl,PS1006112053,943617,USD,TNB
+palestine,Jerusalem Pharma,Jerusalem Pharmaceuticals Co Ltd,jlm-pharmaceutic,PS2016112695,943618,USD,JPH
+palestine,National Insur,National Insur,national-insur,PS3002112921,943622,USD,NIC
+palestine,Wataniya Palestine Mobile,Wataniya Palestine Mobile Telecommunications PSC,wataniya-mob,PS5012112072,943630,USD,OORE
+palestine,Arab Palestinian Invest Comp,Arab Palestinian Invest Comp,arab-palestinian-invest-comp,PS4010112960,945152,USD,APIC
+palestine,Palestine Investment Bank PLC,Palestine Investment Bank PLC,palestine-investment-bank-plc,PS1001112942,946569,USD,PIBC
+palestine,Vegetable Oil In,Vegetable Oil In,vegetable-oil-in,PS2004111535,943619,JOD,VOIC
+palestine,Golden Wheat,Golden Wheat,golden-wheat,PS2009111951,943620,JOD,GMC
+palestine,National Car Ind,National Car Ind,national-car-ind,PS2012112939,943621,USD,NCI
+palestine,Pal Plastic Ind,Palestine Plastic Industrial Co Ltd,pal-plastic-ind,PS2006111988,943824,JOD,LADAEN
+palestine,Palestine Poultry Co Ltd,Palestine Poultry Co Ltd,palestine-poultry-co-ltd,PS2007111979,946570,JOD,AZIZA
+palestine,Arab Company For Paints,Arab Company For Paints,arab-company-for-paints,PS2002111909,953895,JOD,APC
+palestine,Ahliea Insurance,Ahliea Insurance Group,ahliea-ins-group,PS3003112946,13014,USD,AIG
+palestine,Palestine Insurance,Palestine Insurance Co,palestine-insurance-co,PS3006112943,951595,USD,PICO
+palestine,Al Mashriq Insurance,Al Mashriq Insurance Co,al-mashriq-insurance,PS3004112929,1072428,USD,MIC
+palestine,Palestine Industrial Inv,Palestine Industrial Investment,pal-ind-inv-co,PS4004111952,13042,JOD,PIIC
+palestine,Arab Investors,Arab Investors,arab-investors,PS4003111979,943623,JOD,ARAB
+palestine,Union Con & Inv,Union Con & Inv,union-con---inv,PS4008112055,943624,USD,UCI
+palestine,Palestine Investment Develop,Palestine Investment Develop,palestine-investment-develop,PS4006111935,945151,JOD,PID
+palestine,Jerusalem RE Invest,Jerusalem Real Estate Investment Co,jerusalem-re-invest,PS4007112965,1046292,USD,JREI
+palestine,Palestinian Distribution,Palestinian Co for Distribution and Logistics,pal-dist-log-srv,PS5015112053,13050,USD,WASSEL
+palestine,Arab Real Est,Arab Real Est,arab-real-est,PS5001111861,943625,JOD,ARE
+palestine,Nablus Surgical,Nablus Surgical,nablus-surgical,PS5008111955,943627,JOD,NSC
+palestine,Globalcom Telec,Globalcom Telec,globalcom-telec,PS5009112093,943628,USD,GCOM
+palestine,Al Wataniah,Al Wataniah,al-wataniah,PS5010112959,943629,USD,ABRAJ
+palestine,The Ramallah Summer Resort PLC,The Ramallah Summer Resort PLC,the-ramallah-summer-resort-plc,PS5011111455,946568,JOD,RSR
+palestine,The Arab Hotels Co,The Arab Hotels Co,the-arab-hotels-co,PS5003111968,946571,JOD,AHC
+dubai,Ad Aviation,Ad Aviation,ad-aviation,AEA001001014,941292,AED,ADAVIATION
+dubai,Finance House,Finance House,finance-house,AEF000401016,941293,AED,FH
+dubai,Emirates Ins C,Emirates Ins C,emirates-ins-c,AEE000101015,941294,AED,EIC
+dubai,United Arab Bk,United Arab Bk,united-arab-bk,AEU000601010,941295,AED,UAB
+dubai,International Holding Company,International Holding Company PJSC,int-fish-farmi,AEI000201014,941296,AED,IHC
+dubai,Green Crs Ins,Green Crs Ins,green-crs-ins,AEG000801015,941297,AED,GCIC
+dubai,Al Qaiwain Cement,Umm Al Qaiwain Cement Industries Co PSC,al-qaiwain-cmn,AEU000701018,941298,AED,QIC
+dubai,Em Driving Co,Em Driving Co,em-driving-co,AEE000601014,941299,AED,DRIVE
+dubai,Insurance Hous,Insurance Hous,insurance-hous,AEI000401010,941300,AED,IH
+dubai,Invest Bank AD,Invest Bank AD,invest-bank-ad,AEI000101016,941301,AED,INVESTB
+dubai,Rak Cmt & Cons,Rak Cmt & Cons,rak-cmt---cons,AER000101017,941302,AED,RAKWCT
+dubai,Sharjah Cement AD,Sharjah Cement AD,sharjah-cement-ad,AES000401019,941303,AED,SCIDC
+dubai,Abd Nat Takafu,Abd Nat Takafu,abd-nat-takafu,AEA001801017,941305,AED,TKFL
+dubai,Buhaira Nat In,Buhaira Nat In,buhaira-nat-in,AEA001701019,941306,AED,ABNIC
+dubai,Ad Islamic Bk,Ad Islamic Bk,ad-islamic-bk,AEA000801018,941307,AED,ADIB
+dubai,Ad Natl Ins Co,Ad Natl Ins Co,ad-natl-ins-co,AEA001101012,941308,AED,ADNIC
+dubai,Agthia Group,Agthia Group,agthia-group,AEA001901015,941309,AED,AGTHIA
+dubai,National Building Materials,Abu Dhabi National for Building Materials Co PJSC,natl-co-bldg-m,AEA000501014,941310,AED,BILDCO
+dubai,Ad Shipbldg Co,Ad Shipbldg Co,ad-shipbldg-co,AEA000901016,941311,AED,ADSB
+dubai,Al Khazna Ins,Al Khazna Ins,al-khazna-ins,AEA000401017,941312,AED,AKIC
+dubai,Arkan Building,Arkan Building Materials Co PJSC,arkan-bld-mt-c,AEA002801016,941313,AED,ARKAN
+dubai,Bank Of Sharja,Bank Of Sharja,bank-of-sharja,AEB000101011,941314,AED,BOS
+dubai,Dana Gas,Dana Gas,dana-gas,AED000701014,941315,AED,DANA
+dubai,Ad Commercial,Ad Commercial,ad-commercial,AEA000201011,941316,AED,ADCB
+dubai,Aldar Properti,Aldar Properti,aldar-properti,AEA002001013,941317,AED,ALDAR
+dubai,Emirates Telec,Emirates Telec,emirates-telec,AEE000401019,941318,AED,ETISALAT
+dubai,Gulf Cement Co,Gulf Cement Co,gulf-cement-co,AEG000101010,941320,AED,GCEM
+dubai,Gulf Pharm Ind,Gulf Pharm Ind,gulf-pharm-ind,AEG000201018,941321,AED,JULPHAR
+dubai,Methaq,Methaq,methaq,AEM000201016,941322,AED,METHAQ
+dubai,First Abu Dhabi Bank,First Abu Dhabi Bank PJSC,natl-bk-of-ad,AEN000101016,941323,AED,FAB
+dubai,Nat Bk Qaiwain,Nat Bk Qaiwain,nat-bk-qaiwain,AEN000701013,941324,AED,NBQ
+dubai,Natl Bk Of Rak,Natl Bk Of Rak,natl-bk-of-rak,AEN000601015,941325,AED,RAKBANK
+dubai,Rak Ceramics,Rak Ceramics,rak-ceramics,AER000301013,941326,AED,RAKCEC
+dubai,Rak Properties,Rak Properties,rak-properties,AER000601016,941327,AED,RAKPROP
+dubai,Rak Cement Co,Rak Cement Co,rak-cement-co,AER000401011,941328,AED,RAKCC
+dubai,Sharjah Islami,Sharjah Islami,sharjah-islami,AES000201013,941329,AED,SIB
+dubai,Ad Natl Energy,Ad Natl Energy,ad-natl-energy,AEA002401015,941330,AED,TAQA
+dubai,Waha Capital,Waha Capital,waha-capital,AEA000701010,941332,AED,WAHA
+dubai,Abu Dhabi National Hotels Co,Abu Dhabi National Hotels Co,abu-dhabi-national-hotels-co,AEA000301019,950734,AED,ADNH
+dubai,Commercial Bank International,Commercial Bank International,commercial-bank-international,AEC000101019,950735,AED,CBI
+dubai,Foodco Holding PJSC,Foodco Holding PJSC,foodco-holding-pjsc,AEF000101012,950736,AED,FOODCO
+dubai,National Corp Tourism Hotels,National Corp Tourism Hotels,national-corp-tourism-hotels,AEN001001017,950737,AED,NCTH
+dubai,National Marine Dredging,National Marine Dredging PSC,national-marine-dredging,AEN000401010,953758,AED,NMDC
+dubai,Ras Al Khaimah National Insurance,Ras Al Khaimah National Insurance Co PSC,ras-al-khaimah-national-insurance,AER000501018,953759,AED,RAKNIC
+dubai,Gulf Medical Projects Co PSC,Gulf Medical Projects Co PSC,gulf-medical-projects-co-psc,AEG000401014,955815,AED,GMPC
+dubai,Eshraq Properties Co PJSC,Eshraq Properties Co PJSC,eshraq-properties-co-pjsc,AEE000901018,959190,AED,ESHRAQ
+dubai,Manazel Real Estate,Manazel Real Estate PJSC,manazel-real-estate-pjsc,AEM000601017,969226,AED,MANAZEL
+dubai,Fujairah Building Industries,Fujairah Building Industries Co PSC,fujairah-building-industries,AEF000501013,976266,AED,FBI
+dubai,Oman Emirates Holding,Oman and Emirates Holding Co SAOG,om---em-inv-om?cid=976267,OM0000001681,976267,AED,OEIHC
+dubai,Qatar Telecom,Ooredoo QSC,qa-telecom?cid=976268,QA0007227737,976268,AED,ORDS
+dubai,Sudatel Telecom Group,Sudatel Telecom Group Ltd,sudatel-telecom-group-ltd,SD000A0F5KV7,976269,AED,SUDATEL
+dubai,Fujairah Cement Industries,Fujairah Cement Industries Co PSC,fujairah-cement?cid=993907,AEF000301018,993907,AED,FCI
+dubai,Ras Al Khaimah Poultry,Ras Al Khaimah Poultry and Feeding Co,ras-al-khaimah-poultry-and-feeding,AER000201015,993908,AED,RAPCO
+dubai,Union Insurance,Union Insurance Co PSC,union-insurance-co-psc,AEU000501012,993909,AED,UNION
+dubai,Al Khaleej Investment,Al Khaleej Investment Co PJSC,al-khaleej-investment-co-pjsc,AEG000701017,998166,AED,KICO
+dubai,National Bank of Fujairah,National Bank of Fujairah PJSC,national-bank-of-fujairah-pjsc,AEN000801011,998167,AED,NBF
+dubai,National Takaful,National Takaful Co PJSC,national-takaful-co-pjsc,AEN001101015,998168,AED,WATANIA
+dubai,Al Ain Ahlia Insurance,Al Ain Ahlia Insurance Co PSC,al-ain-ahlia-insurance,AEA000101013,1052876,AED,ALAIN
+dubai,National Oil,Abu Dhabi National Oil Company for Distribution PJSC,national-oil,AEA006101017,1057034,AED,ADNOCDIST
+dubai,Al Qudra,Al Qudra Holding PJSC,al-qudra,AEA006501018,1057035,AED,ALQUDRA
+dubai,Sharjah,Sharjah Group Co,sharjah,AES000601014,1057036,AED,SG
+dubai,Air Arabia PJSC,Air Arabia PJSC,air-arabia,AEA003001012,12530,AED,AIRA
+dubai,AJMAN BANK PJSC,AJMAN BANK PJSC,ajman-bank,AEA003201018,12531,AED,AJBNK
+dubai,Dubai Islamic Insurance,Dubai Islamic Insurance Co.,db-isl-ins-rei,AED000401011,12532,AED,AMAN
+dubai,ARAMEX PJSC,ARAMEX PJSC,aramex,AEA002301017,12534,AED,ARMX
+dubai,Arabtec Holding,Arabtec Holding PJSC,arabtec,AEA001501013,12535,AED,ARTC
+dubai,Commercial Bank of Dubai,Commercial Bank of Dubai P.S.C.,dxb-comm-bk,AEC000201017,12537,AED,CBD
+dubai,Deyaar Development,Deyaar Development PJSC,deyaar,AED001001018,12538,AED,DEYR
+dubai,Dubai Financial Market,Dubai Financial Market PJSC,dfm,AED000901010,12539,AED,DFM
+dubai,Dubai Investments,Dubai Investments PJSC,db-invst-co,AED000601016,12541,AED,DINV
+dubai,Dubai Islamic Bank,Dubai Islamic Bank,db-islamic-bk,AED000201015,12542,AED,DISB
+dubai,Dubai National Insurance,Dubai National Insurance,dnir,AED000101017,12543,AED,DNIN
+dubai,Drake&Scull Int,Drake & Scull International PJSC,drake---scull,AED001101016,12544,AED,DSI
+dubai,Takaful House,Takaful House,takaful-house,AET000301019,12545,AED,DTKF
+dubai,Emirate Integrated Telecom,Emirate Integrated Telecom Co PJSC,du,AEE000701012,12546,AED,DU
+dubai,Emaar Properties,Emaar Properties PJSC,emaar-properti,AEE000301011,12547,AED,EMAR
+dubai,Emirates NBD PJSC,Emirates NBD PJSC,emirates-nbd,AEE000801010,12548,AED,ENBD
+dubai,Gulf General Investments,Gulf General Investments Company,gulf-gen-inv-c,AEG000301016,12549,AED,GGIC
+dubai,Gulf Navigation Hld,Gulf Navigation Holding PJSC,gulf-navigatio,AEG000601019,12550,AED,GNAV
+dubai,National Cement Co,National Cement Company P.S.C.,natl-cement-co,AEN000901019,12553,AED,NCC
+dubai,Islamic Arab Insurance,Islamic Arab Insurance Company,islamic-arab-i,AEI000301012,12556,AED,SALAMA
+dubai,SHUAA Capital PSC,SHUAA Capital PSC,shuaa-capital,AES000101015,12557,AED,SHUA
+dubai,National Central Cooling,National Central Cooling Co.,tabreed,AEN000501017,12558,AED,TABR
+dubai,Takaful Emarat PSC,Takaful Emarat PSC,takaful-em,AET000201011,12560,AED,TKFE
+dubai,Union Properties,Union Properties PJSC,union-prop,AEU000101011,12561,AED,UPRO
+dubai,Dubai Insurance Co PSC,Dubai Insurance Co PSC,dubai-insurance,AED000301013,19058,AED,DINC
+dubai,Mashreqbank PSC,Mashreqbank PSC,mashreq-bank,AEM000101018,19059,AED,MASB
+dubai,National General Insurance,National General Insurance Co PSC,national-general-insurance,AEN000301012,19060,AED,NGIN
+dubai,Amlak Finance,Amlak Finance PJSC,amlak-finance,AEA001201010,40413,AED,AMLK
+dubai,Arabian Scandinavian,Arabian Scandinavian Insurance Co PLC,arabian-scandinavian-insurance,AEA001401016,40414,AED,ASCI
+dubai,Emirates Refreshments Co,Emirates Refreshments Company,emirates-refreshments,AEJ000101014,40415,AED,ERC
+dubai,Oman Insurance Co,Oman Insurance Company P.S.C.,oman-insurance,AEO000101014,40416,AED,OIC
+dubai,Emaar Malls,Emaar Malls,emaar-malls-group,AEE001501015,943614,AED,EMAA
+dubai,Marka Pjse,Marka Pjse,marka-pjse,AEM000401012,943615,AED,MARKA
+dubai,Amanat Holdings PJSC,Amanat Holdings PJSC,amanat-holdings-pjsc,AEA005901011,945149,AED,AMANT
+dubai,DXB Entertainments,DXB Entertainments (P.J.S.C.),dubai-parks-and-resorts-pjsc,AED001501017,945150,AED,DXBE
+dubai,Damac Properties Dubai Co PSC,Damac Properties Dubai Co PSC,damac-properties-dubai-co-psc,AED001301012,946567,AED,DAMAC
+dubai,Emaar Develop,Emaar Development PJSC,emaar-develop,AEE001901017,1055159,AED,EMAARDEV
+ivory coast,Ivoirienne d’Electricite,La Compagnie Ivoirienne d’Electricite SA,la-compagnie-ivoirienne-delectrici,CI0000000212,980168,XOF,CIEC
+ivory coast,Bollore Africa Logistics,Bollore Africa Logistics Cote d’Ivoire SA,bollore-africa-logistics-cote-divo,CI0000000261,980178,XOF,SDSC
+ivory coast,Societe Generale de Banques,Societe Generale de Banques en Cote d’Ivoire SA,societe-generale-de-banques,CI0000000030,980180,XOF,SGBC
+ivory coast,Societe des Caoutchoucs,Societe des Caoutchoucs de Grand Bereby SA,societe-des-caoutchoucs-de-grand,CI0000000162,980187,XOF,SOGC
+ivory coast,Societe Africaine de Plantations,Societe Africaine de Plantations d’Heveas SA,societe-africaine-de-plantations,CI0000000196,980188,XOF,SPHC
+ivory coast,NSIA Banque,NSIA Banque Cote d'Ivoire SC,nsia-banque,CI0000002416,1071165,XOF,NSBC
+ivory coast,Ecobank,Ecobank Cote d'Ivoire SA,ecobank,CI0000002424,1071166,XOF,ECOC
+ivory coast,Servair Abidjan,Servair Abidjan SA,servair-abidjan-sa,CI0000000600,980158,XOF,ABJC
+ivory coast,Banque Internationale Cote d Ivoire,Banque Internationale pour le Commerce et l Industrie de Cote d Ivoire SA,banque-internationale-pour-le-comme,CI0000000014,980159,XOF,BICC
+ivory coast,Bernabe Cote d’Ivoire,Bernabe Cote d’Ivoire,bernabe-cote-divoire,CI0000000048,980160,XOF,BNBC
+ivory coast,Societe Ivoirienne de Cables,Societe Ivoirienne de Cables SA,societe-ivoirienne-de-cables-sa,CI0000000154,980166,XOF,CABC
+ivory coast,Cfao Cote d’Ivoire,Cfao Cote d’Ivoire SA,cfao-cote-divoire-sa,CI0000000220,980167,XOF,CFAC
+ivory coast,Filatures Tissages Sacs,Filatures Tissages Sacs Cote d’Ivoire FILTISAC SA,filatures-tissages-sacs-cote,CI0000000121,980170,XOF,FTSC
+ivory coast,Nei-Ceda Ci,Nei-Ceda Ci,nei-ceda-ci,CI0000000618,980171,XOF,NEIC
+ivory coast,Nestle Cote d’Ivoire,Nestle Cote d’Ivoire SA,nestle-cote-divoire-sa,CI0000000295,980172,XOF,NTLC
+ivory coast,Palmci,Palmci SA,palmci-sa,CI0000000592,980174,XOF,PALC
+ivory coast,Tractafric Motors,Tractafric Motors Cote d’Ivoire SA,tractafric-motors-cote-divoire-sa,CI0000000055,980175,XOF,PRSC
+ivory coast,Alios Finance Safca,Alios Finance Safca SA,alios-finance-safca-sa,CI0000000022,980176,XOF,SAFC
+ivory coast,Societe de Distribution d’Eau,Societe de Distribution d’Eau de la Cote d’Ivoire SA,societe-de-distribution-deau-de-la,CI0000000204,980177,XOF,SDCC
+ivory coast,Crown Societe Ivoirienne,Crown Societe Ivoirienne d’Emballage Metallique SA,crown-societe-ivoirienne-demballag,CI0000000345,980179,XOF,SEMC
+ivory coast,Vivo Energy,Vivo Energy Cote d’Ivoire SA,vivo-energy-cote-divoire-sa,CI0000000246,980181,XOF,SHEC
+ivory coast,Societe Ivoirienne,Societe Ivoirienne de Coco Rape SA,societe-ivoirienne-de-coco-rape-sa,CI0000000113,980182,XOF,SICC
+ivory coast,Air Liquide,Air Liquide Cote d’Ivoire SA,air-liquide-cote-divoire-sa,CI0000000550,980183,XOF,SIVC
+ivory coast,Societe de Limonaderie,Societe de Limonaderie et Brasseries d’Afrique SA,societe-de-limonaderie-et-brasserie,CI0000000105,980184,XOF,SLBC
+ivory coast,Societe Multinationale de Bitumes,Societe Multinationale de Bitumes SA,societe-multinationale-de-bitumes,CI0000000170,980185,XOF,SMBC
+ivory coast,Societe d’Etudes et de Travaux,Societe d’Etudes et de Travaux pour l’Afrique de l’Ouest SETAO SA,societe-detudes-et-de-travaux-pour,CI0000000352,980189,XOF,STAC
+ivory coast,Societe Ivoirienne des Tabacs,Societe Ivoirienne des Tabacs SA,societe-ivoirienne-des-tabacs-sa,CI0000000097,980190,XOF,STBC
+ivory coast,Movis Cote Ivoire,Movis Cote Ivoire SA,movis-cote-ivoire-sa,CI0000000279,980191,XOF,SVOC
+ivory coast,Total Cote d’Ivoire,Total Cote d’Ivoire SA,total-cote-divoire-sa,CI0000000659,980192,XOF,TTLC
+ivory coast,Unilever Cote d’Ivoire,Unilever Cote d’Ivoire SA,unilever-cote-divoire-sa,CI0000000287,980194,XOF,UNLC
+ivory coast,Uniwax,Uniwax SA,uniwax-sa,CI0000000337,980195,XOF,UNXC
+malawi,Standard Bank,Standard Bank Ltd,stan-bank,MWSTD0010041,42452,MWK,SBC
+malawi,Blantyre Hotels,Blantyre Hotels Ltd,blantyre-hotels-limited,MWBHL0010029,42453,MWK,BHL
+malawi,First Merchant Bank,First Merchant Bank Ltd,first-merchant-bank,MW000A1C5MC8,42454,MWK,FMB
+malawi,NBM,National Bank Of Malawi,national-bank-of-malawi,MWNBM0010074,42455,MWK,NBM
+malawi,NBS Bank,NBS Bank,nbs-bank,MWNBS0010105,42456,MWK,NBS
+malawi,Old Mutual,Old Mutual PLC,old-mutual?cid=42457,ZAE000255360,42457,MWK,OMU
+malawi,Press PLC,Press Corporation PLC,press-corporation-limited,MWPCL0010053,42458,MWK,PCL
+malawi,Telekom Networks,Telekom Networks Malawi Ltd,telekom-networks-malawi,MWTNM0010126,42459,MWK,TNM
+malawi,NICO,NICO Holdings Ltd,nico-holdings-ltd,MWNICO010014,42460,MWK,NICO
+malawi,National Invest,National Investment Trust Ltd,national-investment-trust-ltd,MWNITL010091,42461,MWK,NITL
+malawi,MPICO,MPICO Ltd,malawi-properties-investment,MWMPI0010116,42463,MWK,MPICO
+malawi,Illovo Sugar,Illovo Sugar Malawi Ltd,illovo,MWILLV010032,42464,MWK,ILV
+malawi,Sunbird Tourism,Sunbird Tourism Ltd,sunbird,MWSTL0010085,43345,MWK,SUNB
+namibia,Bannerman Resources,BANNERMAN,bannerman-rsc?cid=42298,AU000000BMN9,42298,ZAR,BMN
+namibia,Deep Yellow,Deep Yellow Ltd,deep-yellow?cid=42299,AU000000DYL4,42299,ZAR,DYL
+namibia,Paladin Energy,PALADIN NM,paladin-res?cid=42300,AU000000PDN8,42300,ZAR,PDN
+namibia,Anglo American,Anglo American (NM),anglo-american?cid=42302,GB00B1XZS820,42302,ZAR,ANM
+namibia,Old Mutual,Old Mutual Ltd,old-mutual?cid=42303,ZAE000255360,42303,ZAR,OMM
+namibia,Oryx Properties,Oryx Properties Ltd,oryx-properties-ltd,NA0001574913,42304,ZAR,ORY
+namibia,FNB Namibia Holdings,FNB Namibia Holdings Ltd,fnb-namibia-holdings-ltd,NA0003475176,42305,ZAR,FNB
+namibia,Namibia Breweries,Namibia Breweries Ltd,namibia-breweries-ltd,NA0009114944,42306,ZAR,NBS
+namibia,Nictus,Nictus Ltd,nictus?cid=42307,NA0009123481,42307,ZAR,NCT
+namibia,Bidvest Namibia,Bidvest Namibia Ltd,bidvest-namibia-ltd,NA000A0Q5TN0,42308,ZAR,BVN
+namibia,Trustco Group Holdings,Trustco Group Holdings Ltd,trustco-group-holdings?cid=42309,NA000A0RF067,42309,ZAR,TUC
+namibia,Nictus Holdings Namibia,Nictus Holdings Namibia,nictus-holdings-namibia,NA000A1J2SS6,42310,ZAR,NHL
+namibia,Nedbank Group,Nedbank Group Ltd,nedbank-group-ltd-(j)?cid=42311,ZAE000004875,42311,ZAR,NBK
+namibia,Shoprite Holdings,Shoprite Holdings Ltd,shoprite-holdings-ltd-(j)?cid=42312,ZAE000012084,42312,ZAR,SRH
+namibia,Oceana,Oceana Group Ltd,oceana?cid=42313,ZAE000025284,42313,ZAR,OCG
+namibia,Barloworld,Barloworld (NM),barloworld-ltd?cid=42314,ZAE000026639,42314,ZAR,BWL
+namibia,Truworths Int,Truworths International Ltd,truworths-international-ltd-(j)?cid=42315,ZAE000028296,42315,ZAR,TRW
+namibia,Vukile,Vukile Property Fund Ltd,vukile?cid=42316,ZAE000056370,42316,ZAR,VKN
+namibia,Firstrand,FirstRand Ltd,firstrand-ltd-(j)?cid=42317,ZAE000066304,42317,ZAR,FST
+namibia,Afrox,African Oxygen Ltd,afrox?cid=42318,ZAE000067120,42318,ZAR,AOX
+namibia,Sanlam Ltd,Sanlam Ltd,sanlam-ltd-(j)?cid=42319,ZAE000070660,42319,ZAR,SLA
+namibia,Investec Ltd,Investec Ltd,investec-ltd-(j)?cid=42320,ZAE000081949,42320,ZAR,IVD
+namibia,Santam,Santam Ltd,santam?cid=42321,ZAE000093779,42321,ZAR,SNM
+namibia,Standard Bank Grp,Standard Bank Group Ltd,standard-bank-group-ltd-(j)?cid=42322,ZAE000109815,42322,ZAR,SNB
+namibia,Mmi Holdings,MMI Holdings Ltd,mmi-holdings?cid=42323,ZAE000269890,42323,ZAR,MMT
+namibia,Capricorn Investment,Capricorn Investment Group Ltd NM,bank-wind-nm,NA000A1T6SV9,43222,ZAR,CGP
+namibia,PSG Konsult Ltd,Psg Kst Nam,psg-konsult-ltd?cid=943701,ZAE000191417,943701,ZAR,KFS
+namibia,Agra Ltd,Agra Ltd,agra-ltd,NA000A1KCRP0,945800,ZAR,AGR
+namibia,Clover,Clover Industries Ltd,clover?cid=951056,ZAE000152377,951056,ZAR,CLN
+namibia,Astoria Investments Ltd,Astoria Investments Ltd,astoria-investments-ltd?cid=985743,MU0499N00007,985743,ZAR,ARO
+rwanda,Bralirwa S.A.,Bralirwa S.A.,bralirwa-s.a.,RW000A1H63N6,42555,RWF,BLR
+rwanda,Bank of Kigali,Bank of Kigali,bank-of-kigali,RW000A1JCYA5,42556,RWF,BOK
+zambia,CEC Africa,CEC Africa Investments Ltd,cec-africa,ZM0000000516,1056076,ZMW,CCAF
+zambia,Zambian Breweries,Zambian Breweries PLC,zambian-breweries,ZM0000000078,1076871,ZMW,ZABR
