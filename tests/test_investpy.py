@@ -7,11 +7,12 @@ import pytest
 
 import investpy
 
-from investpy.stocks import retrieve_stocks, retrieve_stock_countries
-from investpy.funds import retrieve_funds, retrieve_fund_countries
-from investpy.etfs import retrieve_etfs
-from investpy.indices import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
-from investpy.currency_crosses import retrieve_currency_crosses, retrieve_currency_cross_continents
+from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses, retrieve_currency_cross_continents
+from investpy.retrieval.etfs_retrieval import retrieve_etfs
+from investpy.retrieval.funds_retrieval import retrieve_funds, retrieve_fund_countries
+from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, \
+    retrieve_global_indices_countries
+from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
 
 
 def test_investpy():

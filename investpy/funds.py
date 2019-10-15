@@ -3,7 +3,10 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
+import datetime
 import json
+from random import randint
+import logging
 
 import pandas as pd
 import pkg_resources
@@ -11,345 +14,18 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy import user_agent as ua
+from investpy.utils import user_agent
+from investpy.utils.Data import Data
 
+from investpy.data.funds_data import funds_as_list, funds_as_dict, funds_as_df
+from investpy.data.funds_data import fund_countries_as_list
 
-def retrieve_funds(test_mode=False):
-    """
-    This function retrieves all the available `funds` listed in Investing.com https://es.investing.com/funds. Retrieving
-    all the meta-information attached to them. Additionally when funds are retrieved all the meta-information
-    is both returned as a :obj:`pandas.DataFrame` and stored on a CSV file on a package folder containing all the
-    available resources. Note that maybe some of the information contained in the resulting :obj:`pandas.DataFrame`
-    is useless.
 
-    Args:
-        test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
-            coverage.
-
-    Returns:
-        :obj:`pandas.DataFrame` - funds:
-            The resulting :obj:`pandas.DataFrame` contains all the fund meta-information if found, if not, an
-            empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
-
-            In the case that the retrieval process of funds was successfully completed, the resulting
-            :obj:`pandas.DataFrame` will look like::
-
-                asset class | id | isin | issuer | name | symbol | tag
-                ------------|----|------|--------|------|--------|-----
-                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
-
-    Raises:
-        ValueError: if any of the introduced arguments is not valid.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if fund information was unavailable or not found.
-    """
-
-    if not isinstance(test_mode, bool):
-        raise ValueError('ERR#0041: test_mode can just be either True or False')
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0042: fund_countries.csv file not found")
-
-    results = list()
-
-    for country in countries['country'].tolist():
-        head = {
-            "User-Agent": ua.get_random(),
-            "X-Requested-With": "XMLHttpRequest",
-            "Accept": "text/html",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "keep-alive",
-        }
-
-        url = 'https://www.investing.com/funds/' + country.replace(' ', '-') + '-funds?issuer_filter=0'
-
-        req = requests.get(url, headers=head)
-
-        if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-        root_ = fromstring(req.text)
-        path_ = root_.xpath(".//select[@name='asset_filter']/option")
-
-        assets = list()
-
-        if path_:
-            for elements_ in path_:
-                assets.append(elements_.get("value"))
-
-        for asset in assets:
-            url = "https://www.investing.com/funds/" + country.replace(' ', '-') + "-funds?asset=" \
-                  + str(asset) + "&issuer_filter=0"
-
-            req = requests.get(url, headers=head)
-
-            if req.status_code != 200:
-                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-            root_ = fromstring(req.text)
-            path_ = root_.xpath(".//select[@name='category_filter']/option")
-
-            categories = list()
-
-            if path_:
-                for elements_ in path_:
-                    if elements_.get("value") != '0' and not any(category['id'] == elements_.get("value") for category in categories):
-                        data = {
-                            'name': elements_.text_content().lower(),
-                            'id': elements_.get("value"),
-                        }
-
-                        categories.append(data)
-
-            for category in categories:
-                url = "https://es.investing.com/funds/" + country.replace(' ', '-') + "-funds?asset=" \
-                      + str(asset) + "&issuer_filter=0&fundCategory=" + str(category['id'])
-
-                req = requests.get(url, headers=head)
-
-                if req.status_code != 200:
-                    raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-                root_ = fromstring(req.text)
-                path_ = root_.xpath(".//table[@id='etfs']"
-                                    "/tbody"
-                                    "/tr")
-
-                if path_:
-                    for elements_ in path_:
-                        id_ = elements_.get('id').replace('pair_', '')
-                        symbol = elements_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
-
-                        nested = elements_.xpath(".//a")[0].get('title').rstrip()
-                        tag = elements_.xpath(".//a")[0].get('href').replace('/funds/', '')
-
-                        if not any(result['tag'] == tag for result in results):
-                            info = None
-
-                            while info is None:
-                                try:
-                                    info = retrieve_fund_info(tag)
-                                except:
-                                    pass
-
-                            obj = {
-                                "country": 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
-                                "name": nested.strip().replace(u"\N{REGISTERED SIGN}", ''),
-                                "symbol": symbol,
-                                "tag": tag,
-                                "id": id_,
-                                "issuer": info['issuer'].strip() if info['issuer'] is not None else info['issuer'],
-                                "isin": info['isin'],
-                                "asset_class": info['asset_class'].lower() if info['asset_class'] is not None else info['asset_class'],
-                                "currency": info['currency']
-                            }
-
-                            results.append(obj)
-
-        if test_mode is True:
-            break
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
-
-    df = pd.DataFrame(results)
-
-    df = df.where((pd.notnull(df)), None)
-    df.drop_duplicates(subset="tag", keep='first', inplace=True)
-    df.sort_values('country', ascending=True, inplace=True)
-    df.reset_index(drop=True, inplace=True)
-
-    if test_mode is False:
-        df.to_csv(file_, index=False)
-
-    return df
-
-
-def retrieve_fund_info(tag):
-    """
-    This function retrieves additional information from a fund as listed in Investing.com. Every fund data is retrieved
-    and stored in a CSV in order to get all the possible information from a fund.
-
-    Args:
-        tag (:obj:`str`): is the identifying tag of the specified fund.
-
-    Returns:
-        :obj:`dict` - fund_data:
-            The resulting :obj:`dict` contains the retrieved data if found, if not, the corresponding
-            fields are filled with `None` values.
-
-            In case the information was successfully retrieved, the :obj:`dict` will look like::
-
-                {
-                    'issuer': issuer_value,
-                    'isin': isin_value,
-                    'asset class': asset_value
-                }
-
-    Raises:
-        ConnectionError: raised if GET requests does not return 200 status code.
-        IndexError: raised if fund information was unavailable or not found.
-    """
-
-    url = "https://www.investing.com/funds/" + tag
-
-    head = {
-        "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
-    req = requests.get(url, headers=head)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    result = {
-        'issuer': None,
-        'isin': None,
-        'asset_class': None,
-        'currency': None
-    }
-
-    root_ = fromstring(req.text)
-
-    path_ = root_.xpath(".//div[contains(@class, 'overViewBox')]"
-                        "/div[@id='quotes_summary_current_data']"
-                        "/div[@class='right']"
-                        "/div")
-
-    for p in path_:
-        if p.xpath("span[not(@class)]")[0].text_content().__contains__('Issuer'):
-            result['issuer'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-            continue
-        elif p.xpath("span[not(@class)]")[0].text_content().__contains__('ISIN'):
-            result['isin'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-            continue
-        elif p.xpath("span[not(@class)]")[0].text_content().__contains__('Asset Class'):
-            result['asset_class'] = p.xpath("span[@class='elp']")[0].get('title').rstrip()
-            continue
-
-    path_ = root_.xpath(".//div[contains(@class, 'bottom')]"
-                        "/span[@class='bold']")
-
-    for element_ in path_:
-        if element_.text_content():
-            result['currency'] = element_.text_content()
-
-    return result
-
-
-def retrieve_fund_countries(test_mode=False):
-    """
-    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
-    from, via Web Scraping https://www.investing.com/funds/ where the available countries are listed and retrieved.
-
-    Args:
-        test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
-            coverage.
-
-    Returns:
-        :obj:`pandas.DataFrame` - fund_countries:
-            The resulting :obj:`pandas.DataFrame` contains all the available countries with their corresponding ID,
-            which will be used later by investpy.
-
-    Raises:
-        ConnectionError: raised if connection to Investing.com could not be established.
-        RuntimeError: raised if no countries were retrieved from Investing.com fund listing.
-    """
-
-    if not isinstance(test_mode, bool):
-        raise ValueError('ERR#0041: test_mode can just be either True or False')
-
-    headers = {
-        "User-Agent": ua.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
-    url = 'https://www.investing.com/funds/'
-
-    req = requests.get(url, headers=headers)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    root = fromstring(req.text)
-    path = root.xpath("//div[@id='country_select']/select/option")
-
-    countries = list()
-
-    for element in path:
-        if element.get('value') != '/funds/world-funds':
-            obj = {
-                'country': element.get('value').replace('/funds/', '').replace('-funds', '').replace('-', ' ').strip(),
-                'id': int(element.get('country_id')),
-            }
-
-            countries.append(obj)
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
-
-    df = pd.DataFrame(countries)
-
-    if test_mode is False:
-        df.to_csv(file_, index=False)
-
-    return df
-
-
-def fund_countries_as_list():
-    """
-    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
-    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
-
-    Raises:
-        IndexError: if `fund_countries.csv` was unavailable or not found.
-    """
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        countries = retrieve_fund_countries(test_mode=False)
-
-    if countries is None:
-        raise IOError("ERR#0040: fund countries list not found or unable to retrieve.")
-
-    for index, row in countries.iterrows():
-        if row['country'] == 'uk':
-            countries.loc[index, 'country'] = 'united kingdom'
-        elif row['country'] == 'usa':
-            countries.loc[index, 'country'] = 'united states'
-
-    return countries['country'].tolist()
-
-
-def funds_as_df(country=None):
+def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -362,9 +38,9 @@ def funds_as_df(country=None):
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                asset class | id | isin | issuer | name | symbol | tag | currrency
-                ------------|----|------|--------|------|--------|-----|-----------
-                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
+                asset class | id | isin | issuer | name | symbol | tag
+                ------------|----|------|--------|------|--------|-----
+                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
 
             Just like `investpy.funds.retrieve_funds()` :obj:`pandas.DataFrame` output, but instead of generating the
             CSV file, this function just reads it and loads it into a :obj:`pandas.DataFrame` object.
@@ -373,32 +49,13 @@ def funds_as_df(country=None):
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
-    if country is not None and not isinstance(country, str):
-        raise ValueError("ERR#0025: specified country value not valid.")
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        funds = retrieve_funds()
-
-    if funds is None:
-        raise IOError("ERR#0005: funds not found or unable to retrieve.")
-
-    if country is None:
-        funds.reset_index(drop=True, inplace=True)
-        return funds
-    elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
-        funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
-        funds.reset_index(drop=True, inplace=True)
-        return funds
+    return funds_as_df(country=country)
 
 
-def funds_as_list(country=None):
+def get_funds_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -420,35 +77,20 @@ def funds_as_list(country=None):
         IOError: if the funds file from `investpy` is missing or errored.
     """
 
-    if country is not None and not isinstance(country, str):
-        raise ValueError("ERR#0025: specified country value not valid.")
-
-    resource_package = __name__
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        funds = retrieve_funds()
-
-    if funds is None:
-        raise IOError("ERR#0005: funds not found or unable to retrieve.")
-
-    if country is None:
-        return funds['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
-        return funds[funds['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    return funds_as_list(country=country)
 
 
-def funds_as_dict(country=None, columns=None, as_json=False):
+def get_funds_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
-    `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://es.investing.com/funds/
+    This function retrieves all the available funds on Investing.com and
+    returns them as a :obj:`dict` containing the `asset_class`, `id`, `issuer`,
+    `name`, `symbol` and `tag`. All the available funds can be found at:
+    https://es.investing.com/etfs/spain-etfs
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
         columns (:obj:`list` of :obj:`str`, optional): description
-            a :obj:`list` containing the column names from which the data is going to be retrieved.
+            a `list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`bool`, optional): description
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
@@ -466,14 +108,105 @@ def funds_as_dict(country=None, columns=None, as_json=False):
                     'issuer': issuer,
                     'name': name,
                     'symbol': symbol,
-                    'tag': tag,
-                    'currency': currency
+                    'tag': tag
                 }
 
     Raises:
         ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the funds file from `investpy` is missing or errored.
+        IOError: if the funds file from `investpy` is missing or errored.
     """
+
+    return funds_as_dict(country=country, columns=columns, as_json=as_json)
+
+
+def get_fund_countries():
+    """
+    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
+
+    Raises:
+        IndexError: if `fund_countries.csv` was unavailable or not found.
+    """
+
+    return fund_countries_as_list()
+
+
+def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=False):
+    """
+    This function retrieves recent historical data from the introduced `fund` from Investing
+    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
+    :obj:`json` file, with `ascending` or `descending` order.
+
+    Args:
+        fund (:obj:`str`): name of the fund to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the introduced fund is.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified fund via argument. The dataset contains the open, high, low and close
+            values for the selected fund on market days.
+
+            The return data is case we use default arguments will look like::
+
+                date || open | high | low | close | currency
+                -----||--------------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        date: dd/mm/yyyy,
+                        open: x,
+                        high: x,
+                        low: x,
+                        close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: funds object/file not found or unable to retrieve.
+        RuntimeError: introduced fund does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if fund information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain', as_json=False, order='ascending', debug=False)
+                         Open   High    Low  Close Currency
+            Date
+            2019-08-13  1.110  1.110  1.110  1.110      EUR
+            2019-08-16  1.109  1.109  1.109  1.109      EUR
+            2019-08-19  1.114  1.114  1.114  1.114      EUR
+            2019-08-20  1.112  1.112  1.112  1.112      EUR
+            2019-08-21  1.115  1.115  1.115  1.115      EUR
+
+    """
+
+    if not fund:
+        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
@@ -481,33 +214,682 @@ def funds_as_dict(country=None, columns=None, as_json=False):
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    resource_package = __name__
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+
+    resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = retrieve_funds()
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
-        raise IOError("ERR#0005: funds not found or unable to retrieve.")
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if columns is None:
-        columns = funds.columns.tolist()
+    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+
+    fund = fund.strip()
+    fund = fund.lower()
+
+    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('investpy')
+
+    if debug is False:
+        logger.disabled = True
     else:
-        if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+        logger.disabled = False
 
-    if not all(column in funds.columns.tolist() for column in columns):
-        raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<country, asset class, id, isin, issuer, name, symbol, tag, currency>")
+    logger.info('Searching introduced fund on Investing.com')
+
+    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
+
+    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+
+    logger.info(str(fund) + ' found on Investing.com')
+
+    header = "Datos históricos " + symbol
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": "Daily",
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
+
+    head = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
+    logger.info('Request sent to Investing.com!')
+
+    req = requests.post(url, headers=head, data=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
+
+    if path_:
+        logger.info('Data parsing process starting...')
+
+        for elements_ in path_:
+            info = []
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.text_content())
+
+            if info[0] == 'No se encontraron resultados':
+                raise IndexError("ERR#0008: fund information unavailable or not found.")
+
+            fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+            fund_close = float(info[1].replace('.', '').replace(',', '.'))
+            fund_open = float(info[2].replace('.', '').replace(',', '.'))
+            fund_high = float(info[3].replace('.', '').replace(',', '.'))
+            fund_low = float(info[4].replace('.', '').replace(',', '.'))
+
+            result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
+                                            fund_close, None, fund_currency))
+
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
+
+        logger.info('Data parsing process finished...')
+
+        if as_json is True:
+            json_ = {'name': name,
+                     'recent':
+                         [value.fund_as_json() for value in result]
+                     }
+
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+    """
+    This function retrieves historical data from the introduced `fund` from Investing
+    via Web Scraping on the introduced date range. The resulting data can it either be
+    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
+
+    Args:
+        fund (:obj:`str`): name of the fund to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the introduced fund is.
+        from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
+        to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified fund via argument. The dataset contains the open, high, low and close
+            values for the selected fund on market days.
+
+            The returned data is case we use default arguments will look like::
+
+                date || open | high | low | close | currency
+                -----||--------------------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    historical: [
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: argument error.
+        IOError: funds object/file not found or unable to retrieve.
+        RuntimeError: introduced fund does not match any of the indexed ones.
+        ConnectionError: if GET requests does not return 200 status code.
+        IndexError: if fund information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+                         Open   High    Low  Close Currency
+            Date
+            2018-02-15  1.105  1.105  1.105  1.105      EUR
+            2018-02-16  1.113  1.113  1.113  1.113      EUR
+            2018-02-17  1.113  1.113  1.113  1.113      EUR
+            2018-02-18  1.113  1.113  1.113  1.113      EUR
+            2018-02-19  1.111  1.111  1.111  1.111      EUR
+
+    """
+
+    if not fund:
+        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
 
     if country is None:
-        if as_json:
-            return json.dumps(funds[columns].to_dict(orient='records'))
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+
+    try:
+        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
+
+    try:
+        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+
+    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+
+    date_interval = {
+        'intervals': [],
+    }
+
+    flag = True
+
+    while flag is True:
+        diff = end_date.year - start_date.year
+
+        if diff > 20:
+            obj = {
+                'start': start_date.strftime('%d/%m/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%d/%m/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            start_date = start_date.replace(year=start_date.year + 20)
         else:
-            return funds[columns].to_dict(orient='records')
-    elif country in fund_countries_as_list():
-        if as_json:
-            return json.dumps(funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            obj = {
+                'start': start_date.strftime('%d/%m/%Y'),
+                'end': end_date.strftime('%d/%m/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            flag = False
+
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
+
+    if funds is None:
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+
+    fund = fund.strip()
+    fund = fund.lower()
+
+    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('investpy')
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced fund on Investing.com')
+
+    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
+
+    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+
+    logger.info(str(fund) + ' found on Investing.com')
+
+    final = list()
+
+    logger.info('Data parsing process starting...')
+
+    header = "Datos históricos " + symbol
+
+    for index in range(len(date_interval['intervals'])):
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": "Daily",
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
+
+        head = {
+            "User-Agent": user_agent.get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
+        logger.info('Request sent to Investing.com!')
+
+        req = requests.post(url, headers=head, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+
+        if not req.text:
+            continue
+
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        result = list()
+
+        if path_:
+            for elements_ in path_:
+                info = []
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.text_content())
+
+                if info[0] == 'No se encontraron resultados':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0008: fund information unavailable or not found.")
+
+                else:
+                    data_flag = True
+
+                if data_flag is True:
+                    fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
+                    fund_close = float(info[1].replace('.', '').replace(',', '.'))
+                    fund_open = float(info[2].replace('.', '').replace(',', '.'))
+                    fund_high = float(info[3].replace('.', '').replace(',', '.'))
+                    fund_low = float(info[4].replace('.', '').replace(',', '.'))
+
+                    result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
+                                                    fund_close, None, fund_currency))
+
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
+
+                if as_json is True:
+                    json_ = {'name': name,
+                             'historical':
+                                 [value.fund_as_json() for value in result]
+                             }
+
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
+
+                    final.append(df)
+
         else:
-            return funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    logger.info('Data parsing process finished...')
+
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
+
+
+def get_fund_information(fund, country, as_json=False):
+    """
+    This function retrieves basic financial information from the specified fund.
+    As the information is also provided by Investing.com, the tags and names remain the same so
+    a new Web Scraping process is not needed, the headers can be created with the existing information.
+    The retrieved information from the fund can be valuable as it is additional information that can
+    be used combined with OHLC values, so to determine financial insights from the company which holds
+    the specified fund.
+
+    Args:
+        fund (:obj:`str`): name of the fund to retrieve the financial information from.
+        country (:obj:`str`): name of the country from where the introduced fund is.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`dict`- fund_information:
+            The resulting :obj:`dict` contains the information fields retrieved from Investing.com from the
+            specified funds; it can also be returned as a :obj:`json`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                fund_information = {
+                    'Fund Name': fund_name,
+                    'Rating': rating,
+                    '1-Year Change': year_change,
+                    'Previous Close': prev_close,
+                    'Risk Rating': risk_rating,
+                    'TTM Yield': ttm_yield,
+                    'ROE': roe,
+                    'Issuer': issuer,
+                    'Turnover': turnover,
+                    'ROA': row,
+                    'Inception Date': inception_date,
+                    'Total Assets': total_assets,
+                    'Expenses': expenses,
+                    'Min Investment': min_investment,
+                    'Market Cap': market_cap,
+                    'Category': category
+                }
+
+    """
+
+    if not fund:
+        raise ValueError("ERR#0029: fund parameter is mandatory and must be a valid fund name.")
+
+    if not isinstance(fund, str):
+        raise ValueError("ERR#0028: fund argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
+
+    if funds is None:
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+
+    fund = fund.strip()
+    fund = fund.lower()
+
+    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+        raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
+
+    tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
+
+    url = "https://es.investing.com/funds/" + tag
+
+    head = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+    result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
+                                   'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
+                                   'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])
+    result.at[0, 'Fund Name'] = fund
+
+    if path_:
+        for elements_ in path_:
+            title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
+
+            if title_ == 'Rating':
+                rating_score = 5 - len(
+                    elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+
+                result.at[0, 'Rating'] = int(rating_score)
+            elif title_ == 'Var. en un año':
+                oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[
+                    0].text_content().replace(" ", "")
+
+                result.at[0, '1-Year Change'] = oneyear_variation
+            elif title_ == 'Último cierre':
+                previous_close = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'Previous Close'] = previous_close
+
+                if previous_close != 'N/A':
+                    result.at[0, 'Previous Close'] = float(previous_close.replace('.', '').replace(',', '.'))
+            elif title_ == 'Calificación de riesgo':
+                risk_score = 5 - len(
+                    elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
+
+                result.at[0, 'Risk Rating'] = int(risk_score)
+            elif title_ == 'Rendimiento año móvil':
+                ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'TTM Yield'] = ttm_percentage
+            elif title_ == 'ROE':
+                roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'ROE'] = roe_percentage
+            elif title_ == 'Emisor':
+                issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'Issuer'] = issuer_name.strip()
+            elif title_ == 'Volumen de ventas':
+                turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[
+                    0].text_content()
+
+                result.at[0, 'Turnover'] = turnover_percentage
+            elif title_ == 'ROA':
+                roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'ROA'] = roa_percentage
+            elif title_ == 'Fecha de inicio':
+                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+                inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
+
+                result.at[0, 'Inception Date'] = inception_date.strftime('%d/%m/%Y')
+            elif title_ == 'Total activos':
+                total_assets = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                if total_assets != 'N/A':
+                    if total_assets.__contains__('K'):
+                        total_assets = int(
+                            float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                    elif total_assets.__contains__('M'):
+                        total_assets = int(
+                            float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                    elif total_assets.__contains__('B'):
+                        total_assets = int(
+                            float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                    else:
+                        total_assets = int(float(total_assets.replace('.', '')))
+
+                result.at[0, 'Total Assets'] = total_assets
+            elif title_ == 'Gastos':
+                expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[
+                    0].text_content()
+
+                result.at[0, 'Expenses'] = expenses_percentage
+            elif title_ == 'Inversión mínima':
+                min_investment = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'Min Investment'] = min_investment
+
+                if min_investment != 'N/A':
+                    result.at[0, 'Min Investment'] = int(float(min_investment.replace('.', '')))
+            elif title_ == 'Cap. mercado':
+                market_cap = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                if market_cap != 'N/A':
+                    if market_cap.__contains__('K'):
+                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                    elif market_cap.__contains__('M'):
+                        market_cap = int(
+                            float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                    elif market_cap.__contains__('B'):
+                        market_cap = int(
+                            float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                    else:
+                        market_cap = int(float(market_cap.replace('.', '')))
+
+                result.at[0, 'Market Cap'] = market_cap
+            elif title_ == 'Categoría':
+                category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
+
+                result.at[0, 'Category'] = category_name
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_json()
+            json_ = json.dumps(json_, sort_keys=False)
+
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def search_funds(by, value):
+    """
+    This function searches funds by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced value for the specified field which is the
+    `funds.csv` column name to search in. Available fields to search funds are 'name', 'symbol', 'issuer' and 'isin'.
+
+    Args:
+        by (:obj:`str`):
+            name of the field to search for, which is the column name ('name', 'symbol', 'issuer' or 'isin').
+        value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting `pandas.DataFrame` contains the search results from the given query (the specified value
+            in the specified field). If there are no results and error will be raised, but otherwise this
+            `pandas.DataFrame` will contain all the available field values that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced params is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    """
+
+    available_search_fields = ['name', 'symbol', 'issuer', 'isin']
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
+
+    if funds is None:
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
+    funds['matches'] = funds[by].str.contains(value, case=False)
+
+    search_result = funds.loc[funds['matches'] == True].copy()
+
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+
+    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
+
+    return search_result

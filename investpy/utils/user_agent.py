@@ -28,9 +28,8 @@ def get_random():
         FileNotFoundError: if `user_agent_list.csv` file has not been found.
     """
 
-    resource_package = __name__
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename('investpy', resource_path)
 
     if os.path.exists(file_):
         with open(file_, 'r') as f:
@@ -55,9 +54,8 @@ def clear_file():
     missing content on file `user_agent_list.txt`.
     """
 
-    resource_package = __name__
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename('investpy', resource_path)
 
     if os.path.exists(file_):
         with open(file_, 'w') as f:
@@ -72,9 +70,8 @@ def delete_file():
     is called, it is going to raise a `FileNotFoundError` due to missing file `user_agent_list.txt`.
     """
 
-    resource_package = __name__
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
+    file_ = pkg_resources.resource_filename('investpy', resource_path)
 
     if os.path.exists(file_):
         os.remove(file_)

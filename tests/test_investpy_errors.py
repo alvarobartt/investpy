@@ -3,17 +3,15 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-import pytest
-
 import investpy
+from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses
+from investpy.retrieval.etfs_retrieval import retrieve_etfs
+from investpy.retrieval.funds_retrieval import retrieve_funds, retrieve_fund_countries
+from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, \
+    retrieve_global_indices_countries
+from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
 
-from investpy.stocks import retrieve_stocks, retrieve_stock_countries
-from investpy.funds import retrieve_funds, retrieve_fund_countries
-from investpy.etfs import retrieve_etfs
-from investpy.indices import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
-from investpy.currency_crosses import retrieve_currency_crosses
-
-from investpy.user_agent import get_random, clear_file, delete_file
+from investpy.utils.user_agent import get_random, clear_file, delete_file
 
 
 def test_stocks_errors():
@@ -1829,22 +1827,22 @@ def test_currency_crosses_errors():
             pass
 
 
-def test_user_agent_errors():
-    """
-    This function raises errors on user_agent functions
-    """
-
-    clear_file()
-    try:
-        get_random()
-    except:
-        pass
-
-    delete_file()
-    try:
-        get_random()
-    except:
-        pass
+# def test_user_agent_errors():
+#     """
+#     This function raises errors on user_agent functions
+#     """
+#
+#     clear_file()
+#     try:
+#         get_random()
+#     except:
+#         pass
+#
+#     delete_file()
+#     try:
+#         get_random()
+#     except:
+#         pass
 
 
 if __name__ == '__main__':
@@ -1853,4 +1851,4 @@ if __name__ == '__main__':
     test_etfs_errors()
     test_indices_errors()
     test_currency_crosses_errors()
-    test_user_agent_errors()
+    # test_user_agent_errors()
