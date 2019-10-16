@@ -1827,22 +1827,22 @@ def test_currency_crosses_errors():
             pass
 
 
-# def test_user_agent_errors():
-#     """
-#     This function raises errors on user_agent functions
-#     """
-#
-#     clear_file()
-#     try:
-#         get_random()
-#     except:
-#         pass
-#
-#     delete_file()
-#     try:
-#         get_random()
-#     except:
-#         pass
+def test_user_agent_errors():
+    """
+    This function raises errors on user_agent functions
+    """
+
+    clear_file()
+    try:
+        get_random()
+    except:
+        pass
+
+    delete_file()
+    try:
+        get_random()
+    except:
+        pass
 
 
 if __name__ == '__main__':
@@ -1851,4 +1851,4 @@ if __name__ == '__main__':
     test_etfs_errors()
     test_indices_errors()
     test_currency_crosses_errors()
-    # test_user_agent_errors()
+    test_user_agent_errors()
