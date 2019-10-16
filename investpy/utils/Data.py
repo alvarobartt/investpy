@@ -142,3 +142,21 @@ class Data(object):
             'Volume': self.volume,
             'Currency': self.currency,
         }
+
+    def bond_to_dict(self):
+        return {
+            'Date': self.date,
+            'Open': self.open,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
+        }
+
+    def bond_as_json(self):
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
+        }
