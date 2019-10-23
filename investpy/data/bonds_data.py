@@ -12,61 +12,32 @@ import pkg_resources
 from investpy.retrieval.bonds_retrieval import retrieve_bonds, retrieve_bond_countries
 
 
-def bond_countries_as_list():
-    """
-    This function returns a listing with all the available countries from where stocks can be retrieved, so to
-    let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
-    function. Also, not just the available countries, but the required name is provided since Investing.com has a
-    certain country name standard and countries should be specified the same way they are in Investing.com.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
-
-    Raises:
-        IOError: raised when `bond_countries.csv` file is missing or empty.
-
-    """
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bond_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        countries = retrieve_bond_countries(test_mode=False)
-
-    if countries is None:
-        raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
-    else:
-        return countries['country'].tolist()
-
-
 def bonds_as_df(country=None):
     """
-    This function retrieves all the stock data stored in `stocks.csv` file, which previously was
-    retrieved from Investing.com. Since the resulting object is a matrix of data, the stock data is properly
-    structured in rows and columns, where columns are the stock data attribute names. Additionally, country
-    filtering can be specified, which will make this function return not all the stored stock data, but just
-    the stock data of the stocks from the introduced country.
+    This function retrieves all the bonds data stored in `bonds.csv` file, which previously was
+    retrieved from Investing.com. Since the resulting object is a matrix of data, the bonds data is properly
+    structured in rows and columns, where columns are the bond data attribute names. Additionally, country
+    filtering can be specified, which will make this function return not all the stored bond data, but just
+    the data of the bonds from the introduced country.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
 
     Returns:
-        :obj:`pandas.DataFrame` - stocks_df:
-            The resulting :obj:`pandas.DataFrame` contains all the stock data from the introduced country if specified,
+        :obj:`pandas.DataFrame` - bonds_df:
+            The resulting :obj:`pandas.DataFrame` contains all the bond data from the introduced country if specified,
             or from every country if None was specified, as indexed in Investing.com from the information previously
             retrieved by investpy and stored on a csv file.
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full name | isin | currency | symbol
-                --------|------|-----------|------|----------|--------
-                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxxxxx | xxxxxx
+                country | name | full name 
+                --------|------|-----------
+                xxxxxxx | xxxx | xxxxxxxxx
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        IOError: raised when `bonds.csv` file is missing or empty.
 
     """
 
@@ -96,29 +67,30 @@ def bonds_as_df(country=None):
 
 def bonds_as_list(country=None):
     """
-    This function retrieves all the stock symbols stored in `stocks.csv` file, which contains all the
-    data from the stocks as previously retrieved from Investing.com. So on, this function will just return
-    the stock symbols which will be one of the input parameters when it comes to stock data retrieval functions
+    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
+    data from the bonds as previously retrieved from Investing.com. So on, this function will just return
+    the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
-    this function just returns the symbols and in stock data retrieval functions both the symbol and the country
+    this function just returns the names and in bond data retrieval functions both the name and the country
     must be specified and they must match.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
 
     Returns:
-        :obj:`list` - stocks_list:
-            The resulting :obj:`list` contains the all the stock symbols from the introduced country if specified,
+        :obj:`list` - bonds_list:
+            The resulting :obj:`list` contains the all the bond names from the introduced country if specified,
             or from every country if None was specified, as indexed in Investing.com from the information previously
             retrieved by investpy and stored on a csv file.
 
-            In case the information was successfully retrieved, the :obj:`list` of stock symbols will look like::
+            In case the information was successfully retrieved, the :obj:`list` of bond names will look like::
 
-                stocks_list = ['TS', 'APBR', 'GGAL', 'TXAR', 'PAMP', ...]
+                bonds_list = ['Argentina 1Y', 'Argentina 3Y', 'Argentina 5Y', 'Argentina 9Y', ...]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        IOError: raised when `bonds.csv` file is missing or empty.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -144,35 +116,30 @@ def bonds_as_list(country=None):
 
 def bonds_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the stock information stored in the `stocks.csv` file and formats it as a
+    This function retrieves all the bonds information stored in the `bonds.csv` file and formats it as a
     Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and
     all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the
     JSON structure. Some optional paramaters can be specified such as the country, columns or as_json, which
-    are a filtering by country so not to return all the stocks but just the ones from the introduced country,
+    are a filtering by country so not to return all the bonds but just the ones from the introduced country,
     the column names that want to be retrieved in case of needing just some columns to avoid unnecessary information
     load, and whether the information wants to be returned as a JSON object or as a dictionary; respectively.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
-        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, symbol>
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
+        columns (:obj:`list`, optional): column names of the bonds data to retrieve, can be: <country, name, full_name>
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
-            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
+        :obj:`list` of :obj:`dict` OR :obj:`json` - bonds_dict:
+            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every bond as indexed in Investing.com from
             the information previously retrieved by investpy and stored on a csv file.
 
             In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
-                {
+                bonds_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,
-                    'tag': tag,
-                    'isin': isin,
-                    'id': id,
-                    'currency': currency,
-                    'symbol': symbol,
                 }
 
     Raises:
@@ -207,7 +174,7 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in bonds.columns.tolist() for column in columns):
         raise ValueError("ERR#0063: specified columns does not exist, available columns are "
-                         "<country, name, full_name, tag, id>")
+                         "<country, name, full_name>")
 
     if country is None:
         if as_json:
@@ -220,3 +187,38 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
                 bonds[bonds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return bonds[bonds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+
+
+def bond_countries_as_list():
+    """
+    This function returns a listing with all the available countries from where bonds can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
+
+    Raises:
+        IOError: raised when `bond_countries.csv` file is missing or empty.
+
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'bonds', 'bond_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        countries = retrieve_bond_countries(test_mode=False)
+
+    if countries is None:
+        raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
+    
+    for index, row in countries.iterrows():
+        if row['country'] == 'uk':
+            countries.loc[index, 'country'] = 'united kingdom'
+        elif row['country'] == 'usa':
+            countries.loc[index, 'country'] = 'united states'
+
+    return countries['country'].tolist()

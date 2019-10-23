@@ -97,6 +97,9 @@
 <li class="toctree-l2"><a class="reference internal" href="stocks_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.stocks</span></code></a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.funds</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="etfs_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.etfs</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="indices_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.indices</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="currency_crosses_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.currency_crosses</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="bonds_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.bonds</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="information.html">Additional Information</a></li>
@@ -170,8 +173,8 @@
   <div class="section" id="module-investpy.funds">
 <span id="investpy-funds"></span><h1><a class="reference internal" href="#module-investpy.funds" title="investpy.funds"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.funds</span></code></a><a class="headerlink" href="#module-investpy.funds" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="investpy.funds.get_fund_countries">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_fund_countries</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_countries" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.funds.fund_countries_as_list">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">fund_countries_as_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.fund_countries_as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
 from, via reading the <cite>fund_countries.csv</cite> file from the resources directory. So on, this function will display a
 listing containing a set of countries, in order to let the user know which countries are taken into account and also
@@ -190,202 +193,11 @@ the return listing from this function can be used for country param check if nee
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.funds.get_fund_historical_data">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_fund_historical_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_historical_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves historical data from the introduced <cite>fund</cite> from Investing
-via Web Scraping on the introduced date range. The resulting data can it either be
-stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve recent historical data from.</p></li>
-<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the introduced fund is.</p></li>
-<li><p><strong>from_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, from where data is going to be retrieved.</p></li>
-<li><p><strong>to_date</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – date as <cite>str</cite> formatted as <cite>dd/mm/yyyy</cite>, until where data is going to be retrieved.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite>, <cite>asc</cite> or <cite>descending</cite>, <cite>desc</cite>).</p></li>
-<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The function returns a either a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file containing the retrieved
-recent data from the specified fund via argument. The dataset contains the open, high, low and close
-values for the selected fund on market days.</p>
-<p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span>
-<span class="o">-----||--------------------------------------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
-</pre></div>
-</div>
-<p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="n">historical</span><span class="p">:</span> <span class="p">[</span>
-        <span class="p">{</span>
-            <span class="n">date</span><span class="p">:</span> <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">,</span>
-            <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">close</span><span class="p">:</span> <span class="n">x</span>
-        <span class="p">},</span>
-        <span class="o">...</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – argument error.</p></li>
-<li><p><strong>IOError</strong> – funds object/file not found or unable to retrieve.</p></li>
-<li><p><strong>RuntimeError</strong> – introduced fund does not match any of the indexed ones.</p></li>
-<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
-<li><p><strong>IndexError</strong> – if fund information was unavailable or not found.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_historical_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">                 Open   High    Low  Close Currency</span>
-<span class="go">    Date</span>
-<span class="go">    2018-02-15  1.105  1.105  1.105  1.105      EUR</span>
-<span class="go">    2018-02-16  1.113  1.113  1.113  1.113      EUR</span>
-<span class="go">    2018-02-17  1.113  1.113  1.113  1.113      EUR</span>
-<span class="go">    2018-02-18  1.113  1.113  1.113  1.113      EUR</span>
-<span class="go">    2018-02-19  1.111  1.111  1.111  1.111      EUR</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.funds.get_fund_information">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_fund_information</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_information" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves basic financial information from the specified fund.
-As the information is also provided by Investing.com, the tags and names remain the same so
-a new Web Scraping process is not needed, the headers can be created with the existing information.
-The retrieved information from the fund can be valuable as it is additional information that can
-be used combined with OHLC values, so to determine financial insights from the company which holds
-the specified fund.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve the financial information from.</p></li>
-<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the introduced fund is.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the information fields retrieved from Investing.com from the
-specified funds; it can also be returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>, if argument <cite>as_json=True</cite>.</p>
-<p>If any of the information fields could not be retrieved, that field/s will be filled with
-None values. If the retrieval process succeeded, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fund_information</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Fund Name&#39;</span><span class="p">:</span> <span class="n">fund_name</span><span class="p">,</span>
-    <span class="s1">&#39;Rating&#39;</span><span class="p">:</span> <span class="n">rating</span><span class="p">,</span>
-    <span class="s1">&#39;1-Year Change&#39;</span><span class="p">:</span> <span class="n">year_change</span><span class="p">,</span>
-    <span class="s1">&#39;Previous Close&#39;</span><span class="p">:</span> <span class="n">prev_close</span><span class="p">,</span>
-    <span class="s1">&#39;Risk Rating&#39;</span><span class="p">:</span> <span class="n">risk_rating</span><span class="p">,</span>
-    <span class="s1">&#39;TTM Yield&#39;</span><span class="p">:</span> <span class="n">ttm_yield</span><span class="p">,</span>
-    <span class="s1">&#39;ROE&#39;</span><span class="p">:</span> <span class="n">roe</span><span class="p">,</span>
-    <span class="s1">&#39;Issuer&#39;</span><span class="p">:</span> <span class="n">issuer</span><span class="p">,</span>
-    <span class="s1">&#39;Turnover&#39;</span><span class="p">:</span> <span class="n">turnover</span><span class="p">,</span>
-    <span class="s1">&#39;ROA&#39;</span><span class="p">:</span> <span class="n">row</span><span class="p">,</span>
-    <span class="s1">&#39;Inception Date&#39;</span><span class="p">:</span> <span class="n">inception_date</span><span class="p">,</span>
-    <span class="s1">&#39;Total Assets&#39;</span><span class="p">:</span> <span class="n">total_assets</span><span class="p">,</span>
-    <span class="s1">&#39;Expenses&#39;</span><span class="p">:</span> <span class="n">expenses</span><span class="p">,</span>
-    <span class="s1">&#39;Min Investment&#39;</span><span class="p">:</span> <span class="n">min_investment</span><span class="p">,</span>
-    <span class="s1">&#39;Market Cap&#39;</span><span class="p">:</span> <span class="n">market_cap</span><span class="p">,</span>
-    <span class="s1">&#39;Category&#39;</span><span class="p">:</span> <span class="n">category</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>- fund_information</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.funds.get_fund_recent_data">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_fund_recent_data</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">debug=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_recent_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves recent historical data from the introduced <cite>fund</cite> from Investing
-via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
-<code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>fund</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the fund to retrieve recent historical data from.</p></li>
-<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the introduced fund is.</p></li>
-<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
-<li><p><strong>order</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – optional argument to define the order of the retrieved data (<cite>ascending</cite>, <cite>asc</cite> or <cite>descending</cite>, <cite>desc</cite>).</p></li>
-<li><p><strong>debug</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to either show or hide debug messages on log, <cite>True</cite> or <cite>False</cite>, respectively.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The function returns a either a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file containing the retrieved
-recent data from the specified fund via argument. The dataset contains the open, high, low and close
-values for the selected fund on market days.</p>
-<p>The return data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span>
-<span class="o">-----||--------------------------------------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
-</pre></div>
-</div>
-<p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="n">recent</span><span class="p">:</span> <span class="p">[</span>
-        <span class="n">date</span><span class="p">:</span> <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">,</span>
-        <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-        <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-        <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-        <span class="n">close</span><span class="p">:</span> <span class="n">x</span>
-        <span class="p">},</span>
-        <span class="o">...</span>
-    <span class="p">]</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code></p>
-</dd>
-<dt class="field-even">Raises</dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – argument error.</p></li>
-<li><p><strong>IOError</strong> – funds object/file not found or unable to retrieve.</p></li>
-<li><p><strong>RuntimeError</strong> – introduced fund does not match any of the indexed ones.</p></li>
-<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
-<li><p><strong>IndexError</strong> – if fund information was unavailable or not found.</p></li>
-</ul>
-</dd>
-</dl>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_fund_recent_data</span><span class="p">(</span><span class="n">fund</span><span class="o">=</span><span class="s1">&#39;bbva multiactivo conservador pp&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">                 Open   High    Low  Close Currency</span>
-<span class="go">    Date</span>
-<span class="go">    2019-08-13  1.110  1.110  1.110  1.110      EUR</span>
-<span class="go">    2019-08-16  1.109  1.109  1.109  1.109      EUR</span>
-<span class="go">    2019-08-19  1.114  1.114  1.114  1.114      EUR</span>
-<span class="go">    2019-08-20  1.112  1.112  1.112  1.112      EUR</span>
-<span class="go">    2019-08-21  1.115  1.115  1.115  1.115      EUR</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="function">
-<dt id="investpy.funds.get_funds">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.funds.funds_as_df">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">funds_as_df</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.funds_as_df" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>funds</cite> from Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>,
 which contains not just the fund names, but all the fields contained on the funds file.
-All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
+All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/">https://es.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available funds from.</p>
@@ -414,12 +226,11 @@ CSV file, this function just reads it and loads it into a <code class="xref py p
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.funds.get_funds_dict">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available funds on Investing.com and
-returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the <cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>,
-<cite>name</cite>, <cite>symbol</cite> and <cite>tag</cite>. All the available funds can be found at:
-<a class="reference external" href="https://es.investing.com/etfs/spain-etfs">https://es.investing.com/etfs/spain-etfs</a></p>
+<dt id="investpy.funds.funds_as_dict">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">funds_as_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.funds_as_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available funds on Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the
+<cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>, <cite>name</cite>, <cite>symbol</cite> and <cite>tag</cite>. All the available funds can be found at:
+<a class="reference external" href="https://es.investing.com/etfs/">https://es.investing.com/etfs/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -460,10 +271,10 @@ fields are filled with <cite>None</cite> values.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.funds.get_funds_list">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds_list" title="Permalink to this definition">¶</a></dt>
+<dt id="investpy.funds.funds_as_list">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">funds_as_list</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.funds_as_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available funds and returns a list of each one of them.
-All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0">https://es.investing.com/funds/spain-funds?&amp;issuer_filter=0</a></p>
+All the available funds can be found at: <a class="reference external" href="https://es.investing.com/funds/">https://es.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available funds from.</p>
@@ -493,31 +304,98 @@ every fund listed on Investing.com.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="investpy.funds.search_funds">
-<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">search_funds</code><span class="sig-paren">(</span><em class="sig-param">by</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.search_funds" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function searches funds by the introduced value for the specified field. This means that this function
-is going to search if there is a value that matches the introduced value for the specified field which is the
-<cite>funds.csv</cite> column name to search in. Available fields to search funds are ‘name’, ‘symbol’, ‘issuer’ and ‘isin’.</p>
+<dt id="investpy.funds.retrieve_fund_countries">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">retrieve_fund_countries</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.retrieve_fund_countries" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+from, via Web Scraping <a class="reference external" href="https://www.investing.com/funds/">https://www.investing.com/funds/</a> where the available countries are listed and retrieved.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>by</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the field to search for, which is the column name (‘name’, ‘symbol’, ‘issuer’ or ‘isin’).</p></li>
-<li><p><strong>value</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – value of the field to search for, which is the str that is going to be searched.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
+coverage.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The resulting <cite>pandas.DataFrame</cite> contains the search results from the given query (the specified value
-in the specified field). If there are no results and error will be raised, but otherwise this
-<cite>pandas.DataFrame</cite> will contain all the available field values that match the introduced query.</p>
+<dd class="field-even"><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the available countries with their corresponding ID,
+which will be used later by investpy.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - search_result</p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - fund_countries</p>
 </dd>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
-<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
-<li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if connection to Investing.com could not be established.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if no countries were retrieved from Investing.com fund listing.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.funds.retrieve_fund_info">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">retrieve_fund_info</code><span class="sig-paren">(</span><em class="sig-param">tag</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.retrieve_fund_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves additional information from a fund as listed in Investing.com. Every fund data is retrieved
+and stored in a CSV in order to get all the possible information from a fund.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>tag</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – is the identifying tag of the specified fund.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the retrieved data if found, if not, the corresponding
+fields are filled with <cite>None</cite> values.</p>
+<p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;issuer&#39;</span><span class="p">:</span> <span class="n">issuer_value</span><span class="p">,</span>
+    <span class="s1">&#39;isin&#39;</span><span class="p">:</span> <span class="n">isin_value</span><span class="p">,</span>
+    <span class="s1">&#39;asset class&#39;</span><span class="p">:</span> <span class="n">asset_value</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> - fund_data</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – if fund information was unavailable or not found.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.funds.retrieve_funds">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">retrieve_funds</code><span class="sig-paren">(</span><em class="sig-param">test_mode=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.retrieve_funds" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves all the available <cite>funds</cite> listed in Investing.com <a class="reference external" href="https://es.investing.com/funds">https://es.investing.com/funds</a>. Retrieving
+all the meta-information attached to them. Additionally when funds are retrieved all the meta-information
+is both returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> and stored on a CSV file on a package folder containing all the
+available resources. Note that maybe some of the information contained in the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>
+is useless.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>test_mode</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>) – variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
+coverage.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the fund meta-information if found, if not, an
+empty <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will be returned and no CSV file will be stored.</p>
+<p>In the case that the retrieval process of funds was successfully completed, the resulting
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>asset class | id | isin | issuer | name | symbol | tag
+------------|----|------|--------|------|--------|-----
+xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - funds</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – if any of the introduced arguments is not valid.</p></li>
+<li><p><strong>ConnectionError</strong> – if GET requests does not return 200 status code.</p></li>
+<li><p><strong>IndexError</strong> – if fund information was unavailable or not found.</p></li>
 </ul>
 </dd>
 </dl>

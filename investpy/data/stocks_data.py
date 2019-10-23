@@ -158,13 +158,13 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
+        :obj:`list` of :obj:`dict` OR :obj:`json` - stocks_dict:
             The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
             the information previously retrieved by investpy and stored on a csv file.
 
             In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
-                {
+                stocks_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,

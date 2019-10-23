@@ -23,30 +23,30 @@ from investpy.data.bonds_data import bond_countries_as_list
 
 def get_bonds(country=None):
     """
-    This function retrieves all the stock data stored in `stocks.csv` file, which previously was
-    retrieved from Investing.com. Since the resulting object is a matrix of data, the stock data is properly
-    structured in rows and columns, where columns are the stock data attribute names. Additionally, country
-    filtering can be specified, which will make this function return not all the stored stock data, but just
-    the stock data of the stocks from the introduced country.
+    This function retrieves all the bonds data stored in `bonds.csv` file, which previously was
+    retrieved from Investing.com. Since the resulting object is a matrix of data, the bonds data is properly
+    structured in rows and columns, where columns are the bond data attribute names. Additionally, country
+    filtering can be specified, which will make this function return not all the stored bond data, but just
+    the data of the bonds from the introduced country.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
 
     Returns:
-        :obj:`pandas.DataFrame` - stocks_df:
-            The resulting :obj:`pandas.DataFrame` contains all the stock data from the introduced country if specified,
+        :obj:`pandas.DataFrame` - bonds_df:
+            The resulting :obj:`pandas.DataFrame` contains all the bond data from the introduced country if specified,
             or from every country if None was specified, as indexed in Investing.com from the information previously
             retrieved by investpy and stored on a csv file.
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full name | isin | currency | symbol
-                --------|------|-----------|------|----------|--------
-                xxxxxxx | xxxx | xxxxxxxxx | xxxx | xxxxxxxx | xxxxxx
+                country | name | full name 
+                --------|------|-----------
+                xxxxxxx | xxxx | xxxxxxxxx
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        IOError: raised when `bonds.csv` file is missing or empty.
 
     """
 
@@ -55,29 +55,30 @@ def get_bonds(country=None):
 
 def get_bonds_list(country=None):
     """
-    This function retrieves all the stock symbols stored in `stocks.csv` file, which contains all the
-    data from the stocks as previously retrieved from Investing.com. So on, this function will just return
-    the stock symbols which will be one of the input parameters when it comes to stock data retrieval functions
+    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
+    data from the bonds as previously retrieved from Investing.com. So on, this function will just return
+    the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
-    this function just returns the symbols and in stock data retrieval functions both the symbol and the country
+    this function just returns the names and in bond data retrieval functions both the name and the country
     must be specified and they must match.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
 
     Returns:
-        :obj:`list` - stocks_list:
-            The resulting :obj:`list` contains the all the stock symbols from the introduced country if specified,
+        :obj:`list` - bonds_list:
+            The resulting :obj:`list` contains the all the bond names from the introduced country if specified,
             or from every country if None was specified, as indexed in Investing.com from the information previously
             retrieved by investpy and stored on a csv file.
 
-            In case the information was successfully retrieved, the :obj:`list` of stock symbols will look like::
+            In case the information was successfully retrieved, the :obj:`list` of bond names will look like::
 
-                stocks_list = ['TS', 'APBR', 'GGAL', 'TXAR', 'PAMP', ...]
+                bonds_list = ['Argentina 1Y', 'Argentina 3Y', 'Argentina 5Y', 'Argentina 9Y', ...]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        IOError: raised when `bonds.csv` file is missing or empty.
+    
     """
 
     return bonds_as_list(country)
@@ -85,37 +86,35 @@ def get_bonds_list(country=None):
 
 def get_bonds_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the stock information stored in the `stocks.csv` file and formats it as a
+    This function retrieves all the bonds information stored in the `bonds.csv` file and formats it as a
     Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and
     all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the
     JSON structure. Some optional paramaters can be specified such as the country, columns or as_json, which
-    are a filtering by country so not to return all the stocks but just the ones from the introduced country,
+    are a filtering by country so not to return all the bonds but just the ones from the introduced country,
     the column names that want to be retrieved in case of needing just some columns to avoid unnecessary information
     load, and whether the information wants to be returned as a JSON object or as a dictionary; respectively.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available stocks from.
-        columns (:obj:`list`, optional):column names of the stock data to retrieve, can be: <country, name, full_name, isin, currency, symbol>
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
+        columns (:obj:`list`, optional): column names of the bonds data to retrieve, can be: <country, name, full_name>
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
-            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
+        :obj:`list` of :obj:`dict` OR :obj:`json` - bonds_dict:
+            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every bond as indexed in Investing.com from
             the information previously retrieved by investpy and stored on a csv file.
 
             In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
-                {
+                bonds_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,
-                    'tag': tag,
-                    'id': id,
                 }
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `bonds.csv` file is missing or empty.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -124,17 +123,17 @@ def get_bonds_dict(country=None, columns=None, as_json=False):
 
 def get_bond_countries():
     """
-    This function returns a listing with all the available countries from where stocks can be retrieved, so to
-    let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
+    This function returns a listing with all the available countries from where bonds can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
     function. Also, not just the available countries, but the required name is provided since Investing.com has a
     certain country name standard and countries should be specified the same way they are in Investing.com.
 
     Returns:
         :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
+            The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
 
     Raises:
-        IOError: raised when `stock_countries.csv` file is missing or empty.
+        IOError: raised when `bond_countries.csv` file is missing or empty.
 
     """
 
@@ -143,16 +142,16 @@ def get_bond_countries():
 
 def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
-    of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
+    This function retrieves recent historical data from the introduced bond from Investing.com. So on, the recent data
+    of the introduced bond from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
     the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
     can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a
     :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the index is the date)
     and whether debug messages are going to be printed or not, respectively.
 
     Args:
-        stock (:obj:`str`): symbol of the stock to retrieve recent historical data from.
-        country (:obj:`str`): name of the country from where the stock is.
+        bond (:obj:`str`): name of the bond to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the bond is.
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
@@ -162,15 +161,14 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
             The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
-            recent data of the specified stock from the specified country. So on, the resulting dataframe contains the
-            open, high, low, close and volume values for the selected stock on market days and the currency in which those
-            values are presented.
+            recent data of the specified bond from the specified country. So on, the resulting dataframe contains the
+            open, high, low and close values for the selected bond on market days.
 
             The resulting recent data, in case that the default parameters were applied, will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||-----------------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                date || open | high | low | close 
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
@@ -189,21 +187,21 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        IOError: raised if stocks object/file was not found or unable to retrieve.
-        RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
+        IOError: raised if bonds object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced bond/country was not found or did not match any of the existing ones.
         ConnectionError: raised if connection to Investing.com could not be established.
-        IndexError: raised if stock recent data was unavailable or not found in Investing.com.
+        IndexError: raised if bond historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_bond_recent_data(bond='bbva', country='spain')
-                         Open   High    Low  Close
-            Date
-            2019-08-13  4.263  4.395  4.230  4.353
-            2019-08-14  4.322  4.325  4.215  4.244
-            2019-08-15  4.281  4.298  4.187  4.234
-            2019-08-16  4.234  4.375  4.208  4.365
-            2019-08-19  4.396  4.425  4.269  4.269
-
+        >>> investpy.get_bond_recent_data(bond='Argentina 3Y', country='argentina')
+                        Open    High     Low   Close
+            Date                                      
+            2019-09-23  52.214  52.214  52.214  52.214
+            2019-09-24  52.323  52.323  52.323  52.323
+            2019-09-25  52.432  52.432  52.432  52.432
+            2019-09-26  52.765  52.765  52.765  52.765
+            2019-09-27  52.876  52.876  52.876  52.876
+    
     """
 
     if not bond:
@@ -343,16 +341,16 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
 
 def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
-    of the introduced stock from the specified country in the specified data range will be retrieved and returned as
+    This function retrieves historical data from the introduced bond from Investing.com. So on, the historical data
+    of the introduced bond from the specified country in the specified data range will be retrieved and returned as
     a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
     some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to
     be returned as a :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the
     index is the date) and whether debug messages are going to be printed or not, respectively.
 
     Args:
-        bond (:obj:`str`): symbol of the stock to retrieve historical data from.
-        country (:obj:`str`): name of the country from where the stock is.
+        bond (:obj:`str`): name of the bond to retrieve historical data from.
+        country (:obj:`str`): name of the country from where the bond is.
         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
         as_json (:obj:`bool`, optional):
@@ -364,14 +362,14 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
             The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
-            recent data from the specified stock via argument. The dataset contains the open, high, low, close and
-            volume values for the selected stock on market days.
+            recent data from the specified bond via argument. The dataset contains the open, high, low and close for the 
+            selected bond on market days.
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||-----------------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                date || open | high | low | close 
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx 
 
             but if we define `as_json=True`, then the output will be::
 
@@ -383,8 +381,6 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
                             high: x,
                             low: x,
                             close: x,
-                            volume: x,
-                            currency: x
                         },
                         ...
                     ]
@@ -392,20 +388,20 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        IOError: raised if stocks object/file was not found or unable to retrieve.
-        RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
+        IOError: raised if bonds object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced bond/country was not found or did not match any of the existing ones.
         ConnectionError: raised if connection to Investing.com could not be established.
-        IndexError: raised if stock historical data was unavailable or not found in Investing.com.
+        IndexError: raised if bond historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_bond_historical_data(bond='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close  Volume Currency
-            Date
-            2010-01-04  12.73  12.96  12.73  12.96       0      EUR
-            2010-01-05  13.00  13.11  12.97  13.09       0      EUR
-            2010-01-06  13.03  13.17  13.02  13.12       0      EUR
-            2010-01-07  13.02  13.11  12.93  13.05       0      EUR
-            2010-01-08  13.12  13.22  13.04  13.18       0      EUR
+        >>> investpy.get_bond_historical_data(bond='Argentina 3Y', country='argentina', from_date='01/01/2010', to_date='01/01/2019')
+                        Open  High   Low  Close
+            Date                               
+            2011-01-03  4.15  4.15  4.15   5.15
+            2011-01-04  4.07  4.07  4.07   5.45
+            2011-01-05  4.27  4.27  4.27   5.71
+            2011-01-10  4.74  4.74  4.74   6.27
+            2011-01-11  4.30  4.30  4.30   6.56
 
     """
 
@@ -617,12 +613,12 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
 
 def search_bonds(by, value):
     """
-    This function searches stocks by the introduced value for the specified field. This means that this function
+    This function searches bonds by the introduced value for the specified field. This means that this function
     is going to search if there is a value that matches the introduced one for the specified field which is the
-    `stocks.csv` column name to search in. Available fields to search stocks are 'name', 'full_name' and 'isin'.
+    `bonds.csv` column name to search in. Available fields to search bonds are 'name' or 'full_name'.
 
     Args:
-        by (:obj:`str`): name of the field to search for, which is the column name which can be: 'name', 'full_name' or 'isin'.
+        by (:obj:`str`): name of the field to search for, which is the column name which can be: 'name' or 'full_name'.
         value (:obj:`str`): value of the field to search for, which is the value that is going to be searched.
 
     Returns:
@@ -630,7 +626,7 @@ def search_bonds(by, value):
             The resulting :obj:`pandas.DataFrame` contains the search results from the given query, which is
             any match of the specified value in the specified field. If there are no results for the given query,
             an error will be raised, but otherwise the resulting :obj:`pandas.DataFrame` will contain all the
-            available stocks that match the introduced query.
+            available bonds that match the introduced query.
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
