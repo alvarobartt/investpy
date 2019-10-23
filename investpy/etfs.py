@@ -647,11 +647,13 @@ def get_etfs_overview(country, as_json=False):
                 name | symbol | last | change | turnover
                 ----------------------------------------
                 xxxx | xxxxxx | xxxx | xxxxxx | xxxxxxxx
+    
     Raises:
         ValueError: raised if there was any argument error.
         FileNotFoundError:  raised when `etf_countries.csv` file is missing.
         RuntimeError: raised it the introduced country does not match any of the indexed ones.
         ConnectionError: raised if GET requests does not return 200 status code.
+    
     """
 
     if country is None:
@@ -673,6 +675,11 @@ def get_etfs_overview(country, as_json=False):
 
     if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
+
+    if country.lower() == 'united states':
+        country= 'usa'
+    elif country.lower() == 'united kingdom':
+        country = 'uk'
 
     url = "https://es.investing.com/etfs/" + unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
 
