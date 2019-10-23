@@ -4,12 +4,14 @@
 # See LICENSE for details.
 
 import investpy
-from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses
+from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
 from investpy.retrieval.etfs_retrieval import retrieve_etfs
 from investpy.retrieval.funds_retrieval import retrieve_funds, retrieve_fund_countries
+from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses
 from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, \
     retrieve_global_indices_countries
-from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
+from investpy.retrieval.bonds_retrieval import retrieve_bonds, retrieve_bond_countries
+
 
 from investpy.utils.user_agent import get_random, clear_file, delete_file
 
@@ -1845,10 +1847,346 @@ def test_user_agent_errors():
         pass
 
 
+def test_bonds_errors():
+    """
+    This function raises errors on bodn retrieval functions
+    """
+
+    try:
+        retrieve_bonds(test_mode=None)
+    except:
+        pass
+
+    try:
+        retrieve_bond_countries(test_mode=None)
+    except:
+        pass
+
+    params = [
+        {
+            'country': ['error']
+        },
+        {
+            'country': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_bonds(country=param['country'])
+        except:
+            pass
+
+        try:
+            investpy.get_bonds_list(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': ['error'],
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': None,
+            'as_json': 'error'
+        },
+        {
+            'country': 'spain',
+            'columns': 0,
+            'as_json': True
+        },
+        {
+            'country': 'spain',
+            'columns': ['error'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_bonds_dict(country=param['country'],
+                                     columns=param['columns'],
+                                     as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'bond': None,
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': None,
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'as_json': 'error',
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'as_json': True,
+            'order': 'error',
+            'debug': True
+        },
+        {
+            'bond': 'error',
+            'country': 'argentina',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': ['error'],
+            'country': 'argentina',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'as_json': True,
+            'order': 'ascending',
+            'debug': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_bond_recent_data(bond=param['bond'],
+                                          country=param['country'],
+                                          as_json=param['as_json'],
+                                          order=param['order'],
+                                          debug=param['debug'])
+        except:
+            pass
+
+    params = [
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'stock': None,
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': 'error',
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2019',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'error',
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': ['error'],
+            'country': 'spain',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/1999',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/1900',
+            'to_date': '01/01/1950',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/1950',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/1999',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'debug': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_bond_historical_data(bond=param['bond'],
+                                              country=param['country'],
+                                              from_date=param['from_date'],
+                                              to_date=param['to_date'],
+                                              as_json=param['as_json'],
+                                              order=param['order'],
+                                              debug=param['debug'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'Argentina',
+        },
+        {
+            'by': ['error'],
+            'value': 'Argentina',
+        },
+        {
+            'by': 'error',
+            'value': 'Argentina',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'name',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_bonds(by=param['by'], value=param['value'])
+        except:
+            pass
+
+
 if __name__ == '__main__':
     test_stocks_errors()
     test_funds_errors()
     test_etfs_errors()
     test_indices_errors()
     test_currency_crosses_errors()
+    test_bonds_errors()
     test_user_agent_errors()
