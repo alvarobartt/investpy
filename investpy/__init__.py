@@ -17,3 +17,5 @@ from investpy.indices import get_indices, get_indices_list, get_indices_dict, ge
 from investpy.currency_crosses import get_currency_crosses, get_currency_crosses_list, get_currency_crosses_dict, \
     get_available_currencies, get_currency_cross_recent_data, get_currency_cross_historical_data, \
     search_currency_crosses
+from investpy.bonds import get_bonds, get_bonds_list, get_bonds_dict, get_bond_countries, get_bond_recent_data, \
+    get_bond_historical_data, search_bonds

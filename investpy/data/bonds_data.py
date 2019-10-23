@@ -137,9 +137,9 @@ def bonds_as_list(country=None):
     bonds.drop(columns=['tag', 'id'], inplace=True)
 
     if country is None:
-        return bonds['symbol'].tolist()
+        return bonds['name'].tolist()
     elif unidecode.unidecode(country.lower()) in bond_countries_as_list():
-        return bonds[bonds['country'] == unidecode.unidecode(country.lower())]['symbol'].tolist()
+        return bonds[bonds['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
 
 
 def bonds_as_dict(country=None, columns=None, as_json=False):
