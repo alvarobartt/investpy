@@ -26,6 +26,7 @@ def get_random():
     Raises:
         IOError: raised when `user_agent_list.csv` file was unable to retrieve or errored.
         FileNotFoundError: if `user_agent_list.csv` file has not been found.
+    
     """
 
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))

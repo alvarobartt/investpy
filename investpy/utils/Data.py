@@ -26,6 +26,7 @@ class Data(object):
         close_ (:obj:`float`): close value of the market on the introduced date.
         volume_ (:obj:`long`): number of shares traded on the introduced date.
         currency_ (:obj:`str`): currency in which the data is displayed.
+    
     """
 
     def __init__(self, date_, open_, high_, low_, close_, volume_, currency_):

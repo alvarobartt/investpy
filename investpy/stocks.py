@@ -78,6 +78,7 @@ def get_stocks_list(country=None):
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
         IOError: raised when `stocks.csv` file is missing or empty.
+    
     """
 
     return stocks_as_list(country)

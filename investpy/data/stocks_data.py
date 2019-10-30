@@ -119,6 +119,7 @@ def stocks_as_list(country=None):
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
         IOError: raised when `stocks.csv` file is missing or empty.
+    
     """
 
     if country is not None and not isinstance(country, str):

@@ -1829,24 +1829,6 @@ def test_currency_crosses_errors():
             pass
 
 
-def test_user_agent_errors():
-    """
-    This function raises errors on user_agent functions
-    """
-
-    clear_file()
-    try:
-        get_random()
-    except:
-        pass
-
-    delete_file()
-    try:
-        get_random()
-    except:
-        pass
-
-
 def test_bonds_errors():
     """
     This function raises errors on bodn retrieval functions
@@ -2180,6 +2162,24 @@ def test_bonds_errors():
             investpy.search_bonds(by=param['by'], value=param['value'])
         except:
             pass
+
+
+def test_user_agent_errors():
+    """
+    This function raises errors on user_agent functions
+    """
+
+    clear_file()
+    try:
+        get_random()
+    except:
+        pass
+
+    delete_file()
+    try:
+        get_random()
+    except:
+        pass
 
 
 if __name__ == '__main__':

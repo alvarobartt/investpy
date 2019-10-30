@@ -79,6 +79,7 @@ def get_etfs_list(country=None):
     Raises:
         ValueError: raised when any of the input arguments is not valid.
         IOError: raised when `etfs.csv` file is missing or empty.
+    
     """
 
     return etfs_as_list(country=country)
@@ -118,6 +119,7 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
     Raises:
         ValueError: raised when any of the input arguments is not valid.
         IOError: raised when `etfs.csv` file is missing or empty.
+    
     """
 
     return etfs_as_dict(country=country, columns=columns, as_json=as_json)
@@ -142,6 +144,7 @@ def get_etf_countries():
 
     Raises:
         FileNotFoundError: raised when `etf_countries.csv` file is missing.
+    
     """
 
     return etf_countries_as_list()
@@ -781,6 +784,7 @@ def search_etfs(by, value):
         ValueError: raised if any of the introduced params is not valid or errored.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    
     """
 
     available_search_fields = ['name', 'symbol']

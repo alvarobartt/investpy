@@ -47,6 +47,7 @@ def get_funds(country=None):
 
     Raises:
         IOError: if the funds file from `investpy` is missing or errored.
+    
     """
 
     return funds_as_df(country=country)
@@ -75,6 +76,7 @@ def get_funds_list(country=None):
     Raises:
         ValueError: raised when the introduced arguments are not correct.
         IOError: if the funds file from `investpy` is missing or errored.
+    
     """
 
     return funds_as_list(country=country)
@@ -114,6 +116,7 @@ def get_funds_dict(country=None, columns=None, as_json=False):
     Raises:
         ValueError: raised when the introduced arguments are not correct.
         IOError: if the funds file from `investpy` is missing or errored.
+    
     """
 
     return funds_as_dict(country=country, columns=columns, as_json=as_json)
@@ -852,6 +855,7 @@ def search_funds(by, value):
         ValueError: raised if any of the introduced params is not valid or errored.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    
     """
 
     available_search_fields = ['name', 'symbol', 'issuer', 'isin']

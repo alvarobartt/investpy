@@ -66,6 +66,7 @@ def indices_as_df(country=None):
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
         IOError: raised if the indices file from `investpy` is missing or errored.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -115,6 +116,7 @@ def indices_as_list(country=None):
     Raises:
         ValueError: raised when the introduced arguments are not correct.
         IOError: raised if the indices file from `investpy` is missing or errored.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -174,6 +176,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
     Raises:
         ValueError: raised when the introduced arguments are not correct.
         IOError: raised if the indices file from `investpy` is missing or errored.
+    
     """
 
     if country is not None and not isinstance(country, str):
