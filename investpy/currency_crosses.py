@@ -59,6 +59,7 @@ def get_currency_crosses(base=None, second=None):
 
     Raises:
         IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+    
     """
 
     return currency_crosses_as_df(base=base, second=second)
@@ -97,6 +98,7 @@ def get_currency_crosses_list(base=None, second=None):
 
     Raises:
         IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+    
     """
 
     return currency_crosses_as_list(base=base, second=second)
@@ -146,7 +148,8 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-       IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+    
     """
 
     return currency_crosses_as_dict(base=base, second=second, columns=columns, as_json=as_json)
@@ -172,6 +175,7 @@ def get_available_currencies():
 
     Raises:
         IndexError: raised if `currency_crosses.csv` file was unavailable or not found.
+    
     """
 
     return available_currencies_as_list()
@@ -667,6 +671,7 @@ def search_currency_crosses(by, value):
        ValueError: raised if any of the introduced params is not valid or errored.
        IOError: raised if data could not be retrieved due to file error.
        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    
     """
 
     available_search_fields = ['name', 'full_name', 'base', 'second', 'base_name', 'second_name']

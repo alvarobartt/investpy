@@ -3,60 +3,536 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
+from datetime import datetime, date
+import json
+from random import randint
+import logging
+
 import pandas as pd
 import pkg_resources
 import requests
+import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
+from investpy.utils.Data import Data
+
+from investpy.data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
+from investpy.data.bonds_data import bond_countries_as_list
 
 
-def retrieve_bonds(test_mode=False):
+def get_bonds(country=None):
     """
-    This function retrieves all the available `government bonds` indexed on Investing.com, so to retrieve data 
-    from them which will be used later in inner functions for data retrieval. Additionally, when indices are 
-    retrieved all the information is both returned as a :obj:`pandas.DataFrame` and stored on a CSV file on a 
-    package folder containing all the available resources.
+    This function retrieves all the bonds data stored in `bonds.csv` file, which previously was
+    retrieved from Investing.com. Since the resulting object is a matrix of data, the bonds data is properly
+    structured in rows and columns, where columns are the bond data attribute names. Additionally, country
+    filtering can be specified, which will make this function return not all the stored bond data, but just
+    the data of the bonds from the introduced country.
 
     Args:
-        test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
-            coverage.
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
 
     Returns:
-        :obj:`pandas.DataFrame` - indices:
-            The resulting :obj:`pandas.DataFrame` contains all the bonds information if found, if not, an
-            empty :obj:`pandas.DataFrame` will be returned and no CSV file will be stored.
+        :obj:`pandas.DataFrame` - bonds_df:
+            The resulting :obj:`pandas.DataFrame` contains all the bond data from the introduced country if specified,
+            or from every country if None was specified, as indexed in Investing.com from the information previously
+            retrieved by investpy and stored on a csv file.
 
-            In the case that the retrieval process of indices was successfully completed, the resulting
-            :obj:`pandas.DataFrame` will look like::
+            So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | tag | id 
-                --------|------|-----------|-----|----
-                xxxxxxx | xxxx | xxxxxxxxx | xxx | xx 
+                country | name | full name 
+                --------|------|-----------
+                xxxxxxx | xxxx | xxxxxxxxx
 
     Raises:
-        ValueError: raised if any of the introduced arguments is not valid.
-        FileNotFoundError:
-            raised if `bond_countries.csv` files do not exist or are empty.
-        ConnectionError: raised if GET requests did not return 200 status code.
-        IndexError: raised if bonds information was unavailable or not found.
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `bonds.csv` file is missing or empty.
+
+    """
+
+    return bonds_as_df(country)
+
+
+def get_bonds_list(country=None):
+    """
+    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
+    data from the bonds as previously retrieved from Investing.com. So on, this function will just return
+    the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
+    from investpy. Additionally, note that the country filtering can be applied, which is really useful since
+    this function just returns the names and in bond data retrieval functions both the name and the country
+    must be specified and they must match.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
+
+    Returns:
+        :obj:`list` - bonds_list:
+            The resulting :obj:`list` contains the all the bond names from the introduced country if specified,
+            or from every country if None was specified, as indexed in Investing.com from the information previously
+            retrieved by investpy and stored on a csv file.
+
+            In case the information was successfully retrieved, the :obj:`list` of bond names will look like::
+
+                bonds_list = ['Argentina 1Y', 'Argentina 3Y', 'Argentina 5Y', 'Argentina 9Y', ...]
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `bonds.csv` file is missing or empty.
     
     """
 
-    if not isinstance(test_mode, bool):
-        raise ValueError('ERR#0041: test_mode can just be either True or False')
+    return bonds_as_list(country)
 
-    results = list()
+
+def get_bonds_dict(country=None, columns=None, as_json=False):
+    """
+    This function retrieves all the bonds information stored in the `bonds.csv` file and formats it as a
+    Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and
+    all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the
+    JSON structure. Some optional paramaters can be specified such as the country, columns or as_json, which
+    are a filtering by country so not to return all the bonds but just the ones from the introduced country,
+    the column names that want to be retrieved in case of needing just some columns to avoid unnecessary information
+    load, and whether the information wants to be returned as a JSON object or as a dictionary; respectively.
+
+    Args:
+        country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
+        columns (:obj:`list`, optional): column names of the bonds data to retrieve, can be: <country, name, full_name>
+        as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
+
+    Returns:
+        :obj:`list` of :obj:`dict` OR :obj:`json` - bonds_dict:
+            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every bond as indexed in Investing.com from
+            the information previously retrieved by investpy and stored on a csv file.
+
+            In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
+
+                bonds_dict = {
+                    'country': country,
+                    'name': name,
+                    'full_name': full_name,
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        IOError: raised when `stocks.csv` file is missing or empty.
+
+    """
+
+    return bonds_as_dict(country=country, columns=columns, as_json=as_json)
+
+
+def get_bond_countries():
+    """
+    This function returns a listing with all the available countries from where bonds can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
+
+    Raises:
+        IOError: raised when `bond_countries.csv` file is missing or empty.
+
+    """
+
+    return bond_countries_as_list()
+
+
+def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=False):
+    """
+    This function retrieves recent historical data from the introduced bond from Investing.com. So on, the recent data
+    of the introduced bond from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
+    the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
+    can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a
+    :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the index is the date)
+    and whether debug messages are going to be printed or not, respectively.
+
+    Args:
+        bond (:obj:`str`): name of the bond to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the bond is.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, either True or False, respectively.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            recent data of the specified bond from the specified country. So on, the resulting dataframe contains the
+            open, high, low and close values for the selected bond on market days.
+
+            The resulting recent data, in case that the default parameters were applied, will look like::
+
+                date || open | high | low | close 
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx 
+
+            but in case that as_json parameter was defined as True, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        dd/mm/yyyy: {
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if bonds object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced bond/country was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if bond historical data was unavailable or not found in Investing.com.
+
+    Examples:
+        >>> investpy.get_bond_recent_data(bond='Argentina 3Y', country='argentina')
+                        Open    High     Low   Close
+            Date                                      
+            2019-09-23  52.214  52.214  52.214  52.214
+            2019-09-24  52.323  52.323  52.323  52.323
+            2019-09-25  52.432  52.432  52.432  52.432
+            2019-09-26  52.765  52.765  52.765  52.765
+            2019-09-27  52.876  52.876  52.876  52.876
+    
+    """
+
+    if not bond:
+        raise ValueError("ERR#0066: bond parameter is mandatory and must be a valid bond name.")
+
+    if not isinstance(bond, str):
+        raise ValueError("ERR#0067: bond argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bond_countries.csv'))
+    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
-    for country in countries['tag'].tolist():
+    if bonds is None:
+        raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_bond_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    bonds = bonds[bonds['country'] == unidecode.unidecode(country.lower())]
+
+    bond = bond.strip()
+    bond = bond.lower()
+
+    if unidecode.unidecode(bond) not in [unidecode.unidecode(value.lower()) for value in bonds['name'].tolist()]:
+        raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('investpy')
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced bond on Investing.com')
+
+    id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
+    name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
+    full_name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'full_name']
+
+    logger.info(str(bond) + ' found on Investing.com')
+
+    header = full_name + " Bond Yield Historical Data"
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": "Daily",
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
+
+    head = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
+
+    logger.info('Request sent to Investing.com!')
+
+    req = requests.post(url, headers=head, data=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
+
+    if path_:
+        logger.info('Data parsing process starting...')
+
+        for elements_ in path_:
+            info = []
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.get('data-real-value'))
+
+            bond_date = datetime.fromtimestamp(int(info[0]))
+            bond_date = date(bond_date.year, bond_date.month, bond_date.day)
+            bond_close = float(info[1])
+            bond_open = float(info[2])
+            bond_high = float(info[3])
+            bond_low = float(info[4])
+
+            result.insert(len(result),
+                          Data(bond_date, bond_open, bond_high, bond_low,
+                               bond_close, None, None))
+
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
+
+        logger.info('Data parsing process finished...')
+
+        if as_json is True:
+            json_ = {'name': name,
+                     'recent':
+                         [value.bond_as_json() for value in result]
+                     }
+
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.bond_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+    """
+    This function retrieves historical data from the introduced bond from Investing.com. So on, the historical data
+    of the introduced bond from the specified country in the specified data range will be retrieved and returned as
+    a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
+    some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to
+    be returned as a :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the
+    index is the date) and whether debug messages are going to be printed or not, respectively.
+
+    Args:
+        bond (:obj:`str`): name of the bond to retrieve historical data from.
+        country (:obj:`str`): name of the country from where the bond is.
+        from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
+        to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        debug (:obj:`bool`, optional):
+            optional argument to either show or hide debug messages on log, either True or False, respectively.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified bond via argument. The dataset contains the open, high, low and close for the 
+            selected bond on market days.
+
+            The returned data is case we use default arguments will look like::
+
+                date || open | high | low | close 
+                -----||---------------------------
+                xxxx || xxxx | xxxx | xxx | xxxxx 
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    historical: [
+                        dd/mm/yyyy: {
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if bonds object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced bond/country was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if bond historical data was unavailable or not found in Investing.com.
+
+    Examples:
+        >>> investpy.get_bond_historical_data(bond='Argentina 3Y', country='argentina', from_date='01/01/2010', to_date='01/01/2019')
+                        Open  High   Low  Close
+            Date                               
+            2011-01-03  4.15  4.15  4.15   5.15
+            2011-01-04  4.07  4.07  4.07   5.45
+            2011-01-05  4.27  4.27  4.27   5.71
+            2011-01-10  4.74  4.74  4.74   6.27
+            2011-01-11  4.30  4.30  4.30   6.56
+
+    """
+
+    if not bond:
+        raise ValueError("ERR#0066: bond parameter is mandatory and must be a valid bond name.")
+
+    if not isinstance(bond, str):
+        raise ValueError("ERR#0067: bond argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not isinstance(debug, bool):
+        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+
+    try:
+        datetime.strptime(from_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
+
+    try:
+        datetime.strptime(to_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+
+    date_interval = {
+        'intervals': [],
+    }
+
+    flag = True
+
+    while flag is True:
+        diff = end_date.year - start_date.year
+
+        if diff > 20:
+            obj = {
+                'start': start_date.strftime('%d/%m/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%d/%m/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            start_date = start_date.replace(year=start_date.year + 20)
+        else:
+            obj = {
+                'start': start_date.strftime('%d/%m/%Y'),
+                'end': end_date.strftime('%d/%m/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            flag = False
+
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
+
+    if bonds is None:
+        raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_bond_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    bonds = bonds[bonds['country'] == unidecode.unidecode(country.lower())]
+
+    bond = bond.strip()
+    bond = bond.lower()
+
+    if unidecode.unidecode(bond) not in [unidecode.unidecode(value.lower()) for value in bonds['name'].tolist()]:
+        raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
+
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger('investpy')
+
+    if debug is False:
+        logger.disabled = True
+    else:
+        logger.disabled = False
+
+    logger.info('Searching introduced bond on Investing.com')
+
+    id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
+    name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
+    full_name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'full_name']
+
+    logger.info(str(bond) + ' found on Investing.com')
+
+    final = list()
+
+    logger.info('Data parsing process starting...')
+
+    header = full_name + " Bond Yield Historical Data"
+
+    for index in range(len(date_interval['intervals'])):
+        interval_counter += 1
+
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": "Daily",
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
+
         head = {
             "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -65,126 +541,136 @@ def retrieve_bonds(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        url = "https://www.investing.com/rates-bonds/" + country + "-government-bonds"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
-        req = requests.get(url, headers=head)
+        req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+        if not req.text:
+            continue
+
         root_ = fromstring(req.text)
-        path_ = root_.xpath(".//table[@id='cr1']/tbody/tr")
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+
+        result = list()
 
         if path_:
             for elements_ in path_:
-                id_ = elements_.get('id').replace('pair_', '')
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0069: bond information unavailable or not found.")
+                else:
+                    data_flag = True
+                
+                if data_flag is True:
+                    info = []
+                    for nested_ in elements_.xpath(".//td"):
+                        info.append(nested_.get('data-real-value'))
 
-                for element_ in elements_.xpath('.//a'):
-                    tag_ = element_.get('href')
+                    bond_date = datetime.fromtimestamp(int(info[0]))
+                    bond_date = date(bond_date.year, bond_date.month, bond_date.day)
+                    bond_close = float(info[1])
+                    bond_open = float(info[2])
+                    bond_high = float(info[3])
+                    bond_low = float(info[4])
 
-                    if str(tag_).__contains__('/rates-bonds/'):
-                        tag_ = tag_.replace('/rates-bonds/', '')
-                        full_name_ = element_.get('title').strip()
-                        name = element_.text.strip()
+                    result.insert(len(result),
+                                Data(bond_date, bond_open, bond_high, bond_low,
+                                    bond_close, None, None))
 
-                        data = {
-                            'country': 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
-                            'name': name,
-                            'full_name': full_name_,
-                            'tag': tag_,
-                            'id': id_,
-                        }
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
 
-                        results.append(data)
+                if as_json is True:
+                    json_ = {'name': name,
+                             'historical':
+                                 [value.bond_as_json() for value in result]
+                             }
 
-        if test_mode is True:
-            break
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.bond_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
+
+                    final.append(df)
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    logger.info('Data parsing process finished...')
+
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
+
+
+def search_bonds(by, value):
+    """
+    This function searches bonds by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced one for the specified field which is the
+    `bonds.csv` column name to search in. Available fields to search bonds are 'name' or 'full_name'.
+
+    Args:
+        by (:obj:`str`): name of the field to search for, which is the column name which can be: 'name' or 'full_name'.
+        value (:obj:`str`): value of the field to search for, which is the value that is going to be searched.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting :obj:`pandas.DataFrame` contains the search results from the given query, which is
+            any match of the specified value in the specified field. If there are no results for the given query,
+            an error will be raised, but otherwise the resulting :obj:`pandas.DataFrame` will contain all the
+            available bonds that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced parameters is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+
+    """
+
+    available_search_fields = ['name', 'full_name']
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
-    df = pd.DataFrame(results)
+    if bonds is None:
+        raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
-    df = df.where((pd.notnull(df)), None)
-    df.drop_duplicates(subset="tag", keep='first', inplace=True)
-    df.sort_values('country', ascending=True, inplace=True)
-    df.reset_index(drop=True, inplace=True)
+    bonds['matches'] = bonds[by].str.contains(value, case=False)
 
-    if test_mode is False:
-        df.to_csv(file_, index=False)
+    search_result = bonds.loc[bonds['matches'] == True].copy()
 
-    return df
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
+    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
 
-def retrieve_bond_countries(test_mode=False):
-    """
-    This function retrieves all the country names indexed in Investing.com with available government bonds to retrieve data
-    from. This process is made in order to dispose of a listing with all the countries from where bond information
-    can be retrieved from Investing.com. So on, the retrieved country listing will be used whenever the bonds are
-    retrieved, while looping over it.
-
-    Args:
-        test_mode (:obj:`bool`):
-            variable to avoid time waste on travis-ci since it just needs to test the basics in order to improve code
-            coverage.
-
-    Returns:
-        :obj:`pandas.DataFrame` - bond_countries:
-            The resulting :obj:`pandas.DataFrame` contains all the available countries which have available government 
-            bonds as indexed in Investing.com, from which bond data is going to be retrieved.
-
-    Raises:
-        ValueError: raised whenever any of the introduced arguments is not valid.
-        ConnectionError: raised if connection to Investing.com could not be established.
-        RuntimeError: raised if no countries were found in the Investing.com government bonds listing.
-
-    """
-
-    if not isinstance(test_mode, bool):
-        raise ValueError('ERR#0041: test_mode can just be either True or False')
-
-    headers = {
-        "User-Agent": user_agent.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
-    url = 'https://www.investing.com/rates-bonds/'
-
-    req = requests.get(url, headers=headers)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    root = fromstring(req.text)
-    path = root.xpath("//select[@name='country']/option")
-
-    countries = list()
-
-    for element in path:
-        if element.get('exchangeid') != "":
-            obj = {
-                'exchange_id': int(element.get('exchangeid')),
-                'tag': element.get('value').replace('/rates-bonds/', '').replace('-government-bonds', ''),
-                'country_id': int(element.get('data-country-id')),
-                'country': element.text_content().lower(),
-            }
-
-            countries.append(obj)
-
-    if len(countries) == 0:
-        raise RuntimeError('ERR#0035: no countries could be retrieved!')
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bond_countries.csv'))
-    file_ = pkg_resources.resource_filename(resource_package, resource_path)
-
-    df = pd.DataFrame(countries)
-
-    if test_mode is False:
-        df.to_csv(file_, index=False)
-
-    return df
+    return search_result

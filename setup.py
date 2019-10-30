@@ -14,10 +14,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.9.7',
+    version='0.9.8',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.9.7.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.9.8.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -29,7 +29,8 @@ setup(
         'pandas>=0.25.1',
         'lxml>=4.4.1',
         'setuptools>=41.2.0',
-        'requests>=2.22.0'
+        'requests>=2.22.0',
+        'numpy==1.17.2'
     ],
     data_files=[
         ('stocks', [
@@ -52,6 +53,10 @@ setup(
         ('currency_crosses', [
             'investpy/resources/currency_crosses/currency_crosses.csv',
             'investpy/resources/currency_crosses/currency_cross_continents.csv'
+        ]),
+        ('bonds', [
+            'investpy/resources/bonds/bonds.csv',
+            'investpy/resources/bonds/bond_countries.csv'
         ]),
         ('user_agents', [
             'investpy/resources/user_agent_list.txt'

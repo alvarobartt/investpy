@@ -10,9 +10,9 @@ import investpy
 from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses, retrieve_currency_cross_continents
 from investpy.retrieval.etfs_retrieval import retrieve_etfs
 from investpy.retrieval.funds_retrieval import retrieve_funds, retrieve_fund_countries
-from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, \
-    retrieve_global_indices_countries
+from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
 from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
+from investpy.retrieval.bonds_retrieval import retrieve_bonds, retrieve_bond_countries
 
 
 def test_investpy():
@@ -582,6 +582,103 @@ def test_investpy_currency_crosses():
     retrieve_currency_cross_continents()
 
 
+def test_investpy_bonds():
+    """
+    This function checks that bond data retrieval functions listed in investpy work properly.
+    """
+
+    params = [
+        {
+            'country': 'spain',
+        },
+        {
+            'country': None,
+        },
+    ]
+
+    for param in params:
+        investpy.get_bonds(country=param['country'])
+        investpy.get_bonds_list(country=param['country'])
+
+    params = [
+        {
+            'country': None,
+            'columns': ['full_name', 'name'],
+            'as_json': True
+        },
+        {
+            'country': None,
+            'columns': ['full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': ['full_name', 'name'],
+            'as_json': True
+        },
+        {
+            'country': 'spain',
+            'columns': ['full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'spain',
+            'columns': None,
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_bonds_dict(country=param['country'],
+                                columns=param['columns'],
+                                as_json=param['as_json'])
+
+    investpy.get_bond_countries()
+
+    params = [
+        {
+            'as_json': True,
+            'order': 'ascending',
+            'debug': False
+        },
+        {
+            'as_json': False,
+            'order': 'ascending',
+            'debug': True
+        },
+        {
+            'as_json': True,
+            'order': 'descending',
+            'debug': False
+        },
+        {
+            'as_json': False,
+            'order': 'descending',
+            'debug': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_bond_recent_data(bond='Spain 30Y',
+                                      country='spain',
+                                      as_json=param['as_json'],
+                                      order=param['order'],
+                                      debug=param['debug'])
+
+        investpy.get_bond_historical_data(bond='Spain 30Y',
+                                          country='spain',
+                                          from_date='01/01/1990',
+                                          to_date='01/01/2019',
+                                          as_json=param['as_json'],
+                                          order=param['order'],
+                                          debug=param['debug'])
+
+    investpy.search_bonds(by='name', value='Spain')
+
+    retrieve_bonds(test_mode=True)
+    retrieve_bond_countries(test_mode=True)
+
+
 if __name__ == '__main__':
     test_investpy()
     test_investpy_stocks()
@@ -589,3 +686,4 @@ if __name__ == '__main__':
     test_investpy_etfs()
     test_investpy_indices()
     test_investpy_currency_crosses()
+    test_investpy_bonds()

@@ -26,6 +26,7 @@ class Data(object):
         close_ (:obj:`float`): close value of the market on the introduced date.
         volume_ (:obj:`long`): number of shares traded on the introduced date.
         currency_ (:obj:`str`): currency in which the data is displayed.
+    
     """
 
     def __init__(self, date_, open_, high_, low_, close_, volume_, currency_):
@@ -141,4 +142,22 @@ class Data(object):
             'Close': self.close,
             'Volume': self.volume,
             'Currency': self.currency,
+        }
+
+    def bond_to_dict(self):
+        return {
+            'Date': self.date,
+            'Open': self.open,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
+        }
+
+    def bond_as_json(self):
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
         }

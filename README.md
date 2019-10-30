@@ -30,9 +30,9 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.7``
+``$ pip install investpy==0.9.8``
 
-Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt) 
+Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt)
 file, which can also be installed via pip:
 
 ``$ pip install -r requirements.txt``
@@ -119,12 +119,12 @@ as indexed in Investing.com.
 
 All the functions definitions and usage can be found in the [Documentation](https://investpy.readthedocs.io/)!
 
-## Utilites
+## Utilities
 
-Since investpy is just intended to retrieva data from different financial products as indexed in Investing.com, 
-the development of support modules is presented, which implement an additional functionallity based on investpy data.
-Note that anyone can contribute to this section by creating any package, module or utility which uses this package. So on, the
-ones already created are going to be presented, since they are intended to be used combined with investpy:
+Since investpy is intended to retrieve data from different financial products as indexed in Investing.com, the development 
+of some support modules, which implement an additional functionallity based on investpy data, is presented. Note that anyone 
+can contribute to this section by creating any package, module or utility which uses this package. So on, the ones already 
+created are going to be presented, since they are intended to be used combined with investpy:
 
 - [investpy_portfolio](https://github.com/alvarob96/investpy_portfolio/): is a Python package to generate stock portfolios.
 - [trendet](https://github.com/alvarob96/trendet/): is a Python package for trend detection on stock time series data.

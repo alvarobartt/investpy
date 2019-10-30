@@ -79,6 +79,7 @@ def get_etfs_list(country=None):
     Raises:
         ValueError: raised when any of the input arguments is not valid.
         IOError: raised when `etfs.csv` file is missing or empty.
+    
     """
 
     return etfs_as_list(country=country)
@@ -118,6 +119,7 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
     Raises:
         ValueError: raised when any of the input arguments is not valid.
         IOError: raised when `etfs.csv` file is missing or empty.
+    
     """
 
     return etfs_as_dict(country=country, columns=columns, as_json=as_json)
@@ -142,6 +144,7 @@ def get_etf_countries():
 
     Raises:
         FileNotFoundError: raised when `etf_countries.csv` file is missing.
+    
     """
 
     return etf_countries_as_list()
@@ -628,30 +631,32 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
 def get_etfs_overview(country, as_json=False):
     """
-    This function retrieves an object containing all the real time data available for all the ETFs from a country,
+    This function retrieves an overview containing all the real time data available for the main ETFs from a country,
     such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-    function is to get an overview on all the available ETFs from a country.
+    function is to get an overview on the main ETFs from a country, so to get a general view.
 
     Args:
-        country (:obj:`str`): name of the country to retrieve all its available etf data from.
+        country (:obj:`str`): name of the country to retrieve the ETFs overview from.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
 
     Returns:
         :obj:`pandas.DataFrame` - etfs_overview:
-            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com from all the ETFs
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main ETFs
             from a country in order to get an overview of it.
 
             If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
 
-                name | symbol | last | change | turnover
-                ----------------------------------------
-                xxxx | xxxxxx | xxxx | xxxxxx | xxxxxxxx
+                country | name | full_name | symbol | last | change | turnover
+                --------|------|-----------|--------|------|--------|----------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxx | xxxxxxxx
+    
     Raises:
         ValueError: raised if there was any argument error.
         FileNotFoundError:  raised when `etf_countries.csv` file is missing.
         RuntimeError: raised it the introduced country does not match any of the indexed ones.
         ConnectionError: raised if GET requests does not return 200 status code.
+    
     """
 
     if country is None:
@@ -674,7 +679,12 @@ def get_etfs_overview(country, as_json=False):
     if unidecode.unidecode(country.lower()) not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
 
-    url = "https://es.investing.com/etfs/" + unidecode.unidecode(country.lower()).replace(" ", "-") + "-etfs"
+    if country.lower() == 'united states':
+        country= 'usa'
+    elif country.lower() == 'united kingdom':
+        country = 'uk'
+
+    url = "https://www.investing.com/etfs/world-etfs?&issuer_filter=0"
 
     req = requests.get(url, headers=head)
 
@@ -682,47 +692,69 @@ def get_etfs_overview(country, as_json=False):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath(".//table[@id='etfs']"
-                        "/tbody"
-                        "/tr")
+    path_ = root_.xpath(".//section[@id='leftColumn']/h3")
 
     results = list()
 
     if path_:
         for element_ in path_:
-            id_ = element_.get('id').replace('pair_', '')
-            symbol = element_.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+            link = element_.xpath(".//a")[0].get("href")
+            link = link.replace('/etfs/', '').replace('-etfs', '')
+            
+            if link == unidecode.unidecode(country.lower()):
+                flag = False
 
-            name = element_.xpath(".//a")[0].text.strip()
+                while flag is False:
+                    element_ = element_.getnext()
+                    if element_.tag == 'table':
+                        flag = True
 
-            last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
-            last = element_.xpath(last_path)[0].text_content()
+                table = element_.xpath(".//tbody/tr")
 
-            change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
-            change = element_.xpath(change_path)[0].text_content()
+                for row in table:
+                    id_ = row.get('id').replace('pair_', '')
+                    symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-            turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
-            turnover = element_.xpath(turnover_path)[0].text_content()
+                    nested = row.xpath(".//a")[0]
+                    name = nested.text.strip()
+                    full_name = nested.get('title').rstrip()
 
-            if turnover == '':
-                continue
+                    # In Euro Zone the ETFs are from different countries so the country is specified
+                    country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
+                    country_flag = unidecode.unidecode(country_flag.lower())
 
-            if turnover.__contains__('K'):
-                turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-            elif turnover.__contains__('M'):
-                turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-            else:
-                turnover = int(float(turnover.replace('.', '').replace(',', '.')))
+                    last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+                    last = row.xpath(last_path)[0].text_content()
 
-            data = {
-                "name": name,
-                "symbol": symbol,
-                "last": float(last.replace('.', '').replace(',', '.')),
-                "change": change,
-                "turnover": turnover,
-            }
+                    change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+                    change = row.xpath(change_path)[0].text_content()
 
-            results.append(data)
+                    turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
+                    turnover = row.xpath(turnover_path)[0].text_content()
+
+                    if turnover == '':
+                        continue
+
+                    if turnover.__contains__('K'):
+                        turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                    elif turnover.__contains__('M'):
+                        turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                    else:
+                        turnover = int(float(turnover.replace('.', '').replace(',', '.')))
+
+                    data = {
+                        "country": country_flag,
+                        "name": name,
+                        "full_name": full_name,
+                        "symbol": symbol,
+                        "last": float(last.replace('.', '').replace(',', '.')),
+                        "change": change,
+                        "turnover": turnover,
+                    }
+
+                    results.append(data)
+
+                break
 
     df = pd.DataFrame(results)
 
@@ -752,6 +784,7 @@ def search_etfs(by, value):
         ValueError: raised if any of the introduced params is not valid or errored.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
+    
     """
 
     available_search_fields = ['name', 'symbol']
