@@ -736,9 +736,11 @@ def get_etfs_overview(country, as_json=False):
                         continue
 
                     if turnover.__contains__('K'):
-                        turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif turnover.__contains__('M'):
-                        turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                    elif turnover.__contains__('B'):
+                        turnover = int(float(turnover.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
                     else:
                         turnover = int(float(turnover.replace('.', '').replace(',', '.')))
 
@@ -759,7 +761,7 @@ def get_etfs_overview(country, as_json=False):
     df = pd.DataFrame(results)
 
     if as_json:
-        return df.to_json(orient='records')
+        return json.loads(df.to_json(orient='records'))
     else:
         return df
 
