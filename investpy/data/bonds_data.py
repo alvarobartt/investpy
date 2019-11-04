@@ -9,8 +9,6 @@ import json
 import pandas as pd
 import pkg_resources
 
-from investpy.retrieval.bonds_retrieval import retrieve_bonds, retrieve_bond_countries
-
 
 def bonds_as_df(country=None):
     """
@@ -37,7 +35,8 @@ def bonds_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `bonds.csv` file is missing or empty.
+        FileNotFoundError: raised when bonds file was not found.
+        IOError: raised when bond countries file is missing or empty.
 
     """
 
@@ -49,7 +48,7 @@ def bonds_as_df(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        bonds = retrieve_bonds(test_mode=False)
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
     if bonds is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
@@ -89,7 +88,8 @@ def bonds_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `bonds.csv` file is missing or empty.
+        FileNotFoundError: raised when bonds file was not found.
+        IOError: raised when bond countries file is missing or empty.
     
     """
 
@@ -101,7 +101,7 @@ def bonds_as_list(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        bonds = retrieve_bonds(test_mode=False)
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
     if bonds is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
@@ -144,7 +144,8 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised when bonds file was not found.
+        IOError: raised when bond countries file is missing or empty.
 
     """
 
@@ -159,7 +160,7 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        bonds = retrieve_bonds(test_mode=False)
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
     if bonds is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
@@ -201,7 +202,8 @@ def bond_countries_as_list():
             The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
 
     Raises:
-        IOError: raised when `bond_countries.csv` file is missing or empty.
+        FileNotFoundError: raised when bond countries file was not found.
+        IOError: raised when bond countries file is missing or empty.
 
     """
 
@@ -210,7 +212,7 @@ def bond_countries_as_list():
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        countries = retrieve_bond_countries(test_mode=False)
+        raise FileNotFoundError("ERR#0070: bond countries file not found or errored.")
 
     if countries is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")

@@ -34,9 +34,8 @@ def get_etfs(country=None):
     Returns:
         :obj:`pandas.DataFrame` - etfs:
             The resulting :obj:`pandas.DataFrame` contains all the etfs basic information stored on `etfs.csv`, since it
-            was previously retrieved in `investpy.etfs.retrieve_etfs()`. Unless the country is specified, all the
-            available etfs indexed on Investing.com is returned, but if it is specified, just the etfs from that country
-            are returned.
+            was previously retrieved by investpy. Unless the country is specified, all the available etfs indexed on 
+            Investing.com is returned, but if it is specified, just the etfs from that country are returned.
 
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
@@ -47,7 +46,9 @@ def get_etfs(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
+    
     """
 
     return etfs_as_df(country=country)
@@ -55,8 +56,7 @@ def get_etfs(country=None):
 
 def get_etfs_list(country=None):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already
-    stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
     This function also allows the users to specify which country do they want to retrieve data from or if they
     want to retrieve it from every listed country; so on, a listing of etfs will be returned. This function
     helps the user to get to know which etfs are available on Investing.com.
@@ -78,7 +78,8 @@ def get_etfs_list(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing or empty.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
     
     """
 
@@ -87,18 +88,17 @@ def get_etfs_list(country=None):
 
 def get_etfs_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already
-    stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`json`).
+    :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
         as_json (:obj:`bool`, optional):
-            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
+            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
 
     Returns:
         :obj:`dict` or :obj:`json` - etfs_dict:
@@ -118,7 +118,8 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing or empty.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
     
     """
 
@@ -143,7 +144,7 @@ def get_etf_countries():
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when `etf_countries.csv` file is missing.
+        FileNotFoundError: raised when etf countries file was not found.
     
     """
 
@@ -723,20 +724,20 @@ def get_etfs_overview(country, as_json=False):
             continue
 
         if turnover.__contains__('K'):
-            turnover = float(turnover.replace('K', '')) * 1e3
+            turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
         elif turnover.__contains__('M'):
-            turnover = float(turnover.replace('M', '')) * 1e6
+            turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
         elif turnover.__contains__('B'):
-            turnover = float(turnover.replace('B', '')) * 1e9
+            turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
         else:
-            turnover = float(turnover)
+            turnover = float(turnover.replace(',', ''))
 
         data = {
             "country": country_flag,
             "name": name,
             "full_name": full_name,
             "symbol": symbol,
-            "last": float(last),
+            "last": float(last.replace(',', '')),
             "change": change,
             "turnover": int(turnover),
         }

@@ -52,13 +52,10 @@ def get_currency_crosses(base=None, second=None):
                 -----|-----------|-----|----|------|--------|-----------|-------------
                 xxxx | xxxxxxxxx | xxx | xx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
 
-            Just like `investpy.currency_crosses.retrieve_currencies()`, the output of this function is a
-            :obj:`pandas.DataFrame` containing all the currency crosses as indexed in Investing.com, but instead of
-            scraping the web in order to retrieve them and then generating the CSV file, this function just reads it
-            and loads it into a :obj:`pandas.DataFrame`.
-
     Raises:
-        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
 
@@ -97,7 +94,9 @@ def get_currency_crosses_list(base=None, second=None):
                 ]
 
     Raises:
-        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
 
@@ -123,7 +122,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
             symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
             all the currency crosses where the second currency matches the introduced one.
         columns (:obj:`list`, optional):
-            names of the columns of the stock data to retrieve <name, full_name, tag, id, base, base_name,
+            names of the columns of the equity data to retrieve <name, full_name, tag, id, base, base_name,
             second, second_name>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
@@ -145,10 +144,11 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
                     'second': second,
                     'second_name': second_name
                 }
-
+    
     Raises:
-        ValueError: raised when any of the input arguments is not valid.
-        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
 
@@ -174,7 +174,8 @@ def get_available_currencies():
                 ]
 
     Raises:
-        IndexError: raised if `currency_crosses.csv` file was unavailable or not found.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
 

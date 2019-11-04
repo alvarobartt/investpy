@@ -46,7 +46,8 @@ def get_stocks(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
 
     """
 
@@ -77,7 +78,8 @@ def get_stocks_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
     
     """
 
@@ -100,13 +102,13 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
+        :obj:`list` of :obj:`dict` OR :obj:`json` - stocks_dict:
             The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
             the information previously retrieved by investpy and stored on a csv file.
 
             In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
-                {
+                stocks_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,
@@ -119,7 +121,8 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
 
     """
 
@@ -138,7 +141,8 @@ def get_stock_countries():
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        IOError: raised when `stock_countries.csv` file is missing or empty.
+        FileNotFoundError: raised if stock countries file was not found.
+        IOError: raised when stock countries file is missing or empty.
 
     """
 

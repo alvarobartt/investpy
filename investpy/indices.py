@@ -45,6 +45,7 @@ def get_indices(country=None):
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
+        FileNotFoundError: raised if the indices file was not found.
         IOError: raised if the indices file from `investpy` is missing or errored.
     
     """
@@ -73,8 +74,9 @@ def get_indices_list(country=None):
                 indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -115,8 +117,9 @@ def get_indices_dict(country=None, columns=None, as_json=False):
                 }
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -134,8 +137,8 @@ def get_index_countries():
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if `indices.csv` file was unavailable or not found.
-        IOError: raised if indices were not found.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 

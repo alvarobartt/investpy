@@ -7,13 +7,6 @@ import pytest
 
 import investpy
 
-from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses, retrieve_currency_cross_continents
-from investpy.retrieval.etfs_retrieval import retrieve_etfs
-from investpy.retrieval.funds_retrieval import retrieve_funds, retrieve_fund_countries
-from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, retrieve_global_indices_countries
-from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
-from investpy.retrieval.bonds_retrieval import retrieve_bonds, retrieve_bond_countries
-
 
 def test_investpy():
     """
@@ -123,9 +116,6 @@ def test_investpy_stocks():
     investpy.get_stock_dividends(stock='BBVA', country='spain')
 
     investpy.search_stocks(by='name', value='BBVA')
-
-    retrieve_stocks(test_mode=True)
-    retrieve_stock_countries(test_mode=True)
 
 
 def test_investpy_funds():
@@ -239,9 +229,6 @@ def test_investpy_funds():
 
     investpy.search_funds(by='name', value='bbva')
 
-    retrieve_funds(test_mode=True)
-    retrieve_fund_countries(test_mode=True)
-
 
 def test_investpy_etfs():
     """
@@ -350,8 +337,6 @@ def test_investpy_etfs():
 
     investpy.search_etfs(by='name', value='bbva')
 
-    retrieve_etfs(test_mode=True)
-
 
 def test_investpy_indices():
     """
@@ -445,10 +430,6 @@ def test_investpy_indices():
                                            debug=param['debug'])
 
     investpy.search_indices(by='name', value='ibex')
-
-    retrieve_indices(test_mode=True)
-    retrieve_index_countries(test_mode=True)
-    retrieve_global_indices_countries(test_mode=True)
 
 
 def test_investpy_currency_crosses():
@@ -578,9 +559,6 @@ def test_investpy_currency_crosses():
 
     investpy.search_currency_crosses(by='base', value='EUR')
 
-    retrieve_currency_crosses(test_mode=True)
-    retrieve_currency_cross_continents()
-
 
 def test_investpy_bonds():
     """
@@ -674,9 +652,6 @@ def test_investpy_bonds():
                                           debug=param['debug'])
 
     investpy.search_bonds(by='name', value='Spain')
-
-    retrieve_bonds(test_mode=True)
-    retrieve_bond_countries(test_mode=True)
 
 
 if __name__ == '__main__':

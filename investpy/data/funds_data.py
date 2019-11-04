@@ -10,42 +10,6 @@ import pkg_resources
 
 import unidecode
 
-from investpy.retrieval.funds_retrieval import retrieve_fund_countries, retrieve_funds
-
-
-def fund_countries_as_list():
-    """
-    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
-    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
-
-    Raises:
-        IndexError: if `fund_countries.csv` was unavailable or not found.
-    """
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        countries = retrieve_fund_countries(test_mode=False)
-
-    if countries is None:
-        raise IOError("ERR#0040: fund countries list not found or unable to retrieve.")
-
-    for index, row in countries.iterrows():
-        if row['country'] == 'uk':
-            countries.loc[index, 'country'] = 'united kingdom'
-        elif row['country'] == 'usa':
-            countries.loc[index, 'country'] = 'united states'
-
-    return countries['country'].tolist()
-
 
 def funds_as_df(country=None):
     """
@@ -68,11 +32,11 @@ def funds_as_df(country=None):
                 ------------|----|------|--------|------|--------|-----|-----------
                 xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
 
-            Just like `investpy.funds.retrieve_funds()` :obj:`pandas.DataFrame` output, but instead of generating the
-            CSV file, this function just reads it and loads it into a :obj:`pandas.DataFrame` object.
-
     Raises:
-        IOError: if the funds file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when the funds file was not found.
+        IOError: raised if the funds file is missing or errored.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -83,7 +47,7 @@ def funds_as_df(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = retrieve_funds(test_mode=False)
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
@@ -118,8 +82,10 @@ def funds_as_list(country=None):
                         ...]
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: if the funds file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when the funds file was not found.
+        IOError: raised if the funds file is missing or errored.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -130,7 +96,7 @@ def funds_as_list(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = retrieve_funds(test_mode=False)
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
@@ -173,8 +139,10 @@ def funds_as_dict(country=None, columns=None, as_json=False):
                 }
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the funds file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when the funds file was not found.
+        IOError: raised if the funds file is missing or errored.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -188,7 +156,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        funds = retrieve_funds(test_mode=False)
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
@@ -213,3 +181,39 @@ def funds_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+
+
+def fund_countries_as_list():
+    """
+    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
+    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
+    listing containing a set of countries, in order to let the user know which countries are taken into account and also
+    the return listing from this function can be used for country param check if needed.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
+
+    Raises:
+        FileNotFoundError: raised when the funds file was not found.
+        IndexError: raised if fund countries file was unavailable or not found.
+    
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'funds', 'fund_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0072: fund countries file not found or errored.")
+
+    if countries is None:
+        raise IOError("ERR#0040: fund countries list not found or unable to retrieve.")
+
+    for index, row in countries.iterrows():
+        if row['country'] == 'uk':
+            countries.loc[index, 'country'] = 'united kingdom'
+        elif row['country'] == 'usa':
+            countries.loc[index, 'country'] = 'united states'
+
+    return countries['country'].tolist()
