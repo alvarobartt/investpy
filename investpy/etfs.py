@@ -676,7 +676,9 @@ def get_etfs_overview(country, as_json=False):
         "Connection": "keep-alive",
     }
 
-    if unidecode.unidecode(country.lower()) not in get_etf_countries():
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
 
     if country.lower() == 'united states':
@@ -684,7 +686,7 @@ def get_etfs_overview(country, as_json=False):
     elif country.lower() == 'united kingdom':
         country = 'uk'
 
-    url = "https://www.investing.com/etfs/world-etfs?&issuer_filter=0"
+    url = "https://www.investing.com/etfs/" + country + "-etfs?&issuer_filter=0"
 
     req = requests.get(url, headers=head)
 
@@ -692,71 +694,54 @@ def get_etfs_overview(country, as_json=False):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath(".//section[@id='leftColumn']/h3")
+    table = root_.xpath(".//table[@id='etfs']/tbody/tr")
 
     results = list()
 
-    if path_:
-        for element_ in path_:
-            link = element_.xpath(".//a")[0].get("href")
-            link = link.replace('/etfs/', '').replace('-etfs', '')
-            
-            if link == unidecode.unidecode(country.lower()):
-                flag = False
+    for row in table[:100]:
+        id_ = row.get('id').replace('pair_', '')
+        symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-                while flag is False:
-                    element_ = element_.getnext()
-                    if element_.tag == 'table':
-                        flag = True
+        nested = row.xpath(".//a")[0]
+        name = nested.text.strip()
+        full_name = nested.get('title').rstrip()
 
-                table = element_.xpath(".//tbody/tr")
+        # In Euro Zone the ETFs are from different countries so the country is specified
+        country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
+        country_flag = unidecode.unidecode(country_flag.lower())
 
-                for row in table:
-                    id_ = row.get('id').replace('pair_', '')
-                    symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+        last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+        last = row.xpath(last_path)[0].text_content()
 
-                    nested = row.xpath(".//a")[0]
-                    name = nested.text.strip()
-                    full_name = nested.get('title').rstrip()
+        change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+        change = row.xpath(change_path)[0].text_content()
 
-                    # In Euro Zone the ETFs are from different countries so the country is specified
-                    country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-                    country_flag = unidecode.unidecode(country_flag.lower())
+        turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
+        turnover = row.xpath(turnover_path)[0].text_content()
 
-                    last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
-                    last = row.xpath(last_path)[0].text_content()
+        if turnover == '':
+            continue
 
-                    change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
-                    change = row.xpath(change_path)[0].text_content()
+        if turnover.__contains__('K'):
+            turnover = float(turnover.replace('K', '')) * 1e3
+        elif turnover.__contains__('M'):
+            turnover = float(turnover.replace('M', '')) * 1e6
+        elif turnover.__contains__('B'):
+            turnover = float(turnover.replace('B', '')) * 1e9
+        else:
+            turnover = float(turnover)
 
-                    turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
-                    turnover = row.xpath(turnover_path)[0].text_content()
+        data = {
+            "country": country_flag,
+            "name": name,
+            "full_name": full_name,
+            "symbol": symbol,
+            "last": float(last),
+            "change": change,
+            "turnover": int(turnover),
+        }
 
-                    if turnover == '':
-                        continue
-
-                    if turnover.__contains__('K'):
-                        turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
-                    elif turnover.__contains__('M'):
-                        turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
-                    elif turnover.__contains__('B'):
-                        turnover = int(float(turnover.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
-                    else:
-                        turnover = int(float(turnover.replace('.', '').replace(',', '.')))
-
-                    data = {
-                        "country": country_flag,
-                        "name": name,
-                        "full_name": full_name,
-                        "symbol": symbol,
-                        "last": float(last.replace('.', '').replace(',', '.')),
-                        "change": change,
-                        "turnover": turnover,
-                    }
-
-                    results.append(data)
-
-                break
+        results.append(data)
 
     df = pd.DataFrame(results)
 

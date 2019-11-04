@@ -44,6 +44,7 @@ def retrieve_currency_crosses(test_mode=False):
         ValueError: raised if any of the introduced arguments is not valid.
         FileNotFoundError: raised if `currency_crosses.csv` file does not exists or is empty.
         ConnectionError: raised if GET requests did not return 200 status code.
+
     """
 
     if not isinstance(test_mode, bool):
@@ -118,8 +119,10 @@ def retrieve_currency_crosses(test_mode=False):
 
                     if test_mode is True:
                         break
+
                 if test_mode is True:
                     break
+
         if test_mode is True:
             break
 
@@ -156,6 +159,7 @@ def retrieve_currency_cross_info(tag):
 
     Raises:
         ConnectionError: raised if GET requests does not return 200 status code.
+    
     """
 
     url = "https://www.investing.com/currencies/" + tag
@@ -223,6 +227,7 @@ def retrieve_currency_cross_continents():
         ValueError: raised if any of the introduced arguments is not valid.
         ConnectionError: raised if connection to Investing.com could not be established.
         RuntimeError: raised if no countries were retrieved from Investing.com equity listing.
+    
     """
 
     headers = {

@@ -56,7 +56,7 @@ def retrieve_bonds(test_mode=False):
     else:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
-    for country in countries['tag'].tolist():
+    for _, row in countries.iterrows():
         head = {
             "User-Agent": user_agent.get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -65,7 +65,7 @@ def retrieve_bonds(test_mode=False):
             "Connection": "keep-alive",
         }
 
-        url = "https://www.investing.com/rates-bonds/" + country + "-government-bonds"
+        url = "https://www.investing.com/rates-bonds/" + row['tag'] + "-government-bonds"
 
         req = requests.get(url, headers=head)
 
@@ -88,7 +88,7 @@ def retrieve_bonds(test_mode=False):
                         name = element_.text.strip()
 
                         data = {
-                            'country': 'united kingdom' if country == 'uk' else 'united states' if country == 'usa' else country,
+                            'country': 'united kingdom' if row['country'] == 'uk' else 'united states' if row['country'] == 'usa' else row['country'],
                             'name': name,
                             'full_name': full_name_,
                             'tag': tag_,

@@ -107,3 +107,8 @@ venv.bak/
 .idea
 .idea/
 .idea/*
+
+# VSCode Files
+.vscode
+.vscode/
+.vscode/*
