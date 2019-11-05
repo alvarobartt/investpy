@@ -756,10 +756,10 @@ def search_etfs(by, value):
     """
     This function searches etfs by the introduced value for the specified field. This means that this function
     is going to search if there is a value that matches the introduced value for the specified field which is the
-    `etfs.csv` column name to search in. Available fields to search etfs are 'name' and 'symbol'.
+    `etfs.csv` column name to search in. Available fields to search etfs are 'name', 'full_name' and 'symbol'.
 
     Args:
-        by (:obj:`str`): name of the field to search for, which is the column name ('name' or 'symbol').
+        by (:obj:`str`): name of the field to search for, which is the column name ('name', 'full_name' or 'symbol').
         value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
 
     Returns:
@@ -775,7 +775,7 @@ def search_etfs(by, value):
     
     """
 
-    available_search_fields = ['name', 'symbol']
+    available_search_fields = ['name', 'full_name', 'symbol']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')

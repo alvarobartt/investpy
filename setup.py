@@ -32,36 +32,6 @@ setup(
         'requests>=2.22.0',
         'numpy==1.17.2'
     ],
-    data_files=[
-        ('stocks', [
-            'investpy/resources/stocks/stocks.csv',
-            'investpy/resources/stocks/stock_countries.csv'
-        ]),
-        ('funds', [
-            'investpy/resources/funds/funds.csv',
-            'investpy/resources/funds/fund_countries.csv'
-        ]),
-        ('etfs', [
-            'investpy/resources/etfs/etfs.csv',
-            'investpy/resources/etfs/etf_countries.csv'
-        ]),
-        ('indices', [
-            'investpy/resources/indices/indices.csv',
-            'investpy/resources/indices/index_countries.csv',
-            'investpy/resources/indices/global_indices_countries.csv',
-        ]),
-        ('currency_crosses', [
-            'investpy/resources/currency_crosses/currency_crosses.csv',
-            'investpy/resources/currency_crosses/currency_cross_continents.csv'
-        ]),
-        ('bonds', [
-            'investpy/resources/bonds/bonds.csv',
-            'investpy/resources/bonds/bond_countries.csv'
-        ]),
-        ('user_agents', [
-            'investpy/resources/user_agent_list.txt'
-        ])
-    ],
     include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
