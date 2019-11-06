@@ -687,7 +687,7 @@ def get_etfs_overview(country, as_json=False):
     elif country.lower() == 'united kingdom':
         country = 'uk'
 
-    url = "https://www.investing.com/etfs/" + country + "-etfs?&issuer_filter=0"
+    url = "https://www.investing.com/etfs/" + country.replace(' ', '-') + "-etfs?&issuer_filter=0"
 
     req = requests.get(url, headers=head)
 

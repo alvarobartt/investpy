@@ -6,3 +6,4 @@ include investpy/resources/etfs/*
 include investpy/resources/funds/*
 include investpy/resources/indices/*
 include investpy/resources/stocks/*
+ 

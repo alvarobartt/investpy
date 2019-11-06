@@ -46,7 +46,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing, investing-api, historical-data, financial-data, stocks, funds, etfs, indices',
+    keywords='investing, investing-api, historical-data, financial-data, stocks, funds, etfs, indices, currency crosses, bonds',
     python_requires='>=3',
     project_urls={
         'Bug Reports': 'https://github.com/alvarob96/investpy/issues',
