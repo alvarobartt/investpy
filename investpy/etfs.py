@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -7,6 +7,7 @@ import datetime
 import json
 from random import randint
 import logging
+import warnings
 
 import pandas as pd
 import pkg_resources
@@ -15,7 +16,7 @@ import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
-from investpy.utils.Data import Data
+from investpy.utils.data import Data
 
 from investpy.data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
 from investpy.data.etfs_data import etf_countries_as_list
@@ -175,9 +176,9 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency
-                -----||--------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
+                date || open | high | low | close | currency | exchange
+                -----||--------------------------------------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -190,28 +191,29 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
                             high: x,
                             low: x,
                             close: x,
-                            currency: x
+                            currency: x,
+                            exchange: x,
                         },
                         ...
                     ]
                 }
 
     Raises:
-        ValueError: argument error.
-        IOError: etfs object/file not found or unable to retrieve.
-        RuntimeError: introduced etf does not match any of the indexed ones.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if etf information was unavailable or not found.
+        ValueError: raised whenever any of the arguments is not valid or errored.
+        IOError: raised if etfs object/file not found or unable to retrieve.
+        RuntimeError:raised if the introduced etf does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain', as_json=False, order='ascending', debug=False)
-                          Open    High     Low   Close Currency
+        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
+                          Open    High     Low   Close Currency Exchange
             Date
-            2019-08-13  33.115  33.780  32.985  33.585      EUR
-            2019-08-14  33.335  33.335  32.880  32.905      EUR
-            2019-08-15  32.790  32.925  32.455  32.845      EUR
-            2019-08-16  33.115  33.200  33.115  33.305      EUR
-            2019-08-19  33.605  33.735  33.490  33.685      EUR
+            2019-08-13  33.115  33.780  32.985  33.585      EUR   Madrid
+            2019-08-14  33.335  33.335  32.880  32.905      EUR   Madrid
+            2019-08-15  32.790  32.925  32.455  32.845      EUR   Madrid
+            2019-08-16  33.115  33.200  33.115  33.305      EUR   Madrid
+            2019-08-19  33.605  33.735  33.490  33.685      EUR   Madrid
 
     """
 
@@ -266,6 +268,13 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         logger.disabled = False
 
     logger.info('Searching introduced etf on Investing.com')
+
+    found_etfs = etfs[etfs['name'].str.lower() == etf]
+    
+    if len(found_etfs) > 1:
+        warnings.warn('Note that the displayed information can differ depending on the stock exchange.', Warning)
+
+    del found_etfs
 
     symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
@@ -355,9 +364,9 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
 def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves historical data from the introduced `etf` from Investing
-    via Web Scraping on the introduced date range. The resulting data can it either be
-    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
+    This function retrieves historical data from the introduced `etf` from Investing via Web Scraping on the 
+    introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
+    :obj:`json` object with `ascending` or `descending` order.
 
     Args:
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
@@ -379,9 +388,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency
-                -----||--------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
+                date || open | high | low | close | currency | exchange
+                -----||--------------------------------------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx 
 
             but if we define `as_json=True`, then the output will be::
 
@@ -394,28 +403,29 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                             high: x,
                             low: x,
                             close: x,
-                            currency: x
+                            currency: x,
+                            exchange: x,
                         },
                         ...
                     ]
                 }
 
     Raises:
-        ValueError: argument error.
-        IOError: etfs object/file not found or unable to retrieve.
-        RuntimeError: introduced etf does not match any of the indexed ones.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if etf information was unavailable or not found.
+        ValueError: raised whenever any of the arguments is not valid or errored.
+        IOError: raised if etfs object/file not found or unable to retrieve.
+        RuntimeError:raised if the introduced etf does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
-                         Open   High    Low  Close Currency
+        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+                         Open   High    Low  Close Currency Exchange
             Date
-            2011-12-07  23.70  23.70  23.70  23.62      EUR
-            2011-12-08  23.53  23.60  23.15  23.04      EUR
-            2011-12-09  23.36  23.60  23.36  23.62      EUR
-            2011-12-12  23.15  23.26  23.00  22.88      EUR
-            2011-12-13  22.88  22.88  22.88  22.80      EUR
+            2011-12-07  23.70  23.70  23.70  23.62      EUR   Madrid
+            2011-12-08  23.53  23.60  23.15  23.04      EUR   Madrid
+            2011-12-09  23.36  23.60  23.36  23.62      EUR   Madrid
+            2011-12-12  23.15  23.26  23.00  22.88      EUR   Madrid
+            2011-12-13  22.88  22.88  22.88  22.80      EUR   Madrid
 
     """
 
@@ -519,6 +529,13 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         logger.disabled = False
 
     logger.info('Searching introduced etf on Investing.com')
+
+    found_etfs = etfs[etfs['name'].str.lower() == etf]
+    
+    if len(found_etfs) > 1:
+        warnings.warn('Note that the displayed information can differ depending on the stock exchange.', Warning)
+
+    del found_etfs
 
     symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
