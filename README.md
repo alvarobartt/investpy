@@ -1,8 +1,10 @@
-<a>
-  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" align="left" hspace="20">
-</a>
+<div style="text-align:center">
+  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" hspace="20">
+</div>
 
-# Python package for financial historical data extraction from Investing
+<div style="text-align:center">
+  <h1>Python package for financial historical data extraction from Investing</h1>
+</div>
 
 investpy is a Python package to retrieve historical data from [Investing](https://www.investing.com/). 
 It provides historical data retrieval from up to **29.628 stocks, 81.024 funds, 11.403 etfs, 1.889 currency crosses, 

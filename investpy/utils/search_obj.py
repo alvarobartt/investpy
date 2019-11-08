@@ -11,3 +11,5 @@ class SearchObj(object):
 
     def __init__(self):
         self.test = 'test'
+        # https://es.investing.com/search/?q=aapl&tab=quotes
+        # https://es.investing.com/search/service/SearchInnerPage
