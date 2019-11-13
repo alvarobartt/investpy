@@ -1,12 +1,12 @@
-<a>
-  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" align="right">
-</a>
+<p align="center">
+  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" hspace="20">
+</p>
 
-# investpy — a Python package for financial historical data extraction from Investing
+# Financial Historical Data Extraction with Python
 
-investpy is a Python package to retrieve real-time historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **29.628 stocks, 81.024 funds, 11.366 etfs, 1.889 currency crosses, 
-7.797 indices and 721 bonds**. Basically, investpy allows you to download historical data from almost 
+investpy is a Python package to retrieve historical data from [Investing](https://www.investing.com/). 
+It provides historical data retrieval from up to **29.628 stocks, 81.024 funds, 11.403 etfs, 1.889 currency crosses, 
+7.797 indices and 688 bonds**. Basically, investpy allows you to download historical data from almost 
 all the financial products indexed in Investing.com. All the data that can be retrieved includes data from all over the world, 
 from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, 
 investpy is intended to wrap up all the available data from Investing.com, so that it can be retrieved via Python for 
@@ -30,7 +30,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.8``
+``$ pip install investpy==0.9.9``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt)
 file, which can also be installed via pip:

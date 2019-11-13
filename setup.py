@@ -14,10 +14,10 @@ def readme():
 
 setup(
     name='investpy',
-    version='0.9.8',
+    version='0.9.9',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.9.8.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.9.9.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
@@ -31,36 +31,6 @@ setup(
         'setuptools>=41.2.0',
         'requests>=2.22.0',
         'numpy==1.17.2'
-    ],
-    data_files=[
-        ('stocks', [
-            'investpy/resources/stocks/stocks.csv',
-            'investpy/resources/stocks/stock_countries.csv'
-        ]),
-        ('funds', [
-            'investpy/resources/funds/funds.csv',
-            'investpy/resources/funds/fund_countries.csv'
-        ]),
-        ('etfs', [
-            'investpy/resources/etfs/etfs.csv',
-            'investpy/resources/etfs/etf_countries.csv'
-        ]),
-        ('indices', [
-            'investpy/resources/indices/indices.csv',
-            'investpy/resources/indices/index_countries.csv',
-            'investpy/resources/indices/global_indices_countries.csv',
-        ]),
-        ('currency_crosses', [
-            'investpy/resources/currency_crosses/currency_crosses.csv',
-            'investpy/resources/currency_crosses/currency_cross_continents.csv'
-        ]),
-        ('bonds', [
-            'investpy/resources/bonds/bonds.csv',
-            'investpy/resources/bonds/bond_countries.csv'
-        ]),
-        ('user_agents', [
-            'investpy/resources/user_agent_list.txt'
-        ])
     ],
     include_package_data=True,
     classifiers=[
@@ -76,7 +46,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    keywords='investing, investing-api, historical-data, financial-data, stocks, funds, etfs, indices',
+    keywords='investing, investing-api, historical-data, financial-data, stocks, funds, etfs, indices, currency crosses, bonds',
     python_requires='>=3',
     project_urls={
         'Bug Reports': 'https://github.com/alvarob96/investpy/issues',

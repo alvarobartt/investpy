@@ -1,17 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import investpy
-from investpy.retrieval.stocks_retrieval import retrieve_stocks, retrieve_stock_countries
-from investpy.retrieval.etfs_retrieval import retrieve_etfs
-from investpy.retrieval.funds_retrieval import retrieve_funds, retrieve_fund_countries
-from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses
-from investpy.retrieval.indices_retrieval import retrieve_indices, retrieve_index_countries, \
-    retrieve_global_indices_countries
-from investpy.retrieval.bonds_retrieval import retrieve_bonds, retrieve_bond_countries
-
 
 from investpy.utils.user_agent import get_random, clear_file, delete_file
 
@@ -20,16 +12,6 @@ def test_stocks_errors():
     """
     This function raises errors on stock retrieval functions
     """
-
-    try:
-        retrieve_stocks(test_mode=None)
-    except:
-        pass
-
-    try:
-        retrieve_stock_countries(test_mode=None)
-    except:
-        pass
 
     params = [
         {
@@ -437,16 +419,6 @@ def test_funds_errors():
     This function raises errors on fund retrieval functions
     """
 
-    try:
-        retrieve_funds(test_mode=None)
-    except:
-        pass
-
-    try:
-        retrieve_fund_countries(test_mode=None)
-    except:
-        pass
-
     params = [
         {
             'country': ['error'],
@@ -827,11 +799,6 @@ def test_etfs_errors():
     This function raises errors on etf retrieval functions
     """
 
-    try:
-        retrieve_etfs(test_mode=None)
-    except:
-        pass
-
     params = [
         {
             'country': ['error']
@@ -1191,21 +1158,6 @@ def test_indices_errors():
     This function raises errors on index retrieval functions
     """
 
-    try:
-        retrieve_indices(test_mode=None)
-    except:
-        pass
-
-    try:
-        retrieve_index_countries(test_mode=None)
-    except:
-        pass
-
-    try:
-        retrieve_global_indices_countries(test_mode=None)
-    except:
-        pass
-
     params = [
         {
             'country': ['error']
@@ -1536,11 +1488,6 @@ def test_currency_crosses_errors():
     This function raises errors on currency cross retrieval functions
     """
 
-    try:
-        retrieve_currency_crosses(test_mode=None)
-    except:
-        pass
-
     params = [
         {
             'base': ['error'],
@@ -1833,16 +1780,6 @@ def test_bonds_errors():
     """
     This function raises errors on bodn retrieval functions
     """
-
-    try:
-        retrieve_bonds(test_mode=None)
-    except:
-        pass
-
-    try:
-        retrieve_bond_countries(test_mode=None)
-    except:
-        pass
 
     params = [
         {

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -7,6 +7,7 @@ import datetime
 import json
 from random import randint
 import logging
+import warnings
 
 import pandas as pd
 import pkg_resources
@@ -15,7 +16,7 @@ import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
-from investpy.utils.Data import Data
+from investpy.utils.data import Data
 
 from investpy.data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
 from investpy.data.etfs_data import etf_countries_as_list
@@ -34,9 +35,8 @@ def get_etfs(country=None):
     Returns:
         :obj:`pandas.DataFrame` - etfs:
             The resulting :obj:`pandas.DataFrame` contains all the etfs basic information stored on `etfs.csv`, since it
-            was previously retrieved in `investpy.etfs.retrieve_etfs()`. Unless the country is specified, all the
-            available etfs indexed on Investing.com is returned, but if it is specified, just the etfs from that country
-            are returned.
+            was previously retrieved by investpy. Unless the country is specified, all the available etfs indexed on 
+            Investing.com is returned, but if it is specified, just the etfs from that country are returned.
 
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
@@ -47,7 +47,9 @@ def get_etfs(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
+    
     """
 
     return etfs_as_df(country=country)
@@ -55,8 +57,7 @@ def get_etfs(country=None):
 
 def get_etfs_list(country=None):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already
-    stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
     This function also allows the users to specify which country do they want to retrieve data from or if they
     want to retrieve it from every listed country; so on, a listing of etfs will be returned. This function
     helps the user to get to know which etfs are available on Investing.com.
@@ -78,7 +79,8 @@ def get_etfs_list(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing or empty.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
     
     """
 
@@ -87,18 +89,17 @@ def get_etfs_list(country=None):
 
 def get_etfs_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already
-    stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
-    :obj:`dict`; and the output of the function (:obj:`dict` or :obj:`json`).
+    :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
             names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
         as_json (:obj:`bool`, optional):
-            value to determine the format of the output data (:obj:`dict` or :obj:`json`).
+            value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
 
     Returns:
         :obj:`dict` or :obj:`json` - etfs_dict:
@@ -118,7 +119,8 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing or empty.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
     
     """
 
@@ -143,7 +145,7 @@ def get_etf_countries():
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when `etf_countries.csv` file is missing.
+        FileNotFoundError: raised when etf countries file was not found.
     
     """
 
@@ -174,9 +176,9 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency
-                -----||--------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
+                date || open | high | low | close | currency | exchange
+                -----||--------------------------------------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -189,28 +191,29 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
                             high: x,
                             low: x,
                             close: x,
-                            currency: x
+                            currency: x,
+                            exchange: x,
                         },
                         ...
                     ]
                 }
 
     Raises:
-        ValueError: argument error.
-        IOError: etfs object/file not found or unable to retrieve.
-        RuntimeError: introduced etf does not match any of the indexed ones.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if etf information was unavailable or not found.
+        ValueError: raised whenever any of the arguments is not valid or errored.
+        IOError: raised if etfs object/file not found or unable to retrieve.
+        RuntimeError:raised if the introduced etf does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain', as_json=False, order='ascending', debug=False)
-                          Open    High     Low   Close Currency
+        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
+                          Open    High     Low   Close Currency Exchange
             Date
-            2019-08-13  33.115  33.780  32.985  33.585      EUR
-            2019-08-14  33.335  33.335  32.880  32.905      EUR
-            2019-08-15  32.790  32.925  32.455  32.845      EUR
-            2019-08-16  33.115  33.200  33.115  33.305      EUR
-            2019-08-19  33.605  33.735  33.490  33.685      EUR
+            2019-08-13  33.115  33.780  32.985  33.585      EUR   Madrid
+            2019-08-14  33.335  33.335  32.880  32.905      EUR   Madrid
+            2019-08-15  32.790  32.925  32.455  32.845      EUR   Madrid
+            2019-08-16  33.115  33.200  33.115  33.305      EUR   Madrid
+            2019-08-19  33.605  33.735  33.490  33.685      EUR   Madrid
 
     """
 
@@ -265,6 +268,13 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         logger.disabled = False
 
     logger.info('Searching introduced etf on Investing.com')
+
+    found_etfs = etfs[etfs['name'].str.lower() == etf]
+    
+    if len(found_etfs) > 1:
+        warnings.warn('Note that the displayed information can differ depending on the stock exchange.', Warning)
+
+    del found_etfs
 
     symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
@@ -354,9 +364,9 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
 def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending', debug=False):
     """
-    This function retrieves historical data from the introduced `etf` from Investing
-    via Web Scraping on the introduced date range. The resulting data can it either be
-    stored in a :obj:`pandas.DataFrame` or in a :obj:`json` object with `ascending` or `descending` order.
+    This function retrieves historical data from the introduced `etf` from Investing via Web Scraping on the 
+    introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
+    :obj:`json` object with `ascending` or `descending` order.
 
     Args:
         etf (:obj:`str`): name of the etf to retrieve recent historical data from.
@@ -378,9 +388,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency
-                -----||--------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
+                date || open | high | low | close | currency | exchange
+                -----||--------------------------------------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx 
 
             but if we define `as_json=True`, then the output will be::
 
@@ -393,28 +403,29 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                             high: x,
                             low: x,
                             close: x,
-                            currency: x
+                            currency: x,
+                            exchange: x,
                         },
                         ...
                     ]
                 }
 
     Raises:
-        ValueError: argument error.
-        IOError: etfs object/file not found or unable to retrieve.
-        RuntimeError: introduced etf does not match any of the indexed ones.
-        ConnectionError: if GET requests does not return 200 status code.
-        IndexError: if etf information was unavailable or not found.
+        ValueError: raised whenever any of the arguments is not valid or errored.
+        IOError: raised if etfs object/file not found or unable to retrieve.
+        RuntimeError:raised if the introduced etf does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
-                         Open   High    Low  Close Currency
+        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+                         Open   High    Low  Close Currency Exchange
             Date
-            2011-12-07  23.70  23.70  23.70  23.62      EUR
-            2011-12-08  23.53  23.60  23.15  23.04      EUR
-            2011-12-09  23.36  23.60  23.36  23.62      EUR
-            2011-12-12  23.15  23.26  23.00  22.88      EUR
-            2011-12-13  22.88  22.88  22.88  22.80      EUR
+            2011-12-07  23.70  23.70  23.70  23.62      EUR   Madrid
+            2011-12-08  23.53  23.60  23.15  23.04      EUR   Madrid
+            2011-12-09  23.36  23.60  23.36  23.62      EUR   Madrid
+            2011-12-12  23.15  23.26  23.00  22.88      EUR   Madrid
+            2011-12-13  22.88  22.88  22.88  22.80      EUR   Madrid
 
     """
 
@@ -518,6 +529,13 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         logger.disabled = False
 
     logger.info('Searching introduced etf on Investing.com')
+
+    found_etfs = etfs[etfs['name'].str.lower() == etf]
+    
+    if len(found_etfs) > 1:
+        warnings.warn('Note that the displayed information can differ depending on the stock exchange.', Warning)
+
+    del found_etfs
 
     symbol = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'symbol']
     id_ = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'id']
@@ -676,7 +694,9 @@ def get_etfs_overview(country, as_json=False):
         "Connection": "keep-alive",
     }
 
-    if unidecode.unidecode(country.lower()) not in get_etf_countries():
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value not valid.')
 
     if country.lower() == 'united states':
@@ -684,7 +704,7 @@ def get_etfs_overview(country, as_json=False):
     elif country.lower() == 'united kingdom':
         country = 'uk'
 
-    url = "https://www.investing.com/etfs/world-etfs?&issuer_filter=0"
+    url = "https://www.investing.com/etfs/" + country.replace(' ', '-') + "-etfs?&issuer_filter=0"
 
     req = requests.get(url, headers=head)
 
@@ -692,74 +712,59 @@ def get_etfs_overview(country, as_json=False):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath(".//section[@id='leftColumn']/h3")
+    table = root_.xpath(".//table[@id='etfs']/tbody/tr")
 
     results = list()
 
-    if path_:
-        for element_ in path_:
-            link = element_.xpath(".//a")[0].get("href")
-            link = link.replace('/etfs/', '').replace('-etfs', '')
-            
-            if link == unidecode.unidecode(country.lower()):
-                flag = False
+    for row in table[:100]:
+        id_ = row.get('id').replace('pair_', '')
+        symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-                while flag is False:
-                    element_ = element_.getnext()
-                    if element_.tag == 'table':
-                        flag = True
+        nested = row.xpath(".//a")[0]
+        name = nested.text.strip()
+        full_name = nested.get('title').rstrip()
 
-                table = element_.xpath(".//tbody/tr")
+        # In Euro Zone the ETFs are from different countries so the country is specified
+        country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
+        country_flag = unidecode.unidecode(country_flag.lower())
 
-                for row in table:
-                    id_ = row.get('id').replace('pair_', '')
-                    symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+        last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+        last = row.xpath(last_path)[0].text_content()
 
-                    nested = row.xpath(".//a")[0]
-                    name = nested.text.strip()
-                    full_name = nested.get('title').rstrip()
+        change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+        change = row.xpath(change_path)[0].text_content()
 
-                    # In Euro Zone the ETFs are from different countries so the country is specified
-                    country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-                    country_flag = unidecode.unidecode(country_flag.lower())
+        turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
+        turnover = row.xpath(turnover_path)[0].text_content()
 
-                    last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
-                    last = row.xpath(last_path)[0].text_content()
+        if turnover == '':
+            continue
 
-                    change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
-                    change = row.xpath(change_path)[0].text_content()
+        if turnover.__contains__('K'):
+            turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
+        elif turnover.__contains__('M'):
+            turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
+        elif turnover.__contains__('B'):
+            turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
+        else:
+            turnover = float(turnover.replace(',', ''))
 
-                    turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
-                    turnover = row.xpath(turnover_path)[0].text_content()
+        data = {
+            "country": country_flag,
+            "name": name,
+            "full_name": full_name,
+            "symbol": symbol,
+            "last": float(last.replace(',', '')),
+            "change": change,
+            "turnover": int(turnover),
+        }
 
-                    if turnover == '':
-                        continue
-
-                    if turnover.__contains__('K'):
-                        turnover = int(float(turnover.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
-                    elif turnover.__contains__('M'):
-                        turnover = int(float(turnover.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
-                    else:
-                        turnover = int(float(turnover.replace('.', '').replace(',', '.')))
-
-                    data = {
-                        "country": country_flag,
-                        "name": name,
-                        "full_name": full_name,
-                        "symbol": symbol,
-                        "last": float(last.replace('.', '').replace(',', '.')),
-                        "change": change,
-                        "turnover": turnover,
-                    }
-
-                    results.append(data)
-
-                break
+        results.append(data)
 
     df = pd.DataFrame(results)
 
     if as_json:
-        return df.to_json(orient='records')
+        return json.loads(df.to_json(orient='records'))
     else:
         return df
 
@@ -768,10 +773,10 @@ def search_etfs(by, value):
     """
     This function searches etfs by the introduced value for the specified field. This means that this function
     is going to search if there is a value that matches the introduced value for the specified field which is the
-    `etfs.csv` column name to search in. Available fields to search etfs are 'name' and 'symbol'.
+    `etfs.csv` column name to search in. Available fields to search etfs are 'name', 'full_name' and 'symbol'.
 
     Args:
-        by (:obj:`str`): name of the field to search for, which is the column name ('name' or 'symbol').
+        by (:obj:`str`): name of the field to search for, which is the column name ('name', 'full_name' or 'symbol').
         value (:obj:`str`): value of the field to search for, which is the str that is going to be searched.
 
     Returns:
@@ -787,7 +792,7 @@ def search_etfs(by, value):
     
     """
 
-    available_search_fields = ['name', 'symbol']
+    available_search_fields = ['name', 'full_name', 'symbol']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')

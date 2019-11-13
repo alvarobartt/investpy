@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -15,7 +15,7 @@ import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
-from investpy.utils.Data import Data
+from investpy.utils.data import Data
 
 from investpy.data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
 from investpy.data.bonds_data import bond_countries_as_list
@@ -46,7 +46,8 @@ def get_bonds(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `bonds.csv` file is missing or empty.
+        FileNotFoundError: raised when bonds file was not found.
+        IOError: raised when bond countries file is missing or empty.
 
     """
 
@@ -77,7 +78,8 @@ def get_bonds_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `bonds.csv` file is missing or empty.
+        FileNotFoundError: raised when bonds file was not found.
+        IOError: raised when bond countries file is missing or empty.
     
     """
 
@@ -114,7 +116,8 @@ def get_bonds_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised when bonds file was not found.
+        IOError: raised when bond countries file is missing or empty.
 
     """
 
@@ -133,7 +136,8 @@ def get_bond_countries():
             The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
 
     Raises:
-        IOError: raised when `bond_countries.csv` file is missing or empty.
+        FileNotFoundError: raised when bond countries file was not found.
+        IOError: raised when bond countries file is missing or empty.
 
     """
 

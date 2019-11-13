@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -11,43 +11,6 @@ import pkg_resources
 import numpy as np
 
 import unidecode
-
-from investpy.retrieval.currency_crosses_retrieval import retrieve_currency_crosses
-
-
-def available_currencies_as_list():
-    """
-    This function retrieves a listing with all the available currencies with indexed currency crosses in order to
-    get to know which are the available currencies. The currencies listed in this function, so on, can be used to
-    search currency crosses and used the retrieved data to get historical data of those currency crosses, so to
-    determine which is the value of one base currency in the second currency.
-
-    Returns:
-        :obj:`list` - available_currencies:
-            The resulting :obj:`list` contains all the available currencies with currency crosses being either the base
-            or the second value of the cross, as listed in Investing.com.
-
-            In case the listing was successfully retrieved, the :obj:`list` will look like::
-
-                available_currencies = [
-                    'AED', 'AFN', 'ALL', 'AMD', 'ANG', ...
-                ]
-
-    Raises:
-        IndexError: raised if `currency_crosses.csv` file was unavailable or not found.
-    """
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        currency_crosses = retrieve_currency_crosses(test_mode=False)
-
-    if currency_crosses is None:
-        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
-    else:
-        return np.unique(currency_crosses['base'].unique().tolist() + currency_crosses['second'].unique().tolist())
 
 
 def currency_crosses_as_df(base=None, second=None):
@@ -81,13 +44,11 @@ def currency_crosses_as_df(base=None, second=None):
                 -----|-----------|-----|----|------|--------|-----------|-------------
                 xxxx | xxxxxxxxx | xxx | xx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
 
-            Just like `investpy.currency_crosses.retrieve_currencies()`, the output of this function is a
-            :obj:`pandas.DataFrame` containing all the currency crosses as indexed in Investing.com, but instead of
-            scraping the web in order to retrieve them and then generating the CSV file, this function just reads it
-            and loads it into a :obj:`pandas.DataFrame`.
-
     Raises:
-        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
+    
     """
 
     if base is not None and not isinstance(base, str):
@@ -101,7 +62,7 @@ def currency_crosses_as_df(base=None, second=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = retrieve_currency_crosses(test_mode=False)
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -178,7 +139,10 @@ def currency_crosses_as_list(base=None, second=None):
                 ]
 
     Raises:
-        IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
+    
     """
 
     if base is not None and not isinstance(base, str):
@@ -192,7 +156,7 @@ def currency_crosses_as_list(base=None, second=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = retrieve_currency_crosses(test_mode=False)
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -278,10 +242,12 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
                     'second': second,
                     'second_name': second_name
                 }
-
+    
     Raises:
-        ValueError: raised when any of the input arguments is not valid.
-       IOError: raised if currency_crosses retrieval failed, both for missing file or empty file.
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
+    
     """
 
     if base is not None and not isinstance(base, str):
@@ -298,7 +264,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        currency_crosses = retrieve_currency_crosses(test_mode=False)
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
@@ -363,3 +329,40 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
                 return currency_crosses[columns].to_dict(orient='records')
         else:
             raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
+
+
+def available_currencies_as_list():
+    """
+    This function retrieves a listing with all the available currencies with indexed currency crosses in order to
+    get to know which are the available currencies. The currencies listed in this function, so on, can be used to
+    search currency crosses and used the retrieved data to get historical data of those currency crosses, so to
+    determine which is the value of one base currency in the second currency.
+
+    Returns:
+        :obj:`list` - available_currencies:
+            The resulting :obj:`list` contains all the available currencies with currency crosses being either the base
+            or the second value of the cross, as listed in Investing.com.
+
+            In case the listing was successfully retrieved, the :obj:`list` will look like::
+
+                available_currencies = [
+                    'AED', 'AFN', 'ALL', 'AMD', 'ANG', ...
+                ]
+
+    Raises:
+        FileNotFoundError: raised if currency crosses file was not found.
+        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
+    
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
+
+    if currency_crosses is None:
+        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
+    else:
+        return np.unique(currency_crosses['base'].unique().tolist() + currency_crosses['second'].unique().tolist())

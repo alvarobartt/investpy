@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -9,36 +9,6 @@ import pandas as pd
 import pkg_resources
 
 import unidecode
-
-from investpy.retrieval.indices_retrieval import retrieve_indices
-
-
-def index_countries_as_list():
-    """
-    This function retrieves all the country names indexed in Investing.com with available indices to retrieve data
-    from, via reading the `indices.csv` file from the resources directory. So on, this function will display a listing
-    containing a set of countries, in order to let the user know which countries are available for indices data retrieval.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
-
-    Raises:
-        FileNotFoundError: raised if `indices.csv` file was unavailable or not found.
-        IOError: raised if indices were not found.
-    """
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
-
-    if indices is None:
-        raise IOError("ERR#0037: indices not found or unable to retrieve.")
-    else:
-        return indices['country'].unique().tolist()
 
 
 def indices_as_df(country=None):
@@ -65,6 +35,7 @@ def indices_as_df(country=None):
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
+        FileNotFoundError: raised if the indices file was not found.
         IOError: raised if the indices file from `investpy` is missing or errored.
     
     """
@@ -77,7 +48,7 @@ def indices_as_df(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = retrieve_indices(test_mode=False)
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -114,8 +85,9 @@ def indices_as_list(country=None):
                 indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -127,7 +99,7 @@ def indices_as_list(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = retrieve_indices(test_mode=False)
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -174,8 +146,9 @@ def indices_as_dict(country=None, columns=None, as_json=False):
                 }
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -190,7 +163,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        indices = retrieve_indices(test_mode=False)
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
@@ -217,3 +190,32 @@ def indices_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(indices[indices['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return indices[indices['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+
+
+def index_countries_as_list():
+    """
+    This function retrieves all the country names indexed in Investing.com with available indices to retrieve data
+    from, via reading the `indices.csv` file from the resources directory. So on, this function will display a listing
+    containing a set of countries, in order to let the user know which countries are available for indices data retrieval.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
+
+    Raises:
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
+    
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
+
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
+    else:
+        return indices['country'].unique().tolist()

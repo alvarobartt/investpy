@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -15,7 +15,7 @@ import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
-from investpy.utils.Data import Data
+from investpy.utils.data import Data
 
 from investpy.data.indices_data import indices_as_df, indices_as_list, indices_as_dict
 from investpy.data.indices_data import index_countries_as_list
@@ -45,6 +45,7 @@ def get_indices(country=None):
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
+        FileNotFoundError: raised if the indices file was not found.
         IOError: raised if the indices file from `investpy` is missing or errored.
     
     """
@@ -73,8 +74,9 @@ def get_indices_list(country=None):
                 indices = ['S&P Merval', 'S&P Merval Argentina', 'S&P/BYMA Argentina General', ...]
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -115,8 +117,9 @@ def get_indices_dict(country=None, columns=None, as_json=False):
                 }
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -134,8 +137,8 @@ def get_index_countries():
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if `indices.csv` file was unavailable or not found.
-        IOError: raised if indices were not found.
+        FileNotFoundError: raised if the indices file was not found.
+        IOError: raised if the indices file is missing or errored.
     
     """
 
@@ -323,11 +326,11 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
             index_volume = 0
 
             if info[5].__contains__('K'):
-                index_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                index_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
             elif info[5].__contains__('M'):
-                index_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                index_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
             elif info[5].__contains__('B'):
-                index_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                index_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
             result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                             index_close, index_volume, index_currency))
@@ -607,11 +610,11 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     index_volume = 0
 
                     if info[5].__contains__('K'):
-                        index_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        index_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif info[5].__contains__('M'):
-                        index_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        index_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif info[5].__contains__('B'):
-                        index_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                        index_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
                     result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                                     index_close, index_volume, index_currency))

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -9,46 +9,6 @@ import unidecode
 
 import pandas as pd
 import pkg_resources
-
-from investpy.retrieval.etfs_retrieval import retrieve_etfs
-
-
-def etf_countries_as_list():
-    """
-    This function retrieves all the available countries to retrieve etfs from, as the listed
-    countries are the ones indexed on Investing.com. The purpose of this function is to list
-    the countries which have available etfs according to Investing.com data, so to ease the
-    etf retrieval process of a particular country.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the countries listed on Investing.com with
-            etfs available to retrieve data from.
-
-            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
-            with etfs was successfully completed, the resulting :obj:`list` will look like::
-
-                countries = ['australia', 'austria', 'belgium', 'brazil', ...]
-
-    Raises:
-        FileNotFoundError: raised when `etf_countries.csv` file is missing.
-    """
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
-
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0044: etf_countries file not found")
-
-    for index, row in countries.iterrows():
-        if row['country'] == 'uk':
-            countries.loc[index, 'country'] = 'united kingdom'
-        elif row['country'] == 'usa':
-            countries.loc[index, 'country'] = 'united states'
-
-    return countries['country'].tolist()
 
 
 def etfs_as_df(country=None):
@@ -64,9 +24,8 @@ def etfs_as_df(country=None):
     Returns:
         :obj:`pandas.DataFrame` - etfs:
             The resulting :obj:`pandas.DataFrame` contains all the etfs basic information stored on `etfs.csv`, since it
-            was previously retrieved in `investpy.etfs.retrieve_etfs()`. Unless the country is specified, all the
-            available etfs indexed on Investing.com is returned, but if it is specified, just the etfs from that country
-            are returned.
+            was previously retrieved by investpy. Unless the country is specified, all the available etfs indexed on 
+            Investing.com is returned, but if it is specified, just the etfs from that country are returned.
 
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
@@ -77,7 +36,9 @@ def etfs_as_df(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -88,7 +49,7 @@ def etfs_as_df(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = retrieve_etfs(test_mode=False)
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etf list not found or unable to retrieve.")
@@ -104,8 +65,7 @@ def etfs_as_df(country=None):
 
 def etfs_as_list(country=None):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already
-    stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
     This function also allows the users to specify which country do they want to retrieve data from or if they
     want to retrieve it from every listed country; so on, a listing of etfs will be returned. This function
     helps the user to get to know which etfs are available on Investing.com.
@@ -127,7 +87,9 @@ def etfs_as_list(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing or empty.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -138,7 +100,7 @@ def etfs_as_list(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = retrieve_etfs(test_mode=False)
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etf list not found or unable to retrieve.")
@@ -151,8 +113,7 @@ def etfs_as_list(country=None):
 
 def etfs_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already
-    stored on `etfs.csv`, which if does not exists, will be created by `investpy.etfs.retrieve_etfs()`.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
     This function also allows the user to specify which country do they want to retrieve data from,
     or from every listed country; the columns which the user wants to be included on the resulting
     :obj:`dict`; and the output of the function will either be a :obj:`dict` or a :obj:`json`.
@@ -182,7 +143,9 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        IOError: raised when `etfs.csv` file is missing or empty.
+        FileNotFoundError: raised when etfs file was not found.
+        IOError: raised when etfs file is missing.
+    
     """
 
     if country is not None and not isinstance(country, str):
@@ -196,7 +159,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        etfs = retrieve_etfs(test_mode=False)
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etf list not found or unable to retrieve.")
@@ -222,3 +185,42 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
                 etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+
+
+def etf_countries_as_list():
+    """
+    This function retrieves all the available countries to retrieve etfs from, as the listed
+    countries are the ones indexed on Investing.com. The purpose of this function is to list
+    the countries which have available etfs according to Investing.com data, so to ease the
+    etf retrieval process of a particular country.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the countries listed on Investing.com with
+            etfs available to retrieve data from.
+
+            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
+            with etfs was successfully completed, the resulting :obj:`list` will look like::
+
+                countries = ['australia', 'austria', 'belgium', 'brazil', ...]
+
+    Raises:
+        FileNotFoundError: raised when etf countries file was not found.
+    
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'etfs', 'etf_countries.csv'))
+
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0044: etf_countries file not found")
+
+    for index, row in countries.iterrows():
+        if row['country'] == 'uk':
+            countries.loc[index, 'country'] = 'united kingdom'
+        elif row['country'] == 'usa':
+            countries.loc[index, 'country'] = 'united states'
+
+    return countries['country'].tolist()

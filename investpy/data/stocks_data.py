@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -8,37 +8,6 @@ import json
 
 import pandas as pd
 import pkg_resources
-
-from investpy.retrieval.stocks_retrieval import retrieve_stock_countries, retrieve_stocks
-
-
-def stock_countries_as_list():
-    """
-    This function returns a listing with all the available countries from where stocks can be retrieved, so to
-    let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
-    function. Also, not just the available countries, but the required name is provided since Investing.com has a
-    certain country name standard and countries should be specified the same way they are in Investing.com.
-
-    Returns:
-        :obj:`list` - countries:
-            The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
-
-    Raises:
-        IOError: raised when `stock_countries.csv` file is missing or empty.
-
-    """
-
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        countries = retrieve_stock_countries(test_mode=False)
-
-    if countries is None:
-        raise IOError("ERR#0036: stock countries list not found or unable to retrieve.")
-    else:
-        return countries['country'].tolist()
 
 
 def stocks_as_df(country=None):
@@ -66,7 +35,8 @@ def stocks_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
 
     """
 
@@ -78,7 +48,7 @@ def stocks_as_df(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        stocks = retrieve_stocks(test_mode=False)
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
@@ -118,7 +88,8 @@ def stocks_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
     
     """
 
@@ -130,7 +101,7 @@ def stocks_as_list(country=None):
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        stocks = retrieve_stocks(test_mode=False)
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
@@ -178,7 +149,8 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
 
     """
 
@@ -193,7 +165,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        stocks = retrieve_stocks(test_mode=False)
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
@@ -221,3 +193,33 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
                 stocks[stocks['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return stocks[stocks['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+
+
+def stock_countries_as_list():
+    """
+    This function returns a listing with all the available countries from where stocks can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
+
+    Returns:
+        :obj:`list` - countries:
+            The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
+
+    Raises:
+        FileNotFoundError: raised if stock countries file was not found.
+        IOError: raised when stock countries file is missing or empty.
+
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0071: stock countries file not found or errored.")
+
+    if countries is None:
+        raise IOError("ERR#0036: stock countries list not found or unable to retrieve.")
+    else:
+        return countries['country'].tolist()

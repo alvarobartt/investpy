@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -15,7 +15,7 @@ import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
-from investpy.utils.Data import Data
+from investpy.utils.data import Data
 
 from investpy.data.stocks_data import stocks_as_df, stocks_as_list, stocks_as_dict
 from investpy.data.stocks_data import stock_countries_as_list
@@ -46,7 +46,8 @@ def get_stocks(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
 
     """
 
@@ -77,7 +78,8 @@ def get_stocks_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
     
     """
 
@@ -100,13 +102,13 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
         as_json (:obj:`bool`, optional): if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
 
     Returns:
-        :obj:`list` of :obj:`dict` OR :obj:`json` - equities_dict:
+        :obj:`list` of :obj:`dict` OR :obj:`json` - stocks_dict:
             The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every stock as indexed in Investing.com from
             the information previously retrieved by investpy and stored on a csv file.
 
             In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
 
-                {
+                stocks_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,
@@ -119,7 +121,8 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        IOError: raised when `stocks.csv` file is missing or empty.
+        FileNotFoundError: raised if stocks file was not found.
+        IOError: raised when stocks file is missing or empty.
 
     """
 
@@ -138,7 +141,8 @@ def get_stock_countries():
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        IOError: raised when `stock_countries.csv` file is missing or empty.
+        FileNotFoundError: raised if stock countries file was not found.
+        IOError: raised when stock countries file is missing or empty.
 
     """
 
@@ -327,11 +331,11 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
             stock_volume = 0
 
             if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
             elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
             elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
@@ -605,12 +609,12 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     stock_volume = 0
 
                     if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif info[5].__contains__('B'):
                         stock_volume = int(
-                            float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                            float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,

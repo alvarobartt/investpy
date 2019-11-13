@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
@@ -15,7 +15,7 @@ import unidecode
 from lxml.html import fromstring
 
 from investpy.utils import user_agent
-from investpy.utils.Data import Data
+from investpy.utils.data import Data
 
 from investpy.data.funds_data import funds_as_list, funds_as_dict, funds_as_df
 from investpy.data.funds_data import fund_countries_as_list
@@ -25,7 +25,7 @@ def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
-    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+    All the available funds can be found at: https://es.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -38,15 +38,14 @@ def get_funds(country=None):
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                asset class | id | isin | issuer | name | symbol | tag
-                ------------|----|------|--------|------|--------|-----
-                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx
-
-            Just like `investpy.funds.retrieve_funds()` :obj:`pandas.DataFrame` output, but instead of generating the
-            CSV file, this function just reads it and loads it into a :obj:`pandas.DataFrame` object.
+                asset class | id | isin | issuer | name | symbol | tag | currrency
+                ------------|----|------|--------|------|--------|-----|-----------
+                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
 
     Raises:
-        IOError: if the funds file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when the funds file was not found.
+        IOError: raised if the funds file is missing or errored.
     
     """
 
@@ -56,7 +55,7 @@ def get_funds(country=None):
 def get_funds_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
-    All the available funds can be found at: https://es.investing.com/funds/spain-funds?&issuer_filter=0
+    All the available funds can be found at: https://es.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -74,8 +73,9 @@ def get_funds_list(country=None):
                         ...]
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: if the funds file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when the funds file was not found.
+        IOError: raised if the funds file is missing or errored.
     
     """
 
@@ -84,15 +84,14 @@ def get_funds_list(country=None):
 
 def get_funds_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and
-    returns them as a :obj:`dict` containing the `asset_class`, `id`, `issuer`,
-    `name`, `symbol` and `tag`. All the available funds can be found at:
-    https://es.investing.com/etfs/spain-etfs
+    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
+    `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
+    https://es.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
         columns (:obj:`list` of :obj:`str`, optional): description
-            a `list` containing the column names from which the data is going to be retrieved.
+            a :obj:`list` containing the column names from which the data is going to be retrieved.
         as_json (:obj:`bool`, optional): description
             value to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
@@ -110,12 +109,14 @@ def get_funds_dict(country=None, columns=None, as_json=False):
                     'issuer': issuer,
                     'name': name,
                     'symbol': symbol,
-                    'tag': tag
+                    'tag': tag,
+                    'currency': currency
                 }
 
     Raises:
-        ValueError: raised when the introduced arguments are not correct.
-        IOError: if the funds file from `investpy` is missing or errored.
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when the funds file was not found.
+        IOError: raised if the funds file is missing or errored.
     
     """
 
@@ -134,7 +135,9 @@ def get_fund_countries():
             The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
 
     Raises:
-        IndexError: if `fund_countries.csv` was unavailable or not found.
+        FileNotFoundError: raised when the funds file was not found.
+        IndexError: raised if fund countries file was unavailable or not found.
+    
     """
 
     return fund_countries_as_list()
@@ -777,13 +780,13 @@ def get_fund_information(fund, country, as_json=False):
                 if total_assets != 'N/A':
                     if total_assets.__contains__('K'):
                         total_assets = int(
-                            float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                            float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif total_assets.__contains__('M'):
                         total_assets = int(
-                            float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                            float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif total_assets.__contains__('B'):
                         total_assets = int(
-                            float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                            float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
                     else:
                         total_assets = int(float(total_assets.replace('.', '')))
 
@@ -805,13 +808,13 @@ def get_fund_information(fund, country, as_json=False):
 
                 if market_cap != 'N/A':
                     if market_cap.__contains__('K'):
-                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif market_cap.__contains__('M'):
                         market_cap = int(
-                            float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                            float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif market_cap.__contains__('B'):
                         market_cap = int(
-                            float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                            float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
                     else:
                         market_cap = int(float(market_cap.replace('.', '')))
 
