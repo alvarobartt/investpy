@@ -59,10 +59,10 @@ some functions have been developed in order to retrieve both recent and historic
 As to explain its usage an example is proposed to present historical data retrieval functions::
 
     # Retrieves the recent data of BBVA (last month) a spanish stock, as a pandas.DataFrame on ascending order
-    df = investpy.get_stock_recent_data(stock='bbva', country='spain', as_json=False, order='ascending', debug=False)
+    df = investpy.get_stock_recent_data(stock='bbva', country='spain', as_json=False, order='ascending')
 
     # Retrieves the historical data of BBVA, a spanish stock, on the specified date range as a pandas.DataFrame on ascending order
-    df = investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2018', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+    df = investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2018', to_date='01/01/2019', as_json=False, order='ascending')
 
 As we already saw, both functions take some parameters, but some of them are *optional*, which means that the function
 does not need the user to specify them as they already have a default value.
@@ -74,9 +74,7 @@ be an stock from the specified country, if the stock is not found on the specifi
 When retrieving recent data from an stock, we can additionally specify if we want the output as a json object or not, by
 setting the parameter ``as_json`` as either True or False, respectively. We can also set the ``order`` we want the
 returned object to have based on dates, where ascending goes from the very first date retrieved until now, and
-descending goes the other way. Additionally, there is a parameter called ``debug`` which will enable or disable debug
-log information if True or  False, respectively; debug mode will display debug messages on the console, so to let
-the user know which is happening inside the function.
+descending goes the other way.
 
 Furthermore, when it comes to historical data retrieval, we also need to specify both ``from_date`` and ``to_date``
 values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/mm/yyyy*.

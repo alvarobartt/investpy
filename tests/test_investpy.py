@@ -74,22 +74,18 @@ def test_investpy_stocks():
         {
             'as_json': True,
             'order': 'ascending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'ascending',
-            'debug': True
         },
         {
             'as_json': True,
             'order': 'descending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'descending',
-            'debug': False
         },
     ]
 
@@ -97,16 +93,14 @@ def test_investpy_stocks():
         investpy.get_stock_recent_data(stock='BBVA',
                                        country='spain',
                                        as_json=param['as_json'],
-                                       order=param['order'],
-                                       debug=param['debug'])
+                                       order=param['order'])
 
         investpy.get_stock_historical_data(stock='BBVA',
                                            country='spain',
                                            from_date='01/01/1990',
                                            to_date='01/01/2019',
                                            as_json=param['as_json'],
-                                           order=param['order'],
-                                           debug=param['debug'])
+                                           order=param['order'])
 
     for value in ['spanish', 'english']:
         investpy.get_stock_company_profile(stock='BBVA',
@@ -175,22 +169,18 @@ def test_investpy_funds():
         {
             'as_json': True,
             'order': 'ascending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'ascending',
-            'debug': True
         },
         {
             'as_json': True,
             'order': 'descending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'descending',
-            'debug': False
         },
     ]
 
@@ -198,16 +188,14 @@ def test_investpy_funds():
         investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp',
                                       country='spain',
                                       as_json=param['as_json'],
-                                      order=param['order'],
-                                      debug=param['debug'])
+                                      order=param['order'])
 
         investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp',
                                           country='spain',
                                           from_date='01/01/2010',
                                           to_date='01/01/2019',
                                           as_json=param['as_json'],
-                                          order=param['order'],
-                                          debug=param['debug'])
+                                          order=param['order'])
 
     params = [
         {
@@ -287,22 +275,18 @@ def test_investpy_etfs():
         {
             'as_json': True,
             'order': 'ascending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'ascending',
-            'debug': True
         },
         {
             'as_json': True,
             'order': 'descending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'descending',
-            'debug': False
         },
     ]
 
@@ -310,16 +294,14 @@ def test_investpy_etfs():
         investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50',
                                      country='spain',
                                      as_json=param['as_json'],
-                                     order=param['order'],
-                                     debug=param['debug'])
+                                     order=param['order'])
 
         investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50',
                                          country='spain',
                                          from_date='01/01/2010',
                                          to_date='01/01/2019',
                                          as_json=param['as_json'],
-                                         order=param['order'],
-                                         debug=param['debug'])
+                                         order=param['order'])
 
     params = [
         {
@@ -395,22 +377,18 @@ def test_investpy_indices():
         {
             'as_json': True,
             'order': 'ascending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'ascending',
-            'debug': True
         },
         {
             'as_json': True,
             'order': 'descending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'descending',
-            'debug': False
         },
     ]
 
@@ -418,16 +396,14 @@ def test_investpy_indices():
         investpy.get_index_recent_data(index='ibex 35',
                                        country='spain',
                                        as_json=param['as_json'],
-                                       order=param['order'],
-                                       debug=param['debug'])
+                                       order=param['order'])
 
         investpy.get_index_historical_data(index='ibex 35',
                                            country='spain',
                                            from_date='01/01/2018',
                                            to_date='01/01/2019',
                                            as_json=param['as_json'],
-                                           order=param['order'],
-                                           debug=param['debug'])
+                                           order=param['order'])
 
     investpy.search_indices(by='name', value='ibex')
 
@@ -532,7 +508,6 @@ def test_investpy_currency_crosses():
             'to_date': '01/01/2019',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
         },
         {
             'currency_cross': 'EUR/USD',
@@ -540,22 +515,19 @@ def test_investpy_currency_crosses():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'descending',
-            'debug': False
         },
     ]
 
     for param in params:
         investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'],
                                                 as_json=param['as_json'],
-                                                order=param['order'],
-                                                debug=param['debug'])
+                                                order=param['order'])
 
         investpy.get_currency_cross_historical_data(currency_cross=param['currency_cross'],
                                                     from_date=param['from_date'],
                                                     to_date=param['to_date'],
                                                     as_json=param['as_json'],
-                                                    order=param['order'],
-                                                    debug=param['debug'])
+                                                    order=param['order'])
 
     investpy.search_currency_crosses(by='base', value='EUR')
 
@@ -617,22 +589,18 @@ def test_investpy_bonds():
         {
             'as_json': True,
             'order': 'ascending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'ascending',
-            'debug': True
         },
         {
             'as_json': True,
             'order': 'descending',
-            'debug': False
         },
         {
             'as_json': False,
             'order': 'descending',
-            'debug': False
         },
     ]
 
@@ -640,16 +608,14 @@ def test_investpy_bonds():
         investpy.get_bond_recent_data(bond='Spain 30Y',
                                       country='spain',
                                       as_json=param['as_json'],
-                                      order=param['order'],
-                                      debug=param['debug'])
+                                      order=param['order'])
 
         investpy.get_bond_historical_data(bond='Spain 30Y',
                                           country='spain',
                                           from_date='01/01/1990',
                                           to_date='01/01/2019',
                                           as_json=param['as_json'],
-                                          order=param['order'],
-                                          debug=param['debug'])
+                                          order=param['order'])
 
     investpy.search_bonds(by='name', value='Spain')
 

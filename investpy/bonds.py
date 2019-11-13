@@ -6,7 +6,6 @@
 from datetime import datetime, date
 import json
 from random import randint
-import logging
 
 import pandas as pd
 import pkg_resources
@@ -144,14 +143,14 @@ def get_bond_countries():
     return bond_countries_as_list()
 
 
-def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=False):
+def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the introduced bond from Investing.com. So on, the recent data
     of the introduced bond from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
     the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
-    can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a
-    :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the index is the date)
-    and whether debug messages are going to be printed or not, respectively.
+    can be specified: as_json and order, which let the user decide if the data is going to be returned as a
+    :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the 
+    date), respectively.
 
     Args:
         bond (:obj:`str`): name of the bond to retrieve recent historical data from.
@@ -159,8 +158,6 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, either True or False, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -226,9 +223,6 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
-
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -250,21 +244,9 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
     if unidecode.unidecode(bond) not in [unidecode.unidecode(value.lower()) for value in bonds['name'].tolist()]:
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced bond on Investing.com')
-
     id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
     name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
     full_name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'full_name']
-
-    logger.info(str(bond) + ' found on Investing.com')
 
     header = full_name + " Bond Yield Historical Data"
 
@@ -288,22 +270,16 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
 
     url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
-    logger.info('Request sent to Investing.com!')
-
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
     result = list()
 
     if path_:
-        logger.info('Data parsing process starting...')
-
         for elements_ in path_:
             info = []
             for nested_ in elements_.xpath(".//td"):
@@ -325,8 +301,6 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
         elif order in ['descending', 'desc']:
             result = result
 
-        logger.info('Data parsing process finished...')
-
         if as_json is True:
             json_ = {'name': name,
                      'recent':
@@ -343,14 +317,14 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', debug=
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves historical data from the introduced bond from Investing.com. So on, the historical data
     of the introduced bond from the specified country in the specified data range will be retrieved and returned as
     a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
-    some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to
-    be returned as a :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the
-    index is the date) and whether debug messages are going to be printed or not, respectively.
+    some optional parameters can be specified: as_json and order, which let the user decide if the data is going to
+    be returned as a :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the
+    index is the date), respectively.
 
     Args:
         bond (:obj:`str`): name of the bond to retrieve historical data from.
@@ -360,8 +334,6 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, either True or False, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -426,9 +398,6 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
-
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.strptime(from_date, '%d/%m/%Y')
@@ -500,25 +469,11 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
     if unidecode.unidecode(bond) not in [unidecode.unidecode(value.lower()) for value in bonds['name'].tolist()]:
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced bond on Investing.com')
-
     id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
     name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
     full_name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'full_name']
 
-    logger.info(str(bond) + ' found on Investing.com')
-
     final = list()
-
-    logger.info('Data parsing process starting...')
 
     header = full_name + " Bond Yield Historical Data"
 
@@ -606,8 +561,6 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
                     final.append(df)
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-    logger.info('Data parsing process finished...')
 
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)

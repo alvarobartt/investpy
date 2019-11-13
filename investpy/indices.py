@@ -6,7 +6,6 @@
 import datetime
 import json
 from random import randint
-import logging
 
 import pandas as pd
 import pkg_resources
@@ -145,7 +144,7 @@ def get_index_countries():
     return index_countries_as_list()
 
 
-def get_index_recent_data(index, country, as_json=False, order='ascending', debug=False):
+def get_index_recent_data(index, country, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the introduced `index` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -158,8 +157,6 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -228,9 +225,6 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
-
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -252,23 +246,11 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
     if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced index on Investing.com')
-
     full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
     id_ = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'id']
     name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
 
     index_currency = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'currency']
-
-    logger.info(str(index) + ' found on Investing.com')
 
     header = "Datos históricos " + full_name
 
@@ -292,22 +274,17 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
 
     url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-    logger.info('Request sent to Investing.com!')
-
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
-
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
     result = list()
 
     if path_:
-        logger.info('Data parsing process starting...')
-
         for elements_ in path_:
             info = []
             for nested_ in elements_.xpath(".//td"):
@@ -340,8 +317,6 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
         elif order in ['descending', 'desc']:
             result = result
 
-        logger.info('Data parsing process finished...')
-
         if as_json is True:
             json_ = {'name': name,
                      'recent':
@@ -359,7 +334,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', debu
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_index_historical_data(index, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_index_historical_data(index, country, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves historical data of the introduced `index` (from the specified country, note that both
     index and country should match since if the introduced index is not listed in the indices of that country, the
@@ -374,10 +349,6 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
-        order (:obj:`str`, optional):
-            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -463,9 +434,6 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
-
     date_interval = {
         'intervals': [],
     }
@@ -520,23 +488,11 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced index on Investing.com')
-
     full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
     id_ = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'id']
     name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
 
     index_currency = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'currency']
-
-    logger.info(str(index) + ' found on Investing.com')
 
     final = list()
 
@@ -567,14 +523,10 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
 
         url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-        logger.info('Request sent to Investing.com!')
-
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         if not req.text:
             continue
@@ -584,8 +536,6 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         result = list()
 
         if path_:
-            logger.info('Data parsing process starting...')
-
             for elements_ in path_:
                 info = []
                 for nested_ in elements_.xpath(".//td"):
@@ -638,8 +588,6 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     final.append(df)
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-    logger.info('Data parsing process finished...')
 
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)

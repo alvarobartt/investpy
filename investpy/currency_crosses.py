@@ -6,7 +6,6 @@
 import datetime
 import json
 from random import randint
-import logging
 
 import pandas as pd
 import pkg_resources
@@ -182,7 +181,7 @@ def get_available_currencies():
     return available_currencies_as_list()
 
 
-def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascending', debug=False):
+def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the introduced `currency_cross` as indexed in Investing.com
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -194,8 +193,6 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -257,9 +254,6 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
-
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -276,21 +270,9 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced currency_cross on Investing.com')
-
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
     name = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
     currency = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'second']
-
-    logger.info(str(currency_cross) + ' found on Investing.com')
 
     header = "Datos históricos " + name
 
@@ -314,22 +296,16 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-    logger.info('Request sent to Investing.com!')
-
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
     result = list()
 
     if path_:
-        logger.info('Data parsing process starting...')
-
         for elements_ in path_:
             info = []
             for nested_ in elements_.xpath(".//td"):
@@ -362,8 +338,6 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         elif order in ['descending', 'desc']:
             result = result
 
-        logger.info('Data parsing process finished...')
-
         if as_json is True:
             json_ = {
                 'name': name,
@@ -380,7 +354,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the introduced `currency_cross` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -394,8 +368,6 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -473,9 +445,6 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
-
     date_interval = {
         'intervals': [],
     }
@@ -525,21 +494,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced currency_cross on Investing.com')
-
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
     name = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
     currency = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'second']
-
-    logger.info(str(currency_cross) + ' found on Investing.com')
 
     final = list()
 
@@ -570,22 +527,16 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
         url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-        logger.info('Request sent to Investing.com!')
-
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
         result = list()
 
         if path_:
-            logger.info('Data parsing process starting...')
-
             for elements_ in path_:
                 info = []
                 for nested_ in elements_.xpath(".//td"):
@@ -640,8 +591,6 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     final.append(df)
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-    logger.info('Data parsing process finished...')
 
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)

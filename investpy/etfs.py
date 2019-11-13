@@ -6,7 +6,6 @@
 import datetime
 import json
 from random import randint
-import logging
 import warnings
 
 import pandas as pd
@@ -152,7 +151,7 @@ def get_etf_countries():
     return etf_countries_as_list()
 
 
-def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=False):
+def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
     """
     This function retrieves recent historical data from the introduced `etf` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -165,8 +164,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -235,9 +232,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
-
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -259,16 +253,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced etf on Investing.com')
-
     found_etfs = etfs[etfs['name'].str.lower() == etf]
     
     if len(found_etfs) > 1:
@@ -281,8 +265,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
 
     etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
-
-    logger.info(str(etf) + ' found on Investing.com')
 
     header = "Datos históricos " + symbol
 
@@ -306,22 +288,16 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
 
     url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-    logger.info('Request sent to Investing.com!')
-
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
     result = list()
 
     if path_:
-        logger.info('Data parsing process starting...')
-
         for elements_ in path_:
             info = []
             for nested_ in elements_.xpath(".//td"):
@@ -343,8 +319,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         elif order in ['descending', 'desc']:
             result = result
 
-        logger.info('Data parsing process finished...')
-
         if as_json is True:
             json_ = {'name': name,
                      'recent':
@@ -362,7 +336,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', debug=Fa
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending'):
     """
     This function retrieves historical data from the introduced `etf` from Investing via Web Scraping on the 
     introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
@@ -377,8 +351,6 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -446,9 +418,6 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
-
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
 
     try:
         datetime.datetime.strptime(from_date, '%d/%m/%Y')
@@ -520,16 +489,6 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced etf on Investing.com')
-
     found_etfs = etfs[etfs['name'].str.lower() == etf]
     
     if len(found_etfs) > 1:
@@ -542,8 +501,6 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
 
     etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
-
-    logger.info(str(etf) + ' found on Investing.com')
 
     final = list()
 
@@ -574,14 +531,10 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
         url = "https://es.investing.com/instruments/HistoricalDataAjax"
 
-        logger.info('Request sent to Investing.com!')
-
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         if not req.text:
             continue
@@ -591,8 +544,6 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         result = list()
 
         if path_:
-            logger.info('Data parsing process starting...')
-
             for elements_ in path_:
                 info = []
 
@@ -638,8 +589,6 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-    logger.info('Data parsing process finished...')
 
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)
