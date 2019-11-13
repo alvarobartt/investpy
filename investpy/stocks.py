@@ -331,11 +331,11 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
             stock_volume = 0
 
             if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
             elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
             elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
@@ -609,12 +609,12 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     stock_volume = 0
 
                     if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif info[5].__contains__('B'):
                         stock_volume = int(
-                            float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                            float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,

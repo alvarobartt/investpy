@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.etfs &mdash; investpy 0.9.8 documentation</title>
+  <title>investpy.etfs &mdash; investpy 0.9.9 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.8
+                0.9.9
               </div>
             
           
@@ -463,23 +463,23 @@ retrieval functions as the name of the etf to retrieve data from needs to be spe
 <dl class="function">
 <dt id="investpy.etfs.get_etfs_overview">
 <code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etfs_overview</code><span class="sig-paren">(</span><em class="sig-param">country</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etfs_overview" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves an object containing all the real time data available for all the ETFs from a country,
+<dd><p>This function retrieves an overview containing all the real time data available for the main ETFs from a country,
 such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-function is to get an overview on all the available ETFs from a country.</p>
+function is to get an overview on the main ETFs from a country, so to get a general view.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country to retrieve all its available etf data from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country to retrieve the ETFs overview from.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the data available in Investing.com from all the ETFs
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the data available in Investing.com of the main ETFs
 from a country in order to get an overview of it.</p>
 <p>If the retrieval process succeeded, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> should look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">last</span> <span class="o">|</span> <span class="n">change</span> <span class="o">|</span> <span class="n">turnover</span>
-<span class="o">----------------------------------------</span>
-<span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full_name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">last</span> <span class="o">|</span> <span class="n">change</span> <span class="o">|</span> <span class="n">turnover</span>
+<span class="o">--------|------|-----------|--------|------|--------|----------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 </p>

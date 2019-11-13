@@ -780,13 +780,13 @@ def get_fund_information(fund, country, as_json=False):
                 if total_assets != 'N/A':
                     if total_assets.__contains__('K'):
                         total_assets = int(
-                            float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                            float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif total_assets.__contains__('M'):
                         total_assets = int(
-                            float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                            float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif total_assets.__contains__('B'):
                         total_assets = int(
-                            float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                            float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
                     else:
                         total_assets = int(float(total_assets.replace('.', '')))
 
@@ -808,13 +808,13 @@ def get_fund_information(fund, country, as_json=False):
 
                 if market_cap != 'N/A':
                     if market_cap.__contains__('K'):
-                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif market_cap.__contains__('M'):
                         market_cap = int(
-                            float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                            float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif market_cap.__contains__('B'):
                         market_cap = int(
-                            float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                            float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
                     else:
                         market_cap = int(float(market_cap.replace('.', '')))
 

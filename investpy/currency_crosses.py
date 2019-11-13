@@ -347,11 +347,11 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             currency_cross_volume = 0
 
             if info[5].__contains__('K'):
-                currency_cross_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                currency_cross_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
             elif info[5].__contains__('M'):
-                currency_cross_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                currency_cross_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
             elif info[5].__contains__('B'):
-                currency_cross_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                currency_cross_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
             result.insert(len(result),
                           Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
@@ -610,11 +610,11 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     currency_cross_volume = 0
 
                     if info[5].__contains__('K'):
-                        currency_cross_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1000)
+                        currency_cross_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
                     elif info[5].__contains__('M'):
-                        currency_cross_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1000000)
+                        currency_cross_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
                     elif info[5].__contains__('B'):
-                        currency_cross_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1000000000)
+                        currency_cross_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
 
                     result.insert(len(result),
                                   Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,

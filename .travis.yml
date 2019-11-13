@@ -9,7 +9,7 @@ dist: xenial
 
 install:
   - pip install -r requirements.txt
-  - pip install investpy==0.9.7
+  - pip install investpy==0.9.8
   - pip install pytest==5.1.0
   - pip install codecov==2.0.15
   - pip install pytest-cov==2.7.1
