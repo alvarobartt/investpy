@@ -25,8 +25,8 @@ def get_indices(country=None):
     This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
     returns them as a :obj:`pandas.DataFrame` with all the information of every available index. If the country
     filtering is applied, just the indices from the introduced country are going to be returned.
-    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
-    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
+    All the available indices can be found at: https://www.investing.com/indices/world-indices and at
+    https://www.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -57,8 +57,8 @@ def get_indices_list(country=None):
     This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
     returns them as a :obj:`list` with the names of every available index. If the country filtering is applied, just
     the indices from the introduced country are going to be returned.
-    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
-    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
+    All the available indices can be found at: https://www.investing.com/indices/world-indices and at
+    https://www.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -88,8 +88,8 @@ def get_indices_dict(country=None, columns=None, as_json=False):
     returns them as a :obj:`dict` with all the information of every available index. If the country
     filtering is applied, just the indices from the introduced country are going to be returned. Additionally, the
     columns to retrieve data from can be specified as a parameter formatted as a :obj:`list`.
-    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
-    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
+    All the available indices can be found at: https://www.investing.com/indices/world-indices and at
+    https://www.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -252,7 +252,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending'):
 
     index_currency = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'currency']
 
-    header = "Datos históricos " + full_name
+    header = full_name + ' Historical Data'
 
     params = {
         "curr_id": id_,
@@ -272,7 +272,15 @@ def get_index_recent_data(index, country, as_json=False, order='ascending'):
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+    try:
+        data = _recent_index(head, params)
+        return data
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def _recent_index(head, params):
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
@@ -290,24 +298,25 @@ def get_index_recent_data(index, country, as_json=False, order='ascending'):
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.text_content())
 
-            if info[0] == 'No se encontraron resultados':
+            if info[0] == 'No results found':
                 raise IndexError("ERR#0046: index information unavailable or not found.")
 
-            index_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-
-            index_close = float(info[1].replace('.', '').replace(',', '.'))
-            index_open = float(info[2].replace('.', '').replace(',', '.'))
-            index_high = float(info[3].replace('.', '').replace(',', '.'))
-            index_low = float(info[4].replace('.', '').replace(',', '.'))
+            index_date = datetime.fromtimestamp(int(info[0]))
+            index_date = date(index_date.year, index_date.month, index_date.day)
+            
+            index_close = float(info[1])
+            index_open = float(info[2])
+            index_high = float(info[3])
+            index_low = float(info[4])
 
             index_volume = 0
 
             if info[5].__contains__('K'):
-                index_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                index_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
             elif info[5].__contains__('M'):
-                index_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                index_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
             elif info[5].__contains__('B'):
-                index_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                index_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
             result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                             index_close, index_volume, index_currency))
@@ -329,9 +338,6 @@ def get_index_recent_data(index, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-
-    else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_index_historical_data(index, country, from_date, to_date, as_json=False, order='ascending'):
@@ -496,7 +502,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
 
     final = list()
 
-    header = "Datos históricos " + full_name
+    header = full_name + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
@@ -521,7 +527,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
@@ -541,7 +547,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.text_content())
 
-                if info[0] == 'No se encontraron resultados':
+                if info[0] == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
@@ -550,21 +556,22 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     data_flag = True
 
                 if data_flag is True:
-                    index_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-
-                    index_close = float(info[1].replace('.', '').replace(',', '.'))
-                    index_open = float(info[2].replace('.', '').replace(',', '.'))
-                    index_high = float(info[3].replace('.', '').replace(',', '.'))
-                    index_low = float(info[4].replace('.', '').replace(',', '.'))
+                    index_date = datetime.fromtimestamp(int(info[0]))
+                    index_date = date(index_date.year, index_date.month, index_date.day)
+                    
+                    index_close = float(info[1])
+                    index_open = float(info[2])
+                    index_high = float(info[3])
+                    index_low = float(info[4])
 
                     index_volume = 0
 
                     if info[5].__contains__('K'):
-                        index_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                        index_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
                     elif info[5].__contains__('M'):
-                        index_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                        index_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
                     elif info[5].__contains__('B'):
-                        index_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                        index_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
                     result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                                     index_close, index_volume, index_currency))

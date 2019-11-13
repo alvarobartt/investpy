@@ -24,7 +24,7 @@ def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -54,7 +54,7 @@ def get_funds(country=None):
 def get_funds_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -85,7 +85,7 @@ def get_funds_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
     `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://es.investing.com/funds/
+    https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -247,7 +247,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending'):
 
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     params = {
         "curr_id": id_,
@@ -267,7 +267,15 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending'):
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+    try:
+        data = _recent_funds(head, params)
+        return data
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def _recent_funds(head, params):
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
@@ -284,14 +292,16 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending'):
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.text_content())
 
-            if info[0] == 'No se encontraron resultados':
+            if info[0] == 'No results found':
                 raise IndexError("ERR#0008: fund information unavailable or not found.")
 
-            fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            fund_close = float(info[1].replace('.', '').replace(',', '.'))
-            fund_open = float(info[2].replace('.', '').replace(',', '.'))
-            fund_high = float(info[3].replace('.', '').replace(',', '.'))
-            fund_low = float(info[4].replace('.', '').replace(',', '.'))
+            fund_date = datetime.fromtimestamp(int(info[0]))
+            fund_date = date(fund_date.year, fund_date.month, fund_date.day)
+            
+            fund_close = float(info[1])
+            fund_open = float(info[2])
+            fund_high = float(info[3])
+            fund_low = float(info[4])
 
             result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                             fund_close, None, fund_currency))
@@ -313,8 +323,6 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-    else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, order='ascending'):
@@ -476,7 +484,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
     final = list()
 
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         params = {
@@ -499,7 +507,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
@@ -519,7 +527,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.text_content())
 
-                if info[0] == 'No se encontraron resultados':
+                if info[0] == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
@@ -529,11 +537,13 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     data_flag = True
 
                 if data_flag is True:
-                    fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    fund_close = float(info[1].replace('.', '').replace(',', '.'))
-                    fund_open = float(info[2].replace('.', '').replace(',', '.'))
-                    fund_high = float(info[3].replace('.', '').replace(',', '.'))
-                    fund_low = float(info[4].replace('.', '').replace(',', '.'))
+                    fund_date = datetime.fromtimestamp(int(info[0]))
+                    fund_date = date(fund_date.year, fund_date.month, fund_date.day)
+                    
+                    fund_close = float(info[1])
+                    fund_open = float(info[2])
+                    fund_high = float(info[3])
+                    fund_low = float(info[4])
 
                     result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                                     fund_close, None, fund_currency))

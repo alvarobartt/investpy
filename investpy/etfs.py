@@ -266,7 +266,15 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
 
     etf_currency = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'currency']
 
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
+
+    head = {
+        "User-Agent": user_agent.get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
     params = {
         "curr_id": id_,
@@ -278,15 +286,15 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
         "action": "historical_data"
     }
 
-    head = {
-        "User-Agent": user_agent.get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
+    try:
+        data = _recent_etfs(head, params)
+        return data
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+
+def _recent_etfs(head, params):
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
@@ -303,16 +311,19 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.text_content())
 
-            if info[0] == 'No se encontraron resultados':
+            if info[0] == 'No results found':
                 raise IndexError("ERR#0010: etf information unavailable or not found.")
 
-            etf_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            etf_close = float(info[1].replace('.', '').replace(',', '.'))
-            etf_open = float(info[2].replace('.', '').replace(',', '.'))
-            etf_high = float(info[3].replace('.', '').replace(',', '.'))
-            etf_low = float(info[4].replace('.', '').replace(',', '.'))
+            etf_date = datetime.fromtimestamp(int(info[0]))
+            etf_date = date(etf_date.year, etf_date.month, etf_date.day)
+            
+            etf_close = float(info[1])
+            etf_open = float(info[2])
+            etf_high = float(info[3])
+            etf_low = float(info[4])
 
-            result.insert(len(result), Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency))
+            result.insert(len(result),
+                          Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -320,10 +331,11 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
             result = result
 
         if as_json is True:
-            json_ = {'name': name,
-                     'recent':
-                         [value.etf_as_json() for value in result]
-                     }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.etf_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -331,9 +343,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-
-    else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending'):
@@ -504,7 +513,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     final = list()
 
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
@@ -529,7 +538,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
@@ -550,7 +559,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.text_content())
 
-                if info[0] == 'No se encontraron resultados':
+                if info[0] == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
@@ -559,11 +568,13 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     data_flag = True
 
                 if data_flag is True:
-                    etf_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    etf_close = float(info[1].replace('.', '').replace(',', '.'))
-                    etf_open = float(info[2].replace('.', '').replace(',', '.'))
-                    etf_high = float(info[3].replace('.', '').replace(',', '.'))
-                    etf_low = float(info[4].replace('.', '').replace(',', '.'))
+                    etf_date = datetime.fromtimestamp(int(info[0]))
+                    etf_date = date(etf_date.year, etf_date.month, etf_date.day)
+                    
+                    etf_close = float(info[1])
+                    etf_open = float(info[2])
+                    etf_high = float(info[3])
+                    etf_low = float(info[4])
 
                     result.insert(len(result),
                                   Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency))

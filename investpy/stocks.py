@@ -258,7 +258,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
 
     stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     params = {
         "curr_id": id_,
@@ -278,7 +278,15 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+    try:
+        data = _recent_stocks(head, params)
+        return data
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def _recent_stocks(head, params):
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
@@ -295,23 +303,25 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.text_content())
 
-            if info[0] == 'No se encontraron resultados':
+            if info[0] == 'No results found':
                 raise IndexError("ERR#0007: stock information unavailable or not found.")
 
-            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            stock_close = float(info[1].replace('.', '').replace(',', '.'))
-            stock_open = float(info[2].replace('.', '').replace(',', '.'))
-            stock_high = float(info[3].replace('.', '').replace(',', '.'))
-            stock_low = float(info[4].replace('.', '').replace(',', '.'))
+            stock_date = datetime.fromtimestamp(int(info[0]))
+            stock_date = date(stock_date.year, stock_date.month, stock_date.day)
+            
+            stock_close = float(info[1])
+            stock_open = float(info[2])
+            stock_high = float(info[3])
+            stock_low = float(info[4])
 
             stock_volume = 0
 
             if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                stock_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
             elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                stock_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
             elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                stock_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
@@ -334,8 +344,6 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-    else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending'):
@@ -500,7 +508,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
     final = list()
 
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
@@ -525,7 +533,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
@@ -546,7 +554,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.text_content())
 
-                if info[0] == 'No se encontraron resultados':
+                if info[0] == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
@@ -555,21 +563,22 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     data_flag = True
 
                 if data_flag is True:
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+                    stock_date = datetime.fromtimestamp(int(info[0]))
+                    stock_date = date(stock_date.year, stock_date.month, stock_date.day)
+                    
+                    stock_close = float(info[1])
+                    stock_open = float(info[2])
+                    stock_high = float(info[3])
+                    stock_low = float(info[4])
 
                     stock_volume = 0
 
                     if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                        stock_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
                     elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                        stock_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
                     elif info[5].__contains__('B'):
-                        stock_volume = int(
-                            float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                        stock_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,

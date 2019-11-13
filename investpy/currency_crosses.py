@@ -29,7 +29,7 @@ def get_currency_crosses(base=None, second=None):
     the second currency is USD. These are optional parameters, so specifying one of them means that all the currency
     crosses where the introduced currency is either base or second will be returned; if both are specified,
     just the introduced currency cross will be returned if it exists. All the available currency crosses can be found
-    at: https://es.investing.com/currencies/
+    at: https://www.investing.com/currencies/
 
     Args:
         base (:obj:`str`, optional):
@@ -70,7 +70,7 @@ def get_currency_crosses_list(base=None, second=None):
     cross, for example, in the currency cross `EUR/USD` the base currency is EUR and the second currency is USD. These
     are optional parameters, so specifying one of them means that all the currency crosses where the introduced
     currency is either base or second will be returned; if both are specified, just the introduced currency cross will
-    be returned if it exists. All the available currency crosses can be found at: https://es.investing.com/currencies/
+    be returned if it exists. All the available currency crosses can be found at: https://www.investing.com/currencies/
 
     Args:
         base (:obj:`str`, optional):
@@ -111,7 +111,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
     cross, for example, in the currency cross `EUR/USD` the base currency is EUR and the second currency is USD. These
     are optional parameters, so specifying one of them means that all the currency crosses where the introduced
     currency is either base or second will be returned; if both are specified, just the introduced currency cross will
-    be returned if it exists. All the available currency crosses can be found at: https://es.investing.com/currencies/
+    be returned if it exists. All the available currency crosses can be found at: https://www.investing.com/currencies/
 
     Args:
         base (:obj:`str`, optional):
@@ -274,7 +274,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     name = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
     currency = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'second']
 
-    header = "Datos históricos " + name
+    header = name + ' Historical Data'
 
     params = {
         "curr_id": id_,
@@ -294,7 +294,15 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
+    try:
+        data = _recent_currencies(head, params)
+        return data
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def _recent_currencies(head, params):
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
@@ -311,23 +319,25 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.text_content())
 
-            if info[0] == 'No se encontraron resultados':
+            if info[0] == 'No results found':
                 raise IndexError("ERR#0055: currency_cross information unavailable or not found.")
 
-            currency_cross_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            currency_cross_close = float(info[1].replace('.', '').replace(',', '.'))
-            currency_cross_open = float(info[2].replace('.', '').replace(',', '.'))
-            currency_cross_high = float(info[3].replace('.', '').replace(',', '.'))
-            currency_cross_low = float(info[4].replace('.', '').replace(',', '.'))
+            currency_cross_date = datetime.fromtimestamp(int(info[0]))
+            currency_cross_date = date(currency_cross_date.year, currency_cross_date.month, currency_cross_date.day)
+            
+            currency_cross_close = float(info[1])
+            currency_cross_open = float(info[2])
+            currency_cross_high = float(info[3])
+            currency_cross_low = float(info[4])
 
             currency_cross_volume = 0
 
             if info[5].__contains__('K'):
-                currency_cross_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                currency_cross_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
             elif info[5].__contains__('M'):
-                currency_cross_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                currency_cross_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
             elif info[5].__contains__('B'):
-                currency_cross_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                currency_cross_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
             result.insert(len(result),
                           Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
@@ -350,8 +360,6 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             df.set_index('Date', inplace=True)
 
             return df
-    else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending'):
@@ -500,7 +508,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     final = list()
 
-    header = "Datos históricos " + name
+    header = name + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
@@ -525,7 +533,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
@@ -542,7 +550,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.text_content())
 
-                if info[0] == 'No se encontraron resultados':
+                if info[0] == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
@@ -551,21 +559,22 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     data_flag = True
 
                 if data_flag is True:
-                    currency_cross_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-
-                    currency_cross_close = float(info[1].replace('.', '').replace(',', '.'))
-                    currency_cross_open = float(info[2].replace('.', '').replace(',', '.'))
-                    currency_cross_high = float(info[3].replace('.', '').replace(',', '.'))
-                    currency_cross_low = float(info[4].replace('.', '').replace(',', '.'))
+                    currency_cross_date = datetime.fromtimestamp(int(info[0]))
+                    currency_cross_date = date(currency_cross_date.year, currency_cross_date.month, currency_cross_date.day)
+                    
+                    currency_cross_close = float(info[1])
+                    currency_cross_open = float(info[2])
+                    currency_cross_high = float(info[3])
+                    currency_cross_low = float(info[4])
 
                     currency_cross_volume = 0
 
                     if info[5].__contains__('K'):
-                        currency_cross_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                        currency_cross_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
                     elif info[5].__contains__('M'):
-                        currency_cross_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                        currency_cross_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
                     elif info[5].__contains__('B'):
-                        currency_cross_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                        currency_cross_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
                     result.insert(len(result),
                                   Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,

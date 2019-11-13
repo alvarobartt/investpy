@@ -16,8 +16,8 @@ def indices_as_df(country=None):
     This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
     returns them as a :obj:`pandas.DataFrame` with all the information of every available index. If the country
     filtering is applied, just the indices from the introduced country are going to be returned.
-    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
-    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
+    All the available indices can be found at: https://www.investing.com/indices/world-indices and at
+    https://www.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -69,8 +69,8 @@ def indices_as_list(country=None):
     This function retrieves all the available `indices` from Investing.com as previously listed in investpy, and
     returns them as a :obj:`list` with the names of every available index. If the country filtering is applied, just
     the indices from the introduced country are going to be returned.
-    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
-    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
+    All the available indices can be found at: https://www.investing.com/indices/world-indices and at
+    https://www.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.
@@ -118,8 +118,8 @@ def indices_as_dict(country=None, columns=None, as_json=False):
     returns them as a :obj:`dict` with all the information of every available index. If the country
     filtering is applied, just the indices from the introduced country are going to be returned. Additionally, the
     columns to retrieve data from can be specified as a parameter formatted as a :obj:`list`.
-    All the available indices can be found at: https://es.investing.com/indices/world-indices and at
-    https://es.investing.com/indices/world-indices, since both world and global indices are retrieved.
+    All the available indices can be found at: https://www.investing.com/indices/world-indices and at
+    https://www.investing.com/indices/world-indices, since both world and global indices are retrieved.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available indices from.

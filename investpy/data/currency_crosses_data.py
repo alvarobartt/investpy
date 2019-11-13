@@ -22,7 +22,7 @@ def currency_crosses_as_df(base=None, second=None):
     the second currency is USD. These are optional parameters, so specifying one of them means that all the currency
     crosses where the introduced currency is either base or second will be returned; if both are specified,
     just the introduced currency cross will be returned if it exists. All the available currency crosses can be found
-    at: https://es.investing.com/currencies/
+    at: https://www.investing.com/currencies/
 
     Args:
         base (:obj:`str`, optional):
@@ -116,7 +116,7 @@ def currency_crosses_as_list(base=None, second=None):
     cross, for example, in the currency cross `EUR/USD` the base currency is EUR and the second currency is USD. These
     are optional parameters, so specifying one of them means that all the currency crosses where the introduced
     currency is either base or second will be returned; if both are specified, just the introduced currency cross will
-    be returned if it exists. All the available currency crosses can be found at: https://es.investing.com/currencies/
+    be returned if it exists. All the available currency crosses can be found at: https://www.investing.com/currencies/
 
     Args:
         base (:obj:`str`, optional):
@@ -210,7 +210,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
     cross, for example, in the currency cross `EUR/USD` the base currency is EUR and the second currency is USD. These
     are optional parameters, so specifying one of them means that all the currency crosses where the introduced
     currency is either base or second will be returned; if both are specified, just the introduced currency cross will
-    be returned if it exists. All the available currency crosses can be found at: https://es.investing.com/currencies/
+    be returned if it exists. All the available currency crosses can be found at: https://www.investing.com/currencies/
 
     Args:
         base (:obj:`str`, optional):

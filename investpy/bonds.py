@@ -268,6 +268,14 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
         "Connection": "keep-alive",
     }
 
+    try:
+        data = _recent_bonds(head, params)
+        return data
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def _recent_bonds(head, params):
     url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
@@ -277,6 +285,7 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
     result = list()
 
     if path_:
@@ -293,8 +302,7 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
             bond_low = float(info[4])
 
             result.insert(len(result),
-                          Data(bond_date, bond_open, bond_high, bond_low,
-                               bond_close, None, None))
+                          Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -302,10 +310,11 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
             result = result
 
         if as_json is True:
-            json_ = {'name': name,
-                     'recent':
-                         [value.bond_as_json() for value in result]
-                     }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.bond_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -313,8 +322,6 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-    else:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending'):
