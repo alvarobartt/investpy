@@ -3,7 +3,7 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-import datetime
+from datetime import datetime, date
 import json
 from random import randint
 
@@ -431,17 +431,17 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     try:
-        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+        datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+        datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
@@ -880,13 +880,11 @@ def get_stock_dividends(stock, country):
                 for element_ in elements_.xpath(".//td"):
                     if element_.get('class'):
                         if element_.get('class').__contains__('first'):
-                            dividend_date = datetime.datetime.strptime(
-                                element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_date = datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
                             dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
                         if element_.get('data-value') in type_values.keys():
                             dividend_type = type_values[element_.get('data-value')]
-                            dividend_payment_date = datetime.datetime.strptime(
-                                element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_payment_date = datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
                             next_element_ = element_.getnext()
                             dividend_yield = next_element_.getnext().text_content()
 
@@ -939,14 +937,12 @@ def get_stock_dividends(stock, country):
                         for element_ in elements_.xpath(".//td"):
                             if element_.get('class'):
                                 if element_.get('class').__contains__('first'):
-                                    dividend_date = datetime.datetime.strptime(
-                                        element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_date = datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
                                     dividend_value = float(
                                         element_.getnext().text_content().replace('.', '').replace(',', '.'))
                                 if element_.get('data-value') in type_values.keys():
                                     dividend_type = type_values[element_.get('data-value')]
-                                    dividend_payment_date = datetime.datetime.strptime(
-                                        element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_payment_date = datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
                                     next_element_ = element_.getnext()
                                     dividend_yield = next_element_.getnext().text_content()
                         obj = {

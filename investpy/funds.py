@@ -3,7 +3,7 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-import datetime
+from datetime import datetime, date
 import json
 from random import randint
 
@@ -407,17 +407,17 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
     try:
-        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+        datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+        datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
@@ -730,7 +730,7 @@ def get_fund_information(fund, country, as_json=False):
                 result.at[0, 'ROA'] = roa_percentage
             elif title_ == 'Fecha de inicio':
                 value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
+                inception_date = datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
 
                 result.at[0, 'Inception Date'] = inception_date.strftime('%d/%m/%Y')
             elif title_ == 'Total activos':

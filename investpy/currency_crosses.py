@@ -3,7 +3,7 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-import datetime
+from datetime import datetime, date
 import json
 from random import randint
 
@@ -432,17 +432,17 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
 
     try:
-        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+        datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+        datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
