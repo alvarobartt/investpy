@@ -20,12 +20,13 @@ def get_random():
 
     Returns:
         :obj:`str` - user_agent:
-            The returned :obj:`str` is the name of a random User-Agent, which will be passed on the headers of a request
-            so to avoid restrictions due to the use of multiple requests from the same User-Agent.
+            The returned :obj:`str` is the name of a random User-Agent, which will be passed on the 
+            headers of a request so to avoid restrictions due to the use of multiple requests from the 
+            same User-Agent.
 
     Raises:
         IOError: raised when `user_agent_list.csv` file was unable to retrieve or errored.
-        FileNotFoundError: if `user_agent_list.csv` file has not been found.
+        FileNotFoundError: raised if `user_agent_list.csv` file has not been found.
     
     """
 
@@ -48,11 +49,10 @@ def get_random():
 
 def clear_file():
     """
-    This function clears out the content of `user_agent_list.txt` file so to
-    improve code coverage as to test the whole functionality of `investpy.user_agent.get_random()`
-    function. When the content of the file is cleared out, the next time that the function
-    `investpy.user_agent.get_random()` is called, it is going to raise an `IOError` due to
-    missing content on file `user_agent_list.txt`.
+    This function clears out the content of `user_agent_list.txt` file so to improve code coverage as to test 
+    the whole functionality of `investpy.utils.user_agent.get_random()` function. When the content of the file 
+    is cleared out, the next time that the function `investpy.utils.user_agent.get_random()` is called, it is going 
+    to raise an `IOError` due to missing content on file `user_agent_list.txt`.
     """
 
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))
@@ -65,10 +65,10 @@ def clear_file():
 
 def delete_file():
     """
-    This function deletes `user_agent_list.txt` file so to improve code coverage as to
-    test the whole functionality of `investpy.user_agent.get_random()` function.
-    When file is missing, the next time that the function `investpy.user_agent.get_random()`
-    is called, it is going to raise a `FileNotFoundError` due to missing file `user_agent_list.txt`.
+    This function deletes `user_agent_list.txt` file so to improve code coverage as to test the whole functionality 
+    of `investpy.utils.user_agent.get_random()` function. When file is missing, the next time that the function 
+    `investpy.utils.user_agent.get_random()` is called, it is going to raise a `FileNotFoundError` due to missing file 
+    `user_agent_list.txt`.
     """
 
     resource_path = '/'.join(('resources', 'user_agent_list.txt'))

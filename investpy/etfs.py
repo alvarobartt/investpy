@@ -14,7 +14,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils import user_agent
+from investpy.utils.user_agent import get_random
 from investpy.utils.data import Data
 
 from investpy.data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
@@ -151,7 +151,7 @@ def get_etf_countries():
     return etf_countries_as_list()
 
 
-def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
+def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced `etf` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -164,6 +164,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -232,6 +234,15 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -269,7 +280,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
     header = symbol + ' Historical Data'
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -280,7 +291,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": "Daily",
+        "interval_sec": interval,
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
@@ -336,11 +347,11 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-    except:
+    else:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending'):
+def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced `etf` from Investing via Web Scraping on the 
     introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
@@ -355,6 +366,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -422,6 +435,15 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
         datetime.strptime(from_date, '%d/%m/%Y')
@@ -519,14 +541,14 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": "Daily",
+            "interval_sec": interval,
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
         }
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -642,7 +664,7 @@ def get_etfs_overview(country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

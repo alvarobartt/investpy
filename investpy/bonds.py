@@ -13,7 +13,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils import user_agent
+from investpy.utils.user_agent import get_random
 from investpy.utils.data import Data
 
 from investpy.data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
@@ -143,7 +143,7 @@ def get_bond_countries():
     return bond_countries_as_list()
 
 
-def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
+def get_bond_recent_data(bond, country, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced bond from Investing.com. So on, the recent data
     of the introduced bond from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
@@ -158,6 +158,8 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -223,6 +225,15 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -254,14 +265,14 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": "Daily",
+        "interval_sec": interval,
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
     }
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -314,11 +325,11 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-    except:
+    else:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending'):
+def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced bond from Investing.com. So on, the historical data
     of the introduced bond from the specified country in the specified data range will be retrieved and returned as
@@ -335,6 +346,8 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -399,6 +412,15 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
         datetime.strptime(from_date, '%d/%m/%Y')
@@ -487,14 +509,14 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": "Daily",
+            "interval_sec": interval,
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
         }
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",

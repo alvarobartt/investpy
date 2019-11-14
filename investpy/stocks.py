@@ -13,7 +13,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils import user_agent
+from investpy.utils.user_agent import get_random
 from investpy.utils.data import Data
 
 from investpy.data.stocks_data import stocks_as_df, stocks_as_list, stocks_as_dict
@@ -148,7 +148,7 @@ def get_stock_countries():
     return stock_countries_as_list()
 
 
-def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
+def get_stock_recent_data(stock, country, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
     of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
@@ -163,6 +163,8 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -231,6 +233,15 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -264,14 +275,14 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": "Daily",
+        "interval_sec": interval,
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
     }
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -337,11 +348,11 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
             df.set_index('Date', inplace=True)
 
             return df
-    except:
+    else:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending'):
+def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
     of the introduced stock from the specified country in the specified data range will be retrieved and returned as
@@ -358,6 +369,8 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -424,6 +437,15 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
         datetime.strptime(from_date, '%d/%m/%Y')
@@ -514,14 +536,14 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": "Daily",
+            "interval_sec": interval,
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
         }
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -712,7 +734,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -749,7 +771,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -836,7 +858,7 @@ def get_stock_dividends(stock, country):
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
     headers = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -898,7 +920,7 @@ def get_stock_dividends(stock, country):
 
             while flag is True:
                 headers = {
-                    "User-Agent": user_agent.get_random(),
+                    "User-Agent": get_random(),
                     "X-Requested-With": "XMLHttpRequest",
                     "Accept": "text/html",
                     "Accept-Encoding": "gzip, deflate, br",
