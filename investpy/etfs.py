@@ -310,13 +310,13 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
 
     if path_:
         for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0010: etf information unavailable or not found.")
+            
             info = []
         
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
-
-            if info[0] == 'No results found':
-                raise IndexError("ERR#0010: etf information unavailable or not found.")
 
             etf_date = datetime.fromtimestamp(int(info[0]))
             etf_date = date(etf_date.year, etf_date.month, etf_date.day)
@@ -571,18 +571,18 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
         if path_:
             for elements_ in path_:
-                info = []
-        
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.get('data-real-value'))
-
-                if info[0] == 'No results found':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
                         raise IndexError("ERR#0010: etf information unavailable or not found.")
                 else:
                     data_flag = True
+                
+                info = []
+
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
                     etf_date = datetime.fromtimestamp(int(info[0]))

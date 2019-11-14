@@ -302,13 +302,13 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
     if path_:
         for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0007: stock information unavailable or not found.")
+
             info = []
 
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
-
-            if info[0] == 'No results found':
-                raise IndexError("ERR#0007: stock information unavailable or not found.")
 
             stock_date = datetime.fromtimestamp(int(info[0]))
             stock_date = date(stock_date.year, stock_date.month, stock_date.day)
@@ -567,18 +567,18 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
         if path_:
             for elements_ in path_:
-                info = []
-            
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.get('data-real-value'))
-
-                if info[0] == 'No results found':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
                         raise IndexError("ERR#0007: stock information unavailable or not found.")
                 else:
                     data_flag = True
+                
+                info = []
+            
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
                     stock_date = datetime.fromtimestamp(int(info[0]))

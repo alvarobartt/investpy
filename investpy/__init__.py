@@ -19,3 +19,4 @@ from investpy.currency_crosses import get_currency_crosses, get_currency_crosses
     search_currency_crosses
 from investpy.bonds import get_bonds, get_bonds_list, get_bonds_dict, get_bond_countries, get_bond_recent_data, \
     get_bond_historical_data, search_bonds
+from investpy.search import search_text

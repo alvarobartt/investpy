@@ -293,12 +293,17 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
 
     if path_:
         for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0069: bond information unavailable or not found.")
+            
             info = []
+
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
             bond_date = datetime.fromtimestamp(int(info[0]))
             bond_date = date(bond_date.year, bond_date.month, bond_date.day)
+
             bond_close = float(info[1])
             bond_open = float(info[2])
             bond_high = float(info[3])
@@ -550,19 +555,20 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
                 
                 if data_flag is True:
                     info = []
+
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.get('data-real-value'))
 
                     bond_date = datetime.fromtimestamp(int(info[0]))
                     bond_date = date(bond_date.year, bond_date.month, bond_date.day)
+
                     bond_close = float(info[1])
                     bond_open = float(info[2])
                     bond_high = float(info[3])
                     bond_low = float(info[4])
 
                     result.insert(len(result),
-                                Data(bond_date, bond_open, bond_high, bond_low,
-                                    bond_close, None, None))
+                                  Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -571,10 +577,11 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': name,
-                             'historical':
-                                 [value.bond_as_json() for value in result]
-                             }
+                    json_ = {
+                        'name': name,
+                        'historical':
+                            [value.bond_as_json() for value in result]
+                    }
 
                     final.append(json_)
                 elif as_json is False:

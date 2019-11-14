@@ -297,15 +297,15 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
 
     if path_:
         for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0046: index information unavailable or not found.")
+
             info = []
         
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            if info[0] == 'No results found':
-                raise IndexError("ERR#0046: index information unavailable or not found.")
-
-            index_date = fromtimestamp(int(info[0]))
+            index_date = datetime.fromtimestamp(int(info[0]))
             index_date = date(index_date.year, index_date.month, index_date.day)
             
             index_close = float(info[1])
@@ -375,7 +375,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
             The returned data is case we use default arguments will look like::
 
                 Date || Open | High | Low | Close | Volume | Currency
-                -----||------------------------------------|----------
+                -----||------|------|-----|-------|--------|----------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
@@ -561,18 +561,18 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
 
         if path_:
             for elements_ in path_:
-                info = []
-        
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.get('data-real-value'))
-
-                if info[0] == 'No results found':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
                         raise IndexError("ERR#0046: index information unavailable or not found.")
                 else:
                     data_flag = True
+
+                info = []
+        
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
                     index_date = datetime.fromtimestamp(int(info[0]))

@@ -318,13 +318,13 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     if path_:
         for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0055: currency_cross information unavailable or not found.")
+
             info = []
         
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
-
-            if info[0] == 'No results found':
-                raise IndexError("ERR#0055: currency_cross information unavailable or not found.")
 
             currency_cross_date = datetime.fromtimestamp(int(info[0]))
             currency_cross_date = date(currency_cross_date.year, currency_cross_date.month, currency_cross_date.day)
@@ -568,7 +568,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.get('data-real-value'))
 
-                if info[0] == 'No results found':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:

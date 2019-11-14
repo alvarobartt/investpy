@@ -291,13 +291,13 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
 
     if path_:
         for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0008: fund information unavailable or not found.")
+            
             info = []
         
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
-
-            if info[0] == 'No results found':
-                raise IndexError("ERR#0008: fund information unavailable or not found.")
 
             fund_date = datetime.fromtimestamp(int(info[0]))
             fund_date = date(fund_date.year, fund_date.month, fund_date.day)
@@ -540,19 +540,18 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
         if path_:
             for elements_ in path_:
-                info = []
-        
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.get('data-real-value'))
-
-                if info[0] == 'No results found':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
                         raise IndexError("ERR#0008: fund information unavailable or not found.")
-
                 else:
                     data_flag = True
+
+                info = []
+        
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
                     fund_date = datetime.fromtimestamp(int(info[0]))
