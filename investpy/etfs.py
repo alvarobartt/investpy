@@ -308,8 +308,9 @@ def _recent_etfs(head, params):
     if path_:
         for elements_ in path_:
             info = []
+        
             for nested_ in elements_.xpath(".//td"):
-                info.append(nested_.text_content())
+                info.append(nested_.get('data-real-value'))
 
             if info[0] == 'No results found':
                 raise IndexError("ERR#0010: etf information unavailable or not found.")
@@ -555,9 +556,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         if path_:
             for elements_ in path_:
                 info = []
-
+        
                 for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.text_content())
+                    info.append(nested_.get('data-real-value'))
 
                 if info[0] == 'No results found':
                     if interval_counter < interval_limit:

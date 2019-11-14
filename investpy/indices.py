@@ -295,8 +295,9 @@ def _recent_index(head, params):
     if path_:
         for elements_ in path_:
             info = []
+        
             for nested_ in elements_.xpath(".//td"):
-                info.append(nested_.text_content())
+                info.append(nested_.get('data-real-value'))
 
             if info[0] == 'No results found':
                 raise IndexError("ERR#0046: index information unavailable or not found.")
@@ -544,8 +545,9 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         if path_:
             for elements_ in path_:
                 info = []
+        
                 for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.text_content())
+                    info.append(nested_.get('data-real-value'))
 
                 if info[0] == 'No results found':
                     if interval_counter < interval_limit:

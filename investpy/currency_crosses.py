@@ -316,8 +316,9 @@ def _recent_currencies(head, params):
     if path_:
         for elements_ in path_:
             info = []
+        
             for nested_ in elements_.xpath(".//td"):
-                info.append(nested_.text_content())
+                info.append(nested_.get('data-real-value'))
 
             if info[0] == 'No results found':
                 raise IndexError("ERR#0055: currency_cross information unavailable or not found.")
@@ -547,8 +548,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         if path_:
             for elements_ in path_:
                 info = []
+        
                 for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.text_content())
+                    info.append(nested_.get('data-real-value'))
 
                 if info[0] == 'No results found':
                     if interval_counter < interval_limit:
