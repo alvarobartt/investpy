@@ -286,14 +286,6 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending'):
         "action": "historical_data"
     }
 
-    try:
-        data = _recent_etfs(head, params)
-        return data
-    except:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-
-def _recent_etfs(head, params):
     url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
@@ -344,6 +336,8 @@ def _recent_etfs(head, params):
             df.set_index('Date', inplace=True)
 
             return df
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, order='ascending'):

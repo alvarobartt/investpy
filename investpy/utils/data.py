@@ -161,3 +161,41 @@ class Data(object):
             'low': self.low,
             'close': self.close,
         }
+
+    def unknown_to_dict(self):
+        if self.volume is None:
+            return {
+                'Date': self.date,
+                'Open': self.open,
+                'High': self.high,
+                'Low': self.low,
+                'Close': self.close,
+            }
+        else:
+            return {
+                'Date': self.date,
+                'Open': self.open,
+                'High': self.high,
+                'Low': self.low,
+                'Close': self.close,
+                'Volume': self.volume
+            }
+
+    def unknown_as_json(self):
+        if self.volume is None:
+            return {
+                'date': self.date.strftime('%d/%m/%Y'),
+                'open': self.open,
+                'high': self.high,
+                'low': self.low,
+                'close': self.close,
+            }
+        else:
+            return {
+                'date': self.date.strftime('%d/%m/%Y'),
+                'open': self.open,
+                'high': self.high,
+                'low': self.low,
+                'close': self.close,
+                'volume': self.volume
+            }

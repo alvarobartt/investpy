@@ -278,14 +278,6 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending'):
         "Connection": "keep-alive",
     }
 
-    try:
-        data = _recent_stocks(head, params)
-        return data
-    except:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-
-def _recent_stocks(head, params):
     url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
@@ -335,9 +327,9 @@ def _recent_stocks(head, params):
 
         if as_json is True:
             json_ = {'name': name,
-                     'recent':
-                         [value.stock_as_json() for value in result]
-                     }
+                        'recent':
+                            [value.stock_as_json() for value in result]
+                        }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -345,6 +337,8 @@ def _recent_stocks(head, params):
             df.set_index('Date', inplace=True)
 
             return df
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending'):

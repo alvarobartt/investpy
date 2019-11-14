@@ -272,14 +272,6 @@ def get_index_recent_data(index, country, as_json=False, order='ascending'):
         "Connection": "keep-alive",
     }
 
-    try:
-        data = _recent_index(head, params)
-        return data
-    except:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-
-def _recent_index(head, params):
     url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
@@ -339,6 +331,9 @@ def _recent_index(head, params):
             df.set_index('Date', inplace=True)
 
             return df
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
 
 
 def get_index_historical_data(index, country, from_date, to_date, as_json=False, order='ascending'):

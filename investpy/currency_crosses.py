@@ -294,14 +294,6 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         "Connection": "keep-alive",
     }
 
-    try:
-        data = _recent_currencies(head, params)
-        return data
-    except:
-        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-
-def _recent_currencies(head, params):
     url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
@@ -361,6 +353,8 @@ def _recent_currencies(head, params):
             df.set_index('Date', inplace=True)
 
             return df
+    except:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
 def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending'):
