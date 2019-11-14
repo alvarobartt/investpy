@@ -321,10 +321,10 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
             etf_date = datetime.fromtimestamp(int(info[0]))
             etf_date = date(etf_date.year, etf_date.month, etf_date.day)
             
-            etf_close = float(info[1])
-            etf_open = float(info[2])
-            etf_high = float(info[3])
-            etf_low = float(info[4])
+            etf_close = float(info[1].replace(',', ''))
+            etf_open = float(info[2].replace(',', ''))
+            etf_high = float(info[3].replace(',', ''))
+            etf_low = float(info[4].replace(',', ''))
 
             result.insert(len(result),
                           Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency))
@@ -588,10 +588,10 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     etf_date = datetime.fromtimestamp(int(info[0]))
                     etf_date = date(etf_date.year, etf_date.month, etf_date.day)
                     
-                    etf_close = float(info[1])
-                    etf_open = float(info[2])
-                    etf_high = float(info[3])
-                    etf_low = float(info[4])
+                    etf_close = float(info[1].replace(',', ''))
+                    etf_open = float(info[2].replace(',', ''))
+                    etf_high = float(info[3].replace(',', ''))
+                    etf_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result),
                                   Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency))

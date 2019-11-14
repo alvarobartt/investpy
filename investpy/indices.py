@@ -308,10 +308,10 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
             index_date = datetime.fromtimestamp(int(info[0]))
             index_date = date(index_date.year, index_date.month, index_date.day)
             
-            index_close = float(info[1])
-            index_open = float(info[2])
-            index_high = float(info[3])
-            index_low = float(info[4])
+            index_close = float(info[1].replace(',', ''))
+            index_open = float(info[2].replace(',', ''))
+            index_high = float(info[3].replace(',', ''))
+            index_low = float(info[4].replace(',', ''))
 
             index_volume = 0
 
@@ -578,10 +578,10 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     index_date = datetime.fromtimestamp(int(info[0]))
                     index_date = date(index_date.year, index_date.month, index_date.day)
                     
-                    index_close = float(info[1])
-                    index_open = float(info[2])
-                    index_high = float(info[3])
-                    index_low = float(info[4])
+                    index_close = float(info[1].replace(',', ''))
+                    index_open = float(info[2].replace(',', ''))
+                    index_high = float(info[3].replace(',', ''))
+                    index_low = float(info[4].replace(',', ''))
 
                     index_volume = 0
 

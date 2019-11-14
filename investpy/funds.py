@@ -302,10 +302,10 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             fund_date = datetime.fromtimestamp(int(info[0]))
             fund_date = date(fund_date.year, fund_date.month, fund_date.day)
             
-            fund_close = float(info[1])
-            fund_open = float(info[2])
-            fund_high = float(info[3])
-            fund_low = float(info[4])
+            fund_close = float(info[1].replace(',', ''))
+            fund_open = float(info[2].replace(',', ''))
+            fund_high = float(info[3].replace(',', ''))
+            fund_low = float(info[4].replace(',', ''))
 
             result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                             fund_close, None, fund_currency))
@@ -557,10 +557,10 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     fund_date = datetime.fromtimestamp(int(info[0]))
                     fund_date = date(fund_date.year, fund_date.month, fund_date.day)
                     
-                    fund_close = float(info[1])
-                    fund_open = float(info[2])
-                    fund_high = float(info[3])
-                    fund_low = float(info[4])
+                    fund_close = float(info[1].replace(',', ''))
+                    fund_open = float(info[2].replace(',', ''))
+                    fund_high = float(info[3].replace(',', ''))
+                    fund_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                                     fund_close, None, fund_currency))

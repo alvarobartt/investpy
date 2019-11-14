@@ -232,10 +232,10 @@ class SearchObj(object):
                 date_ = datetime.fromtimestamp(int(info[0]))
                 date_ = date(date_.year, date_.month, date_.day)
                 
-                close_ = float(info[1])
-                open_ = float(info[2])
-                high_ = float(info[3])
-                low_ = float(info[4])
+                close_ = float(info[1].replace(',', ''))
+                open_ = float(info[2].replace(',', ''))
+                high_ = float(info[3].replace(',', ''))
+                low_ = float(info[4].replace(',', ''))
 
                 volume_ = None
                 

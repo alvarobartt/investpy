@@ -304,10 +304,10 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
             bond_date = datetime.fromtimestamp(int(info[0]))
             bond_date = date(bond_date.year, bond_date.month, bond_date.day)
 
-            bond_close = float(info[1])
-            bond_open = float(info[2])
-            bond_high = float(info[3])
-            bond_low = float(info[4])
+            bond_close = float(info[1].replace(',', ''))
+            bond_open = float(info[2].replace(',', ''))
+            bond_high = float(info[3].replace(',', ''))
+            bond_low = float(info[4].replace(',', ''))
 
             result.insert(len(result),
                           Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None))
@@ -562,10 +562,10 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
                     bond_date = datetime.fromtimestamp(int(info[0]))
                     bond_date = date(bond_date.year, bond_date.month, bond_date.day)
 
-                    bond_close = float(info[1])
-                    bond_open = float(info[2])
-                    bond_high = float(info[3])
-                    bond_low = float(info[4])
+                    bond_close = float(info[1].replace(',', ''))
+                    bond_open = float(info[2].replace(',', ''))
+                    bond_high = float(info[3].replace(',', ''))
+                    bond_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result),
                                   Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None))
