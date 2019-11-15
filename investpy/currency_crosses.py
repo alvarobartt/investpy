@@ -204,9 +204,9 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
             The return data is in case we use default arguments will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||------------------------------------|---------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Currency
+                -----||------|------|-----|-------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -218,7 +218,6 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
                             'high': x,
                             'low': x,
                             'close': x,
-                            'volume': x,
                             'currency' : x
                         },
                         ...
@@ -234,13 +233,13 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     Examples:
         >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD')
-                          Open    High     Low   Close  Volume Currency
+                          Open    High     Low   Close Currency
             Date
-            2019-08-27  1.1101  1.1116  1.1084  1.1091       0      USD
-            2019-08-28  1.1090  1.1099  1.1072  1.1078       0      USD
-            2019-08-29  1.1078  1.1093  1.1042  1.1057       0      USD
-            2019-08-30  1.1058  1.1062  1.0963  1.0991       0      USD
-            2019-09-02  1.0990  1.1000  1.0958  1.0968       0      USD
+            2019-08-27  1.1101  1.1116  1.1084  1.1091      USD
+            2019-08-28  1.1090  1.1099  1.1072  1.1078      USD
+            2019-08-29  1.1078  1.1093  1.1042  1.1057      USD
+            2019-08-30  1.1058  1.1062  1.0963  1.0991      USD
+            2019-09-02  1.0990  1.1000  1.0958  1.0968      USD
 
     """
 
@@ -334,18 +333,9 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             currency_cross_high = float(info[3].replace(',', ''))
             currency_cross_low = float(info[4].replace(',', ''))
 
-            currency_cross_volume = 0
-
-            if info[5].__contains__('K'):
-                currency_cross_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-            elif info[5].__contains__('M'):
-                currency_cross_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-            elif info[5].__contains__('B'):
-                currency_cross_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
-
             result.insert(len(result),
                           Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                               currency_cross_close, currency_cross_volume, currency))
+                               currency_cross_close, None, currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -393,9 +383,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
             The return data is case we use default arguments will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||------------------------------------|---------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Currency
+                -----||------|------|-----|-------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -407,7 +397,6 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                             'high': x,
                             'low': x,
                             'close': x,
-                            'volume': x,
                             'currency' : x
                         },
                         ...
@@ -423,13 +412,13 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     Examples:
         >>> investpy.get_currency_cross_historical_data(currency_cross='EUR/USD', from_date='01/01/2018', to_date='01/01/2019')
-                          Open    High     Low   Close  Volume Currency
+                          Open    High     Low   Close Currency
             Date
-            2018-01-01  1.2003  1.2014  1.1995  1.2010       0      USD
-            2018-01-02  1.2013  1.2084  1.2003  1.2059       0      USD
-            2018-01-03  1.2058  1.2070  1.2001  1.2014       0      USD
-            2018-01-04  1.2015  1.2090  1.2004  1.2068       0      USD
-            2018-01-05  1.2068  1.2085  1.2021  1.2030       0      USD
+            2018-01-01  1.2003  1.2014  1.1995  1.2010      USD
+            2018-01-02  1.2013  1.2084  1.2003  1.2059      USD
+            2018-01-03  1.2058  1.2070  1.2001  1.2014      USD
+            2018-01-04  1.2015  1.2090  1.2004  1.2068      USD
+            2018-01-05  1.2068  1.2085  1.2021  1.2030      USD
 
     """
 
@@ -585,18 +574,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     currency_cross_high = float(info[3].replace(',', ''))
                     currency_cross_low = float(info[4].replace(',', ''))
 
-                    currency_cross_volume = 0
-
-                    if info[5].__contains__('K'):
-                        currency_cross_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-                    elif info[5].__contains__('M'):
-                        currency_cross_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-                    elif info[5].__contains__('B'):
-                        currency_cross_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
-
                     result.insert(len(result),
                                   Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                                       currency_cross_close, currency_cross_volume, currency))
+                                       currency_cross_close, None, currency))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

@@ -129,7 +129,6 @@ class Data(object):
             'high': self.high,
             'low': self.low,
             'close': self.close,
-            'volume': self.volume,
             'Currency': self.currency,
         }
 
@@ -140,7 +139,6 @@ class Data(object):
             'High': self.high,
             'Low': self.low,
             'Close': self.close,
-            'Volume': self.volume,
             'Currency': self.currency,
         }
 
