@@ -16,8 +16,26 @@ from investpy.utils.user_agent import get_random
 
 
 class SearchObj(object):
-    """
-    This class ...
+    """Class which contians each search result when searching data in Investing.
+    
+    This class contains the search results of the Investing.com search made with the function
+    call `investpy.search_text(query)` which returns a :obj:`list` of instances of this class
+    with the formatted retrieved information. Additionally, data can either be retrieved or not
+    including both recent and historical data, which will be included in the `SearchObj.data` 
+    attribute when calling either `SearchObj.retrieve_recent_data()` or 
+    `SearchObj.retrieve_historical_data(from_date, to_date)`, respectively.
+
+    Attributes:
+        id_ (:obj:`int`): ID value used by Investing to retrieve data.
+        name (:obj:`str`): name of the retrieved financial product.
+        symbol (:obj:`str`): symbol of the retrieved financial product.
+        tag (:obj:`str`): tag (which is the Investing URL) of the retrieved financial product.
+        country (:obj:`str`): name of the country from where the retrieved financial product is.
+        pair_type (:obj:`str`): type of retrieved financial product (equities, fund, etf, etc.).
+        exchange (:obj:`str`): name of the stock exchange of the retrieved financial product.
+        data (:obj:`pandas.DataFrame`, optional): 
+            recent or historical data to retrieve from the current financial product.
+
     """
 
     def __init__(self, id_, name, symbol, tag, country, pair_type, exchange):
@@ -34,8 +52,16 @@ class SearchObj(object):
 
 
     def retrieve_recent_data(self):
-        """
-        This method ...
+        """Class method used to retrieve the recent data from the class instance of any financial product.
+        
+        This method retrieves the recent data from Investing of the financial product of the current class
+        instance, so it fills the `SearchObj.data` attribute with the retrieved :obj:`pandas.DataFrame`. This method
+        uses the previously filled data from the `investpy.search_text()` function search results to build the
+        request that it is going to be sent to Investing so to retrieve and parse the data.
+
+        Note:
+            Some financial products may not be available since its retrieval has not been developed.
+
         """
 
         if self.pair_type in ['equities', 'fund', 'etf', 'currency']:
@@ -49,7 +75,7 @@ class SearchObj(object):
             head, params = self._prepare_request(header)
         elif self.pair_type in ['certificate', 'commodity', 'crypto', 'fxfuture']:
             self.data = None
-            return None
+            return
 
         try:
             self.data = self._data_retrieval(product=self.pair_type, head=head, params=params)
@@ -57,8 +83,21 @@ class SearchObj(object):
             self.data = None
 
     def retrieve_historical_data(self, from_date, to_date):
-        """
-        This method ...
+        """Class method used to retrieve the historical data from the class instance of any financial product.
+        
+        This method retrieves the historical data from Investing of the financial product of the current class
+        instance on the specified date range, so it fills the `SearchObj.data` attribute with the retrieved 
+        :obj:`pandas.DataFrame`. This method uses the previously filled data from the `investpy.search_text()` 
+        function search results to build the request that it is going to be sent to Investing so to retrieve 
+        and parse the data.
+
+        Note:
+            Some financial products may not be available since its retrieval has not been developed.
+
+        Args:
+            from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
+            to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
+        
         """
 
         try:
@@ -85,7 +124,7 @@ class SearchObj(object):
             header = self.name + ' Historical Data'
         elif self.pair_type in ['certificate', 'commodity', 'crypto', 'fxfuture']:
             self.data = None
-            return None
+            return
 
         if to_date.year - from_date.year > 20:
             intervals = self._calculate_intervals(from_date, to_date)
@@ -102,7 +141,6 @@ class SearchObj(object):
 
             if len(result) < 1:
                 self.data = None
-                return None
             else:
                 self.data = pd.concat(result)
         else:
@@ -113,10 +151,6 @@ class SearchObj(object):
                 self.data = None
 
     def _prepare_request(self, header):
-        """
-        This method ...
-        """
-
         head = {
             "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -138,10 +172,6 @@ class SearchObj(object):
         return head, params
 
     def _prepare_historical_request(self, header, from_date, to_date):
-        """
-        This method ...
-        """
-
         head = {
             "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
@@ -165,10 +195,6 @@ class SearchObj(object):
         return head, params
 
     def _calculate_intervals(self, from_date, to_date):
-        """
-        This method ...
-        """
-
         date_interval = {
             'intervals': [],
         }
@@ -199,10 +225,6 @@ class SearchObj(object):
     
 
     def _data_retrieval(self, product, head, params):
-        """
-        This method ...
-        """
-
         if product in ['equities', 'indice', 'currency']:
             has_volume = True
         else:

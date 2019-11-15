@@ -40,13 +40,13 @@ Reference. For example, a block of code in order to get to test investpy usage i
 
 
     # Retrieve all the available stocks as a Python list
-    stocks = investpy.get_equities_list()
+    stocks = investpy.get_stocks_list()
 
     # Retrieve the recent historical data (past month) of a stock as a pandas.DataFrame on ascending date order
-    df = investpy.get_recent_data(stock='bbva', country='spain', as_json=False, order='ascending')
+    df = investpy.get_stock_recent_data(stock='bbva', country='spain', as_json=False, order='ascending')
 
     # Retrieve the company profile of the introduced stock on english
-    profile = investpy.get_company_profile(stock='bbva', country='spain', language='english')
+    profile = investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
 
 
 Data Source

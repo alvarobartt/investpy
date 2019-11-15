@@ -11,3 +11,4 @@ API Reference
    indices_api.rst
    currency_crosses_api.rst
    bonds_api.rst
+   search_api.rst

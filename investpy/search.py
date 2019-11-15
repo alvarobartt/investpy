@@ -13,8 +13,33 @@ from investpy.utils.user_agent import get_random
 
 def search_text(query):
     """
-    This function ...
+    This function will use the Investing search engine so to retrieve the search results of the
+    introduced query. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`
+    class instances which will contain the search results so that they can be easily accessed and so
+    to ease the data retrieval process since it can be done calling the methods `.retrieve_recent_data()`
+    or `.retrieve_historical_data(from_date, to_date)` from the class instance, which will fill the `data`
+    attribute of that instance.
+
+    Args:
+        query (:obj:`str`): text to search in Investing among all its indexed data.
+
+    Returns:
+        :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
+            The resulting :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj` will contained the retrieved
+            financial products matching the introduced query as indexed in Investing, if found. Note that if no
+            information was found this function will raise a `ValueError` exception.
+
+    Raises:
+        ValueError: raised if either the introduced query is not valid or if no results were found for that query.
+        ConnectionError: raised whenever the connection to Investing.com errored (did not return a 200 OK code).
+
     """
+
+    if not query:
+        raise ValueError('ERR#0074: query parameter is mandatory and it should be a valid str.')
+
+    if not isinstance(query, str):
+        raise ValueError('ERR#0074: query parameter is mandatory and it should be a valid str.')
 
     params = {
         'search_text': query,
