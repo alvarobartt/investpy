@@ -16,7 +16,7 @@ from investpy.utils.user_agent import get_random
 
 
 class SearchObj(object):
-    """Class which contians each search result when searching data in Investing.
+    """Class which contains each search result when searching data in Investing.
     
     This class contains the search results of the Investing.com search made with the function
     call `investpy.search_text(query)` which returns a :obj:`list` of instances of this class

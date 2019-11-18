@@ -1,6 +1,7 @@
 include README.md
 include investpy/resources/*
 include investpy/resources/bonds/*
+include investpy/resources/commodities/*
 include investpy/resources/currency_crosses/*
 include investpy/resources/etfs/*
 include investpy/resources/funds/*
