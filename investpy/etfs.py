@@ -472,8 +472,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
         if diff > 20:
             obj = {
-                'start': start_date.strftime('%d/%m/%Y'),
-                'end': start_date.replace(year=start_date.year + 20).strftime('%d/%m/%Y'),
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)
@@ -481,8 +481,8 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
             start_date = start_date.replace(year=start_date.year + 20)
         else:
             obj = {
-                'start': start_date.strftime('%d/%m/%Y'),
-                'end': end_date.strftime('%d/%m/%Y'),
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': end_date.strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)

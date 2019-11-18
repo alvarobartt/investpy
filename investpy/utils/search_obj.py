@@ -206,8 +206,8 @@ class SearchObj(object):
 
             if diff > 20:
                 obj = {
-                    'from': from_date.strftime('%d/%m/%Y'),
-                    'to': from_date.replace(year=from_date.year + 20).strftime('%d/%m/%Y'),
+                    'from': from_date.strftime('%m/%d/%Y'),
+                    'to': from_date.replace(year=from_date.year + 20).strftime('%m/%d/%Y'),
                 }
 
                 date_interval['intervals'].append(obj)
@@ -215,8 +215,8 @@ class SearchObj(object):
                 from_date = from_date.replace(year=start_date.year + 20)
             else:
                 obj = {
-                    'from': from_date.strftime('%d/%m/%Y'),
-                    'to': to_date.strftime('%d/%m/%Y'),
+                    'from': from_date.strftime('%m/%d/%Y'),
+                    'to': to_date.strftime('%m/%d/%Y'),
                 }
 
                 date_interval['intervals'].append(obj)
