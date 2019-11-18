@@ -69,7 +69,7 @@ def commodities_as_list(group=None):
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
 
 
-def commidities_as_dict(group=None, columns=None, as_json=False):
+def commodities_as_dict(group=None, columns=None, as_json=False):
     """
     """
 
