@@ -149,6 +149,67 @@ def get_commodity_groups():
 
 def get_commodity_recent_data(commodity, as_json=False, order='ascending', interval='Daily'):
     """
+    This function retrieves recent historical data from the introduced commodity from Investing.com, which will be
+    returned as a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. 
+    Note that additionally some optional parameters can be specified: as_json and order, which let the user decide 
+    if the data is going to be returned as a :obj:`json` or not, and if the historical data is going to be ordered 
+    ascending or descending (where the index is the date), respectively.
+
+    Args:
+        commodity (:obj:`str`): name of the commodity to retrieve recent data from.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            recent data of the specified commodity. So on, the resulting dataframe contains the open, high, low and close
+            values for the selected commodity on market days and the currency in which those values are presented.
+
+            The resulting recent data, in case that the default parameters were applied, will look like::
+
+                Date || Open | High | Low | Close | Currency 
+                -----||------|------|-----|-------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx 
+
+            but in case that as_json parameter was defined as True, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        {
+                            date: 'dd/mm/yyyy',
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            currency: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if commodities object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced commodity was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if commodity recent data was unavailable or not found in Investing.com.
+
+    Examples:
+        >>> investpy.get_commodity_recent_data(commodity='gold')
+
+                        Open    High     Low   Close Currency
+            Date                                               
+            2019-10-21  1495.6  1498.7  1484.8  1488.1      USD
+            2019-10-22  1487.5  1492.1  1484.0  1487.5      USD
+            2019-10-23  1491.1  1499.4  1490.7  1495.7      USD
+            2019-10-24  1495.1  1506.9  1490.4  1504.7      USD
+            2019-10-25  1506.4  1520.9  1503.1  1505.3      USD
+
     """
 
     if not commodity:
@@ -271,6 +332,69 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
 def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
+    This function retrieves historical data from the introduced commodity from Investing.com. So on, the historical data
+    of the introduced commodity in the specified data range will be retrieved and returned as a :obj:`pandas.DataFrame` 
+    if the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters 
+    can be specified: as_json and order, which let the user decide if the data is going to be returned as a :obj:`json` or not, 
+    and if the historical data is going to be ordered ascending or descending (where the index is the date), respectively.
+
+    Args:
+        commodity (:obj:`str`): name of the commodity to retrieve recent data from.
+        from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
+        to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            historical data of the specified commodity. So on, the resulting dataframe contains the open, high, low and close
+            values for the selected commodity on market days and the currency in which those values are presented.
+
+            The returned data is case we use default arguments will look like::
+
+                Date || Open | High | Low | Close | Currency 
+                -----||------|------|-----|-------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx 
+
+            but in case that as_json parameter was defined as True, then the output will be::
+
+                {
+                    name: name,
+                    historical: [
+                        {
+                            date: 'dd/mm/yyyy',
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            currency: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if commodities object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced commodity was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if commodity historical data was unavailable or not found in Investing.com.
+
+    Examples:
+        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2010', to_date='01/01/2019')
+
+                          Open    High     Low   Close Currency
+            Date                                               
+            2010-01-04  1097.1  1122.3  1097.1  1117.7      USD
+            2010-01-05  1122.0  1126.5  1115.0  1118.1      USD
+            2010-01-06  1120.7  1139.2  1120.7  1135.9      USD
+            2010-01-07  1132.1  1133.0  1129.2  1133.1      USD
+            2010-01-08  1124.9  1136.9  1122.7  1138.2      USD
+
     """
 
     if not commodity:

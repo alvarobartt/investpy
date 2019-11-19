@@ -121,7 +121,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
             symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
             all the currency crosses where the second currency matches the introduced one.
         columns (:obj:`list`, optional):
-            names of the columns of the equity data to retrieve <name, full_name, tag, id, base, base_name,
+            names of the columns of the currency crosses data to retrieve <name, full_name, tag, id, base, base_name,
             second, second_name>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.

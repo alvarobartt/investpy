@@ -175,16 +175,17 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
             The resulting recent data, in case that the default parameters were applied, will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||-----------------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
                 {
                     name: name,
                     recent: [
-                        dd/mm/yyyy: {
+                        {
+                            date: 'dd/mm/yyyy',
                             open: x,
                             high: x,
                             low: x,
@@ -204,7 +205,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         IndexError: raised if stock recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_recent_data(stock='bbva', country='spain')
+        >>> investpy.get_stock_recent_data(stock='bbva', country='spain')
                          Open   High    Low  Close    Volume Currency
             Date
             2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
@@ -337,10 +338,11 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
             result = result
 
         if as_json is True:
-            json_ = {'name': name,
-                        'recent':
-                            [value.stock_as_json() for value in result]
-                        }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.stock_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -374,22 +376,24 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
-            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
-            recent data from the specified stock via argument. The dataset contains the open, high, low, close and
-            volume values for the selected stock on market days.
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            historical data of the specified stock from the specified country. So on, the resulting dataframe contains the
+            open, high, low, close and volume values for the selected stock on market days and the currency in which those
+            values are presented.
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||-----------------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but if we define `as_json=True`, then the output will be::
 
                 {
                     name: name,
                     historical: [
-                        dd/mm/yyyy: {
+                        {
+                            date: 'dd/mm/yyyy',
                             open: x,
                             high: x,
                             low: x,
@@ -409,7 +413,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         IndexError: raised if stock historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
                          Open   High    Low  Close  Volume Currency
             Date
             2010-01-04  12.73  12.96  12.73  12.96       0      EUR
@@ -609,10 +613,11 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': name,
-                             'historical':
-                                 [value.stock_as_json() for value in result]
-                             }
+                    json_ = {
+                        'name': name,
+                        'historical':
+                            [value.stock_as_json() for value in result]
+                    }
                     final.append(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
@@ -667,7 +672,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         ConnectionError: raised if connection to Investing.com could not be established.
 
     Examples:
-        >>> investpy.get_equity_company_profile(stock='bbva', country='spain', language='english')
+        >>> investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
             company_profile = {
                 url: 'https://www.investing.com/equities/bbva-company-profile',
                 desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a ...'

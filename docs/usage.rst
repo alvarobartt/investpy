@@ -264,8 +264,8 @@ As Investing.com provides more data besides the historical one, some of that add
 Currently, as the package is under-development, some additional functions have been created in order to retrieve more data
 as indexed in Investing.com. 
 
-Equity Company Profile Retrieval
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Stock Company Profile Retrieval
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: python
 

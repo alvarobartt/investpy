@@ -1,5 +1,5 @@
 :mod:`investpy`
-========================
+===============
 
 .. automodule:: investpy
    :special-members:

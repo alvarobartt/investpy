@@ -620,6 +620,110 @@ def test_investpy_bonds():
     investpy.search_bonds(by='name', value='Spain')
 
 
+def test_commodities():
+    """
+    This function checks that commodity data retrieval functions listed in investpy work properly.
+    """
+
+    params = [
+        {
+            'group': 'metals',
+        },
+        {
+            'group': None,
+        },
+    ]
+
+    for param in params:
+        investpy.get_commodities(group=param['group'])
+        investpy.get_commodities_list(group=param['group'])
+
+    params = [
+        {
+            'group': None,
+            'columns': ['title', 'full_name', 'name'],
+            'as_json': True
+        },
+        {
+            'group': None,
+            'columns': ['title', 'full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'group': 'metals',
+            'columns': ['title', 'full_name', 'name'],
+            'as_json': True
+        },
+        {
+            'group': 'metals',
+            'columns': ['title', 'full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'group': 'metals',
+            'columns': None,
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_commodities_dict(group=param['group'],
+                                      columns=param['columns'],
+                                      as_json=param['as_json'])
+
+    investpy.get_commodity_groups()
+
+    params = [
+        {
+            'as_json': True,
+            'order': 'ascending',
+        },
+        {
+            'as_json': False,
+            'order': 'ascending',
+        },
+        {
+            'as_json': True,
+            'order': 'descending',
+        },
+        {
+            'as_json': False,
+            'order': 'descending',
+        },
+    ]
+
+    for param in params:
+        investpy.get_commodity_recent_data(commodity='gold',
+                                           as_json=param['as_json'],
+                                           order=param['order'])
+
+        investpy.get_commodity_historical_data(commodity='gold',
+                                               from_date='01/01/1990',
+                                               to_date='01/01/2019',
+                                               as_json=param['as_json'],
+                                               order=param['order'])
+
+    investpy.search_commodities(by='name', value='gold')
+
+
+def test_search():
+    """
+    This function checks that investpy search function works properly.
+    """
+
+    params = [
+        {
+            'text': 'bbva',
+        },
+        {
+            'text': 'endesa'
+        }
+    ]
+
+    for param in params:
+        investpy.search_text(text=param['text'])
+
+
 if __name__ == '__main__':
     test_investpy()
     test_investpy_stocks()
@@ -628,3 +732,4 @@ if __name__ == '__main__':
     test_investpy_indices()
     test_investpy_currency_crosses()
     test_investpy_bonds()
+    test_search()
