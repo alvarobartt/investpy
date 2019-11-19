@@ -22,6 +22,33 @@ from investpy.data.commodities_data import commodity_groups_list
 
 def get_commodities(group=None):
     """
+    This function retrieves all the commodities data stored in `commodities.csv` file, which previously was
+    retrieved from Investing.com. Since the resulting object is a matrix of data, the commodities data is properly
+    structured in rows and columns, where columns are the commodity data attribute names. Additionally, group
+    filtering can be specified, so that the return commodities are from the specified group instead from every
+    available group. Anyways, since it is an optional parameter it does not need to be specified, which means that
+    if it is None or not specified, all the available commodities will be returned.
+
+    Args:
+        group (:obj:`str`, optional): name of the group to retrieve all the available commodities from.
+
+    Returns:
+        :obj:`pandas.DataFrame` - commodities_df:
+            The resulting :obj:`pandas.DataFrame` contains all the commodities data from the introduced group if specified,
+            or from all the commodity groups if None was specified, as indexed in Investing.com from the information previously
+            retrieved by investpy and stored on a csv file.
+
+            So on, the resulting :obj:`pandas.DataFrame` will look like::
+
+                title | country | name | full_name | currency | group 
+                ------|---------|------|-----------|----------|-------
+                xxxxx | xxxxxxx | xxxx | xxxxxxxxx | xxxxxxxx | xxxxx 
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        FileNotFoundError: raised when commodities file was not found.
+        IOError: raised when commodities file is missing or empty.
+
     """
 
     return commodities_as_df(group=group)
@@ -29,6 +56,29 @@ def get_commodities(group=None):
 
 def get_commodities_list(group=None):
     """
+    This function retrieves all the commodity names as stored in `commodities.csv` file, which contains all the
+    data from the commodities as previously retrieved from Investing.com. So on, this function will just return
+    the commodity names from either all the available groups or from any group, which will later be used when it 
+    comes to both recent and historical data retrieval.
+
+    Args:
+        group (:obj:`str`, optional): name of the group to retrieve all the available commodities from.
+
+    Returns:
+        :obj:`list` - commodities_list:
+            The resulting :obj:`list` contains the all the commodity names from the introduced group if specified,
+            or from every group if None was specified, as indexed in Investing.com from the information previously
+            retrieved by investpy and stored on a csv file.
+
+            In case the information was successfully retrieved, the :obj:`list` of commodity names will look like::
+
+                commodities_list = ['Gold', 'Copper', 'Silver', 'Palladium', 'Platinum', ...]
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        FileNotFoundError: raised when commodities file was not found.
+        IOError: raised when commodities file is missing or empty.
+    
     """
 
     return commodities_as_list(group=group)
@@ -36,6 +86,43 @@ def get_commodities_list(group=None):
 
 def get_commodities_dict(group=None, columns=None, as_json=False):
     """
+    This function retrieves all the commodities information stored in the `commodities.csv` file and formats it as a
+    Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and
+    all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the
+    JSON structure. Some optional paramaters can be specified such as the group, columns or as_json, which
+    are the name of the commodity group to filter between all the available commodities so not to return all the 
+    commodities but just the ones from the introduced group, the column names that want to be retrieved in case 
+    of needing just some columns to avoid unnecessary information load, and whether the information wants to be 
+    returned as a JSON object or as a dictionary; respectively.
+
+    Args:
+        group (:obj:`str`, optional): name of the group to retrieve all the available commodities from.
+        columns (:obj:`list`, optional):
+            column names of the commodities data to retrieve, can be: <title, country, name, full_name, currency, group>
+        as_json (:obj:`bool`, optional):
+            if True the returned data will be a :obj:`json` object, if False, a :obj:`list` of :obj:`dict`.
+
+    Returns:
+        :obj:`list` of :obj:`dict` OR :obj:`json` - bonds_dict:
+            The resulting :obj:`list` of :obj:`dict` contains the retrieved data from every bond as indexed in Investing.com from
+            the information previously retrieved by investpy and stored on a csv file.
+
+            In case the information was successfully retrieved, the :obj:`list` of :obj:`dict` will look like::
+
+                commodities_dict = {
+                    'title': title,
+                    'country': country,
+                    'name': name,
+                    'full_name': full_name,
+                    'currency': currency,
+                    'group': group,
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid.
+        FileNotFoundError: raised when commodities file was not found.
+        IOError: raised when commodities file is missing or empty.
+
     """
 
     return commodities_as_dict(group=group, columns=columns, as_json=as_json)
@@ -43,6 +130,18 @@ def get_commodities_dict(group=None, columns=None, as_json=False):
 
 def get_commodity_groups():
     """
+    This function returns a listing with all the available commodity groupsson that a filtering can be applied when
+    retrieving data from commodities. The current available commodity groups are metals, agriculture and energy, 
+    which include all the raw materials or commodities included in them.
+
+    Returns:
+        :obj:`list` - commodity_groups:
+            The resulting :obj:`list` contains all the available commodity groups as indexed in Investing.com
+
+    Raises:
+        FileNotFoundError: raised when commodities file was not found.
+        IOError: raised when comodities file is missing or empty.
+
     """
 
     return commodity_groups_list()
@@ -367,6 +466,26 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
 
 def search_commodities(by, value):
     """
+    This function searches commodities by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced one for the specified field which is the
+    `commodities.csv` column name to search in. Available fields to search commodities are 'name', 'full_name' and 'title'.
+
+    Args:
+        by (:obj:`str`): name of the field to search for, which is the column name which can be: ''name', 'full_name' or 'title'.
+        value (:obj:`str`): value of the field to search for, which is the value that is going to be searched.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting :obj:`pandas.DataFrame` contains the search results from the given query, which is
+            any match of the specified value in the specified field. If there are no results for the given query,
+            an error will be raised, but otherwise the resulting :obj:`pandas.DataFrame` will contain all the
+            available commodities that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced parameters is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+
     """
 
     available_search_fields = ['name', 'full_name', 'title']

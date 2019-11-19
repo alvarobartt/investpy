@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
-__version__ = '0.9.9'
+__version__ = '0.9.10'
 
 from investpy.stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \
     get_stock_historical_data, get_stock_company_profile, get_stock_dividends, search_stocks
