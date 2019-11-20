@@ -1648,7 +1648,7 @@ def test_currency_crosses_errors():
 
 def test_bonds_errors():
     """
-    This function raises errors on bodn retrieval functions
+    This function raises errors on bond retrieval functions
     """
 
     params = [
@@ -1697,8 +1697,8 @@ def test_bonds_errors():
     for param in params:
         try:
             investpy.get_bonds_dict(country=param['country'],
-                                     columns=param['columns'],
-                                     as_json=param['as_json'])
+                                    columns=param['columns'],
+                                    as_json=param['as_json'])
         except:
             pass
 
@@ -1944,6 +1944,306 @@ def test_bonds_errors():
             pass
 
 
+def test_commodities_errors():
+    """
+    This function raises errors on commodity retrieval functions
+    """
+
+    params = [
+        {
+            'group': ['error']
+        },
+        {
+            'group': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodities(group=param['group'])
+        except:
+            pass
+
+        try:
+            investpy.get_commodities_list(group=param['group'])
+        except:
+            pass
+
+    params = [
+        {
+            'group': ['error'],
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'group': 'metals',
+            'columns': None,
+            'as_json': 'error'
+        },
+        {
+            'group': 'metals',
+            'columns': 0,
+            'as_json': True
+        },
+        {
+            'group': 'metals',
+            'columns': ['error'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodities_dict(group=param['group'],
+                                          columns=param['columns'],
+                                          as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'commodity': None,
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'as_json': 'error',
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None,
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Hourly',
+        },
+        {
+            'commodity': 'chocolate',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodity_recent_data(commodity=param['commodity'],
+                                               as_json=param['as_json'],
+                                               order=param['order'],
+                                               interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'commodity': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': 'error',
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None,
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Hourly',
+        },
+        {
+            'commodity': 'chocolate',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/1999',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/1900',
+            'to_date': '01/01/1950',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/1950',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/1999',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodity_historical_data(commodity=param['commodity'],
+                                                   from_date=param['from_date'],
+                                                   to_date=param['to_date'],
+                                                   as_json=param['as_json'],
+                                                   order=param['order'],
+                                                   interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'silver',
+        },
+        {
+            'by': ['error'],
+            'value': 'silver',
+        },
+        {
+            'by': 'error',
+            'value': 'silver',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'name',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_commodities(by=param['by'], value=param['value'])
+        except:
+            pass
+    
+
+def test_search_errors():
+    """
+    This function raises errors on search functions
+    """
+
+    params = [
+        {
+            'text': None
+        },
+        {
+            'text': ['error']
+        },
+        {
+            'text': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_text(text=param['text'])
+        except:
+            pass
+
+
 def test_user_agent_errors():
     """
     This function raises errors on user_agent functions
@@ -1969,4 +2269,6 @@ if __name__ == '__main__':
     test_indices_errors()
     test_currency_crosses_errors()
     test_bonds_errors()
+    test_commodities_errors()
+    test_search_errors()
     test_user_agent_errors()

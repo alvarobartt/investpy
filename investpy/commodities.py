@@ -556,8 +556,8 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
                     commodity_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result),
-                                Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                                    commodity_close, None, currency))
+                                  Data(commodity_date, commodity_open, commodity_high, commodity_low,
+                                       commodity_close, None, currency))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
