@@ -735,7 +735,14 @@ def test_search():
     ]
 
     for param in params:
-        investpy.search_text(text=param['text'])
+        results = investpy.search_text(text=param['text'])
+
+        for result in results[:2]:
+            try:
+                result.retrieve_recent_data()
+                result.retrieve_historical_data(from_date='01/01/2018', to_date='01/01/2019')
+            except:
+                pass
 
 
 if __name__ == '__main__':
