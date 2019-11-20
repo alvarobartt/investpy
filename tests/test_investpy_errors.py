@@ -70,70 +70,84 @@ def test_stocks_errors():
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': None,
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
             'country': None,
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
             'country': 'greece',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
             'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
             'country': 'spain',
             'as_json': True,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'error',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': ['error'],
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
             'country': 'spain',
-            'as_json': True,
+            'as_json': False,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None,
+        },
+        {
+            'stock': 'BBVA',
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'stock': 'BBVA',
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error',
         },
     ]
 
@@ -143,7 +157,7 @@ def test_stocks_errors():
                                            country=param['country'],
                                            as_json=param['as_json'],
                                            order=param['order'],
-                                           debug=param['debug'])
+                                           interval=param['interval'])
         except:
             pass
 
@@ -155,7 +169,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': None,
@@ -164,7 +178,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -173,7 +187,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -182,7 +196,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -191,7 +205,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -200,7 +214,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -209,7 +223,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -218,7 +232,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -227,7 +241,7 @@ def test_stocks_errors():
             'to_date': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'error',
@@ -236,7 +250,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': ['error'],
@@ -245,7 +259,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -254,7 +268,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -263,7 +277,7 @@ def test_stocks_errors():
             'to_date': '01/01/1950',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -272,7 +286,7 @@ def test_stocks_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -281,7 +295,7 @@ def test_stocks_errors():
             'to_date': '01/01/1999',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': 'BBVA',
@@ -290,7 +304,25 @@ def test_stocks_errors():
             'to_date': '01/03/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'stock': 'BBVA',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'stock': 'BBVA',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -302,7 +334,7 @@ def test_stocks_errors():
                                                to_date=param['to_date'],
                                                as_json=param['as_json'],
                                                order=param['order'],
-                                               debug=param['debug'])
+                                               interval=param['interval'])
         except:
             pass
 
@@ -473,70 +505,84 @@ def test_funds_errors():
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': None,
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': 'germany',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': 'spain',
             'as_json': True,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'error',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': ['error'],
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -546,7 +592,7 @@ def test_funds_errors():
                                           country=param['country'],
                                           as_json=param['as_json'],
                                           order=param['order'],
-                                          debug=param['debug'])
+                                          interval=param['interval'])
         except:
             pass
 
@@ -558,7 +604,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -567,7 +613,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -576,7 +622,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -585,7 +631,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -594,7 +640,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -603,7 +649,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -612,7 +658,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -621,7 +667,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -630,7 +676,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -639,7 +685,7 @@ def test_funds_errors():
             'to_date': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'error',
@@ -648,7 +694,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': ['error'],
@@ -657,7 +703,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -666,7 +712,7 @@ def test_funds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -675,7 +721,7 @@ def test_funds_errors():
             'to_date': '01/01/1998',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -684,7 +730,7 @@ def test_funds_errors():
             'to_date': '01/01/1950',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'fund': 'quality inversion conservadora fi',
@@ -693,7 +739,25 @@ def test_funds_errors():
             'to_date': '01/03/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'fund': 'quality inversion conservadora fi',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -705,7 +769,7 @@ def test_funds_errors():
                                               to_date=param['to_date'],
                                               as_json=param['as_json'],
                                               order=param['order'],
-                                              debug=param['debug'])
+                                              interval=param['interval'])
         except:
             pass
 
@@ -856,77 +920,91 @@ def test_etfs_errors():
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': ['error'],
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': None,
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': 'netherlands',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': 'spain',
             'as_json': True,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'error',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': ['error'],
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -936,7 +1014,7 @@ def test_etfs_errors():
                                          country=param['country'],
                                          as_json=param['as_json'],
                                          order=param['order'],
-                                         debug=param['debug'])
+                                         interval=param['interval'])
         except:
             pass
 
@@ -948,7 +1026,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -957,7 +1035,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -966,7 +1044,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -975,7 +1053,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -984,7 +1062,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -993,7 +1071,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1002,7 +1080,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1011,7 +1089,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1020,7 +1098,7 @@ def test_etfs_errors():
             'to_date': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'error',
@@ -1029,7 +1107,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': ['error'],
@@ -1038,7 +1116,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1047,7 +1125,7 @@ def test_etfs_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1056,7 +1134,7 @@ def test_etfs_errors():
             'to_date': '01/01/1998',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1065,7 +1143,7 @@ def test_etfs_errors():
             'to_date': '01/01/1950',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'etf': 'bbva accion dj eurostoxx 50',
@@ -1074,7 +1152,25 @@ def test_etfs_errors():
             'to_date': '01/03/2019',
             'as_json': True,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -1086,7 +1182,7 @@ def test_etfs_errors():
                                              to_date=param['to_date'],
                                              as_json=param['as_json'],
                                              order=param['order'],
-                                             debug=param['debug'])
+                                             interval=param['interval'])
         except:
             pass
 
@@ -1215,77 +1311,91 @@ def test_indices_errors():
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': ['error'],
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': None,
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': 'netherlands',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': 'spain',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': 'spain',
             'as_json': True,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'error',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': ['error'],
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
             'country': 'spain',
             'as_json': True,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -1295,7 +1405,7 @@ def test_indices_errors():
                                            country=param['country'],
                                            as_json=param['as_json'],
                                            order=param['order'],
-                                           debug=param['debug'])
+                                           interval=param['interval'])
         except:
             pass
 
@@ -1307,7 +1417,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1316,7 +1426,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1325,7 +1435,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1334,7 +1444,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1343,7 +1453,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1352,7 +1462,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1361,7 +1471,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1370,7 +1480,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1379,7 +1489,7 @@ def test_indices_errors():
             'to_date': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'error',
@@ -1388,7 +1498,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': ['error'],
@@ -1397,7 +1507,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1406,7 +1516,7 @@ def test_indices_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1415,7 +1525,7 @@ def test_indices_errors():
             'to_date': '01/01/1998',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1424,7 +1534,7 @@ def test_indices_errors():
             'to_date': '01/01/1950',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'index': 'ibex 35',
@@ -1433,7 +1543,25 @@ def test_indices_errors():
             'to_date': '01/03/2019',
             'as_json': True,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -1445,7 +1573,7 @@ def test_indices_errors():
                                                to_date=param['to_date'],
                                                as_json=param['as_json'],
                                                order=param['order'],
-                                               debug=param['debug'])
+                                               interval=param['interval'])
         except:
             pass
 
@@ -1599,43 +1727,55 @@ def test_currency_crosses_errors():
             'currency_cross': None,
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': ['error'],
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
             'as_json': False,
             'order': 'error',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
             'as_json': False,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'error/error',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': None
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -1644,7 +1784,7 @@ def test_currency_crosses_errors():
             investpy.get_currency_cross_recent_data(currency_cross=param['currency_cross'],
                                                     as_json=param['as_json'],
                                                     order=param['order'],
-                                                    debug=param['debug'])
+                                                    interval=param['interval'])
         except:
             pass
 
@@ -1655,7 +1795,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': ['error'],
@@ -1663,7 +1803,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1671,7 +1811,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1679,7 +1819,7 @@ def test_currency_crosses_errors():
             'to_date': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1687,7 +1827,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2017',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1695,7 +1835,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1703,7 +1843,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1711,7 +1851,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'error/error',
@@ -1719,7 +1859,7 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': 'Daily'
         },
         {
             'currency_cross': 'EUR/USD',
@@ -1727,7 +1867,23 @@ def test_currency_crosses_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': False
+            'interval': None
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -1738,7 +1894,7 @@ def test_currency_crosses_errors():
                                                         to_date=param['to_date'],
                                                         as_json=param['as_json'],
                                                         order=param['order'],
-                                                        debug=param['debug'])
+                                                        interval=param['interval'])
         except:
             pass
 
@@ -1778,7 +1934,7 @@ def test_currency_crosses_errors():
 
 def test_bonds_errors():
     """
-    This function raises errors on bodn retrieval functions
+    This function raises errors on bond retrieval functions
     """
 
     params = [
@@ -1827,8 +1983,8 @@ def test_bonds_errors():
     for param in params:
         try:
             investpy.get_bonds_dict(country=param['country'],
-                                     columns=param['columns'],
-                                     as_json=param['as_json'])
+                                    columns=param['columns'],
+                                    as_json=param['as_json'])
         except:
             pass
 
@@ -1838,63 +1994,77 @@ def test_bonds_errors():
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
             'country': None,
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
             'country': 'argentina',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
             'country': 'argentina',
             'as_json': True,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'error',
             'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': ['error'],
             'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
             'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'as_json': True,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -1904,7 +2074,7 @@ def test_bonds_errors():
                                           country=param['country'],
                                           as_json=param['as_json'],
                                           order=param['order'],
-                                          debug=param['debug'])
+                                          interval=param['interval'])
         except:
             pass
 
@@ -1916,7 +2086,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'stock': None,
@@ -1925,7 +2095,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1934,7 +2104,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1943,7 +2113,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1952,7 +2122,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1961,7 +2131,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': 'error',
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1970,7 +2140,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'error',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1979,7 +2149,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -1988,7 +2158,7 @@ def test_bonds_errors():
             'to_date': 'error',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'error',
@@ -1997,7 +2167,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': ['error'],
@@ -2006,7 +2176,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -2015,7 +2185,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -2024,7 +2194,7 @@ def test_bonds_errors():
             'to_date': '01/01/1950',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -2033,7 +2203,7 @@ def test_bonds_errors():
             'to_date': '01/01/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -2042,7 +2212,7 @@ def test_bonds_errors():
             'to_date': '01/01/1999',
             'as_json': False,
             'order': 'ascending',
-            'debug': True
+            'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
@@ -2051,7 +2221,25 @@ def test_bonds_errors():
             'to_date': '01/03/2019',
             'as_json': False,
             'order': 'ascending',
-            'debug': 'error'
+            'interval': None
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'bond': 'Argentina 3Y',
+            'country': 'argentina',
+            'from_date': '01/01/2019',
+            'to_date': '01/03/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
         },
     ]
 
@@ -2063,7 +2251,7 @@ def test_bonds_errors():
                                               to_date=param['to_date'],
                                               as_json=param['as_json'],
                                               order=param['order'],
-                                              debug=param['debug'])
+                                              interval=param['interval'])
         except:
             pass
 
@@ -2101,6 +2289,306 @@ def test_bonds_errors():
             pass
 
 
+def test_commodities_errors():
+    """
+    This function raises errors on commodity retrieval functions
+    """
+
+    params = [
+        {
+            'group': ['error']
+        },
+        {
+            'group': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodities(group=param['group'])
+        except:
+            pass
+
+        try:
+            investpy.get_commodities_list(group=param['group'])
+        except:
+            pass
+
+    params = [
+        {
+            'group': ['error'],
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'group': 'metals',
+            'columns': None,
+            'as_json': 'error'
+        },
+        {
+            'group': 'metals',
+            'columns': 0,
+            'as_json': True
+        },
+        {
+            'group': 'metals',
+            'columns': ['error'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodities_dict(group=param['group'],
+                                          columns=param['columns'],
+                                          as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'commodity': None,
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'as_json': 'error',
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'chocolate',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None,
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'commodity': 'gold',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodity_recent_data(commodity=param['commodity'],
+                                               as_json=param['as_json'],
+                                               order=param['order'],
+                                               interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'commodity': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': 'error',
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'chocolate',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/1999',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/1900',
+            'to_date': '01/01/1950',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/1950',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/1999',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None,
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'commodity': 'gold',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodity_historical_data(commodity=param['commodity'],
+                                                   from_date=param['from_date'],
+                                                   to_date=param['to_date'],
+                                                   as_json=param['as_json'],
+                                                   order=param['order'],
+                                                   interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'silver',
+        },
+        {
+            'by': ['error'],
+            'value': 'silver',
+        },
+        {
+            'by': 'error',
+            'value': 'silver',
+        },
+        {
+            'by': 'name',
+            'value': None,
+        },
+        {
+            'by': 'name',
+            'value': ['error'],
+        },
+        {
+            'by': 'name',
+            'value': 'error',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_commodities(by=param['by'], value=param['value'])
+        except:
+            pass
+    
+
+def test_search_errors():
+    """
+    This function raises errors on search functions
+    """
+
+    params = [
+        {
+            'text': None
+        },
+        {
+            'text': ['error']
+        },
+        {
+            'text': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_text(text=param['text'])
+        except:
+            pass
+
+
 def test_user_agent_errors():
     """
     This function raises errors on user_agent functions
@@ -2126,4 +2614,6 @@ if __name__ == '__main__':
     test_indices_errors()
     test_currency_crosses_errors()
     test_bonds_errors()
+    test_commodities_errors()
+    test_search_errors()
     test_user_agent_errors()

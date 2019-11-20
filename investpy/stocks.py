@@ -3,10 +3,9 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-import datetime
+from datetime import datetime, date
 import json
 from random import randint
-import logging
 
 import pandas as pd
 import pkg_resources
@@ -14,7 +13,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils import user_agent
+from investpy.utils.user_agent import get_random
 from investpy.utils.data import Data
 
 from investpy.data.stocks_data import stocks_as_df, stocks_as_list, stocks_as_dict
@@ -149,14 +148,14 @@ def get_stock_countries():
     return stock_countries_as_list()
 
 
-def get_stock_recent_data(stock, country, as_json=False, order='ascending', debug=False):
+def get_stock_recent_data(stock, country, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
     of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
     the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
-    can be specified: as_json, order and debug, which let the user decide if the data is going to be returned as a
-    :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the index is the date)
-    and whether debug messages are going to be printed or not, respectively.
+    can be specified: as_json and order, which let the user decide if the data is going to be returned as a
+    :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the 
+    date), respectively.
 
     Args:
         stock (:obj:`str`): symbol of the stock to retrieve recent historical data from.
@@ -164,8 +163,8 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, either True or False, respectively.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -176,16 +175,17 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
 
             The resulting recent data, in case that the default parameters were applied, will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||-----------------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
                 {
                     name: name,
                     recent: [
-                        dd/mm/yyyy: {
+                        {
+                            date: 'dd/mm/yyyy',
                             open: x,
                             high: x,
                             low: x,
@@ -205,7 +205,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
         IndexError: raised if stock recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_recent_data(stock='bbva', country='spain')
+        >>> investpy.get_stock_recent_data(stock='bbva', country='spain')
                          Open   High    Low  Close    Volume Currency
             Date
             2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
@@ -234,8 +234,14 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
@@ -258,84 +264,69 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
     if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced stock on Investing.com')
-
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
     name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
 
     stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
-    logger.info(str(stock) + ' found on Investing.com')
-
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     params = {
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": "Daily",
+        "interval_sec": interval,
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
     }
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
-
-    logger.info('Request sent to Investing.com!')
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
-
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
     result = list()
 
     if path_:
-        logger.info('Data parsing process starting...')
-
         for elements_ in path_:
-            info = []
-            for nested_ in elements_.xpath(".//td"):
-                info.append(nested_.text_content())
-
-            if info[0] == 'No se encontraron resultados':
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
                 raise IndexError("ERR#0007: stock information unavailable or not found.")
 
-            stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            stock_close = float(info[1].replace('.', '').replace(',', '.'))
-            stock_open = float(info[2].replace('.', '').replace(',', '.'))
-            stock_high = float(info[3].replace('.', '').replace(',', '.'))
-            stock_low = float(info[4].replace('.', '').replace(',', '.'))
+            info = []
+
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.get('data-real-value'))
+
+            stock_date = datetime.fromtimestamp(int(info[0]))
+            stock_date = date(stock_date.year, stock_date.month, stock_date.day)
+            
+            stock_close = float(info[1].replace(',', ''))
+            stock_open = float(info[2].replace(',', ''))
+            stock_high = float(info[3].replace(',', ''))
+            stock_low = float(info[4].replace(',', ''))
 
             stock_volume = 0
 
             if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                stock_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
             elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                stock_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
             elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                stock_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
@@ -346,13 +337,12 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
         elif order in ['descending', 'desc']:
             result = result
 
-        logger.info('Data parsing process finished...')
-
         if as_json is True:
-            json_ = {'name': name,
-                     'recent':
-                         [value.stock_as_json() for value in result]
-                     }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.stock_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -364,14 +354,14 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', debu
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
     of the introduced stock from the specified country in the specified data range will be retrieved and returned as
     a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
-    some optional parameters can be specified: as_json, order and debug, which let the user decide if the data is going to
-    be returned as a :obj:`json` or not, if the historical data is going to be ordered ascending or descending (where the
-    index is the date) and whether debug messages are going to be printed or not, respectively.
+    some optional parameters can be specified: as_json and order, which let the user decide if the data is going to
+    be returned as a :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the
+    index is the date), respectively.
 
     Args:
         stock (:obj:`str`): symbol of the stock to retrieve historical data from.
@@ -381,27 +371,29 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, either True or False, respectively.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
-            The function returns a either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
-            recent data from the specified stock via argument. The dataset contains the open, high, low, close and
-            volume values for the selected stock on market days.
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            historical data of the specified stock from the specified country. So on, the resulting dataframe contains the
+            open, high, low, close and volume values for the selected stock on market days and the currency in which those
+            values are presented.
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | volume | currency
-                -----||-----------------------------------------------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but if we define `as_json=True`, then the output will be::
 
                 {
                     name: name,
                     historical: [
-                        dd/mm/yyyy: {
+                        {
+                            date: 'dd/mm/yyyy',
                             open: x,
                             high: x,
                             low: x,
@@ -421,7 +413,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         IndexError: raised if stock historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
                          Open   High    Low  Close  Volume Currency
             Date
             2010-01-04  12.73  12.96  12.73  12.96       0      EUR
@@ -450,21 +442,27 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
-        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+        datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+        datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
@@ -480,8 +478,8 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
         if diff > 20:
             obj = {
-                'start': start_date.strftime('%d/%m/%Y'),
-                'end': start_date.replace(year=start_date.year + 20).strftime('%d/%m/%Y'),
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)
@@ -489,8 +487,8 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
             start_date = start_date.replace(year=start_date.year + 20)
         else:
             obj = {
-                'start': start_date.strftime('%d/%m/%Y'),
-                'end': end_date.strftime('%d/%m/%Y'),
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': end_date.strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)
@@ -523,29 +521,15 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced stock on Investing.com')
-
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
     name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
 
     stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
 
-    logger.info(str(stock) + ' found on Investing.com')
-
     final = list()
 
-    logger.info('Data parsing process starting...')
-
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         interval_counter += 1
@@ -556,21 +540,21 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": "Daily",
+            "interval_sec": interval,
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
         }
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
@@ -587,34 +571,36 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
         if path_:
             for elements_ in path_:
-                info = []
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.text_content())
-
-                if info[0] == 'No se encontraron resultados':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
                         raise IndexError("ERR#0007: stock information unavailable or not found.")
                 else:
                     data_flag = True
+                
+                info = []
+            
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    stock_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    stock_close = float(info[1].replace('.', '').replace(',', '.'))
-                    stock_open = float(info[2].replace('.', '').replace(',', '.'))
-                    stock_high = float(info[3].replace('.', '').replace(',', '.'))
-                    stock_low = float(info[4].replace('.', '').replace(',', '.'))
+                    stock_date = datetime.fromtimestamp(int(info[0]))
+                    stock_date = date(stock_date.year, stock_date.month, stock_date.day)
+                    
+                    stock_close = float(info[1].replace(',', ''))
+                    stock_open = float(info[2].replace(',', ''))
+                    stock_high = float(info[3].replace(',', ''))
+                    stock_low = float(info[4].replace(',', ''))
 
                     stock_volume = 0
 
                     if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
+                        stock_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
                     elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
+                        stock_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
                     elif info[5].__contains__('B'):
-                        stock_volume = int(
-                            float(info[5].replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
+                        stock_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,
@@ -627,10 +613,11 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': name,
-                             'historical':
-                                 [value.stock_as_json() for value in result]
-                             }
+                    json_ = {
+                        'name': name,
+                        'historical':
+                            [value.stock_as_json() for value in result]
+                    }
                     final.append(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
@@ -640,8 +627,6 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-    logger.info('Data parsing process finished...')
 
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)
@@ -687,7 +672,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         ConnectionError: raised if connection to Investing.com could not be established.
 
     Examples:
-        >>> investpy.get_equity_company_profile(stock='bbva', country='spain', language='english')
+        >>> investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
             company_profile = {
                 url: 'https://www.investing.com/equities/bbva-company-profile',
                 desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a ...'
@@ -754,7 +739,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -791,7 +776,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -878,7 +863,7 @@ def get_stock_dividends(stock, country):
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
     headers = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -918,13 +903,11 @@ def get_stock_dividends(stock, country):
                 for element_ in elements_.xpath(".//td"):
                     if element_.get('class'):
                         if element_.get('class').__contains__('first'):
-                            dividend_date = datetime.datetime.strptime(
-                                element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_date = datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
                             dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
                         if element_.get('data-value') in type_values.keys():
                             dividend_type = type_values[element_.get('data-value')]
-                            dividend_payment_date = datetime.datetime.strptime(
-                                element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_payment_date = datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
                             next_element_ = element_.getnext()
                             dividend_yield = next_element_.getnext().text_content()
 
@@ -942,7 +925,7 @@ def get_stock_dividends(stock, country):
 
             while flag is True:
                 headers = {
-                    "User-Agent": user_agent.get_random(),
+                    "User-Agent": get_random(),
                     "X-Requested-With": "XMLHttpRequest",
                     "Accept": "text/html",
                     "Accept-Encoding": "gzip, deflate, br",
@@ -977,14 +960,12 @@ def get_stock_dividends(stock, country):
                         for element_ in elements_.xpath(".//td"):
                             if element_.get('class'):
                                 if element_.get('class').__contains__('first'):
-                                    dividend_date = datetime.datetime.strptime(
-                                        element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_date = datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
                                     dividend_value = float(
                                         element_.getnext().text_content().replace('.', '').replace(',', '.'))
                                 if element_.get('data-value') in type_values.keys():
                                     dividend_type = type_values[element_.get('data-value')]
-                                    dividend_payment_date = datetime.datetime.strptime(
-                                        element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_payment_date = datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
                                     next_element_ = element_.getnext()
                                     dividend_yield = next_element_.getnext().text_content()
                         obj = {

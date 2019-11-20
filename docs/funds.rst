@@ -29,7 +29,7 @@ Listing
 ^^^^^^^
 
 `investpy <https://pypi.org/project/investpy/>`_ offers some listing functions that allow the user to get the general
-information of the indexed funds on `Investing <https://es.investing.com/funds/>`_ as that information is already
+information of the indexed funds on `Investing <https://www.investing.com/funds/>`_ as that information is already
 stored on CSV files generated automatically on the package installation.
 
 The user can either retrieve the whole :obj:`pandas.DataFrame` containing all the information stored on the CSV file, a
@@ -138,9 +138,7 @@ an error will be raised.
 When retrieving recent data from a fund, we can additionally specify if we want the output as a json object or not, by
 setting the parameter ``as_json`` as either True or False, respectively. We can also set the ``order`` we want the
 returned object to have based on dates, where ascending goes from the very first date retrieved until now, and
-descending goes the other way. Additionally, there is a parameter called ``debug`` which will enable or disable debug
-log information if True or False, respectively; debug mode will display debug messages on the console, so to let
-the user know which is happening inside the function.
+descending goes the other way.
 
 Furthermore, when it comes to historical data retrieval, we also need to specify both ``from_date`` and ``to_date``
 values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/mm/yyyy*.
@@ -148,7 +146,7 @@ values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/
 .. tip::
 
     If you are not familiar with funds you can either retrieve a :obj:`list` of the ones available as provided by
-    investpy or check the listing in `Investing Funds <https://es.investing.com/funds>`_.
+    investpy or check the listing in `Investing Funds <https://www.investing.com/funds>`_.
 
 Fund Information
 ^^^^^^^^^^^^^^^^

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction &mdash; investpy 0.9.9 documentation</title>
+  <title>Introduction &mdash; investpy 0.9.10 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.9
+                0.9.10
               </div>
             
           
@@ -93,7 +93,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="model.html">Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="stocks.html">Stocks/Equities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="funds.html">Funds</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a></li>
@@ -198,13 +198,13 @@ Reference. For example, a block of code in order to get to test investpy usage i
 
 
 <span class="c1"># Retrieve all the available stocks as a Python list</span>
-<span class="n">stocks</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_equities_list</span><span class="p">()</span>
+<span class="n">stocks</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_stocks_list</span><span class="p">()</span>
 
 <span class="c1"># Retrieve the recent historical data (past month) of a stock as a pandas.DataFrame on ascending date order</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_recent_data</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_stock_recent_data</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">as_json</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="s1">&#39;ascending&#39;</span><span class="p">)</span>
 
 <span class="c1"># Retrieve the company profile of the introduced stock on english</span>
-<span class="n">profile</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_company_profile</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
+<span class="n">profile</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_stock_company_profile</span><span class="p">(</span><span class="n">stock</span><span class="o">=</span><span class="s1">&#39;bbva&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

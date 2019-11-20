@@ -15,7 +15,7 @@ def funds_as_df(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -64,7 +64,7 @@ def funds_as_df(country=None):
 def funds_as_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -111,7 +111,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
     `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://es.investing.com/funds/
+    https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.

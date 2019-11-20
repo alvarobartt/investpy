@@ -3,10 +3,9 @@
 # Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
-import datetime
+from datetime import datetime, date
 import json
 from random import randint
-import logging
 
 import pandas as pd
 import pkg_resources
@@ -14,7 +13,7 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils import user_agent
+from investpy.utils.user_agent import get_random
 from investpy.utils.data import Data
 
 from investpy.data.funds_data import funds_as_list, funds_as_dict, funds_as_df
@@ -25,7 +24,7 @@ def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
     which contains not just the fund names, but all the fields contained on the funds file.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -55,7 +54,7 @@ def get_funds(country=None):
 def get_funds_list(country=None):
     """
     This function retrieves all the available funds and returns a list of each one of them.
-    All the available funds can be found at: https://es.investing.com/funds/
+    All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -86,7 +85,7 @@ def get_funds_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
     `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://es.investing.com/funds/
+    https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -143,7 +142,7 @@ def get_fund_countries():
     return fund_countries_as_list()
 
 
-def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=False):
+def get_fund_recent_data(fund, country, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced `fund` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -156,8 +155,8 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -194,7 +193,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain')
                          Open   High    Low  Close Currency
             Date
             2019-08-13  1.110  1.110  1.110  1.110      EUR
@@ -223,8 +222,14 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
@@ -247,75 +252,60 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
     if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced fund on Investing.com')
-
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
     name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
 
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
-    logger.info(str(fund) + ' found on Investing.com')
-
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     params = {
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": "Daily",
+        "interval_sec": interval,
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
     }
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/instruments/HistoricalDataAjax"
-
-    logger.info('Request sent to Investing.com!')
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-    logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
-
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
     result = list()
 
     if path_:
-        logger.info('Data parsing process starting...')
-
         for elements_ in path_:
-            info = []
-            for nested_ in elements_.xpath(".//td"):
-                info.append(nested_.text_content())
-
-            if info[0] == 'No se encontraron resultados':
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
                 raise IndexError("ERR#0008: fund information unavailable or not found.")
+            
+            info = []
+        
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.get('data-real-value'))
 
-            fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-            fund_close = float(info[1].replace('.', '').replace(',', '.'))
-            fund_open = float(info[2].replace('.', '').replace(',', '.'))
-            fund_high = float(info[3].replace('.', '').replace(',', '.'))
-            fund_low = float(info[4].replace('.', '').replace(',', '.'))
+            fund_date = datetime.fromtimestamp(int(info[0]))
+            fund_date = date(fund_date.year, fund_date.month, fund_date.day)
+            
+            fund_close = float(info[1].replace(',', ''))
+            fund_open = float(info[2].replace(',', ''))
+            fund_high = float(info[3].replace(',', ''))
+            fund_low = float(info[4].replace(',', ''))
 
             result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                             fund_close, None, fund_currency))
@@ -324,8 +314,6 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
             result = result[::-1]
         elif order in ['descending', 'desc']:
             result = result
-
-        logger.info('Data parsing process finished...')
 
         if as_json is True:
             json_ = {'name': name,
@@ -343,7 +331,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', debug=
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, order='ascending', debug=False):
+def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced `fund` from Investing
     via Web Scraping on the introduced date range. The resulting data can it either be
@@ -358,8 +346,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
             optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
-        debug (:obj:`bool`, optional):
-            optional argument to either show or hide debug messages on log, `True` or `False`, respectively.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -397,7 +385,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019', as_json=False, order='ascending', debug=False)
+        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019')
                          Open   High    Low  Close Currency
             Date
             2018-02-15  1.105  1.105  1.105  1.105      EUR
@@ -426,21 +414,27 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if order not in ['ascending', 'asc', 'descending', 'desc']:
         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-    if not isinstance(debug, bool):
-        raise ValueError("ERR#0033: debug argument can just be a boolean value, either True or False.")
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
-        datetime.datetime.strptime(from_date, '%d/%m/%Y')
+        datetime.strptime(from_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0011: incorrect start date format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.datetime.strptime(to_date, '%d/%m/%Y')
+        datetime.strptime(to_date, '%d/%m/%Y')
     except ValueError:
         raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.datetime.strptime(to_date, '%d/%m/%Y')
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
@@ -456,8 +450,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
         if diff > 20:
             obj = {
-                'start': start_date.strftime('%d/%m/%Y'),
-                'end': start_date.replace(year=start_date.year + 20).strftime('%d/%m/%Y'),
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)
@@ -465,8 +459,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
             start_date = start_date.replace(year=start_date.year + 20)
         else:
             obj = {
-                'start': start_date.strftime('%d/%m/%Y'),
-                'end': end_date.strftime('%d/%m/%Y'),
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': end_date.strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)
@@ -499,29 +493,15 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger('investpy')
-
-    if debug is False:
-        logger.disabled = True
-    else:
-        logger.disabled = False
-
-    logger.info('Searching introduced fund on Investing.com')
-
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
     name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
 
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
-    logger.info(str(fund) + ' found on Investing.com')
-
     final = list()
 
-    logger.info('Data parsing process starting...')
-
-    header = "Datos históricos " + symbol
+    header = symbol + ' Historical Data'
 
     for index in range(len(date_interval['intervals'])):
         params = {
@@ -530,30 +510,26 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": "Daily",
+            "interval_sec": interval,
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
         }
 
         head = {
-            "User-Agent": user_agent.get_random(),
+            "User-Agent": get_random(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
             "Connection": "keep-alive",
         }
 
-        url = "https://es.investing.com/instruments/HistoricalDataAjax"
-
-        logger.info('Request sent to Investing.com!')
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-        logger.info('Request to Investing.com data succeeded with code ' + str(req.status_code) + '!')
 
         if not req.text:
             continue
@@ -564,25 +540,27 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
         if path_:
             for elements_ in path_:
-                info = []
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.text_content())
-
-                if info[0] == 'No se encontraron resultados':
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
                         raise IndexError("ERR#0008: fund information unavailable or not found.")
-
                 else:
                     data_flag = True
 
+                info = []
+        
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
+
                 if data_flag is True:
-                    fund_date = datetime.datetime.strptime(info[0].replace('.', '-'), '%d-%m-%Y')
-                    fund_close = float(info[1].replace('.', '').replace(',', '.'))
-                    fund_open = float(info[2].replace('.', '').replace(',', '.'))
-                    fund_high = float(info[3].replace('.', '').replace(',', '.'))
-                    fund_low = float(info[4].replace('.', '').replace(',', '.'))
+                    fund_date = datetime.fromtimestamp(int(info[0]))
+                    fund_date = date(fund_date.year, fund_date.month, fund_date.day)
+                    
+                    fund_close = float(info[1].replace(',', ''))
+                    fund_open = float(info[2].replace(',', ''))
+                    fund_high = float(info[3].replace(',', ''))
+                    fund_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
                                                     fund_close, None, fund_currency))
@@ -608,8 +586,6 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-    logger.info('Data parsing process finished...')
 
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)
@@ -702,7 +678,7 @@ def get_fund_information(fund, country, as_json=False):
     url = "https://es.investing.com/funds/" + tag
 
     head = {
-        "User-Agent": user_agent.get_random(),
+        "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -771,7 +747,7 @@ def get_fund_information(fund, country, as_json=False):
                 result.at[0, 'ROA'] = roa_percentage
             elif title_ == 'Fecha de inicio':
                 value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                inception_date = datetime.datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
+                inception_date = datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
 
                 result.at[0, 'Inception Date'] = inception_date.strftime('%d/%m/%Y')
             elif title_ == 'Total activos':

@@ -2,11 +2,11 @@
   <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" hspace="20">
 </p>
 
-# Financial Historical Data Extraction with Python
+<h2 align="center">Financial Historical Data Extraction with Python</h2>
 
 investpy is a Python package to retrieve historical data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **29.628 stocks, 81.024 funds, 11.403 etfs, 1.889 currency crosses, 
-7.797 indices and 688 bonds**. Basically, investpy allows you to download historical data from almost 
+It provides historical data retrieval from up to **39.952 stocks, 81.024 funds, 11.403 etfs, 1.889 currency crosses, 
+7.797 indices, 688 bonds and 66 commodities**. Basically, investpy allows you to download historical data from almost 
 all the financial products indexed in Investing.com. All the data that can be retrieved includes data from all over the world, 
 from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, 
 investpy is intended to wrap up all the available data from Investing.com, so that it can be retrieved via Python for 
@@ -30,7 +30,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.9``
+``$ pip install investpy==0.9.10``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt)
 file, which can also be installed via pip:
@@ -89,9 +89,9 @@ Date
 
 As financial data is really complex and sometimes both the product name/symbol and the country are unknown for the user, in 
 terms of what does investpy expect, every financial product listed in investpy (which currently includes stocks,
-funds, etfs, indices and currency crosses) has its own search function. Search functions allow the user to search among
-all the available stocks for example, whenever just one field is known (even though it is not the exact match). So on, a
-basic example on stock search by the ISIN code is presented below:
+funds, etfs, indices, currency crosses, bonds and commodities) has its own search function. Search functions allow the 
+user to search among all the available stocks for example, whenever just one field is known (even though it is not the 
+exact match). So on, a basic example on stock search by the ISIN code is presented below:
 
 ````python
 import investpy
@@ -118,6 +118,8 @@ as indexed in Investing.com.
 ### and much more!
 
 All the functions definitions and usage can be found in the [Documentation](https://investpy.readthedocs.io/)!
+
+<h3 align="center">:neckbeard: Soon crypto currencies and exchanges will be available! :neckbeard:</h3>
 
 ## Utilities
 

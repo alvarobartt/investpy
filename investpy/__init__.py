@@ -4,7 +4,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
-__version__ = '0.9.9'
+__version__ = '0.9.10'
 
 from investpy.stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \
     get_stock_historical_data, get_stock_company_profile, get_stock_dividends, search_stocks
@@ -19,3 +19,6 @@ from investpy.currency_crosses import get_currency_crosses, get_currency_crosses
     search_currency_crosses
 from investpy.bonds import get_bonds, get_bonds_list, get_bonds_dict, get_bond_countries, get_bond_recent_data, \
     get_bond_historical_data, search_bonds
+from investpy.commodities import get_commodities, get_commodities_list, get_commodities_dict, get_commodity_groups, \
+    get_commodity_recent_data, get_commodity_historical_data, search_commodities
+from investpy.search import search_text
