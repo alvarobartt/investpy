@@ -318,8 +318,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            etf_date = datetime.fromtimestamp(int(info[0]))
-            etf_date = date(etf_date.year, etf_date.month, etf_date.day)
+            etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             etf_close = float(info[1].replace(',', ''))
             etf_open = float(info[2].replace(',', ''))
@@ -585,8 +584,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    etf_date = datetime.fromtimestamp(int(info[0]))
-                    etf_date = date(etf_date.year, etf_date.month, etf_date.day)
+                    etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
                     etf_close = float(info[1].replace(',', ''))
                     etf_open = float(info[2].replace(',', ''))

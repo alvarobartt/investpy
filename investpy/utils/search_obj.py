@@ -251,8 +251,7 @@ class SearchObj(object):
                         raise IndexError("ERR#0033: information unavailable or not found.")
                     info.append(val)
 
-                date_ = datetime.fromtimestamp(int(info[0]))
-                date_ = date(date_.year, date_.month, date_.day)
+                date_ = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                 
                 close_ = float(info[1].replace(',', ''))
                 open_ = float(info[2].replace(',', ''))

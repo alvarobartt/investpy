@@ -296,8 +296,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            commodity_date = datetime.fromtimestamp(int(info[0]))
-            commodity_date = date(commodity_date.year, commodity_date.month, commodity_date.day)
+            commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             commodity_close = float(info[1].replace(',', ''))
             commodity_open = float(info[2].replace(',', ''))
@@ -547,8 +546,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    commodity_date = datetime.fromtimestamp(int(info[0]))
-                    commodity_date = date(commodity_date.year, commodity_date.month, commodity_date.day)
+                    commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
                     commodity_close = float(info[1].replace(',', ''))
                     commodity_open = float(info[2].replace(',', ''))
