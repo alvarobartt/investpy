@@ -10,7 +10,7 @@ from investpy.utils.user_agent import get_random, clear_file, delete_file
 
 def test_stocks_errors():
     """
-    This function raises errors on stock retrieval functions
+    This function raises errors on stock retrieval functions.
     """
 
     params = [
@@ -448,7 +448,7 @@ def test_stocks_errors():
 
 def test_funds_errors():
     """
-    This function raises errors on fund retrieval functions
+    This function raises errors on fund retrieval functions.
     """
 
     params = [
@@ -860,7 +860,7 @@ def test_funds_errors():
 
 def test_etfs_errors():
     """
-    This function raises errors on etf retrieval functions
+    This function raises errors on etf retrieval functions.
     """
 
     params = [
@@ -1251,7 +1251,7 @@ def test_etfs_errors():
 
 def test_indices_errors():
     """
-    This function raises errors on index retrieval functions
+    This function raises errors on index retrieval functions.
     """
 
     params = [
@@ -1613,7 +1613,7 @@ def test_indices_errors():
 
 def test_currency_crosses_errors():
     """
-    This function raises errors on currency cross retrieval functions
+    This function raises errors on currency cross retrieval functions.
     """
 
     params = [
@@ -1934,7 +1934,7 @@ def test_currency_crosses_errors():
 
 def test_bonds_errors():
     """
-    This function raises errors on bond retrieval functions
+    This function raises errors on bond retrieval functions.
     """
 
     params = [
@@ -2291,7 +2291,7 @@ def test_bonds_errors():
 
 def test_commodities_errors():
     """
-    This function raises errors on commodity retrieval functions
+    This function raises errors on commodity retrieval functions.
     """
 
     params = [
@@ -2563,11 +2563,19 @@ def test_commodities_errors():
             investpy.search_commodities(by=param['by'], value=param['value'])
         except:
             pass
-    
+
+
+def test_crypto_errors():
+    """
+    This function raises errors on crypto retrieval functions.
+    """
+
+    return None
+
 
 def test_search_errors():
     """
-    This function raises errors on search functions
+    This function raises errors on search functions.
     """
 
     params = [
@@ -2591,7 +2599,7 @@ def test_search_errors():
 
 def test_user_agent_errors():
     """
-    This function raises errors on user_agent functions
+    This function raises errors on user_agent functions.
     """
 
     clear_file()
@@ -2615,5 +2623,6 @@ if __name__ == '__main__':
     test_currency_crosses_errors()
     test_bonds_errors()
     test_commodities_errors()
+    test_crypto_errors()
     test_search_errors()
     test_user_agent_errors()

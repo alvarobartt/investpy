@@ -6,11 +6,13 @@
 
 investpy is a Python package to retrieve historical data from [Investing](https://www.investing.com/). 
 It provides historical data retrieval from up to **39.952 stocks, 81.024 funds, 11.403 etfs, 1.889 currency crosses, 
-7.797 indices, 688 bonds and 66 commodities**. Basically, investpy allows you to download historical data from almost 
-all the financial products indexed in Investing.com. All the data that can be retrieved includes data from all over the world, 
-from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, 
-investpy is intended to wrap up all the available data from Investing.com, so that it can be retrieved via Python for 
-its further usage and/or analysis.
+7.797 indices, 688 bonds, 66 commodities and 2.812 cryptocurrencies**. Basically, investpy allows you to download 
+historical data from almost all the financial products indexed in Investing.com. All the data that can be retrieved 
+includes data from all over the world, from countries such as: **United States, France, India, Spain, Russia or 
+Germany, amongst many others**. Therefore, investpy is intended to wrap up all the available data from Investing.com, 
+so that it can be retrieved via Python for its further usage and/or analysis.
+
+<h3 align="center">:neckbeard: Now including crypto currencies data retrieval! :neckbeard:</h3>
 
 investpy seeks to be one of the most complete Python packages when it comes to historical data extraction of financial
 products in order to stop relying on public/private APIs, as investpy is **FREE** and has **NO LIMITATIONS**. These
@@ -109,6 +111,47 @@ print(search_results.head())
 4  united kingdom  BBVA    Banco Bilbao Vizcaya Argentaria Sa  ES0113211835       EUR   BVAB
 ```
 
+Note that additionally the Investing search engine is completely integrated with investpy so that any available quote as
+indexed in Investing can be easily retrieved just using the following piece of code:
+
+```python
+import investpy
+
+search_results = investpy.search_text(text='gold')
+```
+
+Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to 
+know which are the available functions and attributes of the returned search results, please visit: 
+[investpy search docs](https://investpy.readthedocs.io/search_api.html).
+
+### Crypto Currencies Data Retrieval
+
+One of the main features avaialable in the 1.0 investpy release is the crypto currencies data retrieval
+from Investing.com since its data and futher analysis is on high demand. All the crypto currencies that are
+available in Investing for data retrieval are, so on, available in investpy.
+
+So to ease investpy's usage, some samples will be presented below on how to retrieve the past 5 years of 
+data from Bitcoin:
+
+````python
+import investpy
+
+data = investpy.get_crypto_historical_data(crypto='bitcoin', from_date='01/01/2014', to_date='01/01/2019')
+
+print(data.head())
+````
+```{r, engine='python', count_lines}
+             Open    High    Low   Close  Volume Currency
+Date                                                     
+2014-01-01  805.9   829.9  771.0   815.9   10757      USD
+2014-01-02  815.9   886.2  810.5   856.9   12812      USD
+2014-01-03  856.9   888.2  839.4   884.3    9709      USD
+2014-01-04  884.3   932.2  848.3   924.7   14239      USD
+2014-01-05  924.7  1029.9  911.4  1014.7   21374      USD
+```
+
+Yes, retrieving historical data from any available cryptocurrency is really that easy!
+
 ### Additional Data
 
 As Investing.com provides more data besides the historical one, some of that additional data can be fetched via investpy. 
@@ -118,8 +161,6 @@ as indexed in Investing.com.
 ### and much more!
 
 All the functions definitions and usage can be found in the [Documentation](https://investpy.readthedocs.io/)!
-
-<h3 align="center">:neckbeard: Soon crypto currencies and exchanges will be available! :neckbeard:</h3>
 
 ## Utilities
 

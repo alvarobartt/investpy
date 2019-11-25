@@ -201,7 +201,6 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     Examples:
         >>> investpy.get_commodity_recent_data(commodity='gold')
-
                           Open    High     Low   Close  Volume Currency
             Date                                                       
             2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
@@ -387,7 +386,6 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
 
     Examples:
         >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
-
                           Open    High     Low   Close  Volume Currency
             Date                                                       
             2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD

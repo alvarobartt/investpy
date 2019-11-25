@@ -632,7 +632,7 @@ def test_investpy_bonds():
     investpy.search_bonds(by='name', value='Spain')
 
 
-def test_commodities():
+def test_investpy_commodities():
     """
     This function checks that commodity data retrieval functions listed in investpy work properly.
     """
@@ -720,7 +720,15 @@ def test_commodities():
     investpy.search_commodities(by='name', value='gold')
 
 
-def test_search():
+def test_investpy_crypto():
+    """
+    This function checks that cryptocurrencies data retrieval functions listed in investpy work properly.
+    """
+    
+    return None
+
+
+def test_investpy_search():
     """
     This function checks that investpy search function works properly.
     """
@@ -735,7 +743,13 @@ def test_search():
     ]
 
     for param in params:
-        investpy.search_text(text=param['text'])
+        results = investpy.search_text(text=param['text'])
+
+        for result in results[:5]:
+            result.retrieve_recent_data()
+            print(result.data)
+            result.retrieve_historical_data(from_date='01/01/2019', to_date='01/03/2019')
+            print(result.data)
 
 
 if __name__ == '__main__':
@@ -746,4 +760,7 @@ if __name__ == '__main__':
     test_investpy_indices()
     test_investpy_currency_crosses()
     test_investpy_bonds()
+    test_investpy_commodities()
+    test_investpy_crypto()
+    test_investpy_search()
     test_search()
