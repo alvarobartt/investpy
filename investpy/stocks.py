@@ -217,7 +217,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     """
 
     if not stock:
-        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
 
     if not isinstance(stock, str):
         raise ValueError("ERR#0027: stock argument needs to be a str.")
@@ -417,7 +417,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     """
 
     if not stock:
-        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
 
     if not isinstance(stock, str):
         raise ValueError("ERR#0027: stock argument needs to be a str.")
@@ -673,7 +673,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     }
 
     if not stock:
-        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
 
     if not isinstance(stock, str):
         raise ValueError("ERR#0027: stock argument needs to be a str.")

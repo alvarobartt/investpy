@@ -21,4 +21,6 @@ from investpy.bonds import get_bonds, get_bonds_list, get_bonds_dict, get_bond_c
     get_bond_historical_data, search_bonds
 from investpy.commodities import get_commodities, get_commodities_list, get_commodities_dict, get_commodity_groups, \
     get_commodity_recent_data, get_commodity_historical_data, search_commodities
+from investpy.crypto import get_cryptos, get_cryptos_list, get_cryptos_dict, get_crypto_recent_data, \
+    get_crypto_historical_data, search_cryptos
 from investpy.search import search_text

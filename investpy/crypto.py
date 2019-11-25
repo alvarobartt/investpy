@@ -115,475 +115,450 @@ def get_cryptos_dict(columns=None, as_json=False):
     return cryptos_as_dict(columns=columns, as_json=as_json)
 
 
-# def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='Daily'):
-#     """
-#     This function retrieves recent historical data from the introduced stock from Investing.com. So on, the recent data
-#     of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
-#     the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
-#     can be specified: as_json and order, which let the user decide if the data is going to be returned as a
-#     :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the 
-#     date), respectively.
+def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='Daily'):
+    """
+    This function retrieves recent historical data from the introduced crypto from Investing.com. So on, the recent data
+    of the introduced crypto will be retrieved and returned as a :obj:`pandas.DataFrame` if the parameters are valid 
+    and the request to Investing.com succeeds. Note that additionally some optional parameters can be specified: as_json 
+    and order, which let the user decide if the data is going to be returned as a :obj:`json` or not, and if the historical 
+    data is going to be ordered ascending or descending (where the index is the date), respectively.
 
-#     Args:
-#         stock (:obj:`str`): symbol of the stock to retrieve recent historical data from.
-#         country (:obj:`str`): name of the country from where the stock is.
-#         as_json (:obj:`bool`, optional):
-#             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
-#         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
-#         interval (:obj:`str`, optional):
-#             value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+    Args:
+        crypto (:obj:`str`): name of the crypto currency to retrieve data from.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
-#     Returns:
-#         :obj:`pandas.DataFrame` or :obj:`json`:
-#             The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
-#             recent data of the specified stock from the specified country. So on, the resulting dataframe contains the
-#             open, high, low, close and volume values for the selected stock on market days and the currency in which those
-#             values are presented.
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            recent data of the specified crypto currency. So on, the resulting dataframe contains the open, high, low, 
+            close and volume values for the selected crypto on market days and the currency in which those values are presented.
 
-#             The resulting recent data, in case that the default parameters were applied, will look like::
+            The resulting recent data, in case that the default parameters were applied, will look like::
 
-#                 Date || Open | High | Low | Close | Volume | Currency 
-#                 -----||------|------|-----|-------|--------|----------
-#                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
-#             but in case that as_json parameter was defined as True, then the output will be::
+            but in case that as_json parameter was defined as True, then the output will be::
 
-#                 {
-#                     name: name,
-#                     recent: [
-#                         {
-#                             date: 'dd/mm/yyyy',
-#                             open: x,
-#                             high: x,
-#                             low: x,
-#                             close: x,
-#                             volume: x,
-#                             currency: x
-#                         },
-#                         ...
-#                     ]
-#                 }
+                {
+                    name: name,
+                    recent: [
+                        {
+                            date: 'dd/mm/yyyy',
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            volume: x,
+                            currency: x
+                        },
+                        ...
+                    ]
+                }
 
-#     Raises:
-#         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-#         IOError: raised if stocks object/file was not found or unable to retrieve.
-#         RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
-#         ConnectionError: raised if connection to Investing.com could not be established.
-#         IndexError: raised if stock recent data was unavailable or not found in Investing.com.
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if cryptos object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced crypto name was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if crypto recent data was unavailable or not found in Investing.com.
 
-#     Examples:
-#         >>> investpy.get_stock_recent_data(stock='bbva', country='spain')
-#                          Open   High    Low  Close    Volume Currency
-#             Date
-#             2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
-#             2019-08-14  4.322  4.325  4.215  4.244  36890000      EUR
-#             2019-08-15  4.281  4.298  4.187  4.234  21340000      EUR
-#             2019-08-16  4.234  4.375  4.208  4.365  46080000      EUR
-#             2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR
+    Examples:
+        >>> investpy.get_crypto_recent_data(crypto='bitcoin')
+                          Open     High     Low   Close   Volume Currency
+            Date                                                         
+            2019-10-25  7422.8   8697.7  7404.9  8658.3  1177632      USD
+            2019-10-26  8658.4  10540.0  8061.8  9230.6  1784005      USD
+            2019-10-27  9230.6   9773.2  9081.0  9529.6  1155038      USD
+            2019-10-28  9530.1   9866.9  9202.5  9207.2  1039295      USD
+            2019-10-29  9206.5   9531.3  9125.3  9411.3   918477      USD
 
-#     """
+    """
 
-#     if not stock:
-#         raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
+    if not crypto:
+        raise ValueError("ERR#0083: crypto parameter is mandatory and must be a valid crypto name.")
 
-#     if not isinstance(stock, str):
-#         raise ValueError("ERR#0027: stock argument needs to be a str.")
+    if not isinstance(crypto, str):
+        raise ValueError("ERR#0084: crypto argument needs to be a str.")
 
-#     if country is None:
-#         raise ValueError("ERR#0039: country can not be None, it should be a str.")
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-#     if country is not None and not isinstance(country, str):
-#         raise ValueError("ERR#0025: specified country value not valid.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-#     if not isinstance(as_json, bool):
-#         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-#     if order not in ['ascending', 'asc', 'descending', 'desc']:
-#         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-#     if not interval:
-#         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-#     if not isinstance(interval, str):
-#         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
-#     if interval not in ['Daily', 'Weekly', 'Monthly']:
-#         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    if cryptos is None:
+        raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-#     resource_package = 'investpy'
-#     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
-#     if pkg_resources.resource_exists(resource_package, resource_path):
-#         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-#     else:
-#         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+    crypto = crypto.strip()
+    crypto = crypto.lower()
 
-#     if stocks is None:
-#         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+        raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-#     if unidecode.unidecode(country.lower()) not in get_stock_countries():
-#         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    if status == 'unavailable':
+        raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-#     stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    crypto_name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
+    crypto_id = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'id']
+    crypto_currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
 
-#     stock = stock.strip()
-#     stock = stock.lower()
+    header = crypto_name + ' Historical Data'
 
-#     if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
-#         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+    params = {
+        "curr_id": crypto_id,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": interval,
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
 
-#     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
-#     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
-#     name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
-#     stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
-#     header = symbol + ' Historical Data'
+    req = requests.post(url, headers=head, data=params)
 
-#     params = {
-#         "curr_id": id_,
-#         "smlID": str(randint(1000000, 99999999)),
-#         "header": header,
-#         "interval_sec": interval,
-#         "sort_col": "date",
-#         "sort_ord": "DESC",
-#         "action": "historical_data"
-#     }
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-#     head = {
-#         "User-Agent": get_random(),
-#         "X-Requested-With": "XMLHttpRequest",
-#         "Accept": "text/html",
-#         "Accept-Encoding": "gzip, deflate, br",
-#         "Connection": "keep-alive",
-#     }
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    result = list()
 
-#     url = "https://www.investing.com/instruments/HistoricalDataAjax"
+    if path_:
+        for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0087: crypto information unavailable or not found.")
 
-#     req = requests.post(url, headers=head, data=params)
+            info = []
 
-#     if req.status_code != 200:
-#         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.get('data-real-value'))
 
-#     root_ = fromstring(req.text)
-#     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-#     result = list()
-
-#     if path_:
-#         for elements_ in path_:
-#             if elements_.xpath(".//td")[0].text_content() == 'No results found':
-#                 raise IndexError("ERR#0007: stock information unavailable or not found.")
-
-#             info = []
-
-#             for nested_ in elements_.xpath(".//td"):
-#                 info.append(nested_.get('data-real-value'))
-
-#             stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
-#             stock_close = float(info[1].replace(',', ''))
-#             stock_open = float(info[2].replace(',', ''))
-#             stock_high = float(info[3].replace(',', ''))
-#             stock_low = float(info[4].replace(',', ''))
+            crypto_close = float(info[1].replace(',', ''))
+            crypto_open = float(info[2].replace(',', ''))
+            crypto_high = float(info[3].replace(',', ''))
+            crypto_low = float(info[4].replace(',', ''))
 
-#             stock_volume = int(info[5])
+            crypto_volume = int(info[5])
 
-#             result.insert(len(result),
-#                           Data(stock_date, stock_open, stock_high, stock_low,
-#                                stock_close, stock_volume, stock_currency))
+            result.insert(len(result),
+                          Data(crypto_date, crypto_open, crypto_high, crypto_low,
+                               crypto_close, crypto_volume, crypto_currency))
 
-#         if order in ['ascending', 'asc']:
-#             result = result[::-1]
-#         elif order in ['descending', 'desc']:
-#             result = result
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
 
-#         if as_json is True:
-#             json_ = {
-#                 'name': name,
-#                 'recent':
-#                     [value.stock_as_json() for value in result]
-#             }
+        if as_json is True:
+            json_ = {
+                'name': crypto_name,
+                'recent':
+                    [value.crypto_as_json() for value in result]
+            }
 
-#             return json.dumps(json_, sort_keys=False)
-#         elif as_json is False:
-#             df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
-#             df.set_index('Date', inplace=True)
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.crypto_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
 
-#             return df
-#     else:
-#         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-# def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
-#     """
-#     This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
-#     of the introduced stock from the specified country in the specified data range will be retrieved and returned as
-#     a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
-#     some optional parameters can be specified: as_json and order, which let the user decide if the data is going to
-#     be returned as a :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the
-#     index is the date), respectively.
+def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+    """
+    This function retrieves historical data from the introduced crypto from Investing.com. So on, the historical data
+    of the introduced crypto will be retrieved and returned as a :obj:`pandas.DataFrame` if the parameters are valid 
+    and the request to Investing.com succeeds. Note that additionally some optional parameters can be specified: as_json 
+    and order, which let the user decide if the data is going to be returned as a :obj:`json` or not, and if the historical 
+    data is going to be ordered ascending or descending (where the index is the date), respectively.
 
-#     Args:
-#         stock (:obj:`str`): symbol of the stock to retrieve historical data from.
-#         country (:obj:`str`): name of the country from where the stock is.
-#         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
-#         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
-#         as_json (:obj:`bool`, optional):
-#             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
-#         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
-#         interval (:obj:`str`, optional):
-#             value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+    Args:
+        crypto (:obj:`str`): name of the crypto currency to retrieve data from.
+        from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
+        to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
 
-#     Returns:
-#         :obj:`pandas.DataFrame` or :obj:`json`:
-#             The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
-#             historical data of the specified stock from the specified country. So on, the resulting dataframe contains the
-#             open, high, low, close and volume values for the selected stock on market days and the currency in which those
-#             values are presented.
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            historical data of the specified crypto currency. So on, the resulting dataframe contains the open, high, 
+            low, close and volume values for the selected crypto on market days and the currency in which those values are presented.
 
-#             The returned data is case we use default arguments will look like::
+            The returned data is case we use default arguments will look like::
 
-#                 Date || Open | High | Low | Close | Volume | Currency 
-#                 -----||------|------|-----|-------|--------|----------
-#                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
-#             but if we define `as_json=True`, then the output will be::
+            but if we define `as_json=True`, then the output will be::
 
-#                 {
-#                     name: name,
-#                     historical: [
-#                         {
-#                             date: 'dd/mm/yyyy',
-#                             open: x,
-#                             high: x,
-#                             low: x,
-#                             close: x,
-#                             volume: x,
-#                             currency: x
-#                         },
-#                         ...
-#                     ]
-#                 }
+                {
+                    name: name,
+                    historical: [
+                        {
+                            date: 'dd/mm/yyyy',
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            volume: x,
+                            currency: x
+                        },
+                        ...
+                    ]
+                }
 
-#     Raises:
-#         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-#         IOError: raised if stocks object/file was not found or unable to retrieve.
-#         RuntimeError: raised if the introduced stock/country was not found or did not match any of the existing ones.
-#         ConnectionError: raised if connection to Investing.com could not be established.
-#         IndexError: raised if stock historical data was unavailable or not found in Investing.com.
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if cryptos object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced crypto currency name was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if crypto historical data was unavailable or not found in Investing.com.
 
-#     Examples:
-#         >>> investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-#                          Open   High    Low  Close  Volume Currency
-#             Date
-#             2010-01-04  12.73  12.96  12.73  12.96       0      EUR
-#             2010-01-05  13.00  13.11  12.97  13.09       0      EUR
-#             2010-01-06  13.03  13.17  13.02  13.12       0      EUR
-#             2010-01-07  13.02  13.11  12.93  13.05       0      EUR
-#             2010-01-08  13.12  13.22  13.04  13.18       0      EUR
+    Examples:
+        >>> investpy.get_crypto_historical_data(crypto='bitcoin', from_date='01/01/2018', to_date='01/01/2019')
+                           Open     High      Low    Close  Volume Currency
+            Date                                                           
+            2018-01-01  13850.5  13921.5  12877.7  13444.9   78425      USD
+            2018-01-02  13444.9  15306.1  12934.2  14754.1  137732      USD
+            2018-01-03  14754.1  15435.0  14579.7  15156.6  106543      USD
+            2018-01-04  15156.5  15408.7  14244.7  15180.1  110969      USD
+            2018-01-05  15180.1  17126.9  14832.4  16954.8  141960      USD
 
-#     """
+    """
 
-#     if not stock:
-#         raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock name.")
+    if not crypto:
+        raise ValueError("ERR#0083: crypto parameter is mandatory and must be a valid crypto name.")
 
-#     if not isinstance(stock, str):
-#         raise ValueError("ERR#0027: stock argument needs to be a str.")
+    if not isinstance(crypto, str):
+        raise ValueError("ERR#0084: crypto argument needs to be a str.")
 
-#     if country is None:
-#         raise ValueError("ERR#0039: country can not be None, it should be a str.")
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-#     if country is not None and not isinstance(country, str):
-#         raise ValueError("ERR#0025: specified country value not valid.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
 
-#     if not isinstance(as_json, bool):
-#         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-#     if order not in ['ascending', 'asc', 'descending', 'desc']:
-#         raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-#     if not interval:
-#         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-#     if not isinstance(interval, str):
-#         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    try:
+        datetime.strptime(from_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
 
-#     if interval not in ['Daily', 'Weekly', 'Monthly']:
-#         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    try:
+        datetime.strptime(to_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
 
-#     try:
-#         datetime.strptime(from_date, '%d/%m/%Y')
-#     except ValueError:
-#         raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
-#     try:
-#         datetime.strptime(to_date, '%d/%m/%Y')
-#     except ValueError:
-#         raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+    if start_date >= end_date:
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
-#     start_date = datetime.strptime(from_date, '%d/%m/%Y')
-#     end_date = datetime.strptime(to_date, '%d/%m/%Y')
+    date_interval = {
+        'intervals': [],
+    }
 
-#     if start_date >= end_date:
-#         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+    flag = True
 
-#     date_interval = {
-#         'intervals': [],
-#     }
+    while flag is True:
+        diff = end_date.year - start_date.year
 
-#     flag = True
+        if diff > 20:
+            obj = {
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
+            }
 
-#     while flag is True:
-#         diff = end_date.year - start_date.year
+            date_interval['intervals'].append(obj)
 
-#         if diff > 20:
-#             obj = {
-#                 'start': start_date.strftime('%m/%d/%Y'),
-#                 'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
-#             }
+            start_date = start_date.replace(year=start_date.year + 20)
+        else:
+            obj = {
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': end_date.strftime('%m/%d/%Y'),
+            }
 
-#             date_interval['intervals'].append(obj)
+            date_interval['intervals'].append(obj)
 
-#             start_date = start_date.replace(year=start_date.year + 20)
-#         else:
-#             obj = {
-#                 'start': start_date.strftime('%m/%d/%Y'),
-#                 'end': end_date.strftime('%m/%d/%Y'),
-#             }
+            flag = False
 
-#             date_interval['intervals'].append(obj)
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
 
-#             flag = False
+    data_flag = False
 
-#     interval_limit = len(date_interval['intervals'])
-#     interval_counter = 0
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
-#     data_flag = False
+    if cryptos is None:
+        raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-#     resource_package = 'investpy'
-#     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
-#     if pkg_resources.resource_exists(resource_package, resource_path):
-#         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-#     else:
-#         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+    crypto = crypto.strip()
+    crypto = crypto.lower()
 
-#     if stocks is None:
-#         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+        raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-#     if unidecode.unidecode(country.lower()) not in get_stock_countries():
-#         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    if status == 'unavailable':
+        raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-#     stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    crypto_name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
+    crypto_id = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'id']
+    crypto_currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
 
-#     stock = stock.strip()
-#     stock = stock.lower()
+    header = crypto_name + ' Historical Data'
 
-#     if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
-#         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+    final = list()
 
-#     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
-#     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
-#     name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
+    for index in range(len(date_interval['intervals'])):
+        interval_counter += 1
 
-#     stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
+        params = {
+            "curr_id": crypto_id,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": interval,
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
 
-#     final = list()
+        head = {
+            "User-Agent": get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
 
-#     header = symbol + ' Historical Data'
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
-#     for index in range(len(date_interval['intervals'])):
-#         interval_counter += 1
+        req = requests.post(url, headers=head, data=params)
 
-#         params = {
-#             "curr_id": id_,
-#             "smlID": str(randint(1000000, 99999999)),
-#             "header": header,
-#             "st_date": date_interval['intervals'][index]['start'],
-#             "end_date": date_interval['intervals'][index]['end'],
-#             "interval_sec": interval,
-#             "sort_col": "date",
-#             "sort_ord": "DESC",
-#             "action": "historical_data"
-#         }
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
-#         head = {
-#             "User-Agent": get_random(),
-#             "X-Requested-With": "XMLHttpRequest",
-#             "Accept": "text/html",
-#             "Accept-Encoding": "gzip, deflate, br",
-#             "Connection": "keep-alive",
-#         }
+        if not req.text:
+            continue
 
-#         url = "https://www.investing.com/instruments/HistoricalDataAjax"
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
 
-#         req = requests.post(url, headers=head, data=params)
+        result = list()
 
-#         if req.status_code != 200:
-#             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-#         if not req.text:
-#             continue
-
-#         root_ = fromstring(req.text)
-#         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-
-#         result = list()
-
-#         if path_:
-#             for elements_ in path_:
-#                 if elements_.xpath(".//td")[0].text_content() == 'No results found':
-#                     if interval_counter < interval_limit:
-#                         data_flag = False
-#                     else:
-#                         raise IndexError("ERR#0007: stock information unavailable or not found.")
-#                 else:
-#                     data_flag = True
+        if path_:
+            for elements_ in path_:
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0087: crypto information unavailable or not found.")
+                else:
+                    data_flag = True
                 
-#                 info = []
+                info = []
             
-#                 for nested_ in elements_.xpath(".//td"):
-#                     info.append(nested_.get('data-real-value'))
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
 
-#                 if data_flag is True:
-#                     stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                if data_flag is True:
+                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            
+                    crypto_close = float(info[1].replace(',', ''))
+                    crypto_open = float(info[2].replace(',', ''))
+                    crypto_high = float(info[3].replace(',', ''))
+                    crypto_low = float(info[4].replace(',', ''))
+
+                    crypto_volume = int(info[5])
+
+                    result.insert(len(result),
+                                  Data(crypto_date, crypto_open, crypto_high, crypto_low,
+                                       crypto_close, crypto_volume, crypto_currency))
+
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
+
+                if as_json is True:
+                    json_ = {
+                        'name': crypto_name,
+                        'historical':
+                            [value.crypto_as_json() for value in result]
+                    }
                     
-#                     stock_close = float(info[1].replace(',', ''))
-#                     stock_open = float(info[2].replace(',', ''))
-#                     stock_high = float(info[3].replace(',', ''))
-#                     stock_low = float(info[4].replace(',', ''))
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.crypto_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
 
-#                     stock_volume = int(info[5])
+                    final.append(df)
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
-#                     result.insert(len(result),
-#                                   Data(stock_date, stock_open, stock_high, stock_low,
-#                                        stock_close, stock_volume, stock_currency))
-
-#             if data_flag is True:
-#                 if order in ['ascending', 'asc']:
-#                     result = result[::-1]
-#                 elif order in ['descending', 'desc']:
-#                     result = result
-
-#                 if as_json is True:
-#                     json_ = {
-#                         'name': name,
-#                         'historical':
-#                             [value.stock_as_json() for value in result]
-#                     }
-                    
-#                     final.append(json_)
-#                 elif as_json is False:
-#                     df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
-#                     df.set_index('Date', inplace=True)
-
-#                     final.append(df)
-
-#         else:
-#             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-
-#     if as_json is True:
-#         return json.dumps(final[0], sort_keys=False)
-#     elif as_json is False:
-#         return pd.concat(final)
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
 
 
 def search_cryptos(by, value):
@@ -640,7 +615,7 @@ def search_cryptos(by, value):
 
     cryptos['matches'] = cryptos[by].str.contains(value, case=False)
 
-    search_result = cryptos.loc[stocks['matches'] == True].copy()
+    search_result = cryptos.loc[cryptos['matches'] == True].copy()
 
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
