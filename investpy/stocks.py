@@ -318,14 +318,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
             stock_high = float(info[3].replace(',', ''))
             stock_low = float(info[4].replace(',', ''))
 
-            stock_volume = 0
-
-            if info[5].__contains__('K'):
-                stock_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-            elif info[5].__contains__('M'):
-                stock_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-            elif info[5].__contains__('B'):
-                stock_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+            stock_volume = int(info[5])
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
@@ -591,14 +584,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     stock_high = float(info[3].replace(',', ''))
                     stock_low = float(info[4].replace(',', ''))
 
-                    stock_volume = 0
-
-                    if info[5].__contains__('K'):
-                        stock_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-                    elif info[5].__contains__('M'):
-                        stock_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-                    elif info[5].__contains__('B'):
-                        stock_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+                    stock_volume = int(info[5])
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,
@@ -616,6 +602,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                         'historical':
                             [value.stock_as_json() for value in result]
                     }
+                    
                     final.append(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])

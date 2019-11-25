@@ -312,14 +312,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
             index_high = float(info[3].replace(',', ''))
             index_low = float(info[4].replace(',', ''))
 
-            index_volume = 0
-
-            if info[5].__contains__('K'):
-                index_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-            elif info[5].__contains__('M'):
-                index_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-            elif info[5].__contains__('B'):
-                index_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+            index_volume = int(info[5])
 
             result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                             index_close, index_volume, index_currency))
@@ -581,14 +574,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     index_high = float(info[3].replace(',', ''))
                     index_low = float(info[4].replace(',', ''))
 
-                    index_volume = 0
-
-                    if info[5].__contains__('K'):
-                        index_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-                    elif info[5].__contains__('M'):
-                        index_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-                    elif info[5].__contains__('B'):
-                        index_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+                    index_volume = int(info[5])
 
                     result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                                     index_close, index_volume, index_currency))

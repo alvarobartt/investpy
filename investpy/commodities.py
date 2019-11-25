@@ -202,13 +202,13 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
     Examples:
         >>> investpy.get_commodity_recent_data(commodity='gold')
 
-                        Open    High     Low   Close Currency
-            Date                                               
-            2019-10-21  1495.6  1498.7  1484.8  1488.1      USD
-            2019-10-22  1487.5  1492.1  1484.0  1487.5      USD
-            2019-10-23  1491.1  1499.4  1490.7  1495.7      USD
-            2019-10-24  1495.1  1506.9  1490.4  1504.7      USD
-            2019-10-25  1506.4  1520.9  1503.1  1505.3      USD
+                          Open    High     Low   Close  Volume Currency
+            Date                                                       
+            2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
+            2019-10-28  1507.4  1510.8  1492.3  1495.8  318126      USD
+            2019-10-29  1494.3  1497.1  1485.6  1490.7  291980      USD
+            2019-10-30  1490.5  1499.3  1483.1  1496.7  353638      USD
+            2019-10-31  1498.8  1516.7  1496.0  1514.8  390013      USD
 
     """
 
@@ -303,9 +303,11 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
             commodity_high = float(info[3].replace(',', ''))
             commodity_low = float(info[4].replace(',', ''))
 
+            commodity_volume = int(info[5])
+
             result.insert(len(result),
                           Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                               commodity_close, None, currency))
+                               commodity_close, commodity_volume, currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -384,15 +386,15 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
         IndexError: raised if commodity historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2010', to_date='01/01/2019')
+        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
 
-                          Open    High     Low   Close Currency
-            Date                                               
-            2010-01-04  1097.1  1122.3  1097.1  1117.7      USD
-            2010-01-05  1122.0  1126.5  1115.0  1118.1      USD
-            2010-01-06  1120.7  1139.2  1120.7  1135.9      USD
-            2010-01-07  1132.1  1133.0  1129.2  1133.1      USD
-            2010-01-08  1124.9  1136.9  1122.7  1138.2      USD
+                          Open    High     Low   Close  Volume Currency
+            Date                                                       
+            2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD
+            2018-01-02  1370.5  1370.5  1370.5  1370.5      97      USD
+            2018-01-03  1372.0  1372.0  1369.0  1374.2      22      USD
+            2018-01-04  1363.4  1375.6  1362.7  1377.4      13      USD
+            2018-01-05  1377.8  1377.8  1377.8  1378.4      10      USD
 
     """
 
@@ -553,9 +555,11 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
                     commodity_high = float(info[3].replace(',', ''))
                     commodity_low = float(info[4].replace(',', ''))
 
+                    commodity_volume = int(info[5])
+
                     result.insert(len(result),
                                   Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                                       commodity_close, None, currency))
+                                       commodity_close, commodity_volume, currency))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
