@@ -11,7 +11,7 @@ from investpy.utils.search_obj import SearchObj
 from investpy.utils.user_agent import get_random
 
 
-def search_text(text):
+def search_text(text, count=None):
     """
     This function will use the Investing search engine so to retrieve the search results of the
     introduced text. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`
@@ -22,6 +22,7 @@ def search_text(text):
 
     Args:
         text (:obj:`str`): text to search in Investing among all its indexed data.
+        count (:obj:`int`, optional): number of search results to retrieve and return from Investing.
 
     Returns:
         :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
@@ -40,6 +41,12 @@ def search_text(text):
 
     if not isinstance(text, str):
         raise ValueError('ERR#0074: text parameter is mandatory and it should be a valid str.')
+
+    if count and not isinstance(count, int):
+        raise ValueError('ERR#0088: count parameter is optional, but if specified, it must be an integer equal or higher than 1.')
+
+    if count is not None and count < 1:
+        raise ValueError('ERR#0088: count parameter is optional, but if specified, it must be an integer higher than 0.')
 
     params = {
         'search_text': text,
@@ -68,8 +75,8 @@ def search_text(text):
         raise ValueError("ERR#0000: no results found on Investing for the introduced text.")
 
     search_results = list()
-    
-    for quote in data['quotes']:
+
+    for quote in data['quotes'][:count]:
         country = quote['flag'].lower()
         country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
 
