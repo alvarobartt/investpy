@@ -164,10 +164,10 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             recent data from the specified fund via argument. The dataset contains the open, high, low and close
             values for the selected fund on market days.
 
-            The return data is case we use default arguments will look like::
+            The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency
-                -----||--------------------------------------
+                Date || Open | High | Low | Close | Currency
+                -----||------|------|-----|-------|----------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
@@ -175,11 +175,13 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
                 {
                     name: name,
                     recent: [
-                        date: dd/mm/yyyy,
-                        open: x,
-                        high: x,
-                        low: x,
-                        close: x
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            currency: x
                         },
                         ...
                     ]
@@ -356,8 +358,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency
-                -----||--------------------------------------
+                Date || Open | High | Low | Close | Currency
+                -----||------|------|-----|-------|----------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
@@ -370,7 +372,8 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                             open: x,
                             high: x,
                             low: x,
-                            close: x
+                            close: x,
+                            currency: x
                         },
                         ...
                     ]

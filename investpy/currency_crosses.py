@@ -390,7 +390,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
                 {
                     name: name,
-                    recent: [
+                    historical: [
                         dd/mm/yyyy: {
                             'open': x,
                             'high': x,

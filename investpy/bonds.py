@@ -39,7 +39,7 @@ def get_bonds(country=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full name 
+                country | name | full_name 
                 --------|------|-----------
                 xxxxxxx | xxxx | xxxxxxxxx
 
@@ -55,7 +55,7 @@ def get_bonds(country=None):
 
 def get_bonds_list(country=None):
     """
-    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
+    This function retrieves all the bond names as stored in `bonds.csv` file, which contains all the
     data from the bonds as previously retrieved from Investing.com. So on, this function will just return
     the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
@@ -169,8 +169,8 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
 
             The resulting recent data, in case that the default parameters were applied, will look like::
 
-                date || open | high | low | close 
-                -----||---------------------------
+                Date || Open | High | Low | Close 
+                -----||------|------|-----|-------
                 xxxx || xxxx | xxxx | xxx | xxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
@@ -178,11 +178,12 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
                 {
                     name: name,
                     recent: [
-                        dd/mm/yyyy: {
+                        {
+                            date: 'dd/mm/yyyy',
                             open: x,
                             high: x,
                             low: x,
-                            close: x,
+                            close: x
                         },
                         ...
                     ]
@@ -197,7 +198,7 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
 
     Examples:
         >>> investpy.get_bond_recent_data(bond='Argentina 3Y', country='argentina')
-                        Open    High     Low   Close
+                          Open    High     Low   Close
             Date                                      
             2019-09-23  52.214  52.214  52.214  52.214
             2019-09-24  52.323  52.323  52.323  52.323
@@ -360,22 +361,23 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
             recent data from the specified bond via argument. The dataset contains the open, high, low and close for the 
             selected bond on market days.
 
-            The returned data is case we use default arguments will look like::
+            The resulting recent data, in case that the default parameters were applied, will look like::
 
-                date || open | high | low | close 
-                -----||---------------------------
+                Date || Open | High | Low | Close 
+                -----||------|------|-----|-------
                 xxxx || xxxx | xxxx | xxx | xxxxx 
 
-            but if we define `as_json=True`, then the output will be::
+            but in case that as_json parameter was defined as True, then the output will be::
 
                 {
                     name: name,
                     historical: [
-                        dd/mm/yyyy: {
+                        {
+                            date: 'dd/mm/yyyy',
                             open: x,
                             high: x,
                             low: x,
-                            close: x,
+                            close: x
                         },
                         ...
                     ]

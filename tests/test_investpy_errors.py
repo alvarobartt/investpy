@@ -2570,7 +2570,236 @@ def test_crypto_errors():
     This function raises errors on crypto retrieval functions.
     """
 
-    return None
+    params = [
+        {
+            'columns': None,
+            'as_json': None
+        },
+        {
+            'columns': 'error',
+            'as_json': None
+        },
+        {
+            'columns': ['error'],
+            'as_json': None
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_cryptos_dict(columns=param['columns'],
+                                      as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'crypto': None,
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': None,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
+        },
+        {
+            'crypto': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'Single Collateral DAI',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_crypto_recent_data(crypto=param['crypto'],
+                                            as_json=param['as_json'],
+                                            order=param['order'],
+                                            interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'crypto': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': None,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None,
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/2018',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'error',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'Single Collateral DAI',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_crypto_historical_data(crypto=param['crypto'],
+                                                from_date=param['from_date'],
+                                                to_date=param['to_date'],
+                                                as_json=param['as_json'],
+                                                order=param['order'],
+                                                interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'bitcoin'
+        },
+        {
+            'by': 'error',
+            'value': 'bitcoin'
+        },
+        {
+            'by': ['error'],
+            'value': 'bitcoin'
+        },
+        {
+            'by': 'name',
+            'value': None
+        },
+        {
+            'by': 'name',
+            'value': ['error']
+        },
+        {
+            'by': 'symbol',
+            'value': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_cryptos(by=param['by'], value=param['value'])
+        except:
+            pass
 
 
 def test_search_errors():

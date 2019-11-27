@@ -725,7 +725,61 @@ def test_investpy_crypto():
     This function checks that cryptocurrencies data retrieval functions listed in investpy work properly.
     """
     
-    return None
+    investpy.get_cryptos()
+    investpy.get_cryptos_list()
+
+    params = [
+        {
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'columns': ['name', 'symbol', 'currency'],
+            'as_json': False
+        },
+        {
+            'columns': None,
+            'as_json': True
+        },    
+    ]
+
+    for param in params:
+        investpy.get_cryptos_dict(columns=param['columns'],
+                                  as_json=param['as_json'])
+
+    params = [
+        {
+            'as_json': True,
+            'order': 'ascending',
+        },
+        {
+            'as_json': False,
+            'order': 'ascending',
+        },
+        {
+            'as_json': True,
+            'order': 'descending',
+        },
+        {
+            'as_json': False,
+            'order': 'descending',
+        },
+    ]
+
+    for param in params:
+        investpy.get_crypto_recent_data(crypto='bitcoin',
+                                        as_json=param['as_json'],
+                                        order=param['order'],
+                                        interval='Daily')
+
+        investpy.get_crypto_historical_data(crypto='bitcoin',
+                                            from_date='01/01/1990',
+                                            to_date='01/01/2019',
+                                            as_json=param['as_json'],
+                                            order=param['order'],
+                                            interval='Daily')
+
+    investpy.search_cryptos(by='name', value='bitcoin')
 
 
 def test_investpy_search():

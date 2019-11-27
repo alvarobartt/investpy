@@ -175,8 +175,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency | exchange
-                -----||--------------------------------------|---------
+                Date || Open | High | Low | Close | Currency | Exchange
+                -----||------|------|-----|-------|----------|---------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
@@ -191,7 +191,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
                             low: x,
                             close: x,
                             currency: x,
-                            exchange: x,
+                            exchange: x
                         },
                         ...
                     ]
@@ -376,9 +376,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency | exchange
-                -----||--------------------------------------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Currency | Exchange
+                -----||------|------|-----|-------|----------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -392,7 +392,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                             low: x,
                             close: x,
                             currency: x,
-                            exchange: x,
+                            exchange: x
                         },
                         ...
                     ]

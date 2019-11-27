@@ -169,11 +169,11 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
             recent data of the specified commodity. So on, the resulting dataframe contains the open, high, low and close
             values for the selected commodity on market days and the currency in which those values are presented.
 
-            The resulting recent data, in case that the default parameters were applied, will look like::
+            The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency 
-                -----||------|------|-----|-------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
@@ -186,6 +186,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x
                         },
                         ...
@@ -356,9 +357,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency 
-                -----||------|------|-----|-------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
@@ -371,6 +372,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x
                         },
                         ...

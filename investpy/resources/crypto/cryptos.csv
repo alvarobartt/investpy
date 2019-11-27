@@ -58,7 +58,7 @@ Mixin,mixin,XIN,1071795,USD,available
 Cryptonex,cryptonex,CNX,1061847,USD,available
 Dai,dai,DAI,1061777,USD,available
 Seele,seele,SEELE,1094102,USD,available
-Single Collateral DAI ,,DAI,,,unavailable
+Single Collateral DAI,,DAI,,,unavailable
 KuCoin Shares,kucoin-shares,KCS,1061469,USD,available
 DigiByte,digibyte,DGB,1061782,USD,available
 Bytom,bytom,BTM,1061455,USD,available
@@ -608,7 +608,7 @@ POPCHAIN,,PCH,,,unavailable
 Edge,,DADI,,,unavailable
 1World,,1WO,,,unavailable
 Polybius,polybius,PLBT,1061877,USD,available
-Akropolis ,,AKRO,,,unavailable
+Akropolis,,AKRO,,,unavailable
 PolySwarm,,NCT,,,unavailable
 Endor Protocol,endor-protocol,EDR,1089475,USD,available
 LBRY Credits,library-credit,LBC,1066762,USD,available
@@ -713,7 +713,7 @@ Qitmeer,,HLC,,,unavailable
 AI Doctor,aidoc,AIDOC,1066715,USD,available
 Noku,,NOKU,,,unavailable
 Kleros,kleros,PNK,1089388,USD,available
-HashBX ,,HBX,,,unavailable
+HashBX,,HBX,,,unavailable
 VINchain,,VIN,,,unavailable
 CanonChain,,CZR,,,unavailable
 IHT Real Estate Protocol,iht-real-estate-protocol,IHT,1093935,USD,available
@@ -807,7 +807,7 @@ New Power Coin,new-power-coin,NPW,1094067,USD,available
 SureRemit,sureremit,RMT,1094085,USD,available
 Proton Token,proton-token,PTT,1095972,USD,available
 Q DAO Governance token v1.0,,QDAO,,,unavailable
-EveryCoin ,,EVY,,,unavailable
+EveryCoin,,EVY,,,unavailable
 MenaPay,,MPAY,,,unavailable
 Primas,primas,PST,1061514,USD,available
 Friendz,friends,FDZ,1117717,USD,available
@@ -1229,7 +1229,7 @@ Nerves,,NER,,,unavailable
 Seal Network,,SEAL,,,unavailable
 Birake,,BIR,,,unavailable
 Zeusshield,zeusshield,ZSC,1061485,USD,available
-Gems ,,GEM,,,unavailable
+Gems,,GEM,,,unavailable
 ToaCoin,toacoin,TOA,1071265,USD,available
 Asgard,,ASG,,,unavailable
 Eristica,,ERT,,,unavailable
@@ -1438,7 +1438,7 @@ Playgroundz,,IOG,,,unavailable
 Neutron,neutron,NTRN,1071305,USD,available
 RealChain,,RCT,,,unavailable
 W3Coin,,W3C,,,unavailable
-SignatureChain ,,SICA,,,unavailable
+SignatureChain,,SICA,,,unavailable
 Golfcoin,golfcoin,GOLF,1071915,USD,available
 NetCoin,netcoin,NET,1061776,USD,available
 Suretly,suretly,SUR,1071820,USD,available
@@ -1639,7 +1639,7 @@ AntiBitcoin,antibitcoin,ANTI,1071652,USD,available
 Galilel,,GALI,,,unavailable
 Doge Token,,DOGET,,,unavailable
 Tigereum,,TIG,,,unavailable
-Neutral Dollar ,,NUSD,,,unavailable
+Neutral Dollar,,NUSD,,,unavailable
 BLOC.MONEY,,BLOC,,,unavailable
 GCN Coin,gcn-coin,GCN,1072199,USD,available
 Netbox Coin,,NBX,,,unavailable
@@ -2105,7 +2105,7 @@ nDEX,,NDX,,,unavailable
 VikkyToken,,VIKKY,,,unavailable
 SpeedCash,speedcash,SCS,1071763,USD,available
 Crystal Token,,CYL,,,unavailable
-Crystal Clear ,crystal-clear,CCT,1071471,USD,available
+Crystal Clear,crystal-clear,CCT,1071471,USD,available
 Zayedcoin,zayedcoin,ZYD,1071724,USD,available
 Uptrennd,,1UP,,,unavailable
 Cyber Movie Chain,,CMCT,,,unavailable
@@ -2329,7 +2329,7 @@ LHT,,LHT,,,unavailable
 M2O,,M2O,,,unavailable
 MEX,,MEX,,,unavailable
 MSD,msd,MSD,1071808,USD,available
-PATHHIVE ,,PHV,,,unavailable
+PATHHIVE,,PHV,,,unavailable
 ABLE,,ABLX,,,unavailable
 Aces,aces,ACES,1071844,USD,available
 APOT,,APOT,,,unavailable
@@ -2525,7 +2525,7 @@ IZIChain,,IZI,,,unavailable
 Jumpcoin,,JUMP,,,unavailable
 Livepeer,,LPT,,,unavailable
 MarxCoin,marxcoin,MARX,1071805,USD,available
-MoneroV ,,XMV,,,unavailable
+MoneroV,,XMV,,,unavailable
 NAM COIN,,NAM,,,unavailable
 NEO GOLD,neo-gold,NEOG,1072163,USD,available
 NSS Coin,,NSS,,,unavailable
@@ -2622,7 +2622,7 @@ BAWnetwork,,BAW,,,unavailable
 BlazerCoin,blazercoin,BLAZR,1071897,USD,available
 Blockcloud,,BLOC,,,unavailable
 Blockstack,,STX,,,unavailable
-Boltt Coin ,,BOLTT,,,unavailable
+Boltt Coin,,BOLTT,,,unavailable
 CEDEX Coin,,CEDEX,,,unavailable
 CENTERCOIN,,CENT,,,unavailable
 ChronoCoin,,CRN,,,unavailable
