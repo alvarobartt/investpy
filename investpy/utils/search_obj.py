@@ -70,10 +70,10 @@ class SearchObj(object):
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['indice', 'commodity']:
+        elif self.pair_type in ['indice', 'crypto', 'commodity']:
             header = self.name + ' Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['certificate', 'crypto', 'fxfuture']:
+        elif self.pair_type in ['certificate', 'fxfuture']:
             self.data = None
             return
 
@@ -120,9 +120,9 @@ class SearchObj(object):
             header = self.symbol + ' Historical Data'
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
-        elif self.pair_type in ['indice', 'commodity']:
+        elif self.pair_type in ['indice', 'commodity', 'crypto']:
             header = self.name + ' Historical Data'
-        elif self.pair_type in ['certificate', 'crypto', 'fxfuture']:
+        elif self.pair_type in ['certificate', 'fxfuture']:
             self.data = None
             return
 

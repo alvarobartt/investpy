@@ -616,13 +616,11 @@ def test_investpy_bonds():
 
     for param in params:
         investpy.get_bond_recent_data(bond='Spain 30Y',
-                                      country='spain',
                                       as_json=param['as_json'],
                                       order=param['order'],
                                       interval='Daily')
 
         investpy.get_bond_historical_data(bond='Spain 30Y',
-                                          country='spain',
                                           from_date='01/01/1990',
                                           to_date='01/01/2019',
                                           as_json=param['as_json'],
@@ -800,10 +798,9 @@ def test_investpy_search():
         results = investpy.search_text(text=param['text'])
 
         for result in results[:5]:
+            print(result)
             result.retrieve_recent_data()
-            print(result.data)
             result.retrieve_historical_data(from_date='01/01/2019', to_date='01/03/2019')
-            print(result.data)
 
 
 if __name__ == '__main__':

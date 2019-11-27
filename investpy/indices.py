@@ -344,7 +344,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     This function retrieves historical data of the introduced `index` (from the specified country, note that both
     index and country should match since if the introduced index is not listed in the indices of that country, the
     function will raise an error). The retrieved historical data are the OHLC values plus the Volume and the Currency in
-    which those values are specified, from the introduced data range if valid. So on, the resulting data can it either be
+    which those values are specified, from the introduced date range if valid. So on, the resulting data can it either be
     stored in a :obj:`pandas.DataFrame` or in a :obj:`json` file.
 
     Args:

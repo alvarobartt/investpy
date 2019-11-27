@@ -45,7 +45,7 @@ def get_cryptos():
 
     """
 
-    return cryptos_as_df(country)
+    return cryptos_as_df()
 
 
 def get_cryptos_list():

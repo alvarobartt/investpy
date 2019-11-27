@@ -334,7 +334,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced commodity from Investing.com. So on, the historical data
-    of the introduced commodity in the specified data range will be retrieved and returned as a :obj:`pandas.DataFrame` 
+    of the introduced commodity in the specified date range will be retrieved and returned as a :obj:`pandas.DataFrame` 
     if the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters 
     can be specified: as_json and order, which let the user decide if the data is going to be returned as a :obj:`json` or not, 
     and if the historical data is going to be ordered ascending or descending (where the index is the date), respectively.

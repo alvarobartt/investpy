@@ -1991,77 +1991,48 @@ def test_bonds_errors():
     params = [
         {
             'bond': None,
-            'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
-            'country': None,
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': ['error'],
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'spain',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': 'error',
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'error',
             'interval': 'Daily'
         },
         {
             'bond': 'error',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': ['error'],
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': None
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': ['error']
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': 'error'
@@ -2071,7 +2042,6 @@ def test_bonds_errors():
     for param in params:
         try:
             investpy.get_bond_recent_data(bond=param['bond'],
-                                          country=param['country'],
                                           as_json=param['as_json'],
                                           order=param['order'],
                                           interval=param['interval'])
@@ -2080,17 +2050,7 @@ def test_bonds_errors():
 
     params = [
         {
-            'bond': 'Argentina 3Y',
-            'country': 'spain',
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
             'stock': None,
-            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2099,34 +2059,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': None,
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': ['error'],
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'spain',
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
@@ -2135,7 +2067,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2144,7 +2075,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': 'error',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2153,7 +2083,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': 'error',
             'as_json': False,
@@ -2162,7 +2091,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'error',
-            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2171,7 +2099,6 @@ def test_bonds_errors():
         },
         {
             'bond': ['error'],
-            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2180,7 +2107,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/1999',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2189,7 +2115,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/1900',
             'to_date': '01/01/1950',
             'as_json': False,
@@ -2198,7 +2123,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/1950',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2207,7 +2131,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/01/1999',
             'as_json': False,
@@ -2216,7 +2139,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -2225,7 +2147,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -2234,7 +2155,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -2246,7 +2166,6 @@ def test_bonds_errors():
     for param in params:
         try:
             investpy.get_bond_historical_data(bond=param['bond'],
-                                              country=param['country'],
                                               from_date=param['from_date'],
                                               to_date=param['to_date'],
                                               as_json=param['as_json'],

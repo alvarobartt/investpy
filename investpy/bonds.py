@@ -58,9 +58,8 @@ def get_bonds_list(country=None):
     This function retrieves all the bond names as stored in `bonds.csv` file, which contains all the
     data from the bonds as previously retrieved from Investing.com. So on, this function will just return
     the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
-    from investpy. Additionally, note that the country filtering can be applied, which is really useful since
-    this function just returns the names and in bond data retrieval functions both the name and the country
-    must be specified and they must match.
+    from investpy. Additionally, note that the country filtering can be applied, so that just the names of the 
+    bonds from the specified country are returned.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
@@ -126,9 +125,9 @@ def get_bonds_dict(country=None, columns=None, as_json=False):
 def get_bond_countries():
     """
     This function returns a listing with all the available countries from where bonds can be retrieved, so to
-    let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
-    function. Also, not just the available countries, but the required name is provided since Investing.com has a
-    certain country name standard and countries should be specified the same way they are in Investing.com.
+    let the user know which of them are available. Also, not just the available countries, but the required 
+    name is provided since Investing.com has a certain country name standard and countries should be specified 
+    the same way they are in Investing.com.
 
     Returns:
         :obj:`list` - countries:
@@ -143,18 +142,16 @@ def get_bond_countries():
     return bond_countries_as_list()
 
 
-def get_bond_recent_data(bond, country, as_json=False, order='ascending', interval='Daily'):
+def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced bond from Investing.com. So on, the recent data
-    of the introduced bond from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
-    the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
-    can be specified: as_json and order, which let the user decide if the data is going to be returned as a
-    :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the 
-    date), respectively.
+    of the introduced bond will be retrieved and returned as a :obj:`pandas.DataFrame` if the parameters are valid and 
+    the request to Investing.com succeeds. Note that additionally some optional parameters can be specified: as_json 
+    and order, which let the user decide if the data is going to be returned as a :obj:`json` or not, and if the recent 
+    data is going to be ordered ascending or descending (where the index is the date), respectively.
 
     Args:
         bond (:obj:`str`): name of the bond to retrieve recent historical data from.
-        country (:obj:`str`): name of the country from where the bond is.
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
@@ -164,8 +161,8 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
             The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
-            recent data of the specified bond from the specified country. So on, the resulting dataframe contains the
-            open, high, low and close values for the selected bond on market days.
+            recent data of the specified bond. So on, the resulting dataframe contains the open, high, low and close 
+            values for the selected bond on market days.
 
             The resulting recent data, in case that the default parameters were applied, will look like::
 
@@ -192,12 +189,12 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
         IOError: raised if bonds object/file was not found or unable to retrieve.
-        RuntimeError: raised if the introduced bond/country was not found or did not match any of the existing ones.
+        RuntimeError: raised if the introduced bond was not found or did not match any of the existing ones.
         ConnectionError: raised if connection to Investing.com could not be established.
         IndexError: raised if bond historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_bond_recent_data(bond='Argentina 3Y', country='argentina')
+        >>> investpy.get_bond_recent_data(bond='Argentina 3Y')
                           Open    High     Low   Close
             Date                                      
             2019-09-23  52.214  52.214  52.214  52.214
@@ -213,12 +210,6 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
 
     if not isinstance(bond, str):
         raise ValueError("ERR#0067: bond argument needs to be a str.")
-
-    if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
-
-    if country is not None and not isinstance(country, str):
-        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -244,11 +235,6 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
 
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
-
-    if unidecode.unidecode(country.lower()) not in get_bond_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
-
-    bonds = bonds[bonds['country'] == unidecode.unidecode(country.lower())]
 
     bond = bond.strip()
     bond = bond.lower()
@@ -335,18 +321,17 @@ def get_bond_recent_data(bond, country, as_json=False, order='ascending', interv
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced bond from Investing.com. So on, the historical data
-    of the introduced bond from the specified country in the specified data range will be retrieved and returned as
-    a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
-    some optional parameters can be specified: as_json and order, which let the user decide if the data is going to
-    be returned as a :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the
-    index is the date), respectively.
+    of the introduced bond in the specified date range will be retrieved and returned as a :obj:`pandas.DataFrame` if 
+    the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters 
+    can be specified: as_json and order, which let the user decide if the data is going to be returned as a :obj:`json` 
+    or not, and if the historical data is going to be ordered ascending or descending (where the index is the date), 
+    respectively.
 
     Args:
         bond (:obj:`str`): name of the bond to retrieve historical data from.
-        country (:obj:`str`): name of the country from where the bond is.
         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
         as_json (:obj:`bool`, optional):
@@ -386,12 +371,12 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
         IOError: raised if bonds object/file was not found or unable to retrieve.
-        RuntimeError: raised if the introduced bond/country was not found or did not match any of the existing ones.
+        RuntimeError: raised if the introduced bond was not found or did not match any of the existing ones.
         ConnectionError: raised if connection to Investing.com could not be established.
         IndexError: raised if bond historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_bond_historical_data(bond='Argentina 3Y', country='argentina', from_date='01/01/2010', to_date='01/01/2019')
+        >>> investpy.get_bond_historical_data(bond='Argentina 3Y', from_date='01/01/2010', to_date='01/01/2019')
                         Open  High   Low  Close
             Date                               
             2011-01-03  4.15  4.15  4.15   5.15
@@ -407,12 +392,6 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
 
     if not isinstance(bond, str):
         raise ValueError("ERR#0067: bond argument needs to be a str.")
-
-    if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
-
-    if country is not None and not isinstance(country, str):
-        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -487,11 +466,6 @@ def get_bond_historical_data(bond, country, from_date, to_date, as_json=False, o
 
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
-
-    if unidecode.unidecode(country.lower()) not in get_bond_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
-
-    bonds = bonds[bonds['country'] == unidecode.unidecode(country.lower())]
 
     bond = bond.strip()
     bond = bond.lower()
