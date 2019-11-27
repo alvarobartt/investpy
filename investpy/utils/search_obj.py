@@ -212,7 +212,7 @@ class SearchObj(object):
 
                 date_interval['intervals'].append(obj)
 
-                from_date = from_date.replace(year=start_date.year + 20)
+                from_date = from_date.replace(year=from_date.year + 20)
             else:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),
