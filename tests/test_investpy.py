@@ -819,10 +819,11 @@ def test_investpy_search():
             },
         ]
 
-        for index, result in enumerate(results):
+        for result in results:
             print(result)
             result.retrieve_recent_data()
-            result.retrieve_historical_data(from_date=dates[index]['from_date'], to_date=dates[index]['to_date'])
+            for date in dates:
+                result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
 
 
 if __name__ == '__main__':

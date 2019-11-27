@@ -2778,11 +2778,12 @@ def test_search_errors():
                 },
             ]
 
-            for index, result in enumerate(results):
-                try:
-                    result.retrieve_historical_data(from_date=dates[index]['from_date'], to_date=dates[index]['to_date'])
-                except:
-                    continue
+            for result in results:
+                for date in dates:
+                    try:
+                        result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
+                    except:
+                        pass
         except:
             pass
 
