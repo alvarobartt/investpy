@@ -788,19 +788,41 @@ def test_investpy_search():
     params = [
         {
             'text': 'bbva',
+            'count': 5
         },
         {
-            'text': 'endesa'
-        }
+            'text': 'spain 3y',
+            'count': 5
+        },
+        {
+            'text': 'ibex 35',
+            'count': 5
+        },
+        {
+            'text': 'bnp daxplus',
+            'count': 5
+        },
     ]
 
     for param in params:
-        results = investpy.search_text(text=param['text'])
+        results = investpy.search_text(text=param['text'],
+                                       count=param['count'])
 
-        for result in results[:5]:
+        dates = [
+            {
+                'from_date': '01/01/2018',
+                'to_date': '01/01/2019'
+            },
+            {
+                'from_date': '01/01/1990',
+                'to_date': '01/01/2019'
+            },
+        ]
+
+        for index, result in enumerate(results):
             print(result)
             result.retrieve_recent_data()
-            result.retrieve_historical_data(from_date='01/01/2019', to_date='01/03/2019')
+            result.retrieve_historical_data(from_date=dates[index]['from_date'], to_date=dates[index]['to_date'])
 
 
 if __name__ == '__main__':

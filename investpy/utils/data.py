@@ -222,22 +222,3 @@ class Data(object):
                 'Close': self.close,
                 'Volume': self.volume
             }
-
-    def unknown_as_json(self):
-        if self.volume is None:
-            return {
-                'date': self.date.strftime('%d/%m/%Y'),
-                'open': self.open,
-                'high': self.high,
-                'low': self.low,
-                'close': self.close,
-            }
-        else:
-            return {
-                'date': self.date.strftime('%d/%m/%Y'),
-                'open': self.open,
-                'high': self.high,
-                'low': self.low,
-                'close': self.close,
-                'volume': self.volume
-            }

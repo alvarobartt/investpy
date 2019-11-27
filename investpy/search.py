@@ -45,7 +45,7 @@ def search_text(text, count=None):
     if count and not isinstance(count, int):
         raise ValueError('ERR#0088: count parameter is optional, but if specified, it must be an integer equal or higher than 1.')
 
-    if count is not None and count < 1:
+    if count < 1:
         raise ValueError('ERR#0088: count parameter is optional, but if specified, it must be an integer higher than 0.')
 
     params = {

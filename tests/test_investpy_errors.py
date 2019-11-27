@@ -2240,6 +2240,11 @@ def test_commodities_errors():
             'as_json': False
         },
         {
+            'group': 'error',
+            'columns': None,
+            'as_json': False
+        },
+        {
             'group': 'metals',
             'columns': None,
             'as_json': 'error'
@@ -2496,11 +2501,11 @@ def test_crypto_errors():
         },
         {
             'columns': 'error',
-            'as_json': None
+            'as_json': False
         },
         {
             'columns': ['error'],
-            'as_json': None
+            'as_json': False
         },
     ]
 
@@ -2728,19 +2733,56 @@ def test_search_errors():
 
     params = [
         {
-            'text': None
+            'text': None,
+            'count': None
         },
         {
-            'text': ['error']
+            'text': ['error'],
+            'count': None
         },
         {
-            'text': 'error'
+            'text': 'error',
+            'count': None
         },
+        {
+            'text': 'error',
+            'count': ['error']
+        },
+        {
+            'text': 'error',
+            'count': 0
+        },
+        {
+            'text': 'bbva',
+            'count': 10
+        }
     ]
 
     for param in params:
         try:
-            investpy.search_text(text=param['text'])
+            results = investpy.search_text(text=param['text'],
+                                           count=param['count'])
+
+            dates = [
+                {
+                    'from_date': 'error',
+                    'to_date': '01/01/2019'
+                },
+                {
+                    'from_date': '01/01/2019',
+                    'to_date': 'error'
+                },
+                {
+                    'from_date': '01/01/2019',
+                    'to_date': '01/01/2018'
+                },
+            ]
+
+            for index, result in enumerate(results):
+                try:
+                    result.retrieve_historical_data(from_date=dates[index]['from_date'], to_date=dates[index]['to_date'])
+                except:
+                    continue
         except:
             pass
 
