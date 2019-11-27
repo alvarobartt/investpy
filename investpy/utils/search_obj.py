@@ -222,6 +222,8 @@ class SearchObj(object):
                 date_interval['intervals'].append(obj)
 
                 flag = False
+        
+        return date_interval
     
 
     def _data_retrieval(self, product, head, params):
