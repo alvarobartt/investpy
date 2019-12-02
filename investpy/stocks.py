@@ -115,7 +115,7 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
                     'isin': isin,
                     'id': id,
                     'currency': currency,
-                    'symbol': symbol,
+                    'symbol': symbol
                 }
 
     Raises:

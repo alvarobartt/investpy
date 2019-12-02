@@ -626,7 +626,8 @@ def get_etfs_overview(country, as_json=False):
     """
     This function retrieves an overview containing all the real time data available for the main ETFs from a country,
     such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-    function is to get an overview on the main ETFs from a country, so to get a general view.
+    function is to get an overview on the main ETFs from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, just the overview of the Top 100 ETFs is being retrieved.
 
     Args:
         country (:obj:`str`): name of the country to retrieve the ETFs overview from.
@@ -672,7 +673,7 @@ def get_etfs_overview(country, as_json=False):
     country = unidecode.unidecode(country.lower())
 
     if country not in get_etf_countries():
-        raise RuntimeError('ERR#0025: specified country value not valid.')
+        raise RuntimeError('ERR#0025: specified country value is not valid.')
 
     if country.lower() == 'united states':
         country= 'usa'

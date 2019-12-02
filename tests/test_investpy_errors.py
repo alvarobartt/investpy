@@ -826,6 +826,36 @@ def test_funds_errors():
 
     params = [
         {
+            'country': 'error',
+            'as_json': False,
+        },
+        {
+            'country': None,
+            'as_json': False,
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+        },
+        {
+            'country': 'andorra',
+            'as_json': None,
+        },
+        {
+            'country': 'andorra',
+            'as_json': ['error'],
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_funds_overview(country=param['country'])
+        except:
+            pass
+
+
+    params = [
+        {
             'by': None,
             'value': 'bbva',
         },

@@ -219,6 +219,20 @@ def test_investpy_funds():
                                       country=param['country'],
                                       as_json=param['as_json'])
 
+    params = [
+        {
+            'country': 'andorra',
+            'as_json': True,
+        },
+        {
+            'country': 'andorra',
+            'as_json': False,
+        },
+    ]
+
+    for param in params:
+        investpy.get_funds_overview(country=param['country'], as_json=param['as_json'])
+
     investpy.search_funds(by='name', value='bbva')
 
 

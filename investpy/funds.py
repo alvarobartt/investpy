@@ -814,6 +814,130 @@ def get_fund_information(fund, country, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
+def get_funds_overview(country, as_json=False):
+    """
+    This function retrieves an overview containing all the real time data available for the main funds from a country,
+    such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on the main funds from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, just the overview of the Top 100 funds is being retrieved.
+
+    Args:
+        country (:obj:`str`): name of the country to retrieve the funds overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` - funds_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main ETFs
+            from a country in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                country | name | symbol | last | change | total_assets
+                --------|------|--------|------|--------|--------------
+                xxxxxxx | xxxx | xxxxxx | xxxx | xxxxxx | xxxxxxxxxxxx
+    
+    Raises:
+        ValueError: raised if there was any argument error.
+        FileNotFoundError:  raised when `fund_countries.csv` file is missing.
+        RuntimeError: raised it the introduced country does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_fund_countries():
+        raise RuntimeError('ERR#0025: specified country value is not valid.')
+
+    if country.lower() == 'united states':
+        country= 'usa'
+    elif country.lower() == 'united kingdom':
+        country = 'uk'
+
+    url = "https://www.investing.com/funds/" + country.replace(' ', '-') + "-funds?&issuer_filter=0"
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    table = root_.xpath(".//table[@id='etfs']/tbody/tr")
+
+    results = list()
+
+    for row in table[:100]:
+        id_ = row.get('id').replace('pair_', '')
+        symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+
+        nested = row.xpath(".//a")[0]
+        name = nested.text.strip()
+        full_name = nested.get('title').rstrip()
+
+        country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
+        country_flag = unidecode.unidecode(country_flag.lower())
+
+        last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+        last = row.xpath(last_path)[0].text_content()
+
+        if last == '':
+            continue
+
+        change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+        change = row.xpath(change_path)[0].text_content()
+
+        total_assets_path = change_path
+        total_assets = row.xpath(total_assets_path)[0].getnext().text_content()
+
+        if total_assets == '':
+            total_assets = 0
+        else:
+            if total_assets.__contains__('K'):
+                turnototal_assetsver = float(total_assets.replace('K', '').replace(',', '')) * 1e3
+            elif total_assets.__contains__('M'):
+                total_assets = float(total_assets.replace('M', '').replace(',', '')) * 1e6
+            elif total_assets.__contains__('B'):
+                total_assets = float(total_assets.replace('B', '').replace(',', '')) * 1e9
+            else:
+                total_assets = float(total_assets.replace(',', ''))
+
+        data = {
+            "country": country_flag,
+            "name": name,
+            "symbol": symbol,
+            "last": float(last.replace(',', '')),
+            "change": change,
+            "total_assets": int(total_assets),
+        }
+
+        results.append(data)
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
+
+
 def search_funds(by, value):
     """
     This function searches funds by the introduced value for the specified field. This means that this function
