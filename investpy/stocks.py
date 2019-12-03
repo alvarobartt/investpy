@@ -969,6 +969,152 @@ def get_stock_dividends(stock, country):
         raise RuntimeError("ERR#0061: introduced stock has no dividend's data to display.")
 
 
+def get_stock_information(stock, country, as_json=False):
+    """
+    This function retrieves fundamental financial information from the specified stock. The retrieved 
+    information from the stock can be valuable as it is additional information that can be used combined 
+    with OHLC values, so to determine financial insights from the company which holds the specified stock.
+
+    Args:
+        stock (:obj:`str`): symbol of the stock to retrieve its dividends from.
+        country (:obj:`country`): name of the country from where the stock is from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`dict`- stock_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com
+            from the specified stock ; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                stock_information = {
+                    "Stock Symbol": "AAPL",
+                    "Prev. Close": 267.25,
+                    "Todays Range": "263.45 - 268.25",
+                    "Revenue": 260170000000.00003,
+                    "Open": 267.27,
+                    "52 wk Range": "142 - 268.25",
+                    "EPS": 11.85,
+                    "Volume": 23693550.0,
+                    "Market Cap": 1173730000000.0,
+                    "Dividend (Yield)": "3.08 (1.15%)",
+                    "Average Vol. (3m)": 25609925.0,
+                    "P/E Ratio": 22.29,
+                    "Beta": 1.23,
+                    "1-Year Change": "47.92%",
+                    "Shares Outstanding": 4443236000.0,
+                    "Next Earnings Date": "04/02/2020"
+                }
+
+    """
+
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
+
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+
+    stock = stock.strip()
+
+    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
+
+    tag = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'tag']
+    stock = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'symbol']
+
+    url = "https://www.investing.com/equities/" + tag
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+    result = pd.DataFrame(columns=['Stock Symbol', 'Prev. Close', 'Todays Range', 'Revenue', 'Open', '52 wk Range',
+                                   'EPS', 'Volume', 'Market Cap', 'Dividend (Yield)', 'Average Vol. (3m)', 'P/E Ratio',
+                                   'Beta', '1-Year Change', 'Shares Outstanding', 'Next Earnings Date'])
+    result.at[0, 'Stock Symbol'] = stock
+
+    if path_:
+        for elements_ in path_:
+            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+            title_ = element.text_content()
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                try:
+                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                    continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_dict()
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
 def search_stocks(by, value):
     """
     This function searches stocks by the introduced value for the specified field. This means that this function
@@ -1032,3 +1178,10 @@ def search_stocks(by, value):
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
+
+
+if __name__ == "__main__":
+    res = get_stock_information(stock='AAPL', country='united states', as_json=True)
+    print(res)
+    print(type(res))
+    print(res['Stock Symbol'])

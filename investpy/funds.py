@@ -596,12 +596,9 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
 def get_fund_information(fund, country, as_json=False):
     """
-    This function retrieves basic financial information from the specified fund.
-    As the information is also provided by Investing.com, the tags and names remain the same so
-    a new Web Scraping process is not needed, the headers can be created with the existing information.
-    The retrieved information from the fund can be valuable as it is additional information that can
-    be used combined with OHLC values, so to determine financial insights from the company which holds
-    the specified fund.
+    This function retrieves basic financial information from the specified fund. Retrieved information 
+    from the fund can be valuable as it is additional information that can be used combined with OHLC 
+    values, so to determine financial insights from the company which holds the specified fund.
 
     Args:
         fund (:obj:`str`): name of the fund to retrieve the financial information from.
@@ -610,9 +607,9 @@ def get_fund_information(fund, country, as_json=False):
             optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
     Returns:
-        :obj:`dict`- fund_information:
-            The resulting :obj:`dict` contains the information fields retrieved from Investing.com from the
-            specified funds; it can also be returned as a :obj:`json`, if argument `as_json=True`.
+        :obj:`pandas.DataFrame` or :obj:`dict`- fund_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com 
+            from the specified fund; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
 
             If any of the information fields could not be retrieved, that field/s will be filled with
             None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
@@ -804,9 +801,7 @@ def get_fund_information(fund, country, as_json=False):
         result.replace({'N/A': None}, inplace=True)
 
         if as_json is True:
-            json_ = result.iloc[0].to_json()
-            json_ = json.dumps(json_, sort_keys=False)
-
+            json_ = result.iloc[0].to_dict()
             return json_
         elif as_json is False:
             return result
