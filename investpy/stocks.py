@@ -1178,10 +1178,3 @@ def search_stocks(by, value):
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
-
-
-if __name__ == "__main__":
-    res = get_stock_information(stock='AAPL', country='united states', as_json=True)
-    print(res)
-    print(type(res))
-    print(res['Stock Symbol'])

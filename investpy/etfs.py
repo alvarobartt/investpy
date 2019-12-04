@@ -622,17 +622,19 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         return pd.concat(final)
 
 
-def get_etfs_overview(country, as_json=False):
+def get_etfs_overview(country, as_json=False, n_results=100):
     """
     This function retrieves an overview containing all the real time data available for the main ETFs from a country,
     such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
     function is to get an overview on the main ETFs from a country, so to get a general view. Note that since 
-    this function is retrieving a lot of information at once, just the overview of the Top 100 ETFs is being retrieved.
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 ETFs 
+    is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
 
     Args:
         country (:obj:`str`): name of the country to retrieve the ETFs overview from.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
 
     Returns:
         :obj:`pandas.DataFrame` - etfs_overview:
@@ -661,6 +663,12 @@ def get_etfs_overview(country, as_json=False):
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     head = {
         "User-Agent": get_random(),
@@ -692,7 +700,7 @@ def get_etfs_overview(country, as_json=False):
 
     results = list()
 
-    for row in table[:100]:
+    for row in table[:n_results]:
         id_ = row.get('id').replace('pair_', '')
         symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 

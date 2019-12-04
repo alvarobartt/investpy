@@ -223,15 +223,17 @@ def test_investpy_funds():
         {
             'country': 'andorra',
             'as_json': True,
+            'n_results': 2
         },
         {
             'country': 'andorra',
             'as_json': False,
+            'n_results': 2
         },
     ]
 
     for param in params:
-        investpy.get_funds_overview(country=param['country'], as_json=param['as_json'])
+        investpy.get_funds_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_funds(by='name', value='bbva')
 
@@ -327,15 +329,17 @@ def test_investpy_etfs():
         {
             'country': 'france',
             'as_json': True,
+            'n_results': 2
         },
         {
             'country': 'france',
             'as_json': False,
+            'n_results': 2
         },
     ]
 
     for param in params:
-        investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'])
+        investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_etfs(by='name', value='bbva')
 

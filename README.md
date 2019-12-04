@@ -12,8 +12,6 @@ includes data from all over the world, from countries such as: **United States, 
 Germany, amongst many others**. Therefore, investpy is intended to wrap up all the available data from Investing.com, 
 so that it can be retrieved via Python for its further usage and/or analysis.
 
-<h3 align="center">:neckbeard: Now including crypto currencies data retrieval! :neckbeard:</h3>
-
 investpy seeks to be one of the most complete Python packages when it comes to historical data extraction of financial
 products in order to stop relying on public/private APIs, as investpy is **FREE** and has **NO LIMITATIONS**. These
 are some of the features that currently lead investpy to be one of the most consistent packages of financial data retrieval.

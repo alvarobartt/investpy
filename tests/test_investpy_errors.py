@@ -828,28 +828,43 @@ def test_funds_errors():
         {
             'country': 'error',
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': None,
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': ['error'],
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': 'andorra',
             'as_json': None,
+            'n_results': 2
         },
         {
             'country': 'andorra',
             'as_json': ['error'],
+            'n_results': 2
+        },
+        {
+            'country': 'andorra',
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 1001
         },
     ]
 
     for param in params:
         try:
-            investpy.get_funds_overview(country=param['country'])
+            investpy.get_funds_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
         except:
             pass
 
@@ -1220,28 +1235,43 @@ def test_etfs_errors():
         {
             'country': 'error',
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': None,
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': ['error'],
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': 'spain',
             'as_json': None,
+            'n_results': 2
         },
         {
             'country': 'spain',
             'as_json': ['error'],
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 1001
         },
     ]
 
     for param in params:
         try:
-            investpy.get_etfs_overview(country=param['country'])
+            investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
         except:
             pass
 
