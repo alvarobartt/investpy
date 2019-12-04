@@ -109,6 +109,22 @@ def test_investpy_stocks():
                                            country='spain',
                                            language=value)
 
+    params = [
+        {
+            'country': 'spain',
+            'as_json': True,
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 2
+        },
+    ]
+
+    for param in params:
+        investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+
     investpy.get_stock_dividends(stock='BBVA', country='spain')
 
     investpy.search_stocks(by='name', value='BBVA')

@@ -836,7 +836,8 @@ def get_funds_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError:  raised when `fund_countries.csv` file is missing.
+        FileNotFoundError: raised when either `funds.csv` or `fund_countries.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised it the introduced country does not match any of the indexed ones.
         ConnectionError: raised if GET requests does not return 200 status code.
     
@@ -857,6 +858,16 @@ def get_funds_overview(country, as_json=False, n_results=100):
     if 1 > n_results or n_results > 1000:
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0057: funds file not found or errored.")
+
+    if funds is None:
+        raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
     head = {
         "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
@@ -869,6 +880,8 @@ def get_funds_overview(country, as_json=False, n_results=100):
 
     if country not in get_fund_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')
+
+    funds = funds[funds['country'] == country]
 
     if country.lower() == 'united states':
         country= 'usa'
@@ -929,6 +942,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
             "last": float(last.replace(',', '')),
             "change": change,
             "total_assets": int(total_assets),
+            "currency": funds.loc[(funds['name'] == name).idxmax(), 'currency']
         }
 
         results.append(data)

@@ -414,6 +414,50 @@ def test_stocks_errors():
 
     params = [
         {
+            'country': 'error',
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': None,
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': None,
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': ['error'],
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 1001
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'by': None,
             'value': 'BBVA',
         },

@@ -1115,6 +1115,168 @@ def get_stock_information(stock, country, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
+def get_stocks_overview(country, as_json=False, n_results=100):
+    """
+    This function retrieves an overview containing all the real time data available for the main stocks from a country,
+    such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on the main stocks from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks 
+    is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
+
+    Args:
+        country (:obj:`str`): name of the country to retrieve the stocks overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
+
+    Returns:
+        :obj:`pandas.DataFrame` - stocks_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main stocks
+            from a country in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                country | name | symbol | last | high | low | change | change_percentage | turnover | currency
+                --------|------|--------|------|------|-----|--------|-------------------|----------|----------
+                xxxxxxx | xxxx | xxxxxx | xxxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx | xxxxxxxx | xxxxxxxx
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments errored.
+        FileNotFoundError: raised when either `stocks.csv` or `stock_countries.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_stock_countries():
+        raise RuntimeError('ERR#0025: specified country value is not valid.')
+
+    stocks = stocks[stocks['country'] == country]
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0071: stock countries file not found or errored.")
+
+    if countries is None:
+        raise IOError("ERR#0036: stock countries list not found or unable to retrieve.")
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    params = {
+        "noconstruct": "1",
+        "smlID": countries.loc[(countries['country'] == country).idxmax(), 'id'],
+        "sid": "",
+        "tabletype": "price",
+        "index_id": 'all'
+    }
+
+    url = "https://www.investing.com/equities/StocksFilter"
+
+    req = requests.get(url, params=params, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    table = root_.xpath(".//table[@id='cross_rate_markets_stocks_1']/tbody/tr")
+
+    results = list()
+
+    for row in table[:n_results]:
+        id_ = row.get('id').replace('pair_', '')
+        country_check = row.xpath(".//td[@class='flag']/span")[0].get('title').lower()
+
+        if country_check == 'bosnia-herzegovina':
+            country_check = 'bosnia'
+        elif country_check == 'palestinian territory':
+            country_check = 'palestine'
+        elif country_check == 'united arab emirates':
+            country_check = 'dubai'
+        elif country_check == "cote d'ivoire":
+            country_check = 'ivory coast'
+
+        name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+
+        pid = 'pid-' + id_
+
+        last = row.xpath(".//td[@class='" + pid + "-last']")[0].text_content()
+        high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
+        low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
+
+        pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
+        pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+
+        turnover = row.xpath(".//td[contains(@class, '" + pid + "-turnover')]")[0].text_content()
+
+        if turnover.__contains__('K'):
+            turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
+        elif turnover.__contains__('M'):
+            turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
+        elif turnover.__contains__('B'):
+            turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
+        elif turnover.__contains__('T'):
+            turnover = float(turnover.replace('T', '').replace(',', '')) * 1e12
+
+        data = {
+            "country": country_check,
+            "name": name,
+            "symbol": stocks.loc[(stocks['name'] == name).idxmax(), 'symbol'],
+            "last": float(last.replace(',', '')),
+            "high": float(high.replace(',', '')),
+            "low": float(low.replace(',', '')),
+            "change": pc,
+            "change_percentage": pcp,
+            "turnover": int(turnover),
+            "currency": stocks.loc[(stocks['name'] == name).idxmax(), 'currency']
+        }
+
+        results.append(data)
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
+
+
 def search_stocks(by, value):
     """
     This function searches stocks by the introduced value for the specified field. This means that this function
