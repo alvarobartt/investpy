@@ -101,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="currency_crosses_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.currency_crosses</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="bonds_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.bonds</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="commodities_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.commodities</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypto_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.crypto</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="search_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.search</span></code></a></li>
 </ul>
 </li>
@@ -224,8 +225,8 @@ introduced date range. The resulting data can it either be stored in a <code cla
 recent data from the specified etf via argument. The dataset contains the open, high, low and close
 values for the selected etf on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">exchange</span>
-<span class="o">-----||--------------------------------------|----------</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Currency</span> <span class="o">|</span> <span class="n">Exchange</span>
+<span class="o">-----||------|------|-----|-------|----------|---------</span>
 <span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
@@ -240,7 +241,7 @@ values for the selected etf on market days.</p>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">currency</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">exchange</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">exchange</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -296,8 +297,8 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 recent data from the specified etf via argument. The dataset contains the open, high, low and close
 values for the selected etf on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">exchange</span>
-<span class="o">-----||--------------------------------------|---------</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Currency</span> <span class="o">|</span> <span class="n">Exchange</span>
+<span class="o">-----||------|------|-----|-------|----------|---------</span>
 <span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
@@ -312,7 +313,7 @@ values for the selected etf on market days.</p>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">currency</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">exchange</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">exchange</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -466,15 +467,18 @@ retrieval functions as the name of the etf to retrieve data from needs to be spe
 
 <dl class="function">
 <dt id="investpy.etfs.get_etfs_overview">
-<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etfs_overview</code><span class="sig-paren">(</span><em class="sig-param">country</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etfs_overview" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etfs_overview</code><span class="sig-paren">(</span><em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">n_results=100</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etfs_overview" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves an overview containing all the real time data available for the main ETFs from a country,
 such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-function is to get an overview on the main ETFs from a country, so to get a general view.</p>
+function is to get an overview on the main ETFs from a country, so to get a general view. Note that since
+this function is retrieving a lot of information at once, by default just the overview of the Top 100 ETFs
+is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country to retrieve the ETFs overview from.</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>n_results</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional) – number of results to be displayed on the overview table (0-1000).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -494,7 +498,8 @@ from a country in order to get an overview of it.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if there was any argument error.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when <cite>etf_countries.csv</cite> file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when either <cite>etfs.csv</cite> or <cite>etf_countries.csv</cite> file is missing.</p></li>
+<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
 <li><p><strong>RuntimeError</strong> – raised it the introduced country does not match any of the indexed ones.</p></li>
 <li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
 </ul>

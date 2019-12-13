@@ -101,6 +101,7 @@
 <li class="toctree-l2"><a class="reference internal" href="currency_crosses_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.currency_crosses</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="bonds_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.bonds</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="commodities_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.commodities</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="crypto_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.crypto</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="search_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.search</span></code></a></li>
 </ul>
 </li>
@@ -220,8 +221,8 @@ stored in a <code class="xref py py-obj docutils literal notranslate"><span clas
 recent data from the specified fund via argument. The dataset contains the open, high, low and close
 values for the selected fund on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span>
-<span class="o">-----||--------------------------------------</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Currency</span>
+<span class="o">-----||------|------|-----|-------|----------</span>
 <span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
@@ -234,7 +235,8 @@ values for the selected fund on market days.</p>
             <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-            <span class="n">close</span><span class="p">:</span> <span class="n">x</span>
+            <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -272,12 +274,9 @@ values for the selected fund on market days.</p>
 <dl class="function">
 <dt id="investpy.funds.get_fund_information">
 <code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_fund_information</code><span class="sig-paren">(</span><em class="sig-param">fund</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_fund_information" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves basic financial information from the specified fund.
-As the information is also provided by Investing.com, the tags and names remain the same so
-a new Web Scraping process is not needed, the headers can be created with the existing information.
-The retrieved information from the fund can be valuable as it is additional information that can
-be used combined with OHLC values, so to determine financial insights from the company which holds
-the specified fund.</p>
+<dd><p>This function retrieves basic financial information from the specified fund. Retrieved information
+from the fund can be valuable as it is additional information that can be used combined with OHLC
+values, so to determine financial insights from the company which holds the specified fund.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -287,8 +286,8 @@ the specified fund.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the information fields retrieved from Investing.com from the
-specified funds; it can also be returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>, if argument <cite>as_json=True</cite>.</p>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains the information fields retrieved from Investing.com
+from the specified fund; it can also be returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, if argument <cite>as_json=True</cite>.</p>
 <p>If any of the information fields could not be retrieved, that field/s will be filled with
 None values. If the retrieval process succeeded, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fund_information</span> <span class="o">=</span> <span class="p">{</span>
@@ -314,7 +313,7 @@ None values. If the retrieval process succeeded, the resulting <code class="xref
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>- fund_information</p>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>- fund_information</p>
 </dd>
 </dl>
 </dd></dl>
@@ -339,9 +338,9 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 <dd class="field-even"><p><p>The function returns a either a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file containing the retrieved
 recent data from the specified fund via argument. The dataset contains the open, high, low and close
 values for the selected fund on market days.</p>
-<p>The return data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">||</span> <span class="nb">open</span> <span class="o">|</span> <span class="n">high</span> <span class="o">|</span> <span class="n">low</span> <span class="o">|</span> <span class="n">close</span> <span class="o">|</span> <span class="n">currency</span>
-<span class="o">-----||--------------------------------------</span>
+<p>The returned data is case we use default arguments will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Currency</span>
+<span class="o">-----||------|------|-----|-------|----------</span>
 <span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
@@ -349,11 +348,13 @@ values for the selected fund on market days.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
     <span class="n">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
     <span class="n">recent</span><span class="p">:</span> <span class="p">[</span>
-        <span class="n">date</span><span class="p">:</span> <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">,</span>
-        <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-        <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-        <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
-        <span class="n">close</span><span class="p">:</span> <span class="n">x</span>
+        <span class="p">{</span>
+            <span class="n">date</span><span class="p">:</span> <span class="n">dd</span><span class="o">/</span><span class="n">mm</span><span class="o">/</span><span class="n">yyyy</span><span class="p">,</span>
+            <span class="nb">open</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">currency</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
         <span class="o">...</span>
     <span class="p">]</span>
@@ -499,6 +500,48 @@ every fund listed on Investing.com.</p>
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
 <li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
 <li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.funds.get_funds_overview">
+<code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds_overview</code><span class="sig-paren">(</span><em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">n_results=100</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds_overview" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves an overview containing all the real time data available for the main funds from a country,
+such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+function is to get an overview on the main funds from a country, so to get a general view. Note that since
+this function is retrieving a lot of information at once, by default just the overview of the Top 100 funds
+is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country to retrieve the funds overview from.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+<li><p><strong>n_results</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional) – number of results to be displayed on the overview table (0-1000).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains all the data available in Investing.com of the main ETFs
+from a country in order to get an overview of it.</p>
+<p>If the retrieval process succeeded, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> should look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">last</span> <span class="o">|</span> <span class="n">change</span> <span class="o">|</span> <span class="n">total_assets</span>
+<span class="o">--------|------|--------|------|--------|--------------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxx</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> - funds_overview</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if there was any argument error.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when either <cite>funds.csv</cite> or <cite>fund_countries.csv</cite> file is missing.</p></li>
+<li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
+<li><p><strong>RuntimeError</strong> – raised it the introduced country does not match any of the indexed ones.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
 </ul>
 </dd>
 </dl>

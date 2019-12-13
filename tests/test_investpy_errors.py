@@ -10,7 +10,7 @@ from investpy.utils.user_agent import get_random, clear_file, delete_file
 
 def test_stocks_errors():
     """
-    This function raises errors on stock retrieval functions
+    This function raises errors on stock retrieval functions.
     """
 
     params = [
@@ -414,6 +414,50 @@ def test_stocks_errors():
 
     params = [
         {
+            'country': 'error',
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': None,
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': None,
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': ['error'],
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 1001
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'by': None,
             'value': 'BBVA',
         },
@@ -448,7 +492,7 @@ def test_stocks_errors():
 
 def test_funds_errors():
     """
-    This function raises errors on fund retrieval functions
+    This function raises errors on fund retrieval functions.
     """
 
     params = [
@@ -826,6 +870,51 @@ def test_funds_errors():
 
     params = [
         {
+            'country': 'error',
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': None,
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': 'andorra',
+            'as_json': None,
+            'n_results': 2
+        },
+        {
+            'country': 'andorra',
+            'as_json': ['error'],
+            'n_results': 2
+        },
+        {
+            'country': 'andorra',
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 1001
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_funds_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+
+    params = [
+        {
             'by': None,
             'value': 'bbva',
         },
@@ -860,7 +949,7 @@ def test_funds_errors():
 
 def test_etfs_errors():
     """
-    This function raises errors on etf retrieval functions
+    This function raises errors on etf retrieval functions.
     """
 
     params = [
@@ -1190,28 +1279,43 @@ def test_etfs_errors():
         {
             'country': 'error',
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': None,
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': ['error'],
             'as_json': False,
+            'n_results': 2
         },
         {
             'country': 'spain',
             'as_json': None,
+            'n_results': 2
         },
         {
             'country': 'spain',
             'as_json': ['error'],
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 1001
         },
     ]
 
     for param in params:
         try:
-            investpy.get_etfs_overview(country=param['country'])
+            investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
         except:
             pass
 
@@ -1251,7 +1355,7 @@ def test_etfs_errors():
 
 def test_indices_errors():
     """
-    This function raises errors on index retrieval functions
+    This function raises errors on index retrieval functions.
     """
 
     params = [
@@ -1613,7 +1717,7 @@ def test_indices_errors():
 
 def test_currency_crosses_errors():
     """
-    This function raises errors on currency cross retrieval functions
+    This function raises errors on currency cross retrieval functions.
     """
 
     params = [
@@ -1934,7 +2038,7 @@ def test_currency_crosses_errors():
 
 def test_bonds_errors():
     """
-    This function raises errors on bond retrieval functions
+    This function raises errors on bond retrieval functions.
     """
 
     params = [
@@ -1991,77 +2095,48 @@ def test_bonds_errors():
     params = [
         {
             'bond': None,
-            'country': 'spain',
             'as_json': False,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
-            'country': None,
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': ['error'],
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'spain',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': 'error',
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'error',
             'interval': 'Daily'
         },
         {
             'bond': 'error',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': ['error'],
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': None
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': ['error']
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'as_json': True,
             'order': 'ascending',
             'interval': 'error'
@@ -2071,7 +2146,6 @@ def test_bonds_errors():
     for param in params:
         try:
             investpy.get_bond_recent_data(bond=param['bond'],
-                                          country=param['country'],
                                           as_json=param['as_json'],
                                           order=param['order'],
                                           interval=param['interval'])
@@ -2080,17 +2154,7 @@ def test_bonds_errors():
 
     params = [
         {
-            'bond': 'Argentina 3Y',
-            'country': 'spain',
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
             'stock': None,
-            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2099,34 +2163,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': None,
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': ['error'],
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'spain',
-            'from_date': '01/01/2018',
-            'to_date': '01/01/2019',
-            'as_json': False,
-            'order': 'ascending',
-            'interval': 'Daily'
-        },
-        {
-            'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': 'error',
@@ -2135,7 +2171,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2144,7 +2179,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': 'error',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2153,7 +2187,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': 'error',
             'as_json': False,
@@ -2162,7 +2195,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'error',
-            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2171,7 +2203,6 @@ def test_bonds_errors():
         },
         {
             'bond': ['error'],
-            'country': 'spain',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2180,7 +2211,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/1999',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2189,7 +2219,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/1900',
             'to_date': '01/01/1950',
             'as_json': False,
@@ -2198,7 +2227,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/1950',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2207,7 +2235,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/01/1999',
             'as_json': False,
@@ -2216,7 +2243,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -2225,7 +2251,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -2234,7 +2259,6 @@ def test_bonds_errors():
         },
         {
             'bond': 'Argentina 3Y',
-            'country': 'argentina',
             'from_date': '01/01/2019',
             'to_date': '01/03/2019',
             'as_json': False,
@@ -2246,7 +2270,6 @@ def test_bonds_errors():
     for param in params:
         try:
             investpy.get_bond_historical_data(bond=param['bond'],
-                                              country=param['country'],
                                               from_date=param['from_date'],
                                               to_date=param['to_date'],
                                               as_json=param['as_json'],
@@ -2291,7 +2314,7 @@ def test_bonds_errors():
 
 def test_commodities_errors():
     """
-    This function raises errors on commodity retrieval functions
+    This function raises errors on commodity retrieval functions.
     """
 
     params = [
@@ -2317,6 +2340,11 @@ def test_commodities_errors():
     params = [
         {
             'group': ['error'],
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'group': 'error',
             'columns': None,
             'as_json': False
         },
@@ -2563,35 +2591,310 @@ def test_commodities_errors():
             investpy.search_commodities(by=param['by'], value=param['value'])
         except:
             pass
-    
 
-def test_search_errors():
+
+def test_crypto_errors():
     """
-    This function raises errors on search functions
+    This function raises errors on crypto retrieval functions.
     """
 
     params = [
         {
-            'text': None
+            'columns': None,
+            'as_json': None
         },
         {
-            'text': ['error']
+            'columns': 'error',
+            'as_json': False
         },
         {
-            'text': 'error'
+            'columns': ['error'],
+            'as_json': False
         },
     ]
 
     for param in params:
         try:
-            investpy.search_text(text=param['text'])
+            investpy.get_cryptos_dict(columns=param['columns'],
+                                      as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'crypto': None,
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': None,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
+        },
+        {
+            'crypto': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'crypto': 'Single Collateral DAI',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_crypto_recent_data(crypto=param['crypto'],
+                                            as_json=param['as_json'],
+                                            order=param['order'],
+                                            interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'crypto': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': None,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None,
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error'],
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2018',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'bitcoin',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/2018',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'error',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+        {
+            'crypto': 'Single Collateral DAI',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily',
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_crypto_historical_data(crypto=param['crypto'],
+                                                from_date=param['from_date'],
+                                                to_date=param['to_date'],
+                                                as_json=param['as_json'],
+                                                order=param['order'],
+                                                interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'bitcoin'
+        },
+        {
+            'by': 'error',
+            'value': 'bitcoin'
+        },
+        {
+            'by': ['error'],
+            'value': 'bitcoin'
+        },
+        {
+            'by': 'name',
+            'value': None
+        },
+        {
+            'by': 'name',
+            'value': ['error']
+        },
+        {
+            'by': 'symbol',
+            'value': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_cryptos(by=param['by'], value=param['value'])
+        except:
+            pass
+
+
+def test_search_errors():
+    """
+    This function raises errors on search functions.
+    """
+
+    params = [
+        {
+            'text': None,
+            'count': None
+        },
+        {
+            'text': ['error'],
+            'count': None
+        },
+        {
+            'text': 'error',
+            'count': None
+        },
+        {
+            'text': 'error',
+            'count': ['error']
+        },
+        {
+            'text': 'error',
+            'count': 0
+        },
+        {
+            'text': 'bbva',
+            'count': 10
+        }
+    ]
+
+    for param in params:
+        try:
+            results = investpy.search_text(text=param['text'],
+                                           count=param['count'])
+
+            dates = [
+                {
+                    'from_date': 'error',
+                    'to_date': '01/01/2019'
+                },
+                {
+                    'from_date': '01/01/2019',
+                    'to_date': 'error'
+                },
+                {
+                    'from_date': '01/01/2019',
+                    'to_date': '01/01/2018'
+                },
+            ]
+
+            for result in results:
+                for date in dates:
+                    try:
+                        result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
+                    except:
+                        pass
         except:
             pass
 
 
 def test_user_agent_errors():
     """
-    This function raises errors on user_agent functions
+    This function raises errors on user_agent functions.
     """
 
     clear_file()
@@ -2615,5 +2918,6 @@ if __name__ == '__main__':
     test_currency_crosses_errors()
     test_bonds_errors()
     test_commodities_errors()
+    test_crypto_errors()
     test_search_errors()
     test_user_agent_errors()

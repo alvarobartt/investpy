@@ -305,22 +305,14 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            index_date = datetime.fromtimestamp(int(info[0]))
-            index_date = date(index_date.year, index_date.month, index_date.day)
+            index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             index_close = float(info[1].replace(',', ''))
             index_open = float(info[2].replace(',', ''))
             index_high = float(info[3].replace(',', ''))
             index_low = float(info[4].replace(',', ''))
 
-            index_volume = 0
-
-            if info[5].__contains__('K'):
-                index_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-            elif info[5].__contains__('M'):
-                index_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-            elif info[5].__contains__('B'):
-                index_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+            index_volume = int(info[5])
 
             result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                             index_close, index_volume, index_currency))
@@ -352,7 +344,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     This function retrieves historical data of the introduced `index` (from the specified country, note that both
     index and country should match since if the introduced index is not listed in the indices of that country, the
     function will raise an error). The retrieved historical data are the OHLC values plus the Volume and the Currency in
-    which those values are specified, from the introduced data range if valid. So on, the resulting data can it either be
+    which those values are specified, from the introduced date range if valid. So on, the resulting data can it either be
     stored in a :obj:`pandas.DataFrame` or in a :obj:`json` file.
 
     Args:
@@ -575,22 +567,14 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    index_date = datetime.fromtimestamp(int(info[0]))
-                    index_date = date(index_date.year, index_date.month, index_date.day)
+                    index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
                     index_close = float(info[1].replace(',', ''))
                     index_open = float(info[2].replace(',', ''))
                     index_high = float(info[3].replace(',', ''))
                     index_low = float(info[4].replace(',', ''))
 
-                    index_volume = 0
-
-                    if info[5].__contains__('K'):
-                        index_volume = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-                    elif info[5].__contains__('M'):
-                        index_volume = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-                    elif info[5].__contains__('B'):
-                        index_volume = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+                    index_volume = int(info[5])
 
                     result.insert(len(result), Data(index_date, index_open, index_high, index_low,
                                                     index_close, index_volume, index_currency))

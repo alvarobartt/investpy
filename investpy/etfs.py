@@ -175,8 +175,8 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency | exchange
-                -----||--------------------------------------|---------
+                Date || Open | High | Low | Close | Currency | Exchange
+                -----||------|------|-----|-------|----------|---------
                 xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
@@ -191,7 +191,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
                             low: x,
                             close: x,
                             currency: x,
-                            exchange: x,
+                            exchange: x
                         },
                         ...
                     ]
@@ -318,8 +318,7 @@ def get_etf_recent_data(etf, country, as_json=False, order='ascending', interval
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            etf_date = datetime.fromtimestamp(int(info[0]))
-            etf_date = date(etf_date.year, etf_date.month, etf_date.day)
+            etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             etf_close = float(info[1].replace(',', ''))
             etf_open = float(info[2].replace(',', ''))
@@ -377,9 +376,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
             The returned data is case we use default arguments will look like::
 
-                date || open | high | low | close | currency | exchange
-                -----||--------------------------------------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Currency | Exchange
+                -----||------|------|-----|-------|----------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -393,7 +392,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                             low: x,
                             close: x,
                             currency: x,
-                            exchange: x,
+                            exchange: x
                         },
                         ...
                     ]
@@ -585,8 +584,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    etf_date = datetime.fromtimestamp(int(info[0]))
-                    etf_date = date(etf_date.year, etf_date.month, etf_date.day)
+                    etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
                     etf_close = float(info[1].replace(',', ''))
                     etf_open = float(info[2].replace(',', ''))
@@ -624,16 +622,19 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         return pd.concat(final)
 
 
-def get_etfs_overview(country, as_json=False):
+def get_etfs_overview(country, as_json=False, n_results=100):
     """
     This function retrieves an overview containing all the real time data available for the main ETFs from a country,
     such as the ETF names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-    function is to get an overview on the main ETFs from a country, so to get a general view.
+    function is to get an overview on the main ETFs from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 ETFs 
+    is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
 
     Args:
         country (:obj:`str`): name of the country to retrieve the ETFs overview from.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
 
     Returns:
         :obj:`pandas.DataFrame` - etfs_overview:
@@ -648,7 +649,8 @@ def get_etfs_overview(country, as_json=False):
     
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError:  raised when `etf_countries.csv` file is missing.
+        FileNotFoundError: raised when either `etfs.csv` or `etf_countries.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised it the introduced country does not match any of the indexed ones.
         ConnectionError: raised if GET requests does not return 200 status code.
     
@@ -663,6 +665,22 @@ def get_etfs_overview(country, as_json=False):
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
+
+    if etfs is None:
+        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
+
     head = {
         "User-Agent": get_random(),
         "X-Requested-With": "XMLHttpRequest",
@@ -674,7 +692,9 @@ def get_etfs_overview(country, as_json=False):
     country = unidecode.unidecode(country.lower())
 
     if country not in get_etf_countries():
-        raise RuntimeError('ERR#0025: specified country value not valid.')
+        raise RuntimeError('ERR#0025: specified country value is not valid.')
+
+    etfs = etfs[etfs['country'] == country]
 
     if country.lower() == 'united states':
         country= 'usa'
@@ -693,7 +713,7 @@ def get_etfs_overview(country, as_json=False):
 
     results = list()
 
-    for row in table[:100]:
+    for row in table[:n_results]:
         id_ = row.get('id').replace('pair_', '')
         symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
@@ -734,6 +754,7 @@ def get_etfs_overview(country, as_json=False):
             "last": float(last.replace(',', '')),
             "change": change,
             "turnover": int(turnover),
+            "currency": etfs.loc[(etfs['name'] == name).idxmax(), 'currency']
         }
 
         results.append(data)

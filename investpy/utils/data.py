@@ -167,6 +167,7 @@ class Data(object):
             'High': self.high,
             'Low': self.low,
             'Close': self.close,
+            'Volume': self.volume,
             'Currency': self.currency
         }
 
@@ -177,6 +178,29 @@ class Data(object):
             'high': self.high,
             'low': self.low,
             'close': self.close,
+            'volume': self.volume,
+            'currency': self.currency
+        }
+
+    def crypto_to_dict(self):
+        return {
+            'Date': self.date,
+            'Open': self.open,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close,
+            'Volume': self.volume,
+            'Currency': self.currency
+        }
+
+    def crypto_as_json(self):
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close,
+            'volume': self.volume,
             'currency': self.currency
         }
 
@@ -197,23 +221,4 @@ class Data(object):
                 'Low': self.low,
                 'Close': self.close,
                 'Volume': self.volume
-            }
-
-    def unknown_as_json(self):
-        if self.volume is None:
-            return {
-                'date': self.date.strftime('%d/%m/%Y'),
-                'open': self.open,
-                'high': self.high,
-                'low': self.low,
-                'close': self.close,
-            }
-        else:
-            return {
-                'date': self.date.strftime('%d/%m/%Y'),
-                'open': self.open,
-                'high': self.high,
-                'low': self.low,
-                'close': self.close,
-                'volume': self.volume
             }

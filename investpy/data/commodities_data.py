@@ -228,5 +228,5 @@ def commodity_groups_list():
 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
-    else:
-        return commodities['group'].unique().tolist()
+    
+    return commodities['group'].unique().tolist()
