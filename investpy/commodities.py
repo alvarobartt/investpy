@@ -250,7 +250,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
         countries_allowed = commodities.country.fillna('').str.lower()
         countries_allowed_string = '"' + '", "'.join(countries_allowed.values) + '"'
 
-        assert country in countries_allowed.values, f'ERR#0081: Country must be in [{countries_allowed_string}]'
+        assert country in countries_allowed.values, 'ERR#0081: Country must be in [' + countries_allowed_string + ']'
         commodities = commodities.loc[countries_allowed == country].copy()
 
     commodity = commodity.strip()
@@ -494,7 +494,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
         countries_allowed = commodities.country.fillna('').str.lower()
         countries_allowed_string = '"' + '", "'.join(set(countries_allowed.values)) + '"'
 
-        assert country in countries_allowed.values, f'ERR#0081: Country must be in [{countries_allowed_string}]'
+        assert country in countries_allowed.values, 'ERR#0081: Country must be in [' + countries_allowed_string + ']'
         commodities = commodities.loc[countries_allowed == country].copy()
  
     commodity = commodity.strip()
