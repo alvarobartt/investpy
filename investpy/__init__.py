@@ -7,7 +7,7 @@ __author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
 __version__ = '0.9.10'
 
 from investpy.stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \
-    get_stock_historical_data, get_stock_company_profile, get_stock_dividends, search_stocks
+    get_stock_historical_data, get_stock_company_profile, get_stock_dividends, get_stocks_overview, search_stocks
 
 from investpy.funds import get_funds, get_funds_list, get_funds_dict, get_fund_countries, get_fund_recent_data, \
     get_fund_historical_data, get_fund_information, get_funds_overview, search_funds

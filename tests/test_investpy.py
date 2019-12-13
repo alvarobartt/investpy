@@ -119,7 +119,7 @@ def test_investpy_stocks():
             'country': 'spain',
             'as_json': False,
             'n_results': 2
-        },
+        }
     ]
 
     for param in params:
@@ -719,30 +719,34 @@ def test_investpy_commodities():
 
     params = [
         {
+            'country': None,
             'as_json': True,
             'order': 'ascending',
         },
         {
+            'country': 'united states',
             'as_json': False,
             'order': 'ascending',
         },
         {
+            'country': 'united states',
             'as_json': True,
             'order': 'descending',
         },
         {
+            'country': 'united states',
             'as_json': False,
             'order': 'descending',
         },
     ]
 
     for param in params:
-        investpy.get_commodity_recent_data(commodity='gold',
+        investpy.get_commodity_recent_data(commodity='copper',
                                            as_json=param['as_json'],
                                            order=param['order'],
                                            interval='Daily')
 
-        investpy.get_commodity_historical_data(commodity='gold',
+        investpy.get_commodity_historical_data(commodity='copper',
                                                from_date='01/01/1990',
                                                to_date='01/01/2019',
                                                as_json=param['as_json'],

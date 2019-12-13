@@ -6,6 +6,7 @@
 from datetime import datetime, date
 import json
 from random import randint
+import warnings
 
 import pandas as pd
 import pkg_resources
@@ -147,7 +148,7 @@ def get_commodity_groups():
     return commodity_groups_list()
 
 
-def get_commodity_recent_data(commodity, as_json=False, order='ascending', interval='Daily'):
+def get_commodity_recent_data(commodity, country=None, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced commodity from Investing.com, which will be
     returned as a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. 
@@ -157,6 +158,9 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     Args:
         commodity (:obj:`str`): name of the commodity to retrieve recent data from.
+        country (:obj:`str`, optional):
+            name of the country to retrieve the commodity data from (if there is more than one country that 
+            provides data from the same commodity).
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
@@ -218,6 +222,9 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
     if not isinstance(commodity, str):
         raise ValueError("ERR#0078: commodity parameter is mandatory and must be a valid commodity name.")
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
@@ -248,6 +255,22 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
+
+    if country is None:
+        found_commodities = commodities[commodities['name'].str.lower() == commodity]
+        
+        if len(found_commodities) > 1:
+            msg = "Note that the displayed commodity data can differ depending on the country. " \
+                "If you want to retrieve " + commodity + " data from either " + \
+                " or ".join(found_commodities['country'].tolist()) + ", specify the country parameter."
+            warnings.warn(msg, Warning)
+
+        del found_commodities
+    else:
+        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -331,7 +354,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_commodity_historical_data(commodity, from_date, to_date, country=None, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced commodity from Investing.com. So on, the historical data
     of the introduced commodity in the specified date range will be retrieved and returned as a :obj:`pandas.DataFrame` 
@@ -343,6 +366,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
         commodity (:obj:`str`): name of the commodity to retrieve recent data from.
         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
+        country (:obj:`str`, optional):
+            name of the country to retrieve the commodity data from (if there is more than one country that 
+            provides data from the same commodity).
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
@@ -404,6 +430,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
     if not isinstance(commodity, str):
         raise ValueError("ERR#0078: commodity parameter is mandatory and must be a valid commodity name.")
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+    
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
@@ -483,6 +512,22 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
 
     if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
+
+    if country is None:
+        found_commodities = commodities[commodities['name'].str.lower() == commodity]
+        
+        if len(found_commodities) > 1:
+            msg = "Note that the displayed commodity data can differ depending on the country. " \
+                "If you want to retrieve " + commodity + " data from either " + \
+                " or ".join(found_commodities['country'].tolist()) + ", specify the country parameter."
+            warnings.warn(msg, Warning)
+
+        del found_commodities
+    else:
+        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']

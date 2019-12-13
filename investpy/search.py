@@ -80,7 +80,7 @@ def search_text(text, count=None):
         country = quote['flag'].lower()
         country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
 
-        tag = re.sub('\/(.*?)\/', '', quote['link'])
+        tag = re.sub(r'\/(.*?)\/', '', quote['link'])
 
         search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
                                         country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
