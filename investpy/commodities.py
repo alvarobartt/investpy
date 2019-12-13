@@ -140,14 +140,14 @@ def get_commodity_groups():
 
     Raises:
         FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when comodities file is missing or empty.
+        IOError: raised when commodities file is missing or empty.
 
     """
 
     return commodity_groups_list()
 
 
-def get_commodity_recent_data(commodity, as_json=False, order='ascending', interval='Daily'):
+def get_commodity_recent_data(commodity, as_json=False, order='ascending', interval='Daily', country=None):
     """
     This function retrieves recent historical data from the introduced commodity from Investing.com, which will be
     returned as a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. 
@@ -162,6 +162,8 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
         interval (:obj:`str`, optional):
             value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+        country (:obj:`str`, optional): When commodities name are duplicated between different countries, this parameter can be
+            specified to determine which one should be returned.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -242,6 +244,14 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
+
+    if country is not None:
+        country = unidecode.unidecode(country).lower()
+        countries_allowed = commodities.country.fillna('').str.lower()
+        countries_allowed_string = '"' + '", "'.join(countries_allowed.values) + '"'
+
+        assert country in countries_allowed.values, f'ERR#0081: Country must be in [{countries_allowed_string}]'
+        commodities = commodities.loc[countries_allowed == country].copy()
 
     commodity = commodity.strip()
     commodity = commodity.lower()
@@ -330,7 +340,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, order='ascending', interval='Daily', country=None):
     """
     This function retrieves historical data from the introduced commodity from Investing.com. So on, the historical data
     of the introduced commodity in the specified data range will be retrieved and returned as a :obj:`pandas.DataFrame` 
@@ -347,6 +357,8 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
         interval (:obj:`str`, optional):
             value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+        country (:obj:`str`, optional): When commodities name are duplicated between different countries, this parameter can be
+            specified to determine which one should be returned.
 
     Returns:
         :obj:`pandas.DataFrame` or :obj:`json`:
@@ -477,6 +489,14 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
+    if country is not None:
+        country = unidecode.unidecode(country).lower()
+        countries_allowed = commodities.country.fillna('').str.lower()
+        countries_allowed_string = '"' + '", "'.join(set(countries_allowed.values)) + '"'
+
+        assert country in countries_allowed.values, f'ERR#0081: Country must be in [{countries_allowed_string}]'
+        commodities = commodities.loc[countries_allowed == country].copy()
+ 
     commodity = commodity.strip()
     commodity = commodity.lower()
 
