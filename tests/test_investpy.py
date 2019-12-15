@@ -875,4 +875,3 @@ if __name__ == '__main__':
     test_investpy_commodities()
     test_investpy_crypto()
     test_investpy_search()
-    test_search()
