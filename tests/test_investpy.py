@@ -109,6 +109,22 @@ def test_investpy_stocks():
                                            country='spain',
                                            language=value)
 
+    params = [
+        {
+            'country': 'spain',
+            'as_json': True,
+            'n_results': 2
+        },
+        {
+            'country': 'spain',
+            'as_json': False,
+            'n_results': 2
+        }
+    ]
+
+    for param in params:
+        investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+
     investpy.get_stock_dividends(stock='BBVA', country='spain')
 
     investpy.search_stocks(by='name', value='BBVA')
@@ -219,6 +235,22 @@ def test_investpy_funds():
                                       country=param['country'],
                                       as_json=param['as_json'])
 
+    params = [
+        {
+            'country': 'andorra',
+            'as_json': True,
+            'n_results': 2
+        },
+        {
+            'country': 'andorra',
+            'as_json': False,
+            'n_results': 2
+        },
+    ]
+
+    for param in params:
+        investpy.get_funds_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+
     investpy.search_funds(by='name', value='bbva')
 
 
@@ -313,15 +345,17 @@ def test_investpy_etfs():
         {
             'country': 'france',
             'as_json': True,
+            'n_results': 2
         },
         {
             'country': 'france',
             'as_json': False,
+            'n_results': 2
         },
     ]
 
     for param in params:
-        investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'])
+        investpy.get_etfs_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_etfs(by='name', value='bbva')
 
@@ -616,13 +650,11 @@ def test_investpy_bonds():
 
     for param in params:
         investpy.get_bond_recent_data(bond='Spain 30Y',
-                                      country='spain',
                                       as_json=param['as_json'],
                                       order=param['order'],
                                       interval='Daily')
 
         investpy.get_bond_historical_data(bond='Spain 30Y',
-                                          country='spain',
                                           from_date='01/01/1990',
                                           to_date='01/01/2019',
                                           as_json=param['as_json'],
@@ -632,7 +664,7 @@ def test_investpy_bonds():
     investpy.search_bonds(by='name', value='Spain')
 
 
-def test_commodities():
+def test_investpy_commodities():
     """
     This function checks that commodity data retrieval functions listed in investpy work properly.
     """
@@ -687,30 +719,34 @@ def test_commodities():
 
     params = [
         {
+            'country': None,
             'as_json': True,
             'order': 'ascending',
         },
         {
+            'country': 'united states',
             'as_json': False,
             'order': 'ascending',
         },
         {
+            'country': 'united states',
             'as_json': True,
             'order': 'descending',
         },
         {
+            'country': 'united states',
             'as_json': False,
             'order': 'descending',
         },
     ]
 
     for param in params:
-        investpy.get_commodity_recent_data(commodity='gold',
+        investpy.get_commodity_recent_data(commodity='copper',
                                            as_json=param['as_json'],
                                            order=param['order'],
                                            interval='Daily')
 
-        investpy.get_commodity_historical_data(commodity='gold',
+        investpy.get_commodity_historical_data(commodity='copper',
                                                from_date='01/01/1990',
                                                to_date='01/01/2019',
                                                as_json=param['as_json'],
@@ -720,7 +756,69 @@ def test_commodities():
     investpy.search_commodities(by='name', value='gold')
 
 
-def test_search():
+def test_investpy_crypto():
+    """
+    This function checks that cryptocurrencies data retrieval functions listed in investpy work properly.
+    """
+    
+    investpy.get_cryptos()
+    investpy.get_cryptos_list()
+
+    params = [
+        {
+            'columns': None,
+            'as_json': False
+        },
+        {
+            'columns': ['name', 'symbol', 'currency'],
+            'as_json': False
+        },
+        {
+            'columns': None,
+            'as_json': True
+        },    
+    ]
+
+    for param in params:
+        investpy.get_cryptos_dict(columns=param['columns'],
+                                  as_json=param['as_json'])
+
+    params = [
+        {
+            'as_json': True,
+            'order': 'ascending',
+        },
+        {
+            'as_json': False,
+            'order': 'ascending',
+        },
+        {
+            'as_json': True,
+            'order': 'descending',
+        },
+        {
+            'as_json': False,
+            'order': 'descending',
+        },
+    ]
+
+    for param in params:
+        investpy.get_crypto_recent_data(crypto='bitcoin',
+                                        as_json=param['as_json'],
+                                        order=param['order'],
+                                        interval='Daily')
+
+        investpy.get_crypto_historical_data(crypto='bitcoin',
+                                            from_date='01/01/1990',
+                                            to_date='01/01/2019',
+                                            as_json=param['as_json'],
+                                            order=param['order'],
+                                            interval='Daily')
+
+    investpy.search_cryptos(by='name', value='bitcoin')
+
+
+def test_investpy_search():
     """
     This function checks that investpy search function works properly.
     """
@@ -728,21 +826,42 @@ def test_search():
     params = [
         {
             'text': 'bbva',
+            'count': 5
         },
         {
-            'text': 'endesa'
-        }
+            'text': 'spain 3y',
+            'count': 5
+        },
+        {
+            'text': 'ibex 35',
+            'count': 5
+        },
+        {
+            'text': 'bnp daxplus',
+            'count': 5
+        },
     ]
 
     for param in params:
-        results = investpy.search_text(text=param['text'])
+        results = investpy.search_text(text=param['text'],
+                                       count=param['count'])
 
-        for result in results[:2]:
-            try:
-                result.retrieve_recent_data()
-                result.retrieve_historical_data(from_date='01/01/2018', to_date='01/01/2019')
-            except:
-                pass
+        dates = [
+            {
+                'from_date': '01/01/2018',
+                'to_date': '01/01/2019'
+            },
+            {
+                'from_date': '01/01/1990',
+                'to_date': '01/01/2019'
+            },
+        ]
+
+        for result in results:
+            print(result)
+            result.retrieve_recent_data()
+            for date in dates:
+                result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
 
 
 if __name__ == '__main__':
@@ -753,4 +872,6 @@ if __name__ == '__main__':
     test_investpy_indices()
     test_investpy_currency_crosses()
     test_investpy_bonds()
-    test_search()
+    test_investpy_commodities()
+    test_investpy_crypto()
+    test_investpy_search()

@@ -6,6 +6,7 @@
 from datetime import datetime, date
 import json
 from random import randint
+import warnings
 
 import pandas as pd
 import pkg_resources
@@ -147,7 +148,7 @@ def get_commodity_groups():
     return commodity_groups_list()
 
 
-def get_commodity_recent_data(commodity, as_json=False, order='ascending', interval='Daily'):
+def get_commodity_recent_data(commodity, country=None, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced commodity from Investing.com, which will be
     returned as a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. 
@@ -157,6 +158,9 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     Args:
         commodity (:obj:`str`): name of the commodity to retrieve recent data from.
+        country (:obj:`str`, optional):
+            name of the country to retrieve the commodity data from (if there is more than one country that 
+            provides data from the same commodity).
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
@@ -169,11 +173,11 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
             recent data of the specified commodity. So on, the resulting dataframe contains the open, high, low and close
             values for the selected commodity on market days and the currency in which those values are presented.
 
-            The resulting recent data, in case that the default parameters were applied, will look like::
+            The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency 
-                -----||------|------|-----|-------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
@@ -186,6 +190,7 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x
                         },
                         ...
@@ -201,14 +206,13 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     Examples:
         >>> investpy.get_commodity_recent_data(commodity='gold')
-
-                        Open    High     Low   Close Currency
-            Date                                               
-            2019-10-21  1495.6  1498.7  1484.8  1488.1      USD
-            2019-10-22  1487.5  1492.1  1484.0  1487.5      USD
-            2019-10-23  1491.1  1499.4  1490.7  1495.7      USD
-            2019-10-24  1495.1  1506.9  1490.4  1504.7      USD
-            2019-10-25  1506.4  1520.9  1503.1  1505.3      USD
+                          Open    High     Low   Close  Volume Currency
+            Date                                                       
+            2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
+            2019-10-28  1507.4  1510.8  1492.3  1495.8  318126      USD
+            2019-10-29  1494.3  1497.1  1485.6  1490.7  291980      USD
+            2019-10-30  1490.5  1499.3  1483.1  1496.7  353638      USD
+            2019-10-31  1498.8  1516.7  1496.0  1514.8  390013      USD
 
     """
 
@@ -217,6 +221,9 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     if not isinstance(commodity, str):
         raise ValueError("ERR#0078: commodity parameter is mandatory and must be a valid commodity name.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
@@ -248,6 +255,22 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
 
     if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
+
+    if country is None:
+        found_commodities = commodities[commodities['name'].str.lower() == commodity]
+        
+        if len(found_commodities) > 1:
+            msg = "Note that the displayed commodity data can differ depending on the country. " \
+                "If you want to retrieve " + commodity + " data from either " + \
+                " or ".join(found_commodities['country'].tolist()) + ", specify the country parameter."
+            warnings.warn(msg, Warning)
+
+        del found_commodities
+    else:
+        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -296,17 +319,18 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            commodity_date = datetime.fromtimestamp(int(info[0]))
-            commodity_date = date(commodity_date.year, commodity_date.month, commodity_date.day)
+            commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             commodity_close = float(info[1].replace(',', ''))
             commodity_open = float(info[2].replace(',', ''))
             commodity_high = float(info[3].replace(',', ''))
             commodity_low = float(info[4].replace(',', ''))
 
+            commodity_volume = int(info[5])
+
             result.insert(len(result),
                           Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                               commodity_close, None, currency))
+                               commodity_close, commodity_volume, currency))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -330,10 +354,10 @@ def get_commodity_recent_data(commodity, as_json=False, order='ascending', inter
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_commodity_historical_data(commodity, from_date, to_date, country=None, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced commodity from Investing.com. So on, the historical data
-    of the introduced commodity in the specified data range will be retrieved and returned as a :obj:`pandas.DataFrame` 
+    of the introduced commodity in the specified date range will be retrieved and returned as a :obj:`pandas.DataFrame` 
     if the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters 
     can be specified: as_json and order, which let the user decide if the data is going to be returned as a :obj:`json` or not, 
     and if the historical data is going to be ordered ascending or descending (where the index is the date), respectively.
@@ -342,6 +366,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
         commodity (:obj:`str`): name of the commodity to retrieve recent data from.
         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
+        country (:obj:`str`, optional):
+            name of the country to retrieve the commodity data from (if there is more than one country that 
+            provides data from the same commodity).
         as_json (:obj:`bool`, optional):
             to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
         order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
@@ -356,9 +383,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency 
-                -----||------|------|-----|-------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx 
+                Date || Open | High | Low | Close | Volume | Currency 
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
 
             but in case that as_json parameter was defined as True, then the output will be::
 
@@ -371,6 +398,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x
                         },
                         ...
@@ -385,15 +413,14 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
         IndexError: raised if commodity historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2010', to_date='01/01/2019')
-
-                          Open    High     Low   Close Currency
-            Date                                               
-            2010-01-04  1097.1  1122.3  1097.1  1117.7      USD
-            2010-01-05  1122.0  1126.5  1115.0  1118.1      USD
-            2010-01-06  1120.7  1139.2  1120.7  1135.9      USD
-            2010-01-07  1132.1  1133.0  1129.2  1133.1      USD
-            2010-01-08  1124.9  1136.9  1122.7  1138.2      USD
+        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
+                          Open    High     Low   Close  Volume Currency
+            Date                                                       
+            2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD
+            2018-01-02  1370.5  1370.5  1370.5  1370.5      97      USD
+            2018-01-03  1372.0  1372.0  1369.0  1374.2      22      USD
+            2018-01-04  1363.4  1375.6  1362.7  1377.4      13      USD
+            2018-01-05  1377.8  1377.8  1377.8  1378.4      10      USD
 
     """
 
@@ -403,6 +430,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
     if not isinstance(commodity, str):
         raise ValueError("ERR#0078: commodity parameter is mandatory and must be a valid commodity name.")
 
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+    
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
@@ -483,6 +513,22 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
     if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
+    if country is None:
+        found_commodities = commodities[commodities['name'].str.lower() == commodity]
+        
+        if len(found_commodities) > 1:
+            msg = "Note that the displayed commodity data can differ depending on the country. " \
+                "If you want to retrieve " + commodity + " data from either " + \
+                " or ".join(found_commodities['country'].tolist()) + ", specify the country parameter."
+            warnings.warn(msg, Warning)
+
+        del found_commodities
+    else:
+        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
     name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'name']
@@ -547,17 +593,18 @@ def get_commodity_historical_data(commodity, from_date, to_date, as_json=False, 
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    commodity_date = datetime.fromtimestamp(int(info[0]))
-                    commodity_date = date(commodity_date.year, commodity_date.month, commodity_date.day)
+                    commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
                     commodity_close = float(info[1].replace(',', ''))
                     commodity_open = float(info[2].replace(',', ''))
                     commodity_high = float(info[3].replace(',', ''))
                     commodity_low = float(info[4].replace(',', ''))
 
+                    commodity_volume = int(info[5])
+
                     result.insert(len(result),
                                   Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                                       commodity_close, None, currency))
+                                       commodity_close, commodity_volume, currency))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

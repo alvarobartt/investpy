@@ -325,8 +325,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            currency_cross_date = datetime.fromtimestamp(int(info[0]))
-            currency_cross_date = date(currency_cross_date.year, currency_cross_date.month, currency_cross_date.day)
+            currency_cross_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             currency_cross_close = float(info[1].replace(',', ''))
             currency_cross_open = float(info[2].replace(',', ''))
@@ -391,7 +390,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
                 {
                     name: name,
-                    recent: [
+                    historical: [
                         dd/mm/yyyy: {
                             'open': x,
                             'high': x,
@@ -566,8 +565,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     data_flag = True
 
                 if data_flag is True:
-                    currency_cross_date = datetime.fromtimestamp(int(info[0]))
-                    currency_cross_date = date(currency_cross_date.year, currency_cross_date.month, currency_cross_date.day)
+                    currency_cross_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
                     currency_cross_close = float(info[1].replace(',', ''))
                     currency_cross_open = float(info[2].replace(',', ''))

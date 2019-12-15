@@ -216,11 +216,5 @@ def bond_countries_as_list():
 
     if countries is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
-    
-    for index, row in countries.iterrows():
-        if row['country'] == 'uk':
-            countries.loc[index, 'country'] = 'united kingdom'
-        elif row['country'] == 'usa':
-            countries.loc[index, 'country'] = 'united states'
 
     return countries['country'].tolist()

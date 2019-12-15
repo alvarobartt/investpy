@@ -70,10 +70,10 @@ class SearchObj(object):
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['indice']:
+        elif self.pair_type in ['indice', 'crypto', 'commodity']:
             header = self.name + ' Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['certificate', 'commodity', 'crypto', 'fxfuture']:
+        elif self.pair_type in ['certificate', 'fxfuture']:
             self.data = None
             return
 
@@ -120,9 +120,9 @@ class SearchObj(object):
             header = self.symbol + ' Historical Data'
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
-        elif self.pair_type in ['indice']:
+        elif self.pair_type in ['indice', 'commodity', 'crypto']:
             header = self.name + ' Historical Data'
-        elif self.pair_type in ['certificate', 'commodity', 'crypto', 'fxfuture']:
+        elif self.pair_type in ['certificate', 'fxfuture']:
             self.data = None
             return
 
@@ -212,7 +212,7 @@ class SearchObj(object):
 
                 date_interval['intervals'].append(obj)
 
-                from_date = from_date.replace(year=start_date.year + 20)
+                from_date = from_date.replace(year=from_date.year + 20)
             else:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),
@@ -222,10 +222,12 @@ class SearchObj(object):
                 date_interval['intervals'].append(obj)
 
                 flag = False
+        
+        return date_interval
     
 
     def _data_retrieval(self, product, head, params):
-        if product in ['equities', 'indice', 'currency']:
+        if product in ['equities', 'indice']:
             has_volume = True
         else:
             has_volume = False
@@ -251,8 +253,7 @@ class SearchObj(object):
                         raise IndexError("ERR#0033: information unavailable or not found.")
                     info.append(val)
 
-                date_ = datetime.fromtimestamp(int(info[0]))
-                date_ = date(date_.year, date_.month, date_.day)
+                date_ = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                 
                 close_ = float(info[1].replace(',', ''))
                 open_ = float(info[2].replace(',', ''))
@@ -262,12 +263,7 @@ class SearchObj(object):
                 volume_ = None
                 
                 if has_volume is True:
-                    if info[5].__contains__('K'):
-                        volume_ = int(float(info[5].replace('K', '').replace(',', '')) * 1e3)
-                    elif info[5].__contains__('M'):
-                        volume_ = int(float(info[5].replace('M', '').replace(',', '')) * 1e6)
-                    elif info[5].__contains__('B'):
-                        volume_ = int(float(info[5].replace('B', '').replace(',', '')) * 1e9)
+                    volume_ = int(info[5])
 
                 result.insert(len(result),
                               Data(date_, open_, high_, low_, close_, volume_, None))

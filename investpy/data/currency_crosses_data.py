@@ -364,5 +364,5 @@ def available_currencies_as_list():
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
-    else:
-        return np.unique(currency_crosses['base'].unique().tolist() + currency_crosses['second'].unique().tolist())
+    
+    return np.unique(currency_crosses['base'].unique().tolist() + currency_crosses['second'].unique().tolist())
