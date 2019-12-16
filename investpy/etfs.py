@@ -681,14 +681,6 @@ def get_etfs_overview(country, as_json=False, n_results=100):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    head = {
-        "User-Agent": get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
     country = unidecode.unidecode(country.lower())
 
     if country not in get_etf_countries():
@@ -700,6 +692,14 @@ def get_etfs_overview(country, as_json=False, n_results=100):
         country= 'usa'
     elif country.lower() == 'united kingdom':
         country = 'uk'
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
     url = "https://www.investing.com/etfs/" + country.replace(' ', '-') + "-etfs?&issuer_filter=0"
 

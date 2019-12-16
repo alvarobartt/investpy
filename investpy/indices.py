@@ -338,7 +338,6 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-
 def get_index_historical_data(index, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data of the introduced `index` (from the specified country, note that both
@@ -603,6 +602,287 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         return json.dumps(final[0], sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
+
+
+def get_index_information(index, country, as_json=False):
+    """
+    This function retrieves fundamental financial information from the specified index. The retrieved 
+    information from the index can be valuable as it is additional information that can be used combined 
+    with OHLC values, so to determine financial insights from the company which holds the specified index.
+
+    Args:
+        index (:obj:`str`): name of the index to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the index is.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`dict`- index_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com
+            from the specified index; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                index_information = {
+                    "Index Name": "S&P Merval",
+                    "Prev. Close": 36769.59,
+                    "Volume": None,
+                    "Todays Range": "36,769.59 - 37,894.32",
+                    "Open": 36769.59,
+                    "Average Vol. (3m)": None,
+                    "52 wk Range": "22,484.4 - 44,470.76",
+                    "1-Year Change": "18.19%"
+                }
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if indices.csv file was not found or errored.
+        IOError: raised if indices.csv file is empty or errored.
+        RuntimeError: raised if scraping process failed while running.
+        ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
+
+    """
+
+    if not index:
+        raise ValueError("ERR#0047: index param is mandatory and should be a str.")
+
+    if not isinstance(index, str):
+        raise ValueError("ERR#0047: index param is mandatory and should be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
+
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_index_countries():
+        raise ValueError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+
+    index = index.strip()
+    index = index.lower()
+
+    if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
+        raise ValueError("ERR#0045: index " + index + " not found, check if it is correct.")
+
+    name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
+    tag = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'tag']
+
+    url = "https://www.investing.com/indices/" + tag
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+    result = pd.DataFrame(columns=['Index Name', 'Prev. Close', 'Volume', 'Todays Range', 'Open',
+                                   'Average Vol. (3m)', '52 wk Range', '1-Year Change'])
+    result.at[0, 'Index Name'] = name
+
+    if path_:
+        for elements_ in path_:
+            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+            title_ = element.text_content()
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                try:
+                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                    continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_dict()
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def get_indices_overview(country, as_json=False, n_results=100):
+    """
+    This function retrieves an overview containing all the real time data available for the main indices from a country,
+    such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on the main indices from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 indices 
+    is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
+
+    Args:
+        country (:obj:`str`): name of the country to retrieve the indices overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
+
+    Returns:
+        :obj:`pandas.DataFrame` - indices_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main indices
+            from a country in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                country | name | last | high | low | change | change_percentage | currency
+                --------|------|------|------|-----|--------|-------------------|----------
+                xxxxxxx | xxxx | xxxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx | xxxxxxxx
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when either `indices.csv` or `index_countries.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
+
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
+
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_index_countries():
+        raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+    indices = indices[indices['country'] == country]
+
+    if country == 'united states':
+        country= 'usa'
+    elif country == 'united kingdom':
+        country = 'uk'
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://www.investing.com/indices/" + country.replace(' ', '-') + "-indices?&majorIndices=on&primarySectors=on&additionalIndices=on&otherIndices=on"
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    table = root_.xpath(".//table[@id='cr1']/tbody/tr")
+
+    results = list()
+
+    for row in table[:n_results]:
+        id_ = row.get('id').replace('pair_', '')
+        country_check = row.xpath(".//td[@class='flag']/span")[0].get('title').lower()
+
+        if country_check == 'bosnia-herzegovina':
+            country_check = 'bosnia'
+        elif country_check == 'palestinian territory':
+            country_check = 'palestine'
+        elif country_check == 'united arab emirates':
+            country_check = 'dubai'
+        elif country_check == "cote d'ivoire":
+            country_check = 'ivory coast'
+
+        name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+
+        pid = 'pid-' + id_
+
+        last = row.xpath(".//td[@class='" + pid + "-last']")[0].text_content()
+        high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
+        low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
+
+        pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
+        pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+
+        data = {
+            "country": country_check,
+            "name": name,
+            "last": float(last.replace(',', '')),
+            "high": float(high.replace(',', '')),
+            "low": float(low.replace(',', '')),
+            "change": pc,
+            "change_percentage": pcp,
+            "currency": indices.loc[(indices['name'] == name).idxmax(), 'currency']
+        }
+
+        results.append(data)
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
 
 
 def search_indices(by, value):
