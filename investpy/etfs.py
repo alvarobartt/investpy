@@ -622,6 +622,164 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
         return pd.concat(final)
 
 
+def get_etf_information(etf, country, as_json=False):
+    """
+    This function retrieves fundamental financial information from the specified ETF. The retrieved 
+    information from the ETF can be valuable as it is additional information that can be used combined 
+    with OHLC values, so to determine financial insights from the company which holds the specified ETF.
+
+    Args:
+        etf (:obj:`str`): name of the ETF to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the ETF is.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`dict`- etf_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com
+            from the specified ETF; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                etf_information = {
+                    "1-Year Change": "21.83%",
+                    "52 wk Range": "233.76 - 320.06",
+                    "Asset Class": "Equity",
+                    "Average Vol. (3m)": 59658771.0,
+                    "Beta": 1.01,
+                    "Dividend Yield": "1.73%",
+                    "Dividends (TTM)": 4.03,
+                    "ETF Name": "SPDR S&P 500",
+                    "Market Cap": 296440000000.0,
+                    "Open": 319.25,
+                    "Prev. Close": 317.27,
+                    "ROI (TTM)": "- 0.46%",
+                    "Shares Outstanding": 934132116.0,
+                    "Todays Range": "319.18 - 320.06",
+                    "Total Assets": 167650000000.0,
+                    "Volume": 27928710.0
+                }
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if etfs.csv file was not found or errored.
+        IOError: raised if etfs.csv file is empty or errored.
+        RuntimeError: raised if scraping process failed while running.
+        ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
+
+    """
+
+    if not etf:
+        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+
+    if not isinstance(etf, str):
+        raise ValueError("ERR#0030: etf argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
+
+    if etfs is None:
+        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
+
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_etf_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+    etfs = etfs[etfs['country'] == country]
+
+    etf = etf.strip()
+    etf = etf.lower()
+
+    if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+        raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
+
+    name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
+    tag = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'tag']
+
+    url = "https://www.investing.com/etfs/" + tag
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+    result = pd.DataFrame(columns=['ETF Name', 'Prev. Close', 'Todays Range', 'ROI (TTM)',
+                                   'Open', '52 wk Range', 'Dividends (TTM)', 'Volume',
+                                   'Market Cap', 'Dividend Yield', 'Average Vol. (3m)',
+                                   'Total Assets', 'Beta', '1-Year Change', 'Shares Outstanding',
+                                   'Asset Class'])
+    result.at[0, 'ETF Name'] = name
+
+    if path_:
+        for elements_ in path_:
+            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+            title_ = element.text_content()
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                try:
+                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                    continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_dict()
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
 def get_etfs_overview(country, as_json=False, n_results=100):
     """
     This function retrieves an overview containing all the real time data available for the main ETFs from a country,
