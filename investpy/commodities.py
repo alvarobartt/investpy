@@ -635,6 +635,184 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
         return pd.concat(final)
 
 
+def get_commodity_information(commodity, country=None, as_json=False):
+    """
+    This function retrieves fundamental financial information from the specified commodity. The retrieved 
+    information from the commodity can be valuable as it is additional information that can be used combined 
+    with OHLC values, so to determine financial insights from the company which holds the specified commodity.
+
+    Args:
+        commodity (:obj:`str`): name of the commodity to retrieve information from.
+        country (:obj:`str`, optional):
+            name of the country to retrieve the commodity information from (if there is more than one country
+            that provides data from the same commodity).
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`dict`- commodity_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com
+            from the specified commodity; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                commodity_information = {
+                    "1-Year Change": "16.15%",
+                    "52 wk Range": "1,270.2 - 1,566.2",
+                    "Base Symbol": "GC",
+                    "Commodity Name": "Gold",
+                    "Contract Size": "100 Troy Ounces",
+                    "Last Rollover Day": "24/11/2019",
+                    "Month": "Feb 20",
+                    "Months": "GJMQVZ",
+                    "Open": 1479.8,
+                    "Point Value": "$100",
+                    "Prev. Close": 1481.2,
+                    "Settlement Day": "25/01/2020",
+                    "Settlement Type": "Physical",
+                    "Tick Size": 0.1,
+                    "Tick Value": 10.0,
+                    "Todays Range": "1,477.55 - 1,484.25"
+                }
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if commodities.csv file was not found or errored.
+        IOError: raised if commodities.csv file is empty or errored.
+        RuntimeError: raised if scraping process failed while running.
+        ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
+
+    """
+
+    if not commodity:
+        raise ValueError("ERR#0078: commodity parameter is mandatory and must be a valid commodity name.")
+
+    if not isinstance(commodity, str):
+        raise ValueError("ERR#0078: commodity parameter is mandatory and must be a valid commodity name.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
+
+    if commodities is None:
+        raise IOError("ERR#0076: commodities not found or unable to retrieve.")
+
+    commodity = commodity.strip()
+    commodity = commodity.lower()
+
+    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+        raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
+
+    if country is None:
+        found_commodities = commodities[commodities['name'].str.lower() == commodity]
+        
+        if len(found_commodities) > 1:
+            msg = "Note that the displayed commodity information can differ depending on the country. " \
+                "If you want to retrieve " + commodity + " data from either " + \
+                " or ".join(found_commodities['country'].tolist()) + ", specify the country parameter."
+            warnings.warn(msg, Warning)
+
+        del found_commodities
+    else:
+        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+
+    name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'name']
+    tag = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'tag']
+
+    url = "https://www.investing.com/commodities/" + tag
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+    result = pd.DataFrame(columns=['Commodity Name', 'Prev. Close', 'Month', 'Tick Size', 'Open',
+                                   'Contract Size', 'Tick Value', 'Todays Range', 'Settlement Type',
+                                   'Base Symbol', '52 wk Range', 'Settlement Day', 'Point Value',
+                                   '1-Year Change', 'Last Rollover Day', 'Months'])
+    result.at[0, 'Commodity Name'] = name
+
+    if path_:
+        for elements_ in path_:
+            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+            title_ = element.text_content()
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                try:
+                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    result.at[0, title_] = datetime.strptime(text, "%m/%d/%Y").strftime("%d/%m/%Y")
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    if text.__contains__('1 = '):
+                        result.at[0, title_] = text.replace('1 = ', '')
+                        continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_dict()
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
 def search_commodities(by, value):
     """
     This function searches commodities by the introduced value for the specified field. This means that this function

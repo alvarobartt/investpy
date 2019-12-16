@@ -5,6 +5,7 @@
 
 from datetime import datetime, date
 import json
+import re
 from random import randint
 
 import pandas as pd
@@ -572,6 +573,180 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
         return json.dumps(final[0], sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
+
+
+def get_bond_information(bond, as_json=False):
+    """
+    This function retrieves fundamental financial information from the specified bond. The retrieved 
+    information from the bond can be valuable as it is additional information that can be used combined 
+    with OHLC values, so to determine financial insights from the company which holds the specified bond.
+
+    Args:
+        bond (:obj:`str`): name of the bond to retrieve information from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`dict`- bond_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com
+            from the specified bond; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                bond_information = {
+                    "1-Year Change": "46.91%",
+                    "52 wk Range": "-0.575 - 0.01",
+                    "Bond Name": "Spain 1Y",
+                    "Coupon": "None",
+                    "Maturity Date": "04/12/2020",
+                    "Prev. Close": -0.425,
+                    "Price": 100.417,
+                    "Price Open": 100.416,
+                    "Price Range": -100.481,
+                    "Todays Range": "-0.49 - -0.424"
+                }
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if bonds.csv file was not found or errored.
+        IOError: raised if bonds.csv file is empty or errored.
+        RuntimeError: raised if scraping process failed while running.
+        ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
+
+    """
+
+    if not bond:
+        raise ValueError("ERR#0066: bond parameter is mandatory and must be a valid bond name.")
+
+    if not isinstance(bond, str):
+        raise ValueError("ERR#0067: bond argument needs to be a str.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
+
+    if bonds is None:
+        raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
+
+    bond = bond.strip()
+    bond = bond.lower()
+
+    if unidecode.unidecode(bond) not in [unidecode.unidecode(value.lower()) for value in bonds['name'].tolist()]:
+        raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
+
+    name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
+    tag = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'tag']
+
+    url = "https://www.investing.com/rates-bonds/" + tag
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+    result = pd.DataFrame(columns=['Bond Name', 'Prev. Close', 'Price', 'Coupon', 'Todays Range',
+                                   'Price Open', 'Maturity Date', '52 wk Range', 'Price Range',
+                                   '1-Year Change'])
+    result.at[0, 'Bond Name'] = name
+
+    if path_:
+        for elements_ in path_:
+            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+            title_ = element.text_content()
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                try:
+                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    result.at[0, title_] = datetime.strptime(text, "%d %b %Y").strftime("%d/%m/%Y")
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    occ = text.count('-')
+
+                    if occ == 1:
+                        reg = re.compile(r"([\-]{1}[ ]{1}[0-9\.]+)+")
+                        matches = reg.findall(text)
+                        if len(matches) > 0:
+                            result.at[0, title_] = float(matches[0].replace(' ', ''))
+                            continue
+                    elif occ == 2:
+                        reg = re.compile(r"([\-]{1}[ ]{1}[0-9\.]+)+")
+                        matches = reg.findall(text)
+                        if len(matches) > 0:
+                            res = matches[0].replace(' ', '')
+                            result.at[0, title_] = ' '.join([res, matches[1]])
+                            continue
+                    elif occ == 3:
+                        reg = re.compile(r"([\-]{1}[ ]{1}[0-9\.]+)+")
+                        matches = reg.findall(text)
+                        if len(matches) > 0:
+                            res = list()
+                            for match in matches:
+                                res.append(match.replace(' ', ''))
+                            result.at[0, title_] = ' - '.join(res)
+                            continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_dict()
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
+def get_bonds_overview(country, as_json=False, n_results=100):
+    return None
 
 
 def search_bonds(by, value):
