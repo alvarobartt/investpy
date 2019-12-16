@@ -561,6 +561,121 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         return pd.concat(final)
 
 
+def get_crypto_information(crypto, as_json=False):
+    """
+    This function retrieves fundamental financial information from the specified crypto currency. The retrieved 
+    information from the crypto currency can be valuable as it is additional information that can be used combined 
+    with OHLC values, so to determine financial insights from the company which holds the specified crypto currency.
+
+    Args:
+        currency_cross (:obj:`str`): name of the currency_cross to retrieve recent historical data from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`dict`- crypto_information:
+            The resulting :obj:`pandas.DataFrame` contains the information fields retrieved from Investing.com
+            from the specified crypto currency; it can also be returned as a :obj:`dict`, if argument `as_json=True`.
+
+            If any of the information fields could not be retrieved, that field/s will be filled with
+            None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
+
+                crypto_information = {
+                    'Chg (7D)': '-4.63%',
+                    'Circulating Supply': ' BTC18.10M',
+                    'Crypto Currency': 'Bitcoin',
+                    'Currency': 'USD',
+                    'Market Cap': '$129.01B',
+                    'Max Supply': 'BTC21.00M',
+                    'Todays Range': '7,057.8 - 7,153.1',
+                    'Vol (24H)': '$17.57B'
+                }
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if currency_crosses.csv file was not found or errored.
+        IOError: raised if currency_crosses.csv file is empty or errored.
+        RuntimeError: raised if scraping process failed while running.
+        ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
+
+    """
+
+    if not crypto:
+        raise ValueError("ERR#0083: crypto parameter is mandatory and must be a valid crypto name.")
+
+    if not isinstance(crypto, str):
+        raise ValueError("ERR#0084: crypto argument needs to be a str.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
+
+    if cryptos is None:
+        raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
+
+    crypto = crypto.strip()
+    crypto = crypto.lower()
+
+    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+        raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
+
+    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    if status == 'unavailable':
+        raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
+
+    name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
+    currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
+    tag = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'tag']
+
+    url = "https://www.investing.com/crypto/" + tag
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath("//div[@class='cryptoGlobalData']/div")
+
+    result = pd.DataFrame(columns=['Crypto Currency', 'Market Cap', 'Circulating Supply', 'Max Supply',
+                                   'Vol (24H)', 'Todays Range', 'Chg (7D)', 'Currency'])
+    result.at[0, 'Crypto Currency'] = name
+    result.at[0, 'Currency'] = currency
+
+    if path_:
+        for elements_ in path_:
+            element = elements_.xpath(".//span[@class='title']")[0]
+            title_ = element.text_content().replace(':', '')
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                result.at[0, title_] = element.getnext().text_content().strip()
+
+        result.replace({'N/A': None}, inplace=True)
+
+        if as_json is True:
+            json_ = result.iloc[0].to_dict()
+            return json_
+        elif as_json is False:
+            return result
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+
 def search_cryptos(by, value):
     """
     This function searches cryptos by the introduced value for the specified field. This means that this function
