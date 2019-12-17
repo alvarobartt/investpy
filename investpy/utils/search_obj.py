@@ -59,6 +59,12 @@ class SearchObj(object):
         uses the previously filled data from the `investpy.search_text()` function search results to build the
         request that it is going to be sent to Investing so to retrieve and parse the data.
 
+        Returns:
+            :obj:`pandas.DataFrame` - data:
+                This method retrieves the recent data from the current class instance of a financial product
+                from Investing.com. This method both stores retrieved data in self.data attribute of the class 
+                instance and it also returns it as a normal function will do.
+
         Note:
             Some financial products may not be available since its retrieval has not been developed.
 
@@ -75,12 +81,14 @@ class SearchObj(object):
             head, params = self._prepare_request(header)
         elif self.pair_type in ['certificate', 'fxfuture']:
             self.data = None
-            return
+            return None
 
         try:
             self.data = self._data_retrieval(product=self.pair_type, head=head, params=params)
+            return self.data
         except:
             self.data = None
+            return None
 
     def retrieve_historical_data(self, from_date, to_date):
         """Class method used to retrieve the historical data from the class instance of any financial product.
@@ -90,6 +98,12 @@ class SearchObj(object):
         :obj:`pandas.DataFrame`. This method uses the previously filled data from the `investpy.search_text()` 
         function search results to build the request that it is going to be sent to Investing so to retrieve 
         and parse the data.
+
+        Returns:
+            :obj:`pandas.DataFrame` - data:
+                This method retrieves the historical data from the current class instance of a financial product
+                from Investing.com. This method both stores retrieved data in self.data attribute of the class 
+                instance and it also returns it as a normal function will do.
 
         Note:
             Some financial products may not be available since its retrieval has not been developed.
