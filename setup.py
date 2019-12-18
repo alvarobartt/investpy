@@ -12,27 +12,26 @@ def readme():
         return f.read()
 
 
-def parse_requirements():
-    requirements = list()
-    with io.open('requirements.txt', encoding='utf-8') as f:
-        for line in f.readlines():
-            requirements.append(line.strip())
-    return requirements
-
-
 setup(
     name='investpy',
-    version='0.9.11',
+    version='0.9.12',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.9.11.tar.gz',
+    download_url='https://github.com/alvarob96/investpy/archive/0.9.12.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarob96@usal.es',
     description='investpy — a Python package for financial historical data extraction from Investing',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=parse_requirements(),
+    install_requires=[
+        "Unidecode>=1.1.1",
+        "setuptools>=41.2.0",
+        "numpy>=1.17.2",
+        "pandas>=0.25.1",
+        "lxml>=4.4.1",
+        "requests>=2.22.0"
+    ],
     include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
