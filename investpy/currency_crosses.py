@@ -736,6 +736,11 @@ def get_currency_cross_information(currency_cross, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
+def get_currency_crosses_overview():
+    # Re-structure currency crosses retrieval with https://www.investing.com/currencies/single-currency-crosses
+    return None
+
+
 def search_currency_crosses(by, value):
     """
     This function searches currency crosses by the introduced value for the specified field. This means that this

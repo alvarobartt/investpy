@@ -868,14 +868,6 @@ def get_funds_overview(country, as_json=False, n_results=100):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    head = {
-        "User-Agent": get_random(),
-        "X-Requested-With": "XMLHttpRequest",
-        "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
-        "Connection": "keep-alive",
-    }
-
     country = unidecode.unidecode(country.lower())
 
     if country not in get_fund_countries():
@@ -887,6 +879,14 @@ def get_funds_overview(country, as_json=False, n_results=100):
         country= 'usa'
     elif country.lower() == 'united kingdom':
         country = 'uk'
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
 
     url = "https://www.investing.com/funds/" + country.replace(' ', '-') + "-funds?&issuer_filter=0"
 
@@ -900,52 +900,55 @@ def get_funds_overview(country, as_json=False, n_results=100):
 
     results = list()
 
-    for row in table[:n_results]:
-        id_ = row.get('id').replace('pair_', '')
-        symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+    if len(table) > 0:
+        for row in table[:n_results]:
+            id_ = row.get('id').replace('pair_', '')
+            symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-        nested = row.xpath(".//a")[0]
-        name = nested.text.strip()
-        full_name = nested.get('title').rstrip()
+            nested = row.xpath(".//a")[0]
+            name = nested.text.strip()
+            full_name = nested.get('title').rstrip()
 
-        country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-        country_flag = unidecode.unidecode(country_flag.lower())
+            country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
+            country_flag = unidecode.unidecode(country_flag.lower())
 
-        last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
-        last = row.xpath(last_path)[0].text_content()
+            last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+            last = row.xpath(last_path)[0].text_content()
 
-        if last == '':
-            continue
+            if last == '':
+                continue
 
-        change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
-        change = row.xpath(change_path)[0].text_content()
+            change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+            change = row.xpath(change_path)[0].text_content()
 
-        total_assets_path = change_path
-        total_assets = row.xpath(total_assets_path)[0].getnext().text_content()
+            total_assets_path = change_path
+            total_assets = row.xpath(total_assets_path)[0].getnext().text_content()
 
-        if total_assets == '':
-            total_assets = 0
-        else:
-            if total_assets.__contains__('K'):
-                total_assets = float(total_assets.replace('K', '').replace(',', '')) * 1e3
-            elif total_assets.__contains__('M'):
-                total_assets = float(total_assets.replace('M', '').replace(',', '')) * 1e6
-            elif total_assets.__contains__('B'):
-                total_assets = float(total_assets.replace('B', '').replace(',', '')) * 1e9
+            if total_assets == '':
+                total_assets = 0
             else:
-                total_assets = float(total_assets.replace(',', ''))
+                if total_assets.__contains__('K'):
+                    total_assets = float(total_assets.replace('K', '').replace(',', '')) * 1e3
+                elif total_assets.__contains__('M'):
+                    total_assets = float(total_assets.replace('M', '').replace(',', '')) * 1e6
+                elif total_assets.__contains__('B'):
+                    total_assets = float(total_assets.replace('B', '').replace(',', '')) * 1e9
+                else:
+                    total_assets = float(total_assets.replace(',', ''))
 
-        data = {
-            "country": country_flag,
-            "name": name,
-            "symbol": symbol,
-            "last": float(last.replace(',', '')),
-            "change": change,
-            "total_assets": int(total_assets),
-            "currency": funds.loc[(funds['name'] == name).idxmax(), 'currency']
-        }
+            data = {
+                "country": country_flag,
+                "name": name,
+                "symbol": symbol,
+                "last": float(last.replace(',', '')),
+                "change": change,
+                "total_assets": int(total_assets),
+                "currency": funds.loc[(funds['name'] == name).idxmax(), 'currency']
+            }
 
-        results.append(data)
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
 
     df = pd.DataFrame(results)
 

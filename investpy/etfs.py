@@ -871,51 +871,54 @@ def get_etfs_overview(country, as_json=False, n_results=100):
 
     results = list()
 
-    for row in table[:n_results]:
-        id_ = row.get('id').replace('pair_', '')
-        symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
+    if len(table) > 0:
+        for row in table[:n_results]:
+            id_ = row.get('id').replace('pair_', '')
+            symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
-        nested = row.xpath(".//a")[0]
-        name = nested.text.strip()
-        full_name = nested.get('title').rstrip()
+            nested = row.xpath(".//a")[0]
+            name = nested.text.strip()
+            full_name = nested.get('title').rstrip()
 
-        # In Euro Zone the ETFs are from different countries so the country is specified
-        country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-        country_flag = unidecode.unidecode(country_flag.lower())
+            # In Euro Zone the ETFs are from different countries so the country is specified
+            country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
+            country_flag = unidecode.unidecode(country_flag.lower())
 
-        last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
-        last = row.xpath(last_path)[0].text_content()
+            last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
+            last = row.xpath(last_path)[0].text_content()
 
-        change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
-        change = row.xpath(change_path)[0].text_content()
+            change_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-pcp' + "')]"
+            change = row.xpath(change_path)[0].text_content()
 
-        turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
-        turnover = row.xpath(turnover_path)[0].text_content()
+            turnover_path = ".//td[contains(@class, '" + 'pid-' + str(id_) + '-turnover' + "')]"
+            turnover = row.xpath(turnover_path)[0].text_content()
 
-        if turnover == '':
-            continue
+            if turnover == '':
+                continue
 
-        if turnover.__contains__('K'):
-            turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
-        elif turnover.__contains__('M'):
-            turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
-        elif turnover.__contains__('B'):
-            turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
-        else:
-            turnover = float(turnover.replace(',', ''))
+            if turnover.__contains__('K'):
+                turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
+            elif turnover.__contains__('M'):
+                turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
+            elif turnover.__contains__('B'):
+                turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
+            else:
+                turnover = float(turnover.replace(',', ''))
 
-        data = {
-            "country": country_flag,
-            "name": name,
-            "full_name": full_name,
-            "symbol": symbol,
-            "last": float(last.replace(',', '')),
-            "change": change,
-            "turnover": int(turnover),
-            "currency": etfs.loc[(etfs['name'] == name).idxmax(), 'currency']
-        }
+            data = {
+                "country": country_flag,
+                "name": name,
+                "full_name": full_name,
+                "symbol": symbol,
+                "last": float(last.replace(',', '')),
+                "change": change,
+                "turnover": int(turnover),
+                "currency": etfs.loc[(etfs['name'] == name).idxmax(), 'currency']
+            }
 
-        results.append(data)
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
 
     df = pd.DataFrame(results)
 

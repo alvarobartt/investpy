@@ -29,24 +29,24 @@ MCX Futures Market Quotes,india,49792,MCX Silver Micro,Silver Micro Futures,silv
 MCX Futures Market Quotes,india,49793,MCX Silver Mini,Silver Mini Futures,silver-mini,INR,metals
 MCX Futures Market Quotes,india,49794,MCX Zinc,Zinc Futures,zinc,INR,metals
 MCX Futures Market Quotes,india,49795,MCX Zinc Mini,Zinc Mini Futures,zinc-mini,INR,metals
-Real Time Streaming Futures Quotes,united states,8832,US Coffee C,US Coffee C Futures,us-coffee-c,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8851,US Cotton #2,US Cotton #2 Futures,us-cotton-no.2,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8869,US Sugar #11,US Sugar #11 Futures,us-sugar-no11,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8891,Orange Juice,Orange Juice Futures,orange-juice,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8894,US Cocoa,US Cocoa Futures,us-cocoa,USD,agriculture
-Real Time Streaming Futures Quotes,united kingdom,8911,London Coffee,London Robusta Coffee Futures,london-coffee,USD,agriculture
-Real Time Streaming Futures Quotes,united kingdom,8860,London Cocoa,London Cocoa Futures,london-cocoa,GBP,agriculture
-Real Time Streaming Futures Quotes,united kingdom,8834,London Sugar,London Sugar Futures,london-sugar,USD,agriculture
-Real Time Streaming Futures Quotes,united states,959198,Lumber,Lumber Futures,lumber,USD,agriculture
-MCX Futures Market Quotes,india,49770,MCX Cardamom,Cardamom Futures,cardamom,INR,agriculture
-MCX Futures Market Quotes,india,49773,MCX Cotton,Cotton 29mm Futures,cotton,INR,agriculture
-MCX Futures Market Quotes,india,49775,MCX Crude Palm Oil,Crude Palm Oil Futures,crude-palm-oil,INR,agriculture
-MCX Futures Market Quotes,india,49782,MCX Kapas,Kapas Futures,kapas,INR,agriculture
-MCX Futures Market Quotes,india,49785,MCX Mentha Oil,Mentha Oil Futures,mentha-oil,INR,agriculture
-MCX Futures Market Quotes,india,997362,MCX Castor Seed,Castor Seed Futures,castor-seed?cid=997362,INR,agriculture
-Real Time Streaming Futures Quotes,united states,8914,Live Cattle,Live Cattle Futures,live-cattle,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8913,Lean Hogs,Lean Hogs Futures,lean-hogs,USD,agriculture
-Real Time Streaming Futures Quotes,united states,961618,Feeder Cattle,Feeder Cattle Futures,feed-cattle,USD,agriculture
+Real Time Streaming Futures Quotes,united states,8832,US Coffee C,US Coffee C Futures,us-coffee-c,USD,softs
+Real Time Streaming Futures Quotes,united states,8851,US Cotton #2,US Cotton #2 Futures,us-cotton-no.2,USD,softs
+Real Time Streaming Futures Quotes,united states,8869,US Sugar #11,US Sugar #11 Futures,us-sugar-no11,USD,softs
+Real Time Streaming Futures Quotes,united states,8891,Orange Juice,Orange Juice Futures,orange-juice,USD,softs
+Real Time Streaming Futures Quotes,united states,8894,US Cocoa,US Cocoa Futures,us-cocoa,USD,softs
+Real Time Streaming Futures Quotes,united kingdom,8911,London Coffee,London Robusta Coffee Futures,london-coffee,USD,softs
+Real Time Streaming Futures Quotes,united kingdom,8860,London Cocoa,London Cocoa Futures,london-cocoa,GBP,softs
+Real Time Streaming Futures Quotes,united kingdom,8834,London Sugar,London Sugar Futures,london-sugar,USD,softs
+Real Time Streaming Futures Quotes,united states,959198,Lumber,Lumber Futures,lumber,USD,softs
+MCX Futures Market Quotes,india,49770,MCX Cardamom,Cardamom Futures,cardamom,INR,softs
+MCX Futures Market Quotes,india,49773,MCX Cotton,Cotton 29mm Futures,cotton,INR,softs
+MCX Futures Market Quotes,india,49775,MCX Crude Palm Oil,Crude Palm Oil Futures,crude-palm-oil,INR,softs
+MCX Futures Market Quotes,india,49782,MCX Kapas,Kapas Futures,kapas,INR,softs
+MCX Futures Market Quotes,india,49785,MCX Mentha Oil,Mentha Oil Futures,mentha-oil,INR,softs
+MCX Futures Market Quotes,india,997362,MCX Castor Seed,Castor Seed Futures,castor-seed?cid=997362,INR,softs
+Real Time Streaming Futures Quotes,united states,8914,Live Cattle,Live Cattle Futures,live-cattle,USD,meats
+Real Time Streaming Futures Quotes,united states,8913,Lean Hogs,Lean Hogs Futures,lean-hogs,USD,meats
+Real Time Streaming Futures Quotes,united states,961618,Feeder Cattle,Feeder Cattle Futures,feed-cattle,USD,meats
 Real Time Streaming Futures Quotes,united kingdom,8833,Brent Oil,Brent Oil Futures,brent-oil,USD,energy
 Real Time Streaming Futures Quotes,united states,8849,Crude Oil WTI,Crude Oil WTI Futures,crude-oil,USD,energy
 Real Time Streaming Futures Quotes,united kingdom,8861,London Gas Oil,London Gas Oil Futures,london-gas-oil,USD,energy
@@ -57,11 +57,11 @@ Real Time Streaming Futures Quotes,united states,954867,Gasoline RBOB,Gasoline R
 MCX Futures Market Quotes,india,49769,MCX Brent Oil,Brent Oil Futures,brent-oil?cid=49769,INR,energy
 MCX Futures Market Quotes,india,49774,MCX Crude Oil WTI,Crude Oil WTI Futures,crude-oil?cid=49774,INR,energy
 MCX Futures Market Quotes,india,49787,MCX Natural Gas,Natural Gas Futures,natural-gas?cid=49787,INR,energy
-Real Time Streaming Futures Quotes,united kingdom,8912,London Wheat,London Wheat Futures,london-wheat,GBP,agriculture
-Real Time Streaming Futures Quotes,united states,13916,Rough Rice,Rough Rice Futures,rough-rice,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8915,US Soybean Oil,US Soybean Oil Futures,us-soybean-oil,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8919,US Soybean Meal,US Soybean Meal Futures,us-soybean-meal,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8916,US Soybeans,US Soybeans Futures,us-soybeans,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8917,US Wheat,US Wheat Futures,us-wheat,USD,agriculture
-Real Time Streaming Futures Quotes,united states,8918,US Corn,US Corn Futures,us-corn,USD,agriculture
-Real Time Streaming Futures Quotes,united states,959199,Oats,Oats Futures,oats,USD,agriculture
+Real Time Streaming Futures Quotes,united kingdom,8912,London Wheat,London Wheat Futures,london-wheat,GBP,grains
+Real Time Streaming Futures Quotes,united states,13916,Rough Rice,Rough Rice Futures,rough-rice,USD,grains
+Real Time Streaming Futures Quotes,united states,8915,US Soybean Oil,US Soybean Oil Futures,us-soybean-oil,USD,grains
+Real Time Streaming Futures Quotes,united states,8919,US Soybean Meal,US Soybean Meal Futures,us-soybean-meal,USD,grains
+Real Time Streaming Futures Quotes,united states,8916,US Soybeans,US Soybeans Futures,us-soybeans,USD,grains
+Real Time Streaming Futures Quotes,united states,8917,US Wheat,US Wheat Futures,us-wheat,USD,grains
+Real Time Streaming Futures Quotes,united states,8918,US Corn,US Corn Futures,us-corn,USD,grains
+Real Time Streaming Futures Quotes,united states,959199,Oats,Oats Futures,oats,USD,grains

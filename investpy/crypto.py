@@ -676,6 +676,175 @@ def get_crypto_information(crypto, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
+def get_cryptos_overview(as_json=False, n_results=100):
+    """
+    This function retrieves an overview containing all the real time data available for the main crypto currencies,
+    such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on the main crypto currencies, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 crypto 
+    currencies is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
+
+    Args:
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional):
+            number of results to be displayed on the overview table (0-all_cryptos), where all crypto currencies will 
+            be retrieved if n_results=None.
+
+    Note:
+        The amount of indexed crypto currencies may vary, so if n_results is set to `None`, all the available crypto
+        currencies in Investing while retrieving the overview, will be retrieved and returned.
+
+    Returns:
+        :obj:`pandas.DataFrame` - cryptos_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main crypto
+            currencies in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                name | symbol | price | market_cap | volume24h | total_volume | change24h | change7d | currency
+                -----|--------|-------|------------|-----------|--------------|-----------|----------|----------
+                xxxx | xxxxxx | xxxxx | xxxxxxxxxx | xxxxxxxxx | xxxxxxxxxxxx | xxxxxxxxx | xxxxxxxx | xxxxxxxx
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if n_results is not None and not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if n_results is not None:
+        if 1 > n_results or n_results > 1000:
+            raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    header = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://es.investing.com/crypto/currencies"
+
+    req = requests.get(url, headers=header)
+
+    root = fromstring(req.text)
+    table = root.xpath(".//table[contains(@class, 'allCryptoTlb')]/tbody/tr")
+
+    results = list()
+
+    flag = False
+
+    if len(table) > 0:
+        if n_results is not None and n_results <= 100:
+            table = table[:n_results]
+            flag = True
+        for row in table:
+            name = row.xpath(".//td[contains(@class, 'elp')]")[0].text_content().strip()
+            symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+            price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
+
+            market_cap = row.xpath(".//td[@class='js-market-cap']")[0].get('data-value')
+            volume24h = row.xpath(".//td[@class='js-24h-volume']")[0].get('data-value')
+            total_volume = row.xpath(".//td[@class='js-total-vol']")[0].text_content()
+
+            change24h = row.xpath(".//td[contains(@class, 'js-currency-change-24h')]")[0].text_content()
+            change7d = row.xpath(".//td[contains(@class, 'js-currency-change-7d')]")[0].text_content()
+
+            data = {
+                "name": name,
+                "symbol": symbol,
+                "price": float(price.replace(',', '')),
+                "market_cap": float(market_cap.replace(',', '')),
+                "volume24h": volume24h,
+                "total_volume": total_volume,
+                "change24h": change24h,
+                "change7d": change7d,
+                "currency": "USD"
+            }
+
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+
+    if flag is True:
+        df = pd.DataFrame(results)
+
+        if as_json:
+            return json.loads(df.to_json(orient='records'))
+        else:
+            return df
+    else:
+        header = {
+            "User-Agent": get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
+
+        params = {
+            'lastRowId': 100
+        }
+
+        url = 'https://www.investing.com/crypto/Service/LoadCryptoCurrencies'
+
+        req = requests.post(url=url, headers=header, data=params)
+
+        root = fromstring(req.json()['html'])
+        table = root.xpath(".//tr")
+
+        if n_results is not None:
+            remaining_cryptos = n_results - len(results)
+            table = table[:remaining_cryptos]
+
+        if len(table) > 0:
+            for row in table:
+                name = row.xpath(".//td[contains(@class, 'elp')]")[0].text_content().strip()
+                symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+                price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
+
+                market_cap = row.xpath(".//td[@class='js-market-cap']")[0].get('data-value')
+                volume24h = row.xpath(".//td[@class='js-24h-volume']")[0].get('data-value')
+                total_volume = row.xpath(".//td[@class='js-total-vol']")[0].text_content()
+
+                change24h = row.xpath(".//td[contains(@class, 'js-currency-change-24h')]")[0].text_content()
+                change7d = row.xpath(".//td[contains(@class, 'js-currency-change-7d')]")[0].text_content()
+
+                data = {
+                    "name": name,
+                    "symbol": symbol,
+                    "price": float(price.replace(',', '')),
+                    "market_cap": float(market_cap.replace(',', '')),
+                    "volume24h": volume24h,
+                    "total_volume": total_volume,
+                    "change24h": change24h,
+                    "change7d": change7d,
+                    "currency": "USD"
+                }
+
+                results.append(data)
+        else:
+            raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
+
+
 def search_cryptos(by, value):
     """
     This function searches cryptos by the introduced value for the specified field. This means that this function

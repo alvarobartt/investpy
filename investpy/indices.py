@@ -840,42 +840,45 @@ def get_indices_overview(country, as_json=False, n_results=100):
 
     results = list()
 
-    for row in table[:n_results]:
-        id_ = row.get('id').replace('pair_', '')
-        country_check = row.xpath(".//td[@class='flag']/span")[0].get('title').lower()
+    if len(table) > 0:
+        for row in table[:n_results]:
+            id_ = row.get('id').replace('pair_', '')
+            country_check = row.xpath(".//td[@class='flag']/span")[0].get('title').lower()
 
-        if country_check == 'bosnia-herzegovina':
-            country_check = 'bosnia'
-        elif country_check == 'palestinian territory':
-            country_check = 'palestine'
-        elif country_check == 'united arab emirates':
-            country_check = 'dubai'
-        elif country_check == "cote d'ivoire":
-            country_check = 'ivory coast'
+            if country_check == 'bosnia-herzegovina':
+                country_check = 'bosnia'
+            elif country_check == 'palestinian territory':
+                country_check = 'palestine'
+            elif country_check == 'united arab emirates':
+                country_check = 'dubai'
+            elif country_check == "cote d'ivoire":
+                country_check = 'ivory coast'
 
-        name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
 
-        pid = 'pid-' + id_
+            pid = 'pid-' + id_
 
-        last = row.xpath(".//td[@class='" + pid + "-last']")[0].text_content()
-        high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
-        low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
+            last = row.xpath(".//td[@class='" + pid + "-last']")[0].text_content()
+            high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
+            low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
 
-        pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
-        pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+            pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
+            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
 
-        data = {
-            "country": country_check,
-            "name": name,
-            "last": float(last.replace(',', '')),
-            "high": float(high.replace(',', '')),
-            "low": float(low.replace(',', '')),
-            "change": pc,
-            "change_percentage": pcp,
-            "currency": indices.loc[(indices['name'] == name).idxmax(), 'currency']
-        }
+            data = {
+                "country": country_check,
+                "name": name,
+                "last": float(last.replace(',', '')),
+                "high": float(high.replace(',', '')),
+                "low": float(low.replace(',', '')),
+                "change": pc,
+                "change_percentage": pcp,
+                "currency": indices.loc[(indices['name'] == name).idxmax(), 'currency']
+            }
 
-        results.append(data)
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
 
     df = pd.DataFrame(results)
 

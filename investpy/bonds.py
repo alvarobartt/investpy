@@ -745,8 +745,126 @@ def get_bond_information(bond, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_bonds_overview(country, as_json=False, n_results=100):
-    return None
+def get_bonds_overview(country, as_json=False):
+    """
+    This function retrieves an overview containing all the real time data available for the government bonds
+    from a country, such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main 
+    usage of this function is to get an overview on the government bonds from a country, so to get a general view.
+
+    Args:
+        country (:obj:`str`): name of the country to retrieve the government bonds overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+
+    Returns:
+        :obj:`pandas.DataFrame` - bonds_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the government
+            bonds from a country in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                country | name | last | last_close | high | low | change | change_percentage
+                --------|------|------|------------|------|-----|--------|-------------------
+                xxxxxxx | xxxx | xxxx | xxxxxxxxxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if `bonds.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
+
+    if bonds is None:
+        raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
+
+    country = unidecode.unidecode(country.lower())
+
+    if country not in get_bond_countries():
+        raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+    bonds = bonds[bonds['country'] == country]
+
+    if country == 'united states':
+        country= 'usa'
+    elif country == 'united kingdom':
+        country = 'uk'
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/rates-bonds/' + country + '-government-bonds'
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    table = root_.xpath(".//table[@id='cr1']/tbody/tr")
+
+    results = list()
+
+    if len(table) > 0:
+        for row in table:
+            id_ = row.get('id').replace('pair_', '')
+            country_check = row.xpath(".//td[@class='flag']/span")[0].get('title').lower()
+
+            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+
+            pid = 'pid-' + id_
+
+            last = row.xpath(".//td[@class='" + pid + "-last']")[0].text_content()
+            last_close = row.xpath(".//td[@class='" + pid + "-last_close']")[0].text_content()
+            high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
+            low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
+
+            pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
+            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+
+            data = {
+                "country": country_check,
+                "name": name,
+                "last": float(last.replace(',', '')),
+                "last_close": float(last_close.replace(',', '')),
+                "high": float(high.replace(',', '')),
+                "low": float(low.replace(',', '')),
+                "change": pc,
+                "change_percentage": pcp
+            }
+
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
 
 
 def search_bonds(by, value):
