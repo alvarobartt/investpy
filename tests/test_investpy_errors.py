@@ -2894,34 +2894,34 @@ def test_search_errors():
     params = [
         {
             'text': None,
-            'count': None
+            'n_results': None
         },
         {
             'text': ['error'],
-            'count': None
+            'n_results': None
         },
         {
             'text': 'error',
-            'count': None
+            'n_results': None
         },
         {
             'text': 'error',
-            'count': ['error']
+            'n_results': ['error']
         },
         {
             'text': 'error',
-            'count': 0
+            'n_results': 0
         },
         {
             'text': 'bbva',
-            'count': 10
+            'n_results': 10
         }
     ]
 
     for param in params:
         try:
             results = investpy.search(text=param['text'],
-                                      count=param['count'])
+                                      n_results=param['n_results'])
 
             dates = [
                 {

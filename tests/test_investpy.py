@@ -826,25 +826,25 @@ def test_investpy_search():
     params = [
         {
             'text': 'bbva',
-            'count': 5
+            'n_results': 5
         },
         {
             'text': 'spain 3y',
-            'count': 5
+            'n_results': 5
         },
         {
             'text': 'ibex 35',
-            'count': 5
+            'n_results': 5
         },
         {
             'text': 'bnp daxplus',
-            'count': 5
+            'n_results': 5
         },
     ]
 
     for param in params:
         results = investpy.search(text=param['text'],
-                                  count=param['count'])
+                                  n_results=param['n_results'])
 
         dates = [
             {

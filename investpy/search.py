@@ -58,9 +58,10 @@ def search(text, n_results=None, filters=None):
 
     available_filters = ['indice', 'equities', 'etf', 'fund', 'commodity', 'currency', 'crypto', 'bond', 'certificate', 'fxfuture']
 
-    condition = set(filters).issubset(available_filters)
-    if condition is False:
-        raise ValueError('ERR#0095: filters parameter values must be contained in ' + ', '.join(available_filters) + '.')
+    if filters:
+        condition = set(filters).issubset(available_filters)
+        if condition is False:
+            raise ValueError('ERR#0095: filters parameter values must be contained in ' + ', '.join(available_filters) + '.')
 
     params = {
         'search_text': text,

@@ -148,7 +148,7 @@ Date
 2014-01-05  924.7  1029.9  911.4  1014.7   21374      USD
 ```
 
-Yes, retrieving historical data from any available cryptocurrency is really that easy!
+Yes, retrieving historical data from any available crypto currency is really that easy!
 
 ### Additional Data
 
