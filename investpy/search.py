@@ -11,18 +11,22 @@ from investpy.utils.search_obj import SearchObj
 from investpy.utils.user_agent import get_random
 
 
-def search_text(text, count=None):
+def search(text, n_results=None, filters=None):
     """
     This function will use the Investing search engine so to retrieve the search results of the
     introduced text. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`
     class instances which will contain the search results so that they can be easily accessed and so
-    to ease the data retrieval process since it can be done calling the methods `.retrieve_recent_data()`
-    or `.retrieve_historical_data(from_date, to_date)` from the class instance, which will fill the `data`
-    attribute of that instance.
+    to ease the data retrieval process since it can be done calling the methods `self.retrieve_recent_data()`
+    or `self.retrieve_historical_data(from_date, to_date)` from the class instance, which will fill the `self.data`
+    attribute of that class instance.
 
     Args:
         text (:obj:`str`): text to search in Investing among all its indexed data.
-        count (:obj:`int`, optional): number of search results to retrieve and return from Investing.
+        n_results (:obj:`int`, optional): number of search results to retrieve and return from Investing.
+        filters (:obj:`list` of :obj:`str`, optional):
+            list with the filter/s to be applied to the search result quotes so that the resulting quotes match
+            the filters. Possible filters are: `indice`, `equities`, `etf`, `fund`, `commodity`, `currency`, `crypto`,
+            `bond`, `certificate` and `fxfuture`. Default is `None` which means that no filter will be applied.
 
     Returns:
         :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
@@ -42,11 +46,21 @@ def search_text(text, count=None):
     if not isinstance(text, str):
         raise ValueError('ERR#0074: text parameter is mandatory and it should be a valid str.')
 
-    if count and not isinstance(count, int):
-        raise ValueError('ERR#0088: count parameter is optional, but if specified, it must be an integer equal or higher than 1.')
+    if n_results and not isinstance(n_results, int):
+        raise ValueError('ERR#0088: n_results parameter is optional, but if specified, it must be an integer equal or higher than 1.')
 
-    if count < 1:
-        raise ValueError('ERR#0088: count parameter is optional, but if specified, it must be an integer higher than 0.')
+    if n_results is not None:
+        if n_results < 1:
+            raise ValueError('ERR#0088: n_results parameter is optional, but if specified, it must be an integer higher than 0.')
+
+    if filters and not isinstance(filters, list):
+        raise ValueError('ERR#0094: filters parameter can just be a list or None if no filter wants to be applied.')
+
+    available_filters = ['indice', 'equities', 'etf', 'fund', 'commodity', 'currency', 'crypto', 'bond', 'certificate', 'fxfuture']
+
+    condition = set(filters).issubset(available_filters)
+    if condition is False:
+        raise ValueError('ERR#0095: filters parameter values must be contained in ' + ', '.join(available_filters) + '.')
 
     params = {
         'search_text': text,
@@ -72,17 +86,43 @@ def search_text(text, count=None):
     data = req.json()
 
     if data['total']['quotes'] == 0:
-        raise ValueError("ERR#0000: no results found on Investing for the introduced text.")
+        raise ValueError("ERR#0093: no results found on Investing for the introduced text.")
 
     search_results = list()
 
-    for quote in data['quotes'][:count]:
-        country = quote['flag'].lower()
-        country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
+    if filters is None:
+        for quote in data['quotes'][:n_results]:
+            country = quote['flag'].lower()
+            country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
 
-        tag = re.sub(r'\/(.*?)\/', '', quote['link'])
+            tag = re.sub(r'\/(.*?)\/', '', quote['link'])
 
-        search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                        country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
+            search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
+                                            country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
+    else:
+        if n_results is None:
+            for quote in data['quotes'][:n_results]:
+                country = quote['flag'].lower()
+                country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
+
+                tag = re.sub(r'\/(.*?)\/', '', quote['link'])
+
+                if quote['pair_type'] in filters:
+                    search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
+                                                    country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
+        else:
+            results_count = n_results
+            for quote in data['quotes']:
+                country = quote['flag'].lower()
+                country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
+
+                tag = re.sub(r'\/(.*?)\/', '', quote['link'])
+
+                if quote['pair_type'] in filters:
+                    search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
+                                                    country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
+                    results_count -= 1
+                    if results_count == 0:
+                        break
 
     return search_results

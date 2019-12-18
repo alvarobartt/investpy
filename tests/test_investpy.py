@@ -843,8 +843,8 @@ def test_investpy_search():
     ]
 
     for param in params:
-        results = investpy.search_text(text=param['text'],
-                                       count=param['count'])
+        results = investpy.search(text=param['text'],
+                                  count=param['count'])
 
         dates = [
             {

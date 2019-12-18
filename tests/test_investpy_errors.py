@@ -2920,8 +2920,8 @@ def test_search_errors():
 
     for param in params:
         try:
-            results = investpy.search_text(text=param['text'],
-                                           count=param['count'])
+            results = investpy.search(text=param['text'],
+                                      count=param['count'])
 
             dates = [
                 {

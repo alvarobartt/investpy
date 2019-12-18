@@ -115,7 +115,7 @@ indexed in Investing can be easily retrieved just using the following piece of c
 ```python
 import investpy
 
-search_results = investpy.search_text(text='gold')
+search_results = investpy.search(text='gold')
 ```
 
 Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to 
