@@ -246,6 +246,16 @@ def test_investpy_funds():
             'as_json': False,
             'n_results': 2
         },
+        {
+            'country': 'united states',
+            'as_json': False,
+            'n_results': 2
+        },
+        {
+            'country': 'united kingdom',
+            'as_json': False,
+            'n_results': 2
+        }
     ]
 
     for param in params:
@@ -826,20 +836,34 @@ def test_investpy_search():
     params = [
         {
             'text': 'bbva',
-            'n_results': 5
+            'n_results': 5,
+            'filters': None
         },
         {
             'text': 'spain 3y',
-            'n_results': 5
+            'n_results': 5,
+            'filters': None
         },
         {
             'text': 'ibex 35',
-            'n_results': 5
+            'n_results': 5,
+            'filters': None
         },
         {
             'text': 'bnp daxplus',
-            'n_results': 5
+            'n_results': 5,
+            'filters': None
         },
+        {
+            'text': 'apple',
+            'n_results': None,
+            'filters': ['equities']
+        },
+        {
+            'text': 'apple',
+            'n_results': 10,
+            'filters': ['equities']
+        }
     ]
 
     for param in params:

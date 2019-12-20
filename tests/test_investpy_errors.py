@@ -2894,27 +2894,43 @@ def test_search_errors():
     params = [
         {
             'text': None,
-            'n_results': None
+            'n_results': None,
+            'filters': None
         },
         {
             'text': ['error'],
-            'n_results': None
+            'n_results': None,
+            'filters': None
         },
         {
             'text': 'error',
-            'n_results': None
+            'n_results': None,
+            'filters': None
         },
         {
             'text': 'error',
-            'n_results': ['error']
+            'n_results': ['error'],
+            'filters': None
         },
         {
             'text': 'error',
-            'n_results': 0
+            'n_results': 0,
+            'filters': None
         },
         {
             'text': 'bbva',
-            'n_results': 10
+            'n_results': 10,
+            'filters': None
+        },
+        {
+            'text': 'bbva',
+            'n_results': 10,
+            'filters': 'error'
+        },
+        {
+            'text': 'bbva',
+            'n_results': 10,
+            'filters': ['error']
         }
     ]
 
