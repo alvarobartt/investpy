@@ -88,6 +88,13 @@ def test_stocks_errors():
         },
         {
             'stock': 'BBVA',
+            'country': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'stock': 'BBVA',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
@@ -183,6 +190,15 @@ def test_stocks_errors():
         {
             'stock': 'BBVA',
             'country': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'stock': 'BBVA',
+            'country': 'error',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -345,6 +361,11 @@ def test_stocks_errors():
             'language': 'spanish'
         },
         {
+            'stock': ['error'],
+            'country': 'spain',
+            'language': 'spanish'
+        },
+        {
             'stock': 'BBVA',
             'country': None,
             'language': 'spanish'
@@ -390,6 +411,10 @@ def test_stocks_errors():
         },
         {
             'stock': 'bbva',
+            'country': None,
+        },
+        {
+            'stock': 'bbva',
             'country': ['error'],
         },
         {
@@ -412,6 +437,45 @@ def test_stocks_errors():
         except:
             pass
 
+    params = [
+        {
+            'stock': None,
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'stock': ['error'],
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'stock': 'bbva',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'stock': 'bbva',
+            'country': ['error'],
+            'as_json': False
+        },
+        {
+            'stock': 'bbva',
+            'country': 'spain',
+            'as_json': None
+        },
+        {
+            'stock': 'bbva',
+            'country': 'error',
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_stock_information(stock=param['stock'], country=param['country'], as_json=param['as_json'])
+        except:
+            pass
+    
     params = [
         {
             'country': 'error',
@@ -2154,7 +2218,7 @@ def test_bonds_errors():
 
     params = [
         {
-            'stock': None,
+            'bond': None,
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
             'as_json': False,
@@ -2275,6 +2339,56 @@ def test_bonds_errors():
                                               as_json=param['as_json'],
                                               order=param['order'],
                                               interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'bond': None,
+            'as_json': False
+        },
+        {
+            'bond': ['error'],
+            'as_json': False
+        },
+        {
+            'bond': 'argentina 3y',
+            'as_json': None
+        },
+        {
+            'bond': 'error',
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_bond_information(bond=param['bond'], as_json=param['as_json'])
+        except:
+            pass
+    
+    params = [
+        {
+            'country': None,
+            'as_json': False,
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+        },
+        {
+            'country': 'spain',
+            'as_json': None,
+        },
+        {
+            'country': 'error',
+            'as_json': False,
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_bonds_overview(country=param['country'], as_json=param['as_json'])
         except:
             pass
 
@@ -2617,6 +2731,74 @@ def test_commodities_errors():
 
     params = [
         {
+            'commodity': None,
+            'country': None,
+            'as_json': False
+        },
+        {
+            'commodity': ['error'],
+            'country': None,
+            'as_json': False
+        },
+        {
+            'commodity': 'copper',
+            'country': ['error'],
+            'as_json': False
+        },
+        {
+            'commodity': 'copper',
+            'country': None,
+            'as_json': None
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodity_information(commodity=param['commodity'], country=param['country'], as_json=param['as_json'])
+        except:
+            pass
+    
+    params = [
+        {
+            'group': None,
+            'as_json': True,
+            'n_results': 100
+        },
+        {
+            'group': ['error'],
+            'as_json': True,
+            'n_results': 100
+        },
+        {
+            'group': 'metals',
+            'as_json': None,
+            'n_results': 100
+        },
+        {
+            'group': 'metals',
+            'as_json': True,
+            'n_results': 'error'
+        },
+        {
+            'group': 'metals',
+            'as_json': True,
+            'n_results': 0
+        },
+        {
+            'group': 'error',
+            'as_json': True,
+            'n_results': 10
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_commodities_overview(group=param['group'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'by': None,
             'value': 'silver',
         },
@@ -2937,7 +3119,8 @@ def test_search_errors():
     for param in params:
         try:
             results = investpy.search(text=param['text'],
-                                      n_results=param['n_results'])
+                                      n_results=param['n_results'],
+                                      filters=params['filters'])
 
             dates = [
                 {

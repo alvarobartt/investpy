@@ -671,6 +671,34 @@ def test_investpy_bonds():
                                           order=param['order'],
                                           interval='Daily')
 
+    params = [
+        {
+            'bond': 'spain 30y',
+            'as_json': False
+        },
+        {
+            'bond': 'argentina 3y',
+            'as_json': True
+        }
+    ]
+
+    for param in params:
+        investpy.get_bond_information(bond=param['bond'], as_json=param['as_json'])
+    
+    params = [
+        {
+            'country': 'united states',
+            'as_json': True,
+        },
+        {
+            'country': 'united kingdom',
+            'as_json': False,
+        }
+    ]
+
+    for param in params:
+        investpy.get_bonds_overview(country=param['country'], as_json=param['as_json'])
+
     investpy.search_bonds(by='name', value='Spain')
 
 
@@ -752,6 +780,7 @@ def test_investpy_commodities():
 
     for param in params:
         investpy.get_commodity_recent_data(commodity='copper',
+                                           country=param['country'],
                                            as_json=param['as_json'],
                                            order=param['order'],
                                            interval='Daily')
@@ -759,9 +788,42 @@ def test_investpy_commodities():
         investpy.get_commodity_historical_data(commodity='copper',
                                                from_date='01/01/1990',
                                                to_date='01/01/2019',
+                                               country=param['country'],
                                                as_json=param['as_json'],
                                                order=param['order'],
                                                interval='Daily')
+
+    params = [
+        {
+            'commodity': 'copper',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'commodity': 'copper',
+            'country': 'united states',
+            'as_json': True
+        }
+    ]
+
+    for param in params:
+        investpy.get_commodity_information(commodity=param['commodity'], country=param['country'], as_json=param['as_json'])
+    
+    params = [
+        {
+            'group': 'metals',
+            'as_json': True,
+            'n_results': 100
+        },
+        {
+            'group': 'metals',
+            'as_json': False,
+            'n_results': 100
+        }
+    ]
+
+    for param in params:
+        investpy.get_commodities_overview(group=param['group'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_commodities(by='name', value='gold')
 
@@ -868,7 +930,8 @@ def test_investpy_search():
 
     for param in params:
         results = investpy.search(text=param['text'],
-                                  n_results=param['n_results'])
+                                  n_results=param['n_results'],
+                                  filters=params['filters'])
 
         dates = [
             {

@@ -750,9 +750,8 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
             company_profile['desc'] = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
 
-            return company_profile
-        else:
-            return company_profile
+        return company_profile
+        
     elif selected_source == 'Investing':
         tag = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
@@ -780,9 +779,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         if path_:
             company_profile['desc'] = str(path_[0].text_content())
 
-            return company_profile
-        else:
-            return company_profile
+        return company_profile
 
 
 def get_stock_dividends(stock, country):
