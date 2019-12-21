@@ -1747,6 +1747,89 @@ def test_indices_errors():
 
     params = [
         {
+            'index': None,
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'index': ['error'],
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'index': 'ibex 35',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'index': 'ibex 35',
+            'country': ['error'],
+            'as_json': False
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': None
+        },
+        {
+            'index': 'error',
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'error',
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_index_information(index=param['index'], country=param['country'], as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': None, 
+            'as_json': False,
+            'n_results': 10
+        },
+        {
+            'country': ['error'], 
+            'as_json': False,
+            'n_results': 10
+        },
+        {
+            'country': 'spain', 
+            'as_json': None,
+            'n_results': 10
+        },
+        {
+            'country': 'spain', 
+            'as_json': False,
+            'n_results': 'error'
+        },
+        {
+            'country': 'spain', 
+            'as_json': False,
+            'n_results': 0
+        },
+        {
+            'country': 'error', 
+            'as_json': False,
+            'n_results': 10
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_indices_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'by': None,
             'value': 'ibex',
         },
@@ -2750,6 +2833,16 @@ def test_commodities_errors():
             'country': None,
             'as_json': None
         },
+        {
+            'commodity': 'error',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'commodity': 'copper',
+            'country': 'error',
+            'as_json': False
+        },
     ]
 
     for param in params:
@@ -3036,6 +3129,56 @@ def test_crypto_errors():
 
     params = [
         {
+            'crypto': None,
+            'as_json': False
+        },
+        {
+            'crypto': ['error'],
+            'as_json': False
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': None
+        },
+        {
+            'crypto': 'error',
+            'as_json': False
+        },
+        {
+            'crypto': 'single collateral dai',
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_crypto_information(crypto=param['crypto'], as_json=param['as_json'])
+        except:
+            pass
+    
+    params = [
+        {
+            'as_json': None,
+            'n_results': 10
+        },
+        {
+            'as_json': False,
+            'n_results': 'error'
+        },
+        {
+            'as_json': False,
+            'n_results': 0
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_cryptos_overview(as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'by': None,
             'value': 'bitcoin'
         },
@@ -3120,7 +3263,7 @@ def test_search_errors():
         try:
             results = investpy.search(text=param['text'],
                                       n_results=param['n_results'],
-                                      filters=params['filters'])
+                                      filters=param['filters'])
 
             dates = [
                 {

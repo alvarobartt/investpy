@@ -111,6 +111,22 @@ def test_investpy_stocks():
 
     params = [
         {
+            'stock': 'bbva',
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'stock': 'bbva',
+            'country': 'spain',
+            'as_json': True
+        }
+    ]
+
+    for param in params:
+        investpy.get_stock_information(stock=param['stock'], country=param['country'], as_json=param['as_json'])
+
+    params = [
+        {
             'country': 'spain',
             'as_json': True,
             'n_results': 2
@@ -456,6 +472,38 @@ def test_investpy_indices():
                                            as_json=param['as_json'],
                                            order=param['order'],
                                            interval='Daily')
+
+    params = [
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'index': 'ibex 35',
+            'country': 'spain',
+            'as_json': True
+        }
+    ]
+
+    for param in params:
+        investpy.get_index_information(index=param['index'], country=param['country'], as_json=param['as_json'])
+    
+    params = [
+        {
+            'country': 'united states', 
+            'as_json': False,
+            'n_results': 10
+        },
+        {
+            'country': 'united kingdom', 
+            'as_json': True,
+            'n_results': 10
+        }
+    ]
+
+    for param in params:
+        investpy.get_indices_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_indices(by='name', value='ibex')
 
@@ -887,6 +935,50 @@ def test_investpy_crypto():
                                             order=param['order'],
                                             interval='Daily')
 
+    params = [
+        {
+            'crypto': 'bitcoin',
+            'as_json': False
+        },
+        {
+            'crypto': 'bitcoin',
+            'as_json': True
+        }
+    ]
+
+    for param in params:
+        investpy.get_crypto_information(crypto=param['crypto'], as_json=param['as_json'])
+    
+    params = [
+        {
+            'as_json': False,
+            'n_results': 10
+        },
+        {
+            'as_json': True,
+            'n_results': 10
+        },
+        {
+            'as_json': False,
+            'n_results': 110
+        },
+        {
+            'as_json': True,
+            'n_results': 110
+        },
+        {
+            'as_json': False,
+            'n_results': None
+        },
+        {
+            'as_json': True,
+            'n_results': None
+        },
+    ]
+
+    for param in params:
+        investpy.get_cryptos_overview(as_json=param['as_json'], n_results=param['n_results'])
+
     investpy.search_cryptos(by='name', value='bitcoin')
 
 
@@ -931,7 +1023,7 @@ def test_investpy_search():
     for param in params:
         results = investpy.search(text=param['text'],
                                   n_results=param['n_results'],
-                                  filters=params['filters'])
+                                  filters=param['filters'])
 
         dates = [
             {
