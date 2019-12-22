@@ -1341,6 +1341,45 @@ def test_etfs_errors():
 
     params = [
         {
+            'etf': None,
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'etf': ['error'],
+            'country': 'spain',
+            'as_json': False
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': ['error'],
+            'as_json': False
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': 'spain',
+            'as_json': None
+        },
+        {
+            'etf': 'bbva accion dj eurostoxx 50',
+            'country': 'error',
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_etf_information(etf=param['etf'], country=param['country'], as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
             'country': 'error',
             'as_json': False,
             'n_results': 2
@@ -2148,6 +2187,28 @@ def test_currency_crosses_errors():
                                                         interval=param['interval'])
         except:
             pass
+
+    params = [
+        {
+            'currency_cross': None,
+            'as_json': False
+        },
+        {
+            'currency_cross': ['error'],
+            'as_json': False
+        },
+        {
+            'currency_cross': 'EUR/USD',
+            'as_json': None
+        },
+        {
+            'currency_cross': 'error',
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_currency_cross_information(currency_cross=param['currency_cross'], as_json=param['as_json'])
 
     params = [
         {
