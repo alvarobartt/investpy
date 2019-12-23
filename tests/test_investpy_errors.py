@@ -2208,7 +2208,10 @@ def test_currency_crosses_errors():
     ]
 
     for param in params:
-        investpy.get_currency_cross_information(currency_cross=param['currency_cross'], as_json=param['as_json'])
+        try:
+            investpy.get_currency_cross_information(currency_cross=param['currency_cross'], as_json=param['as_json'])
+        except:
+            pass
 
     params = [
         {
