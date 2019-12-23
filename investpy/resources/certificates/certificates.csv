@@ -1,0 +1,251 @@
+country,name,full_name,symbol,tag,id,issuer,isin,asset_class,underlying
+france,SOCIETE GENERALE CAC 40 X10 31DEC99,SOCIETE GENERALE EFFEKTEN GMBH ZT CAC 40 X10 LEVERAGE 31DEC99,FR0011214527,societe-generale-cac-40-x10-31dec99,1115847,Societe Generale Effekten GMBH,FR0011214527,index,CAC 40 Leverage x10 NR
+france,COMMERZBANK SG 31Dec99,COMMERZBANK AG ZT  SOCIETE GENERALE 31Dec99,DE000CD5PE72,commerzbank-sg-31dec99,1117315,Commerzbank AG,DE000CD5PE72,equity,Societe Generale
+france,BNP Call 21.44 EUR VALEO SA 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 21.44 EUR VALEO SA 31Dec99,FRBNPP00QNQ6,bnp-call-21.44-eur-valeo-sa-31dec99,1116794,BNP Paribas Issuance BV,FRBNPP00QNQ6,equity,Valeo
+france,SG ZT SILVER X5 LEV 31Dec99,SOCIETE GENERALE EFFEKTEN GMBH ZT  SILVER X5 LEV 31Dec99,FR0011815067,sg-zt-silver-x5-lev-31dec99,1117388,Societe Generale Effekten GMBH,FR0011815067,commodity,
+france,SG Call 68.64 EUR ORPEA 31Dec99,SG ISSUER Call 68.64 EUR ORPEA 31Dec99,LU1428456526,sg-call-68.64-eur-orpea-31dec99,1117372,SG Issuer SA,LU1428456526,equity,Orpea
+france,BNP Call 15.68 VEOLIA ENVIRONNEMENT,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 15.68 EUR VEOLIA ENVIRONNEMENT 31Dec99,FRBNPP00BKG5,bnp-call-15.68-veolia-environnement,1116756,BNP Paribas Issuance BV,FRBNPP00BKG5,equity,Veolia Environnement
+france,BNP Call 55.51 Gaztransport Shs,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 55.51 EUR Gaztransport Technigaz SA Ord Shs 31Dec99,FRBNPP00OKJ2,bnp-call-55.51-gaztransport-shs,1116931,BNP Paribas Issuance BV,FRBNPP00OKJ2,equity,GTT
+france,SG ZT Leverage DAX x5 31Dec99,SOCIETE GENERALE EFFEKTEN GMBH ZT  Leverage DAX x5 31Dec99,FR0012189231,sg-zt-leverage-dax-x5-31dec99,1117668,Societe Generale Effekten GMBH,FR0012189231,index,LEVDAX X5 TR
+france,BNP Call 13.43 USD SILVER 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 13.43 USD SILVER 31Dec99,FRBNPP00MON0,bnp-call-13.43-usd-silver-31dec99,1116740,BNP Paribas Issuance BV,FRBNPP00MON0,commodity,XAG/USD
+france,ING Call 725 EUR PLATINUM 31Dec99,ING BANK N.V. Call 725 EUR PLATINUM 31Dec99,NL0012823603,ing-call-725-eur-platinum-31dec99,1117349,Ing Bank NV,NL0012823603,commodity,
+france,BNP Call 42.1 EUR TOTAL SA 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 42.1 EUR TOTAL SA 31Dec99,FRBNPP00ZZZ2,bnp-call-42.1-eur-total-sa-31dec99,1116889,BNP Paribas Issuance BV,FRBNPP00ZZZ2,equity,Total
+france,CITI LevDAX x10 Index 31Dec99,CITIGROUP GLOBAL MARKETS DEUTSCHLAND AG ZT  LevDAX x10 (TR) EUR Index 31Dec99,DE000CX52KG0,citi-levdax-x10-index-31dec99,1117543,Citigroup Global Markets Deutschland AG,DE000CX52KG0,index,
+france,BNP Call 93.02 WENDEL INVESTISST,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 93.02 EUR WENDEL INVESTISST 31Dec99,FRBNPP006N68,bnp-call-93.02-wendel-investisst,1117010,BNP Paribas Issuance BV,FRBNPP006N68,equity,Wendel
+france,SG ZT WTI Fut 5X Lev Ind 31Dec99,SG ISSUER ZT  WTI Fut 5X Lev Ind 31Dec99,FR0013112786,sg-zt-wti-fut-5x-lev-ind-31dec99,1117374,SG Issuer SA,FR0013112786,commodity,SGI Smart WTI Long Invest
+france,BNP Call 33.94 LAFARGEHOLCIM LTD,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 33.94 EUR LAFARGEHOLCIM LTD 31Dec99,FRBNPP00OPX2,bnp-call-33.94-lafargeholcim-ltd,1116851,BNP Paribas Issuance BV,FRBNPP00OPX2,equity,LafargeHolcim
+france,BNP Gold 31Dec99,BNP Paribas Arbitrage Issuance BV ZT Gold 31Dec99,NL0006454928,bnp-gold-31dec99,1117224,BNP Paribas Issuance BV,NL0006454928,commodity,XAU/USD
+france,BNP Call 3.58 EUR NATIXIS 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 3.58 EUR NATIXIS 31Dec99,FRBNPP00ONA5,bnp-call-3.58-eur-natixis-31dec99,1116834,BNP Paribas Issuance BV,FRBNPP00ONA5,equity,Natixis
+france,BNP Call 972.98 USD GOLD 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 972.98 USD GOLD 31Dec99,FR0012636678,bnp-call-972.98-usd-gold-31dec99,1117020,BNP Paribas Issuance BV,FR0012636678,commodity,XAU/USD
+france,BNP Call 951.4 USD GOLD 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 951.4 USD GOLD 31Dec99,FRBNPP00OAH7,bnp-call-951.4-usd-gold-31dec99,1117014,BNP Paribas Issuance BV,FRBNPP00OAH7,commodity,XAU/USD
+france,BNP Call 82.92 EUR THALES 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 82.92 EUR THALES 31Dec99,FRBNPP00ILK0,bnp-call-82.92-eur-thales-31dec99,1116996,BNP Paribas Issuance BV,FRBNPP00ILK0,equity,Thales
+france,SG Call WTI CRUDE 31Dec99,Societe Generale Effekten GMBH Call   WTI CRUDE 31Dec99,FR0010583914,sg-call-wti-crude-31dec99,1117378,Societe Generale Effekten GMBH,FR0010583914,commodity,
+france,SG Call Grandes Valeurs 31Dec99,SOCIETE GENERALE EFFEKTEN GMBH Call  Investir 10 - Grandes Valeurs 31Dec99,FR0011630474,sg-call-grandes-valeurs-31dec99,1117649,Societe Generale Effekten GMBH,FR0011630474,index,
+france,BNP ZT Brent Crude Oil 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV ZT Brent Crude Oil 31Dec99,FR0010307439,bnp-zt-brent-crude-oil-31dec99,1117223,BNP Paribas Issuance BV,FR0010307439,commodity,Brent Oil
+france,SG ZT PALLADIUM 31Dec99,SOCIETE GENERALE EFFEKTEN GMBH ZT  PALLADIUM 31Dec99,FR0012468106,sg-zt-palladium-31dec99,1117385,Societe Generale Effekten GMBH,FR0012468106,commodity,XPD/USD
+france,BNP Put 7551.7 EUR CAC 40 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Put 7551.7 EUR CAC 40 31Dec99,FRBNPP00G281,bnp-put-7551.7-eur-cac-40-31dec99,1117510,BNP Paribas Issuance BV,FRBNPP00G281,index,CAC 40
+france,SG ZT Brent Crude 31Dec99,Societe Generale Effekten GMBH ZT Brent Crude 31Dec99,FR0010511535,sg-zt-brent-crude-31dec99,1117391,Societe Generale Effekten GMBH,FR0010511535,commodity,Brent Oil
+france,COMMERZBANK Call RENAULT SA 31Dec99,COMMERZBANK AG Call RENAULT SA 31Dec99,DE000CE4W512,commerzbank-call-renault-sa-31dec99,1117266,Commerzbank AG,DE000CE4W512,equity,Renault
+france,SG CAC 40 X10 LEVERAGE 31DEC99,SG Issuer ZT CAC 40 X10 LEVERAGE 31DEC99,FR0013101565,sg-cac-40-x10-leverage-31dec99,1115849,SG Issuer SA,FR0013101565,equity,CAC 40 Leverage x10 NR
+france,Commerz Put CAC40 FUT 0618 31Dec992,COMMERZBANK AG Put CAC40 FUT 06/18 31Dec99,DE000CA0ZD72,commerz-put-cac40-fut-0618-31dec992,1117569,Commerzbank AG,DE000CA0ZD72,index,CAC 40
+france,COMMERZBANK Call ICE BRENT 0917,COMMERZBANK AG Call ICE BRENT 09/17 31Dec99,DE000CE8YLR5,commerzbank-call-ice-brent-0917,1117252,Commerzbank AG,DE000CE8YLR5,commodity,Brent Oil
+france,Commerz Put CAC40 FUT 06/18 31Dec99,COMMERZBANK AG Put CAC40 FUT 06/18 31Dec99,DE000CA0ZD64,commerz-put-cac40-fut-06-18-31dec99,1117570,Commerzbank AG,DE000CA0ZD64,index,CAC 40
+france,CITI Put CAC 40 x15 Sh GR 31Dec99,CITIGROUP GLOBAL MARKETS DEUTSCHLAND AG & CO. KGAA. Put CAC 40 x15 Short GR 31Dec99,DE000CY5AW73,citi-put-cac-40-x15-sh-gr-31dec99,1117528,Citigroup Global Markets Deutschland AG,DE000CY5AW73,index,
+france,COMMERZBANK CAC FUT 07/16 31Dec99,COMMERZBANK AG ZT  CAC FUT 07/16 31Dec99,DE000CD5NZY1,commerzbank-cac-fut-07-16-31dec99,1117582,Commerzbank AG,DE000CD5NZY1,index,
+france,COMMERZ Put SP500MINI 06/18 31Dec99,COMMERZBANK AG Put SP500MINI 06/18 31Dec99,DE000CA0ZD56,commerz-put-sp500mini-06-18-31dec99,1117577,Commerzbank AG,DE000CA0ZD56,index,S&P 500
+france,Commerz CAC FUT 12/16 31Dec99,COMMERZBANK AG ZT  CAC FUT 12/16 31Dec99,DE000CD9F467,commerz-cac-fut-12-16-31dec99,1117583,Commerzbank AG,DE000CD9F467,index,CAC 40
+france,Commerz CAC FUT 02/16 31Dec997,COMMERZBANK AG ZT  CAC FUT 02/16 31Dec99,DE000CZ28ZJ7,commerz-cac-fut-02-16-31dec997,1117580,Commerzbank AG,DE000CZ28ZJ7,index,CAC 40
+france,SG Call 13 EUR ORANGE 31Dec99,SG ISSUER Call 13 EUR ORANGE 31Dec99,LU1428373747,sg-call-13-eur-orange-31dec99,1117360,SG Issuer SA,LU1428373747,equity,Orange
+france,BNP Call 7.95 EUR EDF 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 7.95 EUR EDF 31Dec99,FRBNPP00DXF6,bnp-call-7.95-eur-edf-31dec99,1116970,BNP Paribas Issuance BV,FRBNPP00DXF6,equity,Electricite de France
+france,SG ZT CAC 40 x5 Leverage 31Dec998,SOCIETE GENERALE EFFEKTEN GMBH ZT  CAC 40 x5 Leverage 31Dec99,FR0010961078,sg-zt-cac-40-x5-leverage-31dec998,1117663,Societe Generale Effekten GMBH,FR0010961078,index,
+france,SG ZT CAC 40 x4 Leverage 31Dec99,SOCIETE GENERALE EFFEKTEN GMBH ZT  CAC 40 x4 Leverage 31Dec99,FR0010961060,sg-zt-cac-40-x4-leverage-31dec99,1117661,Societe Generale Effekten GMBH,FR0010961060,index,
+france,Commerz VIX CBOE-10/16 31Dec992,COMMERZBANK AG ZT  VIX FUTURE CBOE-10/16 31Dec99,DE000CD9DKV2,commerz-vix-cboe-10-16-31dec992,1117606,Commerzbank AG,DE000CD9DKV2,index,
+france,BNP Put 118.66 EUR SOLVAY 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Put 118.66 EUR SOLVAY 31Dec99,FRBNPP00P6F0,bnp-put-118.66-eur-solvay-31dec99,1117054,BNP Paribas Issuance BV,FRBNPP00P6F0,equity,Solvay
+france,Commerz Put CAC FUT 03/17 31Dec998,COMMERZBANK AG Put CAC FUT 03/17 31Dec99,DE000CE4WFX8,commerz-put-cac-fut-03-17-31dec998,1117564,Commerzbank AG,DE000CE4WFX8,index,CAC 40
+france,CITI CAC 40 x10 Leverage 31Dec99,CITIGROUP GLOBAL MARKETS DEUTSCHLAND AG ZT  CAC 40 x10 Leverage 31Dec99,DE000CX52KK2,citi-cac-40-x10-leverage-31dec99,1117531,Citigroup Global Markets Deutschland AG,DE000CX52KK2,index,CAC 40 Leverage x10 NR
+france,BNP Call 39.35 DAIMLER BENZ 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 39.35 EUR DAIMLER BENZ 31Dec99,FRBNPP00LGE7,bnp-call-39.35-daimler-benz-31dec99,1116875,BNP Paribas Issuance BV,FRBNPP00LGE7,equity,Daimler AG
+france,COMMERZBANK Call 58 SANOFIAVENTIS,COMMERZBANK AG Call 58 EUR SANOFI-AVENTIS 31Dec99,DE000CK541B6,commerzbank-call-58-sanofiaventis,1117233,Commerzbank AG,DE000CK541B6,equity,Sanofi
+france,BNP Call 12.63 EUR ORANGE 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 12.63 EUR ORANGE 31Dec99,FRBNPP00EJD8,bnp-call-12.63-eur-orange-31dec99,1116733,BNP Paribas Issuance BV,FRBNPP00EJD8,equity,Orange
+france,SG ZT CAC 40 x7 Leverage 31Dec99,SOCIETE GENERALE EFFEKTEN GMBH ZT CAC 40 x7 Leverage 31Dec99,FR0011119395,sg-zt-cac-40-x7-leverage-31dec99,1117674,Societe Generale Effekten GMBH,FR0011119395,index,CAC 40
+france,COMMERZBANK Call ALIBABA GROUP,COMMERZBANK AG Call ALIBABA GROUP HOLDING LTD 31Dec99,DE000CV614W4,commerzbank-call-alibaba-group,1117240,Commerzbank AG,DE000CV614W4,equity,Alibaba ADR
+france,BNP Call 18.27 AHOLD DEL 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 18.27 EUR AHOLD DEL 31Dec99,FRBNPP00NUK1,bnp-call-18.27-ahold-del-31dec99,1116778,BNP Paribas Issuance BV,FRBNPP00NUK1,equity,Ahold Delhaize
+germany,BNP Call MSCI Chile Net TR USD,BNP Paribas Arbitrage Issuance B.V. Call MSCI Chile Net TR USD 31Dec99,DEAA2RDE,bnp-call-msci-chile-net-tr-usd,1119015,BNP Paribas Issuance BV,NL0009569839,index,BNP Paribas Arbitrage Issuance B.V. Call MSCI Chil
+germany,BNP Call MSCI Colombia 31Dec99,BNP Paribas Arbitrage Issuance B.V. Call MSCI Colombia 31Dec99,DEAA2RDF,bnp-call-msci-colombia-31dec99,1119016,BNP Paribas Issuance BV,NL0009569847,index,MSCI Colombia
+germany,BNP Call 2730 EUR DAX 31Dec99,BNP Paribas Arbitrage Issuance B.V. Call 2730 EUR DAX 31Dec99,DE721791,bnp-call-2730-eur-dax-31dec99,1119010,BNP Paribas Issuance BV,NL0000266906,index,DAX
+germany,BNP Call MSCI New Zealand 31Dec99,BNP Paribas Arbitrage Issuance B.V. Call MSCI New Zealand 31Dec99,DEAA209B,bnp-call-msci-new-zealand-31dec99,1119017,BNP Paribas Issuance BV,DE000AA209B4,index,
+germany,BNP ZT BNP Vietnam Price Return,BNP Paribas Arbitrage Issuance B.V. ZT BNP Paribas Arbitrage Issuance B.V. Vietnam Price Return Inde,DEAA0KE8,bnp-zt-bnp-vietnam-price-return,1119023,BNP Paribas Issuance BV,DE000AA0KE80,index,
+germany,BNP DJ Stoxx 600 Cyclical Goods Ser,BNP Paribas Arbitrage Issuance B.V. ZT Dow Jones Stoxx 600 Cyclical Goods Services Price EUR 31Dec99,DE827430,bnp-dj-stoxx-600-cyclical-goods-ser,1119020,BNP Paribas Issuance BV,DE0008274309,index,Stoxx 600 Industrial Goods Srvcs PR
+germany,BNP KOSPI 200 Index 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV ZT KOSPI 200 Index 31Dec99,DE571515,bnp-kospi-200-index-31dec99,1119021,BNP Paribas Issuance BV,DE0005715155,index,KOSPI 200
+germany,BNP Paribas ZT MSCI Russia 31Dec99,BNP Paribas ZT MSCI Russia 31Dec99,DEBN2RUS,bnp-paribas-zt-msci-russia-31dec99,1119022,BNP Paribas Emissions und Handelsgesellschaft mbH,DE000BN2RUS1,index,
+germany,BNP Call Chile Inter 10 Index,BNP Paribas Arbitrage Issuance B.V. Call Chile Inter 10 Index 31Dec99,DEAA0C4K,bnp-call-chile-inter-10-index,1119014,BNP Paribas Issuance BV,NL0000756583,index,BNP Paribas Arbitrage Issuance B.V. Call Chile Int
+germany,BNP DAXplus Maximum Sharpe Ger TR,BNP Paribas Arbitrage Issuance B.V. ZT DAXplus Maximum Sharpe Ratio Germany EUR Total Return Index 3,DEAA0KF0,bnp-daxplus-maximum-sharpe-ger-tr,1119019,BNP Paribas Issuance BV,DE000AA0KF06,index,
+germany,BNP Call CECE Composite Euro,BNP Paribas Arbitrage Issuance B.V. Call CECE Composite Euro 31Dec99,DEABN0EW,bnp-call-cece-composite-euro,1119013,BNP Paribas Issuance BV,NL0000212009,index,CECE Composite EUR
+germany,Vontobel Call 25.4 EUR Unilever,Vontobel Call 25.4 EUR Unilever N.V. 31Dec99,DEVZ6VKT,vontobel-call-25.4-eur-unilever,1118967,Vontobel Financial Products Ltd,DE000VZ6VKT5,equity,Unilever NV
+germany,BNP Call 466.07 NYSE Arca Biotechno,BNP Paribas Arbitrage Issuance B.V. Call 466.07 USD NYSE Arca Biotechnology Index 31Dec99,DE167484,bnp-call-466.07-nyse-arca-biotechno,1119011,BNP Paribas Issuance BV,NL0000225530,index,ICE Crude Oil
+germany,HSBC Call 0.79 GBP EUR/GPB,HSBC Trinkaus & Burkhardt AG Call 0.79 GBP EUR/GPB Cross Rate 31Dec99,DETD6EYZ,hsbc-call-0.79-gbp-eur-gpb,1118992,HSBC Trinkaus & Burkhardt AG,DE000TD6EYZ9,currency,EUR/GBP
+germany,HSBC Call 0.77 GBP EUR/GPB,HSBC Trinkaus & Burkhardt AG Call 0.77 GBP EUR/GPB Cross Rate 31Dec99,DETD6EYX,hsbc-call-0.77-gbp-eur-gpb,1118990,HSBC Trinkaus & Burkhardt AG,DE000TD6EYX4,currency,EUR/GBP
+germany,UBS Call 29 EUR Unilever 27.55219,UBS AG (London Branch) Call 29 EUR Unilever N.V. 31Dec99,DEUZ0D9F,ubs-call-29-eur-unilever-27.55219,1118957,UBS AG (London Branch),DE000UZ0D9F6,equity,Unilever NV
+germany,Vontobel Call 24.5 EUR Unilever,Vontobel Call 24.5 EUR Unilever N.V. 31Dec99,DEVZ638Y,vontobel-call-24.5-eur-unilever,1118966,Vontobel Financial Products Ltd,DE000VZ638Y2,equity,Unilever NV
+germany,Vontobel Call 28.2 EUR Unilever,Vontobel Call 28.2 EUR Unilever N.V. 31Dec99,DEVZ7JJN,vontobel-call-28.2-eur-unilever,1118972,Vontobel Financial Products Ltd,DE000VZ7JJN3,equity,Unilever NV
+germany,Vontobel Call 27.6 EUR Unilever,Vontobel Call 27.6 EUR Unilever N.V. 31Dec99,DEVZ4XMX,vontobel-call-27.6-eur-unilever,1118971,Vontobel Financial Products Ltd,DE000VZ4XMX4,equity,Unilever NV
+germany,Vontobel Call 27.21 EUR Unilever,Vontobel Call 27.21 EUR Unilever N.V. 31Dec99,DEVZ4VMM,vontobel-call-27.21-eur-unilever,1118970,Vontobel Financial Products Ltd,DE000VZ4VMM1,equity,Unilever NV
+germany,Vontobel Call 26.3 EUR Unilever,Vontobel Call 26.3 EUR Unilever N.V. 31Dec99,DEVZ4XM1,vontobel-call-26.3-eur-unilever,1118969,Vontobel Financial Products Ltd,DE000VZ4XM19,equity,Unilever NV
+germany,Vontobel Call 25.8 EUR Unilever,Vontobel Call 25.8 EUR Unilever N.V. 31Dec99,DEVZ61GS,vontobel-call-25.8-eur-unilever,1118968,Vontobel Financial Products Ltd,DE000VZ61GS9,equity,Unilever NV
+germany,BNP ZT DAX 31Dec99,BNP Paribas Arbitrage Issuance B.V. ZT DAX Idx 31Dec99,DE768918,bnp-zt-dax-31dec99,1119024,BNP Paribas Issuance BV,DE0007689184,index,TecDAX
+germany,BNP Call CASE 30 31Dec99,BNP Paribas Arbitrage Issuance B.V. Call CASE 30 31Dec99,DEABN1EJ,bnp-call-case-30-31dec99,1119012,BNP Paribas Issuance BV,NL0000047991,index,EGX 30
+germany,BNP Call RBS Generic Drugs TR Index,BNP Paribas Arbitrage Issuance B.V. Call RBS Generic Drugs Total Return Index 31Dec99,DEABN9PP,bnp-call-rbs-generic-drugs-tr-index,1119018,BNP Paribas Issuance BV,NL0000605582,index,BNP Paribas Arbitrage Issuance B.V. Call RBS Gener
+germany,ING Call 0.9807 NOK EUR/NOK FX,ING Bank N.V. Call 0.9807 NOK EUR/NOK FX Cross Rate 31Dec99,DENG16Q7,ing-call-0.9807-nok-eur-nok-fx,1119002,Ing Bank NV,DE000NG16Q76,currency,EUR/NOK
+germany,BNP Call 2457 EUR DAX 31Dec99,BNP Paribas Arbitrage Issuance B.V. Call 2457 EUR DAX 31Dec99,DE721792,bnp-call-2457-eur-dax-31dec99,1119009,BNP Paribas Issuance BV,NL0000266914,index,DAX
+germany,HSBC Call 0.78 GBP EUR/GPB,HSBC Trinkaus & Burkhardt AG Call 0.78 GBP EUR/GPB Cross Rate 31Dec99,DETD6EYY,hsbc-call-0.78-gbp-eur-gpb,1118991,HSBC Trinkaus & Burkhardt AG,DE000TD6EYY2,currency,EUR/GBP
+germany,Dresdner Bank S BOX Dimax Deutschla,Dresdner Bank ZT S-BOX Dimax Deutschland Performance-Index 31Dec99,DEDR3WZU,dresdner-bank-s-box-dimax-deutschla,1119225,Dresdner Bank AG,DE000DR3WZU8,index,
+germany,HV Call Solactive Deutscher Maschin,HypoVereinsbank onemarkets Call Solactive Deutscher Maschinenbau Performance-Index 31Dec99,DEHV3DMB,hv-call-solactive-deutscher-maschin,1119294,UniCredit Bank AG,DE000HV3DMB6,index,
+germany,HV Call Solactive BRIC E-Commerce P,HypoVereinsbank onemarkets Call Solactive BRIC E-Commerce Performance-Index 31Dec99,DEHV1BEC,hv-call-solactive-bric-e-commerce-p,1119293,UniCredit Bank AG,DE000HV1BEC9,index,
+germany,DB Brent Crude Oil 31Dec99,Deutsche Bank AG ZT Brent Crude Oil 31Dec99,DEDB3CTQ,db-brent-crude-oil-31dec99,1118216,"DZ BANK AG Deutsche Zentral Genossenschaftsbank, F",DE000DB3CTQ9,commodity,
+germany,Vontobel Call Solactive China Autom,Vontobel GmbH Call Solactive China Automobile Performance-Index 31Dec99,DEVT0WT8,vontobel-call-solactive-china-autom,1119405,Vontobel Financial Products Ltd,DE000VT0WT85,index,
+germany,BNP ZT DAXplus MV Germany TR,BNP Paribas Arbitrage Issuance B.V. ZT DAXplus Minimum Variance Germany EUR Total Return Index 31Dec,DEAA0KFZ,bnp-zt-daxplus-mv-germany-tr,1119028,BNP Paribas Issuance BV,DE000AA0KFZ2,index,
+germany,HSBC Call 99.5 JPY EUR/JPY,HSBC Trinkaus & Burkhardt AG Call 99.5 JPY EUR/JPY Cross rate 31Dec99,DETD6EYB,hsbc-call-99.5-jpy-eur-jpy,1119000,HSBC Trinkaus & Burkhardt AG,DE000TD6EYB0,currency,EUR/JPY
+germany,Bayerische DAX Index 31Dec99,Bayerische Hypo-und Vereinsbank AG ZT DAX Index 31Dec99,DEHY1Y7L,bayerische-dax-index-31dec99,1119006,UniCredit Bank AG,DE000HY1Y7L2,index,DAX
+germany,Bayerische DAX Index 0.01 31Dec99,Bayerische DAX Index 0.01 31Dec99,DEHV72U3,bayerische-dax-index-0.01-31dec99,1119005,UniCredit Bank AG,DE000HV72U39,index,DAX
+germany,ING Call 19.6139 JPY EUR/JPY,ING Bank N.V. Call 19.6139 JPY EUR/JPY Cross rate 31Dec99,DENG16Q6,ing-call-19.6139-jpy-eur-jpy,1119004,Ing Bank NV,DE000NG16Q68,currency,EUR/JPY
+germany,UBS Call 29 EUR Unilever 28.93907,UBS AG (London Branch) Call 29 EUR Unilever N.V. 31Dec99,DEUZ4CFN,ubs-call-29-eur-unilever-28.93907,1118958,UBS AG (London Branch),DE000UZ4CFN4,equity,Unilever NV
+germany,HSBC Call 0.905 USD EUR/USD Spot,HSBC Trinkaus & Burkhardt AG Call 0.905 USD EUR/USD Spot 31Dec99,DETD6EZ7,hsbc-call-0.905-usd-eur-usd-spot,1118993,HSBC Trinkaus & Burkhardt AG,DE000TD6EZ73,currency,EUR/USD
+germany,ING Call 0.2451 CHF EUR/CHF,ING Bank N.V. Call 0.2451 CHF EUR/CHF Cross Rate 31Dec99,DENG16Q8,ing-call-0.2451-chf-eur-chf,1119001,Ing Bank NV,DE000NG16Q84,currency,EUR/CHF
+germany,HSBC Call 109.5 JPY EUR/JPY,HSBC Trinkaus & Burkhardt AG Call 109.5 JPY EUR/JPY Cross rate 31Dec99,DETD6EYE,hsbc-call-109.5-jpy-eur-jpy,1118999,HSBC Trinkaus & Burkhardt AG,DE000TD6EYE4,currency,EUR/JPY
+germany,BNP Call 2260.19 China Enterprises,BNP Paribas Arbitrage Issuance B.V. Call 2260.19 HKD Hang Seng China Enterprises 31Dec99,DE342602,bnp-call-2260.19-china-enterprises,1119008,BNP Paribas Issuance BV,NL0000325652,index,Hang Seng CCI
+germany,HSBC Call 107.5 JPY EUR/JPY,HSBC Trinkaus & Burkhardt AG Call 107.5 JPY EUR/JPY Cross rate 31Dec99,DETD6EYD,hsbc-call-107.5-jpy-eur-jpy,1118998,HSBC Trinkaus & Burkhardt AG,DE000TD6EYD6,currency,EUR/JPY
+germany,HSBC Call 103.5 JPY EUR/JPY,HSBC Trinkaus & Burkhardt AG Call 103.5 JPY EUR/JPY Cross rate 31Dec99,DETD6EYC,hsbc-call-103.5-jpy-eur-jpy,1118997,HSBC Trinkaus & Burkhardt AG,DE000TD6EYC8,currency,EUR/JPY
+germany,HSBC Call 0.965 USD EUR/USD Spot,HSBC Trinkaus & Burkhardt AG Call 0.965 USD EUR/USD Spot 31Dec99,DETD6EZA,hsbc-call-0.965-usd-eur-usd-spot,1118996,HSBC Trinkaus & Burkhardt AG,DE000TD6EZA9,currency,EUR/USD
+germany,HSBC Call 0.945 USD EUR/USD Spot,HSBC Trinkaus & Burkhardt AG Call 0.945 USD EUR/USD Spot 31Dec99,DETD6EZ9,hsbc-call-0.945-usd-eur-usd-spot,1118995,HSBC Trinkaus & Burkhardt AG,DE000TD6EZ99,currency,EUR/USD
+germany,HSBC Call 0.925 USD EUR/USD Spot,HSBC Trinkaus & Burkhardt AG Call 0.925 USD EUR/USD Spot 31Dec99,DETD6EZ8,hsbc-call-0.925-usd-eur-usd-spot,1118994,HSBC Trinkaus & Burkhardt AG,DE000TD6EZ81,currency,EUR/USD
+germany,ING Call 19.6124 JPY USD/JPY,ING Bank N.V. Call 19.6124 JPY USD/JPY Cross rate 31Dec99,DENG16RA,ing-call-19.6124-jpy-usd-jpy,1119003,Ing Bank NV,DE000NG16RA5,currency,USD/JPY
+germany,Bayerische DJ UBS Crude Oil 3M TR,Bayerische Hypo-und Vereinsbank AG ZT Dow Jones-UBS Crude Oil Subindex 3 Month Forward Total Return,DEHV5BKP,bayerische-dj-ubs-crude-oil-3m-tr,1119007,UniCredit Bank AG,DE000HV5BKP9,index,
+italy,BNP Put Eurex DAX Future 15Dec21,BNP PARIBAS ISSUANCE Put Eurex DAX Index Future Continuation 1 15Dec21,NL266642,bnp-put-eurex-dax-future-15dec21,1120602,BNP Paribas Issuance BV,NL0012666424,index,DAX
+italy,Vontobel 7X Long linked to DAX,Vontobel 7X Long linked to DAX,DEVN9AAA,vontobel-7x-long-linked-to-dax,1120420,Vontobel Financial Products GmbH,DE000VN9AAA8,index,
+italy,Vontobel Put VT 7XS Eurostoxx 50,Vontobel Put VT 7XS Eurostoxx 50 18Dec20,DEVN9AAZ,vontobel-put-vt-7xs-eurostoxx-50,1121110,Vontobel Financial Products GmbH,DE000VN9AAZ5,index,
+italy,Vontobel Call VT 7XL FTSE MIB,Vontobel Call VT 7XL FTSE MIB 18Dec20,DEVN9DZV,vontobel-call-vt-7xl-ftse-mib,1121075,Vontobel Financial Products GmbH,DE000VN9DZV5,index,
+italy,BNP Put 29450 EUR FTSE MIB 18Dec20,BNP PARIBAS ISSUANCE Put 29450 EUR FTSE MIB Index 18Dec20,NL266723,bnp-put-29450-eur-ftse-mib-18dec20,1120466,BNP Paribas Issuance BV,NL0012667232,index,FTSE MIB
+italy,Vontobel Call 7X Long  Brent Oil,Vontobel Financial Products GmbH Call 7X Long Index linked to Brent Crude Oil Future 18Dec20,DEVN9KK8,vontobel-call-7x-long-brent-oil,1121048,Vontobel Financial Products GmbH,DE000VN9KK82,commodity,
+italy,BNP Call FTSE MIB Future 17Dec21,BNP PARIBAS ISSUANCE Call Milan Stock Exchange FTSE MIB Index Future 17Dec21,NL266639,bnp-call-ftse-mib-future-17dec21,1120618,BNP Paribas Issuance BV,NL0012666390,index,FTSE MIB
+italy,Vontobel Call 7XL EuroStoxx Banks,Vontobel Call VT 7XL EuroStoxx Banks 18Dec20,DEVN9ABV,vontobel-call-7xl-eurostoxx-banks,1121051,Vontobel Financial Products GmbH,DE000VN9ABV2,index,
+italy,Vontobel 7X Long on Cocoa 9.09,Vontobel Financial Products GmbH 7X Long Fixed Lever on Cocoa 9.09,DEVN9BMB,vontobel-7x-long-on-cocoa-9.09,1121021,Vontobel Financial Products GmbH,DE000VN9BMB9,commodity,
+italy,BNP Call 395 TRY EUR/TRY 18Dec20,BNP PARIBAS ISSUANCE Call 3.95 TRY EUR/TRY Spot Rate 18Dec20,NL266983,bnp-call-395-try-eur-try-18dec20,1120566,BNP Paribas Issuance BV,NL0012669832,currency,EUR/TRY
+italy,Credit Suisse ZT Basket 23Sep24,Credit Suisse ZT Basket 23Sep24,XS1973535203,credit-suisse-zt-basket-23sep24,1155681,Credit Suisse,XS1973535203,equity,
+italy,Vontobel Put VT 7XS FTSE 100,Vontobel Put VT 7XS FTSE 100 18Dec20,DEVN9AT5,vontobel-put-vt-7xs-ftse-100,1121111,Vontobel Financial Products GmbH,DE000VN9AT51,index,
+italy,SG WTI Crude Oil Long x5 29Jan21,SG ISSUER ZT WTI Crude Oil Long x5 29Jan21,XS004819,sg-wti-crude-oil-long-x5-29jan21,1121007,SG Issuer SA,XS1290048195,commodity,
+italy,BNP PUT 384 Intesa SanPaolo 18Dec20,BNP PARIBAS ISSUANCE PUT 3.84 EUR Intesa SanPaolo SpA 18Dec20,NL266315,bnp-put-384-intesa-sanpaolo-18dec20,1120549,BNP Paribas Issuance BV,NL0012663157,equity,Intesa Sanpaolo
+italy,BNP PUT 27332 EUR FTSE MIB 18Dec20,BNP PARIBAS ISSUANCE PUT 27332 EUR FTSE MIB Index 18Dec20,NL266262,bnp-put-27332-eur-ftse-mib-18dec20,1120464,BNP Paribas Issuance BV,NL0012662621,index,FTSE MIB
+italy,Uni Put Italia Leva 7 Short 15Oct21,UniCredit Bank AG Put Italia Leva 7 Short 15Oct21,DEHV42GD,uni-put-italia-leva-7-short-15oct21,1120942,UniCredit Bank AG,DE000HV42GD9,equity,
+italy,SG Put FTSE MIB Gross TR 5x 26Jun20,SG ISSUER Put FTSE MIB Gross TR 5x Daily Short Strategy RT Index 26Jun20,XS646584,sg-put-ftse-mib-gross-tr-5x-26jun20,1121004,SG Issuer SA,XS1236465842,index,
+italy,Vontobel 5X Long Fixed Lever on MIB,Vontobel Financial Products GmbH 5X Long Fixed Lever on MIB,DEVN9AAL,vontobel-5x-long-fixed-lever-on-mib,1121014,Vontobel Financial Products GmbH,DE000VN9AAL5,index,
+italy,SG SLVR X7 LONG 18Jun21,SG ISSUER ZT SLVR X7 LONG 18Jun21,LU417069,sg-slvr-x7-long-18jun21,1121005,SG Issuer SA,LU1434170699,commodity,
+italy,Vontobel Put VT 5XS Coffee 2,Vontobel Put VT 5XS Coffee 2 18Dec20,DEVN9AB8,vontobel-put-vt-5xs-coffee-2,1121099,Vontobel Financial Products GmbH,DE000VN9AB85,commodity,
+italy,Vontobel 7X Long on Soy 9.09,Vontobel Financial Products GmbH 7X Long Fixed Lever on Soy 9.09,DEVN9BMF,vontobel-7x-long-on-soy-9.09,1121024,Vontobel Financial Products GmbH,DE000VN9BMF0,commodity,
+italy,Vontobel 7X Short su Cacao,Vontobel Financial Products GmbH Leva Fissa 7X Short su Cacao,DEVN9DZU,vontobel-7x-short-su-cacao,1121035,Vontobel Financial Products GmbH,DE000VN9DZU7,commodity,
+italy,SG Brent Crude Oil Short x5 17Dec21,SG ISSUER ZT Brent Crude Oil Future Short x5 17Dec21,LU072578,sg-brent-crude-oil-short-x5-17dec21,1120989,SG Issuer SA,LU1540725782,commodity,Brent Oil
+italy,BNP Put STOXX 50 Future 15Dec21,BNP PARIBAS ISSUANCE Put EURO STOXX 50 Index Future 15Dec21,NL266644,bnp-put-stoxx-50-future-15dec21,1120500,BNP Paribas Issuance BV,NL0012666440,index,Euro Stoxx 50
+italy,SG Brent Crude Oil Long x7 17Dec21,SG ISSUER ZT Brent Crude Oil Future Long x7 17Dec21,LU072683,sg-brent-crude-oil-long-x7-17dec21,1120988,SG Issuer SA,LU1540726830,commodity,Brent Oil
+italy,Vontobel Put 7X Short  Brent Oil,Vontobel Financial Products GmbH Put 7X Short Index linked to Brent Crude Oil Future 18Dec20,DEVN9KLA,vontobel-put-7x-short-brent-oil,1121090,Vontobel Financial Products GmbH,DE000VN9KLA4,commodity,
+italy,SG S&P 500 TR 01Apr21,SG ISSUER ZT S&P 500 TR 01Apr21,LU137671,sg-s-p-500-tr-01apr21,1121129,SG Issuer SA,LU1391376719,index,S&P 500
+italy,Vontobel 7X Short linked to DAX,Vontobel 7X Short linked to DAX,DEVN9AAB,vontobel-7x-short-linked-to-dax,1120424,Bank Vontobel AG,DE000VN9AAB6,index,
+italy,Vontobel Put VT 7XS Nasdaq 100,Vontobel Put VT 7XS Nasdaq 100 18Dec20,DEVN9AA7,vontobel-put-vt-7xs-nasdaq-100,1121113,Vontobel Financial Products GmbH,DE000VN9AA78,index,
+italy,Vontobel Put VT 7XS Coffee 18Dec20,Vontobel Put VT 7XS Coffee 18Dec20,DEVN9AB9,vontobel-put-vt-7xs-coffee-18dec20,1121107,Vontobel Financial Products GmbH,DE000VN9AB93,commodity,
+italy,Vontobel 7X Long on Coffee 10.74,Vontobel Financial Products GmbH 7X Long Fixed Lever on Coffee 10.74,DEVN9CG5,vontobel-7x-long-on-coffee-10.74,1121022,Vontobel Financial Products GmbH,DE000VN9CG54,commodity,
+italy,Vontobel 7X Short Palladium 8.44,Vontobel Financial Products GmbH 7X Short Lever on Palladium 8.44,DEVN9CG8,vontobel-7x-short-palladium-8.44,1121033,Vontobel Financial Products GmbH,DE000VN9CG88,commodity,
+italy,SG NASDAQ 100 Short x7 01Apr21,SG ISSUER ZT NASDAQ 100 Short x7 01Apr21,LU137655,sg-nasdaq-100-short-x7-01apr21,1121002,SG Issuer SA,LU1391376552,index,Nasdaq 100
+italy,Vontobel 7X Long on Coffee 8.95,Vontobel Financial Products GmbH 7X Long Fixed Lever on Coffee 8.95,DEVN9AB7,vontobel-7x-long-on-coffee-8.95,1121023,Vontobel Financial Products GmbH,DE000VN9AB77,commodity,
+italy,Vontobel Call VT 5XL WTI oil,Vontobel Call VT 5XL WTI oil 18Dec20,DEVN9ABG,vontobel-call-vt-5xl-wti-oil,1121065,Vontobel Financial Products GmbH,DE000VN9ABG3,commodity,
+italy,Vontobel Put VT 7XS DJ 18Dec20,Vontobel Put VT 7XS DJ 18Dec20,DEVN9ABF,vontobel-put-vt-7xs-dj-18dec20,1121109,Vontobel Financial Products GmbH,DE000VN9ABF5,index,
+italy,SG GAS X7 LONG 18Jun21,SG ISSUER ZT GAS X7 LONG 18Jun21,LU417093,sg-gas-x7-long-18jun21,1120994,SG Issuer SA,LU1775931840,commodity,
+italy,SG Put FTSE MIB Gross TR 5x 19Jun20,Societe Generale Effekten GMBH Put FTSE MIB Gross TR 5x Daily Short Strategy RT Index 19Jun20,DESG7YA6,sg-put-ftse-mib-gross-tr-5x-19jun20,1121003,Societe Generale Effekten GMBH,DE000SG7YA64,index,
+italy,SG FTSE MIB Gross TR 5x S 18Jun21,SG ISSUER ZT FTSE MIB Gross TR 5x Daily Short Strategy RT Index 18Jun21,LU016333,sg-ftse-mib-gross-tr-5x-s-18jun21,1120992,SG Issuer SA,LU1490163331,index,
+italy,Vontobel 5X Short on MIB,Vontobel Financial Products GmbH Fixed Lever 5X Short on MIB,DEVN9AAQ,vontobel-5x-short-on-mib,1121018,Vontobel Financial Products GmbH,DE000VN9AAQ4,index,
+italy,BNP Put FTSE MIB Future 17Dec21,BNP PARIBAS ISSUANCE Put Milan Stock Exchange FTSE MIB Index Future 17Dec21,NL266640,bnp-put-ftse-mib-future-17dec21,1120616,BNP Paribas Issuance BV,NL0012666408,index,FTSE MIB
+italy,Vontobel Call VT 5XL Coffee 18Dec20,Vontobel Call VT 5XL Coffee 18Dec20,DEVN9AB6,vontobel-call-vt-5xl-coffee-18dec20,1121059,Vontobel Financial Products GmbH,DE000VN9AB69,commodity,
+italy,Vontobel Put VT 7XS SP 500 18Dec20,Vontobel Put VT 7XS SP 500 18Dec20,DEVN9AA3,vontobel-put-vt-7xs-sp-500-18dec20,1121116,Vontobel Financial Products GmbH,DE000VN9AA37,index,
+italy,Vontobel Call VT 7XL Brent Oil,Vontobel Call VT 7XL Brent Oil 18Dec20,DEVN9AAT,vontobel-call-vt-7xl-brent-oil,1121068,Vontobel Financial Products GmbH,DE000VN9AAT8,commodity,
+italy,BNP PUT 28012 EUR FTSE MIB 18Dec20,BNP PARIBAS ISSUANCE PUT 28012 EUR FTSE MIB Index 18Dec20,NL266263,bnp-put-28012-eur-ftse-mib-18dec20,1120465,BNP Paribas Issuance BV,NL0012662639,index,FTSE MIB
+italy,Vontobel Put VT 7XS FTSE MIB,Vontobel Put VT 7XS FTSE MIB 18Dec20,DEVN9DZW,vontobel-put-vt-7xs-ftse-mib,1121112,Vontobel Financial Products GmbH,DE000VN9DZW3,index,
+italy,SG 25.06.21 FTSE x5 Short,SG Issuer SA 25.06.21 FTSE x5 Short,LU940053,sg-25.06.21-ftse-x5-short,1120985,SG Issuer SA,LU1489400538,index,
+italy,Uni Put Italia Leva 7 Short 16Oct20,UniCredit Bank AG Put Italia Leva 7 Short 16Oct20,DEHV40B6,uni-put-italia-leva-7-short-16oct20,1120943,UniCredit Bank AG,DE000HV40B64,equity,
+italy,Vontobel Put 3X Short Tesla 16Jun23,Vontobel Financial Products GmbH Put 3X Short Index linked to Tesla Motors Inc. 16Jun23,DEVN9D1B,vontobel-put-3x-short-tesla-16jun23,1121088,Vontobel Financial Products GmbH,DE000VN9D1B7,index,
+italy,Vontobel Put VT 7XS Wheat 18Dec20,Vontobel Put VT 7XS Wheat 18Dec20,DEVN9ACH,vontobel-put-vt-7xs-wheat-18dec20,1121118,Vontobel Financial Products GmbH,DE000VN9ACH9,commodity,
+netherlands,BNP Call 454.9 EUR AEX 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 454.9 EUR AEX 31Dec99,NL0012040216,bnp-call-454.9-eur-aex-31dec99,1119939,BNP Paribas Issuance BV,NL0012040216,index,AEX
+netherlands,"BNP Call AALBERTS Long 28,056",BNP PARIBAS ARBITRAGE ISSUANCE BV Call AALBERTS 31Dec99,NL0013277759,"bnp-call-aalberts-long-28,056",1119855,BNP Paribas Issuance BV,NL0013277759,equity,Aalberts Industries
+netherlands,BNP Call 1960 USD S AND P 500,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 1960 USD S AND P 500 31Dec99,NL0011657168,bnp-call-1960-usd-s-and-p-500,1119890,BNP Paribas Issuance BV,NL0011657168,index,S&P 500
+netherlands,BNP Call 59.6 EUR HEINEKEN 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 59.6 EUR HEINEKEN 31Dec99,NL0010921391,bnp-call-59.6-eur-heineken-31dec99,1119773,BNP Paribas Issuance BV,NL0010921391,equity,Heineken
+netherlands,BNP Call 1720.26 USD S AND P 500,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 1720.26 USD S AND P 500 31Dec99,NL0011637566,bnp-call-1720.26-usd-s-and-p-500,1119887,BNP Paribas Issuance BV,NL0011637566,index,S&P 500
+netherlands,BNP Call 475.74 EUR AEX 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 475.74 EUR AEX 31Dec99,NL0013278138,bnp-call-475.74-eur-aex-31dec99,1119950,BNP Paribas Issuance BV,NL0013278138,index,AEX
+netherlands,BNP Call 394.56 EUR AEX 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 394.56 EUR AEX 31Dec99,NL0011648860,bnp-call-394.56-eur-aex-31dec99,1119924,BNP Paribas Issuance BV,NL0011648860,index,AEX
+netherlands,BNP Call 201 EUR ROYAL DUTCH SHELLA,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 20.1 EUR ROYAL DUTCH SHELL-A 31Dec99,NL0011654546,bnp-call-201-eur-royal-dutch-shella,1119606,BNP Paribas Issuance BV,NL0011654546,equity,Royal Dutch Shell A
+netherlands,GS Call 2342ROYAL DUTCH SHELL-A,GOLDMAN SACHS & CO WERTP.GMBH Call 23.42 EUR ROYAL DUTCH SHELL-A 31Dec99,NL0011998232,gs-call-2342royal-dutch-shell-a,1121691,Goldman Sachs & Co Wertpapier GMBH,NL0011998232,equity,Royal Dutch Shell A
+netherlands,BNP Call 10227.72 EUR DAX 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 10227.72 EUR DAX 31Dec99,NL0013276090,bnp-call-10227.72-eur-dax-31dec99,1119872,BNP Paribas Issuance BV,NL0013276090,index,DAX
+netherlands,BNP Call 14600 JPY NIKKEI 225,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 14600 JPY NIKKEI 225 31Dec99,NL0011805031,bnp-call-14600-jpy-nikkei-225,1119543,BNP Paribas Issuance BV,NL0011805031,equity,Nikkei 225
+netherlands,GS Call 465ARCELORMITTAL 31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 4.65 EUR ARCELORMITTAL 31Dec99,NL0011926886,gs-call-465arcelormittal-31dec99,1121580,Goldman Sachs & Co Wertpapier GMBH,NL0011926886,equity,ArcelorMittal
+netherlands,BNP Call 46.6 EUR TAKEAWAY.COM,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 46.6 EUR TAKEAWAY.COM 31Dec99,NL0013275514,bnp-call-46.6-eur-takeaway.com,1119720,BNP Paribas Issuance BV,NL0013275514,equity,Takeaway Com
+netherlands,BNP Put 708081 NASDAQ-100 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Put 7080.81 USD NASDAQ-100 31Dec99,NL0013164395,bnp-put-708081-nasdaq-100-31dec99,1121576,BNP Paribas Issuance BV,NL0013164395,index,Nasdaq 100
+netherlands,GS Call 533ARCELORMITTAL 31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 5.33 EUR ARCELORMITTAL 31Dec99,NL0011979356,gs-call-533arcelormittal-31dec99,1121581,Goldman Sachs & Co Wertpapier GMBH,NL0011979356,equity,ArcelorMittal
+netherlands,GS Call 34AIR FRANCE KLM 31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 3.4 EUR AIR FRANCE KLM 31Dec99,NL0011240825,gs-call-34air-france-klm-31dec99,1121579,Goldman Sachs & Co Wertpapier GMBH,NL0011240825,equity,Air France KLM
+netherlands,GS Call 1981394AHOLD DEL 31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 19.81394 EUR AHOLD DEL 31Dec99,NL0013132558,gs-call-1981394ahold-del-31dec99,1121578,Goldman Sachs & Co Wertpapier GMBH,NL0013132558,equity,Ahold Delhaize
+netherlands,BNP Put 719192 NASDAQ-100 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Put 7191.92 USD NASDAQ-100 31Dec99,NL0013152515,bnp-put-719192-nasdaq-100-31dec99,1121577,BNP Paribas Issuance BV,NL0013152515,index,Nasdaq 100
+netherlands,GS Call 487.9 EUR AEX 31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 487.9 EUR AEX 31Dec99,NL0013228323,gs-call-487.9-eur-aex-31dec99,1121356,Goldman Sachs & Co Wertpapier GMBH,NL0013228323,index,AEX
+netherlands,BNP Put 5384 COCA COLA CO 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Put 53.84 USD COCA COLA CO 31Dec99,NL0013281991,bnp-put-5384-coca-cola-co-31dec99,1121575,BNP Paribas Issuance BV,NL0013281991,equity,
+netherlands,GS Call 2680 EUR STOXX 50 31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 2680 EUR EURO STOXX 50 31Dec99,NL0011602669,gs-call-2680-eur-stoxx-50-31dec99,1121583,Goldman Sachs & Co Wertpapier GMBH,NL0011602669,index,EURO STOXX 50
+netherlands,BNP Call 30.6 USD ICE BRENT 04/16,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 30.6 USD ICE BRENT 04/16 31Dec99,NL0011648340,bnp-call-30.6-usd-ice-brent-04-16,1119453,BNP Paribas Issuance BV,NL0011648340,commodity,Brent Oil
+netherlands,ING Call 7699Galapagos NV 31Dec99,ING BANK N.V. Call 76.99 EUR Galapagos NV 31Dec99,NL0013199516,ing-call-7699galapagos-nv-31dec99,1122121,Ing Bank NV,NL0013199516,equity,Galapagos
+netherlands,BNP Call 36.2 EUR UNILEVER 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 36.2 EUR UNILEVER 31Dec99,NL0012036073,bnp-call-36.2-eur-unilever-31dec99,1119684,BNP Paribas Issuance BV,NL0012036073,equity,Unilever NV
+netherlands,BNP Call 42.88 EUR TAKEAWAY.COM,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 42.88 EUR TAKEAWAY.COM 31Dec99,NL0013274103,bnp-call-42.88-eur-takeaway.com,1119712,BNP Paribas Issuance BV,NL0013274103,equity,Takeaway Com
+netherlands,BNP Call 11.99 EUR SBM OFFSHORE,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 11.99 EUR SBM OFFSHORE 31Dec99,NL0013280282,bnp-call-11.99-eur-sbm-offshore,1119511,BNP Paribas Issuance BV,NL0013280282,equity,SBM Offshore
+netherlands,BNP Call 4663.36 EUR CAC 40 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 4663.36 EUR CAC 40 31Dec99,NL0013279961,bnp-call-4663.36-eur-cac-40-31dec99,1119942,BNP Paribas Issuance BV,NL0013279961,index,CAC 40
+netherlands,BNP Call 64.97 EUR HEINEKEN 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 64.97 EUR HEINEKEN 31Dec99,NL0011539267,bnp-call-64.97-eur-heineken-31dec99,1119790,BNP Paribas Issuance BV,NL0011539267,equity,Heineken
+netherlands,BNP Put ADYEN 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Put ADYEN 31Dec99,NL0013286263,bnp-put-adyen-31dec99,1121297,BNP Paribas Issuance BV,NL0013286263,equity,Adyen
+netherlands,BNP Call 1.84 EUR AGFA-GEVAERT,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 1.84 EUR AGFA-GEVAERT 31Dec99,NL0010895843,bnp-call-1.84-eur-agfa-gevaert,1119504,BNP Paribas Issuance BV,NL0010895843,equity,Agfa Gevaert
+netherlands,BNP Call 505.19 EUR ADYEN 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 505.19 EUR ADYEN 31Dec99,NL0013282643,bnp-call-505.19-eur-adyen-31dec99,1119744,BNP Paribas Issuance BV,NL0013282643,equity,Adyen
+netherlands,BNP Call 665 USD PLATINUM 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 665 USD PLATINUM 31Dec99,NL0011540257,bnp-call-665-usd-platinum-31dec99,1119474,BNP Paribas Issuance BV,NL0011540257,commodity,
+netherlands,BNP Call 16.18 EUR ABN AMRO Bank,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 16.18 EUR ABN AMRO Bank 31Dec99,NL0011914825,bnp-call-16.18-eur-abn-amro-bank,1119554,BNP Paribas Issuance BV,NL0011914825,equity,ABN AMRO
+netherlands,ING Call 2503ROYAL DUTCH SHELL-A,ING BANK N.V. Call 25.03 EUR ROYAL DUTCH SHELL-A 31Dec99,NL0013199284,ing-call-2503royal-dutch-shell-a,1122195,Ing Bank NV,NL0013199284,equity,Royal Dutch Shell A
+netherlands,ING Call 0679PHARMING GROUP31Dec99,ING BANK N.V. Call 0.679 EUR PHARMING GROUP NV 31Dec99,NL0013199045,ing-call-0679pharming-group31dec99,1122175,Ing Bank NV,NL0013199045,equity,
+netherlands,BNP Call 436.03 EUR AEX 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 436.03 EUR AEX 31Dec99,NL0011908447,bnp-call-436.03-eur-aex-31dec99,1119933,BNP Paribas Issuance BV,NL0011908447,index,AEX
+netherlands,BNP Call 5.1 EUR EURONAV NV 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 5.1 EUR EURONAV NV 31Dec99,NL0013275084,bnp-call-5.1-eur-euronav-nv-31dec99,1119730,BNP Paribas Issuance BV,NL0013275084,equity,Euronav
+netherlands,ING Call 120755 EUR SILVER 31Dec99,ING BANK N.V. Call 12.0755 EUR SILVER 31Dec99,NL0011485875,ing-call-120755-eur-silver-31dec99,1122064,Ing Bank NV,NL0011485875,commodity,XAG/USD
+netherlands,BNP Call 3.94 EUR AEGON NV 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 3.94 EUR AEGON NV 31Dec99,NL0012030209,bnp-call-3.94-eur-aegon-nv-31dec99,1119667,BNP Paribas Issuance BV,NL0012030209,equity,Aegon
+netherlands,GS Call 1410232ABN AMRO Bank31Dec99,GOLDMAN SACHS & CO WERTP.GMBH Call 14.10232 EUR ABN AMRO Bank 31Dec99,NL0013181662,gs-call-1410232abn-amro-bank31dec99,1121633,Goldman Sachs & Co Wertpapier GMBH,NL0013181662,equity,ABN AMRO
+netherlands,BNP Call 13.1 EUR ORANGE 31Dec99,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 13.1 EUR ORANGE 31Dec99,NL0012017222,bnp-call-13.1-eur-orange-31dec99,1119526,BNP Paribas Issuance BV,NL0012017222,equity,Orange
+netherlands,BNP ZT S&P 07Nov05,BNP PARIBAS ARBITRAGE ISSUANCE BV ZT S&P 07Nov05,NL0000290195,bnp-zt-s-p-07nov05,1121269,BNP Paribas Issuance BV,NL0000290195,index,S&P 100
+netherlands,ING Call 139GAZ DE FRANCE 31Dec99,ING BANK N.V. Call 13.9 EUR GAZ DE FRANCE 31Dec99,NL0010217501,ing-call-139gaz-de-france-31dec99,1122112,Ing Bank NV,NL0010217501,equity,Engie
+netherlands,BNP Call 174 USD NYMEX CRUDE 02/16,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 17.4 USD NYMEX LS CRUDE 02/16 31Dec99,NL0011535539,bnp-call-174-usd-nymex-crude-02-16,1119447,BNP Paribas Issuance BV,NL0011535539,commodity,Brent Oil
+netherlands,BNP Call 5.59 EUR EURONAV NV,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 5.59 EUR EURONAV NV 31Dec99,NL0012028070,bnp-call-5.59-eur-euronav-nv,1119738,BNP Paribas Issuance BV,NL0012028070,equity,Euronav
+netherlands,BNP Call 56.05 USD ICE BRENT 03/19,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 56.05 USD ICE BRENT 03/19 31Dec99,NL0013281488,bnp-call-56.05-usd-ice-brent-03-19,1119471,BNP Paribas Issuance BV,NL0013281488,commodity,Brent Oil
+netherlands,BNP Call 4.1 EUR ARCELORMITTAL,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 4.1 EUR ARCELORMITTAL 31Dec99,NL0011659057,bnp-call-4.1-eur-arcelormittal,1119695,BNP Paribas Issuance BV,NL0011659057,equity,ArcelorMittal
+netherlands,ING Call 116VOLKSWAGEN PREF 31Dec99,ING BANK N.V. Call 116 EUR VOLKSWAGEN PREF 31Dec99,NL0011861950,ing-call-116volkswagen-pref-31dec99,1122146,Ing Bank NV,NL0011861950,equity,Volkswagen AG Vz
+netherlands,ING Call 147 EUR OCI NV 31Dec99,ING BANK N.V. Call 14.7 EUR OCI NV 31Dec99,NL0012063275,ing-call-147-eur-oci-nv-31dec99,1121997,Ing Bank NV,NL0012063275,equity,OCI NV
+netherlands,BNP Call 221 EUR ROYAL DUTCH SHELLA,BNP PARIBAS ARBITRAGE ISSUANCE BV Call 22.1 EUR ROYAL DUTCH SHELL-A 31Dec99,NL0012030654,bnp-call-221-eur-royal-dutch-shella,1119623,BNP Paribas Issuance BV,NL0012030654,equity,Royal Dutch Shell A
+sweden,NB Call 9500 NOK DAX 31Dec99,Nordea Bank AB Call 9500 NOK DAX 31Dec99,NO0010828338,nb-call-9500-nok-dax-31dec99,1122790,Nordea Bank Abp,NO0010828338,index,DAX
+sweden,NB Put 2400 SEK OMXS30 31Dec99,Nordea Bank AB Put 2400 SEK OMXS30 31Dec99,SE0009893019,nb-put-2400-sek-omxs30-31dec99,1122824,Nordea Bank Abp,SE0009893019,index,OMXS30
+sweden,NBp Call 1455 SEK OMXS30 31Dec99,Nordea Bank Abp Call 1455 SEK OMXS30 31Dec99,SE0011979624,nbp-call-1455-sek-omxs30-31dec99,1122892,Nordea Bank Abp,SE0011979624,index,OMXS30
+sweden,SB Call OMXS30 31Dec99,Swedbank AB Call OMXS30 31Dec99,SE0012115715,sb-call-omxs30-31dec99,1122978,Swedbank AB,SE0012115715,index,OMXS30
+sweden,NBp Call 1365 SEK OMXS30 31Dec99,Nordea Bank Abp Call 1365 SEK OMXS30 31Dec99,SE0011979590,nbp-call-1365-sek-omxs30-31dec99,1122890,Nordea Bank Abp,SE0011979590,index,OMXS30
+sweden,NB Call 48.5 ICE Brent Crude Oil,Nordea Bank AB Call 48.5 USD ICE Brent Crude Oil 31Dec99,SE0010142463,nb-call-48.5-ice-brent-crude-oil,1122777,Nordea Bank Abp,SE0010142463,commodity,Brent Oil
+sweden,NBp Call 100 SEK Volvo AB ser. B,Nordea Bank Abp Call 100 SEK Volvo AB ser. B 31Dec99,SE0011423318,nbp-call-100-sek-volvo-ab-ser.-b,1122883,Nordea Bank Abp,SE0011423318,equity,Volvo
+sweden,NB ZT 2230 SEK OMXS30 31Dec99,Nordea Bank AB ZT 2230 SEK OMXS30 31Dec99,SE0010825729,nb-zt-2230-sek-omxs30-31dec99,1122871,Nordea Bank Abp,SE0010825729,index,OMXS30
+sweden,NBp Call x18 OMXS30 31Dec99,Nordea Bank Abp Call x18 OMXS30 31Dec99,SE0011761287,nbp-call-x18-omxs30-31dec99,1122923,Nordea Bank Abp,SE0011761287,index,OMXS30
+sweden,NB Call 1222 SEK OMXS30 31Dec99,Nordea Bank AB Call 1222 SEK OMXS30 31Dec99,SE0009982739,nb-call-1222-sek-omxs30-31dec99,1122757,Nordea Bank Abp,SE0009982739,index,OMXS30
+sweden,NBp Call SSAB A shares 31Dec99,Nordea Bank Abp Call SSAB A shares 31Dec99,SE0011423664,nbp-call-ssab-a-shares-31dec99,1122916,Nordea Bank Abp,SE0011423664,equity,SSAB A
+sweden,NBp Call 90 SEK ELEKTA B 31Dec99,Nordea Bank Abp Call 90 SEK ELEKTA B 31Dec99,SE0011424852,nbp-call-90-sek-elekta-b-31dec99,1122907,Nordea Bank Abp,SE0011424852,equity,Elekta B
+sweden,NBp Call 90 SEK Tele2 AB ser. B,Nordea Bank Abp Call 90 SEK Tele2 AB ser. B 31Dec99,SE0011752310,nbp-call-90-sek-tele2-ab-ser.-b,1122908,Nordea Bank Abp,SE0011752310,equity,Tele2 AB
+sweden,NBp Call Boliden AB 31Dec99,Nordea Bank Abp Call Boliden AB 31Dec99,SE0011423383,nbp-call-boliden-ab-31dec99,1122909,Nordea Bank Abp,SE0011423383,equity,Boliden
+sweden,NBp Call 64 SEK Ericsson ser. B,Nordea Bank Abp Call 64 SEK Ericsson ser. B 31Dec99,SE0011422633,nbp-call-64-sek-ericsson-ser.-b,1122906,Nordea Bank Abp,SE0011422633,equity,LM Ericsson B
+sweden,NBp Call x12 Brent Oil 314 Dec99,Nordea Bank Abp Call x12 ICE Brent Crude Oil 314 Dec99,SE0011759224,nbp-call-x12-brent-oil-314-dec99,1122920,Nordea Bank Abp,SE0011759224,commodity,Brent Oil
+sweden,NBp Call x10 ICE Brent Crude Oil 4,Nordea Bank Abp Call x10 ICE Brent Crude Oil 4 31Dec99,SE0011759240,nbp-call-x10-ice-brent-crude-oil-4,1122919,Nordea Bank Abp,SE0011759240,commodity,Brent Oil
+sweden,NBp Call x15 ICE Brent Crude Oil,Nordea Bank Abp Call x15 ICE Brent Crude Oil 31Dec99,SE0011979244,nbp-call-x15-ice-brent-crude-oil,1122922,Nordea Bank Abp,SE0011979244,commodity,Brent Oil
+sweden,NBp Call Gold 31Dec99,Nordea Bank Abp Call Gold 31Dec99,SE0011979269,nbp-call-gold-31dec99,1122912,Nordea Bank Abp,SE0011979269,commodity,XAU/USD
+sweden,NBp Call x10 ICE Brent Crude Oil,Nordea Bank Abp Call x10 ICE Brent Crude Oil 31Dec99,SE0011761717,nbp-call-x10-ice-brent-crude-oil,1122918,Nordea Bank Abp,SE0011761717,commodity,Brent Oil
+sweden,NBp Call Hennes and Mauritz ser. B,Nordea Bank Abp Call Hennes and Mauritz ser. B 31Dec99,SE0011423425,nbp-call-hennes-and-mauritz-ser.-b,1122913,Nordea Bank Abp,SE0011423425,equity,H&M B
+sweden,NBp Call 1395 SEK OMXS30 31Dec99,Nordea Bank Abp Call 1395 SEK OMXS30 31Dec99,SE0011979608,nbp-call-1395-sek-omxs30-31dec99,1122891,Nordea Bank Abp,SE0011979608,index,OMXS30
+sweden,NB Call 1100 SEK OMXS30 31Dec99,Nordea Bank AB Call 1100 SEK OMXS30 31Dec99,SE0009892888,nb-call-1100-sek-omxs30-31dec99,1122752,Nordea Bank Abp,SE0009892888,index,OMXS30
+sweden,NBp Put x5 Swedbank 31Dec99,Nordea Bank Abp Put x5 Swedbank 31Dec99,SE0011423573,nbp-put-x5-swedbank-31dec99,1122974,Nordea Bank Abp,SE0011423573,equity,Swedbank A
+sweden,NBp Call x5 Swedbank 31Dec99,Nordea Bank Abp Call x5 Swedbank 31Dec99,SE0011423581,nbp-call-x5-swedbank-31dec99,1122926,Nordea Bank Abp,SE0011423581,equity,Swedbank A
+sweden,NB Call 1300 SEK OMXS30 31Dec99,Nordea Bank AB Call 1300 SEK OMXS30 31Dec99,SE0009892896,nb-call-1300-sek-omxs30-31dec99,1122761,Nordea Bank Abp,SE0009892896,index,OMXS30
+sweden,NBp Call Volvo AB ser. B 31Dec99,Nordea Bank Abp Call Volvo AB ser. B 31Dec99,SE0011423623,nbp-call-volvo-ab-ser.-b-31dec99,1122917,Nordea Bank Abp,SE0011423623,equity,Volvo
+sweden,NBp Call Silver 31Dec99,Nordea Bank Abp Call Silver 31Dec99,SE0011979285,nbp-call-silver-31dec99,1122915,Nordea Bank Abp,SE0011979285,commodity,XAG/USD
+sweden,NB Call 8500 EUR DAX 31Dec99,Nordea Bank AB Call 8500 EUR DAX 31Dec99,SE0009892607,nb-call-8500-eur-dax-31dec99,1122788,Nordea Bank Abp,SE0009892607,index,DAX
+sweden,NBp Call DAX 31Dec99,Nordea Bank Abp Call DAX 31Dec99,SE0011978675,nbp-call-dax-31dec99,1122910,Nordea Bank Abp,SE0011978675,index,DAX
+sweden,NBp Call x20 OMXS30 31Dec99,Nordea Bank Abp Call x20 OMXS30 31Dec99,SE0011978659,nbp-call-x20-omxs30-31dec99,1122924,Nordea Bank Abp,SE0011978659,index,OMXS30
+sweden,NB Call 9500 SEK DAX 31Dec99,Nordea Bank AB Call 9500 SEK DAX 31Dec99,SE0009892615,nb-call-9500-sek-dax-31dec99,1122791,Nordea Bank Abp,SE0009892615,index,DAX
+sweden,NB Call MINI GULD NORDENT 7 31Dec99,Nordea Bank AB Call MINI GULD NORDENT 7 31Dec99,SE0009978984,nb-call-mini-guld-nordent-7-31dec99,1122800,Nordea Bank Abp,SE0009978984,commodity,XAU/USD
+sweden,NBp Call S&P 500 31Dec99,Nordea Bank Abp Call S&P 500 31Dec99,SE0011978634,nbp-call-s-p-500-31dec99,1122914,Nordea Bank Abp,SE0011978634,index,S&P 500
+sweden,NB Put 15800 EUR DAX 31Dec99,Nordea Bank AB Put 15800 EUR DAX 31Dec99,SE0009892755,nb-put-15800-eur-dax-31dec99,1122813,Nordea Bank Abp,SE0009892755,index,DAX
+sweden,NBp Call x12 ICE Brent Crude Oil,Nordea Bank Abp Call x12 ICE Brent Crude Oil 31Dec99,SE0011975044,nbp-call-x12-ice-brent-crude-oil,1122921,Nordea Bank Abp,SE0011975044,commodity,Brent Oil
+sweden,NB Call 1340 SEK OMXS30 31Dec99,Nordea Bank AB Call 1340 SEK OMXS30 31Dec99,SE0010140269,nb-call-1340-sek-omxs30-31dec99,1122762,Nordea Bank Abp,SE0010140269,index,OMXS30
+sweden,NB ZT 2160 SEK OMXS30 31Dec99,Nordea Bank AB ZT 2160 SEK OMXS30 31Dec99,SE0010630442,nb-zt-2160-sek-omxs30-31dec99,1122870,Nordea Bank Abp,SE0010630442,index,OMXS30
+sweden,NB Call 6500 EUR DAX 31Dec99,Nordea Bank AB Call 6500 EUR DAX 31Dec99,SE0009892599,nb-call-6500-eur-dax-31dec99,1122785,Nordea Bank Abp,SE0009892599,index,DAX
+sweden,NB Call 13.2 USD Silver 31Dec99,Nordea Bank AB Call 13.2 USD Silver 31Dec99,SE0011418250,nb-call-13.2-usd-silver-31dec99,1122760,Nordea Bank Abp,SE0011418250,commodity,XAG/USD
+sweden,NB Call Fingerprint Cards B 31Dec99,Nordea Bank AB Call Fingerprint Cards B 31Dec99,SE0011168244,nb-call-fingerprint-cards-b-31dec99,1122794,Nordea Bank Abp,SE0011168244,equity,Fingerprint Cards B
+sweden,NB Call Silver 31Dec99,Nordea Bank AB Call Silver 31Dec99,SE0011416213,nb-call-silver-31dec99,1122804,Nordea Bank Abp,SE0011416213,commodity,XAG/USD
+sweden,NB Call 1270 SEK OMXS30 31Dec99,Nordea Bank AB Call 1270 SEK OMXS30 31Dec99,SE0010140251,nb-call-1270-sek-omxs30-31dec99,1122759,Nordea Bank Abp,SE0010140251,index,OMXS30
+sweden,NBp Call Fingerprint Cards B,Nordea Bank Abp Call Fingerprint Cards B 31Dec99,SE0011978972,nbp-call-fingerprint-cards-b,1122911,Nordea Bank Abp,SE0011978972,equity,Fingerprint Cards B
+sweden,NB Call 1358 SEK OMXS30 31Dec99,Nordea Bank AB Call 1358 SEK OMXS30 31Dec99,SE0009982747,nb-call-1358-sek-omxs30-31dec99,1122763,Nordea Bank Abp,SE0009982747,index,OMXS30
+sweden,NBp Put Sandvik 31Dec99,Nordea Bank Abp Put Sandvik 31Dec99,SE0011423698,nbp-put-sandvik-31dec99,1122968,Nordea Bank Abp,SE0011423698,equity,Sandvik AB
+sweden,NB Call 102 SEK Swedbank 31Dec99,Nordea Bank AB Call 102 SEK Swedbank 31Dec99,SE0009980436,nb-call-102-sek-swedbank-31dec99,1122748,Nordea Bank Abp,SE0009980436,equity,Swedbank A
+sweden,NB Call 53 Skandinaviska EnskildaBA,Nordea Bank AB Call 53 SEK Skandinaviska Enskilda Banken ser. A 31Dec99,SE0009980238,nb-call-53-skandinaviska-enskildaba,1122779,Nordea Bank Abp,SE0009980238,equity,SEB A
+sweden,NBp Put Gold 31Dec99,Nordea Bank Abp Put Gold 31Dec99,SE0011979277,nbp-put-gold-31dec99,1122960,Nordea Bank Abp,SE0011979277,commodity,XAU/USD
+sweden,Alphabeta Call Sol GE Large Mid NTR,Alphabeta Access Products Call Solactive Domestic Germany Large & Mid Cap NTR 31Dec99,JE00BHTCQD09,alphabeta-call-sol-ge-large-mid-ntr,1122746,Alphabeta Access Products Ltd,JE00BHTCQD09,index,
