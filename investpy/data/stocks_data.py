@@ -140,9 +140,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
                     'country': country,
                     'name': name,
                     'full_name': full_name,
-                    'tag': tag,
                     'isin': isin,
-                    'id': id,
                     'currency': currency,
                     'symbol': symbol,
                 }
@@ -180,7 +178,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in stocks.columns.tolist() for column in columns):
         raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, name, full_name, tag, isin, id, symbol, currency>")
+                         "<country, name, full_name, isin, currency, symbol>")
 
     if country is None:
         if as_json:

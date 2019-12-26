@@ -140,9 +140,9 @@ def indices_as_dict(country=None, columns=None, as_json=False):
                     'name': name,
                     'full_name': full_name,
                     'symbol': symbol,
-                    'tag': tag,
-                    'id': id,
-                    'currency': currency
+                    'currency': currency,
+                    'class': class,
+                    'market': market
                 }
 
     Raises:
