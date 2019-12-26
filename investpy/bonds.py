@@ -40,7 +40,7 @@ def get_bonds(country=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name 
+                country | name | full name 
                 --------|------|-----------
                 xxxxxxx | xxxx | xxxxxxxxx
 
@@ -56,11 +56,12 @@ def get_bonds(country=None):
 
 def get_bonds_list(country=None):
     """
-    This function retrieves all the bond names as stored in `bonds.csv` file, which contains all the
+    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
     data from the bonds as previously retrieved from Investing.com. So on, this function will just return
     the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
-    from investpy. Additionally, note that the country filtering can be applied, so that just the names of the 
-    bonds from the specified country are returned.
+    from investpy. Additionally, note that the country filtering can be applied, which is really useful since
+    this function just returns the names and in bond data retrieval functions both the name and the country
+    must be specified and they must match.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
@@ -126,9 +127,9 @@ def get_bonds_dict(country=None, columns=None, as_json=False):
 def get_bond_countries():
     """
     This function returns a listing with all the available countries from where bonds can be retrieved, so to
-    let the user know which of them are available. Also, not just the available countries, but the required 
-    name is provided since Investing.com has a certain country name standard and countries should be specified 
-    the same way they are in Investing.com.
+    let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
 
     Returns:
         :obj:`list` - countries:

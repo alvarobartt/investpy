@@ -42,14 +42,13 @@ def get_currency_crosses(base=None, second=None):
     Returns:
         :obj:`pandas.DataFrame` - currency_crosses_df:
             The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information retrieved from
-            Investing.com, some of which is not useful for the user, but for the inner package functions, such as the
-            `tag` or `id` fields.
+            Investing.com.
 
             In case the information was successfully retrieved, the resulting :obj:`pandas.DataFrame` will look like::
 
-                name | full_name | tag | id | base | second | base_name | second_name
-                -----|-----------|-----|----|------|--------|-----------|-------------
-                xxxx | xxxxxxxxx | xxx | xx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
+                name | full_name | base | second | base_name | second_name
+                -----|-----------|------|--------|-----------|-------------
+                xxxx | xxxxxxxxx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
@@ -121,7 +120,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
             symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
             all the currency crosses where the second currency matches the introduced one.
         columns (:obj:`list`, optional):
-            names of the columns of the currency crosses data to retrieve <name, full_name, tag, id, base, base_name,
+            names of the columns of the currency crosses data to retrieve <name, full_name, base, base_name,
             second, second_name>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
@@ -136,8 +135,6 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
                 {
                     'name': name,
                     'full_name': full_name,
-                    'tag': tag,
-                    'id': id,
                     'base': base,
                     'base_name': base_name,
                     'second': second,

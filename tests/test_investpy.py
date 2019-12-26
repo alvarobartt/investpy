@@ -167,22 +167,22 @@ def test_investpy_funds():
     params = [
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
@@ -301,22 +301,22 @@ def test_investpy_etfs():
     params = [
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.etfs &mdash; investpy 0.9.11 documentation</title>
+  <title>investpy.etfs &mdash; investpy 0.9.13 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.11
+                0.9.13
               </div>
             
           
@@ -274,6 +274,62 @@ values for the selected etf on market days.</p>
 <span class="go">    2011-12-13  22.88  22.88  22.88  22.80      EUR   Madrid</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="investpy.etfs.get_etf_information">
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_information</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function retrieves fundamental financial information from the specified ETF. The retrieved
+information from the ETF can be valuable as it is additional information that can be used combined
+with OHLC values, so to determine financial insights from the company which holds the specified ETF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>etf</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the ETF to retrieve recent historical data from.</p></li>
+<li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>) – name of the country from where the ETF is.</p></li>
+<li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – optional argument to determine the format of the output data (<code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> contains the information fields retrieved from Investing.com
+from the specified ETF; it can also be returned as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>, if argument <cite>as_json=True</cite>.</p>
+<p>If any of the information fields could not be retrieved, that field/s will be filled with
+None values. If the retrieval process succeeded, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">etf_information</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;1-Year Change&quot;</span><span class="p">:</span> <span class="s2">&quot;21.83%&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;52 wk Range&quot;</span><span class="p">:</span> <span class="s2">&quot;233.76 - 320.06&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Asset Class&quot;</span><span class="p">:</span> <span class="s2">&quot;Equity&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Average Vol. (3m)&quot;</span><span class="p">:</span> <span class="mf">59658771.0</span><span class="p">,</span>
+    <span class="s2">&quot;Beta&quot;</span><span class="p">:</span> <span class="mf">1.01</span><span class="p">,</span>
+    <span class="s2">&quot;Dividend Yield&quot;</span><span class="p">:</span> <span class="s2">&quot;1.73%&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Dividends (TTM)&quot;</span><span class="p">:</span> <span class="mf">4.03</span><span class="p">,</span>
+    <span class="s2">&quot;ETF Name&quot;</span><span class="p">:</span> <span class="s2">&quot;SPDR S&amp;P 500&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Market Cap&quot;</span><span class="p">:</span> <span class="mf">296440000000.0</span><span class="p">,</span>
+    <span class="s2">&quot;Open&quot;</span><span class="p">:</span> <span class="mf">319.25</span><span class="p">,</span>
+    <span class="s2">&quot;Prev. Close&quot;</span><span class="p">:</span> <span class="mf">317.27</span><span class="p">,</span>
+    <span class="s2">&quot;ROI (TTM)&quot;</span><span class="p">:</span> <span class="s2">&quot;- 0.46%&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Shares Outstanding&quot;</span><span class="p">:</span> <span class="mf">934132116.0</span><span class="p">,</span>
+    <span class="s2">&quot;Todays Range&quot;</span><span class="p">:</span> <span class="s2">&quot;319.18 - 320.06&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Total Assets&quot;</span><span class="p">:</span> <span class="mf">167650000000.0</span><span class="p">,</span>
+    <span class="s2">&quot;Volume&quot;</span><span class="p">:</span> <span class="mf">27928710.0</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code>- etf_information</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ValueError</strong> – raised if any of the introduced arguments is not valid or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised if etfs.csv file was not found or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if etfs.csv file is empty or errored.</p></li>
+<li><p><strong>RuntimeError</strong> – raised if scraping process failed while running.</p></li>
+<li><p><strong>ConnectionError</strong> – raised if the connection to Investing.com errored (did not return HTTP 200)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">

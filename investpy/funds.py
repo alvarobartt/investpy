@@ -37,9 +37,9 @@ def get_funds(country=None):
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                asset class | id | isin | issuer | name | symbol | tag | currrency
-                ------------|----|------|--------|------|--------|-----|-----------
-                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
+                country | name | symbol | issuer | isin | asset_class | currency | underlying
+                --------|------|--------|--------|------|-------------|----------|------------
+                xxxxxxx | xxxx | xxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxx
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
@@ -66,10 +66,12 @@ def get_funds_list(country=None):
 
             In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
 
-                funds = ['Blackrock Global Funds - Global Allocation Fund E2',
-                        'Quality Inversión Conservadora Fi',
-                        'Nordea 1 - Stable Return Fund E Eur',
-                        ...]
+                funds = [
+                    'Blackrock Global Funds - Global Allocation Fund E2',
+                    'Quality Inversión Conservadora Fi',
+                    'Nordea 1 - Stable Return Fund E Eur',
+                    ...
+                ]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
@@ -83,9 +85,9 @@ def get_funds_list(country=None):
 
 def get_funds_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
-    `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://www.investing.com/funds/
+    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing 
+    the country, name, symbol, tag, id, issuer, isin, asset_class, currency and underlying data. All the available
+    funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -102,14 +104,14 @@ def get_funds_dict(country=None, columns=None, as_json=False):
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
                 {
-                    'asset class': asset_class,
-                    'id': id,
-                    'isin': isin,
-                    'issuer': issuer,
+                    'country': country,
                     'name': name,
                     'symbol': symbol,
-                    'tag': tag,
-                    'currency': currency
+                    'issuer': issuer,
+                    'isin': isin,
+                    'asset_class': asset_class,
+                    'currency': currency,
+                    'underlying': underlying
                 }
 
     Raises:

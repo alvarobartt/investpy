@@ -35,7 +35,7 @@ def get_cryptos():
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                name | symbol | currency
+                name | symbol | currency 
                 -----|--------|----------
                 xxxx | xxxxxx | xxxxxxxx 
 

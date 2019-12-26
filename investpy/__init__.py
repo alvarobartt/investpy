@@ -33,4 +33,6 @@ from investpy.commodities import get_commodities, get_commodities_list, get_comm
 from investpy.crypto import get_cryptos, get_cryptos_list, get_cryptos_dict, get_crypto_recent_data, \
     get_crypto_historical_data, get_crypto_information, get_cryptos_overview, search_cryptos
 
+from investpy.certificates import get_certificates, get_certificates_list, get_certificates_dict, get_certificate_countries
+
 from investpy.search import search

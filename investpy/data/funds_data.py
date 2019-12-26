@@ -115,9 +115,9 @@ def funds_as_list(country=None):
 
 def funds_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
-    `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://www.investing.com/funds/
+    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing 
+    the country, name, symbol, tag, id, issuer, isin, asset_class, currency and underlying data. All the available
+    funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.

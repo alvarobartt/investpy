@@ -23,10 +23,9 @@ from investpy.data.etfs_data import etf_countries_as_list
 
 def get_etfs(country=None):
     """
-    This function retrieves all the available countries to retrieve etfs from, as the listed
-    countries are the ones indexed on Investing.com. The purpose of this function is to list
-    the countries which have available etfs according to Investing.com data, so to ease the
-    etf retrieval process of a particular country.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
+    This function also allows the users to specify which country do they want to retrieve data from or if they
+    want to retrieve it from every listed country; so on, all the indexed etfs will be returned.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
@@ -40,9 +39,9 @@ def get_etfs(country=None):
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | symbol | tag | id | currency
-                --------|------|--------|-----|----|----------
-                xxxxxxx | xxxx | xxxxxx | xxx | xx | xxxxxxxx
+                country | name | full_name | symbol | isin | asset_class | currency | stock_exchange
+                --------|------|-----------|--------|------|-------------|----------|----------------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxxxxxx
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
@@ -72,9 +71,11 @@ def get_etfs_list(country=None):
 
             In case the listing was successfully retrieved, the :obj:`list` will look like::
 
-                etfs_list = ['Betashares U.S. Equities Strong Bear Currency Hedg',
-                            'Betashares Active Australian Hybrids',
-                            'Australian High Interest Cash', ...]
+                etfs_list = [
+                    'Betashares U.S. Equities Strong Bear Currency Hedg',
+                    'Betashares Active Australian Hybrids',
+                    'Australian High Interest Cash', ...
+                ]
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
@@ -96,7 +97,8 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
-            names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
+            names of the columns of the etf data to retrieve <country, name, full_name, symbol, isin, asset_class, 
+            currency, stock_exchange>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
 
@@ -108,12 +110,14 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
                 {
-                    'country': country,
-                    'id': id,
-                    'tag': tag,
-                    'name': name,
-                    'symbol': symbol,
-                    'currency': currency
+                    "country": country,
+                    "name": name,
+                    "full_name": full_name,
+                    "symbol": symbol,
+                    "isin": isin,
+                    "asset_class": asset_class,
+                    "currency": currency,
+                    "stock_exchange": stock_exchange
                 }
 
     Raises:
