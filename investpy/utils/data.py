@@ -182,6 +182,24 @@ class Data(object):
             'currency': self.currency
         }
 
+    def certificate_to_dict(self):
+        return {
+            'Date': self.date,
+            'Open': self.open,
+            'High': self.high,
+            'Low': self.low,
+            'Close': self.close
+        }
+
+    def certificate_as_json(self):
+        return {
+            'date': self.date.strftime('%d/%m/%Y'),
+            'open': self.open,
+            'high': self.high,
+            'low': self.low,
+            'close': self.close
+        }
+
     def crypto_to_dict(self):
         return {
             'Date': self.date,

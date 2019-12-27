@@ -151,12 +151,460 @@ def get_certificate_countries():
     return certificate_countries_as_list()
 
 
-def get_certificate_recent_data():
-    return None
+def get_certificate_recent_data(certificate, country, as_json=False, order='ascending', interval='Daily'):
+    """
+    This function retrieves recent historical data from the introduced certificate from Investing.com. So on, the recent data
+    of the introduced certificate from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
+    the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
+    can be specified: as_json and order, which let the user decide if the data is going to be returned as a
+    :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the 
+    date), respectively.
+
+    Args:
+        certificate (:obj:`str`): name of the certificate to retrieve recent data from.
+        country (:obj:`str`): name of the country from where the certificate is.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved recent 
+            data from the specified certificate via argument. The dataset contains the OHLC values of the certificate.
+
+            The returned data is case we use default arguments will look like::
+
+                Date || Open | High | Low | Close 
+                -----||------|------|-----|-------
+                xxxx || xxxx | xxxx | xxx | xxxxx 
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised if there was an argument error.
+        IOError: raised if indices object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced certificate does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if certificate information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_certificate_recent_data(certificate='COMMERZBANK Call ALIBABA GROUP', country='france')
+                        Open  High   Low  Close
+            Date                               
+            2019-11-27  5.47  5.47  5.47   5.47
+            2019-12-05  5.52  5.52  5.52   5.52
+            2019-12-10  5.37  5.37  5.37   5.37
+            2019-12-12  6.27  6.27  6.27   6.27
+            2019-12-16  6.80  6.80  6.80   6.80
+            2019-12-20  7.50  7.50  7.50   7.50
+
+    """
+
+    if not certificate:
+        raise ValueError("ERR#0100: certificate param is mandatory and should be a str.")
+
+    if not isinstance(certificate, str):
+        raise ValueError("ERR#0100: certificate param is mandatory and should be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
+
+    if certificates is None:
+        raise IOError("ERR#0097: certificates not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+
+    certificate = certificate.strip()
+    certificate = certificate.lower()
+
+    if unidecode.unidecode(certificate) not in [unidecode.unidecode(value.lower()) for value in certificates['name'].tolist()]:
+        raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
+
+    symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
+    id_ = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'id']
+    name = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'name']
+
+    header = symbol + ' Historical Data'
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": interval,
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
+
+    req = requests.post(url, headers=head, data=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
+    result = list()
+
+    if path_:
+        for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0102: certificate information unavailable or not found.")
+
+            info = []
+        
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.get('data-real-value'))
+
+            certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            
+            certificate_close = float(info[1].replace(',', ''))
+            certificate_open = float(info[2].replace(',', ''))
+            certificate_high = float(info[3].replace(',', ''))
+            certificate_low = float(info[4].replace(',', ''))
+
+            result.insert(len(result), Data(certificate_date, certificate_open, certificate_high,
+                                            certificate_low, certificate_close, None, None))
+
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
+
+        if as_json is True:
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.certificate_as_json() for value in result]
+            }
+
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.certificate_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_certificate_historical_data():
-    return None
+def get_certificate_historical_data(certificate, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+    """
+    This function retrieves historical data from the introduced certificate from Investing.com. So on, the historical data
+    of the introduced certificate from the specified country in the specified date range will be retrieved and returned as
+    a :obj:`pandas.DataFrame` if the parameters are valid and the request to Investing.com succeeds. Note that additionally
+    some optional parameters can be specified: as_json and order, which let the user decide if the data is going to
+    be returned as a :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the
+    index is the date), respectively.
+
+    Args:
+        certificate (:obj:`str`): name of the certificate to retrieve historical data from.
+        country (:obj:`str`): name of the country from where the certificate is.
+        from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
+        to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
+        as_json (:obj:`bool`, optional):
+            to determine the format of the output data, either a :obj:`pandas.DataFrame` if False and a :obj:`json` if True.
+        order (:obj:`str`, optional): to define the order of the retrieved data which can either be ascending or descending.
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function can return either a :obj:`pandas.DataFrame` or a :obj:`json` object, containing the retrieved
+            historical data of the specified certificate from the specified country. So on, the resulting dataframe contains the
+            OHLC values for the selected certificate on market days.
+
+            The returned data is case we use default arguments will look like::
+
+                Date || Open | High | Low | Close 
+                -----||------|------|-----|-------
+                xxxx || xxxx | xxxx | xxx | xxxxx 
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    historical: [
+                        {
+                            date: 'dd/mm/yyyy',
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised whenever any of the introduced arguments is not valid or errored.
+        IOError: raised if certificates object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced certificate/country was not found or did not match any of the existing ones.
+        ConnectionError: raised if connection to Investing.com could not be established.
+        IndexError: raised if certificate historical data was unavailable or not found in Investing.com.
+
+    Examples:
+        >>> investpy.get_certificate_historical_data(certificate='COMMERZBANK Call ALIBABA GROUP', country='france', from_date='01/01/2010', to_date='01/01/2019')
+                         Open   High    Low  Close
+            Date                                  
+            2018-03-14  39.77  39.77  39.77  39.77
+            2018-03-15  48.18  48.18  48.18  46.48
+            2018-03-16  46.48  46.48  46.48  46.48
+            2018-03-19  40.73  40.73  40.73  40.73
+            2018-03-20  44.61  44.61  44.61  44.61
+
+    """
+
+    if not certificate:
+        raise ValueError("ERR#0100: certificate param is mandatory and should be a str.")
+
+    if not isinstance(certificate, str):
+        raise ValueError("ERR#0100: certificate param is mandatory and should be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    try:
+        datetime.strptime(from_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0011: incorrect from_date date format, it should be 'dd/mm/yyyy'.")
+
+    try:
+        datetime.strptime(to_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0012: incorrect to_date format, it should be 'dd/mm/yyyy'.")
+
+    start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    end_date = datetime.strptime(to_date, '%d/%m/%Y')
+
+    if start_date >= end_date:
+        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+
+    date_interval = {
+        'intervals': [],
+    }
+
+    flag = True
+
+    while flag is True:
+        diff = end_date.year - start_date.year
+
+        if diff > 20:
+            obj = {
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            start_date = start_date.replace(year=start_date.year + 20)
+        else:
+            obj = {
+                'start': start_date.strftime('%m/%d/%Y'),
+                'end': end_date.strftime('%m/%d/%Y'),
+            }
+
+            date_interval['intervals'].append(obj)
+
+            flag = False
+
+    interval_limit = len(date_interval['intervals'])
+    interval_counter = 0
+
+    data_flag = False
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
+
+    if certificates is None:
+        raise IOError("ERR#0097: certificates not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+
+    certificate = certificate.strip()
+    certificate = certificate.lower()
+
+    if unidecode.unidecode(certificate) not in [unidecode.unidecode(value.lower()) for value in certificates['name'].tolist()]:
+        raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
+
+    symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
+    id_ = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'id']
+    name = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'name']
+
+    header = symbol + ' Historical Data'
+
+    final = list()
+
+    for index in range(len(date_interval['intervals'])):
+        interval_counter += 1
+
+        params = {
+            "curr_id": id_,
+            "smlID": str(randint(1000000, 99999999)),
+            "header": header,
+            "st_date": date_interval['intervals'][index]['start'],
+            "end_date": date_interval['intervals'][index]['end'],
+            "interval_sec": interval,
+            "sort_col": "date",
+            "sort_ord": "DESC",
+            "action": "historical_data"
+        }
+
+        head = {
+            "User-Agent": get_random(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://www.investing.com/instruments/HistoricalDataAjax"
+
+        req = requests.post(url, headers=head, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+        if not req.text:
+            continue
+
+        root_ = fromstring(req.text)
+        path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+
+        result = list()
+
+        if path_:
+            for elements_ in path_:
+                if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                    if interval_counter < interval_limit:
+                        data_flag = False
+                    else:
+                        raise IndexError("ERR#0102: certificate information unavailable or not found.")
+                else:
+                    data_flag = True
+                
+                info = []
+            
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get('data-real-value'))
+
+                if data_flag is True:
+                    certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            
+                    certificate_close = float(info[1].replace(',', ''))
+                    certificate_open = float(info[2].replace(',', ''))
+                    certificate_high = float(info[3].replace(',', ''))
+                    certificate_low = float(info[4].replace(',', ''))
+
+                    result.insert(len(result), Data(certificate_date, certificate_open, certificate_high,
+                                                    certificate_low, certificate_close, None, None))
+
+            if data_flag is True:
+                if order in ['ascending', 'asc']:
+                    result = result[::-1]
+                elif order in ['descending', 'desc']:
+                    result = result
+
+                if as_json is True:
+                    json_ = {
+                        'name': name,
+                        'historical':
+                            [value.certificate_as_json() for value in result]
+                    }
+                    
+                    final.append(json_)
+                elif as_json is False:
+                    df = pd.DataFrame.from_records([value.certificate_to_dict() for value in result])
+                    df.set_index('Date', inplace=True)
+
+                    final.append(df)
+
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+    if as_json is True:
+        return json.dumps(final[0], sort_keys=False)
+    elif as_json is False:
+        return pd.concat(final)
 
 
 def get_certificate_information():
