@@ -149,3 +149,89 @@ def get_certificate_countries():
     """
 
     return certificate_countries_as_list()
+
+
+def get_certificate_recent_data():
+    return None
+
+
+def get_certificate_historical_data():
+    return None
+
+
+def get_certificate_information():
+    return None
+
+
+def get_certificates_overview():
+    return None
+
+
+def search_certificates(by, value):
+    """
+    This function searches certificates by the introduced value for the specified field. This means that this function
+    is going to search if there is a value that matches the introduced one for the specified field which is the
+    `certificates.csv` column name to search in. Available fields to search certificates are `country`, `name`, 
+    `full_name`, `symbol`, `issuer`, `isin`, `asset_class`, `underlying`.
+
+    Args:
+        by (:obj:`str`):
+            name of the field to search for, which is the column name which can be: country, name, full_name, symbol,
+            issuer, isin, asset_class or underlying.
+        value (:obj:`str`): value of the field to search for, which is the value that is going to be searched.
+
+    Returns:
+        :obj:`pandas.DataFrame` - search_result:
+            The resulting :obj:`pandas.DataFrame` contains the search results from the given query, which is
+            any match of the specified value in the specified field. If there are no results for the given query,
+            an error will be raised, but otherwise the resulting :obj:`pandas.DataFrame` will contain all the
+            available certificates that match the introduced query.
+
+    Raises:
+        ValueError: raised if any of the introduced parameters is not valid or errored.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: raised if no results were found for the introduced value in the introduced field.
+
+    """
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
+
+    if certificates is None:
+        raise IOError("ERR#0097: certificates not found or unable to retrieve.")
+
+    certificates.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = certificates.columns.tolist()
+
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    certificates['matches'] = certificates[by].str.contains(value, case=False)
+
+    search_result = certificates.loc[certificates['matches'] == True].copy()
+
+    if len(search_result) == 0:
+        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
+
+    search_result.drop(columns=['matches'], inplace=True)
+    search_result.reset_index(drop=True, inplace=True)
+
+    return search_result
