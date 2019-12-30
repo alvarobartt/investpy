@@ -23,7 +23,7 @@ from investpy.data.funds_data import fund_countries_as_list
 def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the fund names, but all the fields contained on the funds file.
+    which contains not just the fund names, but all the fields contained on the `funds.csv` file.
     All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
@@ -43,8 +43,8 @@ def get_funds(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -75,8 +75,8 @@ def get_funds_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -116,8 +116,8 @@ def get_funds_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -136,8 +136,8 @@ def get_fund_countries():
             The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised when the funds file was not found.
-        IndexError: raised if fund countries file was unavailable or not found.
+        FileNotFoundError: raised when the `fund_countries.csv` file was not found.
+        IndexError: raised if `fund_countries.csv` file was unavailable or not found.
     
     """
 
@@ -838,9 +838,11 @@ def get_funds_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError: raised when either `funds.csv` or `fund_countries.csv` file is missing.
+        FileNotFoundError: raised when `funds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the indexed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -979,6 +981,7 @@ def search_funds(by, value):
 
     Raises:
         ValueError: raised if any of the introduced params is not valid or errored.
+        FileNotFoundError: raised if `funds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
     

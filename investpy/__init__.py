@@ -34,6 +34,7 @@ from investpy.crypto import get_cryptos, get_cryptos_list, get_cryptos_dict, get
     get_crypto_historical_data, get_crypto_information, get_cryptos_overview, search_cryptos
 
 from investpy.certificates import get_certificates, get_certificates_list, get_certificates_dict, get_certificate_countries, \
-    get_certificate_recent_data, get_certificate_historical_data, get_certificate_information, get_certificates_overview, search_certificates
+    get_certificate_recent_data, get_certificate_historical_data, get_certificate_information, get_certificates_overview, \
+    search_certificates
 
 from investpy.search import search

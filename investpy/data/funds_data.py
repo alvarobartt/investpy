@@ -14,7 +14,7 @@ import unidecode
 def funds_as_df(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the fund names, but all the fields contained on the funds file.
+    which contains not just the fund names, but all the fields contained on the `funds.csv` file.
     All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
@@ -34,8 +34,8 @@ def funds_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -87,8 +87,8 @@ def funds_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -146,8 +146,8 @@ def funds_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -203,8 +203,8 @@ def fund_countries_as_list():
             The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised when the funds file was not found.
-        IndexError: raised if fund countries file was unavailable or not found.
+        FileNotFoundError: raised when the `fund_countries.csv` file was not found.
+        IndexError: raised if `fund_countries.csv` file was unavailable or not found.
     
     """
 

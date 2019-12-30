@@ -407,10 +407,9 @@ values for the selected etf on market days.</p>
 <dl class="function">
 <dt id="investpy.etfs.get_etfs">
 <code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etfs</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etfs" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available countries to retrieve etfs from, as the listed
-countries are the ones indexed on Investing.com. The purpose of this function is to list
-the countries which have available etfs according to Investing.com data, so to ease the
-etf retrieval process of a particular country.</p>
+<dd><p>This function retrieves all the available etfs indexed on Investing.com, already stored on <cite>etfs.csv</cite>.
+This function also allows the users to specify which country do they want to retrieve data from or if they
+want to retrieve it from every listed country; so on, all the indexed etfs will be returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available etfs from.</p>
@@ -421,9 +420,9 @@ was previously retrieved by investpy. Unless the country is specified, all the a
 Investing.com is returned, but if it is specified, just the etfs from that country are returned.</p>
 <p>In the case that the file reading of <cite>etfs.csv</cite> or the retrieval process from Investing.com was
 successfully completed, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">tag</span> <span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">currency</span>
-<span class="o">--------|------|--------|-----|----|----------</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full_name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">asset_class</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">stock_exchange</span>
+<span class="o">--------|------|-----------|--------|------|-------------|----------|----------------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -452,7 +451,8 @@ or from every listed country; the columns which the user wants to be included on
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>country</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional) – name of the country to retrieve all its available etfs from.</p></li>
-<li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – names of the columns of the etf data to retrieve &lt;country, country_code, id, name, symbol, tag&gt;</p></li>
+<li><p><strong>columns</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code>, optional) – names of the columns of the etf data to retrieve &lt;country, name, full_name, symbol, isin, asset_class,
+currency, stock_exchange&gt;</p></li>
 <li><p><strong>as_json</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>, optional) – value to determine the format of the output data which can either be a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> or a <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code>.</p></li>
 </ul>
 </dd>
@@ -461,12 +461,14 @@ or from every listed country; the columns which the user wants to be included on
 fields are filled with <cite>None</cite> values.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
-    <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
-    <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
-    <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
-    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span>
+    <span class="s2">&quot;country&quot;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+    <span class="s2">&quot;full_name&quot;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
+    <span class="s2">&quot;symbol&quot;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
+    <span class="s2">&quot;isin&quot;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
+    <span class="s2">&quot;asset_class&quot;</span><span class="p">:</span> <span class="n">asset_class</span><span class="p">,</span>
+    <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="n">currency</span><span class="p">,</span>
+    <span class="s2">&quot;stock_exchange&quot;</span><span class="p">:</span> <span class="n">stock_exchange</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -501,9 +503,11 @@ helps the user to get to know which etfs are available on Investing.com.</p>
 a listing of the names of the etfs listed on Investing.com, which is the input for data
 retrieval functions as the name of the etf to retrieve data from needs to be specified.</p>
 <p>In case the listing was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">etfs_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Betashares U.S. Equities Strong Bear Currency Hedg&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Betashares Active Australian Hybrids&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Australian High Interest Cash&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">etfs_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Betashares U.S. Equities Strong Bear Currency Hedg&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Betashares Active Australian Hybrids&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Australian High Interest Cash&#39;</span><span class="p">,</span> <span class="o">...</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </p>

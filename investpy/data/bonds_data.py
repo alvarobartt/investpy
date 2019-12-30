@@ -35,8 +35,8 @@ def bonds_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when bonds file was not found.
-        IOError: raised when bond countries file is missing or empty.
+        FileNotFoundError: raised when `bonds.csv` file was not found.
+        IOError: raised when `bond_countries.csv` file is missing or empty.
 
     """
 
@@ -66,7 +66,7 @@ def bonds_as_df(country=None):
 
 def bonds_as_list(country=None):
     """
-    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
+    This function retrieves all the bond names as stored in `bonds.csv` file, which contains all the
     data from the bonds as previously retrieved from Investing.com. So on, this function will just return
     the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
@@ -88,8 +88,8 @@ def bonds_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when bonds file was not found.
-        IOError: raised when bond countries file is missing or empty.
+        FileNotFoundError: raised when `bonds.csv` file was not found.
+        IOError: raised when `bonds.csv` file is missing or empty.
     
     """
 
@@ -144,8 +144,8 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when bonds file was not found.
-        IOError: raised when bond countries file is missing or empty.
+        FileNotFoundError: raised when `bonds.csv` file was not found.
+        IOError: raised when `bonds.csv` file is missing or empty.
 
     """
 
@@ -202,8 +202,8 @@ def bond_countries_as_list():
             The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised when bond countries file was not found.
-        IOError: raised when bond countries file is missing or empty.
+        FileNotFoundError: raised when `bonds.csv` file was not found.
+        IOError: raised when `bonds.csv` file is missing or empty.
 
     """
 

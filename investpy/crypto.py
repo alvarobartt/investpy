@@ -40,8 +40,8 @@ def get_cryptos():
                 xxxx | xxxxxx | xxxxxxxx 
 
     Raises:
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
 
     """
 
@@ -68,8 +68,8 @@ def get_cryptos_list():
                 cryptos_list = ['Bitcoin', 'Ethereum', 'XRP', 'Bitcoin Cash', 'Tether', 'Litecoin', ...]
 
     Raises:
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
     
     """
 
@@ -107,8 +107,8 @@ def get_cryptos_dict(columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
 
     """
 
@@ -590,8 +590,8 @@ def get_crypto_information(crypto, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency_crosses.csv file was not found or errored.
-        IOError: raised if currency_crosses.csv file is empty or errored.
+        FileNotFoundError: raised if `cryptos.csv` file was not found or errored.
+        IOError: raised if `cryptos.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -706,7 +706,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: raised it no overview results could be retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -861,6 +861,7 @@ def search_cryptos(by, value):
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if `cryptos.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
 

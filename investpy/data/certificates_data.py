@@ -36,8 +36,8 @@ def certificates_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if certificates file was not found.
-        IOError: raised when certificates file is missing or empty.
+        FileNotFoundError: raised if `certificates.csv` file was not found.
+        IOError: raised when `certificates.csv` file is missing or empty.
 
     """
 
@@ -67,19 +67,19 @@ def certificates_as_df(country=None):
 
 def certificates_as_list(country=None):
     """
-    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
+    This function retrieves all the available certificates indexed on Investing.com, already stored on `certificates.csv`.
     This function also allows the users to specify which country do they want to retrieve data from or if they
-    want to retrieve it from every listed country; so on, a listing of etfs will be returned. This function
-    helps the user to get to know which etfs are available on Investing.com.
+    want to retrieve it from every listed country; so on, a listing of certificates will be returned. This function
+    helps the user to get to know which certificates are available on Investing.com.
 
     Args:
-        country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
+        country (:obj:`str`, optional): name of the country to retrieve all its available certificates from.
 
     Returns:
         :obj:`list` - certificates_list:
-            The resulting :obj:`list` contains the retrieved data from the `etfs.csv` file, which is
-            a listing of the names of the etfs listed on Investing.com, which is the input for data
-            retrieval functions as the name of the etf to retrieve data from needs to be specified.
+            The resulting :obj:`list` contains the retrieved data from the `certificates.csv` file, which is
+            a listing of the names of the certificates listed on Investing.com, which is the input for data
+            retrieval functions as the name of the certificate to retrieve data from needs to be specified.
 
             In case the listing was successfully retrieved, the :obj:`list` will look like::
 
@@ -87,8 +87,8 @@ def certificates_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if certificates file was not found.
-        IOError: raised when certificates file is missing or empty.
+        FileNotFoundError: raised if `certificates.csv` file was not found.
+        IOError: raised when `certificates.csv` file is missing or empty.
     
     """
 
@@ -145,8 +145,8 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if certificates file was not found.
-        IOError: raised when certificates file is missing or empty.
+        FileNotFoundError: raised if `certificates.csv` file was not found.
+        IOError: raised when `certificates.csv` file is missing or empty.
     
     """
 
@@ -209,7 +209,8 @@ def certificate_countries_as_list():
                 countries = ['france', 'germany', 'italy', 'netherlands', 'sweden']
 
     Raises:
-        FileNotFoundError: raised when certificate countries file was not found.
+        FileNotFoundError: raised if `certificate_countries.csv` file was not found.
+        IOError: raised when `certificate_countries.csv` file is missing or empty.
     
     """
 

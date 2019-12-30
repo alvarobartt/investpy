@@ -35,8 +35,8 @@ def etfs_as_df(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -90,8 +90,8 @@ def etfs_as_list(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -138,7 +138,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
-                {
+                etfs_dict = {
                     "country": country,
                     "name": name,
                     "full_name": full_name,
@@ -151,8 +151,8 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -215,7 +215,7 @@ def etf_countries_as_list():
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when etf countries file was not found.
+        FileNotFoundError: raised when `etf_countries.csv` file was not found.
     
     """
 

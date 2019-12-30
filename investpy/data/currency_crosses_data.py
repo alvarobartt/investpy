@@ -45,7 +45,7 @@ def currency_crosses_as_df(base=None, second=None):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -141,7 +141,7 @@ def currency_crosses_as_list(base=None, second=None):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -235,7 +235,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
-                {
+                currency_crosses_dict = {
                     'name': name,
                     'full_name': full_name,
                     'base': base,
@@ -246,7 +246,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
     
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -353,7 +353,7 @@ def available_currencies_as_list():
                 ]
 
     Raises:
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """

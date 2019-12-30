@@ -52,7 +52,7 @@ def get_currency_crosses(base=None, second=None):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -93,7 +93,7 @@ def get_currency_crosses_list(base=None, second=None):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -143,7 +143,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
     
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -170,7 +170,7 @@ def get_available_currencies():
                 ]
 
     Raises:
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -632,8 +632,8 @@ def get_currency_cross_information(currency_cross, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency_crosses.csv file was not found or errored.
-        IOError: raised if currency_crosses.csv file is empty or errored.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
+        IOError: raised if `currency_crosses.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -759,6 +759,7 @@ def search_currency_crosses(by, value):
 
     Raises:
        ValueError: raised if any of the introduced params is not valid or errored.
+       FileNotFoundError: raised if `currency_crosses.csv` file is missing.
        IOError: raised if data could not be retrieved due to file error.
        RuntimeError: raised if no results were found for the introduced value in the introduced field.
     

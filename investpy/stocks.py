@@ -45,8 +45,8 @@ def get_stocks(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -77,8 +77,8 @@ def get_stocks_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
     
     """
 
@@ -118,8 +118,8 @@ def get_stocks_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -138,8 +138,8 @@ def get_stock_countries():
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if stock countries file was not found.
-        IOError: raised when stock countries file is missing or empty.
+        FileNotFoundError: raised if `stock_countries.csv` file was not found.
+        IOError: raised when `stock_countries.csv` file is missing or empty.
 
     """
 
@@ -971,7 +971,7 @@ def get_stock_information(stock, country, as_json=False):
     with OHLC values, so to determine financial insights from the company which holds the specified stock.
 
     Args:
-        stock (:obj:`str`): symbol of the stock to retrieve its dividends from.
+        stock (:obj:`str`): symbol of the stock to retrieve its information from.
         country (:obj:`country`): name of the country from where the stock is from.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
@@ -1002,6 +1002,13 @@ def get_stock_information(stock, country, as_json=False):
                     "Shares Outstanding": 4443236000.0,
                     "Next Earnings Date": "04/02/2020"
                 }
+
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised if `stocks.csv` file was not found or errored.
+        IOError: raised if `stocks.csv` file is empty or errored.
+        RuntimeError: raised if scraping process failed while running.
+        ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
     """
 
@@ -1139,7 +1146,9 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         ValueError: raised if any of the introduced arguments errored.
         FileNotFoundError: raised when either `stocks.csv` or `stock_countries.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -1294,6 +1303,7 @@ def search_stocks(by, value):
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if `stocks.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
 

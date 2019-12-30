@@ -35,8 +35,8 @@ def stocks_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -88,8 +88,8 @@ def stocks_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
     
     """
 
@@ -147,8 +147,8 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -205,8 +205,8 @@ def stock_countries_as_list():
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if stock countries file was not found.
-        IOError: raised when stock countries file is missing or empty.
+        FileNotFoundError: raised if `stock_countries.csv` file was not found.
+        IOError: raised when `stock_countries.csv` file is missing or empty.
 
     """
 

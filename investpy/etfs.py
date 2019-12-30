@@ -45,8 +45,8 @@ def get_etfs(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -79,8 +79,8 @@ def get_etfs_list(country=None):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -109,7 +109,7 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
-                {
+                etfs_dict = {
                     "country": country,
                     "name": name,
                     "full_name": full_name,
@@ -122,8 +122,8 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -148,7 +148,7 @@ def get_etf_countries():
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when etf countries file was not found.
+        FileNotFoundError: raised when `etf_countries.csv` file was not found.
     
     """
 
@@ -667,8 +667,8 @@ def get_etf_information(etf, country, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if etfs.csv file was not found or errored.
-        IOError: raised if etfs.csv file is empty or errored.
+        FileNotFoundError: raised if `etfs.csv` file was not found or errored.
+        IOError: raised if `etfs.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -811,9 +811,11 @@ def get_etfs_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError: raised when either `etfs.csv` or `etf_countries.csv` file is missing.
+        FileNotFoundError: raised when `etfs.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the indexed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -950,6 +952,7 @@ def search_etfs(by, value):
 
     Raises:
         ValueError: raised if any of the introduced params is not valid or errored.
+        FileNotFoundError: raised if `etfs.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
     

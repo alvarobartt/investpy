@@ -772,7 +772,9 @@ def get_bonds_overview(country, as_json=False):
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `bonds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -887,6 +889,7 @@ def search_bonds(by, value):
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if `bonds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
 
