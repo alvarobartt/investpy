@@ -198,7 +198,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
 
     Raises:
         ValueError: raised if there was an argument error.
-        IOError: raised if indices object/file was not found or unable to retrieve.
+        IOError: raised if certificates object/file was not found or unable to retrieve.
         RuntimeError: raised if the introduced certificate does not match any of the indexed ones.
         ConnectionError: raised if GET requests does not return 200 status code.
         IndexError: raised if certificate information was unavailable or not found.
@@ -756,7 +756,137 @@ def get_certificate_information(certificate, country, as_json=False):
 
 
 def get_certificates_overview(country, as_json=False, n_results=100):
-    return None
+    """
+    This function retrieves an overview containing all the real time data available for the main certificates 
+    from a country, such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main 
+    usage of this function is to get an overview on the main certificates from a country, so to get a general view. 
+    Note that since this function is retrieving a lot of information at once, by default just the overview of 
+    the Top 100 certificates is being retrieved, but an additional parameter called n_results can be specified so to 
+    retrieve N results.
+
+    Args:
+        country (:obj:`str`): name of the country to retrieve the certificates overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
+
+    Returns:
+        :obj:`pandas.DataFrame` - certificates_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main certificates
+            from a country in order to get an overview of it.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                country | name | symbol | last | change_percentage | turnover
+                --------|------|--------|------|-------------------|----------
+                xxxxxxx | xxxx | xxxxxx | xxxx | xxxxxxxxxxxxxxxxx | xxxxxxxx
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments is not valid or errored.
+        FileNotFoundError: raised when `certificates.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
+
+    if certificates is None:
+        raise IOError("ERR#0097: certificates not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://www.investing.com/certificates/" + country.replace(' ', '-') + "-certificates"
+
+    req = requests.get(url, headers=head)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    table = root_.xpath(".//table[@id='certificates']/tbody/tr")
+
+    results = list()
+
+    if len(table) > 0:
+        for row in table[:n_results]:
+            id_ = row.get('id').replace('pair_', '')
+            country_check = row.xpath(".//td[@class='flag']/span")[0].get('title').lower()
+
+            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+
+            pid = 'pid-' + id_
+
+            symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get("title").strip()
+
+            last = row.xpath(".//td[@class='" + pid + "-last']")[0].text_content()
+
+            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+            turnover = row.xpath(".//td[contains(@class, '" + pid + "-turnover')]")[0].text_content()
+
+            if turnover != '0':
+                if turnover.__contains__('K'):
+                    turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
+                elif turnover.__contains__('M'):
+                    turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
+                elif turnover.__contains__('B'):
+                    turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
+                else:
+                    turnover = float(turnover.replace(',', ''))
+
+            data = {
+                "country": country_check,
+                "name": name,
+                "symbol": symbol,
+                "last": float(last.replace(',', '')),
+                "change_percentage": pcp,
+                "turnover": int(turnover)
+            }
+
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
 
 
 def search_certificates(by, value):
@@ -828,7 +958,3 @@ def search_certificates(by, value):
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
-
-
-if __name__ == "__main__":
-    print(get_certificate_information(certificate='COMMERZBANK Call ALIBABA GROUP', country='france', as_json=True))
