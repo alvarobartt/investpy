@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import pytest
@@ -1193,12 +1193,12 @@ def test_investpy_search():
         {
             'text': 'apple',
             'n_results': None,
-            'filters': ['equities']
+            'filters': ['stocks']
         },
         {
             'text': 'apple',
             'n_results': 10,
-            'filters': ['equities']
+            'filters': ['stocks']
         }
     ]
 

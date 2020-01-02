@@ -21,7 +21,7 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'investpy'
-copyright = '2018-2019, Alvaro Bartolome'
+copyright = '2018-2020, Alvaro Bartolome'
 author = 'Alvaro Bartolome'
 
 # The short X.Y version
