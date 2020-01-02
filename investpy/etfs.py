@@ -570,6 +570,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:

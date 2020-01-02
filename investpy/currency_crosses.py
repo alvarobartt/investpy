@@ -542,8 +542,12 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+        if not req.text:
+            continue
+
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:

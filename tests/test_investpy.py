@@ -129,12 +129,32 @@ def test_investpy_stocks():
         {
             'country': 'spain',
             'as_json': True,
-            'n_results': 2
+            'n_results': 50
         },
         {
-            'country': 'spain',
+            'country': 'united states',
             'as_json': False,
-            'n_results': 2
+            'n_results': 50
+        },
+        {
+            'country': 'bosnia',
+            'as_json': False,
+            'n_results': 50
+        },
+        {
+            'country': 'palestine',
+            'as_json': False,
+            'n_results': 50
+        },
+        {
+            'country': 'dubai',
+            'as_json': False,
+            'n_results': 50
+        },
+        {
+            'country': 'ivory coast',
+            'as_json': False,
+            'n_results': 50
         }
     ]
 
@@ -759,7 +779,11 @@ def test_investpy_bonds():
         {
             'bond': 'argentina 3y',
             'as_json': True
-        }
+        },
+        {
+            'bond': 'germany 3m',
+            'as_json': False
+        },
     ]
 
     for param in params:

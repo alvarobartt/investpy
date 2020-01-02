@@ -540,6 +540,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:

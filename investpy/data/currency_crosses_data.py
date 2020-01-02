@@ -359,13 +359,13 @@ def available_currencies_as_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currencies.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
-        raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
+        raise FileNotFoundError("ERR#0103: currencies file not found or errored.")
 
-    if currency_crosses is None:
-        raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
+    if currencies is None:
+        raise IOError("ERR#0104: currencies not found or unable to retrieve.")
     
-    return np.unique(currency_crosses['base'].unique().tolist() + currency_crosses['second'].unique().tolist())
+    return currencies['symbol'].tolist()

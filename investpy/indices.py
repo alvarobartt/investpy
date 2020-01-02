@@ -548,6 +548,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:

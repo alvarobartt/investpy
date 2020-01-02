@@ -496,6 +496,9 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+        if not req.text:
+            continue
+
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
 

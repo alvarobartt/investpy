@@ -3432,7 +3432,7 @@ def test_certificate_errors():
                                                  country=param['country'],
                                                  as_json=param['as_json'],
                                                  order=param['order'],
-                                                 interval='Daily')
+                                                 interval=param['interval'])
         except:
             pass
         
@@ -3480,6 +3480,15 @@ def test_certificate_errors():
             'to_date': '01/01/2019',
             'as_json': None,
             'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
             'interval': 'Daily'
         },
         {

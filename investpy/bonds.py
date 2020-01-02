@@ -728,12 +728,6 @@ def get_bond_information(bond, as_json=False):
                     continue
                 except:
                     pass
-                try:
-                    value = element.getnext().text_content().strip()
-                    result.at[0, title_] = value
-                    continue
-                except:
-                    pass
 
         result.replace({'N/A': None}, inplace=True)
 
