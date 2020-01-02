@@ -107,7 +107,7 @@ def certificates_as_list(country=None):
 
     if country is None:
         return certificates['name'].tolist()
-    elif country in certificate_countries_as_list():
+    elif unidecode.unidecode(country.lower()) in certificate_countries_as_list():
         return certificates[certificates['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
 
 
@@ -183,10 +183,9 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(certificates[columns].to_dict(orient='records'))
         else:
             return certificates[columns].to_dict(orient='records')
-    elif country in certificate_countries_as_list():
+    elif unidecode.unidecode(country.lower()) in certificate_countries_as_list():
         if as_json:
-            return json.dumps(
-                certificates[certificates['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(certificates[certificates['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
             return certificates[certificates['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
 
