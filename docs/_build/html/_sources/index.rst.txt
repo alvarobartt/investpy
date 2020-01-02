@@ -21,6 +21,7 @@ Welcome to investpy's documentation!
    funds.rst
    api.rst
    information.md
+   faq.md
    disclaimer.md
 
 
