@@ -2190,6 +2190,45 @@ def test_currency_crosses_errors():
 
     params = [
         {
+            'currency': None,
+            'as_json': False,
+            'n_results': 100
+        },
+        {
+            'currency': ['error'],
+            'as_json': True,
+            'n_results': 100
+        },
+        {
+            'currency': 'eur',
+            'as_json': 'error',
+            'n_results': 100
+        },
+        {
+            'currency': 'eur',
+            'as_json': True,
+            'n_results': 'error'
+        },
+        {
+            'currency': 'eur',
+            'as_json': True,
+            'n_results': 0
+        },
+        {
+            'currency': 'error',
+            'as_json': True,
+            'n_results': 10
+        }
+    ]
+    
+    for param in params:
+        try:
+            investpy.get_currency_crosses_overview(currency=param['currency'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'currency_cross': None,
             'as_json': False
         },

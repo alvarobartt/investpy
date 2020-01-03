@@ -681,7 +681,21 @@ def test_investpy_currency_crosses():
     for param in params:
         investpy.get_currency_cross_information(currency_cross=param['currency_cross'], as_json=param['as_json'])
     
-    investpy.get_currency_crosses_overview()
+    params = [
+        {
+            'currency': 'try',
+            'as_json': False,
+            'n_results': 100
+        },
+        {
+            'currency': 'amd',
+            'as_json': True,
+            'n_results': 100
+        }
+    ]
+    
+    for param in params:
+        investpy.get_currency_crosses_overview(currency=param['currency'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_currency_crosses(by='base', value='EUR')
 

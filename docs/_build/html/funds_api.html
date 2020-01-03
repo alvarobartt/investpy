@@ -193,8 +193,8 @@ the return listing from this function can be used for country param check if nee
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IndexError</strong> – raised if fund countries file was unavailable or not found.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>fund_countries.csv</cite> file was not found.</p></li>
+<li><p><strong>IndexError</strong> – raised if <cite>fund_countries.csv</cite> file was unavailable or not found.</p></li>
 </ul>
 </dd>
 </dl>
@@ -395,7 +395,7 @@ values for the selected fund on market days.</p>
 <dt id="investpy.funds.get_funds">
 <code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>funds</cite> from Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>,
-which contains not just the fund names, but all the fields contained on the funds file.
+which contains not just the fund names, but all the fields contained on the <cite>funds.csv</cite> file.
 All the available funds can be found at: <a class="reference external" href="https://www.investing.com/funds/">https://www.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -419,8 +419,8 @@ for example.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>funds.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised if the <cite>funds.csv</cite> file is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -466,8 +466,8 @@ fields are filled with <cite>None</cite> values.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>funds.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised if the <cite>funds.csv</cite> file is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -502,8 +502,8 @@ every fund listed on Investing.com.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>funds.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised if the <cite>funds.csv</cite> file is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -542,9 +542,10 @@ from a country in order to get an overview of it.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if there was any argument error.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when either <cite>funds.csv</cite> or <cite>fund_countries.csv</cite> file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when <cite>funds.csv</cite> file is missing.</p></li>
 <li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
-<li><p><strong>RuntimeError</strong> – raised it the introduced country does not match any of the indexed ones.</p></li>
+<li><p><strong>RuntimeError</strong> – raised either if the introduced country does not match any of the listed ones or if no overview results could be
+    retrieved from Investing.com.</p></li>
 <li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
 </ul>
 </dd>
@@ -575,6 +576,7 @@ in the specified field). If there are no results and error will be raised, but o
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised if <cite>funds.csv</cite> file is missing.</p></li>
 <li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
 <li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
 </ul>

@@ -199,7 +199,7 @@ with etfs was successfully completed, the resulting <code class="xref py py-obj 
 <dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> - countries</p>
 </dd>
 <dt class="field-odd">Raises</dt>
-<dd class="field-odd"><p><strong>FileNotFoundError</strong> – raised when etf countries file was not found.</p>
+<dd class="field-odd"><p><strong>FileNotFoundError</strong> – raised when <cite>etf_countries.csv</cite> file was not found.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,8 +325,8 @@ None values. If the retrieval process succeeded, the resulting <code class="xref
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised if etfs.csv file was not found or errored.</p></li>
-<li><p><strong>IOError</strong> – raised if etfs.csv file is empty or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised if <cite>etfs.csv</cite> file was not found or errored.</p></li>
+<li><p><strong>IOError</strong> – raised if <cite>etfs.csv</cite> file is empty or errored.</p></li>
 <li><p><strong>RuntimeError</strong> – raised if scraping process failed while running.</p></li>
 <li><p><strong>ConnectionError</strong> – raised if the connection to Investing.com errored (did not return HTTP 200)</p></li>
 </ul>
@@ -435,8 +435,8 @@ successfully completed, the resulting <code class="xref py py-obj docutils liter
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised when any of the input arguments is not valid.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when etfs file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised when etfs file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when <cite>etfs.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised when <cite>etfs.csv</cite> file is missing.</p></li>
 </ul>
 </dd>
 </dl>
@@ -462,7 +462,7 @@ currency, stock_exchange&gt;</p></li>
 <dd class="field-even"><p><p>The resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> contains the retrieved data if found, if not, the corresponding
 fields are filled with <cite>None</cite> values.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">etfs_dict</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;country&quot;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
     <span class="s2">&quot;full_name&quot;</span><span class="p">:</span> <span class="n">full_name</span><span class="p">,</span>
@@ -482,8 +482,8 @@ fields are filled with <cite>None</cite> values.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised when any of the input arguments is not valid.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when etfs file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised when etfs file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when <cite>etfs.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised when <cite>etfs.csv</cite> file is missing.</p></li>
 </ul>
 </dd>
 </dl>
@@ -520,8 +520,8 @@ retrieval functions as the name of the etf to retrieve data from needs to be spe
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised when any of the input arguments is not valid.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when etfs file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised when etfs file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when <cite>etfs.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised when <cite>etfs.csv</cite> file is missing.</p></li>
 </ul>
 </dd>
 </dl>
@@ -560,9 +560,10 @@ from a country in order to get an overview of it.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if there was any argument error.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when either <cite>etfs.csv</cite> or <cite>etf_countries.csv</cite> file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when <cite>etfs.csv</cite> file is missing.</p></li>
 <li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
-<li><p><strong>RuntimeError</strong> – raised it the introduced country does not match any of the indexed ones.</p></li>
+<li><p><strong>RuntimeError</strong> – raised either if the introduced country does not match any of the listed ones or if no overview results could be
+    retrieved from Investing.com.</p></li>
 <li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
 </ul>
 </dd>
@@ -593,6 +594,7 @@ in the specified field). If there are no results and error will be raised, but o
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised if <cite>etfs.csv</cite> file is missing.</p></li>
 <li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
 <li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
 </ul>

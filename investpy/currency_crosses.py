@@ -5,7 +5,8 @@
 
 from datetime import datetime, date
 import json
-from random import randint
+from random import randint, sample
+import string
 
 import pandas as pd
 import pkg_resources
@@ -737,9 +738,149 @@ def get_currency_cross_information(currency_cross, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_currency_crosses_overview():
-    # Re-structure currency crosses retrieval with https://www.investing.com/currencies/single-currency-crosses
-    return None
+def get_currency_crosses_overview(currency, as_json=False, n_results=100):
+    """
+    This function retrieves an overview containing all the real time data available for the main stocks from a country,
+    such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on the main stocks from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks 
+    is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
+
+    Args:
+        currency (:obj:`str`): name of the currency to retrieve the currency crosses overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
+
+    Returns:
+        :obj:`pandas.DataFrame` - stocks_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main currency
+            crosses from a given currency in order to get an overview of them.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                symbol | name | bid | ask | high | low | change | change_percentage
+                -------|------|-----|-----|------|-----|--------|-------------------
+                xxxxxx | xxxx | xxx | xxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx 
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments errored.
+        FileNotFoundError: raised if `currencies.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: 
+            raised either if the introduced currency does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if currency is None:
+        raise ValueError("ERR#0105: currency can not be None, it should be a str.")
+
+    if not isinstance(currency, str):
+        raise ValueError("ERR#0106: specified currency value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currencies.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0103: currencies file not found or errored.")
+
+    if currencies is None:
+        raise IOError("ERR#0104: currencies not found or unable to retrieve.")
+
+    currency = unidecode.unidecode(currency.lower())
+
+    if currency not in currencies['symbol'].str.lower().tolist():
+        raise ValueError("ERR#0106: specified currency value not valid.")
+
+    currency = currencies.loc[(currencies['symbol'].str.lower() == currency).idxmax(), 'symbol']
+
+    value = currencies.loc[(currencies['symbol'] == currency).idxmax(), 'value']
+    session_id = ''.join(sample(string.ascii_lowercase, 9))
+
+    params = {
+        'session_uniq_id': session_id,
+        'currencies': value
+    }
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/currencies/Service/ChangeCurrency'
+
+    req = requests.get(url, headers=head, params=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.json()['HTML'])
+    table = root_.xpath(".//table[@id='cr1']/tbody/tr")
+
+    results = list()
+
+    if len(table) > 0:
+        for row in table[:n_results]:
+            id_ = row.get('id').replace('pair_', '')
+
+            symbol = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].get('title')
+
+            if symbol.__contains__(currency + '='):
+                old_symbol = symbol
+                symbol = symbol.replace('=', '').replace(currency, '/' + currency)
+                name = name.replace(old_symbol, symbol)
+            elif symbol.__contains__('='):
+                old_symbol = symbol
+                symbol = symbol.replace('=', '').replace(currency, currency + '/')
+                name = name.replace(old_symbol, symbol)
+
+            pid = 'pid-' + id_
+
+            bid = row.xpath(".//td[@class='" + pid + "-bid']")[0].text_content()
+            ask = row.xpath(".//td[@class='" + pid + "-ask']")[0].text_content()
+            high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
+            low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
+
+            pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
+            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+
+            data = {
+                "symbol": symbol,
+                "name": name,
+                "bid": float(bid.replace(',', '')),
+                "ask": float(ask.replace(',', '')),
+                "high": float(high.replace(',', '')),
+                "low": float(low.replace(',', '')),
+                "change": pc,
+                "change_percentage": pcp
+            }
+
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
 
 
 def search_currency_crosses(by, value):
