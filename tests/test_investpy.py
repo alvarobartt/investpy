@@ -121,7 +121,7 @@ def test_investpy_stocks():
             'as_json': True
         },
         {
-            'stock': 'Halyk Bank AO',
+            'stock': 'HSBK',
             'country': 'kazakhstan',
             'as_json': False
         }
