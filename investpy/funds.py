@@ -988,17 +988,11 @@ def search_funds(by, value):
     
     """
 
-    available_search_fields = ['name', 'symbol', 'issuer', 'isin']
-
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -1015,6 +1009,14 @@ def search_funds(by, value):
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
+
+    funds.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = funds.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
 
     funds['matches'] = funds[by].str.contains(value, case=False)
 

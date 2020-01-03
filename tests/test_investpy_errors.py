@@ -372,6 +372,11 @@ def test_stocks_errors():
         },
         {
             'stock': 'BBVA',
+            'country': ['error'],
+            'language': 'spanish'
+        },
+        {
+            'stock': 'BBVA',
             'country': 'greece',
             'language': 'spanish'
         },

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -1093,11 +1093,7 @@ def get_stock_information(stock, country, as_json=False):
                     pass
                 try:
                     value = element.getnext().text_content().strip()
-                    if value.__contains__('K'):
-                        value = float(value.replace('K', '').replace(',', '')) * 1e3
-                    elif value.__contains__('M'):
-                        value = float(value.replace('M', '').replace(',', '')) * 1e6
-                    elif value.__contains__('B'):
+                    if value.__contains__('B'):
                         value = float(value.replace('B', '').replace(',', '')) * 1e9
                     elif value.__contains__('T'):
                         value = float(value.replace('T', '').replace(',', '')) * 1e12
@@ -1254,10 +1250,6 @@ def get_stocks_overview(country, as_json=False, n_results=100):
                 turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
             elif turnover.__contains__('M'):
                 turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
-            elif turnover.__contains__('B'):
-                turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
-            elif turnover.__contains__('T'):
-                turnover = float(turnover.replace('T', '').replace(',', '')) * 1e12
 
             data = {
                 "country": country_check,
@@ -1309,17 +1301,11 @@ def search_stocks(by, value):
 
     """
 
-    available_search_fields = ['name', 'full_name', 'isin']
-
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -1337,6 +1323,14 @@ def search_stocks(by, value):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
+    stocks.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = stocks.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     stocks['matches'] = stocks[by].str.contains(value, case=False)
 
     search_result = stocks.loc[stocks['matches'] == True].copy()
@@ -1344,7 +1338,7 @@ def search_stocks(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

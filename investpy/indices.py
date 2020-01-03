@@ -915,17 +915,11 @@ def search_indices(by, value):
     
     """
 
-    available_search_fields = ['name', 'full_name', 'symbol']
-
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -942,6 +936,14 @@ def search_indices(by, value):
 
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
+
+    indices.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = indices.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
 
     indices['matches'] = indices[by].str.contains(value, case=False)
 

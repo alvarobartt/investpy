@@ -119,6 +119,11 @@ def test_investpy_stocks():
             'stock': 'bbva',
             'country': 'spain',
             'as_json': True
+        },
+        {
+            'stock': 'Halyk Bank AO',
+            'country': 'kazakhstan',
+            'as_json': False
         }
     ]
 

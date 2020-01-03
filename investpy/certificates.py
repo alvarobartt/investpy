@@ -917,6 +917,18 @@ def search_certificates(by, value):
 
     """
 
+    if not by:
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not isinstance(by, str):
+        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+
+    if not value:
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
+    if not isinstance(value, str):
+        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -931,21 +943,9 @@ def search_certificates(by, value):
 
     available_search_fields = certificates.columns.tolist()
 
-    if not by:
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if not isinstance(by, str):
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
     if isinstance(by, str) and by not in available_search_fields:
         raise ValueError('ERR#0026: the introduced field to search can either just be '
                          + ' or '.join(available_search_fields))
-
-    if not value:
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
-
-    if not isinstance(value, str):
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     certificates['matches'] = certificates[by].str.contains(value, case=False)
 

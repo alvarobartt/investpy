@@ -889,17 +889,11 @@ def search_bonds(by, value):
 
     """
 
-    available_search_fields = ['name', 'full_name']
-
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -917,6 +911,14 @@ def search_bonds(by, value):
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
+    bonds.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = bonds.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     bonds['matches'] = bonds[by].str.contains(value, case=False)
 
     search_result = bonds.loc[bonds['matches'] == True].copy()
@@ -924,7 +926,7 @@ def search_bonds(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
