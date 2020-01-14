@@ -12,5 +12,6 @@ API Reference
    currency_crosses_api.rst
    bonds_api.rst
    commodities_api.rst
+   certificates_api.rst
    crypto_api.rst
    search_api.rst

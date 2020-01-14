@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
-__version__ = '0.9.12'
+__version__ = '0.9.13'
 
 from investpy.stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \
     get_stock_historical_data, get_stock_company_profile, get_stock_dividends, get_stock_information, get_stocks_overview, \
@@ -32,5 +32,9 @@ from investpy.commodities import get_commodities, get_commodities_list, get_comm
 
 from investpy.crypto import get_cryptos, get_cryptos_list, get_cryptos_dict, get_crypto_recent_data, \
     get_crypto_historical_data, get_crypto_information, get_cryptos_overview, search_cryptos
+
+from investpy.certificates import get_certificates, get_certificates_list, get_certificates_dict, get_certificate_countries, \
+    get_certificate_recent_data, get_certificate_historical_data, get_certificate_information, get_certificates_overview, \
+    search_certificates
 
 from investpy.search import search

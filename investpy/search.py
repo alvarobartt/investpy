@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import requests
@@ -25,8 +25,9 @@ def search(text, n_results=None, filters=None):
         n_results (:obj:`int`, optional): number of search results to retrieve and return from Investing.
         filters (:obj:`list` of :obj:`str`, optional):
             list with the filter/s to be applied to the search result quotes so that the resulting quotes match
-            the filters. Possible filters are: `indice`, `equities`, `etf`, `fund`, `commodity`, `currency`, `crypto`,
-            `bond`, `certificate` and `fxfuture`. Default is `None` which means that no filter will be applied.
+            the filters. Possible filters are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
+            `crypto`, `bonds`, `certificates` and `fxfutures`. Default is `None` which means that no filter will 
+            be applied.
 
     Returns:
         :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
@@ -56,12 +57,27 @@ def search(text, n_results=None, filters=None):
     if filters and not isinstance(filters, list):
         raise ValueError('ERR#0094: filters parameter can just be a list or None if no filter wants to be applied.')
 
-    available_filters = ['indice', 'equities', 'etf', 'fund', 'commodity', 'currency', 'crypto', 'bond', 'certificate', 'fxfuture']
+    available_filters = {
+        'indices': 'indice', 
+        'stocks': 'equities', 
+        'etfs': 'etf', 
+        'funds': 'fund', 
+        'commodities': 'commodity', 
+        'currencies': 'currency', 
+        'cryptos': 'crypto', 
+        'bonds': 'bond', 
+        'certificates': 'certificate', 
+        'fxfutures': 'fxfuture'
+    }
+
+    print(available_filters.keys())
 
     if filters:
-        condition = set(filters).issubset(available_filters)
+        condition = set(filters).issubset(available_filters.keys())
         if condition is False:
             raise ValueError('ERR#0095: filters parameter values must be contained in ' + ', '.join(available_filters) + '.')
+        else:
+            filters = [available_filters[filter_] for filter_ in filters]
 
     params = {
         'search_text': text,

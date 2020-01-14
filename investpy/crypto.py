@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -35,13 +35,13 @@ def get_cryptos():
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                name | symbol | currency
+                name | symbol | currency 
                 -----|--------|----------
                 xxxx | xxxxxx | xxxxxxxx 
 
     Raises:
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
 
     """
 
@@ -68,8 +68,8 @@ def get_cryptos_list():
                 cryptos_list = ['Bitcoin', 'Ethereum', 'XRP', 'Bitcoin Cash', 'Tether', 'Litecoin', ...]
 
     Raises:
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
     
     """
 
@@ -107,8 +107,8 @@ def get_cryptos_dict(columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
 
     """
 
@@ -496,6 +496,9 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+        if not req.text:
+            continue
+
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
 
@@ -590,8 +593,8 @@ def get_crypto_information(crypto, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency_crosses.csv file was not found or errored.
-        IOError: raised if currency_crosses.csv file is empty or errored.
+        FileNotFoundError: raised if `cryptos.csv` file was not found or errored.
+        IOError: raised if `cryptos.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -706,7 +709,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: raised it no overview results could be retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -861,22 +864,17 @@ def search_cryptos(by, value):
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if `cryptos.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
 
     """
-
-    available_search_fields = ['name', 'symbol']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -894,6 +892,14 @@ def search_cryptos(by, value):
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
+    cryptos.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = cryptos.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     cryptos['matches'] = cryptos[by].str.contains(value, case=False)
 
     search_result = cryptos.loc[cryptos['matches'] == True].copy()
@@ -901,7 +907,7 @@ def search_cryptos(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

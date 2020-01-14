@@ -21,13 +21,13 @@ import sphinx_rtd_theme
 # -- Project information -----------------------------------------------------
 
 project = 'investpy'
-copyright = '2018-2019, Alvaro Bartolome'
+copyright = '2018-2020, Alvaro Bartolome'
 author = 'Alvaro Bartolome'
 
 # The short X.Y version
-version = '0.9.12'
+version = '0.9.13'
 # The full version, including alpha/beta/rc tags
-release = '0.9.12'
+release = '0.9.13'
 
 
 # -- General configuration ---------------------------------------------------

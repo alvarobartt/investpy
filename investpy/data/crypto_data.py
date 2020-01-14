@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import unidecode
@@ -31,8 +31,8 @@ def cryptos_as_df():
                 xxxx | xxxxxx | xxxxxxxx 
 
     Raises:
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
 
     """
 
@@ -73,8 +73,8 @@ def cryptos_as_list():
                 cryptos_list = ['Bitcoin', 'Ethereum', 'XRP', 'Bitcoin Cash', 'Tether', 'Litecoin', ...]
 
     Raises:
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
     
     """
 
@@ -125,8 +125,8 @@ def cryptos_as_dict(columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if cryptos file was not found.
-        IOError: raised when cryptos file is missing or empty.
+        FileNotFoundError: raised if `cryptos.csv` file was not found.
+        IOError: raised when `cryptos.csv` file is missing or empty.
 
     """
 

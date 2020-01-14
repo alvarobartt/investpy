@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import investpy
@@ -368,6 +368,11 @@ def test_stocks_errors():
         {
             'stock': 'BBVA',
             'country': None,
+            'language': 'spanish'
+        },
+        {
+            'stock': 'BBVA',
+            'country': ['error'],
             'language': 'spanish'
         },
         {
@@ -2190,6 +2195,45 @@ def test_currency_crosses_errors():
 
     params = [
         {
+            'currency': None,
+            'as_json': False,
+            'n_results': 100
+        },
+        {
+            'currency': ['error'],
+            'as_json': True,
+            'n_results': 100
+        },
+        {
+            'currency': 'eur',
+            'as_json': 'error',
+            'n_results': 100
+        },
+        {
+            'currency': 'eur',
+            'as_json': True,
+            'n_results': 'error'
+        },
+        {
+            'currency': 'eur',
+            'as_json': True,
+            'n_results': 0
+        },
+        {
+            'currency': 'error',
+            'as_json': True,
+            'n_results': 10
+        }
+    ]
+    
+    for param in params:
+        try:
+            investpy.get_currency_crosses_overview(currency=param['currency'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
             'currency_cross': None,
             'as_json': False
         },
@@ -3275,6 +3319,438 @@ def test_crypto_errors():
             pass
 
 
+def test_certificate_errors():
+    """
+    This function raises errors on certificate retrieval functions.
+    """
+
+    params = [
+        {
+            'country': ['error']
+        },
+        {
+            'country': 'error'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificates(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': ['error']
+        },
+        {
+            'country': 'error'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificates_list(country=param['country'])
+        except:
+            pass
+
+    params = [
+        {
+            'country': ['error'],
+            'columns': ['full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'france',
+            'columns': ['full_name', 'name'],
+            'as_json': 'error'
+        },
+        {
+            'country': 'france',
+            'columns': 'error',
+            'as_json': False
+        },
+        {
+            'country': 'france',
+            'columns': ['error'],
+            'as_json': False
+        },
+        {
+            'country': 'error',
+            'columns': ['full_name', 'name'],
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificates_dict(country=param['country'],
+                                           columns=param['columns'],
+                                           as_json=param['as_json'])
+        except:
+            pass
+
+    params = [
+        {
+            'certificate': None,
+            'country': 'france',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': ['error'],
+            'country': 'france',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': None,
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': ['error'],
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': 'error',
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'spain',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'error',
+            'country': 'france',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificate_recent_data(certificate=param['certificate'],
+                                                 country=param['country'],
+                                                 as_json=param['as_json'],
+                                                 order=param['order'],
+                                                 interval=param['interval'])
+        except:
+            pass
+        
+    params = [
+        {
+            'certificate': None,
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': ['error'],
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': None,
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': ['error'],
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': None,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'error',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': None
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': ['error']
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'error'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': 'error',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': 'error',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/2019',
+            'to_date': '01/01/2018',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'from_date': '01/01/1990',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'error',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        },
+        {
+            'certificate': 'error',
+            'country': 'france',
+            'from_date': '01/01/2018',
+            'to_date': '01/01/2019',
+            'as_json': False,
+            'order': 'ascending',
+            'interval': 'Daily'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificate_historical_data(certificate=param['certificate'],
+                                                     country=param['country'],
+                                                     from_date=param['from_date'],
+                                                     to_date=param['to_date'],
+                                                     as_json=param['as_json'],
+                                                     order=param['order'],
+                                                     interval=param['interval'])
+        except:
+            pass
+
+    params = [
+        {
+            'certificate': None,
+            'country': 'france',
+            'as_json': False
+        },
+        {
+            'certificate': ['error'],
+            'country': 'france',
+            'as_json': False
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': None,
+            'as_json': False
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': ['error'],
+            'as_json': False
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': None
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'error',
+            'as_json': False
+        },
+        {
+            'certificate': 'error',
+            'country': 'france',
+            'as_json': False
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificate_information(certificate=param['certificate'],
+                                                 country=param['country'],
+                                                 as_json=param['as_json'])
+        except:
+            pass
+    
+    params = [
+        {
+            'country': None,
+            'as_json': False,
+            'n_results': 10
+        },
+        {
+            'country': ['error'],
+            'as_json': False,
+            'n_results': 10
+        },
+        {
+            'country': 'france',
+            'as_json': None,
+            'n_results': 10
+        },
+        {
+            'country': 'france',
+            'as_json': False,
+            'n_results': 'error'
+        },
+        {
+            'country': 'france',
+            'as_json': False,
+            'n_results': 0
+        },
+        {
+            'country': 'error',
+            'as_json': False,
+            'n_results': 10
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_certificates_overview(country=param['country'],
+                                               as_json=param['as_json'],
+                                               n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
+            'by': None,
+            'value': 'COMMERZBANK'
+        },
+        {
+            'by': ['error'],
+            'value': 'COMMERZBANK'
+        },
+        {
+            'by': 'error',
+            'value': 'COMMERZBANK'
+        },
+        {
+            'by': 'name',
+            'value': None
+        },
+        {
+            'by': 'name',
+            'value': ['error']
+        },
+        {
+            'by': 'symbol',
+            'value': 'error'
+        },
+    ]
+
+    for param in params:
+        try:
+            investpy.search_certificates(by=param['by'], value=param['value'])
+        except:
+            pass
+
+
 def test_search_errors():
     """
     This function raises errors on search functions.
@@ -3381,5 +3857,6 @@ if __name__ == '__main__':
     test_bonds_errors()
     test_commodities_errors()
     test_crypto_errors()
+    test_certificate_errors()
     test_search_errors()
     test_user_agent_errors()

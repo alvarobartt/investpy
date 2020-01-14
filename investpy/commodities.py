@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -47,8 +47,8 @@ def get_commodities(group=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when commodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
 
     """
 
@@ -77,8 +77,8 @@ def get_commodities_list(group=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when commodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
     
     """
 
@@ -121,8 +121,8 @@ def get_commodities_dict(group=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when commodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
 
     """
 
@@ -140,8 +140,8 @@ def get_commodity_groups():
             The resulting :obj:`list` contains all the available commodity groups as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when comodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
 
     """
 
@@ -678,7 +678,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if commodities.csv file was not found or errored.
+        FileNotFoundError: raised if `commodities.csv` file was not found or errored.
         IOError: raised if commodities.csv file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
@@ -795,12 +795,6 @@ def get_commodity_information(commodity, country=None, as_json=False):
                     continue
                 except:
                     pass
-                try:
-                    value = element.getnext().text_content().strip()
-                    result.at[0, title_] = value
-                    continue
-                except:
-                    pass
 
         result.replace({'N/A': None}, inplace=True)
 
@@ -843,7 +837,9 @@ def get_commodities_overview(group, as_json=False, n_results=100):
         ValueError: raised if any of the introduced arguments errored.
         FileNotFoundError: raised if `commodities.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: 
+            raised either if the introduced group does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -962,22 +958,17 @@ def search_commodities(by, value):
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if `commodities.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
 
     """
-
-    available_search_fields = ['name', 'full_name', 'title']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -995,6 +986,14 @@ def search_commodities(by, value):
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
+    commodities.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = commodities.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     commodities['matches'] = commodities[by].str.contains(value, case=False)
 
     search_result = commodities.loc[commodities['matches'] == True].copy()
@@ -1002,7 +1001,7 @@ def search_commodities(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

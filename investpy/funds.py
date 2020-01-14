@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -23,7 +23,7 @@ from investpy.data.funds_data import fund_countries_as_list
 def get_funds(country=None):
     """
     This function retrieves all the available `funds` from Investing.com and returns them as a :obj:`pandas.DataFrame`,
-    which contains not just the fund names, but all the fields contained on the funds file.
+    which contains not just the fund names, but all the fields contained on the `funds.csv` file.
     All the available funds can be found at: https://www.investing.com/funds/
 
     Args:
@@ -37,14 +37,14 @@ def get_funds(country=None):
 
             In case the information was successfully retrieved, the :obj:`pandas.DataFrame` will look like::
 
-                asset class | id | isin | issuer | name | symbol | tag | currrency
-                ------------|----|------|--------|------|--------|-----|-----------
-                xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
+                country | name | symbol | issuer | isin | asset_class | currency | underlying
+                --------|------|--------|--------|------|-------------|----------|------------
+                xxxxxxx | xxxx | xxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxx
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -66,15 +66,17 @@ def get_funds_list(country=None):
 
             In case the information was successfully retrieved from the CSV file, the :obj:`list` will look like::
 
-                funds = ['Blackrock Global Funds - Global Allocation Fund E2',
-                        'Quality Inversión Conservadora Fi',
-                        'Nordea 1 - Stable Return Fund E Eur',
-                        ...]
+                funds = [
+                    'Blackrock Global Funds - Global Allocation Fund E2',
+                    'Quality Inversión Conservadora Fi',
+                    'Nordea 1 - Stable Return Fund E Eur',
+                    ...
+                ]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -83,9 +85,9 @@ def get_funds_list(country=None):
 
 def get_funds_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing the
-    `asset_class`, `id`, `issuer`, `name`, `symbol`, `tag` and `currency`. All the available funds can be found at:
-    https://www.investing.com/funds/
+    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing 
+    the country, name, symbol, tag, id, issuer, isin, asset_class, currency and underlying data. All the available
+    funds can be found at: https://www.investing.com/funds/
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available funds from.
@@ -102,20 +104,20 @@ def get_funds_dict(country=None, columns=None, as_json=False):
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
                 {
-                    'asset class': asset_class,
-                    'id': id,
-                    'isin': isin,
-                    'issuer': issuer,
+                    'country': country,
                     'name': name,
                     'symbol': symbol,
-                    'tag': tag,
-                    'currency': currency
+                    'issuer': issuer,
+                    'isin': isin,
+                    'asset_class': asset_class,
+                    'currency': currency,
+                    'underlying': underlying
                 }
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when the funds file was not found.
-        IOError: raised if the funds file is missing or errored.
+        FileNotFoundError: raised when the `funds.csv` file was not found.
+        IOError: raised if the `funds.csv` file is missing or errored.
     
     """
 
@@ -134,8 +136,8 @@ def get_fund_countries():
             The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised when the funds file was not found.
-        IndexError: raised if fund countries file was unavailable or not found.
+        FileNotFoundError: raised when the `fund_countries.csv` file was not found.
+        IndexError: raised if `fund_countries.csv` file was unavailable or not found.
     
     """
 
@@ -538,6 +540,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:
@@ -836,9 +839,11 @@ def get_funds_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError: raised when either `funds.csv` or `fund_countries.csv` file is missing.
+        FileNotFoundError: raised when `funds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the indexed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -977,22 +982,17 @@ def search_funds(by, value):
 
     Raises:
         ValueError: raised if any of the introduced params is not valid or errored.
+        FileNotFoundError: raised if `funds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
     
     """
-
-    available_search_fields = ['name', 'symbol', 'issuer', 'isin']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -1010,6 +1010,14 @@ def search_funds(by, value):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
+    funds.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = funds.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     funds['matches'] = funds[by].str.contains(value, case=False)
 
     search_result = funds.loc[funds['matches'] == True].copy()
@@ -1017,7 +1025,7 @@ def search_funds(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import requests
@@ -70,7 +70,7 @@ class SearchObj(object):
 
         """
 
-        if self.pair_type in ['equities', 'fund', 'etf', 'currency']:
+        if self.pair_type in ['equities', 'fund', 'etf', 'currency', 'certificate']:
             header = self.symbol + ' Historical Data'
             head, params = self._prepare_request(header)
         elif self.pair_type in ['bond']:
@@ -79,7 +79,7 @@ class SearchObj(object):
         elif self.pair_type in ['indice', 'crypto', 'commodity']:
             header = self.name + ' Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['certificate', 'fxfuture']:
+        elif self.pair_type in ['fxfuture']:
             self.data = None
             return None
 
@@ -130,13 +130,13 @@ class SearchObj(object):
         if from_date >= to_date:
             raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
-        if self.pair_type in ['equities', 'fund', 'etf', 'currency']:
+        if self.pair_type in ['equities', 'fund', 'etf', 'currency', 'certificate']:
             header = self.symbol + ' Historical Data'
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
         elif self.pair_type in ['indice', 'commodity', 'crypto']:
             header = self.name + ' Historical Data'
-        elif self.pair_type in ['certificate', 'fxfuture']:
+        elif self.pair_type in ['fxfuture']:
             self.data = None
             return
 

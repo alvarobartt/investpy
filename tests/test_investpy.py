@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import pytest
@@ -119,6 +119,11 @@ def test_investpy_stocks():
             'stock': 'bbva',
             'country': 'spain',
             'as_json': True
+        },
+        {
+            'stock': 'HSBK',
+            'country': 'kazakhstan',
+            'as_json': False
         }
     ]
 
@@ -129,12 +134,32 @@ def test_investpy_stocks():
         {
             'country': 'spain',
             'as_json': True,
-            'n_results': 2
+            'n_results': 50
         },
         {
-            'country': 'spain',
+            'country': 'united states',
             'as_json': False,
-            'n_results': 2
+            'n_results': 50
+        },
+        {
+            'country': 'bosnia',
+            'as_json': False,
+            'n_results': 50
+        },
+        {
+            'country': 'palestine',
+            'as_json': False,
+            'n_results': 50
+        },
+        {
+            'country': 'dubai',
+            'as_json': False,
+            'n_results': 50
+        },
+        {
+            'country': 'ivory coast',
+            'as_json': False,
+            'n_results': 50
         }
     ]
 
@@ -167,22 +192,22 @@ def test_investpy_funds():
     params = [
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
@@ -301,22 +326,22 @@ def test_investpy_etfs():
     params = [
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': None,
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': True
         },
         {
             'country': 'spain',
-            'columns': ['id', 'name'],
+            'columns': ['name'],
             'as_json': False
         },
         {
@@ -661,7 +686,21 @@ def test_investpy_currency_crosses():
     for param in params:
         investpy.get_currency_cross_information(currency_cross=param['currency_cross'], as_json=param['as_json'])
     
-    investpy.get_currency_crosses_overview()
+    params = [
+        {
+            'currency': 'try',
+            'as_json': False,
+            'n_results': 100
+        },
+        {
+            'currency': 'amd',
+            'as_json': True,
+            'n_results': 100
+        }
+    ]
+    
+    for param in params:
+        investpy.get_currency_crosses_overview(currency=param['currency'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_currency_crosses(by='base', value='EUR')
 
@@ -759,7 +798,11 @@ def test_investpy_bonds():
         {
             'bond': 'argentina 3y',
             'as_json': True
-        }
+        },
+        {
+            'bond': 'germany 3m',
+            'as_json': False
+        },
     ]
 
     for param in params:
@@ -908,9 +951,9 @@ def test_investpy_commodities():
     investpy.search_commodities(by='name', value='gold')
 
 
-def test_investpy_crypto():
+def test_investpy_cryptos():
     """
-    This function checks that cryptocurrencies data retrieval functions listed in investpy work properly.
+    This function checks that crypto currencies data retrieval functions listed in investpy work properly.
     """
     
     investpy.get_cryptos()
@@ -1014,6 +1057,132 @@ def test_investpy_crypto():
     investpy.search_cryptos(by='name', value='bitcoin')
 
 
+def test_investpy_certificates():
+    """
+    This function checks that certificate data retrieval functions listed in investpy work properly.
+    """
+
+    params = [
+        {
+            'country': 'france',
+        },
+        {
+            'country': None,
+        },
+    ]
+
+    for param in params:
+        investpy.get_certificates(country=param['country'])
+        investpy.get_certificates_list(country=param['country'])
+
+    params = [
+        {
+            'country': None,
+            'columns': ['full_name', 'name'],
+            'as_json': True
+        },
+        {
+            'country': None,
+            'columns': ['full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'france',
+            'columns': ['full_name', 'name'],
+            'as_json': True
+        },
+        {
+            'country': 'france',
+            'columns': ['full_name', 'name'],
+            'as_json': False
+        },
+        {
+            'country': 'france',
+            'columns': None,
+            'as_json': False
+        },
+    ]
+
+    for param in params:
+        investpy.get_certificates_dict(country=param['country'],
+                                       columns=param['columns'],
+                                       as_json=param['as_json'])
+
+    investpy.get_certificate_countries()
+
+    params = [
+        {
+            'as_json': True,
+            'order': 'ascending',
+        },
+        {
+            'as_json': False,
+            'order': 'ascending',
+        },
+        {
+            'as_json': True,
+            'order': 'descending',
+        },
+        {
+            'as_json': False,
+            'order': 'descending',
+        },
+    ]
+
+    for param in params:
+        investpy.get_certificate_recent_data(certificate='COMMERZBANK SG 31Dec99',
+                                             country='france',
+                                             as_json=param['as_json'],
+                                             order=param['order'],
+                                             interval='Daily')
+
+        investpy.get_certificate_historical_data(certificate='COMMERZBANK SG 31Dec99',
+                                                 country='france',
+                                                 from_date='01/01/1990',
+                                                 to_date='01/01/2019',
+                                                 as_json=param['as_json'],
+                                                 order=param['order'],
+                                                 interval='Daily')
+
+    params = [
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': False
+        },
+        {
+            'certificate': 'COMMERZBANK SG 31Dec99',
+            'country': 'france',
+            'as_json': True
+        }
+    ]
+
+    for param in params:
+        investpy.get_certificate_information(certificate=param['certificate'],
+                                             country=param['country'],
+                                             as_json=param['as_json'])
+    
+    params = [
+        {
+            'country': 'france',
+            'as_json': True,
+            'n_results': 10
+        },
+        {
+            'country': 'france',
+            'as_json': False,
+            'n_results': 10
+        }
+    ]
+
+    for param in params:
+        investpy.get_certificates_overview(country=param['country'],
+                                           as_json=param['as_json'],
+                                           n_results=param['n_results'])
+
+    investpy.search_certificates(by='name', value='COMMERZBANK')
+
+
 def test_investpy_search():
     """
     This function checks that investpy search function works properly.
@@ -1043,12 +1212,12 @@ def test_investpy_search():
         {
             'text': 'apple',
             'n_results': None,
-            'filters': ['equities']
+            'filters': ['stocks']
         },
         {
             'text': 'apple',
             'n_results': 10,
-            'filters': ['equities']
+            'filters': ['stocks']
         }
     ]
 
@@ -1084,5 +1253,6 @@ if __name__ == '__main__':
     test_investpy_currency_crosses()
     test_investpy_bonds()
     test_investpy_commodities()
-    test_investpy_crypto()
+    test_investpy_cryptos()
+    test_investpy_certificates()
     test_investpy_search()

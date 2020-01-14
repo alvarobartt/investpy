@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import json
@@ -35,8 +35,8 @@ def indices_as_df(country=None):
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file from `investpy` is missing or errored.
     
     """
 
@@ -86,8 +86,8 @@ def indices_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file is missing or errored.
     
     """
 
@@ -135,20 +135,20 @@ def indices_as_dict(country=None, columns=None, as_json=False):
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
-                {
+                indices_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,
                     'symbol': symbol,
-                    'tag': tag,
-                    'id': id,
-                    'currency': currency
+                    'currency': currency,
+                    'class': class,
+                    'market': market
                 }
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file is missing or errored.
     
     """
 
@@ -203,8 +203,8 @@ def index_countries_as_list():
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file is missing or errored.
     
     """
 

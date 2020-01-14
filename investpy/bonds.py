@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -40,7 +40,7 @@ def get_bonds(country=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name 
+                country | name | full name 
                 --------|------|-----------
                 xxxxxxx | xxxx | xxxxxxxxx
 
@@ -56,11 +56,12 @@ def get_bonds(country=None):
 
 def get_bonds_list(country=None):
     """
-    This function retrieves all the bond names as stored in `bonds.csv` file, which contains all the
+    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
     data from the bonds as previously retrieved from Investing.com. So on, this function will just return
     the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
-    from investpy. Additionally, note that the country filtering can be applied, so that just the names of the 
-    bonds from the specified country are returned.
+    from investpy. Additionally, note that the country filtering can be applied, which is really useful since
+    this function just returns the names and in bond data retrieval functions both the name and the country
+    must be specified and they must match.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available bonds from.
@@ -126,9 +127,9 @@ def get_bonds_dict(country=None, columns=None, as_json=False):
 def get_bond_countries():
     """
     This function returns a listing with all the available countries from where bonds can be retrieved, so to
-    let the user know which of them are available. Also, not just the available countries, but the required 
-    name is provided since Investing.com has a certain country name standard and countries should be specified 
-    the same way they are in Investing.com.
+    let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
+    function. Also, not just the available countries, but the required name is provided since Investing.com has a
+    certain country name standard and countries should be specified the same way they are in Investing.com.
 
     Returns:
         :obj:`list` - countries:
@@ -727,12 +728,6 @@ def get_bond_information(bond, as_json=False):
                     continue
                 except:
                     pass
-                try:
-                    value = element.getnext().text_content().strip()
-                    result.at[0, title_] = value
-                    continue
-                except:
-                    pass
 
         result.replace({'N/A': None}, inplace=True)
 
@@ -771,7 +766,9 @@ def get_bonds_overview(country, as_json=False):
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `bonds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -886,22 +883,17 @@ def search_bonds(by, value):
 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if `bonds.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
 
     """
-
-    available_search_fields = ['name', 'full_name']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -919,6 +911,14 @@ def search_bonds(by, value):
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
+    bonds.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = bonds.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     bonds['matches'] = bonds[by].str.contains(value, case=False)
 
     search_result = bonds.loc[bonds['matches'] == True].copy()
@@ -926,7 +926,7 @@ def search_bonds(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

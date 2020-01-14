@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import unidecode
@@ -35,8 +35,8 @@ def stocks_as_df(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -88,8 +88,8 @@ def stocks_as_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
     
     """
 
@@ -140,17 +140,15 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
                     'country': country,
                     'name': name,
                     'full_name': full_name,
-                    'tag': tag,
                     'isin': isin,
-                    'id': id,
                     'currency': currency,
                     'symbol': symbol,
                 }
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised if stocks file was not found.
-        IOError: raised when stocks file is missing or empty.
+        FileNotFoundError: raised if `stocks.csv` file was not found.
+        IOError: raised when `stocks.csv` file is missing or empty.
 
     """
 
@@ -180,7 +178,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
 
     if not all(column in stocks.columns.tolist() for column in columns):
         raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, name, full_name, tag, isin, id, symbol, currency>")
+                         "<country, name, full_name, isin, currency, symbol>")
 
     if country is None:
         if as_json:
@@ -207,8 +205,8 @@ def stock_countries_as_list():
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if stock countries file was not found.
-        IOError: raised when stock countries file is missing or empty.
+        FileNotFoundError: raised if `stock_countries.csv` file was not found.
+        IOError: raised when `stock_countries.csv` file is missing or empty.
 
     """
 

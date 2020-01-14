@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
 import json
-from random import randint
+from random import randint, sample
+import string
 
 import pandas as pd
 import pkg_resources
@@ -42,18 +43,17 @@ def get_currency_crosses(base=None, second=None):
     Returns:
         :obj:`pandas.DataFrame` - currency_crosses_df:
             The resulting :obj:`pandas.DataFrame` contains all the currency crosses basic information retrieved from
-            Investing.com, some of which is not useful for the user, but for the inner package functions, such as the
-            `tag` or `id` fields.
+            Investing.com.
 
             In case the information was successfully retrieved, the resulting :obj:`pandas.DataFrame` will look like::
 
-                name | full_name | tag | id | base | second | base_name | second_name
-                -----|-----------|-----|----|------|--------|-----------|-------------
-                xxxx | xxxxxxxxx | xxx | xx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
+                name | full_name | base | second | base_name | second_name
+                -----|-----------|------|--------|-----------|-------------
+                xxxx | xxxxxxxxx | xxxx | xxxxxx | xxxxxxxxx | xxxxxxxxxxx
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -94,7 +94,7 @@ def get_currency_crosses_list(base=None, second=None):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -121,7 +121,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
             symbol of the second currency of the currency cross, this will return a :obj:`pandas.DataFrame` containing
             all the currency crosses where the second currency matches the introduced one.
         columns (:obj:`list`, optional):
-            names of the columns of the currency crosses data to retrieve <name, full_name, tag, id, base, base_name,
+            names of the columns of the currency crosses data to retrieve <name, full_name, base, base_name,
             second, second_name>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
@@ -136,8 +136,6 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
                 {
                     'name': name,
                     'full_name': full_name,
-                    'tag': tag,
-                    'id': id,
                     'base': base,
                     'base_name': base_name,
                     'second': second,
@@ -146,7 +144,7 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
     
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -173,7 +171,7 @@ def get_available_currencies():
                 ]
 
     Raises:
-        FileNotFoundError: raised if currency crosses file was not found.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
     
     """
@@ -545,8 +543,12 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+        if not req.text:
+            continue
+
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:
@@ -635,8 +637,8 @@ def get_currency_cross_information(currency_cross, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if currency_crosses.csv file was not found or errored.
-        IOError: raised if currency_crosses.csv file is empty or errored.
+        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
+        IOError: raised if `currency_crosses.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -736,9 +738,149 @@ def get_currency_cross_information(currency_cross, as_json=False):
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_currency_crosses_overview():
-    # Re-structure currency crosses retrieval with https://www.investing.com/currencies/single-currency-crosses
-    return None
+def get_currency_crosses_overview(currency, as_json=False, n_results=100):
+    """
+    This function retrieves an overview containing all the real time data available for the main stocks from a country,
+    such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
+    function is to get an overview on the main stocks from a country, so to get a general view. Note that since 
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks 
+    is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
+
+    Args:
+        currency (:obj:`str`): name of the currency to retrieve the currency crosses overview from.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        n_results (:obj:`int`, optional): number of results to be displayed on the overview table (0-1000).
+
+    Returns:
+        :obj:`pandas.DataFrame` - stocks_overview:
+            The resulting :obj:`pandas.DataFrame` contains all the data available in Investing.com of the main currency
+            crosses from a given currency in order to get an overview of them.
+
+            If the retrieval process succeeded, the resulting :obj:`pandas.DataFrame` should look like::
+
+                symbol | name | bid | ask | high | low | change | change_percentage
+                -------|------|-----|-----|------|-----|--------|-------------------
+                xxxxxx | xxxx | xxx | xxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx 
+    
+    Raises:
+        ValueError: raised if any of the introduced arguments errored.
+        FileNotFoundError: raised if `currencies.csv` file is missing.
+        IOError: raised if data could not be retrieved due to file error.
+        RuntimeError: 
+            raised either if the introduced currency does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
+        ConnectionError: raised if GET requests does not return 200 status code.
+    
+    """
+
+    if currency is None:
+        raise ValueError("ERR#0105: currency can not be None, it should be a str.")
+
+    if not isinstance(currency, str):
+        raise ValueError("ERR#0106: specified currency value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if not isinstance(n_results, int):
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    if 1 > n_results or n_results > 1000:
+        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'currency_crosses', 'currencies.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0103: currencies file not found or errored.")
+
+    if currencies is None:
+        raise IOError("ERR#0104: currencies not found or unable to retrieve.")
+
+    currency = unidecode.unidecode(currency.lower())
+
+    if currency not in currencies['symbol'].str.lower().tolist():
+        raise ValueError("ERR#0106: specified currency value not valid.")
+
+    currency = currencies.loc[(currencies['symbol'].str.lower() == currency).idxmax(), 'symbol']
+
+    value = currencies.loc[(currencies['symbol'] == currency).idxmax(), 'value']
+    session_id = ''.join(sample(string.ascii_lowercase, 9))
+
+    params = {
+        'session_uniq_id': session_id,
+        'currencies': value
+    }
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/currencies/Service/ChangeCurrency'
+
+    req = requests.get(url, headers=head, params=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.json()['HTML'])
+    table = root_.xpath(".//table[@id='cr1']/tbody/tr")
+
+    results = list()
+
+    if len(table) > 0:
+        for row in table[:n_results]:
+            id_ = row.get('id').replace('pair_', '')
+
+            symbol = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].get('title')
+
+            if symbol.__contains__(currency + '='):
+                old_symbol = symbol
+                symbol = symbol.replace('=', '').replace(currency, '/' + currency)
+                name = name.replace(old_symbol, symbol)
+            elif symbol.__contains__('='):
+                old_symbol = symbol
+                symbol = symbol.replace('=', '').replace(currency, currency + '/')
+                name = name.replace(old_symbol, symbol)
+
+            pid = 'pid-' + id_
+
+            bid = row.xpath(".//td[@class='" + pid + "-bid']")[0].text_content()
+            ask = row.xpath(".//td[@class='" + pid + "-ask']")[0].text_content()
+            high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
+            low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
+
+            pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
+            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+
+            data = {
+                "symbol": symbol,
+                "name": name,
+                "bid": float(bid.replace(',', '')),
+                "ask": float(ask.replace(',', '')),
+                "high": float(high.replace(',', '')),
+                "low": float(low.replace(',', '')),
+                "change": pc,
+                "change_percentage": pcp
+            }
+
+            results.append(data)
+    else:
+        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+
+    df = pd.DataFrame(results)
+
+    if as_json:
+        return json.loads(df.to_json(orient='records'))
+    else:
+        return df
 
 
 def search_currency_crosses(by, value):
@@ -762,22 +904,17 @@ def search_currency_crosses(by, value):
 
     Raises:
        ValueError: raised if any of the introduced params is not valid or errored.
+       FileNotFoundError: raised if `currency_crosses.csv` file is missing.
        IOError: raised if data could not be retrieved due to file error.
        RuntimeError: raised if no results were found for the introduced value in the introduced field.
     
     """
-
-    available_search_fields = ['name', 'full_name', 'base', 'second', 'base_name', 'second_name']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -795,6 +932,14 @@ def search_currency_crosses(by, value):
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
 
+    currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = currency_crosses.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     currency_crosses['matches'] = currency_crosses[by].str.contains(value, case=False)
 
     search_result = currency_crosses.loc[currency_crosses['matches'] == True].copy()
@@ -802,7 +947,7 @@ def search_currency_crosses(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + ' value.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

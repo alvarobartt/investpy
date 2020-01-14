@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.funds &mdash; investpy 0.9.11 documentation</title>
+  <title>investpy.funds &mdash; investpy 0.9.13 documentation</title>
   
 
   
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.11
+                0.9.13
               </div>
             
           
@@ -101,11 +101,13 @@
 <li class="toctree-l2"><a class="reference internal" href="currency_crosses_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.currency_crosses</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="bonds_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.bonds</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="commodities_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.commodities</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="certificates_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.certificates</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="crypto_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.crypto</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="search_api.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">investpy.search</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="information.html">Additional Information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequent Asked Questions - FAQs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="disclaimer.html">Disclaimer</a></li>
 </ul>
 
@@ -191,8 +193,8 @@ the return listing from this function can be used for country param check if nee
 </dd>
 <dt class="field-odd">Raises</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IndexError</strong> – raised if fund countries file was unavailable or not found.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>fund_countries.csv</cite> file was not found.</p></li>
+<li><p><strong>IndexError</strong> – raised if <cite>fund_countries.csv</cite> file was unavailable or not found.</p></li>
 </ul>
 </dd>
 </dl>
@@ -393,7 +395,7 @@ values for the selected fund on market days.</p>
 <dt id="investpy.funds.get_funds">
 <code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds</code><span class="sig-paren">(</span><em class="sig-param">country=None</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves all the available <cite>funds</cite> from Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code>,
-which contains not just the fund names, but all the fields contained on the funds file.
+which contains not just the fund names, but all the fields contained on the <cite>funds.csv</cite> file.
 All the available funds can be found at: <a class="reference external" href="https://www.investing.com/funds/">https://www.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -404,9 +406,9 @@ All the available funds can be found at: <a class="reference external" href="htt
 some of which is not useful for the user, but for the inner package functions, such as the <cite>id</cite> field,
 for example.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>asset class | id | isin | issuer | name | symbol | tag | currrency
-------------|----|------|--------|------|--------|-----|-----------
-xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">issuer</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">asset_class</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">underlying</span>
+<span class="o">--------|------|--------|--------|------|-------------|----------|------------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -417,8 +419,8 @@ xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>funds.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised if the <cite>funds.csv</cite> file is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -427,9 +429,9 @@ xxxxxxxxxxx | xx | xxxx | xxxxxx | xxxx | xxxxxx | xxx | xxxxxxxxx
 <dl class="function">
 <dt id="investpy.funds.get_funds_dict">
 <code class="sig-prename descclassname">investpy.funds.</code><code class="sig-name descname">get_funds_dict</code><span class="sig-paren">(</span><em class="sig-param">country=None</em>, <em class="sig-param">columns=None</em>, <em class="sig-param">as_json=False</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.funds.get_funds_dict" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function retrieves all the available funds on Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing the
-<cite>asset_class</cite>, <cite>id</cite>, <cite>issuer</cite>, <cite>name</cite>, <cite>symbol</cite>, <cite>tag</cite> and <cite>currency</cite>. All the available funds can be found at:
-<a class="reference external" href="https://www.investing.com/funds/">https://www.investing.com/funds/</a></p>
+<dd><p>This function retrieves all the available funds on Investing.com and returns them as a <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> containing
+the country, name, symbol, tag, id, issuer, isin, asset_class, currency and underlying data. All the available
+funds can be found at: <a class="reference external" href="https://www.investing.com/funds/">https://www.investing.com/funds/</a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -445,14 +447,14 @@ value to determine the format of the output data (<code class="xref py py-obj do
 fields are filled with <cite>None</cite> values.</p>
 <p>In case the information was successfully retrieved, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">dict</span></code> will look like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
-    <span class="s1">&#39;asset class&#39;</span><span class="p">:</span> <span class="n">asset_class</span><span class="p">,</span>
-    <span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="nb">id</span><span class="p">,</span>
-    <span class="s1">&#39;isin&#39;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
-    <span class="s1">&#39;issuer&#39;</span><span class="p">:</span> <span class="n">issuer</span><span class="p">,</span>
+    <span class="s1">&#39;country&#39;</span><span class="p">:</span> <span class="n">country</span><span class="p">,</span>
     <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
     <span class="s1">&#39;symbol&#39;</span><span class="p">:</span> <span class="n">symbol</span><span class="p">,</span>
-    <span class="s1">&#39;tag&#39;</span><span class="p">:</span> <span class="n">tag</span><span class="p">,</span>
-    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span>
+    <span class="s1">&#39;issuer&#39;</span><span class="p">:</span> <span class="n">issuer</span><span class="p">,</span>
+    <span class="s1">&#39;isin&#39;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
+    <span class="s1">&#39;asset_class&#39;</span><span class="p">:</span> <span class="n">asset_class</span><span class="p">,</span>
+    <span class="s1">&#39;currency&#39;</span><span class="p">:</span> <span class="n">currency</span><span class="p">,</span>
+    <span class="s1">&#39;underlying&#39;</span><span class="p">:</span> <span class="n">underlying</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -464,8 +466,8 @@ fields are filled with <cite>None</cite> values.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>funds.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised if the <cite>funds.csv</cite> file is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -484,10 +486,12 @@ All the available funds can be found at: <a class="reference external" href="htt
 <dd class="field-even"><p><p>The resulting list contains the retrieved data, which corresponds to the fund names of
 every fund listed on Investing.com.</p>
 <p>In case the information was successfully retrieved from the CSV file, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">funds</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Blackrock Global Funds - Global Allocation Fund E2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Quality Inversión Conservadora Fi&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Nordea 1 - Stable Return Fund E Eur&#39;</span><span class="p">,</span>
-        <span class="o">...</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">funds</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Blackrock Global Funds - Global Allocation Fund E2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Quality Inversión Conservadora Fi&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Nordea 1 - Stable Return Fund E Eur&#39;</span><span class="p">,</span>
+    <span class="o">...</span>
+<span class="p">]</span>
 </pre></div>
 </div>
 </p>
@@ -498,8 +502,8 @@ every fund listed on Investing.com.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised whenever any of the introduced arguments is not valid or errored.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when the funds file was not found.</p></li>
-<li><p><strong>IOError</strong> – raised if the funds file is missing or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when the <cite>funds.csv</cite> file was not found.</p></li>
+<li><p><strong>IOError</strong> – raised if the <cite>funds.csv</cite> file is missing or errored.</p></li>
 </ul>
 </dd>
 </dl>
@@ -538,9 +542,10 @@ from a country in order to get an overview of it.</p>
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if there was any argument error.</p></li>
-<li><p><strong>FileNotFoundError</strong> – raised when either <cite>funds.csv</cite> or <cite>fund_countries.csv</cite> file is missing.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised when <cite>funds.csv</cite> file is missing.</p></li>
 <li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
-<li><p><strong>RuntimeError</strong> – raised it the introduced country does not match any of the indexed ones.</p></li>
+<li><p><strong>RuntimeError</strong> – raised either if the introduced country does not match any of the listed ones or if no overview results could be
+    retrieved from Investing.com.</p></li>
 <li><p><strong>ConnectionError</strong> – raised if GET requests does not return 200 status code.</p></li>
 </ul>
 </dd>
@@ -571,6 +576,7 @@ in the specified field). If there are no results and error will be raised, but o
 <dt class="field-even">Raises</dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>ValueError</strong> – raised if any of the introduced params is not valid or errored.</p></li>
+<li><p><strong>FileNotFoundError</strong> – raised if <cite>funds.csv</cite> file is missing.</p></li>
 <li><p><strong>IOError</strong> – raised if data could not be retrieved due to file error.</p></li>
 <li><p><strong>RuntimeError</strong> – raised if no results were found for the introduced value in the introduced field.</p></li>
 </ul>
@@ -600,7 +606,7 @@ in the specified field). If there are no results and error will be raised, but o
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018-2019, Alvaro Bartolome
+        &copy; Copyright 2018-2020, Alvaro Bartolome
 
     </p>
   </div>

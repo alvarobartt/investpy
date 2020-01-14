@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 import unidecode
@@ -36,8 +36,8 @@ def commodities_as_df(group=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when commodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
 
     """
     
@@ -90,8 +90,8 @@ def commodities_as_list(group=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when commodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
     
     """
 
@@ -155,8 +155,8 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when commodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
 
     """
 
@@ -214,8 +214,8 @@ def commodity_groups_list():
             The resulting :obj:`list` contains all the available commodity groups as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised when commodities file was not found.
-        IOError: raised when comodities file is missing or empty.
+        FileNotFoundError: raised when `commodities.csv` file was not found.
+        IOError: raised when `commodities.csv` file is missing or empty.
 
     """
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -44,8 +44,8 @@ def get_indices(country=None):
 
     Raises:
         ValueError: raised if any of the introduced parameters is missing or errored.
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file from `investpy` is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file from `investpy` is missing or errored.
     
     """
 
@@ -74,8 +74,8 @@ def get_indices_list(country=None):
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file is missing or errored.
     
     """
 
@@ -105,20 +105,20 @@ def get_indices_dict(country=None, columns=None, as_json=False):
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
-                {
+                indices_dict = {
                     'country': country,
                     'name': name,
                     'full_name': full_name,
                     'symbol': symbol,
-                    'tag': tag,
-                    'id': id,
-                    'currency': currency
+                    'currency': currency,
+                    'class': class,
+                    'market': market
                 }
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file is missing or errored.
     
     """
 
@@ -136,8 +136,8 @@ def get_index_countries():
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
     Raises:
-        FileNotFoundError: raised if the indices file was not found.
-        IOError: raised if the indices file is missing or errored.
+        FileNotFoundError: raised if the `indices.csv` file was not found.
+        IOError: raised if the `indices.csv` file is missing or errored.
     
     """
 
@@ -548,6 +548,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:
@@ -637,8 +638,8 @@ def get_index_information(index, country, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if indices.csv file was not found or errored.
-        IOError: raised if indices.csv file is empty or errored.
+        FileNotFoundError: raised if `indices.csv` file was not found or errored.
+        IOError: raised if `indices.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -776,9 +777,11 @@ def get_indices_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised when either `indices.csv` or `index_countries.csv` file is missing.
+        FileNotFoundError: raised when `indices.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the listed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -906,22 +909,17 @@ def search_indices(by, value):
 
     Raises:
        ValueError: raised if any of the introduced params is not valid or errored.
+       FileNotFoundError: raised if `indices.csv` file is missing.
        IOError: raised if data could not be retrieved due to file error.
        RuntimeError: raised if no results were found for the introduced value in the introduced field.
     
     """
-
-    available_search_fields = ['name', 'full_name', 'symbol']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -939,6 +937,14 @@ def search_indices(by, value):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
+    indices.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = indices.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     indices['matches'] = indices[by].str.contains(value, case=False)
 
     search_result = indices.loc[indices['matches'] == True].copy()
@@ -946,7 +952,7 @@ def search_indices(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

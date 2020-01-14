@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -23,10 +23,9 @@ from investpy.data.etfs_data import etf_countries_as_list
 
 def get_etfs(country=None):
     """
-    This function retrieves all the available countries to retrieve etfs from, as the listed
-    countries are the ones indexed on Investing.com. The purpose of this function is to list
-    the countries which have available etfs according to Investing.com data, so to ease the
-    etf retrieval process of a particular country.
+    This function retrieves all the available etfs indexed on Investing.com, already stored on `etfs.csv`.
+    This function also allows the users to specify which country do they want to retrieve data from or if they
+    want to retrieve it from every listed country; so on, all the indexed etfs will be returned.
 
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
@@ -40,14 +39,14 @@ def get_etfs(country=None):
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | symbol | tag | id | currency
-                --------|------|--------|-----|----|----------
-                xxxxxxx | xxxx | xxxxxx | xxx | xx | xxxxxxxx
+                country | name | full_name | symbol | isin | asset_class | currency | stock_exchange
+                --------|------|-----------|--------|------|-------------|----------|----------------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxxxxxx
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -72,14 +71,16 @@ def get_etfs_list(country=None):
 
             In case the listing was successfully retrieved, the :obj:`list` will look like::
 
-                etfs_list = ['Betashares U.S. Equities Strong Bear Currency Hedg',
-                            'Betashares Active Australian Hybrids',
-                            'Australian High Interest Cash', ...]
+                etfs_list = [
+                    'Betashares U.S. Equities Strong Bear Currency Hedg',
+                    'Betashares Active Australian Hybrids',
+                    'Australian High Interest Cash', ...
+                ]
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -96,7 +97,8 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
-            names of the columns of the etf data to retrieve <country, country_code, id, name, symbol, tag>
+            names of the columns of the etf data to retrieve <country, name, full_name, symbol, isin, asset_class, 
+            currency, stock_exchange>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
 
@@ -107,19 +109,21 @@ def get_etfs_dict(country=None, columns=None, as_json=False):
 
             In case the information was successfully retrieved, the :obj:`dict` will look like::
 
-                {
-                    'country': country,
-                    'id': id,
-                    'tag': tag,
-                    'name': name,
-                    'symbol': symbol,
-                    'currency': currency
+                etfs_dict = {
+                    "country": country,
+                    "name": name,
+                    "full_name": full_name,
+                    "symbol": symbol,
+                    "isin": isin,
+                    "asset_class": asset_class,
+                    "currency": currency,
+                    "stock_exchange": stock_exchange
                 }
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
-        FileNotFoundError: raised when etfs file was not found.
-        IOError: raised when etfs file is missing.
+        FileNotFoundError: raised when `etfs.csv` file was not found.
+        IOError: raised when `etfs.csv` file is missing.
     
     """
 
@@ -144,7 +148,7 @@ def get_etf_countries():
                 countries = ['australia', 'austria', 'belgium', 'brazil', ...]
 
     Raises:
-        FileNotFoundError: raised when etf countries file was not found.
+        FileNotFoundError: raised when `etf_countries.csv` file was not found.
     
     """
 
@@ -566,6 +570,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+        
         result = list()
 
         if path_:
@@ -663,8 +668,8 @@ def get_etf_information(etf, country, as_json=False):
 
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
-        FileNotFoundError: raised if etfs.csv file was not found or errored.
-        IOError: raised if etfs.csv file is empty or errored.
+        FileNotFoundError: raised if `etfs.csv` file was not found or errored.
+        IOError: raised if `etfs.csv` file is empty or errored.
         RuntimeError: raised if scraping process failed while running.
         ConnectionError: raised if the connection to Investing.com errored (did not return HTTP 200)
 
@@ -807,9 +812,11 @@ def get_etfs_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if there was any argument error.
-        FileNotFoundError: raised when either `etfs.csv` or `etf_countries.csv` file is missing.
+        FileNotFoundError: raised when `etfs.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: raised it the introduced country does not match any of the indexed ones.
+        RuntimeError: 
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+            retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
     
     """
@@ -946,22 +953,17 @@ def search_etfs(by, value):
 
     Raises:
         ValueError: raised if any of the introduced params is not valid or errored.
+        FileNotFoundError: raised if `etfs.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: raised if no results were found for the introduced value in the introduced field.
     
     """
-
-    available_search_fields = ['name', 'full_name', 'symbol']
 
     if not by:
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
 
     if not isinstance(by, str):
         raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
-
-    if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
 
     if not value:
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
@@ -979,6 +981,14 @@ def search_etfs(by, value):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
+    etfs.drop(columns=['tag', 'id'], inplace=True)
+
+    available_search_fields = etfs.columns.tolist()
+
+    if isinstance(by, str) and by not in available_search_fields:
+        raise ValueError('ERR#0026: the introduced field to search can either just be '
+                         + ' or '.join(available_search_fields))
+
     etfs['matches'] = etfs[by].str.contains(value, case=False)
 
     search_result = etfs.loc[etfs['matches'] == True].copy()
@@ -986,7 +996,7 @@ def search_etfs(by, value):
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
 
-    search_result.drop(columns=['tag', 'id', 'matches'], inplace=True)
+    search_result.drop(columns=['matches'], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
