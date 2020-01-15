@@ -25,6 +25,10 @@ are some of the features that currently lead investpy to be one of the most cons
 [![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
 [![Downloads](https://img.shields.io/pypi/dm/investpy.svg?maxAge=2592000&label=installs&color=%2327B1FF)](https://pypistats.org/packages/investpy)
 
+**Join gitter chat to ease developer-user communication and also contribute with other investpy users.**
+
+[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/investpy/community?source=orgpage)
+
 ## Installation
 
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
