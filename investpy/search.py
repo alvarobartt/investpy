@@ -70,8 +70,6 @@ def search(text, n_results=None, filters=None):
         'fxfutures': 'fxfuture'
     }
 
-    print(available_filters.keys())
-
     if filters:
         condition = set(filters).issubset(available_filters.keys())
         if condition is False:
