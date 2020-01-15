@@ -214,15 +214,15 @@ class SearchObj(object):
         while flag is True:
             diff = to_date.year - from_date.year
 
-            if diff > 20:
+            if diff > 19:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),
-                    'to': from_date.replace(year=from_date.year + 20).strftime('%m/%d/%Y'),
+                    'to': from_date.replace(year=from_date.year + 19).strftime('%m/%d/%Y'),
                 }
 
                 date_interval['intervals'].append(obj)
 
-                from_date = from_date.replace(year=from_date.year + 20)
+                from_date = from_date.replace(year=from_date.year + 19)
             else:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),

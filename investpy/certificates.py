@@ -461,15 +461,15 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     while flag is True:
         diff = end_date.year - start_date.year
 
-        if diff > 20:
+        if diff > 19:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
-                'end': start_date.replace(year=start_date.year + 20).strftime('%m/%d/%Y'),
+                'end': start_date.replace(year=start_date.year + 19).strftime('%m/%d/%Y'),
             }
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 20)
+            start_date = start_date.replace(year=start_date.year + 19)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
