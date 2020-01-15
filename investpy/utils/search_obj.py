@@ -76,19 +76,16 @@ class SearchObj(object):
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['indice', 'crypto', 'commodity']:
+        elif self.pair_type in ['indice', 'commodity', 'crypto', 'fxfuture']:
             header = self.name + ' Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['fxfuture']:
-            self.data = None
-            return None
 
         try:
             self.data = self._data_retrieval(product=self.pair_type, head=head, params=params)
             return self.data
         except:
             self.data = None
-            return None
+            return self.data
 
     def retrieve_historical_data(self, from_date, to_date):
         """Class method used to retrieve the historical data from the class instance of any financial product.
@@ -134,11 +131,8 @@ class SearchObj(object):
             header = self.symbol + ' Historical Data'
         elif self.pair_type in ['bond']:
             header = self.name + ' Bond Yield Historical Data'
-        elif self.pair_type in ['indice', 'commodity', 'crypto']:
+        elif self.pair_type in ['indice', 'commodity', 'crypto', 'fxfuture']:
             header = self.name + ' Historical Data'
-        elif self.pair_type in ['fxfuture']:
-            self.data = None
-            return
 
         if to_date.year - from_date.year > 20:
             intervals = self._calculate_intervals(from_date, to_date)
@@ -163,6 +157,8 @@ class SearchObj(object):
                 self.data = self._data_retrieval(product=self.pair_type, head=head, params=params)
             except:
                 self.data = None
+
+        return self.data
 
     def _prepare_request(self, header):
         head = {
@@ -218,15 +214,15 @@ class SearchObj(object):
         while flag is True:
             diff = to_date.year - from_date.year
 
-            if diff > 20:
+            if diff > 19:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),
-                    'to': from_date.replace(year=from_date.year + 20).strftime('%m/%d/%Y'),
+                    'to': from_date.replace(year=from_date.year + 19).strftime('%m/%d/%Y'),
                 }
 
                 date_interval['intervals'].append(obj)
 
-                from_date = from_date.replace(year=from_date.year + 20)
+                from_date = from_date.replace(year=from_date.year + 19)
             else:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),
@@ -241,7 +237,7 @@ class SearchObj(object):
     
 
     def _data_retrieval(self, product, head, params):
-        if product in ['equities', 'indice']:
+        if product in ['equities', 'indice', 'fxfuture']:
             has_volume = True
         else:
             has_volume = False
