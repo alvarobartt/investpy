@@ -481,7 +481,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, as_json=False, ord
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19)
+            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
