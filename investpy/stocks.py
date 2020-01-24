@@ -703,6 +703,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
     stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
 
+    stock = unidecode.unidecode(stock.lower())
     stock = stock.strip()
 
     if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in
