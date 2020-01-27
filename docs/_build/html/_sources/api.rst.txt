@@ -14,4 +14,5 @@ API Reference
    commodities_api.rst
    certificates_api.rst
    crypto_api.rst
+   news_api.rst
    search_api.rst
