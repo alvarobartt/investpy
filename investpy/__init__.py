@@ -40,3 +40,5 @@ from investpy.certificates import get_certificates, get_certificates_list, get_c
 from investpy.search import search
 
 from investpy.news import get_calendar
+
+from investpy.technical import technical_indicators, moving_averages, pivot_points
