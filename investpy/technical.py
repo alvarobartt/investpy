@@ -6,18 +6,40 @@
 import pandas as pd
 
 import pkg_resources
-import requests
 import unidecode
+
+import requests
 from lxml.html import fromstring
 
 from investpy.utils.user_agent import get_random
 from investpy.utils.auxiliar import resource_to_data
 
 
-def technical_indicators(name, country, product_type, interval):
+def technical_indicators(name, country, product_type, interval='daily'):
     """
     This function ...
     """
+
+    if not name:
+        raise ValueError("ERR#0116: the parameter name must be specified and must be a string.")
+
+    if not isinstance(name, str):
+        raise ValueError("ERR#0116: the parameter name must be specified and must be a string.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0117: this parameter can just be None or a string, if required.")
+
+    if not product_type:
+        raise ValueError("ERR#0118: product_type value is mandatory and must be a string.")
+
+    if not isinstance(product_type, str):
+        raise ValueError("ERR#0118: product_type value is mandatory and must be a string.")
+
+    if not interval:
+        raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
     product_types = {
         'certificate': 'certificates/certificates.csv',
@@ -32,7 +54,7 @@ def technical_indicators(name, country, product_type, interval):
     product_type = unidecode.unidecode(product_type.lower().strip())
 
     if product_type not in product_types.keys():
-        raise ValueError("")
+        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(product_types.keys()))
 
     intervals = {
         '5mins': 60*5,
@@ -47,7 +69,7 @@ def technical_indicators(name, country, product_type, interval):
 
     if interval:
         if interval not in intervals.keys():
-            raise ValueError("")
+            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
     else:
         interval = 'daily'
 
@@ -58,12 +80,12 @@ def technical_indicators(name, country, product_type, interval):
             country = unidecode.unidecode(country.lower().strip())
 
             if country not in data['country'].tolist():
-                raise ValueError("")
+                raise ValueError("ERR#0124: introduced country does not exist or is not available.")
 
             data = data[data['country'] == country]
         else:
             if product_type != 'commodity':
-                raise ValueError("")
+                raise ValueError("ERR#0123: country parameter is required with the introduced product_type.")
 
     if product_type == 'stock':
         check = 'symbol'
@@ -73,7 +95,7 @@ def technical_indicators(name, country, product_type, interval):
     name = unidecode.unidecode(name.lower().strip())
 
     if name not in [unidecode.unidecode(value.lower()) for value in data[check].tolist()]:
-        raise RuntimeError("")
+        raise RuntimeError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
 
@@ -121,10 +143,31 @@ def technical_indicators(name, country, product_type, interval):
     return result
 
 
-def moving_averages(name, country, product_type, interval):
+def moving_averages(name, country, product_type, interval='daily'):
     """
     This function ...
     """
+
+    if not name:
+        raise ValueError("ERR#0116: the parameter name must be specified and must be a string.")
+
+    if not isinstance(name, str):
+        raise ValueError("ERR#0116: the parameter name must be specified and must be a string.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0117: this parameter can just be None or a string, if required.")
+
+    if not product_type:
+        raise ValueError("ERR#0118: product_type value is mandatory and must be a string.")
+
+    if not isinstance(product_type, str):
+        raise ValueError("ERR#0118: product_type value is mandatory and must be a string.")
+
+    if not interval:
+        raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
     product_types = {
         'certificate': 'certificates/certificates.csv',
@@ -139,7 +182,7 @@ def moving_averages(name, country, product_type, interval):
     product_type = unidecode.unidecode(product_type.lower().strip())
 
     if product_type not in product_types.keys():
-        raise ValueError("")
+        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(product_types.keys()))
 
     intervals = {
         '5mins': 60*5,
@@ -154,7 +197,7 @@ def moving_averages(name, country, product_type, interval):
 
     if interval:
         if interval not in intervals.keys():
-            raise ValueError("")
+            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
     else:
         interval = 'daily'
 
@@ -165,12 +208,12 @@ def moving_averages(name, country, product_type, interval):
             country = unidecode.unidecode(country.lower().strip())
 
             if country not in data['country'].tolist():
-                raise ValueError("")
+                raise ValueError("ERR#0124: introduced country does not exist or is not available.")
 
             data = data[data['country'] == country]
         else:
             if product_type != 'commodity':
-                raise ValueError("")
+                raise ValueError("ERR#0123: country parameter is required with the introduced product_type.")
 
     if product_type == 'stock':
         check = 'symbol'
@@ -180,7 +223,7 @@ def moving_averages(name, country, product_type, interval):
     name = unidecode.unidecode(name.lower().strip())
 
     if name not in [unidecode.unidecode(value.lower()) for value in data[check].tolist()]:
-        raise RuntimeError("")
+        raise RuntimeError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
 
@@ -206,32 +249,59 @@ def moving_averages(name, country, product_type, interval):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root = fromstring(req.text)
-    table = root.xpath(".//table[contains(@class, 'technicalIndicatorsTbl')]/tbody/tr")
+    table = root.xpath(".//table[contains(@class, 'movingAvgsTbl')]/tbody/tr")
 
-    tech_indicators = list()
+    moving_avgs = list()
 
     for row in table:
         for value in row.xpath("td"):
-            if value.get('class').__contains__('symbol'):
-                tech_ind = value.text_content().strip()
-                tech_val = float(value.getnext().text_content().strip())
-                tech_sig = value.getnext().getnext().text_content().strip().lower()
-                
-                tech_indicators.append({
-                    'technical_indicator': tech_ind,
-                    'value': tech_val,
-                    'signal': tech_sig 
-                })
+            if value.get('class') is not None:
+                if value.get('class').__contains__('symbol'):
+                    ma_period = value.text_content().strip().replace('MA', '')
+                    sma_signal = value.getnext().xpath("span")[0].text_content().strip().lower()
+                    sma_value = float(value.getnext().text_content().lower().replace(sma_signal, '').strip())
+                    value = value.getnext()
+                    ema_signal = value.getnext().xpath(".//span")[0].text_content().strip().lower()
+                    ema_value = float(value.getnext().text_content().lower().replace(ema_signal, '').strip())
 
-    result = pd.DataFrame(tech_indicators)
+                    moving_avgs.append({
+                        'period': ma_period,
+                        'sma_value': sma_value,
+                        'sma_signal': sma_signal,
+                        'ema_value': ema_value,
+                        'ema_signal': ema_signal
+                    })
+
+    result = pd.DataFrame(moving_avgs)
 
     return result
 
 
-def pivot_points(name, country, product_type, interval):
+def pivot_points(name, country, product_type, interval='daily'):
     """
     This function ...
     """
+
+    if not name:
+        raise ValueError("ERR#0116: the parameter name must be specified and must be a string.")
+
+    if not isinstance(name, str):
+        raise ValueError("ERR#0116: the parameter name must be specified and must be a string.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0117: this parameter can just be None or a string, if required.")
+
+    if not product_type:
+        raise ValueError("ERR#0118: product_type value is mandatory and must be a string.")
+
+    if not isinstance(product_type, str):
+        raise ValueError("ERR#0118: product_type value is mandatory and must be a string.")
+
+    if not interval:
+        raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
     product_types = {
         'certificate': 'certificates/certificates.csv',
@@ -246,7 +316,7 @@ def pivot_points(name, country, product_type, interval):
     product_type = unidecode.unidecode(product_type.lower().strip())
 
     if product_type not in product_types.keys():
-        raise ValueError("")
+        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(product_types.keys()))
 
     intervals = {
         '5mins': 60*5,
@@ -261,7 +331,7 @@ def pivot_points(name, country, product_type, interval):
 
     if interval:
         if interval not in intervals.keys():
-            raise ValueError("")
+            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
     else:
         interval = 'daily'
 
@@ -272,12 +342,12 @@ def pivot_points(name, country, product_type, interval):
             country = unidecode.unidecode(country.lower().strip())
 
             if country not in data['country'].tolist():
-                raise ValueError("")
+                raise ValueError("ERR#0124: introduced country does not exist or is not available.")
 
             data = data[data['country'] == country]
         else:
             if product_type != 'commodity':
-                raise ValueError("")
+                raise ValueError("ERR#0123: country parameter is required with the introduced product_type.")
 
     if product_type == 'stock':
         check = 'symbol'
@@ -287,7 +357,7 @@ def pivot_points(name, country, product_type, interval):
     name = unidecode.unidecode(name.lower().strip())
 
     if name not in [unidecode.unidecode(value.lower()) for value in data[check].tolist()]:
-        raise RuntimeError("")
+        raise RuntimeError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
 
