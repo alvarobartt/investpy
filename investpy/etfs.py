@@ -308,7 +308,10 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     del found_etfs
 
     if stock_exchange:
-        etf_exchange = stock_exchange
+        if stock_exchange.lower() not in found_etfs['stock_exchange'].str.lower():
+            raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+        else:
+            etf_exchange = stock_exchange
     else:
         etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
 
@@ -594,7 +597,10 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     del found_etfs
 
     if stock_exchange:
-        etf_exchange = stock_exchange
+        if stock_exchange.lower() not in found_etfs['stock_exchange'].str.lower():
+            raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+        else:
+            etf_exchange = stock_exchange
     else:
         etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
 
