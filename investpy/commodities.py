@@ -330,7 +330,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
 
             result.insert(len(result),
                           Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                               commodity_close, commodity_volume, currency))
+                               commodity_close, commodity_volume, currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -604,7 +604,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
 
                     result.insert(len(result),
                                   Data(commodity_date, commodity_open, commodity_high, commodity_low,
-                                       commodity_close, commodity_volume, currency))
+                                       commodity_close, commodity_volume, currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

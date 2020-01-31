@@ -332,7 +332,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
             result.insert(len(result),
                           Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                               currency_cross_close, None, currency))
+                               currency_cross_close, None, currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -576,7 +576,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
                     result.insert(len(result),
                                   Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                                       currency_cross_close, None, currency))
+                                       currency_cross_close, None, currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

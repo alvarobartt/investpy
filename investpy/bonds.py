@@ -299,7 +299,7 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
             bond_low = float(info[4].replace(',', ''))
 
             result.insert(len(result),
-                          Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None))
+                          Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -546,7 +546,7 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
                     bond_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result),
-                                  Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None))
+                                  Data(bond_date, bond_open, bond_high, bond_low, bond_close, None, None, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
