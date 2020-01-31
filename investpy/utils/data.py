@@ -17,6 +17,7 @@ class Data(object):
         close_ (:obj:`float`): close value of the market on the introduced date.
         volume_ (:obj:`long`): number of shares traded on the introduced date.
         currency_ (:obj:`str`): currency in which the data is displayed.
+        exchange_ (:obj:`str`): stock exchange that provides the data.
 
     Attributes:
         date_ (:obj:`str`): date in dd/mm/yyyy format.
@@ -26,10 +27,11 @@ class Data(object):
         close_ (:obj:`float`): close value of the market on the introduced date.
         volume_ (:obj:`long`): number of shares traded on the introduced date.
         currency_ (:obj:`str`): currency in which the data is displayed.
+        exchange_ (:obj:`str`): stock exchange that provides the data.
     
     """
 
-    def __init__(self, date_, open_, high_, low_, close_, volume_, currency_):
+    def __init__(self, date_, open_, high_, low_, close_, volume_, currency_, exchange_):
         self.date = date_
         self.open = open_
         self.high = high_
@@ -37,6 +39,7 @@ class Data(object):
         self.close = close_
         self.volume = volume_
         self.currency = currency_
+        self.exchange = exchange_
 
     def stock_to_dict(self):
         return {
@@ -88,6 +91,7 @@ class Data(object):
             'Low': self.low,
             'Close': self.close,
             'Currency': self.currency,
+            'Exchange': self.exchange
         }
 
     def etf_as_json(self):
@@ -98,6 +102,7 @@ class Data(object):
             'low': self.low,
             'close': self.close,
             'currency': self.currency,
+            'exchange': self.exchange
         }
 
     def index_to_dict(self):
@@ -108,7 +113,7 @@ class Data(object):
             'Low': self.low,
             'Close': self.close,
             'Volume': self.volume,
-            'Currency': self.currency,
+            'Currency': self.currency
         }
 
     def index_as_json(self):

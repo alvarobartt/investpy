@@ -315,7 +315,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
             index_volume = int(info[5])
 
             result.insert(len(result), Data(index_date, index_open, index_high, index_low,
-                                            index_close, index_volume, index_currency))
+                                            index_close, index_volume, index_currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -577,7 +577,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     index_volume = int(info[5])
 
                     result.insert(len(result), Data(index_date, index_open, index_high, index_low,
-                                                    index_close, index_volume, index_currency))
+                                                    index_close, index_volume, index_currency, None))
             if data_flag is True:
                 if order in ['ascending', 'asc']:
                     result = result[::-1]

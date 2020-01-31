@@ -320,7 +320,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
-                               stock_close, stock_volume, stock_currency))
+                               stock_close, stock_volume, stock_currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -586,7 +586,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,
-                                       stock_close, stock_volume, stock_currency))
+                                       stock_close, stock_volume, stock_currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
