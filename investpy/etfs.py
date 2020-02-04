@@ -269,51 +269,56 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     etf = unidecode.unidecode(etf.strip().lower())
 
     def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+    
+    etfs = etfs[etfs['country'].str.lower() == country]
+
+    if etf not in [value for value in etfs['name'].str.lower()]:
+        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
+
+    etfs = etfs[etfs['name'].str.lower() == etf]
 
     if def_exchange['country'] != country:
         warnings.warn(
             'Selected country does not contain the default stock exchange of the introduced ETF. ' + \
             'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
-            def_exchange['stock_exchange'].lower() + '\".', 
+            def_exchange['stock_exchange'] + '\".', 
             Warning
         )
+        
+        if stock_exchange:
+            if stock_exchange.lower() not in etfs['stock_exchange'].str.lower().tolist():
+                raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+            
+            etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
+        else:
+            found_etfs = etfs[etfs['name'].str.lower() == etf]
+    
+            if len(found_etfs) > 1:
+                warnings.warn(
+                    'Note that the displayed information can differ depending on the stock exchange. Available stock_exchange' + \
+                    ' values for \"' + country + '\" are: \"' + '\", \"'.join(found_etfs['stock_exchange']) + '\".',
+                    Warning
+                )
+
+            del found_etfs
+
+            etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
     else:
         if stock_exchange:
-            if def_exchange['stock_exchange'] != stock_exchange:
+            if stock_exchange.lower() not in etfs['stock_exchange'].str.lower().tolist():
+                raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+
+            if def_exchange['stock_exchange'].lower() != stock_exchange.lower():
                 warnings.warn(
                     'Selected stock_exchange is not the default one of the introduced ETF. ' + \
                     'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
                     def_exchange['stock_exchange'].lower() + '\".', 
                     Warning
                 )
+
+            etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
         else:
             etf_exchange = def_exchange['stock_exchange']
-
-    del def_exchange
-
-    etfs = etfs[etfs['country'].str.lower() == country]
-
-    if etf not in [value for value in etfs['name'].str.lower()]:
-        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
-
-    found_etfs = etfs[etfs['name'].str.lower() == etf]
-    
-    if len(found_etfs) > 1:
-        warnings.warn(
-            'Note that the displayed information can differ depending on the stock exchange. Available stock_exchange' + \
-            ' values for \"' + country + '\" are: \"' + '\", \"'.join(found_etfs['stock_exchange']) + '\".',
-            Warning
-        )
-
-    del found_etfs
-
-    if stock_exchange:
-        if stock_exchange.lower() not in found_etfs['stock_exchange'].str.lower():
-            raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
-        else:
-            etf_exchange = stock_exchange
-    else:
-        etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
 
     symbol = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
     id_ = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
@@ -558,51 +563,56 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     etf = unidecode.unidecode(etf.strip().lower())
 
     def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+    
+    etfs = etfs[etfs['country'].str.lower() == country]
+
+    if etf not in [value for value in etfs['name'].str.lower()]:
+        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
+
+    etfs = etfs[etfs['name'].str.lower() == etf]
 
     if def_exchange['country'] != country:
         warnings.warn(
             'Selected country does not contain the default stock exchange of the introduced ETF. ' + \
             'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
-            def_exchange['stock_exchange'].lower() + '\".', 
+            def_exchange['stock_exchange'] + '\".', 
             Warning
         )
+        
+        if stock_exchange:
+            if stock_exchange.lower() not in etfs['stock_exchange'].str.lower().tolist():
+                raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+            
+            etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
+        else:
+            found_etfs = etfs[etfs['name'].str.lower() == etf]
+    
+            if len(found_etfs) > 1:
+                warnings.warn(
+                    'Note that the displayed information can differ depending on the stock exchange. Available stock_exchange' + \
+                    ' values for \"' + country + '\" are: \"' + '\", \"'.join(found_etfs['stock_exchange']) + '\".',
+                    Warning
+                )
+
+            del found_etfs
+
+            etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
     else:
         if stock_exchange:
-            if def_exchange['stock_exchange'] != stock_exchange:
+            if stock_exchange.lower() not in etfs['stock_exchange'].str.lower().tolist():
+                raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+
+            if def_exchange['stock_exchange'].lower() != stock_exchange.lower():
                 warnings.warn(
                     'Selected stock_exchange is not the default one of the introduced ETF. ' + \
                     'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
                     def_exchange['stock_exchange'].lower() + '\".', 
                     Warning
                 )
+
+            etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
         else:
             etf_exchange = def_exchange['stock_exchange']
-
-    del def_exchange
-
-    etfs = etfs[etfs['country'].str.lower() == country]
-
-    if etf not in [value for value in etfs['name'].str.lower()]:
-        raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
-
-    found_etfs = etfs[etfs['name'].str.lower() == etf]
-    
-    if len(found_etfs) > 1:
-        warnings.warn(
-            'Note that the displayed information can differ depending on the stock exchange. Available stock_exchange' + \
-            ' values for \"' + country + '\" are: \"' + '\", \"'.join(found_etfs['stock_exchange']) + '\".',
-            Warning
-        )
-
-    del found_etfs
-
-    if stock_exchange:
-        if stock_exchange.lower() not in found_etfs['stock_exchange'].str.lower():
-            raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
-        else:
-            etf_exchange = stock_exchange
-    else:
-        etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
 
     symbol = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
     id_ = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
