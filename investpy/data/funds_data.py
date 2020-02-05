@@ -53,6 +53,7 @@ def funds_as_df(country=None):
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
     funds.drop(columns=['tag', 'id'], inplace=True)
+    funds = funds.where(pd.notnull(funds), None)
 
     if country is None:
         funds.reset_index(drop=True, inplace=True)
@@ -106,6 +107,7 @@ def funds_as_list(country=None):
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
     funds.drop(columns=['tag', 'id'], inplace=True)
+    funds = funds.where(pd.notnull(funds), None)
 
     if country is None:
         return funds['name'].tolist()
@@ -168,6 +170,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
     funds.drop(columns=['tag', 'id'], inplace=True)
+    funds = funds.where(pd.notnull(funds), None)
 
     if columns is None:
         columns = funds.columns.tolist()

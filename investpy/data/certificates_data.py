@@ -55,6 +55,7 @@ def certificates_as_df(country=None):
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
     certificates.drop(columns=['tag', 'id'], inplace=True)
+    certificates = certificates.where(pd.notnull(certificates), None)
 
     if country is None:
         certificates.reset_index(drop=True, inplace=True)
@@ -104,6 +105,9 @@ def certificates_as_list(country=None):
 
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
+
+    certificates.drop(columns=['tag', 'id'], inplace=True)
+    certificates = certificates.where(pd.notnull(certificates), None)
 
     if country is None:
         return certificates['name'].tolist()
@@ -164,6 +168,7 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
     certificates.drop(columns=['tag', 'id'], inplace=True)
+    certificates = certificates.where(pd.notnull(certificates), None)
 
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")

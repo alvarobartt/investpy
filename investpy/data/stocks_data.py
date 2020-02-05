@@ -54,6 +54,7 @@ def stocks_as_df(country=None):
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
     stocks.drop(columns=['tag', 'id'], inplace=True)
+    stocks = stocks.where(pd.notnull(stocks), None)
 
     if country is None:
         stocks.reset_index(drop=True, inplace=True)
@@ -107,6 +108,7 @@ def stocks_as_list(country=None):
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
     stocks.drop(columns=['tag', 'id'], inplace=True)
+    stocks = stocks.where(pd.notnull(stocks), None)
 
     if country is None:
         return stocks['symbol'].tolist()
@@ -169,6 +171,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
     stocks.drop(columns=['tag', 'id'], inplace=True)
+    stocks = stocks.where(pd.notnull(stocks), None)
 
     if columns is None:
         columns = stocks.columns.tolist()

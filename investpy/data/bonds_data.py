@@ -54,6 +54,7 @@ def bonds_as_df(country=None):
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
     bonds.drop(columns=['tag', 'id'], inplace=True)
+    bonds = bonds.where(pd.notnull(bonds), None)
 
     if country is None:
         bonds.reset_index(drop=True, inplace=True)
@@ -107,6 +108,7 @@ def bonds_as_list(country=None):
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
     bonds.drop(columns=['tag', 'id'], inplace=True)
+    bonds = bonds.where(pd.notnull(bonds), None)
 
     if country is None:
         return bonds['name'].tolist()
@@ -166,6 +168,7 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
     bonds.drop(columns=['tag', 'id'], inplace=True)
+    bonds = bonds.where(pd.notnull(bonds), None)
 
     if columns is None:
         columns = bonds.columns.tolist()
