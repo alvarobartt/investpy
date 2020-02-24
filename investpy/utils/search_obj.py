@@ -276,7 +276,7 @@ class SearchObj(object):
                     volume_ = int(info[5])
 
                 result.insert(len(result),
-                              Data(date_, open_, high_, low_, close_, volume_, None))
+                              Data(date_, open_, high_, low_, close_, volume_, None, None))
 
             result = result[::-1]
 
