@@ -143,7 +143,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if from_date is not None and not isinstance(from_date, str):
         raise ValueError("ERR#0114: the introduced date value must be a string unless it is None.")
 
-    if to_date is not None and not isinstance(froto_datem_date, str):
+    if to_date is not None and not isinstance(to_date, str):
         raise ValueError("ERR#0114: the introduced date value must be a string unless it is None.")
 
     url = "https://www.investing.com/economic-calendar/Service/getCalendarFilteredData"
@@ -197,7 +197,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if countries is not None:
         def_countries = list()
 
-        available_countries = country_filters.keys().tolist()
+        available_countries = list(country_filters.keys())
 
         for country in countries:
             country = unidecode.unidecode(country.lower())
@@ -214,7 +214,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if categories is not None:
         def_categories = list()
 
-        available_categories = category_filters.keys().tolist()
+        available_categories = list(category_filters.keys())
 
         for category in categories:
             category = unidecode.unidecode(category.lower())

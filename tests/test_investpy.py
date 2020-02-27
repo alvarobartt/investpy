@@ -1238,10 +1238,83 @@ def test_investpy_search():
         ]
 
         for result in results:
-            print(result)
+            result.__str__
             result.retrieve_recent_data()
             for date in dates:
                 result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
+
+
+def test_investpy_news():
+    """
+    This function checks that investpy news retrieval functionality works as expected.
+    """
+
+    params = [
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': ['spain', 'france'],
+            'importances': ['high', 'low'],
+            'categories': ['credit', 'employment'],
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': 'GMT -3:00',
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'categories': None,
+            'from_date': '01/01/2020',
+            'to_date': '01/02/2020'
+        }
+    ]
+
+    for param in params:
+        investpy.get_calendar(time_zone=param['time_zone'],
+                              time_filter=param['time_filter'],
+                              countries=param['countries'],
+                              importances=param['importances'],
+                              categories=param['categories'],
+                              from_date=param['from_date'],
+                              to_date=param['to_date'])
+
+
+def test_investpy_technical():
+    """
+    This function checks that investpy news retrieval functionality works as expected.
+    """
+
+    params = [
+        {
+            'name': 'bbva',
+            'country': 'spain',
+            'product_type': 'stock',
+            'interval': 'weekly',
+        },
+        {
+            'name': 'bbva mi inversion rf mixta fi',
+            'country': 'spain',
+            'product_type': 'fund',
+            'interval': 'daily',
+        },
+    ]
+
+    for param in params:
+        investpy.technical_indicators(name=param['name'],
+                                      country=param['country'],
+                                      product_type=param['product_type'],
+                                      interval=param['interval'])
+
+        investpy.moving_averages(name=param['name'],
+                                 country=param['country'],
+                                 product_type=param['product_type'],
+                                 interval=param['interval'])
+
+        investpy.pivot_points(name=param['name'],
+                              country=param['country'],
+                              product_type=param['product_type'],
+                              interval=param['interval'])
 
 
 if __name__ == '__main__':
@@ -1256,3 +1329,5 @@ if __name__ == '__main__':
     test_investpy_cryptos()
     test_investpy_certificates()
     test_investpy_search()
+    test_investpy_news()
+    test_investpy_technical()
