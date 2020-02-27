@@ -381,6 +381,11 @@ def test_stocks_errors():
             'language': 'spanish'
         },
         {
+            'stock': 'ALPER',
+            'country': 'france',
+            'language': 'spanish'
+        },
+        {
             'stock': 'BBVA',
             'country': 'spain',
             'language': 'error'
@@ -3830,6 +3835,22 @@ def test_search_errors():
             pass
 
 
+def test_technical_errors():
+    """
+    This function raises errors on technical functions.
+    """
+
+    return None
+
+
+def test_news_errors():
+    """
+    This function raises errors on news functions.
+    """
+
+    return None
+
+
 def test_user_agent_errors():
     """
     This function raises errors on user_agent functions.
@@ -3859,4 +3880,6 @@ if __name__ == '__main__':
     test_crypto_errors()
     test_certificate_errors()
     test_search_errors()
+    test_technical_errors()
+    test_news_errors()
     test_user_agent_errors()

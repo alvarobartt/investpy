@@ -628,6 +628,10 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     for spanish stocks currently, so on, if any other stock from any other country is introduced as parameter,
     the function will raise an exception.
 
+    Note:
+        Currently just the spanish company profile can be retrieved from spanish stocks, so if you try to
+        retrieve it in spanish for any other country, this function will raise a ValueError exception.
+
     Args:
         stock (:obj:`str`): symbol of the stock to retrieve its company profile from.
         country (:obj:`str`): name of the country from where the stock is.
@@ -682,14 +686,20 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    if language.lower() not in available_sources.keys():
-        raise ValueError(
-            "ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
+    language = unidecode.unidecode(language.strip().lower())
 
-    if unidecode.unidecode(country.lower()) not in ['spain']:
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    if language not in available_sources.keys():
+        raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
 
-    selected_source = available_sources[language.lower()]
+    country = unidecode.unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+    if country != 'spain' and language == 'spanish':
+        raise ValueError("ERR#0127: currently spanish company description is just available for spanish stocks.")
+
+    selected_source = available_sources[language]
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
@@ -701,14 +711,12 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
-    stock = unidecode.unidecode(stock.lower())
-    stock = stock.strip()
+    stock = unidecode.unidecode(stock.strip().lower())
 
-    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in
-                                                  stocks['symbol'].tolist()]:
-        raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
+    if stock not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     company_profile = {
         'url': None,
