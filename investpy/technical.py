@@ -122,8 +122,6 @@ def technical_indicators(name, country, product_type, interval='daily'):
     if interval:
         if interval not in intervals.keys():
             raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
-    else:
-        interval = 'daily'
 
     data = resource_to_data(path_to_data=product_types[product_type])
 
@@ -296,8 +294,6 @@ def moving_averages(name, country, product_type, interval='daily'):
     if interval:
         if interval not in intervals.keys():
             raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
-    else:
-        interval = 'daily'
 
     data = resource_to_data(path_to_data=product_types[product_type])
 
@@ -475,8 +471,6 @@ def pivot_points(name, country, product_type, interval='daily'):
     if interval:
         if interval not in intervals.keys():
             raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
-    else:
-        interval = 'daily'
 
     data = resource_to_data(path_to_data=product_types[product_type])
 

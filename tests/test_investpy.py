@@ -1238,7 +1238,7 @@ def test_investpy_search():
         ]
 
         for result in results:
-            result.__str__
+            print(result)
             result.retrieve_recent_data()
             for date in dates:
                 result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
