@@ -69,6 +69,7 @@ def currency_crosses_as_df(base=None, second=None):
     available_currencies = available_currencies_as_list()
 
     currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses = currency_crosses.where(pd.notnull(currency_crosses), None)
 
     if base is None and second is None:
         currency_crosses.reset_index(drop=True, inplace=True)
@@ -165,6 +166,7 @@ def currency_crosses_as_list(base=None, second=None):
     available_currencies = available_currencies_as_list()
 
     currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses = currency_crosses.where(pd.notnull(currency_crosses), None)
 
     if base is None and second is None:
         currency_crosses.reset_index(drop=True, inplace=True)
@@ -273,6 +275,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
     available_currencies = available_currencies_as_list()
 
     currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses = currency_crosses.where(pd.notnull(currency_crosses), None)
 
     if columns is None:
         columns = currency_crosses.columns.tolist()

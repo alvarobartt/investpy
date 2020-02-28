@@ -55,6 +55,7 @@ def commodities_as_df(group=None):
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
     commodities.drop(columns=['tag', 'id'], inplace=True)
+    commodities = commodities.where(pd.notnull(commodities), None)
 
     if group is None:
         commodities.reset_index(drop=True, inplace=True)
@@ -109,6 +110,7 @@ def commodities_as_list(group=None):
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
     commodities.drop(columns=['tag', 'id'], inplace=True)
+    commodities = commodities.where(pd.notnull(commodities), None)
 
     if group is None:
         return commodities['name'].tolist()
@@ -177,6 +179,7 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
     commodities.drop(columns=['tag', 'id'], inplace=True)
+    commodities = commodities.where(pd.notnull(commodities), None)
 
     if columns is None:
         columns = commodities.columns.tolist()

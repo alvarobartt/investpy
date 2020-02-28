@@ -311,7 +311,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             fund_low = float(info[4].replace(',', ''))
 
             result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
-                                            fund_close, None, fund_currency))
+                                            fund_close, None, fund_currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -460,7 +460,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19)
+            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -567,7 +567,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     fund_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result), Data(fund_date, fund_open, fund_high, fund_low,
-                                                    fund_close, None, fund_currency))
+                                                    fund_close, None, fund_currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

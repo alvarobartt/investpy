@@ -332,7 +332,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
             result.insert(len(result),
                           Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                               currency_cross_close, None, currency))
+                               currency_cross_close, None, currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -473,7 +473,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19)
+            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -576,7 +576,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
                     result.insert(len(result),
                                   Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                                       currency_cross_close, None, currency))
+                                       currency_cross_close, None, currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -585,10 +585,11 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': name,
-                             'historical':
-                                 [value.currency_cross_as_json() for value in result]
-                             }
+                    json_ = {
+                        'name': name,
+                        'historical':
+                            [value.currency_cross_as_json() for value in result]
+                    }
 
                     final.append(json_)
                 elif as_json is False:

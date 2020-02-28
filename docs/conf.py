@@ -25,9 +25,9 @@ copyright = '2018-2020, Alvaro Bartolome'
 author = 'Alvaro Bartolome'
 
 # The short X.Y version
-version = '0.9.13'
+version = '0.9.14'
 # The full version, including alpha/beta/rc tags
-release = '0.9.13'
+release = '0.9.14'
 
 
 # -- General configuration ---------------------------------------------------

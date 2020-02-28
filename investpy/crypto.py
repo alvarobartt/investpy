@@ -277,7 +277,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
 
             result.insert(len(result),
                           Data(crypto_date, crypto_open, crypto_high, crypto_low,
-                               crypto_close, crypto_volume, crypto_currency))
+                               crypto_close, crypto_volume, crypto_currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -422,7 +422,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19)
+            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -531,7 +531,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
 
                     result.insert(len(result),
                                   Data(crypto_date, crypto_open, crypto_high, crypto_low,
-                                       crypto_close, crypto_volume, crypto_currency))
+                                       crypto_close, crypto_volume, crypto_currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

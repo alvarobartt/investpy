@@ -54,6 +54,7 @@ def indices_as_df(country=None):
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
     indices.drop(columns=['tag', 'id'], inplace=True)
+    indices = indices.where(pd.notnull(indices), None)
 
     if country is None:
         indices.reset_index(drop=True, inplace=True)
@@ -105,6 +106,7 @@ def indices_as_list(country=None):
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
     indices.drop(columns=['tag', 'id'], inplace=True)
+    indices = indices.where(pd.notnull(indices), None)
 
     if country is None:
         return indices['name'].tolist()
@@ -169,6 +171,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
     indices.drop(columns=['tag', 'id'], inplace=True)
+    indices = indices.where(pd.notnull(indices), None)
 
     if columns is None:
         columns = indices.columns.tolist()

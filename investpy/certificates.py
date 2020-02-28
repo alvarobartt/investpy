@@ -318,7 +318,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
             certificate_low = float(info[4].replace(',', ''))
 
             result.insert(len(result), Data(certificate_date, certificate_open, certificate_high,
-                                            certificate_low, certificate_close, None, None))
+                                            certificate_low, certificate_close, None, None, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -469,7 +469,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19)
+            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -576,7 +576,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
                     certificate_low = float(info[4].replace(',', ''))
 
                     result.insert(len(result), Data(certificate_date, certificate_open, certificate_high,
-                                                    certificate_low, certificate_close, None, None))
+                                                    certificate_low, certificate_close, None, None, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:

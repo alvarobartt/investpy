@@ -29,9 +29,9 @@ def etfs_as_df(country=None):
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | symbol | isin | asset_class | currency | stock_exchange
-                --------|------|-----------|--------|------|-------------|----------|----------------
-                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxxxxxx
+                country | name | full_name | symbol | isin | asset_class | currency | stock_exchange | def_stock_exchange 
+                --------|------|-----------|--------|------|-------------|----------|----------------|--------------------
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx 
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
@@ -54,6 +54,7 @@ def etfs_as_df(country=None):
         raise IOError("ERR#0009: etfs not found or unable to retrieve.")
 
     etfs.drop(columns=['tag', 'id'], inplace=True)
+    etfs = etfs.where(pd.notnull(etfs), None)
 
     if country is None:
         etfs.reset_index(drop=True, inplace=True)
@@ -109,6 +110,7 @@ def etfs_as_list(country=None):
         raise IOError("ERR#0009: etfs not found or unable to retrieve.")
 
     etfs.drop(columns=['tag', 'id'], inplace=True)
+    etfs = etfs.where(pd.notnull(etfs), None)
 
     if country is None:
         return etfs['name'].tolist()
@@ -146,7 +148,8 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
                     "isin": isin,
                     "asset_class": asset_class,
                     "currency": currency,
-                    "stock_exchange": stock_exchange
+                    "stock_exchange": stock_exchange,
+                    "def_stock_exchange": def_stock_exchange
                 }
 
     Raises:
@@ -173,6 +176,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
         raise IOError("ERR#0009: etfs not found or unable to retrieve.")
 
     etfs.drop(columns=['tag', 'id'], inplace=True)
+    etfs = etfs.where(pd.notnull(etfs), None)
 
     if columns is None:
         columns = etfs.columns.tolist()

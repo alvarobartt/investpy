@@ -48,6 +48,7 @@ def cryptos_as_df():
 
     cryptos = cryptos[cryptos['status'] == 'available']
     cryptos.drop(columns=['tag', 'id', 'status'], inplace=True)
+    cryptos = cryptos.where(pd.notnull(cryptos), None)
 
     cryptos.reset_index(drop=True, inplace=True)
     return cryptos
@@ -90,6 +91,7 @@ def cryptos_as_list():
 
     cryptos = cryptos[cryptos['status'] == 'available']
     cryptos.drop(columns=['tag', 'id', 'status'], inplace=True)
+    cryptos = cryptos.where(pd.notnull(cryptos), None)
 
     return cryptos['name'].tolist()
 
@@ -145,6 +147,7 @@ def cryptos_as_dict(columns=None, as_json=False):
 
     cryptos = cryptos[cryptos['status'] == 'available']
     cryptos.drop(columns=['tag', 'id', 'status'], inplace=True)
+    cryptos = cryptos.where(pd.notnull(cryptos), None)
 
     if columns is None:
         columns = cryptos.columns.tolist()

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# Copyright 2018-2019 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
@@ -320,7 +320,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
-                               stock_close, stock_volume, stock_currency))
+                               stock_close, stock_volume, stock_currency, None))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -474,7 +474,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19)
+            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -586,7 +586,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,
-                                       stock_close, stock_volume, stock_currency))
+                                       stock_close, stock_volume, stock_currency, None))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -627,6 +627,10 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     resulting object will be the same. Note that this functionalliy as described in the docs is just supported
     for spanish stocks currently, so on, if any other stock from any other country is introduced as parameter,
     the function will raise an exception.
+
+    Note:
+        Currently just the spanish company profile can be retrieved from spanish stocks, so if you try to
+        retrieve it in spanish for any other country, this function will raise a ValueError exception.
 
     Args:
         stock (:obj:`str`): symbol of the stock to retrieve its company profile from.
@@ -682,14 +686,20 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    if language.lower() not in available_sources.keys():
-        raise ValueError(
-            "ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
+    language = unidecode.unidecode(language.strip().lower())
 
-    if unidecode.unidecode(country.lower()) not in ['spain']:
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    if language not in available_sources.keys():
+        raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
 
-    selected_source = available_sources[language.lower()]
+    country = unidecode.unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+    if country != 'spain' and language == 'spanish':
+        raise ValueError("ERR#0127: currently spanish company description is just available for spanish stocks.")
+
+    selected_source = available_sources[language]
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
@@ -701,13 +711,12 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
-    stock = stock.strip()
+    stock = unidecode.unidecode(stock.strip().lower())
 
-    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in
-                                                  stocks['symbol'].tolist()]:
-        raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
+    if stock not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     company_profile = {
         'url': None,
