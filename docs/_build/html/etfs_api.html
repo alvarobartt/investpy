@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -208,7 +208,7 @@ with etfs was successfully completed, the resulting <code class="xref py py-obj 
 
 <dl class="function">
 <dt id="investpy.etfs.get_etf_historical_data">
-<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">stock_exchange=None</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced <cite>etf</cite> from Investing via Web Scraping on the
 introduced date range. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -268,7 +268,7 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
 <span class="go">                 Open   High    Low  Close Currency Exchange</span>
 <span class="go">    Date</span>
 <span class="go">    2011-12-07  23.70  23.70  23.70  23.62      EUR   Madrid</span>
@@ -338,7 +338,7 @@ None values. If the retrieval process succeeded, the resulting <code class="xref
 
 <dl class="function">
 <dt id="investpy.etfs.get_etf_recent_data">
-<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">stock_exchange=None</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>etf</cite> from Investing
 via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -396,7 +396,7 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
 <span class="go">                  Open    High     Low   Close Currency Exchange</span>
 <span class="go">    Date</span>
 <span class="go">    2019-08-13  33.115  33.780  32.985  33.585      EUR   Madrid</span>
@@ -424,9 +424,9 @@ was previously retrieved by investpy. Unless the country is specified, all the a
 Investing.com is returned, but if it is specified, just the etfs from that country are returned.</p>
 <p>In the case that the file reading of <cite>etfs.csv</cite> or the retrieval process from Investing.com was
 successfully completed, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full_name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">asset_class</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">stock_exchange</span>
-<span class="o">--------|------|-----------|--------|------|-------------|----------|----------------</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full_name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">asset_class</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">stock_exchange</span> <span class="o">|</span> <span class="n">def_stock_exchange</span>
+<span class="o">--------|------|-----------|--------|------|-------------|----------|----------------|--------------------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -472,7 +472,8 @@ fields are filled with <cite>None</cite> values.</p>
     <span class="s2">&quot;isin&quot;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
     <span class="s2">&quot;asset_class&quot;</span><span class="p">:</span> <span class="n">asset_class</span><span class="p">,</span>
     <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="n">currency</span><span class="p">,</span>
-    <span class="s2">&quot;stock_exchange&quot;</span><span class="p">:</span> <span class="n">stock_exchange</span>
+    <span class="s2">&quot;stock_exchange&quot;</span><span class="p">:</span> <span class="n">stock_exchange</span><span class="p">,</span>
+    <span class="s2">&quot;def_stock_exchange&quot;</span><span class="p">:</span> <span class="n">def_stock_exchange</span>
 <span class="p">}</span>
 </pre></div>
 </div>
