@@ -2,9 +2,9 @@
   <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" hspace="20">
 </p>
 
-<h2 align="center">Financial Historical Data Extraction with Python</h2>
+<h2 align="center">Financial Data Extraction with Python</h2>
 
-investpy is a Python package to retrieve historical data from [Investing](https://www.investing.com/). 
+investpy is a Python package to retrieve data from [Investing](https://www.investing.com/). 
 It provides historical data retrieval from up to **39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 
 7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**. Basically, investpy allows you
 to download historical data from almost all the financial products indexed in Investing.com. All the data that can be 
@@ -33,7 +33,7 @@ are some of the features that currently lead investpy to be one of the most cons
 In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
 pip on the terminal by typing:
 
-``$ pip install investpy==0.9.14``
+``$ pip install investpy``
 
 Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt)
 file, which can also be installed via pip:
@@ -50,24 +50,6 @@ some basic functionality will be sorted out with sample Python code blocks.
 As the main functionality is based on historical data retrieval, the usage of stock data retrieval functions 
 will be explained so to ease the use of investpy, which is mainly intended for historical data extraction, which 
 means that every other function is additional.
-
-```python
-import investpy
-
-df = investpy.get_stock_recent_data(stock='BBVA',
-                                    country='spain')
-print(df.head())
-```
-```{r, engine='python', count_lines}
-             Open   High    Low  Close    Volume Currency
-Date                                                     
-2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
-2019-08-14  4.322  4.325  4.215  4.244  36890000      EUR
-2019-08-15  4.281  4.298  4.187  4.234  21340000      EUR
-2019-08-16  4.234  4.375  4.208  4.365  46080000      EUR
-2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR
-
-```
 
 ```python
 import investpy
@@ -91,39 +73,40 @@ Date
 ### Search Data
 
 As financial data is really complex and sometimes both the product name/symbol and the country are unknown for the user, in 
-terms of what does investpy expect, every financial product listed in investpy (which currently includes stocks,
-funds, etfs, indices, currency crosses, bonds and commodities) has its own search function. Search functions allow the 
-user to search among all the available stocks for example, whenever just one field is known (even though it is not the 
-exact match). So on, a basic example on stock search by the ISIN code is presented below:
-
-````python
-import investpy
-
-search_results = investpy.search_stocks(by='isin', value='ES0113211835')
-
-print(search_results.head())
-````
-```{r, engine='python', count_lines}
-          country  name                             full_name          isin  currency symbol  
-0          mexico  BBVA    Banco Bilbao Vizcaya Argentaria SA  ES0113211835       MXN   BBVA  
-1          mexico  BBVA  Banco Bilbao Vizcaya Argentaria S.A.  ES0113211835       MXN   BBVA  
-2         belgium  BBVA    Banco Bilbao Vizcaya Argentaria SA  ES0113211835       EUR   BBVA  
-3           spain  BBVA  Banco Bilbao Vizcaya Argentaria S.A.  ES0113211835       EUR   BBVA  
-4  united kingdom  BBVA    Banco Bilbao Vizcaya Argentaria Sa  ES0113211835       EUR   BVAB
-```
-
-Note that additionally the Investing search engine is completely integrated with investpy so that any available quote as
-indexed in Investing can be easily retrieved just using the following piece of code:
+terms of what does investpy expect. So on, the Investing.com search engine is completely integrated with investpy so that 
+any available financial product can be easily retrieved just using the following piece of code:
 
 ```python
 import investpy
 
-search_results = investpy.search(text='gold')
+search_results = investpy.search(text='Apple',
+                                 filters=['stocks'],
+                                 n_results=10)
 ```
 
 Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to 
 know which are the available functions and attributes of the returned search results, please visit: 
-[investpy search docs](https://investpy.readthedocs.io/search_api.html).
+[investpy Search Engine](https://investpy.readthedocs.io/search_api.html). So, those objects can be used to retrieve
+retrieved product's historical data, its information, etc., as presented in this piece of code:
+
+```python
+ for search_result in search_results[:1]:
+   print(search_result)
+   search_result.retrieve_historical_data(from_date='01/01/2019', to_date='01/01/2020')
+   print(search_result.data.head())
+```
+```{r, engine='python', count_lines}
+{"id_": 6408, "name": "Apple Inc", "symbol": "AAPL", "country": "united states", "tag": "apple-computer-inc", "pair_type": "equities", "exchange": "NASDAQ"}
+
+              Open    High     Low   Close    Volume
+Date                                                
+2019-01-02  154.89  158.85  154.23  157.92  37039736
+2019-01-03  143.98  145.72  142.00  142.19  91312192
+2019-01-04  144.53  148.55  143.80  148.26  58607072
+2019-01-07  148.70  148.83  145.90  147.93  54777764
+2019-01-08  149.56  151.82  148.52  150.75  41025312
+
+```
 
 ### Crypto Currencies Data Retrieval
 
@@ -152,15 +135,6 @@ Date
 
 Yes, retrieving historical data from any available crypto currency is really that easy!
 
-### Additional Data
-
-As Investing.com provides more data besides the historical one, some of that additional data can be fetched via investpy. 
-Currently, as the package is under-development, some additional functions have been created in order to retrieve more data
-as indexed in Investing.com. 
-
-### and much more!
-
-All the functions definitions and usage can be found in the [Documentation](https://investpy.readthedocs.io/)!
 
 ## Utilities
 
@@ -186,29 +160,9 @@ Additionally, you can triage issues on [investpy CodeTriage](https://www.codetri
 provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new 
 ideas to improve package functionality and efficiency.
 
-## Frequent Asked Questions - FAQs
+## Reference
 
-#### Where can I find the reference of a function and its usage?
-
-Currently the `docs/` are still missing a lot of information, but they can be clear enough so that users can get to know which functions can be used and how. If you feel that any functionallity or feature is not clear enough, please let me know in the issues tab, so that I can explain it properly for newcomers, so that answers are more general and help more users than just the one asking it. Docs can be found at: [Documentation](https://investpy.readthedocs.io/)
-
-#### What do I do if the financial product I am looking for is not indexed in investpy?
-
-As it is known, investpy gathers and retrieves data from Investing.com which is a website that contains a lot of financial information. Since investpy relies on Investing data, some of it may not be available in Investing, which will mean that it will not be available in investpy either. Anyways, it can be an investpy problem while retrieving data, so on, there is a search function (`investpy.search(text, n_results, filters)`) that can be used for searching financial products that are available in Investing but they can not be retrieved using investpy main functions.
-
-#### I am having problems while installing the package.
-
-If you followed the [Installation Guide](https://github.com/alvarob96/investpy/blob/master/README.md#Installation), you should be able to use investpy without having any problem, anyways, if you are stuck on it, open an issue at investpy issues tab so to let the developers know which is your problem in order to solve it as soon as possible. If you were not able to complete the installation, please check that you are running Python 3.5 at least and that you are installing the latest version available, if you are still having problems, open an issue.
-
-#### How do I contribute to investpy?
-
-Currently I am not admitting any Pull Request since investpy is under development, and so to keep a clean structure, I will be developing new functionalities until code is clean enough to let newcome contributors help. Anyways, the most effective tool you have in order to contribute to investpy are **issues** where you can give me new ideas or some functionallity you would like to see implemented in investpy. You can also use issues in order to report bugs or problems so to help investpy's development and consistency.
-
-#### How do I reference investpy?
-
-Since investpy is an open source Python package, whenever you use it, would be nice from you to mention or comment where does the data comes from. This way, investpy can be spread among more users which will consequently improve package usage since more users can contribute to it due to the increasing reach to newcome developers. A sample reference is presented below:
-
-`investpy - a Python package for Financial Historical Data Extraction developed by Álvaro Bartolomé del Canto @ alvarob96 at GitHub`
+`investpy - a Python package for Financial Data Extraction developed by Álvaro Bartolomé del Canto @ alvarob96 at GitHub`
 
 ## Disclaimer
 
