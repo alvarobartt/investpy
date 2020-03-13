@@ -1,7 +1,7 @@
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
 # See LICENSE for details.
 
-__author__ = 'Alvaro Bartolome @ alvarob96 in GitHub'
+__author__ = 'Alvaro Bartolome @ alvarobartt in GitHub'
 __version__ = '0.9.14'
 
 from investpy.stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \

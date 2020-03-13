@@ -6,7 +6,7 @@
 Welcome to investpy's documentation!
 ====================================
 
-.. image:: https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png
+.. image:: https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/investpy_logo.png
     :align: center
 
 .. toctree::

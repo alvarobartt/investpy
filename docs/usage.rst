@@ -1,7 +1,7 @@
 Usage
 =====
 
-Along this document, the main `investpy <https://github.com/alvarob96/investpy>`_ functions are going to be presented. So on, this is a tutorial 
+Along this document, the main `investpy <https://github.com/alvarobartt/investpy>`_ functions are going to be presented. So on, this is a tutorial 
 on how to use **investpy** to retrieve data from the financial products available, such as: stocks, funds, ETFs, indices and currency crosses, 
 retrieved from Investing.com.
 

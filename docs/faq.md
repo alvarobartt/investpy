@@ -12,7 +12,7 @@ As it is known, investpy gathers and retrieves data from Investing.com which is 
 
 ## I am having problems while installing the package.
 
-If you followed the [Installation Guide](https://github.com/alvarob96/investpy/blob/master/README.md#Installation), you should be able to use investpy without having any problem, anyways, if you are stuck on it, open an issue at investpy issues tab so to let the developers know which is your problem in order to solve it as soon as possible. If you were not able to complete the installation, please check that you are running Python 3.5 at least and that you are installing the latest version available, if you are still having problems, open an issue.
+If you followed the [Installation Guide](https://github.com/alvarobartt/investpy/blob/master/README.md#Installation), you should be able to use investpy without having any problem, anyways, if you are stuck on it, open an issue at investpy issues tab so to let the developers know which is your problem in order to solve it as soon as possible. If you were not able to complete the installation, please check that you are running Python 3.5 at least and that you are installing the latest version available, if you are still having problems, open an issue.
 
 ## How do I contribute to investpy?
 
@@ -22,4 +22,4 @@ Currently I am not admitting any Pull Request since investpy is under developmen
 
 Since investpy is an open source Python package, whenever you use it, would be nice from you to mention or comment where does the data comes from. This way, investpy can be spread among more users which will consequently improve package usage since more users can contribute to it due to the increasing reach to newcome developers. A sample reference is presented below:
 
-`investpy - a Python package for Financial Historical Data Extraction developed by Álvaro Bartolomé del Canto @ alvarob96 at GitHub`
+`investpy - a Python package for Financial Historical Data Extraction developed by Álvaro Bartolomé del Canto @ alvarobartt at GitHub`

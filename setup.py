@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
 # See LICENSE for details.
 
 from setuptools import setup, find_packages
@@ -16,10 +16,10 @@ setup(
     version='0.9.14',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarob96/investpy/archive/0.9.14.tar.gz',
+    download_url='https://github.com/alvarobartt/investpy/archive/0.9.14.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
-    author_email='alvarob96@usal.es',
+    author_email='alvarobartt@usal.es',
     description='investpy — a Python package for financial historical data extraction from Investing',
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -53,8 +53,8 @@ setup(
     ]),
     python_requires='>=3',
     project_urls={
-        'Bug Reports': 'https://github.com/alvarob96/investpy/issues',
-        'Source': 'https://github.com/alvarob96/investpy',
+        'Bug Reports': 'https://github.com/alvarobartt/investpy/issues',
+        'Source': 'https://github.com/alvarobartt/investpy',
         'Documentation': 'https://investpy.readthedocs.io/'
     },
 )

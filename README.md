@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/alvarob96/investpy/master/docs/investpy_logo.png" hspace="20">
+  <img src="https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/investpy_logo.png" hspace="20">
 </p>
 
 <h2 align="center">Financial Data Extraction with Python</h2>
@@ -35,7 +35,7 @@ pip on the terminal by typing:
 
 ``$ pip install investpy``
 
-Every package used is listed in [requirements.txt](https://github.com/alvarob96/investpy/blob/master/requirements.txt)
+Every package used is listed in [requirements.txt](https://github.com/alvarobartt/investpy/blob/master/requirements.txt)
 file, which can also be installed via pip:
 
 ``$ pip install -r requirements.txt``
@@ -143,15 +143,15 @@ of some support modules, which implement an additional functionallity based on i
 can contribute to this section by creating any package, module or utility which uses this package. So on, the ones already 
 created are going to be presented, since they are intended to be used combined with investpy:
 
-- [investpy_portfolio](https://github.com/alvarob96/investpy_portfolio/): is a Python package to generate stock portfolios.
-- [trendet](https://github.com/alvarob96/trendet/): is a Python package for trend detection on stock time series data.
+- [investpy_portfolio](https://github.com/alvarobartt/investpy_portfolio/): is a Python package to generate stock portfolios.
+- [trendet](https://github.com/alvarobartt/trendet/): is a Python package for trend detection on stock time series data.
 
 ## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
 
 As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements, 
 enhancements and ideas.
 
-Also there is an open tab of [issues](https://github.com/alvarob96/investpy/issues) where anyone can contribute opening 
+Also there is an open tab of [issues](https://github.com/alvarobartt/investpy/issues) where anyone can contribute opening 
 new issues if needed or navigate through them in order to solve them or contribute to its solving. Remember that issues
 are not threads to describe multiple issues, this does not mean that issues can't be discussed, but if new issues are 
 reported, a new issue should be open so to keep a structured project management.
@@ -162,7 +162,7 @@ ideas to improve package functionality and efficiency.
 
 ## Reference
 
-`investpy - a Python package for Financial Data Extraction developed by Álvaro Bartolomé del Canto @ alvarob96 at GitHub`
+`investpy - a Python package for Financial Data Extraction developed by Álvaro Bartolomé del Canto @ alvarobartt at GitHub`
 
 ## Disclaimer
 
