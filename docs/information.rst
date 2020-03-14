@@ -5,7 +5,7 @@ As this is an open source project it is open to contributions, bug reports, bug 
 enhancements and ideas. On Github you can find an open tab of `issues <https://github.com/alvarobartt/investpy/issues/>`_
 where you can contribute by opening new issues if needed or contribute to its solving.
 
-Additionally, you can triage issues on `investpy Code Triage <https://www.codetriage.com/alvarob96/investpy>`_ where
+Additionally, you can triage issues on `investpy Code Triage <https://www.codetriage.com/alvarobartt/investpy>`_ where
 you can both open and solve issues so the package can grow and improve faster as the issues solve relevant bugs,
 problems or needs of the package.
 

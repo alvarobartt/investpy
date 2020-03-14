@@ -25,7 +25,7 @@ Cloud, respectively. So, to install the latest release of `investpy <https://pyp
 
 * from GitHub via PyPI::
 
-    $ python -m pip install https://github.com/alvarob96/investpy/archive/master.zip
+    $ python -m pip install https://github.com/alvarobartt/investpy/archive/master.zip
 
 
 Update Package
@@ -43,7 +43,7 @@ If you already had `investpy <https://pypi.org/project/investpy/>`_ installed an
 
 * from GitHub via PyPi::
 
-    $ python -m pip install --upgrade https://github.com/alvarob96/investpy/archive/master.zip
+    $ python -m pip install --upgrade https://github.com/alvarobartt/investpy/archive/master.zip
 
 All the dependencies are already listed on the setup file of the package, but to sum them up, when installing
 `investpy <https://pypi.org/project/investpy/>`_, it will install the following dependencies:

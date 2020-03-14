@@ -19,10 +19,10 @@ are some of the features that currently lead investpy to be one of the most cons
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
 [![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://dev.azure.com/alvarob96/alvarob96/_apis/build/status/alvarob96.investpy?branchName=master)](https://dev.azure.com/alvarob96/alvarob96/_build?definitionId=1&_a=summary)
-[![Build Status](https://img.shields.io/travis/alvarob96/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarob96/investpy)
+[![Build Status](https://dev.azure.com/alvarobartt/alvarobartt/_apis/build/status/alvarobartt.investpy?branchName=master)](https://dev.azure.com/alvarobartt/alvarobartt/_build?definitionId=1&_a=summary)
+[![Build Status](https://img.shields.io/travis/alvarobartt/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarobartt/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
-[![codecov](https://codecov.io/gh/alvarob96/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarob96/investpy)
+[![codecov](https://codecov.io/gh/alvarobartt/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarobartt/investpy)
 
 **Join gitter chat to ease developer-user communication and also contribute with other investpy users.**
 
@@ -143,10 +143,10 @@ of some support modules, which implement an additional functionallity based on i
 can contribute to this section by creating any package, module or utility which uses this package. So on, the ones already 
 created are going to be presented, since they are intended to be used combined with investpy:
 
-- [investpy_portfolio](https://github.com/alvarobartt/investpy_portfolio/): is a Python package to generate stock portfolios.
+- [pyrtfolio](https://github.com/alvarobartt/pyrtfolio/): is a Python package to generate stock portfolios.
 - [trendet](https://github.com/alvarobartt/trendet/): is a Python package for trend detection on stock time series data.
 
-## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarob96/investpy/badges/users.svg)](https://www.codetriage.com/alvarob96/investpy)
+## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarobartt/investpy/badges/users.svg)](https://www.codetriage.com/alvarobartt/investpy)
 
 As this is an open source project it is open to contributions, bug reports, bug fixes, documentation improvements, 
 enhancements and ideas.
@@ -156,7 +156,7 @@ new issues if needed or navigate through them in order to solve them or contribu
 are not threads to describe multiple issues, this does not mean that issues can't be discussed, but if new issues are 
 reported, a new issue should be open so to keep a structured project management.
 
-Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarob96/investpy) so you can 
+Additionally, you can triage issues on [investpy CodeTriage](https://www.codetriage.com/alvarobartt/investpy) so you can 
 provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new 
 ideas to improve package functionality and efficiency.
 
