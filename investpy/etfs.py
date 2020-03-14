@@ -12,11 +12,11 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
-from investpy.data.etfs_data import etf_countries_as_list
+from .data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
+from .data.etfs_data import etf_countries_as_list
 
 
 def get_etfs(country=None):

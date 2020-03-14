@@ -12,11 +12,11 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.currency_crosses_data import currency_crosses_as_df, currency_crosses_as_list, currency_crosses_as_dict
-from investpy.data.currency_crosses_data import available_currencies_as_list
+from .data.currency_crosses_data import currency_crosses_as_df, currency_crosses_as_list, currency_crosses_as_dict
+from .data.currency_crosses_data import available_currencies_as_list
 
 
 def get_currency_crosses(base=None, second=None):

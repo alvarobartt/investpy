@@ -11,10 +11,10 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.crypto_data import cryptos_as_df, cryptos_as_list, cryptos_as_dict
+from .data.crypto_data import cryptos_as_df, cryptos_as_list, cryptos_as_dict
 
 
 def get_cryptos():

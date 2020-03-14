@@ -9,8 +9,8 @@ import unidecode
 import requests
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.auxiliar import resource_to_data
+from .utils.user_agent import get_random
+from .utils.auxiliar import resource_to_data
 
 
 def technical_indicators(name, country, product_type, interval='daily'):

@@ -12,11 +12,11 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.certificates_data import certificates_as_df, certificates_as_list, certificates_as_dict
-from investpy.data.certificates_data import certificate_countries_as_list
+from .data.certificates_data import certificates_as_df, certificates_as_list, certificates_as_dict
+from .data.certificates_data import certificate_countries_as_list
 
 
 def get_certificates(country=None):

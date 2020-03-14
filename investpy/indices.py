@@ -11,11 +11,11 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.indices_data import indices_as_df, indices_as_list, indices_as_dict
-from investpy.data.indices_data import index_countries_as_list
+from .data.indices_data import indices_as_df, indices_as_list, indices_as_dict
+from .data.indices_data import index_countries_as_list
 
 
 def get_indices(country=None):

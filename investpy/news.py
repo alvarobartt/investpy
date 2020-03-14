@@ -8,7 +8,7 @@ import unidecode
 
 import pandas as pd
 
-from investpy.utils.user_agent import get_random
+from .utils.user_agent import get_random
 
 import requests
 from lxml.html import fromstring

@@ -9,8 +9,8 @@ import json
 from datetime import datetime, date
 from random import randint
 
-from investpy.utils.data import Data
-from investpy.utils.user_agent import get_random
+from .data import Data
+from .user_agent import get_random
 
 
 class SearchObj(object):

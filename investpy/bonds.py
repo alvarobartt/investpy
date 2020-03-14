@@ -12,11 +12,11 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
-from investpy.data.bonds_data import bond_countries_as_list
+from .data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
+from .data.bonds_data import bond_countries_as_list
 
 
 def get_bonds(country=None):

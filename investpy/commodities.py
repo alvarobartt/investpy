@@ -12,11 +12,11 @@ import requests
 import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.user_agent import get_random
+from .utils.data import Data
 
-from investpy.data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
-from investpy.data.commodities_data import commodity_groups_list
+from .data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
+from .data.commodities_data import commodity_groups_list
 
 
 def get_commodities(group=None):

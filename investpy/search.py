@@ -5,8 +5,8 @@ import requests
 
 import re
 
-from investpy.utils.search_obj import SearchObj
-from investpy.utils.user_agent import get_random
+from .utils.search_obj import SearchObj
+from .utils.user_agent import get_random
 
 
 def search(text, n_results=None, filters=None):
