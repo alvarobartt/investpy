@@ -48,6 +48,11 @@ class SearchObj(object):
     def __str__(self):
         return json.dumps(self.__dict__)
 
+    def __eq__(self, other):
+        return self.id_ == other.id_
+
+    def __hash__(self):
+        return self.id_
 
     def retrieve_recent_data(self):
         """Class method used to retrieve the recent data from the class instance of any financial product.
@@ -233,7 +238,6 @@ class SearchObj(object):
         
         return date_interval
     
-
     def _data_retrieval(self, product, head, params):
         if product in ['equities', 'indice', 'fxfuture']:
             has_volume = True

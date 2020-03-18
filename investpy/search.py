@@ -9,7 +9,7 @@ from .utils.search_obj import SearchObj
 from .utils.user_agent import get_random
 
 
-def search(text, n_results=None, filters=None):
+def search(text, filters=None, n_results=None):
     """
     This function will use the Investing search engine so to retrieve the search results of the
     introduced text. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`
@@ -20,12 +20,12 @@ def search(text, n_results=None, filters=None):
 
     Args:
         text (:obj:`str`): text to search in Investing among all its indexed data.
-        n_results (:obj:`int`, optional): number of search results to retrieve and return from Investing.
         filters (:obj:`list` of :obj:`str`, optional):
             list with the filter/s to be applied to the search result quotes so that the resulting quotes match
             the filters. Possible filters are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
             `crypto`, `bonds`, `certificates` and `fxfutures`. Default is `None` which means that no filter will 
             be applied.
+        n_results (:obj:`int`, optional): number of search results to retrieve and return from Investing.
 
     Returns:
         :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
@@ -74,11 +74,14 @@ def search(text, n_results=None, filters=None):
             raise ValueError('ERR#0095: filters parameter values must be contained in ' + ', '.join(available_filters) + '.')
         else:
             filters = [available_filters[filter_] for filter_ in filters]
+    else:
+        filters = [value for key, value in available_filters.items()]
 
     params = {
         'search_text': text,
         'tab': 'quotes',
-        'isFilter': False
+        'limit': 270,
+        'offset': 0
     }
 
     head = {
@@ -91,51 +94,35 @@ def search(text, n_results=None, filters=None):
 
     url = 'https://www.investing.com/search/service/SearchInnerPage'
 
-    req = requests.post(url, headers=head, data=params)
-
-    if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
-
-    data = req.json()
-
-    if data['total']['quotes'] == 0:
-        raise ValueError("ERR#0093: no results found on Investing for the introduced text.")
-
     search_results = list()
 
-    if filters is None:
-        for quote in data['quotes'][:n_results]:
+    while True:
+        req = requests.post(url, headers=head, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+        data = req.json()
+
+        if data['total']['quotes'] == 0:
+            raise ValueError("ERR#0093: no results found on Investing for the introduced text.")
+
+        if n_results is None:
+            n_results = data['total']['quotes']
+
+        for quote in data['quotes']:
             country = quote['flag'].lower()
             country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
 
             tag = re.sub(r'\/(.*?)\/', '', quote['link'])
 
-            search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                            country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
-    else:
-        if n_results is None:
-            for quote in data['quotes'][:n_results]:
-                country = quote['flag'].lower()
-                country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
-
-                tag = re.sub(r'\/(.*?)\/', '', quote['link'])
-
-                if quote['pair_type'] in filters:
-                    search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                                    country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
-        else:
-            results_count = n_results
-            for quote in data['quotes']:
-                country = quote['flag'].lower()
-                country = country if country not in ['usa', 'uk'] else 'united states' if country == 'usa' else 'united kingdom'
-
-                tag = re.sub(r'\/(.*?)\/', '', quote['link'])
-
-                if quote['pair_type'] in filters:
-                    search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                                    country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
-                    results_count -= 1
-                    if results_count == 0:
-                        break
-
-    return search_results
+            if quote['pair_type'] in filters:
+                search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
+                                                country=country, tag=tag, pair_type=quote['pair_type'], exchange=quote['exchange']))
+        
+        params['offset'] = len(search_results) - 1                    
+        
+        if len(search_results) >= n_results:
+            break
+        
+    return list(set(search_results))[:n_results]
