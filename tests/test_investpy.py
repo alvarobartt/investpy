@@ -1204,12 +1204,12 @@ def test_investpy_search():
         },
         {
             'text': 'bnp daxplus',
-            'n_results': 5,
+            'n_results': None,
             'filters': None
         },
         {
             'text': 'apple',
-            'n_results': None,
+            'n_results': 2,
             'filters': ['stocks']
         },
         {
@@ -1240,6 +1240,7 @@ def test_investpy_search():
             result.retrieve_recent_data()
             for date in dates:
                 result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
+            break
 
 
 def test_investpy_news():
