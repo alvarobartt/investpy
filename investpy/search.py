@@ -96,6 +96,8 @@ def search(text, filters=None, n_results=None):
 
     search_results = list()
 
+    total_results = None
+
     while True:
         req = requests.post(url, headers=head, data=params)
 
@@ -106,6 +108,9 @@ def search(text, filters=None, n_results=None):
 
         if data['total']['quotes'] == 0:
             raise ValueError("ERR#0093: no results found on Investing for the introduced text.")
+
+        if total_results is None:
+            total_results = data['total']['quotes']
 
         if n_results is None:
             n_results = data['total']['quotes']
@@ -122,7 +127,7 @@ def search(text, filters=None, n_results=None):
         
         params['offset'] = len(search_results) - 1                    
         
-        if len(search_results) >= n_results:
+        if len(search_results) >= n_results or len(search_results) >= total_results:
             break
         
     return list(set(search_results))[:n_results]
