@@ -158,8 +158,6 @@ def search(text, filters=None, countries=None, n_results=None):
     else:
         flags = list(available_countries.keys())
 
-    print(flags)
-
     params = {
         'search_text': text,
         'tab': 'quotes',
@@ -182,15 +180,12 @@ def search(text, filters=None, countries=None, n_results=None):
     total_results = None
 
     while True:
-        print(params)
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
             raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
         data = req.json()
-
-        print(data['total'])
 
         if data['total']['quotes'] == 0:
             raise ValueError("ERR#0093: no results found on Investing for the introduced text.")
@@ -201,14 +196,10 @@ def search(text, filters=None, countries=None, n_results=None):
         if n_results is None:
             n_results = data['total']['quotes']
 
-        print(f"TOTAL QUOTES: {len(data['quotes'])}")
-
         for quote in data['quotes']:
             flag = quote['flag']
 
             tag = re.sub(r'\/(.*?)\/', '', quote['link'])
-
-            print(quote['name'])
 
             # TODO: change filters dict so to include the proper filter name instead of the one provided by Investing.com
             if quote['pair_type'] in filters and flag in flags:
@@ -220,7 +211,5 @@ def search(text, filters=None, countries=None, n_results=None):
         
         if len(search_results) >= n_results or len(search_results) >= total_results or params['offset'] >= total_results:
             break
-    
-    print(len(search_results))
 
     return list(set(search_results))[:n_results]
