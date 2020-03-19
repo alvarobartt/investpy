@@ -2,24 +2,25 @@
   <img src="https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/investpy_logo.png" hspace="20">
 </p>
 
-<h2 align="center">Financial Data Extraction with Python</h2>
+<h2 align="center">Financial Data Extraction from Investing.com with Python</h2>
 
-investpy is a Python package to retrieve data from [Investing](https://www.investing.com/). 
-It provides historical data retrieval from up to **39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 
-7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**. Basically, investpy allows you
-to download historical data from almost all the financial products indexed in Investing.com. All the data that can be 
+investpy is a Python package to retrieve data from [Investing](https://www.investing.com/), which 
+provides data retrieval from up to **39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 
+7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**. investpy allows you
+to download historical data from all the financial products indexed in Investing.com. All the data that can be 
 retrieved includes data from all over the world, from countries such as: **United States, France, India, Spain, Russia or 
 Germany, amongst many others**. Therefore, investpy is intended to wrap up all the available data from Investing.com, 
-so that it can be retrieved via Python for its further usage and/or analysis.
+so that it can be easily retrieved with Python for its further usage and/or analysis.
 
-investpy seeks to be one of the most complete Python packages when it comes to historical data extraction of financial
-products in order to stop relying on public/private APIs, as investpy is **FREE** and has **NO LIMITATIONS**. These
-are some of the features that currently lead investpy to be one of the most consistent packages of financial data retrieval.
+investpy seeks to be one of the most complete Python packages when it comes to financial data extraction
+in order to stop relying on public/private APIs, since investpy is **FREE** and has **NO LIMITATIONS**. These
+are some of the features that currently lead investpy to be one of the most consistent packages when it comes to financial 
+data retrieval.
 
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
 [![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://dev.azure.com/alvarobartt/alvarobartt/_apis/build/status/alvarobartt.investpy?branchName=master)](https://dev.azure.com/alvarobartt/alvarobartt/_build?definitionId=1&_a=summary)
+[![Build Status](https://dev.azure.com/alvarobartt/alvarobartt/_apis/build/status/investpy?branchName=master)](https://dev.azure.com/alvarobartt/alvarobartt/_build/latest?definitionId=3&branchName=master)
 [![Build Status](https://img.shields.io/travis/alvarobartt/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarobartt/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarobartt/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarobartt/investpy)
@@ -34,11 +35,6 @@ In order to get this package working you will need to install [**investpy**](htt
 pip on the terminal by typing:
 
 ``$ pip install investpy``
-
-Every package used is listed in [requirements.txt](https://github.com/alvarobartt/investpy/blob/master/requirements.txt)
-file, which can also be installed via pip:
-
-``$ pip install -r requirements.txt``
 
 ## Usage
 
@@ -79,7 +75,7 @@ any available financial product can be easily retrieved just using the following
 ```python
 import investpy
 
-search_results = investpy.search(text='Apple',
+search_results = investpy.search(text='apple',
                                  filters=['stocks'],
                                  n_results=10)
 ```
@@ -113,8 +109,8 @@ Date
 It has recently been included crypto currency data retrieval functions. All the crypto currencies that are
 available in Investing for data retrieval are, so on, available in investpy.
 
-So to ease investpy's usage, some samples will be presented below on how to retrieve the past 5 years of 
-data from Bitcoin:
+So to ease investpy's usage, a sample will be presented below of how to retrieve the past 5 years of 
+data from Bitcoin (BTC):
 
 ````python
 import investpy
@@ -134,7 +130,6 @@ Date
 ```
 
 Yes, retrieving historical data from any available crypto currency is really that easy!
-
 
 ## Utilities
 
@@ -162,7 +157,7 @@ ideas to improve package functionality and efficiency.
 
 ## Reference
 
-`investpy - a Python package for Financial Data Extraction developed by Álvaro Bartolomé del Canto @ alvarobartt at GitHub`
+`investpy - a Python package for Financial Data Extraction from Investing.com developed by Álvaro Bartolomé del Canto @ alvarobartt at GitHub`
 
 ## Disclaimer
 
