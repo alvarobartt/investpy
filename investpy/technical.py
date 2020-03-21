@@ -9,8 +9,7 @@ import unidecode
 import requests
 from lxml.html import fromstring
 
-import .utils.constant as cst
-
+from .utils import constant as cst
 from .utils.user_agent import get_random
 from .utils.auxiliar import resource_to_data
 
@@ -48,13 +47,12 @@ def technical_indicators(name, country, product_type, interval='daily'):
                 ---------------------|-------|--------
                  xxxxxxxxxxxxxxxxxxx | xxxxx | xxxxxx
                 
-
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
         ConnectionError: raised if the connection to Investing.com errored or could not be established. 
 
     Examples:
-        >>> investpy.technical_factors(name='bbva', country='spain', product_type='stock', interval='daily')
+        >>> investpy.technical_indicators(name='bbva', country='spain', product_type='stock', interval='daily')
                 technical_indicator    value           signal
             0               RSI(14)  39.1500             sell
             1            STOCH(9,6)  33.2340             sell

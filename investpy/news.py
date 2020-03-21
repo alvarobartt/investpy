@@ -8,8 +8,7 @@ import unidecode
 
 import pandas as pd
 
-import .utils.constant as cst
-
+from .utils import constant as cst
 from .utils.user_agent import get_random
 
 import requests

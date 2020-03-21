@@ -6,8 +6,7 @@ import requests
 import re
 from unidecode import unidecode
 
-import .utils.constant as cst
-
+from .utils import constant as cst
 from .utils.search_obj import SearchObj
 from .utils.user_agent import get_random
 
