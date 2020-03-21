@@ -1189,40 +1189,41 @@ def test_investpy_search():
     params = [
         {
             'text': 'bbva',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': 5
         },
         {
             'text': 'spain 3y',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': 5
         },
         {
             'text': 'ibex 35',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': 5
         },
         {
             'text': 'bnp daxplus',
-            'n_results': None,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': 'apple',
-            'n_results': 2,
-            'filters': ['stocks']
-        },
-        {
-            'text': 'apple',
-            'n_results': 10,
-            'filters': ['stocks']
+            'products': ['stocks'],
+            'countries': ['united states'],
+            'n_results': 1
         }
     ]
 
     for param in params:
         results = investpy.search(text=param['text'],
-                                  n_results=param['n_results'],
-                                  filters=param['filters'])
+                                  products=param['products'],
+                                  countries=param['countries'],
+                                  n_results=param['n_results'])
 
         dates = [
             {

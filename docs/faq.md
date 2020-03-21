@@ -8,7 +8,7 @@ Currently the `docs/` are still missing a lot of information, but they can be cl
 
 ## What do I do if the financial product I am looking for is not indexed in investpy?
 
-As it is known, investpy gathers and retrieves data from Investing.com which is a website that contains a lot of financial information. Since investpy relies on Investing data, some of it may not be available in Investing, which will mean that it will not be available in investpy either. Anyways, it can be an investpy problem while retrieving data, so on, there is a search function (`investpy.search(text, n_results, filters)`) that can be used for searching financial products that are available in Investing but they can not be retrieved using investpy main functions.
+As it is known, investpy gathers and retrieves data from Investing.com which is a website that contains a lot of financial information. Since investpy relies on Investing data, some of it may not be available in Investing, which will mean that it will not be available in investpy either. Anyways, it can be an investpy problem while retrieving data, so on, there is a search function (`investpy.search(text, products, countries, n_results)`) that can be used for searching financial products that are available in Investing but they can not be retrieved using investpy main functions.
 
 ## I am having problems while installing the package.
 

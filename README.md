@@ -68,15 +68,17 @@ Date
 
 ### Search Data
 
-As financial data is really complex and sometimes both the product name/symbol and the country are unknown for the user, in 
-terms of what does investpy expect. So on, the Investing.com search engine is completely integrated with investpy so that 
-any available financial product can be easily retrieved just using the following piece of code:
+Investing.com search engine is completely integrated with investpy so that any available financial product (quote) 
+can be easily found since the search function provides the user some parameters in order to adjust the search to their
+needs, where both product types and countries from where the products are from can be specified. All the search functionality
+can be easily achieved just using the following piece of code:
 
 ```python
 import investpy
 
 search_results = investpy.search(text='apple',
-                                 filters=['stocks'],
+                                 products=['stocks'],
+                                 countries=['united_states'],
                                  n_results=10)
 ```
 

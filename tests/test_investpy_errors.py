@@ -3762,51 +3762,66 @@ def test_search_errors():
     params = [
         {
             'text': None,
-            'n_results': None,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': ['error'],
-            'n_results': None,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': 'error',
-            'n_results': None,
-            'filters': None
-        },
-        {
-            'text': 'error',
-            'n_results': ['error'],
-            'filters': None
-        },
-        {
-            'text': 'error',
-            'n_results': 0,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': 'bbva',
-            'n_results': 10,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': ['error']
         },
         {
             'text': 'bbva',
-            'n_results': 10,
-            'filters': 'error'
+            'products': None,
+            'countries': None,
+            'n_results': 0
         },
         {
             'text': 'bbva',
-            'n_results': 10,
-            'filters': ['error']
+            'products': 'error',
+            'countries': None,
+            'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': ['error'],
+            'countries': None,
+            'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': None,
+            'countries': 'error',
+            'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': None,
+            'countries': ['error'],
+            'n_results': 10
         }
     ]
 
     for param in params:
         try:
-            results = investpy.search(text=param['text'],
-                                      n_results=param['n_results'],
-                                      filters=param['filters'])
+            results = investpy.search(text=param['text']
+                                      countries=param['countries'],
+                                      products=param['products'].
+                                      n_results=param['n_results'])
 
             dates = [
                 {
@@ -3828,7 +3843,8 @@ def test_search_errors():
                     try:
                         result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
                     except:
-                        pass
+                        continue
+                break
         except:
             pass
 

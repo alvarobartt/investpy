@@ -10,33 +10,38 @@ from .utils.search_obj import SearchObj
 from .utils.user_agent import get_random
 
 
-def search(text, filters=None, countries=None, n_results=None):
+def search(text, products=None, countries=None, n_results=None):
     """
-    This function will use the Investing search engine so to retrieve the search results of the
+    This function will use the Investing.com search engine so to retrieve the search results of the
     introduced text. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`
     class instances which will contain the search results so that they can be easily accessed and so
     to ease the data retrieval process since it can be done calling the methods `self.retrieve_recent_data()`
-    or `self.retrieve_historical_data(from_date, to_date)` from the class instance, which will fill the `self.data`
-    attribute of that class instance.
+    or `self.retrieve_historical_data(from_date, to_date)` from each class instance, which will fill the historical
+    data attribute, `self.data`, of the class instance.
 
     Args:
         text (:obj:`str`): text to search in Investing among all its indexed data.
-        filters (:obj:`list` of :obj:`str`, optional):
-            list with the filter/s to be applied to the search result quotes so that the resulting quotes match
-            the filters. Possible filters are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
-            `crypto`, `bonds`, `certificates` and `fxfutures`. Default is `None` which means that no filter will 
-            be applied.
-        n_results (:obj:`int`, optional): number of search results to retrieve and return from Investing.
+        products (:obj:`list` of :obj:`str`, optional):
+            list with the product type filter/s to be applied to search result quotes so that they match
+            the filters. Possible products are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
+            `crypto`, `bonds`, `certificates` and `fxfutures`, by default this parameter is set to `None` which 
+            means that no filter will be applied, and all product type quotes will be retrieved.
+        countries (:obj:`list` of :obj:`str`, optional):
+            list with the country name filter/s to be applied to search result quotes so that they match
+            the filters. Possible countries can be found in the docs, by default this paremeter is set to
+            `None` which means that no filter will be applied, and quotes from every country will be retrieved.
+        n_results (:obj:`int`, optional): number of search results to retrieve and return.
 
     Returns:
         :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
             The resulting :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj` will contained the retrieved
-            financial products matching the introduced text as indexed in Investing, if found. Note that if no
-            information was found this function will raise a `ValueError` exception.
+            financial products matching the introduced text if found, otherwise a RuntimeError will be raised, so as to
+            let the user know that no results were found for the introduced text.
 
     Raises:
-        ValueError: raised if either the introduced text is not valid or if no results were found for that text.
-        ConnectionError: raised whenever the connection to Investing.com errored (did not return a 200 OK code).
+        ValueError: raised whenever any of the introduced parameter is not valid or errored.
+        ConnectionError: raised whenever the connection to Investing.com rfailed.
+        RuntimeError: raised when there was an error while executing the function.
 
     """
 
@@ -59,7 +64,8 @@ def search(text, filters=None, countries=None, n_results=None):
     if filters and not isinstance(filters, list):
         raise ValueError('ERR#0094: filters parameter can just be a list or None if no filter wants to be applied.')
 
-    available_filters = {
+    # TODO: must be included in constants.py variables
+    product_filters = {
         'indices': 'indice', 
         'stocks': 'equities', 
         'etfs': 'etf', 
@@ -71,19 +77,37 @@ def search(text, filters=None, countries=None, n_results=None):
         'certificates': 'certificate', 
         'fxfutures': 'fxfuture'
     }
+    
+    # TODO: must be included in constants.py variables
+    pair_filters = {
+        'indice': 'indices', 
+        'equities': 'stocks', 
+        'etf': 'etfs', 
+        'fund': 'funds', 
+        'commodity': 'commodities', 
+        'currency': 'currencies', 
+        'crypto': 'cryptos', 
+        'bond': 'bonds', 
+        'certificate': 'certificates', 
+        'fxfuture': 'fxfutures'
+    }
 
-    # TODO: unidecode operation and to lower case need to be done
-    if filters:
-        condition = set(filters).issubset(available_filters.keys())
+    if products:
+        try:
+            products = list(map(lambda product: unidecode(product.lower().strip()), products))
+        except:
+            raise ValueError("ERR#0130: the introduced products filter must be a list of str in order to be valid.")
+
+        condition = set(products).issubset(product_filters.keys())
         if condition is False:
-            raise ValueError('ERR#0095: filters parameter values must be contained in ' + ', '.join(available_filters) + '.')
-        else:
-            filters = [available_filters[filter_] for filter_ in filters]
+            raise ValueError('ERR#0095: products filtering parameter possible values are: \"' + ', '.join(product_filters.keys()) + '\".')
+        
+        products = [product_filters[product] for product in products]
     else:
-        filters = list(available_filters.values())
+        products = list(product_filters.values())
 
-    # TODO: constant variables containing all the countries
-    available_countries = {
+    # TODO: must be included in constants.py variables
+    flag_filters = {
         'Andorra': 'andorra', 'Argentina': 'argentina', 'Australia': 'australia', 'Austria': 'austria',
         'Bahrain': 'bahrain', 'Bangladesh': 'bangladesh', 'Belgium': 'belgium', 'Bermuda': 'bermuda', 
         'Bosnia': 'bosnia', 'Botswana': 'botswana', 'Brazil': 'brazil', 'Bulgaria': 'bulgaria', 
@@ -113,7 +137,8 @@ def search(text, filters=None, countries=None, n_results=None):
         'Zambia': 'zambia', 'Zimbabwe': 'zimbabwe'
     }
 
-    available_flags = {
+    # TODO: must be included in constants.py variables
+    country_filters = {
         'andorra': 'Andorra', 'argentina': 'Argentina', 'australia': 'Australia', 'austria': 'Austria', 
         'bahrain': 'Bahrain', 'bangladesh': 'Bangladesh', 'belgium': 'Belgium', 'bermuda': 'Bermuda', 
         'bosnia': 'Bosnia', 'botswana': 'Botswana', 'brazil': 'Brazil', 'bulgaria': 'Bulgaria', 
@@ -142,21 +167,20 @@ def search(text, filters=None, countries=None, n_results=None):
         'venezuela': 'Venezuela', 'vietnam': 'Vietnam', 'zambia': 'Zambia', 'zimbabwe': 'Zimbabwe'
     }
 
-    search_countries = list(available_countries.values())
-
     if countries:
         try:
-            countries = [unidecode(country.lower().strip()) for country in countries]
+            countries = list(map(lambda country: unidecode(country.lower().strip()), countries))
         except:
-            raise ValueError('ERR#0129: introduced countries are not valid, please validate them.')
+            raise ValueError("ERR#0131: the introduced countries filter must be a list of str in order to be valid.")
 
-        condition = set(countries).issubset(search_countries)
+        condition = set(countries).issubset(country_filters.keys())
         if condition is False:
-            raise ValueError('ERR#0129: introduced countries are not valid, please validate them.')
-        else:
-            flags = [available_flags[country] for country in countries]
+            # TODO: instead of printing the possible countries on the exception, reference the docs instead (including the listing of available countries)
+            raise ValueError('ERR#0129: countries filtering parameter possible values are: \"' + ', '.join(country_filters.keys()) + '\".')
+        
+        countries = [country_filters[country] for country in countries]
     else:
-        flags = list(available_countries.keys())
+        countries = list(country_filters.values())
 
     params = {
         'search_text': text,
@@ -188,7 +212,7 @@ def search(text, filters=None, countries=None, n_results=None):
         data = req.json()
 
         if data['total']['quotes'] == 0:
-            raise ValueError("ERR#0093: no results found on Investing for the introduced text.")
+            raise RuntimeError("ERR#0093: no results found on Investing for the introduced text.")
 
         if total_results is None:
             total_results = data['total']['quotes']
@@ -197,16 +221,17 @@ def search(text, filters=None, countries=None, n_results=None):
             n_results = data['total']['quotes']
 
         for quote in data['quotes']:
-            flag = quote['flag']
-
             tag = re.sub(r'\/(.*?)\/', '', quote['link'])
 
-            # TODO: change filters dict so to include the proper filter name instead of the one provided by Investing.com
-            if quote['pair_type'] in filters and flag in flags:
+            if quote['pair_type'] in products and quote['flag'] in countries:
                 search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                                country=available_countries[flag], tag=tag, pair_type=quote['pair_type'],
+                                                country=flag_filters[quote['flag']], tag=tag, pair_type=pair_filters[quote['pair_type']],
                                                 exchange=quote['exchange']))
         
+        # TODO: fix in case that results are for example 271 where the last result will never be retrieved
+        # offset = 0, total_results = 21 -> ok 10 results
+        # offset = 10, total_results = 21 -> ok 10 results
+        # offset = 20, total_results = 21 -> fail (1 missing result, bc 21 - 10 - 10 - 10 < 0) 
         params['offset'] += 270
         
         if len(search_results) >= n_results or len(search_results) >= total_results or params['offset'] >= total_results:

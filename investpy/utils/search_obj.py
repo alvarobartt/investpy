@@ -17,10 +17,10 @@ class SearchObj(object):
     """Class which contains each search result when searching data in Investing.
     
     This class contains the search results of the Investing.com search made with the function
-    call `investpy.search(text)` which returns a :obj:`list` of instances of this class
-    with the formatted retrieved information. Additionally, data can either be retrieved or not
-    including both recent and historical data, which will be included in the `SearchObj.data` 
-    attribute when calling either `SearchObj.retrieve_recent_data()` or 
+    call `investpy.search(text, products, countries, n_results)` which returns a :obj:`list` 
+    of instances of this class with the formatted retrieved information. Additionally, data can 
+    either be retrieved or not including both recent and historical data, which will be included 
+    in the `SearchObj.data` attribute when calling either `SearchObj.retrieve_recent_data()` or 
     `SearchObj.retrieve_historical_data(from_date, to_date)`, respectively.
 
     Attributes:
@@ -59,8 +59,8 @@ class SearchObj(object):
         
         This method retrieves the recent data from Investing of the financial product of the current class
         instance, so it fills the `SearchObj.data` attribute with the retrieved :obj:`pandas.DataFrame`. This method
-        uses the previously filled data from the `investpy.search(text)` function search results to build the
-        request that it is going to be sent to Investing so to retrieve and parse the data.
+        uses the previously filled data from the `investpy.search(text, products, countries, n_results)` function 
+        search results to build the request that it is going to be sent to Investing so to retrieve and parse the data.
 
         Returns:
             :obj:`pandas.DataFrame` - data:
@@ -95,9 +95,9 @@ class SearchObj(object):
         
         This method retrieves the historical data from Investing of the financial product of the current class
         instance on the specified date range, so it fills the `SearchObj.data` attribute with the retrieved 
-        :obj:`pandas.DataFrame`. This method uses the previously filled data from the `investpy.search(text)` 
-        function search results to build the request that it is going to be sent to Investing so to retrieve 
-        and parse the data.
+        :obj:`pandas.DataFrame`. This method uses the previously filled data from the 
+        `investpy.search(text, products, countries, n_results)` function search results to build the request 
+        that it is going to be sent to Investing so to retrieve and parse the data.
 
         Returns:
             :obj:`pandas.DataFrame` - data:
