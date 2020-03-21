@@ -9,6 +9,8 @@ import unidecode
 import requests
 from lxml.html import fromstring
 
+import .utils.constant as cst
+
 from .utils.user_agent import get_random
 from .utils.auxiliar import resource_to_data
 
@@ -37,7 +39,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
             `5hours`, `daily`, `weekly` and `monthly`.
 
     Returns:
-        :obj:`pandas.DataFrame` - moving_averages:
+        :obj:`pandas.DataFrame` - technical_indicators:
             The resulting :obj:`pandas.DataFrame` contains the table with the results of the calculation of the technical 
             indicators made by Investing.com for the introduced financial product. So on, if the retrieval process succeed
             its result will look like::
@@ -90,38 +92,16 @@ def technical_indicators(name, country, product_type, interval='daily'):
     if not isinstance(interval, str):
         raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
-    product_types = {
-        'certificate': 'certificates/certificates.csv',
-        'commodity': 'commodities/commodities.csv',
-        'currency_cross': 'currency_crosses/currency_crosses.csv',
-        'etf': 'etfs/etfs.csv',
-        'fund': 'funds/funds.csv',
-        'index': 'indices/indices.csv',
-        'stock': 'stocks/stocks.csv',
-        'bond': 'bonds/bonds.csv'
-    }
-
     product_type = unidecode.unidecode(product_type.lower().strip())
 
-    if product_type not in product_types.keys():
-        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(product_types.keys()))
-
-    intervals = {
-        '5mins': 60*5,
-        '15mins': 60*15,
-        '30mins': 60*30,
-        '1hour': 60*60,
-        '5hours': 60*60*5,
-        'daily': 60*60*24,
-        'weekly': 'week',
-        'monthly': 'month'
-    }
+    if product_type not in cst.PRODUCT_TYPE_FILES.keys():
+        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(cst.PRODUCT_TYPE_FILES.keys()))
 
     if interval:
-        if interval not in intervals.keys():
-            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
+        if interval not in cst.INTERVAL_FILTERS.keys():
+            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(cst.INTERVAL_FILTERS.keys()))
 
-    data = resource_to_data(path_to_data=product_types[product_type])
+    data = resource_to_data(path_to_data=cst.PRODUCT_TYPE_FILES[product_type])
 
     if product_type not in ['currency_cross']:
         if country is not None:
@@ -149,7 +129,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     data_values = {
         'pairID': product_id,
-        'period': intervals[interval],
+        'period': cst.INTERVAL_FILTERS[interval],
         'viewType': 'normal'
     }
 
@@ -186,9 +166,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
                     'signal': tech_sig.replace(' ', '_')
                 })
 
-    result = pd.DataFrame(tech_indicators)
-
-    return result
+    return pd.DataFrame(tech_indicators)
 
 
 def moving_averages(name, country, product_type, interval='daily'):
@@ -218,7 +196,8 @@ def moving_averages(name, country, product_type, interval='daily'):
 
     Returns:
         :obj:`pandas.DataFrame` - moving_averages:
-            The resulting :obj:`pandas.DataFrame` contains the table with the results of the calculation of the moving averages made by Investing.com for the introduced financial product. So on, if the retrieval process succeed
+            The resulting :obj:`pandas.DataFrame` contains the table with the results of the calculation of the moving averages
+            made by Investing.com for the introduced financial product. So on, if the retrieval process succeed
             its result will look like::
 
                  period | sma_value | sma_signal | ema_value | ema_signal 
@@ -262,38 +241,16 @@ def moving_averages(name, country, product_type, interval='daily'):
     if not isinstance(interval, str):
         raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
-    product_types = {
-        'certificate': 'certificates/certificates.csv',
-        'commodity': 'commodities/commodities.csv',
-        'currency_cross': 'currency_crosses/currency_crosses.csv',
-        'etf': 'etfs/etfs.csv',
-        'fund': 'funds/funds.csv',
-        'index': 'indices/indices.csv',
-        'stock': 'stocks/stocks.csv',
-        'bond': 'bonds/bonds.csv'
-    }
-
     product_type = unidecode.unidecode(product_type.lower().strip())
 
-    if product_type not in product_types.keys():
-        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(product_types.keys()))
-
-    intervals = {
-        '5mins': 60*5,
-        '15mins': 60*15,
-        '30mins': 60*30,
-        '1hour': 60*60,
-        '5hours': 60*60*5,
-        'daily': 60*60*24,
-        'weekly': 'week',
-        'monthly': 'month'
-    }
+    if product_type not in cst.PRODUCT_TYPE_FILES.keys():
+        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(cst.PRODUCT_TYPE_FILES.keys()))
 
     if interval:
-        if interval not in intervals.keys():
-            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
+        if interval not in cst.INTERVAL_FILTERS.keys():
+            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(cst.INTERVAL_FILTERS.keys()))
 
-    data = resource_to_data(path_to_data=product_types[product_type])
+    data = resource_to_data(path_to_data=cst.PRODUCT_TYPE_FILES[product_type])
 
     if product_type not in ['currency_cross']:
         if country is not None:
@@ -321,7 +278,7 @@ def moving_averages(name, country, product_type, interval='daily'):
 
     data_values = {
         'pairID': product_id,
-        'period': intervals[interval],
+        'period': cst.INTERVAL_FILTERS[interval],
         'viewType': 'normal'
     }
 
@@ -364,9 +321,7 @@ def moving_averages(name, country, product_type, interval='daily'):
                         'ema_signal': ema_signal
                     })
 
-    result = pd.DataFrame(moving_avgs)
-
-    return result
+    return pd.DataFrame(moving_avgs)
 
 
 def pivot_points(name, country, product_type, interval='daily'):
@@ -394,7 +349,7 @@ def pivot_points(name, country, product_type, interval='daily'):
             `5hours`, `daily`, `weekly` and `monthly`.
 
     Returns:
-        :obj:`pandas.DataFrame` - moving_averages:
+        :obj:`pandas.DataFrame` - pivot_points:
             The resulting :obj:`pandas.DataFrame` contains the table with the results of the calculation of the pivot
             points made by Investing.com for the introduced financial product. So on, if the retrieval process succeed
             its result will look like::
@@ -439,38 +394,16 @@ def pivot_points(name, country, product_type, interval='daily'):
     if not isinstance(interval, str):
         raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
-    product_types = {
-        'certificate': 'certificates/certificates.csv',
-        'commodity': 'commodities/commodities.csv',
-        'currency_cross': 'currency_crosses/currency_crosses.csv',
-        'etf': 'etfs/etfs.csv',
-        'fund': 'funds/funds.csv',
-        'index': 'indices/indices.csv',
-        'stock': 'stocks/stocks.csv',
-        'bond': 'bonds/bonds.csv'
-    }
-
     product_type = unidecode.unidecode(product_type.lower().strip())
 
-    if product_type not in product_types.keys():
-        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(product_types.keys()))
-
-    intervals = {
-        '5mins': 60*5,
-        '15mins': 60*15,
-        '30mins': 60*30,
-        '1hour': 60*60,
-        '5hours': 60*60*5,
-        'daily': 60*60*24,
-        'weekly': 'week',
-        'monthly': 'month'
-    }
+    if product_type not in cst.PRODUCT_TYPE_FILES.keys():
+        raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(cst.PRODUCT_TYPE_FILES.keys()))
 
     if interval:
-        if interval not in intervals.keys():
-            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(product_types.keys()))
+        if interval not in cst.INTERVAL_FILTERS.keys():
+            raise ValueError("ERR#0120: introduced interval value does not exist. Available values are: " + ', '.join(cst.INTERVAL_FILTERS.keys()))
 
-    data = resource_to_data(path_to_data=product_types[product_type])
+    data = resource_to_data(path_to_data=cst.PRODUCT_TYPE_FILES[product_type])
 
     if product_type not in ['currency_cross']:
         if country is not None:
@@ -498,7 +431,7 @@ def pivot_points(name, country, product_type, interval='daily'):
 
     data_values = {
         'pairID': product_id,
-        'period': intervals[interval],
+        'period': cst.INTERVAL_FILTERS[interval],
         'viewType': 'normal'
     }
 
@@ -527,24 +460,22 @@ def pivot_points(name, country, product_type, interval='daily'):
 
     table = root.xpath(".//table[contains(@class, 'crossRatesTbl')]/tbody/tr")
 
-    results = list()
+    pivot_pts = list()
 
     for row in table:
-        result = dict()
+        pivot_pt = dict()
         elements = row.xpath("td")
 
         for key, value in values.items():
             if value != 'name':
                 val = elements[key].text_content().strip()
                 try:
-                    result.update({value: float(val)})
+                    pivot_pt.update({value: float(val)})
                 except:
-                    result.update({value: None})
+                    pivot_pt.update({value: None})
             else:
-                result.update({value: elements[key].text_content().strip()})
+                pivot_pt.update({value: elements[key].text_content().strip()})
         
-        results.append(result)
+        pivot_pts.append(pivot_pt)
 
-    result = pd.DataFrame(results)
-
-    return result
+    return pd.DataFrame(pivot_pts)
