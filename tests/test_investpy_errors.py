@@ -3818,9 +3818,9 @@ def test_search_errors():
 
     for param in params:
         try:
-            results = investpy.search(text=param['text']
+            results = investpy.search(text=param['text'],
                                       countries=param['countries'],
-                                      products=param['products'].
+                                      products=param['products'],
                                       n_results=param['n_results'])
 
             dates = [
