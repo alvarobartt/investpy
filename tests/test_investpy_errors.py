@@ -3,8 +3,6 @@
 
 import investpy
 
-from investpy.utils.user_agent import get_random, clear_file, delete_file
-
 
 def test_stocks_errors():
     """
@@ -4093,24 +4091,6 @@ def test_technical_errors():
             pass
 
 
-def test_user_agent_errors():
-    """
-    This function raises errors on user_agent functions.
-    """
-
-    clear_file()
-    try:
-        get_random()
-    except:
-        pass
-
-    delete_file()
-    try:
-        get_random()
-    except:
-        pass
-
-
 if __name__ == '__main__':
     test_stocks_errors()
     test_funds_errors()
@@ -4124,4 +4104,3 @@ if __name__ == '__main__':
     test_search_errors()
     test_technical_errors()
     test_news_errors()
-    test_user_agent_errors()

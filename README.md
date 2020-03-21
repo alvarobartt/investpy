@@ -94,7 +94,7 @@ retrieved product's historical data, its information, etc., as presented in this
    print(search_result.data.head())
 ```
 ```{r, engine='python', count_lines}
-{"id_": 6408, "name": "Apple Inc", "symbol": "AAPL", "country": "united states", "tag": "apple-computer-inc", "pair_type": "equities", "exchange": "NASDAQ"}
+{"id_": 6408, "name": "Apple Inc", "symbol": "AAPL", "country": "united states", "tag": "apple-computer-inc", "pair_type": "stocks", "exchange": "NASDAQ"}
 
               Open    High     Low   Close    Volume
 Date                                                

@@ -29,7 +29,7 @@ class SearchObj(object):
         symbol (:obj:`str`): symbol of the retrieved financial product.
         tag (:obj:`str`): tag (which is the Investing URL) of the retrieved financial product.
         country (:obj:`str`): name of the country from where the retrieved financial product is.
-        pair_type (:obj:`str`): type of retrieved financial product (equities, fund, etf, etc.).
+        pair_type (:obj:`str`): type of retrieved financial product (stocks, funds, etfs, etc.).
         exchange (:obj:`str`): name of the stock exchange of the retrieved financial product.
         data (:obj:`pandas.DataFrame`, optional): 
             recent or historical data to retrieve from the current financial product.
@@ -73,13 +73,13 @@ class SearchObj(object):
 
         """
 
-        if self.pair_type in ['equities', 'fund', 'etf', 'currency', 'certificate']:
+        if self.pair_type in ['stocks', 'funds', 'etfs', 'currencies', 'certificates']:
             header = self.symbol + ' Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['bond']:
+        elif self.pair_type in ['bonds']:
             header = self.name + ' Bond Yield Historical Data'
             head, params = self._prepare_request(header)
-        elif self.pair_type in ['indice', 'commodity', 'crypto', 'fxfuture']:
+        elif self.pair_type in ['indices', 'commodities', 'cryptos', 'fxfutures']:
             header = self.name + ' Historical Data'
             head, params = self._prepare_request(header)
 
@@ -130,11 +130,11 @@ class SearchObj(object):
         if from_date >= to_date:
             raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
 
-        if self.pair_type in ['equities', 'fund', 'etf', 'currency', 'certificate']:
+        if self.pair_type in ['stocks', 'funds', 'etfs', 'currencies', 'certificates']:
             header = self.symbol + ' Historical Data'
-        elif self.pair_type in ['bond']:
+        elif self.pair_type in ['bonds']:
             header = self.name + ' Bond Yield Historical Data'
-        elif self.pair_type in ['indice', 'commodity', 'crypto', 'fxfuture']:
+        elif self.pair_type in ['indices', 'commodities', 'cryptos', 'fxfutures']:
             header = self.name + ' Historical Data'
 
         if to_date.year - from_date.year > 20:
@@ -239,7 +239,7 @@ class SearchObj(object):
         return date_interval
     
     def _data_retrieval(self, product, head, params):
-        if product in ['equities', 'indice', 'fxfuture']:
+        if product in ['stocks', 'indices', 'fxfutures']:
             has_volume = True
         else:
             has_volume = False

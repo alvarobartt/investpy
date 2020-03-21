@@ -138,7 +138,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
             'dateFrom': datetime.strptime(from_date, '%d/%m/%Y').strftime('%Y-%m-%d'),
             'dateTo': datetime.strptime(to_date, '%d/%m/%Y').strftime('%Y-%m-%d'),
             'timeZone': choice(cst.TIMEZONES[time_zone]),
-            'timeFilter': cst.TIME_FILTER[time_filter],
+            'timeFilter': cst.TIME_FILTERS[time_filter],
             'currentTab': 'custom',
             'submitFilters': 1,
             'limit_from': 0
