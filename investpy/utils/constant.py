@@ -224,3 +224,18 @@ USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36",
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36"
 ]
+
+# TODO: read csv files and transform them into dicts, procedure: csv into pandas and pandas to_dict()
+BOND_COUNTRIES = {}
+
+CERTIFICATE_COUNTRIES = {}
+
+CURRENCIES = {}
+
+ETF_COUNTRIES = {}
+
+FUND_COUNTRIES = {}
+
+STOCK_COUNTRIES = {}
+
+INDEX_COUNTRIES = {}
