@@ -11,7 +11,7 @@ from .utils.search_obj import SearchObj
 from .utils.user_agent import get_random
 
 
-def search(text, products=None, countries=None, n_results=None):
+def search_quotes(text, products=None, countries=None, n_results=None):
     """
     This function will use the Investing.com search engine so to retrieve the search results of the
     introduced text. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`

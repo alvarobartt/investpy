@@ -3816,10 +3816,10 @@ def test_search_errors():
 
     for param in params:
         try:
-            results = investpy.search(text=param['text'],
-                                      countries=param['countries'],
-                                      products=param['products'],
-                                      n_results=param['n_results'])
+            results = investpy.search_quotes(text=param['text'],
+                                             countries=param['countries'],
+                                             products=param['products'],
+                                             n_results=param['n_results'])
 
             dates = [
                 {

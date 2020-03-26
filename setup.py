@@ -26,7 +26,7 @@ setup(
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarobartt@usal.es',
-    description='investpy — a Python package for financial historical data extraction from Investing',
+    description='investpy — a Python package for financial data extraction from Investing',
     long_description=readme(),
     long_description_content_type='text/markdown',
     install_requires=requirements(),

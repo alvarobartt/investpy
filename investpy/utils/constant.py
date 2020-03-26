@@ -225,7 +225,6 @@ USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36"
 ]
 
-# TODO: read csv files and transform them into dicts, procedure: csv into pandas and pandas to_dict()
 BOND_COUNTRIES = [
     {'exchange_id': 37, 'tag': 'argentina', 'country_id': 29, 'country': 'argentina'}, {'exchange_id': 18, 'tag': 'australia', 'country_id': 25, 'country': 'australia'},
     {'exchange_id': 17, 'tag': 'austria', 'country_id': 54, 'country': 'austria'}, {'exchange_id': 39, 'tag': 'bahrain', 'country_id': 145, 'country': 'bahrain'},

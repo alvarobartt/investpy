@@ -76,10 +76,10 @@ can be easily achieved just using the following piece of code:
 ```python
 import investpy
 
-search_results = investpy.search(text='apple',
-                                 products=['stocks'],
-                                 countries=['united_states'],
-                                 n_results=10)
+search_results = investpy.search_quotes(text='apple',
+                                        products=['stocks'],
+                                        countries=['united_states'],
+                                        n_results=10)
 ```
 
 Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to 

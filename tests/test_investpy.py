@@ -1220,10 +1220,10 @@ def test_investpy_search():
     ]
 
     for param in params:
-        results = investpy.search(text=param['text'],
-                                  products=param['products'],
-                                  countries=param['countries'],
-                                  n_results=param['n_results'])
+        results = investpy.search_quotes(text=param['text'],
+                                         products=param['products'],
+                                         countries=param['countries'],
+                                         n_results=param['n_results'])
 
         dates = [
             {
