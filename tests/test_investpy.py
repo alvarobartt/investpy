@@ -1128,13 +1128,13 @@ def test_investpy_certificates():
     ]
 
     for param in params:
-        investpy.get_certificate_recent_data(certificate='COMMERZBANK SG 31Dec99',
+        investpy.get_certificate_recent_data(certificate='SG ZT CAC 40 x7 Short 31Dec99',
                                              country='france',
                                              as_json=param['as_json'],
                                              order=param['order'],
                                              interval='Daily')
 
-        investpy.get_certificate_historical_data(certificate='COMMERZBANK SG 31Dec99',
+        investpy.get_certificate_historical_data(certificate='SG ZT CAC 40 x7 Short 31Dec99',
                                                  country='france',
                                                  from_date='01/01/1990',
                                                  to_date='01/01/2019',
@@ -1144,12 +1144,12 @@ def test_investpy_certificates():
 
     params = [
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
             'country': 'france',
             'as_json': False
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
             'country': 'france',
             'as_json': True
         }
