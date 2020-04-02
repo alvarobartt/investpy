@@ -909,8 +909,8 @@ def get_funds_overview(country, as_json=False, n_results=100):
             symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
             nested = row.xpath(".//a")[0]
-            name = nested.text.strip()
-            full_name = nested.get('title').rstrip()
+            name = nested.get('title').rstrip()
+            full_name = nested.text.strip()
 
             country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
             country_flag = unidecode.unidecode(country_flag.lower())
@@ -942,6 +942,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
             data = {
                 "country": country_flag,
                 "name": name,
+                "full_name": full_name,
                 "symbol": symbol,
                 "last": float(last.replace(',', '')),
                 "change": change,

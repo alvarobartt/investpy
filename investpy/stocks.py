@@ -1283,6 +1283,12 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         return df
 
 
+# TODO: functions to cover all stock financials
+def get_stock_financial_summary(stock, country, period='annual'):
+    url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax?action=change_report_type&pid=6408&financial_id=6408&ratios_id=6408&period_type=Annual'
+    return None
+
+
 def search_stocks(by, value):
     """
     This function searches stocks by the introduced value for the specified field. This means that this function
