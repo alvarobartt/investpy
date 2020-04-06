@@ -1,7 +1,7 @@
 # Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
 # See LICENSE for details.
 
-import unidecode
+from unidecode import unidecode
 import json
 
 import pandas as pd
@@ -57,8 +57,8 @@ def bonds_as_df(country=None):
     if country is None:
         bonds.reset_index(drop=True, inplace=True)
         return bonds
-    elif unidecode.unidecode(country.lower()) in bond_countries_as_list():
-        bonds = bonds[bonds['country'] == unidecode.unidecode(country.lower())]
+    elif unidecode(country.lower()) in bond_countries_as_list():
+        bonds = bonds[bonds['country'] == unidecode(country.lower())]
         bonds.reset_index(drop=True, inplace=True)
         return bonds
 
@@ -110,8 +110,8 @@ def bonds_as_list(country=None):
 
     if country is None:
         return bonds['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in bond_countries_as_list():
-        return bonds[bonds['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    elif unidecode(country.lower()) in bond_countries_as_list():
+        return bonds[bonds['country'] == unidecode(country.lower())]['name'].tolist()
 
 
 def bonds_as_dict(country=None, columns=None, as_json=False):
@@ -186,9 +186,9 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
     elif country in bond_countries_as_list():
         if as_json:
             return json.dumps(
-                bonds[bonds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+                bonds[bonds['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return bonds[bonds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return bonds[bonds['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
 
 
 def bond_countries_as_list():

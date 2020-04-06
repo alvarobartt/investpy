@@ -6,7 +6,7 @@ import json
 import pandas as pd
 import pkg_resources
 
-import unidecode
+from unidecode import unidecode
 
 
 def funds_as_df(country=None):
@@ -56,8 +56,8 @@ def funds_as_df(country=None):
     if country is None:
         funds.reset_index(drop=True, inplace=True)
         return funds
-    elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
-        funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+    elif unidecode(country.lower()) in fund_countries_as_list():
+        funds = funds[funds['country'] == unidecode(country.lower())]
         funds.reset_index(drop=True, inplace=True)
         return funds
 
@@ -109,8 +109,8 @@ def funds_as_list(country=None):
 
     if country is None:
         return funds['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in fund_countries_as_list():
-        return funds[funds['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    elif unidecode(country.lower()) in fund_countries_as_list():
+        return funds[funds['country'] == unidecode(country.lower())]['name'].tolist()
 
 
 def funds_as_dict(country=None, columns=None, as_json=False):
@@ -187,9 +187,9 @@ def funds_as_dict(country=None, columns=None, as_json=False):
             return funds[columns].to_dict(orient='records')
     elif country in fund_countries_as_list():
         if as_json:
-            return json.dumps(funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(funds[funds['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return funds[funds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return funds[funds['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
 
 
 def fund_countries_as_list():

@@ -9,7 +9,7 @@ import warnings
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils.user_agent import get_random
@@ -251,7 +251,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     commodity = commodity.strip()
     commodity = commodity.lower()
 
-    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -265,10 +265,10 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
 
         del found_commodities
     else:
-        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
             raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+        commodities = commodities[commodities['country'] == unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -508,7 +508,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     commodity = commodity.strip()
     commodity = commodity.lower()
 
-    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -522,10 +522,10 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
 
         del found_commodities
     else:
-        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
             raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+        commodities = commodities[commodities['country'] == unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -708,7 +708,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
     commodity = commodity.strip()
     commodity = commodity.lower()
 
-    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -722,10 +722,10 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
         del found_commodities
     else:
-        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
             raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+        commodities = commodities[commodities['country'] == unidecode(country.lower())]
 
     name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'name']
     tag = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'tag']
@@ -867,7 +867,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    group = unidecode.unidecode(group.lower())
+    group = unidecode(group.lower())
 
     if group not in get_commodity_groups():
         raise RuntimeError('ERR#0091: specified commodity group value is not valid.')

@@ -9,7 +9,7 @@ import warnings
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils.user_agent import get_random
@@ -259,12 +259,12 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.strip().lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    etf = unidecode.unidecode(etf.strip().lower())
+    etf = unidecode(etf.strip().lower())
 
     def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
@@ -553,12 +553,12 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.strip().lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    etf = unidecode.unidecode(etf.strip().lower())
+    etf = unidecode(etf.strip().lower())
 
     def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
@@ -786,7 +786,7 @@ def get_etf_information(etf, country, as_json=False):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
@@ -796,7 +796,7 @@ def get_etf_information(etf, country, as_json=False):
     etf = etf.strip()
     etf = etf.lower()
 
-    if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+    if unidecode(etf) not in [unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
 
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
@@ -932,7 +932,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')
@@ -975,7 +975,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
 
             # In Euro Zone the ETFs are from different countries so the country is specified
             country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-            country_flag = unidecode.unidecode(country_flag.lower())
+            country_flag = unidecode(country_flag.lower())
 
             last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
             last = row.xpath(last_path)[0].text_content()

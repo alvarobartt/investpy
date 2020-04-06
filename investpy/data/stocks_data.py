@@ -1,7 +1,7 @@
 # Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
 # See LICENSE for details.
 
-import unidecode
+from unidecode import unidecode
 import json
 
 import pandas as pd
@@ -57,8 +57,8 @@ def stocks_as_df(country=None):
     if country is None:
         stocks.reset_index(drop=True, inplace=True)
         return stocks
-    elif unidecode.unidecode(country.lower()) in stock_countries_as_list():
-        stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    elif unidecode(country.lower()) in stock_countries_as_list():
+        stocks = stocks[stocks['country'] == unidecode(country.lower())]
         stocks.reset_index(drop=True, inplace=True)
         return stocks
 
@@ -110,8 +110,8 @@ def stocks_as_list(country=None):
 
     if country is None:
         return stocks['symbol'].tolist()
-    elif unidecode.unidecode(country.lower()) in stock_countries_as_list():
-        return stocks[stocks['country'] == unidecode.unidecode(country.lower())]['symbol'].tolist()
+    elif unidecode(country.lower()) in stock_countries_as_list():
+        return stocks[stocks['country'] == unidecode(country.lower())]['symbol'].tolist()
 
 
 def stocks_as_dict(country=None, columns=None, as_json=False):
@@ -189,9 +189,9 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
     elif country in stock_countries_as_list():
         if as_json:
             return json.dumps(
-                stocks[stocks['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+                stocks[stocks['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return stocks[stocks['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return stocks[stocks['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
 
 
 def stock_countries_as_list():

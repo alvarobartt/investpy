@@ -6,7 +6,7 @@ import json
 import pandas as pd
 import pkg_resources
 
-import unidecode
+from unidecode import unidecode
 
 
 def indices_as_df(country=None):
@@ -57,8 +57,8 @@ def indices_as_df(country=None):
     if country is None:
         indices.reset_index(drop=True, inplace=True)
         return indices
-    elif unidecode.unidecode(country.lower()) in index_countries_as_list():
-        indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+    elif unidecode(country.lower()) in index_countries_as_list():
+        indices = indices[indices['country'] == unidecode(country.lower())]
         indices.reset_index(drop=True, inplace=True)
         return indices
 
@@ -108,8 +108,8 @@ def indices_as_list(country=None):
 
     if country is None:
         return indices['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in index_countries_as_list():
-        return indices[indices['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    elif unidecode(country.lower()) in index_countries_as_list():
+        return indices[indices['country'] == unidecode(country.lower())]['name'].tolist()
 
 
 def indices_as_dict(country=None, columns=None, as_json=False):
@@ -188,9 +188,9 @@ def indices_as_dict(country=None, columns=None, as_json=False):
             return indices[columns].to_dict(orient='records')
     elif country in index_countries_as_list():
         if as_json:
-            return json.dumps(indices[indices['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(indices[indices['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return indices[indices['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return indices[indices['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
 
 
 def index_countries_as_list():

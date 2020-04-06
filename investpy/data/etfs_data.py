@@ -3,7 +3,7 @@
 
 import json
 
-import unidecode
+from unidecode import unidecode
 
 import pandas as pd
 import pkg_resources
@@ -57,8 +57,8 @@ def etfs_as_df(country=None):
     if country is None:
         etfs.reset_index(drop=True, inplace=True)
         return etfs
-    elif unidecode.unidecode(country.lower()) in etf_countries_as_list():
-        etfs = etfs[etfs['country'] == unidecode.unidecode(country.lower())]
+    elif unidecode(country.lower()) in etf_countries_as_list():
+        etfs = etfs[etfs['country'] == unidecode(country.lower())]
         etfs.reset_index(drop=True, inplace=True)
         return etfs
 
@@ -113,7 +113,7 @@ def etfs_as_list(country=None):
     if country is None:
         return etfs['name'].tolist()
     elif country in etf_countries_as_list():
-        return etfs[etfs['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+        return etfs[etfs['country'] == unidecode(country.lower())]['name'].tolist()
 
 
 def etfs_as_dict(country=None, columns=None, as_json=False):
@@ -194,9 +194,9 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     elif country in etf_countries_as_list():
         if as_json:
             return json.dumps(
-                etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+                etfs[etfs['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return etfs[etfs['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return etfs[etfs['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
 
 
 def etf_countries_as_list():

@@ -8,7 +8,7 @@ from random import randint
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils.user_agent import get_random
@@ -212,7 +212,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     crypto = crypto.strip()
     crypto = crypto.lower()
 
-    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -449,7 +449,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     crypto = crypto.strip()
     crypto = crypto.lower()
 
-    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -620,7 +620,7 @@ def get_crypto_information(crypto, as_json=False):
     crypto = crypto.strip()
     crypto = crypto.lower()
 
-    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']

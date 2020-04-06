@@ -4,7 +4,7 @@
 import pandas as pd
 
 import pkg_resources
-import unidecode
+from unidecode import unidecode
 
 import requests
 from lxml.html import fromstring
@@ -90,7 +90,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
     if not isinstance(interval, str):
         raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
-    product_type = unidecode.unidecode(product_type.lower().strip())
+    product_type = unidecode(product_type.lower().strip())
 
     if product_type not in cst.PRODUCT_TYPE_FILES.keys():
         raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(cst.PRODUCT_TYPE_FILES.keys()))
@@ -103,7 +103,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     if product_type not in ['currency_cross']:
         if country is not None:
-            country = unidecode.unidecode(country.lower().strip())
+            country = unidecode(country.lower().strip())
 
             if country not in data['country'].tolist():
                 raise ValueError("ERR#0124: introduced country does not exist or is not available.")
@@ -118,9 +118,9 @@ def technical_indicators(name, country, product_type, interval='daily'):
     else:
         check = 'name'
 
-    name = unidecode.unidecode(name.lower().strip())
+    name = unidecode(name.lower().strip())
 
-    if name not in [unidecode.unidecode(value.lower()) for value in data[check].tolist()]:
+    if name not in [unidecode(value.lower()) for value in data[check].tolist()]:
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
@@ -239,7 +239,7 @@ def moving_averages(name, country, product_type, interval='daily'):
     if not isinstance(interval, str):
         raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
-    product_type = unidecode.unidecode(product_type.lower().strip())
+    product_type = unidecode(product_type.lower().strip())
 
     if product_type not in cst.PRODUCT_TYPE_FILES.keys():
         raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(cst.PRODUCT_TYPE_FILES.keys()))
@@ -252,7 +252,7 @@ def moving_averages(name, country, product_type, interval='daily'):
 
     if product_type not in ['currency_cross']:
         if country is not None:
-            country = unidecode.unidecode(country.lower().strip())
+            country = unidecode(country.lower().strip())
 
             if country not in data['country'].tolist():
                 raise ValueError("ERR#0124: introduced country does not exist or is not available.")
@@ -267,9 +267,9 @@ def moving_averages(name, country, product_type, interval='daily'):
     else:
         check = 'name'
 
-    name = unidecode.unidecode(name.lower().strip())
+    name = unidecode(name.lower().strip())
 
-    if name not in [unidecode.unidecode(value.lower()) for value in data[check].tolist()]:
+    if name not in [unidecode(value.lower()) for value in data[check].tolist()]:
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
@@ -392,7 +392,7 @@ def pivot_points(name, country, product_type, interval='daily'):
     if not isinstance(interval, str):
         raise ValueError("ERR#0121: interval value is mandatory and must be a string.")
 
-    product_type = unidecode.unidecode(product_type.lower().strip())
+    product_type = unidecode(product_type.lower().strip())
 
     if product_type not in cst.PRODUCT_TYPE_FILES.keys():
         raise ValueError("ERR#0119: introduced product_type value does not exist. Available values are: " + ', '.join(cst.PRODUCT_TYPE_FILES.keys()))
@@ -405,7 +405,7 @@ def pivot_points(name, country, product_type, interval='daily'):
 
     if product_type not in ['currency_cross']:
         if country is not None:
-            country = unidecode.unidecode(country.lower().strip())
+            country = unidecode(country.lower().strip())
 
             if country not in data['country'].tolist():
                 raise ValueError("ERR#0124: introduced country does not exist or is not available.")
@@ -420,9 +420,9 @@ def pivot_points(name, country, product_type, interval='daily'):
     else:
         check = 'name'
 
-    name = unidecode.unidecode(name.lower().strip())
+    name = unidecode(name.lower().strip())
 
-    if name not in [unidecode.unidecode(value.lower()) for value in data[check].tolist()]:
+    if name not in [unidecode(value.lower()) for value in data[check].tolist()]:
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']

@@ -9,7 +9,7 @@ import string
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils.user_agent import get_random
@@ -273,7 +273,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     currency_cross = currency_cross.strip()
     currency_cross = currency_cross.lower()
 
-    if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
+    if unidecode(currency_cross) not in [unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
@@ -500,7 +500,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     currency_cross = currency_cross.strip()
     currency_cross = currency_cross.lower()
 
-    if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
+    if unidecode(currency_cross) not in [unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
@@ -665,7 +665,7 @@ def get_currency_cross_information(currency_cross, as_json=False):
     currency_cross = currency_cross.strip()
     currency_cross = currency_cross.lower()
 
-    if unidecode.unidecode(currency_cross) not in [unidecode.unidecode(value.lower()) for value in crosses['name'].tolist()]:
+    if unidecode(currency_cross) not in [unidecode(value.lower()) for value in crosses['name'].tolist()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     name = crosses.loc[(crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
@@ -798,7 +798,7 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
     if currencies is None:
         raise IOError("ERR#0104: currencies not found or unable to retrieve.")
 
-    currency = unidecode.unidecode(currency.lower())
+    currency = unidecode(currency.lower())
 
     if currency not in currencies['symbol'].str.lower().tolist():
         raise ValueError("ERR#0106: specified currency value not valid.")

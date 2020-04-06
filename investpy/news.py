@@ -4,7 +4,7 @@
 from datetime import datetime
 from time import strftime, gmtime
 from random import choice
-import unidecode
+from unidecode import unidecode
 
 import pandas as pd
 
@@ -151,7 +151,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
 
         # TODO: improve loop using lambda
         for country in countries:
-            country = unidecode.unidecode(country.lower())
+            country = unidecode(country.lower())
             country = country.strip()
 
             if country in available_countries:
@@ -169,7 +169,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
 
         # TODO: improve loop using lambda
         for category in categories:
-            category = unidecode.unidecode(category.lower())
+            category = unidecode(category.lower())
             category = category.strip()
 
             if category in available_categories:
@@ -185,7 +185,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
 
         # TODO: improve loop using lambda
         for importance in importances:
-            importance = unidecode.unidecode(importance.lower())
+            importance = unidecode(importance.lower())
             importance = importance.strip()
 
             for key, value in cst.IMPORTANCE_RATINGS.items():

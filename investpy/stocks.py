@@ -8,7 +8,7 @@ from random import randint
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils.user_agent import get_random
@@ -249,15 +249,15 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+    if unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == unidecode(country.lower())]
 
     stock = stock.strip()
     stock = stock.lower()
 
-    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if unidecode(stock) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
@@ -498,15 +498,15 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+    if unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == unidecode(country.lower())]
 
     stock = stock.strip()
     stock = stock.lower()
 
-    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if unidecode(stock) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
@@ -684,12 +684,12 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    language = unidecode.unidecode(language.strip().lower())
+    language = unidecode(language.strip().lower())
 
     if language not in available_sources.keys():
         raise ValueError("ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en).")
 
-    country = unidecode.unidecode(country.strip().lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
@@ -711,9 +711,9 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
     stocks = stocks[stocks['country'] == country]
 
-    stock = unidecode.unidecode(stock.strip().lower())
+    stock = unidecode(stock.strip().lower())
 
-    if stock not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     company_profile = {
@@ -836,15 +836,15 @@ def get_stock_dividends(stock, country):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+    if unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'].str.lower() == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'].str.lower() == unidecode(country.lower())]
 
     stock = stock.strip()
     stock = stock.lower()
 
-    if unidecode.unidecode(stock) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if unidecode(stock) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
@@ -890,11 +890,11 @@ def get_stock_dividends(stock, country):
                 for element_ in elements_.xpath(".//td"):
                     if element_.get('class'):
                         if element_.get('class').__contains__('first'):
-                            dividend_date = datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
-                            dividend_value = float(element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                            dividend_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.get('data-value'))).date()), '%Y-%m-%d')
+                            dividend_value = float(element_.getnext().text_content().replace(',', ''))
                         if element_.get('data-value') in type_values.keys():
                             dividend_type = type_values[element_.get('data-value')]
-                            dividend_payment_date = datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                            dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
                             next_element_ = element_.getnext()
                             dividend_yield = next_element_.getnext().text_content()
 
@@ -947,12 +947,11 @@ def get_stock_dividends(stock, country):
                         for element_ in elements_.xpath(".//td"):
                             if element_.get('class'):
                                 if element_.get('class').__contains__('first'):
-                                    dividend_date = datetime.strptime(element_.text_content().strip().replace('.', '-'), '%d-%m-%Y')
-                                    dividend_value = float(
-                                        element_.getnext().text_content().replace('.', '').replace(',', '.'))
+                                    dividend_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.get('data-value'))).date()), '%Y-%m-%d')
+                                    dividend_value = float(element_.getnext().text_content().replace(',', ''))
                                 if element_.get('data-value') in type_values.keys():
                                     dividend_type = type_values[element_.get('data-value')]
-                                    dividend_payment_date = datetime.strptime(element_.getnext().text_content().strip().replace('.', '-'), '%d-%m-%Y')
+                                    dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
                                     next_element_ = element_.getnext()
                                     dividend_yield = next_element_.getnext().text_content()
                         obj = {
@@ -1044,14 +1043,14 @@ def get_stock_information(stock, country, as_json=False):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_stock_countries():
+    if unidecode(country.lower()) not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode.unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == unidecode(country.lower())]
 
     stock = stock.strip()
 
-    if unidecode.unidecode(stock.lower()) not in [unidecode.unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if unidecode(stock.lower()) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
 
     tag = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'tag']
@@ -1181,7 +1180,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_stock_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')

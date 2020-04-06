@@ -8,7 +8,7 @@ import pkg_resources
 
 import numpy as np
 
-import unidecode
+from unidecode import unidecode
 
 
 def currency_crosses_as_df(base=None, second=None):
@@ -74,12 +74,12 @@ def currency_crosses_as_df(base=None, second=None):
 
         return currency_crosses
     elif base is not None:
-        if unidecode.unidecode(base.upper()) in available_currencies:
+        if unidecode(base.upper()) in available_currencies:
             if second is not None:
-                if unidecode.unidecode(second.upper()) in available_currencies:
+                if unidecode(second.upper()) in available_currencies:
                     currency_crosses = currency_crosses[
-                        (currency_crosses['base'] == unidecode.unidecode(base.upper())) &
-                        (currency_crosses['second'] == unidecode.unidecode(second.upper()))
+                        (currency_crosses['base'] == unidecode(base.upper())) &
+                        (currency_crosses['second'] == unidecode(second.upper()))
                     ]
                     currency_crosses.reset_index(drop=True, inplace=True)
 
@@ -91,15 +91,15 @@ def currency_crosses_as_df(base=None, second=None):
                 else:
                     raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
             else:
-                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
+                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode(base.upper())]
                 currency_crosses.reset_index(drop=True, inplace=True)
 
                 return currency_crosses
         else:
             raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
     elif second is not None:
-        if unidecode.unidecode(second.upper()) in available_currencies:
-            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode.unidecode(second.upper())]
+        if unidecode(second.upper()) in available_currencies:
+            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode(second.upper())]
             currency_crosses.reset_index(drop=True, inplace=True)
 
             return currency_crosses
@@ -171,12 +171,12 @@ def currency_crosses_as_list(base=None, second=None):
 
         return currency_crosses['name'].tolist()
     elif base is not None:
-        if unidecode.unidecode(base.upper()) in available_currencies:
+        if unidecode(base.upper()) in available_currencies:
             if second is not None:
-                if unidecode.unidecode(second.upper()) in available_currencies:
+                if unidecode(second.upper()) in available_currencies:
                     currency_crosses = currency_crosses[
-                        (currency_crosses['base'] == unidecode.unidecode(base.upper())) &
-                        (currency_crosses['second'] == unidecode.unidecode(second.upper()))
+                        (currency_crosses['base'] == unidecode(base.upper())) &
+                        (currency_crosses['second'] == unidecode(second.upper()))
                     ]
                     currency_crosses.reset_index(drop=True, inplace=True)
 
@@ -188,15 +188,15 @@ def currency_crosses_as_list(base=None, second=None):
                 else:
                     raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
             else:
-                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
+                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode(base.upper())]
                 currency_crosses.reset_index(drop=True, inplace=True)
 
                 return currency_crosses['name'].tolist()
         else:
             raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
     elif second is not None:
-        if unidecode.unidecode(second.upper()) in available_currencies:
-            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode.unidecode(second.upper())]
+        if unidecode(second.upper()) in available_currencies:
+            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode(second.upper())]
             currency_crosses.reset_index(drop=True, inplace=True)
 
             return currency_crosses['name'].tolist()
@@ -293,12 +293,12 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
         else:
             return currency_crosses[columns].to_dict(orient='records')
     elif base is not None:
-        if unidecode.unidecode(base.upper()) in available_currencies:
+        if unidecode(base.upper()) in available_currencies:
             if second is not None:
-                if unidecode.unidecode(second.upper()) in available_currencies:
+                if unidecode(second.upper()) in available_currencies:
                     currency_crosses = currency_crosses[
-                        (currency_crosses['base'] == unidecode.unidecode(base.upper())) &
-                        (currency_crosses['second'] == unidecode.unidecode(second.upper()))
+                        (currency_crosses['base'] == unidecode(base.upper())) &
+                        (currency_crosses['second'] == unidecode(second.upper()))
                     ]
                     currency_crosses.reset_index(drop=True, inplace=True)
 
@@ -313,7 +313,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
                 else:
                     raise ValueError("ERR#0053: the introduced currency " + str(second) + " does not exists.")
             else:
-                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode.unidecode(base.upper())]
+                currency_crosses = currency_crosses[currency_crosses['base'] == unidecode(base.upper())]
                 currency_crosses.reset_index(drop=True, inplace=True)
 
                 if as_json:
@@ -323,8 +323,8 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
         else:
             raise ValueError("ERR#0053: the introduced currency " + str(base) + " does not exists.")
     elif second is not None:
-        if unidecode.unidecode(second.upper()) in available_currencies:
-            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode.unidecode(second.upper())]
+        if unidecode(second.upper()) in available_currencies:
+            currency_crosses = currency_crosses[currency_crosses['second'] == unidecode(second.upper())]
             currency_crosses.reset_index(drop=True, inplace=True)
 
             if as_json:

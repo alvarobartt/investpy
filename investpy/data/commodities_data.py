@@ -1,7 +1,7 @@
 # Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
 # See LICENSE for details.
 
-import unidecode
+from unidecode import unidecode
 import json
 
 import pandas as pd
@@ -59,8 +59,8 @@ def commodities_as_df(group=None):
         commodities.reset_index(drop=True, inplace=True)
         return commodities
     else:
-        if unidecode.unidecode(group.lower()) in commodity_groups_list():
-            commodities = commodities[commodities['group'] == unidecode.unidecode(group.lower())]
+        if unidecode(group.lower()) in commodity_groups_list():
+            commodities = commodities[commodities['group'] == unidecode(group.lower())]
             commodities.reset_index(drop=True, inplace=True)
             return commodities
         else:
@@ -113,8 +113,8 @@ def commodities_as_list(group=None):
     if group is None:
         return commodities['name'].tolist()
     else:
-        if unidecode.unidecode(group.lower()) in commodity_groups_list():
-            return commodities[commodities['group'] == unidecode.unidecode(group.lower())]['name'].tolist()
+        if unidecode(group.lower()) in commodity_groups_list():
+            return commodities[commodities['group'] == unidecode(group.lower())]['name'].tolist()
         else:
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
 
@@ -197,9 +197,9 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
     else:
         if group in commodity_groups_list():
             if as_json:
-                return json.dumps(commodities[commodities['group'] == unidecode.unidecode(group.lower())][columns].to_dict(orient='records'))
+                return json.dumps(commodities[commodities['group'] == unidecode(group.lower())][columns].to_dict(orient='records'))
             else:
-                return commodities[commodities['group'] == unidecode.unidecode(group.lower())][columns].to_dict(orient='records')
+                return commodities[commodities['group'] == unidecode(group.lower())][columns].to_dict(orient='records')
         else:
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
 

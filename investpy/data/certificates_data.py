@@ -3,7 +3,7 @@
 
 import json
 
-import unidecode
+from unidecode import unidecode
 
 import pandas as pd
 import pkg_resources
@@ -58,8 +58,8 @@ def certificates_as_df(country=None):
     if country is None:
         certificates.reset_index(drop=True, inplace=True)
         return certificates
-    elif unidecode.unidecode(country.lower()) in certificate_countries_as_list():
-        certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+    elif unidecode(country.lower()) in certificate_countries_as_list():
+        certificates = certificates[certificates['country'] == unidecode(country.lower())]
         certificates.reset_index(drop=True, inplace=True)
         return certificates
 
@@ -109,8 +109,8 @@ def certificates_as_list(country=None):
 
     if country is None:
         return certificates['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in certificate_countries_as_list():
-        return certificates[certificates['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    elif unidecode(country.lower()) in certificate_countries_as_list():
+        return certificates[certificates['country'] == unidecode(country.lower())]['name'].tolist()
 
 
 def certificates_as_dict(country=None, columns=None, as_json=False):
@@ -186,11 +186,11 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(certificates[columns].to_dict(orient='records'))
         else:
             return certificates[columns].to_dict(orient='records')
-    elif unidecode.unidecode(country.lower()) in certificate_countries_as_list():
+    elif unidecode(country.lower()) in certificate_countries_as_list():
         if as_json:
-            return json.dumps(certificates[certificates['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(certificates[certificates['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
         else:
-            return certificates[certificates['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return certificates[certificates['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
 
 
 def certificate_countries_as_list():
