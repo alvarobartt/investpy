@@ -82,7 +82,7 @@ def certificates_as_list(country=None):
 
             In case the listing was successfully retrieved, the :obj:`list` will look like::
 
-                certificates_list = ['SOCIETE GENERALE CAC 40 X10 31DEC99', 'COMMERZBANK SG 31Dec99', ...]
+                certificates_list = ['SOCIETE GENERALE CAC 40 X10 31DEC99', 'SG ZT CAC 40 x7 Short 31Dec99', ...]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.

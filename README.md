@@ -157,9 +157,20 @@ Additionally, you can triage issues on [investpy CodeTriage](https://www.codetri
 provide issues so the package can grow and improve as the issues solves bugs, problems or needs, and maybe provide new 
 ideas to improve package functionality and efficiency.
 
-## Reference
+## Citation
 
-`investpy - a Python package for Financial Data Extraction from Investing.com developed by Álvaro Bartolomé del Canto @ alvarobartt at GitHub`
+When citing this repository on your publications please use the following **bibtex** citation:
+
+```
+@misc{investpy,
+    author = {Alvaro Bartolome del Canto},
+    title = {investpy - Financial Data Extraction from Investing.com with Python},
+    year = {2018-2020},
+    publisher = {GitHub},
+    journal = {GitHub Repository},
+    howpublished = {\url{https://github.com/alvarobartt/investpy}},
+}
+```
 
 ## Disclaimer
 
