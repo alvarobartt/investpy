@@ -857,7 +857,7 @@ def get_stock_dividends(stock, country):
         "Connection": "keep-alive",
     }
 
-    url = 'https://es.investing.com/equities/' + str(tag_) + '-dividends'
+    url = 'https://www.investing.com/equities/' + str(tag_) + '-dividends'
 
     req = requests.get(url=url, headers=headers)
 
@@ -924,7 +924,7 @@ def get_stock_dividends(stock, country):
                     'last_timestamp': int(last_timestamp)
                 }
 
-                url = 'https://es.investing.com/equities/MoreDividendsHistory'
+                url = 'https://www.investing.com/equities/MoreDividendsHistory'
 
                 req = requests.post(url=url, headers=headers, params=params)
 

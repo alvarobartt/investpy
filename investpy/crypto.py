@@ -730,7 +730,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/crypto/currencies"
+    url = "https://www.investing.com/crypto/currencies"
 
     req = requests.get(url, headers=header)
 
