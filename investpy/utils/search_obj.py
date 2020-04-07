@@ -68,9 +68,6 @@ class SearchObj(object):
                 from Investing.com. This method both stores retrieved data in self.data attribute of the class 
                 instance and it also returns it as a normal function will do.
 
-        Note:
-            Some financial products may not be available since its retrieval has not been developed.
-
         """
 
         if self.pair_type in ['stocks', 'funds', 'etfs', 'currencies', 'certificates']:
@@ -83,12 +80,9 @@ class SearchObj(object):
             header = self.name + ' Historical Data'
             head, params = self._prepare_request(header)
 
-        try:
-            self.data = self._data_retrieval(product=self.pair_type, head=head, params=params)
-            return self.data
-        except:
-            self.data = None
-            return self.data
+        data = self._data_retrieval(product=self.pair_type, head=head, params=params)
+        
+        return data
 
     def retrieve_historical_data(self, from_date, to_date):
         """Class method used to retrieve the historical data from the class instance of any financial product.
@@ -109,6 +103,10 @@ class SearchObj(object):
             from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
             to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
         
+        Raises:
+            ValueError: ...
+            RuntimeError: ...
+
         """
 
         try:
@@ -134,7 +132,7 @@ class SearchObj(object):
         elif self.pair_type in ['indices', 'commodities', 'cryptos', 'fxfutures']:
             header = self.name + ' Historical Data'
 
-        if to_date.year - from_date.year > 20:
+        if to_date.year - from_date.year > 19:
             intervals = self._calculate_intervals(from_date, to_date)
 
             result = list()
@@ -147,18 +145,15 @@ class SearchObj(object):
                 except:
                     continue
 
-            if len(result) < 1:
-                self.data = None
+            if len(result) > 0:
+                data = pd.concat(result)
             else:
-                self.data = pd.concat(result)
+                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
             head, params = self._prepare_historical_request(header=header, from_date=from_date.strftime('%d/%m/%Y'), to_date=to_date.strftime('%d/%m/%Y'))
-            try:
-                self.data = self._data_retrieval(product=self.pair_type, head=head, params=params)
-            except:
-                self.data = None
+            data = self._data_retrieval(product=self.pair_type, head=head, params=params)
 
-        return self.data
+        return data
 
     def retrieve_information(self):
         """Class method used to retrieve the information from the class instance of any financial product.
@@ -175,6 +170,10 @@ class SearchObj(object):
                 from Investing.com. This method both stores retrieved information in self.info attribute of the class 
                 instance and it also returns it as a normal function will do.
         
+        Raises:
+            ConnectionError: ...
+            RuntimeError: ...
+
         """
 
         url = "https://www.investing.com" + self.tag
@@ -205,6 +204,9 @@ class SearchObj(object):
                     title = 'Todays Range'
                 try:
                     value = float(element.getnext().text_content().replace(',', ''))
+                    if isinstance(value, float):
+                        if value.is_integer() is True:
+                            value = int(value)
                     result[title] = value if value != 'N/A' else None
                     continue
                 except:
@@ -234,6 +236,9 @@ class SearchObj(object):
                         value = float(value.replace('B', '').replace(',', '')) * 1e9
                     elif value.__contains__('T'):
                         value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    if isinstance(value, float):
+                        if value.is_integer() is True:
+                            value = int(value)
                     result[title] = value if value != 'N/A' else None
                     continue
                 except:

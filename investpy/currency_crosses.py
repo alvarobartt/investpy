@@ -340,7 +340,8 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         if as_json is True:
             json_ = {
                 'name': name,
-                'recent': [value.currency_cross_as_json() for value in result]
+                'recent': 
+                    [value.currency_cross_as_json() for value in result]
             }
 
             return json.dumps(json_, sort_keys=False)

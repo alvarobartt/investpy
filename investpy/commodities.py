@@ -613,7 +613,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
                 if as_json is True:
                     json_ = {
                         'name': name,
-                        'recent':
+                        'historical':
                             [value.commodity_as_json() for value in result]
                     }
 
