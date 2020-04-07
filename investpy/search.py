@@ -3,12 +3,11 @@
 
 import requests
 
-import re
 from unidecode import unidecode
 
 from .utils import constant as cst
 from .utils.search_obj import SearchObj
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 
 
 def search_quotes(text, products=None, countries=None, n_results=None):
@@ -103,7 +102,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -134,11 +133,9 @@ def search_quotes(text, products=None, countries=None, n_results=None):
             n_results = data['total']['quotes']
 
         for quote in data['quotes']:
-            tag = re.sub(r'\/(.*?)\/', '', quote['link'])
-
             if quote['pair_type'] in products and quote['flag'] in countries:
                 search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                                country=cst.FLAG_FILTERS[quote['flag']], tag=tag,
+                                                country=cst.FLAG_FILTERS[quote['flag']], tag=quote['link'],
                                                 pair_type=cst.PAIR_FILTERS[quote['pair_type']], exchange=quote['exchange']))
         
         params['offset'] += 270

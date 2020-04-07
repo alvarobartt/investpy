@@ -12,7 +12,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
@@ -259,7 +259,7 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -497,7 +497,7 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -646,7 +646,7 @@ def get_bond_information(bond, as_json=False):
     url = "https://www.investing.com/rates-bonds/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -803,7 +803,7 @@ def get_bonds_overview(country, as_json=False):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

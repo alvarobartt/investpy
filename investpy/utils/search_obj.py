@@ -10,7 +10,7 @@ from datetime import datetime, date
 from random import randint
 
 from .data import Data
-from .user_agent import get_random
+from .aux import random_user_agent
 
 
 class SearchObj(object):
@@ -105,9 +105,6 @@ class SearchObj(object):
                 from Investing.com. This method both stores retrieved data in self.data attribute of the class 
                 instance and it also returns it as a normal function will do.
 
-        Note:
-            Some financial products may not be available since its retrieval has not been developed.
-
         Args:
             from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
             to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
@@ -163,9 +160,94 @@ class SearchObj(object):
 
         return self.data
 
+    def retrieve_information(self):
+        """Class method used to retrieve the information from the class instance of any financial product.
+        
+        This method retrieves the information from Investing.com of the financial product of the current class
+        instance, so it fills the `SearchObj.info` attribute with the retrieved :obj:`dict`. This method uses the
+        previously retrieved data from the `investpy.search_quotes(text, products, countries, n_results)` 
+        function search results to build the request that it is going to be sent to Investing so to retrieve and 
+        parse the information, since the product tag is required.
+
+        Returns:
+            :obj:`dict` - info:
+                This method retrieves the information from the current class instance of a financial product
+                from Investing.com. This method both stores retrieved information in self.info attribute of the class 
+                instance and it also returns it as a normal function will do.
+        
+        """
+
+        url = "https://www.investing.com" + self.tag
+
+        head = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive",
+        }
+
+        req = requests.get(url, headers=head)
+
+        if req.status_code != 200:
+            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+        root_ = fromstring(req.text)
+        path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+        result = dict()
+
+        if path_:
+            for elements_ in path_:
+                element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+                title = element.text_content().strip()
+                if title == "Day's Range":
+                    title = 'Todays Range'
+                try:
+                    value = float(element.getnext().text_content().replace(',', ''))
+                    result[title] = value if value != 'N/A' else None
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    text = datetime.strptime(text, "%m/%d/%Y").strftime("%d/%m/%Y")
+                    result[title] = text if text != 'N/A' else None
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    if text.__contains__('1 = '):
+                        text = text.replace('1 = ', '')
+                        result[title] = text if text != 'N/A' else None
+                        continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result[title] = value if value != 'N/A' else None
+                    continue
+                except:
+                    pass
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        self.info = result
+
+        return result
+
     def _prepare_request(self, header):
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -186,7 +268,7 @@ class SearchObj(object):
 
     def _prepare_historical_request(self, header, from_date, to_date):
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -279,10 +361,12 @@ class SearchObj(object):
 
                 result.insert(len(result),
                               Data(date_, open_, high_, low_, close_, volume_, None, None))
+        else:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
-            result = result[::-1]
+        result = result[::-1]
 
-            df = pd.DataFrame.from_records([value.unknown_to_dict() for value in result])
-            df.set_index('Date', inplace=True)
+        df = pd.DataFrame.from_records([value.unknown_to_dict() for value in result])
+        df.set_index('Date', inplace=True)
 
-            return df
+        return df

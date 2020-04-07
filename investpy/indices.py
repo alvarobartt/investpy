@@ -11,7 +11,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.indices_data import indices_as_df, indices_as_list, indices_as_dict
@@ -274,7 +274,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -527,7 +527,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -685,7 +685,7 @@ def get_index_information(index, country, as_json=False):
     url = "https://www.investing.com/indices/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -822,7 +822,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

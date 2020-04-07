@@ -12,7 +12,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.certificates_data import certificates_as_df, certificates_as_list, certificates_as_dict
@@ -279,7 +279,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -528,7 +528,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -687,7 +687,7 @@ def get_certificate_information(certificate, country, as_json=False):
     url = "https://www.investing.com/certificates/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -821,7 +821,7 @@ def get_certificates_overview(country, as_json=False, n_results=100):
     certificates = certificates[certificates['country'] == unidecode(country.lower())]
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

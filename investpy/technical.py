@@ -10,8 +10,7 @@ import requests
 from lxml.html import fromstring
 
 from .utils import constant as cst
-from .utils.user_agent import get_random
-from .utils.auxiliar import resource_to_data
+from .utils.aux import random_user_agent, resource_to_data
 
 
 def technical_indicators(name, country, product_type, interval='daily'):
@@ -132,7 +131,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
     }
 
     headers = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -281,7 +280,7 @@ def moving_averages(name, country, product_type, interval='daily'):
     }
 
     headers = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -434,7 +433,7 @@ def pivot_points(name, country, product_type, interval='daily'):
     }
 
     headers = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

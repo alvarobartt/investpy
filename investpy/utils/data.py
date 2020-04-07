@@ -1,7 +1,6 @@
 # Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
 # See LICENSE for details.
 
-
 class Data(object):
     """
     This class is used to store the historical data of avery financial product retrieved from Investing.com either as

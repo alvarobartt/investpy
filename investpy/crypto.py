@@ -11,7 +11,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.crypto_data import cryptos_as_df, cryptos_as_list, cryptos_as_dict
@@ -236,7 +236,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -480,7 +480,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -634,7 +634,7 @@ def get_crypto_information(crypto, as_json=False):
     url = "https://www.investing.com/crypto/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -723,7 +723,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
             raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     header = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -783,7 +783,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
             return df
     else:
         header = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",

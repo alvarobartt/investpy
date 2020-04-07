@@ -12,7 +12,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
@@ -327,7 +327,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     header = symbol + ' Historical Data'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -638,7 +638,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -805,7 +805,7 @@ def get_etf_information(etf, country, as_json=False):
     url = "https://www.investing.com/etfs/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -945,7 +945,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

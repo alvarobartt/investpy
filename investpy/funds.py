@@ -11,7 +11,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.funds_data import funds_as_list, funds_as_dict, funds_as_df
@@ -273,7 +273,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -519,7 +519,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -678,7 +678,7 @@ def get_fund_information(fund, country, as_json=False):
     url = "https://www.investing.com/funds/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -817,7 +817,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

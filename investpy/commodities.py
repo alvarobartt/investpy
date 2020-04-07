@@ -12,7 +12,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
@@ -289,7 +289,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -553,7 +553,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -733,7 +733,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
     url = "https://www.investing.com/commodities/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -875,7 +875,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
     commodities = commodities[commodities['group'] == group]
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

@@ -9,7 +9,7 @@ from unidecode import unidecode
 import pandas as pd
 
 from .utils import constant as cst
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 
 import requests
 from lxml.html import fromstring
@@ -99,7 +99,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     url = "https://www.investing.com/economic-calendar/Service/getCalendarFilteredData"
 
     headers = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",

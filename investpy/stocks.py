@@ -11,7 +11,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.user_agent import get_random
+from .utils.aux import random_user_agent
 from .utils.data import Data
 
 from .data.stocks_data import stocks_as_df, stocks_as_list, stocks_as_dict
@@ -279,7 +279,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -535,7 +535,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -729,7 +729,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -765,7 +765,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         company_profile['url'] = url
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -850,7 +850,7 @@ def get_stock_dividends(stock, country):
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
     headers = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -912,7 +912,7 @@ def get_stock_dividends(stock, country):
 
             while flag is True:
                 headers = {
-                    "User-Agent": get_random(),
+                    "User-Agent": random_user_agent(),
                     "X-Requested-With": "XMLHttpRequest",
                     "Accept": "text/html",
                     "Accept-Encoding": "gzip, deflate, br",
@@ -1059,7 +1059,7 @@ def get_stock_information(stock, country, as_json=False):
     url = "https://www.investing.com/equities/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -1198,7 +1198,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         raise IOError("ERR#0036: stock countries list not found or unable to retrieve.")
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
