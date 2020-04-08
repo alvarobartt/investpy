@@ -54,7 +54,7 @@ def get_bonds(country=None):
 
 def get_bonds_list(country=None):
     """
-    This function retrieves all the bond names as stored in `stocks.csv` file, which contains all the
+    This function retrieves all the bond names as stored in `bonds.csv` file, which contains all the
     data from the bonds as previously retrieved from Investing.com. So on, this function will just return
     the government bond names which will be one of the input parameters when it comes to bond data retrieval functions
     from investpy. Additionally, note that the country filtering can be applied, which is really useful since
@@ -227,7 +227,7 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -458,7 +458,7 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -625,7 +625,7 @@ def get_bond_information(bond, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -781,7 +781,7 @@ def get_bonds_overview(country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -900,7 +900,7 @@ def search_bonds(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

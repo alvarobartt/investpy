@@ -43,7 +43,7 @@ def commodities_as_df(group=None):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -98,7 +98,7 @@ def commodities_as_list(group=None):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -167,7 +167,7 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -221,7 +221,7 @@ def commodity_groups_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

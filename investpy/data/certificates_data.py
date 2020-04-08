@@ -43,7 +43,7 @@ def certificates_as_df(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -95,7 +95,7 @@ def certificates_as_list(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -159,7 +159,7 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -217,7 +217,7 @@ def certificate_countries_as_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificate_countries.csv'))
+    resource_path = '/'.join(('resources', 'certificate_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

@@ -240,7 +240,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -489,7 +489,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -700,7 +700,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     selected_source = available_sources[language]
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -827,7 +827,7 @@ def get_stock_dividends(stock, country):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -1034,7 +1034,7 @@ def get_stock_information(stock, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -1171,7 +1171,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -1188,7 +1188,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
     stocks = stocks[stocks['country'] == country]
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stock_countries.csv'))
+    resource_path = '/'.join(('resources', 'stock_countries.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -1326,7 +1326,7 @@ def search_stocks(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

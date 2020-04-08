@@ -35,7 +35,7 @@ def cryptos_as_df():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -78,7 +78,7 @@ def cryptos_as_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -134,7 +134,7 @@ def cryptos_as_dict(columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

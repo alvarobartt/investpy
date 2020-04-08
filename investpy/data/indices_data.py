@@ -42,7 +42,7 @@ def indices_as_df(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -94,7 +94,7 @@ def indices_as_list(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -159,7 +159,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -210,7 +210,7 @@ def index_countries_as_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

@@ -200,7 +200,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -437,7 +437,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -608,7 +608,7 @@ def get_crypto_information(crypto, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -881,7 +881,7 @@ def search_cryptos(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

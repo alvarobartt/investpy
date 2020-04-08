@@ -250,7 +250,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -544,7 +544,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -777,7 +777,7 @@ def get_etf_information(etf, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -923,7 +923,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -1058,7 +1058,7 @@ def search_etfs(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

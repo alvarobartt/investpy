@@ -242,7 +242,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -484,7 +484,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -661,7 +661,7 @@ def get_certificate_information(certificate, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -806,7 +806,7 @@ def get_certificates_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -928,7 +928,7 @@ def search_certificates(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

@@ -235,7 +235,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -481,7 +481,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -659,7 +659,7 @@ def get_index_information(index, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -800,7 +800,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -926,7 +926,7 @@ def search_indices(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

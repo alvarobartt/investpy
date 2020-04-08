@@ -55,7 +55,7 @@ def currency_crosses_as_df(base=None, second=None):
         raise ValueError("ERR#0051: specified second currency value is not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -152,7 +152,7 @@ def currency_crosses_as_list(base=None, second=None):
         raise ValueError("ERR#0051: specified second currency value is not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -261,7 +261,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currency_crosses.csv'))
+    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -360,7 +360,7 @@ def available_currencies_as_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses', 'currencies.csv'))
+    resource_path = '/'.join(('resources', 'currencies.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

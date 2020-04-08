@@ -134,14 +134,14 @@ TIMEZONES = {
 }
 
 PRODUCT_TYPE_FILES = {
-    'certificate': 'certificates/certificates.csv',
-    'commodity': 'commodities/commodities.csv',
-    'currency_cross': 'currency_crosses/currency_crosses.csv',
-    'etf': 'etfs/etfs.csv',
-    'fund': 'funds/funds.csv',
-    'index': 'indices/indices.csv',
-    'stock': 'stocks/stocks.csv',
-    'bond': 'bonds/bonds.csv'
+    'certificate': 'certificates.csv',
+    'commodity': 'commodities.csv',
+    'currency_cross': 'currency_crosses.csv',
+    'etf': 'etfs.csv',
+    'fund': 'funds.csv',
+    'index': 'indices.csv',
+    'stock': 'stocks.csv',
+    'bond': 'bonds.csv'
 }
 
 INTERVAL_FILTERS = {
