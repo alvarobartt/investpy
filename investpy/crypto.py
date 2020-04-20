@@ -746,8 +746,15 @@ def get_cryptos_overview(as_json=False, n_results=100):
             table = table[:n_results]
             flag = True
         for row in table:
-            name = row.xpath(".//td[contains(@class, 'elp')]")[0].text_content().strip()
+            name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
             symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+            tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
+            
+            if len(tag) > 0:
+                status = 'available'
+            else:
+                status = 'unavailable'
 
             price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
 
@@ -761,6 +768,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
             data = {
                 "name": name,
                 "symbol": symbol,
+                "status": status,
                 "price": float(price.replace(',', '')),
                 "market_cap": float(market_cap.replace(',', '')),
                 "volume24h": volume24h,
@@ -807,8 +815,15 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
         if len(table) > 0:
             for row in table:
-                name = row.xpath(".//td[contains(@class, 'elp')]")[0].text_content().strip()
+                name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
                 symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+                tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
+            
+                if len(tag) > 0:
+                    status = 'available'
+                else:
+                    status = 'unavailable'
 
                 price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
 
@@ -822,6 +837,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
                 data = {
                     "name": name,
                     "symbol": symbol,
+                    "status": status,
                     "price": float(price.replace(',', '')),
                     "market_cap": float(market_cap.replace(',', '')),
                     "volume24h": volume24h,
