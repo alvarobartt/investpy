@@ -2,7 +2,7 @@
 # See LICENSE for details.
 
 from datetime import datetime
-from time import strftime, gmtime
+from time import strftime, localtime, gmtime
 from random import choice
 from unidecode import unidecode
 
@@ -66,11 +66,14 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if time_zone is None:
         time_zone = 'GMT'
 
-        hour_diff = int(strftime('%H')) - int(strftime('%H', gmtime()))
-        min_diff = int(strftime('%M')) - int(strftime('%M', gmtime()))
+        diff = datetime.strptime(strftime('%d/%m/%Y %H:%M', localtime()), '%d/%m/%Y %H:%M') - \
+            datetime.strptime(strftime('%d/%m/%Y %H:%M', gmtime()), '%d/%m/%Y %H:%M')
+
+        hour_diff = int(diff.total_seconds() / 3600)
+        min_diff = int(diff.total_seconds() % 3600) * 60
 
         if hour_diff != 0:
-            time_zone = "GMT " + ('-' if hour_diff < 0 else '+') + str(hour_diff) + ":" + ('00' if min_diff == 0 else str(min_diff))
+            time_zone = "GMT " + ('+' if hour_diff > 0 else '') + str(hour_diff) + ":" + ('00' if min_diff < 30 else '30')
     else:
         if time_zone not in cst.TIMEZONES.keys():
             raise ValueError("ERR#0108: the introduced time_zone does not exist, please consider passing time_zone as None.")
