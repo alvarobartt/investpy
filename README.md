@@ -4,12 +4,12 @@
 
 <h2 align="center">Financial Data Extraction from Investing.com with Python</h2>
 
-investpy is a Python package to retrieve data from [Investing](https://www.investing.com/), which 
+investpy is a Python package to retrieve data from [Investing.com](https://www.investing.com/), which 
 provides data retrieval from up to **39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 
-7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**. investpy allows you
-to download historical data from all the financial products indexed in Investing.com. All the data that can be 
-retrieved includes data from all over the world, from countries such as: **United States, France, India, Spain, Russia or 
-Germany, amongst many others**. Therefore, investpy is intended to wrap up all the available data from Investing.com, 
+7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**. investpy allows the user
+to download both recent and historical data from all the financial products indexed at Investing.com. It includes
+data from all over the world, from countries such as: **United States, France, India, Spain, Russia or 
+Germany, amongst many others**. Therefore, investpy is intended to wrap up all the available data at Investing.com, 
 so that it can be easily retrieved with Python for its further usage and/or analysis.
 
 investpy seeks to be one of the most complete Python packages when it comes to financial data extraction
@@ -31,21 +31,33 @@ data retrieval.
 
 ## Installation
 
-In order to get this package working you will need to install [**investpy**](https://pypi.org/project/investpy/) using 
-pip on the terminal by typing:
+In order to get this package working you will need to install it via pip (with a Python3.5 version or higher) on the terminal by typing:
 
 ``$ pip install investpy``
 
+Additionally, if you want to use the latest investpy version instead of the stable one, you can just use the following command:
+
+``$ pip install git+https://github.com/alvarobartt/investpy.git@developer``
+
+The developer branch ensures the user that the most updated version will always be the working and fully operative so as not to wait
+until the stable release on the master branch comes out (which eventually may take some time depending on the amount of issues to solve).
+
+## Documentation
+
+You can find the complete developer investpy documentation at: https://investpy.readthedocs.io/, hosted on [Read the Docs](https://readthedocs.org/) and generated using 
+[sphinx](https://www.sphinx-doc.org/en/master/) with the theme [sphinx_rtd_theme](https://github.com/readthedocs/sphinx_rtd_theme) which is the standard Read the Docs theme for sphinx.
+
 ## Usage
 
-Even though some investpy usage examples are shown on the [docs](https://investpy.readthedocs.io/usage.html), 
+Even though some investpy usage examples are presented on the [docs](https://investpy.readthedocs.io/usage.html), 
 some basic functionality will be sorted out with sample Python code blocks.
 
 ### Recent/Historical Data Retrieval
 
-As the main functionality is based on historical data retrieval, the usage of stock data retrieval functions 
-will be explained so to ease the use of investpy, which is mainly intended for historical data extraction, which 
-means that every other function is additional.
+investpy allows the user to download both recent and historical data from any financial product indexed (stocks, funds, etfs,
+currency crosses, certificates, bonds, commodities indices and cryptos) and, in the presented example below, the historical data
+from the past years of an stock is retrieved. So as to get to know all the available recent and historical data
+extraction functions provided by investpy, and also, parameter tuning, please read the docs.
 
 ```python
 import investpy
@@ -68,9 +80,9 @@ Date
 
 ### Search Data
 
-Investing.com search engine is completely integrated with investpy so that any available financial product (quote) 
-can be easily found since the search function provides the user some parameters in order to adjust the search to their
-needs, where both product types and countries from where the products are from can be specified. All the search functionality
+Investing.com search engine is completely integrated with investpy, which means that any available financial product (quote) 
+can be easily found. The search function allows the user tune the parameters in order to adjust the search results to their
+needs, where both product types and countries from where the products are, can be specified. All the search functionality
 can be easily achieved just using the following piece of code:
 
 ```python
@@ -83,9 +95,9 @@ search_results = investpy.search_quotes(text='apple',
 ```
 
 Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to 
-know which are the available functions and attributes of the returned search results, please visit: 
-[investpy Search Engine](https://investpy.readthedocs.io/search_api.html). So, those objects can be used to retrieve
-retrieved product's historical data, its information, etc., as presented in this piece of code:
+know which are the available functions and attributes of the returned search results, please read the related documentation at:
+[investpy Search Engine](https://investpy.readthedocs.io/search_api.html). So on, those search results let the user retrieve
+both recent and historical data from that concrete product, its information, etc., as presented in the piece of code below:
 
 ```python
  for search_result in search_results[:1]:
@@ -108,11 +120,13 @@ Date
 
 ### Crypto Currencies Data Retrieval
 
-It has recently been included crypto currency data retrieval functions. All the crypto currencies that are
-available in Investing for data retrieval are, so on, available in investpy.
+Crypto currencies support has recently been included, so as to let the user retrieve data and information from
+any available crypto at Investing.com. Please note that some crypto currencies do not have available data indexed 
+at Investing.com so that it can not be retrieved using investpy neither, even though they are just a few, take it
+into consideration.
 
-So to ease investpy's usage, a sample will be presented below of how to retrieve the past 5 years of 
-data from Bitcoin (BTC):
+As already presented previously, historical data retrieval using investpy is really easy. The piece of code presented 
+below shows how to retrieve the past years of historical data from Bitcoin (BTC).
 
 ````python
 import investpy
@@ -130,8 +144,6 @@ Date
 2014-01-04  884.3   932.2  848.3   924.7   14239      USD
 2014-01-05  924.7  1029.9  911.4  1014.7   21374      USD
 ```
-
-Yes, retrieving historical data from any available crypto currency is really that easy!
 
 ## Utilities
 
@@ -177,4 +189,4 @@ When citing this repository on your publications please use the following **bibt
 This Python package has been made for research purposes in order to fit the needs that Investing.com does not cover, so 
 this package works like an Application Programming Interface (API) of Investing.com developed in an altruistic way. 
 Conclude that this package is not related in any way with Investing.com or any dependant company, the only requirement 
-specified by Investing in order to develop this package was "*mention the source where data is retrieved from*".
+specified by Investing.com in order to develop this package was "*mention the source where data is retrieved from*".
