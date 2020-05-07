@@ -1,17 +1,18 @@
-# Copyright 2018-2020 Alvaro Bartolome @ alvarobartt in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from setuptools import setup, find_packages
 import io
+
+from setuptools import setup, find_packages
 
 
 def readme():
     with io.open('README.md', encoding='utf-8') as f:
         return f.read()
 
-def requirements():
+def requirements(filename):
     reqs = list()
-    with io.open('requirements.txt', encoding='utf-8') as f:
+    with io.open(filename, encoding='utf-8') as f:
         for line in f.readlines():
             reqs.append(line.strip())
     return reqs
@@ -26,10 +27,10 @@ setup(
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarobartt@usal.es',
-    description='investpy — a Python package for financial data extraction from Investing',
+    description='Financial Data Extraction from Investing.com with Python',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=requirements(),
+    install_requires=requirements(filename='requirements.txt'),
     include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -45,6 +46,10 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
+    extras_require={
+        "tests": requirements(filename='tests/requirements.txt'),
+        "docs": requirements(filename='docs/requirements.txt')
+    },
     keywords=', '.join([
         'investing', 'investing-api', 'historical-data',
         'financial-data', 'stocks', 'funds', 'etfs',

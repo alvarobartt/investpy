@@ -15,10 +15,11 @@ investpy seeks to be one of the most complete Python packages when it comes to f
 [![Build Status](https://img.shields.io/travis/alvarobartt/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarobartt/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarobartt/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarobartt/investpy)
-
-**Join gitter chat to ease developer-user communication and also contribute with other investpy users.**
-
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/investpy/community?source=orgpage)
+
+**If you want to support the project, you can buy the developer a coffee. More information at: [buy-me-a-coffee](https://github.com/alvarobartt/buy-me-a-coffee)**
+
+<p align="center"><a href="https://www.buymeacoffee.com/alvarobartt" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a></p>
 
 ## Installation
 
