@@ -22,4 +22,4 @@ Currently I am not admitting any Pull Request since investpy is under developmen
 
 Since investpy is an open source Python package, whenever you use it, would be nice from you to mention or comment where does the data comes from. This way, investpy can be spread among more users which will consequently improve package usage since more users can contribute to it due to the increasing reach to newcome developers. A sample reference is presented below:
 
-`investpy - a Python package for Financial Historical Data Extraction developed by Álvaro Bartolomé del Canto @ alvarobartt at GitHub`
+`investpy - a Python package for Financial Data Extraction from Investing.com developed by Álvaro Bartolomé del Canto, alvarobartt @ GitHub`

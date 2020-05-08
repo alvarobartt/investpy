@@ -1,6 +1,18 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
+
+FINANCIAL_SUMMARY_TYPES = {
+    'income_statement': 0,
+    'balance_sheet': 1,
+    'cash_flow_statement': 2
+}
+
+FINANCIAL_SUMMARY_PERIODS = {
+    "annual": "Annual",
+    "quarterly": "Interim"
+}
+
 PRODUCT_FILTERS = {
     'indices': 'indice', 
     'stocks': 'equities', 

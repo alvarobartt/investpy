@@ -31,7 +31,7 @@ Additionally, **if you want to use the latest investpy version instead of the st
 
 ``$ pip install git+https://github.com/alvarobartt/investpy.git@developer``
 
-**The developer branch ensures the user that the most updated version will always be the working and fully operative** so as not to wait until the stable release on the master branch comes out (which eventually may take some time depending on the amount of issues to solve).
+**The developer branch ensures the user that the most updated version will always be working and fully operative** so as not to wait until the stable release on the master branch comes out (which eventually may take some time depending on the amount of issues to solve).
 
 ## Documentation
 
@@ -48,20 +48,20 @@ investpy allows the user to **download both recent and historical data from any 
 ```python
 import investpy
 
-df = investpy.get_stock_historical_data(stock='BBVA',
-                                        country='spain',
+df = investpy.get_stock_historical_data(stock='AAPL',
+                                        country='United States',
                                         from_date='01/01/2010',
-                                        to_date='01/01/2019')
+                                        to_date='01/01/2020')
 print(df.head())
 ```
 ```{r, engine='python', count_lines}
-             Open   High    Low  Close  Volume Currency
-Date                                                   
-2010-01-04  12.73  12.96  12.73  12.96       0      EUR
-2010-01-05  13.00  13.11  12.97  13.09       0      EUR
-2010-01-06  13.03  13.17  13.02  13.12       0      EUR
-2010-01-07  13.02  13.11  12.93  13.05       0      EUR
-2010-01-08  13.12  13.22  13.04  13.18       0      EUR
+             Open   High    Low  Close     Volume Currency
+Date                                                      
+2010-01-04  30.49  30.64  30.34  30.57  123432176      USD
+2010-01-05  30.66  30.80  30.46  30.63  150476160      USD
+2010-01-06  30.63  30.75  30.11  30.14  138039728      USD
+2010-01-07  30.25  30.29  29.86  30.08  119282440      USD
+2010-01-08  30.04  30.29  29.87  30.28  111969192      USD
 ```
 
 So as to get to know all the available recent and historical data extraction functions provided by investpy, and also, parameter tuning, please read the docs.

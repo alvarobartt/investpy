@@ -2,15 +2,19 @@
 # See LICENSE for details.
 
 from datetime import datetime, date
-import json
 from random import randint
 
+import json
 import pandas as pd
+import numpy as np
+
 import pkg_resources
+
 import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
+from .utils import constant as cst
 from .utils.aux import random_user_agent
 from .utils.data import Data
 
@@ -1282,10 +1286,118 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         return df
 
 
-# TODO: functions to cover all stock financials
-def get_stock_financial_summary(stock, country, period='annual'):
-    url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax?action=change_report_type&pid=6408&financial_id=6408&ratios_id=6408&period_type=Annual'
-    return None
+
+def get_stock_financial_summary(stock, country, summary_type='income_statement', period='annual'):
+    """
+    This function retrieves ...
+    """
+
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
+
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if summary_type is None:
+        raise ValueError("ERR#0132: summary_type can not be None, it should be a str.")
+
+    if not isinstance(summary_type, str):
+        raise ValueError("ERR#0133: summary_type value not valid.")
+
+    summary_type = unidecode(summary_type.strip().lower())
+
+    if summary_type not in cst.FINANCIAL_SUMMARY_TYPES.keys():
+        raise ValueError("ERR#0134: introduced summary_type is not valid, since available values are: " + ', '.join(cst.FINANCIAL_SUMMARY_TYPES.keys()))
+
+    if period is None:
+        raise ValueError("ERR#0135: period can not be None, it should be a str.")
+
+    if not isinstance(period, str):
+        raise ValueError("ERR#0136: period value not valid.")
+
+    period = unidecode(period.strip().lower())
+
+    if period not in cst.FINANCIAL_SUMMARY_PERIODS.keys():
+        raise ValueError("ERR#0137: introduced period is not valid, since available values are: " + ', '.join(cst.FINANCIAL_SUMMARY_PERIODS.keys()))
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'stocks.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    if unidecode(country.lower()) not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    stocks = stocks[stocks['country'] == unidecode(country.lower())]
+
+    stock = unidecode(stock.strip().lower())
+
+    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist() if value is not np.nan]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+
+    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+
+    headers = {
+        "User-Agent": random_user_agent(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    params = {
+        "action": "change_report_type",
+        "pid": id_,
+        "financial_id": id_,
+        "ratios_id": id_,
+        "period_type": cst.FINANCIAL_SUMMARY_PERIODS[period]
+    }
+
+    url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax'
+    
+    req = requests.get(url, params=params, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root = fromstring(req.text)
+    tables = root.xpath(".//div[@class='companySummaryIncomeStatement']\
+        /table[contains(@class, 'companyFinancialSummaryTbl')]")
+
+    data = {
+        'Date': list()
+    }
+
+    table = tables[cst.FINANCIAL_SUMMARY_TYPES[summary_type]]
+
+    for element in table.xpath(".//thead")[0].xpath(".//th"):
+        if element.get('class') is None:
+            data['Date'].append(datetime.strptime(element.text_content().strip(), '%b %d, %Y'))
+
+    for element in table.xpath(".//tbody")[0].xpath(".//tr"):
+        curr_row = None
+        for row in element.xpath(".//td"):
+            if row.get('class') is not None:
+                curr_row = row.text_content().strip()
+                data[curr_row] = list()
+                continue
+            data[curr_row].append(int(row.text_content().strip()))
+
+    dataset = pd.DataFrame(data)
+    dataset.set_index('Date', inplace=True)
+
+    return dataset
 
 
 def search_stocks(by, value):
