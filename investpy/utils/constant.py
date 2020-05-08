@@ -82,20 +82,17 @@ COUNTRY_FILTERS = {
     'iraq': 'Iraq', 'ireland': 'Ireland', 'israel': 'Israel', 'italy': 'Italy', 'jamaica': 'Jamaica', 
     'japan': 'Japan', 'jordan': 'Jordan', 'kazakhstan': 'Kazakhstan', 'kenya': 'Kenya', 'kuwait': 'Kuwait', 
     'latvia': 'Latvia', 'lebanon': 'Lebanon', 'liechtenstein': 'Liechtenstein', 'lithuania': 'Lithuania', 
-    'luxembourg': 'Luxembourg', 'malawi': 'Malawi', 'south korea': 'South_Korea', 'spain': 'Spain', 
-    'sri lanka': 'Sri_Lanka', 'sweden': 'Sweden', 'switzerland': 'Switzerland', 'taiwan': 'Taiwan', 
-    'tanzania': 'Tanzania', 'thailand': 'Thailand', 'tunisia': 'Tunisia', 'turkey': 'Turkey', 'uganda': 'Uganda', 
-    'ukraine': 'Ukraine', 'dubai': 'Dubai', 'united kingdom': 'UK', 'united states': 'USA', 'venezuela': 'Venezuela', 
-    'vietnam': 'Vietnam', 'zambia': 'Zambia', 'zimbabwe': 'Zimbabwe', 'mauritius': 'Mauritius', 'mexico': 'Mexico', 
+    'luxembourg': 'Luxembourg', 'malawi': 'Malawi', 'mauritius': 'Mauritius', 'mexico': 'Mexico', 
     'monaco': 'Monaco', 'mongolia': 'Mongolia', 'montenegro': 'Montenegro', 'morocco': 'Morocco', 'namibia': 'Namibia', 
     'netherlands': 'Netherlands', 'new zealand': 'New_Zealand', 'nigeria': 'Nigeria', 'norway': 'Norway', 'oman': 'Oman', 
     'pakistan': 'Pakistan', 'palestine': 'Palestine', 'peru': 'Peru', 'philippines': 'Philippines', 'poland': 'Poland', 
     'portugal': 'Portugal', 'qatar': 'Qatar', 'romania': 'Romania', 'russia': 'Russian_Federation', 'rwanda': 'Rwanda', 
     'saudi arabia': 'Saudi_Arabia', 'serbia': 'Serbia', 'singapore': 'Singapore', 'slovakia': 'Slovakia', 'slovenia': 'Slovenia', 
-    'south africa': 'South_Africa', 'south korea': 'South_Korea', 'spain': 'Spain', 'sri lanka': 'Sri_Lanka', 'sweden': 'Sweden', 
-    'switzerland': 'Switzerland', 'taiwan': 'Taiwan', 'tanzania': 'Tanzania', 'thailand': 'Thailand', 'tunisia': 'Tunisia', 
-    'turkey': 'Turkey', 'uganda': 'Uganda', 'ukraine': 'Ukraine', 'dubai': 'Dubai', 'united kingdom': 'UK', 'united states': 'USA', 
-    'venezuela': 'Venezuela', 'vietnam': 'Vietnam', 'zambia': 'Zambia', 'zimbabwe': 'Zimbabwe'
+    'south africa': 'South_Africa', 'south korea': 'South_Korea', 'spain': 'Spain', 
+    'sri lanka': 'Sri_Lanka', 'sweden': 'Sweden', 'switzerland': 'Switzerland', 'taiwan': 'Taiwan', 
+    'tanzania': 'Tanzania', 'thailand': 'Thailand', 'tunisia': 'Tunisia', 'turkey': 'Turkey', 'uganda': 'Uganda', 
+    'ukraine': 'Ukraine', 'dubai': 'Dubai', 'united kingdom': 'UK', 'united states': 'USA', 'venezuela': 'Venezuela', 
+    'vietnam': 'Vietnam', 'zambia': 'Zambia', 'zimbabwe': 'Zimbabwe'
 }
 
 CATEGORY_FILTERS = {
@@ -343,7 +340,7 @@ ETF_COUNTRIES = [
     {'country': 'peru', 'code': 'pe'}, {'country': 'poland', 'code': 'pl'}, {'country': 'portugal', 'code': 'pt'}, {'country': 'qatar', 'code': 'qa'}, {'country': 'romania', 'code': 'ro'},
     {'country': 'russia', 'code': 'ru'}, {'country': 'saudi arabia', 'code': 'sa'}, {'country': 'singapore', 'code': 'sg'}, {'country': 'south africa', 'code': 'sa'}, {'country': 'south korea', 'code': 'kr'},
     {'country': 'spain', 'code': 'es'}, {'country': 'sweden', 'code': 'se'}, {'country': 'switzerland', 'code': 'ch'}, {'country': 'taiwan', 'code': 'tw'}, {'country': 'thailand', 'code': 'th'},
-    {'country': 'turkey', 'code': 'tr'}, {'country': 'uk', 'code': 'uk'}, {'country': 'usa', 'code': 'us'}, {'country': 'vietnam', 'code': 'vn'}
+    {'country': 'turkey', 'code': 'tr'}, {'country': 'united kingdom', 'code': 'uk'}, {'country': 'united states', 'code': 'us'}, {'country': 'vietnam', 'code': 'vn'}
 ]
 
 FUND_COUNTRIES = [
@@ -358,8 +355,8 @@ FUND_COUNTRIES = [
     {'country': 'norway', 'id': 60}, {'country': 'oman', 'id': 87}, {'country': 'pakistan', 'id': 44}, {'country': 'philippines', 'id': 45}, {'country': 'poland', 'id': 53},
     {'country': 'portugal', 'id': 38}, {'country': 'qatar', 'id': 170}, {'country': 'russia', 'id': 56}, {'country': 'saudi arabia', 'id': 52}, {'country': 'singapore', 'id': 36},
     {'country': 'slovenia', 'id': 112}, {'country': 'south africa', 'id': 110}, {'country': 'south korea', 'id': 11}, {'country': 'spain', 'id': 26}, {'country': 'sweden', 'id': 9},
-    {'country': 'switzerland', 'id': 12}, {'country': 'taiwan', 'id': 46}, {'country': 'thailand', 'id': 41}, {'country': 'united arab emirates', 'id': 143}, {'country': 'uk', 'id': 4},
-    {'country': 'usa', 'id': 5}, {'country': 'vietnam', 'id': 178}
+    {'country': 'switzerland', 'id': 12}, {'country': 'taiwan', 'id': 46}, {'country': 'thailand', 'id': 41}, {'country': 'dubai', 'id': 143}, {'country': 'united kingdom', 'id': 4},
+    {'country': 'united states', 'id': 5}, {'country': 'vietnam', 'id': 178}
 ]
 
 STOCK_COUNTRIES = [
@@ -387,10 +384,10 @@ STOCK_COUNTRIES = [
 INDEX_COUNTRIES = [
     {'country': 'argentina', 'country_name': 'argentina'}, {'country': 'australia', 'country_name': 'australia'}, {'country': 'austria', 'country_name': 'austria'},
     {'country': 'bahrain', 'country_name': 'bahrain'}, {'country': 'bangladesh', 'country_name': 'bangladesh'}, {'country': 'belgium', 'country_name': 'belgium'},
-    {'country': 'bosnia', 'country_name': 'bosnia-herzegovina'}, {'country': 'botswana', 'country_name': 'botswana'}, {'country': 'brazil', 'country_name': 'brazil'},
+    {'country': 'bosnia', 'country_name': 'bosnia'}, {'country': 'botswana', 'country_name': 'botswana'}, {'country': 'brazil', 'country_name': 'brazil'},
     {'country': 'bulgaria', 'country_name': 'bulgaria'}, {'country': 'canada', 'country_name': 'canada'}, {'country': 'chile', 'country_name': 'chile'},
     {'country': 'china', 'country_name': 'china'}, {'country': 'colombia', 'country_name': 'colombia'}, {'country': 'costa rica', 'country_name': 'costa rica'}, 
-    {'country': 'ivory coast', 'country_name': "cote d'ivoire"}, {'country': 'croatia', 'country_name': 'croatia'}, {'country': 'cyprus', 'country_name': 'cyprus'}, 
+    {'country': 'ivory coast', 'country_name': "ivory coast"}, {'country': 'croatia', 'country_name': 'croatia'}, {'country': 'cyprus', 'country_name': 'cyprus'}, 
     {'country': 'czech republic', 'country_name': 'czech republic'}, {'country': 'denmark', 'country_name': 'denmark'}, {'country': 'ecuador', 'country_name': 'ecuador'},
     {'country': 'egypt', 'country_name': 'egypt'}, {'country': 'estonia', 'country_name': 'estonia'}, {'country': 'finland', 'country_name': 'finland'}, 
     {'country': 'france', 'country_name': 'france'}, {'country': 'germany', 'country_name': 'germany'}, {'country': 'greece', 'country_name': 'greece'},
@@ -414,7 +411,7 @@ INDEX_COUNTRIES = [
     {'country': 'sri lanka', 'country_name': 'sri lanka'}, {'country': 'sweden', 'country_name': 'sweden'}, {'country': 'switzerland', 'country_name': 'switzerland'},
     {'country': 'taiwan', 'country_name': 'taiwan'}, {'country': 'tanzania', 'country_name': 'tanzania'}, {'country': 'thailand', 'country_name': 'thailand'},
     {'country': 'tunisia', 'country_name': 'tunisia'}, {'country': 'turkey', 'country_name': 'turkey'}, {'country': 'uganda', 'country_name': 'uganda'},
-    {'country': 'ukraine', 'country_name': 'ukraine'}, {'country': 'dubai', 'country_name': 'united arab emirates'}, {'country': 'uk', 'country_name': 'united kingdom'},
+    {'country': 'ukraine', 'country_name': 'ukraine'}, {'country': 'dubai', 'country_name': 'dubai'}, {'country': 'uk', 'country_name': 'united kingdom'},
     {'country': 'usa', 'country_name': 'united states'}, {'country': 'venezuela', 'country_name': 'venezuela'}, {'country': 'vietnam', 'country_name': 'vietnam'},
     {'country': 'zambia', 'country_name': 'zambia'}, {'country': 'zimbabwe', 'country_name': 'zimbabwe'}
 ]

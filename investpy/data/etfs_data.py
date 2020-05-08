@@ -1,12 +1,14 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import json
+import pkg_resources
 
 from unidecode import unidecode
 
+import json
 import pandas as pd
-import pkg_resources
+
+from .utils import constant as cst
 
 
 def etfs_as_df(country=None):
@@ -201,38 +203,14 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
 
 def etf_countries_as_list():
     """
-    This function retrieves all the available countries to retrieve etfs from, as the listed
-    countries are the ones indexed on Investing.com. The purpose of this function is to list
-    the countries which have available etfs according to Investing.com data, so to ease the
-    etf retrieval process of a particular country.
+    This function returns a listing with all the available countries from where funds can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every fund retrieval
+    function.
 
     Returns:
         :obj:`list` - countries:
-            The resulting :obj:`list` contains all the countries listed on Investing.com with
-            etfs available to retrieve data from.
+            The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
 
-            In the case that the file reading of `etf_countries.csv` which contains the names and codes of the countries
-            with etfs was successfully completed, the resulting :obj:`list` will look like::
-
-                countries = ['australia', 'austria', 'belgium', 'brazil', ...]
-
-    Raises:
-        FileNotFoundError: raised when `etf_countries.csv` file was not found.
-    
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etf_countries.csv'))
-
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0044: etf countries file not found")
-
-    for index, row in countries.iterrows():
-        if row['country'] == 'uk':
-            countries.loc[index, 'country'] = 'united kingdom'
-        elif row['country'] == 'usa':
-            countries.loc[index, 'country'] = 'united states'
-
-    return countries['country'].tolist()
+    return [value['country'] for value in cst.ETF_COUNTRIES]

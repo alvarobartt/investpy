@@ -1,14 +1,14 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import json
-
-import pandas as pd
 import pkg_resources
 
-import numpy as np
-
 from unidecode import unidecode
+
+import json
+import pandas as pd
+
+from .utils import constant as cst
 
 
 def currency_crosses_as_df(base=None, second=None):
@@ -347,26 +347,6 @@ def available_currencies_as_list():
             The resulting :obj:`list` contains all the available currencies with currency crosses being either the base
             or the second value of the cross, as listed in Investing.com.
 
-            In case the listing was successfully retrieved, the :obj:`list` will look like::
-
-                available_currencies = [
-                    'AED', 'AFN', 'ALL', 'AMD', 'ANG', ...
-                ]
-
-    Raises:
-        FileNotFoundError: raised if `currency_crosses.csv` file was not found.
-        IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currencies.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0103: currencies file not found or errored.")
-
-    if currencies is None:
-        raise IOError("ERR#0104: currencies not found or unable to retrieve.")
-    
-    return currencies['symbol'].tolist()
+    return [value['symbol'] for value in cst.CURRENCIES]

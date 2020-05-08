@@ -1,11 +1,12 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from unidecode import unidecode
-import json
-
-import pandas as pd
 import pkg_resources
+
+from unidecode import unidecode
+
+import json
+import pandas as pd
 
 
 def cryptos_as_df():

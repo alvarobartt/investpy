@@ -1,12 +1,14 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import json
-
-import pandas as pd
 import pkg_resources
 
 from unidecode import unidecode
+
+import json
+import pandas as pd
+
+from .utils import constant as cst
 
 
 def funds_as_df(country=None):
@@ -194,35 +196,14 @@ def funds_as_dict(country=None, columns=None, as_json=False):
 
 def fund_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available funds to retrieve data
-    from, via reading the `fund_countries.csv` file from the resources directory. So on, this function will display a
-    listing containing a set of countries, in order to let the user know which countries are taken into account and also
-    the return listing from this function can be used for country param check if needed.
+    This function returns a listing with all the available countries from where funds can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every fund retrieval
+    function.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with funds as indexed in Investing.com
 
-    Raises:
-        FileNotFoundError: raised when the `fund_countries.csv` file was not found.
-        IndexError: raised if `fund_countries.csv` file was unavailable or not found.
-    
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'fund_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0072: fund countries file not found or errored.")
-
-    if countries is None:
-        raise IOError("ERR#0040: fund countries list not found or unable to retrieve.")
-
-    for index, row in countries.iterrows():
-        if row['country'] == 'uk':
-            countries.loc[index, 'country'] = 'united kingdom'
-        elif row['country'] == 'usa':
-            countries.loc[index, 'country'] = 'united states'
-
-    return countries['country'].tolist()
+    return [value['country'] for value in cst.FUND_COUNTRIES]

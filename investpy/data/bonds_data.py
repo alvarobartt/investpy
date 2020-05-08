@@ -1,11 +1,14 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from unidecode import unidecode
-import json
-
-import pandas as pd
 import pkg_resources
+
+from unidecode import unidecode
+
+import json
+import pandas as pd
+
+from .utils import constant as cst
 
 
 def bonds_as_df(country=None):
@@ -195,27 +198,12 @@ def bond_countries_as_list():
     """
     This function returns a listing with all the available countries from where bonds can be retrieved, so to
     let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
-    function. Also, not just the available countries, but the required name is provided since Investing.com has a
-    certain country name standard and countries should be specified the same way they are in Investing.com.
+    function.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
 
-    Raises:
-        FileNotFoundError: raised when `bonds.csv` file was not found.
-        IOError: raised when `bonds.csv` file is missing or empty.
-
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bond_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0070: bond countries file not found or errored.")
-
-    if countries is None:
-        raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
-
-    return countries['country'].tolist()
+    return [value['country'] for value in cst.BOND_COUNTRIES]

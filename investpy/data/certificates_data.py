@@ -1,12 +1,14 @@
 # Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import json
+import pkg_resources
 
 from unidecode import unidecode
 
+import json
 import pandas as pd
-import pkg_resources
+
+from .utils import constant as cst
 
 
 def certificates_as_df(country=None):
@@ -204,26 +206,7 @@ def certificate_countries_as_list():
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the countries listed on Investing.com with available certificates
             to retrieve data from.
-
-            In the case that the file reading of `certificate_countries.csv` which contains the names of the available
-            countries with certificates was successfully completed, the resulting :obj:`list` will look like::
-
-                countries = ['france', 'germany', 'italy', 'netherlands', 'sweden']
-
-    Raises:
-        FileNotFoundError: raised if `certificate_countries.csv` file was not found.
-        IOError: raised when `certificate_countries.csv` file is missing or empty.
     
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificate_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0098: certificate countries file not found or errored.")
-
-    if countries is None:
-        raise IOError("ERR#0099: certificate countries not found or unable to retrieve.")
-
-    return countries['country'].tolist()
+    return [value['country'] for value in cst.CERTIFICATE_COUNTRIES]
