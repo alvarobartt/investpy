@@ -8,7 +8,7 @@ from unidecode import unidecode
 import json
 import pandas as pd
 
-from .utils import constant as cst
+from ..utils import constant as cst
 
 
 def currency_crosses_as_df(base=None, second=None):

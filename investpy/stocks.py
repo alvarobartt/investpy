@@ -1289,7 +1289,46 @@ def get_stocks_overview(country, as_json=False, n_results=100):
 
 def get_stock_financial_summary(stock, country, summary_type='income_statement', period='annual'):
     """
-    This function retrieves ...
+    This function retrieves the financial summary of the introduced stock (by symbol) from the introduced
+    country, based on the summary_type value this function returns a different type of financial summary, so
+    that the output format of this function depends on its type. Additionally, the period of the retrieved
+    financial summary type can be specified.
+
+    Args:
+        stock (:obj:`str`): symbol of the stock to retrieve its financial summary.
+        country (:obj:`str`): name of the country from where the introduced stock symbol is.
+        summary_type (:obj:`str`, optional):
+            type of the financial summary table to retrieve, default value is `income_statement`, but all the 
+            available types are: `income_statement`, `cash_flow_statement` and `balance_sheet`.
+        period (:obj:`str`, optional):
+            period range of the financial summary table to rertieve, detault value is `annual`, but all the 
+            available periods are: `annual` and `quarterly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` - financial_summary:
+            The resulting :obj:`pandas.DataFrame` contains the table of the requested financial summary from the 
+            introduced stock, so the fields/column names may vary, since it depends on the summary_type introduced.
+
+                Date || Field 1 | Field 2 | ... | Field N 
+                -----||---------|---------|-----|---------
+                xxxx || xxxxxxx | xxxxxxx | xxx | xxxxxxx  
+                
+    Raises:
+        ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if the stocks.csv file was not found.
+        IOError: raised if the stocks.csv file could not be read.
+        ConnectionError: raised if the connection to Investing.com errored or could not be established.
+        RuntimeError: raised if any error occurred while running the function.
+
+    Examples:
+        >>> investpy.get_stock_financial_summary(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
+                        Total Revenue  Gross Profit  Operating Income  Net Income
+            Date                                                                 
+            2019-09-28         260174         98392             63930       55256
+            2018-09-29         265595        101839             70898       59531
+            2017-09-30         229234         88186             61344       48351
+            2016-09-24         215639         84263             60024       45687
+
     """
 
     if not stock:
