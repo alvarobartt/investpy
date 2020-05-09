@@ -150,7 +150,7 @@ class SearchObj(object):
             else:
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
-            head, params = self._prepare_historical_request(header=header, from_date=from_date.strftime('%d/%m/%Y'), to_date=to_date.strftime('%d/%m/%Y'))
+            head, params = self._prepare_historical_request(header=header, from_date=from_date.strftime('%m/%d/%Y'), to_date=to_date.strftime('%m/%d/%Y'))
             data = self._data_retrieval(product=self.pair_type, head=head, params=params)
 
         return data
