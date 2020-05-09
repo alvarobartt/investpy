@@ -483,7 +483,7 @@ def test_stocks_errors():
             investpy.get_stock_information(stock=param['stock'], country=param['country'], as_json=param['as_json'])
         except:
             pass
-    
+
     params = [
         {
             'country': 'error',
@@ -525,6 +525,90 @@ def test_stocks_errors():
     for param in params:
         try:
             investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
+            'stock': None,
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': ['error'],
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': None,
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': ['error'],
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': None,
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': ['error'],
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'error',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': None
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': ['error']
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'error'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'error',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'error',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_stock_financial_summary(stock=param['stock'],
+                                                 country=param['country'], 
+                                                 summary_type=param['summary_type'],
+                                                 period=param['period'])
         except:
             pass
 

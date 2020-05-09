@@ -166,6 +166,33 @@ def test_investpy_stocks():
 
     investpy.get_stock_dividends(stock='BBVA', country='spain')
 
+    params = [
+        {
+            'stock': 'bbva',
+            'country': 'spain',
+            'summary_type': 'balance_sheet',
+            'period': 'annual'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'barc',
+            'country': 'united kingdom',
+            'summary_type': 'cash_flow_statement',
+            'period': 'annual'
+        }
+    ]
+
+    for param in params:
+        investpy.get_stock_financial_summary(stock=param['stock'],
+                                             country=param['country'], 
+                                             summary_type=param['summary_type'],
+                                             period=param['period'])
+
     investpy.search_stocks(by='name', value='BBVA')
 
 
