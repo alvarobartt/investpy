@@ -66,7 +66,7 @@ def stocks_as_df(country=None):
         if country not in stock_countries_as_list():
             raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-        stocks = stocks[stocks['country'] == unidecode(country.lower())]
+        stocks = stocks[stocks['country'] == country]
         stocks.reset_index(drop=True, inplace=True)
         
         return stocks

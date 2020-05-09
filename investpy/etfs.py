@@ -178,9 +178,9 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency | Exchange
-                -----||------|------|-----|-------|----------|---------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency | Exchange
+                -----||------|------|-----|-------|--------|----------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -193,6 +193,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x,
                             exchange: x
                         },
@@ -209,13 +210,13 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
     Examples:
         >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
-                          Open    High     Low   Close Currency Exchange
-            Date
-            2019-08-13  33.115  33.780  32.985  33.585      EUR   Madrid
-            2019-08-14  33.335  33.335  32.880  32.905      EUR   Madrid
-            2019-08-15  32.790  32.925  32.455  32.845      EUR   Madrid
-            2019-08-16  33.115  33.200  33.115  33.305      EUR   Madrid
-            2019-08-19  33.605  33.735  33.490  33.685      EUR   Madrid
+                          Open    High    Low   Close  Volume Currency Exchange
+            Date                                                               
+            2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid
+            2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid
+            2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid
+            2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid
+            2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid
 
     """
 
@@ -353,6 +354,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
     result = list()
 
     if path_:
@@ -366,14 +368,16 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
                 info.append(nested_.get('data-real-value'))
 
             etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
-            
+
             etf_close = float(info[1].replace(',', ''))
             etf_open = float(info[2].replace(',', ''))
             etf_high = float(info[3].replace(',', ''))
             etf_low = float(info[4].replace(',', ''))
 
+            etf_volume = int(info[5])
+
             result.insert(len(result),
-                          Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency, etf_exchange))
+                          Data(etf_date, etf_open, etf_high, etf_low, etf_close, etf_volume, etf_currency, etf_exchange))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -423,9 +427,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency | Exchange
-                -----||------|------|-----|-------|----------|---------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency | Exchange
+                -----||------|------|-----|-------|--------|----------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -438,6 +442,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x,
                             exchange: x
                         },
@@ -454,13 +459,13 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
     Examples:
         >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close Currency Exchange
-            Date
-            2011-12-07  23.70  23.70  23.70  23.62      EUR   Madrid
-            2011-12-08  23.53  23.60  23.15  23.04      EUR   Madrid
-            2011-12-09  23.36  23.60  23.36  23.62      EUR   Madrid
-            2011-12-12  23.15  23.26  23.00  22.88      EUR   Madrid
-            2011-12-13  22.88  22.88  22.88  22.80      EUR   Madrid
+                         Open   High    Low  Close  Volume Currency Exchange
+            Date                                                            
+            2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid
+            2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid
+            2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid
+            2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid
+            2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid
 
     """
 
@@ -683,8 +688,10 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
                     etf_high = float(info[3].replace(',', ''))
                     etf_low = float(info[4].replace(',', ''))
 
+                    etf_volume = int(info[5])
+
                     result.insert(len(result),
-                                  Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency, etf_exchange))
+                                  Data(etf_date, etf_open, etf_high, etf_low, etf_close, etf_volume, etf_currency, etf_exchange))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
