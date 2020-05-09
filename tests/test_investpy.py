@@ -164,7 +164,19 @@ def test_investpy_stocks():
     for param in params:
         investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
-    investpy.get_stock_dividends(stock='BBVA', country='spain')
+    params = [
+        {
+            'stock': 'bbva',
+            'country': 'spain'
+        },
+        {
+            'stock': 'entel',
+            'country': 'chile'
+        }
+    ]
+
+    for param in params:
+        investpy.get_stock_dividends(stock=param['stock'], country=param['country'])
 
     params = [
         {

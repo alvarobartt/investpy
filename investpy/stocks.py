@@ -845,10 +845,9 @@ def get_stock_dividends(stock, country):
 
     stocks = stocks[stocks['country'].str.lower() == unidecode(country.lower())]
 
-    stock = stock.strip()
-    stock = stock.lower()
+    stock = unidecode(stock.strip().lower())
 
-    if unidecode(stock) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist() if value is not np.nan]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
@@ -898,7 +897,10 @@ def get_stock_dividends(stock, country):
                             dividend_value = float(element_.getnext().text_content().replace(',', ''))
                         if element_.get('data-value') in type_values.keys():
                             dividend_type = type_values[element_.get('data-value')]
-                            dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
+                            try:
+                                dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
+                            except:
+                                dividend_payment_date = None
                             next_element_ = element_.getnext()
                             dividend_yield = next_element_.getnext().text_content()
 
@@ -955,7 +957,10 @@ def get_stock_dividends(stock, country):
                                     dividend_value = float(element_.getnext().text_content().replace(',', ''))
                                 if element_.get('data-value') in type_values.keys():
                                     dividend_type = type_values[element_.get('data-value')]
-                                    dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
+                                    try:
+                                        dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
+                                    except:
+                                        dividend_payment_date = None
                                     next_element_ = element_.getnext()
                                     dividend_yield = next_element_.getnext().text_content()
                         obj = {
