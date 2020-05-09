@@ -942,6 +942,9 @@ def get_stock_dividends(stock, country):
                 if res['hasMoreHistory'] is False:
                     flag = False
 
+                if res['hasMoreHistory'] is None or not res['historyRows']:
+                    break
+
                 root_ = fromstring(res['historyRows'])
                 path_ = root_.xpath(".//tr")
 
