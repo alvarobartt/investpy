@@ -60,9 +60,15 @@ def stocks_as_df(country=None):
     if country is None:
         stocks.reset_index(drop=True, inplace=True)
         return stocks
-    elif unidecode(country.lower()) in stock_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in stock_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         stocks = stocks[stocks['country'] == unidecode(country.lower())]
         stocks.reset_index(drop=True, inplace=True)
+        
         return stocks
 
 
@@ -113,8 +119,13 @@ def stocks_as_list(country=None):
 
     if country is None:
         return stocks['symbol'].tolist()
-    elif unidecode(country.lower()) in stock_countries_as_list():
-        return stocks[stocks['country'] == unidecode(country.lower())]['symbol'].tolist()
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in stock_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        return stocks[stocks['country'] == country]['symbol'].tolist()
 
 
 def stocks_as_dict(country=None, columns=None, as_json=False):
@@ -189,12 +200,16 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(stocks[columns].to_dict(orient='records'))
         else:
             return stocks[columns].to_dict(orient='records')
-    elif country in stock_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in stock_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         if as_json:
-            return json.dumps(
-                stocks[stocks['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(stocks[stocks['country'] == country][columns].to_dict(orient='records'))
         else:
-            return stocks[stocks['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
+            return stocks[stocks['country'] == country][columns].to_dict(orient='records')
 
 
 def stock_countries_as_list():

@@ -46,10 +46,11 @@ def cryptos_as_df():
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
     cryptos = cryptos[cryptos['status'] == 'available']
+    
     cryptos.drop(columns=['tag', 'id', 'status'], inplace=True)
     cryptos = cryptos.where(pd.notnull(cryptos), None)
-
     cryptos.reset_index(drop=True, inplace=True)
+    
     return cryptos
 
 

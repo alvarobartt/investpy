@@ -60,9 +60,15 @@ def bonds_as_df(country=None):
     if country is None:
         bonds.reset_index(drop=True, inplace=True)
         return bonds
-    elif unidecode(country.lower()) in bond_countries_as_list():
-        bonds = bonds[bonds['country'] == unidecode(country.lower())]
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in bond_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        bonds = bonds[bonds['country'] == country]
         bonds.reset_index(drop=True, inplace=True)
+        
         return bonds
 
 
@@ -113,8 +119,13 @@ def bonds_as_list(country=None):
 
     if country is None:
         return bonds['name'].tolist()
-    elif unidecode(country.lower()) in bond_countries_as_list():
-        return bonds[bonds['country'] == unidecode(country.lower())]['name'].tolist()
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in bond_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        return bonds[bonds['country'] == country]['name'].tolist()
 
 
 def bonds_as_dict(country=None, columns=None, as_json=False):
@@ -186,12 +197,16 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(bonds[columns].to_dict(orient='records'))
         else:
             return bonds[columns].to_dict(orient='records')
-    elif country in bond_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in bond_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         if as_json:
-            return json.dumps(
-                bonds[bonds['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(bonds[bonds['country'] == country][columns].to_dict(orient='records'))
         else:
-            return bonds[bonds['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
+            return bonds[bonds['country'] == country][columns].to_dict(orient='records')
 
 
 def bond_countries_as_list():

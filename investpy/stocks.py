@@ -1308,10 +1308,11 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
         :obj:`pandas.DataFrame` - financial_summary:
             The resulting :obj:`pandas.DataFrame` contains the table of the requested financial summary from the 
             introduced stock, so the fields/column names may vary, since it depends on the summary_type introduced.
+            So on, the returned table will have the following format/structure::
 
                 Date || Field 1 | Field 2 | ... | Field N 
                 -----||---------|---------|-----|---------
-                xxxx || xxxxxxx | xxxxxxx | xxx | xxxxxxx  
+                xxxx || xxxxxxx | xxxxxxx | xxx | xxxxxxx 
                 
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.

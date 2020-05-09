@@ -62,12 +62,15 @@ def commodities_as_df(group=None):
         commodities.reset_index(drop=True, inplace=True)
         return commodities
     else:
-        if unidecode(group.lower()) in commodity_groups_list():
-            commodities = commodities[commodities['group'] == unidecode(group.lower())]
-            commodities.reset_index(drop=True, inplace=True)
-            return commodities
-        else:
+        group = unidecode(group.strip().lower())
+
+        if group not in commodity_groups_list():
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+        
+        commodities = commodities[commodities['group'] == group]
+        commodities.reset_index(drop=True, inplace=True)
+        
+        return commodities
 
 
 def commodities_as_list(group=None):
@@ -116,10 +119,12 @@ def commodities_as_list(group=None):
     if group is None:
         return commodities['name'].tolist()
     else:
-        if unidecode(group.lower()) in commodity_groups_list():
-            return commodities[commodities['group'] == unidecode(group.lower())]['name'].tolist()
-        else:
+        group = unidecode(group.strip().lower())
+
+        if group not in commodity_groups_list():
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+            
+        return commodities[commodities['group'] == group]['name'].tolist()
 
 
 def commodities_as_dict(group=None, columns=None, as_json=False):
@@ -198,13 +203,15 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
         else:
             return commodities[columns].to_dict(orient='records')
     else:
-        if group in commodity_groups_list():
-            if as_json:
-                return json.dumps(commodities[commodities['group'] == unidecode(group.lower())][columns].to_dict(orient='records'))
-            else:
-                return commodities[commodities['group'] == unidecode(group.lower())][columns].to_dict(orient='records')
-        else:
+        group = unidecode(group.strip().lower())
+
+        if group not in commodity_groups_list():
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+
+        if as_json:
+            return json.dumps(commodities[commodities['group'] == group][columns].to_dict(orient='records'))
+        else:
+            return commodities[commodities['group'] == group][columns].to_dict(orient='records')
 
 
 def commodity_groups_list():

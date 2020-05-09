@@ -60,9 +60,15 @@ def certificates_as_df(country=None):
     if country is None:
         certificates.reset_index(drop=True, inplace=True)
         return certificates
-    elif unidecode(country.lower()) in certificate_countries_as_list():
-        certificates = certificates[certificates['country'] == unidecode(country.lower())]
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in certificate_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        certificates = certificates[certificates['country'] == country]
         certificates.reset_index(drop=True, inplace=True)
+        
         return certificates
 
 
@@ -111,8 +117,13 @@ def certificates_as_list(country=None):
 
     if country is None:
         return certificates['name'].tolist()
-    elif unidecode(country.lower()) in certificate_countries_as_list():
-        return certificates[certificates['country'] == unidecode(country.lower())]['name'].tolist()
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in certificate_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        return certificates[certificates['country'] == country]['name'].tolist()
 
 
 def certificates_as_dict(country=None, columns=None, as_json=False):
@@ -188,11 +199,16 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(certificates[columns].to_dict(orient='records'))
         else:
             return certificates[columns].to_dict(orient='records')
-    elif unidecode(country.lower()) in certificate_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in certificate_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+        
         if as_json:
-            return json.dumps(certificates[certificates['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(certificates[certificates['country'] == country][columns].to_dict(orient='records'))
         else:
-            return certificates[certificates['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
+            return certificates[certificates['country'] == country][columns].to_dict(orient='records')
 
 
 def certificate_countries_as_list():

@@ -58,9 +58,15 @@ def funds_as_df(country=None):
     if country is None:
         funds.reset_index(drop=True, inplace=True)
         return funds
-    elif unidecode(country.lower()) in fund_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in fund_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         funds = funds[funds['country'] == unidecode(country.lower())]
         funds.reset_index(drop=True, inplace=True)
+        
         return funds
 
 
@@ -111,8 +117,13 @@ def funds_as_list(country=None):
 
     if country is None:
         return funds['name'].tolist()
-    elif unidecode(country.lower()) in fund_countries_as_list():
-        return funds[funds['country'] == unidecode(country.lower())]['name'].tolist()
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in fund_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        return funds[funds['country'] == country]['name'].tolist()
 
 
 def funds_as_dict(country=None, columns=None, as_json=False):
@@ -187,11 +198,16 @@ def funds_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(funds[columns].to_dict(orient='records'))
         else:
             return funds[columns].to_dict(orient='records')
-    elif country in fund_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in fund_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         if as_json:
-            return json.dumps(funds[funds['country'] == unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(funds[funds['country'] == country][columns].to_dict(orient='records'))
         else:
-            return funds[funds['country'] == unidecode(country.lower())][columns].to_dict(orient='records')
+            return funds[funds['country'] == country][columns].to_dict(orient='records')
 
 
 def fund_countries_as_list():
