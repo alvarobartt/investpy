@@ -47,7 +47,7 @@ def stocks_as_df(country=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -107,7 +107,7 @@ def stocks_as_list(country=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -175,7 +175,7 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 

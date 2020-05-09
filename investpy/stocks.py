@@ -6,7 +6,6 @@ from random import randint
 
 import json
 import pandas as pd
-import numpy as np
 
 import pkg_resources
 
@@ -246,7 +245,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -495,7 +494,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -706,7 +705,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -833,7 +832,7 @@ def get_stock_dividends(stock, country):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -847,7 +846,7 @@ def get_stock_dividends(stock, country):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist() if value is not np.nan]:
+    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
@@ -898,7 +897,8 @@ def get_stock_dividends(stock, country):
                         if element_.get('data-value') in type_values.keys():
                             dividend_type = type_values[element_.get('data-value')]
                             try:
-                                dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
+                                value = int(element_.getnext().get('data-value'))
+                                dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(value).date()), '%Y-%m-%d')
                             except:
                                 dividend_payment_date = None
                             next_element_ = element_.getnext()
@@ -961,7 +961,8 @@ def get_stock_dividends(stock, country):
                                 if element_.get('data-value') in type_values.keys():
                                     dividend_type = type_values[element_.get('data-value')]
                                     try:
-                                        dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(int(element_.getnext().get('data-value'))).date()), '%Y-%m-%d')
+                                        value = int(element_.getnext().get('data-value'))
+                                        dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(value).date()), '%Y-%m-%d')
                                     except:
                                         dividend_payment_date = None
                                     next_element_ = element_.getnext()
@@ -1048,7 +1049,7 @@ def get_stock_information(stock, country, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -1185,7 +1186,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -1377,7 +1378,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
@@ -1391,7 +1392,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist() if value is not np.nan]:
+    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
@@ -1488,7 +1489,7 @@ def search_stocks(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
