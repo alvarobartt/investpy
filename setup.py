@@ -46,6 +46,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
+    python_requires='>=3',
     extras_require={
         "tests": requirements(filename='tests/requirements.txt'),
         "docs": requirements(filename='docs/requirements.txt')
@@ -56,7 +57,6 @@ setup(
         'indices', 'currency crosses', 'bonds', 'commodities',
         'crypto currencies'
     ]),
-    python_requires='>=3',
     project_urls={
         'Bug Reports': 'https://github.com/alvarobartt/investpy/issues',
         'Source': 'https://github.com/alvarobartt/investpy',
