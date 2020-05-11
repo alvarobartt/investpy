@@ -2,6 +2,8 @@
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 import re
 from random import randint
@@ -288,8 +290,7 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            bond_date = datetime.fromtimestamp(int(info[0]))
-            bond_date = date(bond_date.year, bond_date.month, bond_date.day)
+            bond_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
 
             bond_close = float(info[1].replace(',', ''))
             bond_open = float(info[2].replace(',', ''))
@@ -535,8 +536,7 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.get('data-real-value'))
 
-                    bond_date = datetime.fromtimestamp(int(info[0]))
-                    bond_date = date(bond_date.year, bond_date.month, bond_date.day)
+                    bond_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
 
                     bond_close = float(info[1].replace(',', ''))
                     bond_open = float(info[2].replace(',', ''))

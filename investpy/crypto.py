@@ -2,6 +2,8 @@
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
 
@@ -264,7 +266,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             crypto_close = float(info[1].replace(',', ''))
             crypto_open = float(info[2].replace(',', ''))
@@ -518,7 +520,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
                     crypto_close = float(info[1].replace(',', ''))
                     crypto_open = float(info[2].replace(',', ''))

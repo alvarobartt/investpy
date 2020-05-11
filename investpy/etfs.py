@@ -2,8 +2,11 @@
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
+
 import warnings
 
 import pandas as pd
@@ -367,7 +370,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
 
             etf_close = float(info[1].replace(',', ''))
             etf_open = float(info[2].replace(',', ''))
@@ -681,7 +684,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                     
                     etf_close = float(info[1].replace(',', ''))
                     etf_open = float(info[2].replace(',', ''))

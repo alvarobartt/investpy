@@ -3,6 +3,8 @@
 
 from datetime import datetime
 from time import strftime, localtime, gmtime
+import pytz
+
 from random import choice
 from unidecode import unidecode
 
@@ -212,7 +214,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     for row in table:
         id_ = row.get("id")
         if id_ == None:
-            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", ""))).strftime("%d/%m/%Y")
+            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", "")), tz=pytz.utc).strftime("%d/%m/%Y")
         else:
             id_ = id_.replace('eventRowId_', '')
 

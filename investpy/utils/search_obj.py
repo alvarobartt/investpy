@@ -7,6 +7,7 @@ import pandas as pd
 
 import json
 from datetime import datetime, date
+import pytz
 from random import randint
 
 from .data import Data
@@ -326,7 +327,7 @@ class SearchObj(object):
         return date_interval
     
     def _data_retrieval(self, product, head, params):
-        if product in ['stocks', 'indices', 'fxfutures']:
+        if product in ['stocks', 'etfs', 'indices', 'fxfutures', 'cryptos']:
             has_volume = True
         else:
             has_volume = False
@@ -352,7 +353,7 @@ class SearchObj(object):
                         raise IndexError("ERR#0033: information unavailable or not found.")
                     info.append(val)
 
-                date_ = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                date_ = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                 
                 close_ = float(info[1].replace(',', ''))
                 open_ = float(info[2].replace(',', ''))
@@ -365,7 +366,7 @@ class SearchObj(object):
                     volume_ = int(info[5])
 
                 result.insert(len(result),
-                              Data(date_, open_, high_, low_, close_, volume_, None, None))
+                              Data(date_, open_, high_, low_, close_, volume_, self.exchange, None))
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 

@@ -2,6 +2,8 @@
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
 
@@ -301,7 +303,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             fund_close = float(info[1].replace(',', ''))
             fund_open = float(info[2].replace(',', ''))
@@ -557,7 +559,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                     
                     fund_close = float(info[1].replace(',', ''))
                     fund_open = float(info[2].replace(',', ''))
