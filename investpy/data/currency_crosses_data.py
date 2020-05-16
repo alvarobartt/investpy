@@ -368,4 +368,4 @@ def available_currencies_as_list():
 
     """
 
-    return [value['symbol'] for value in cst.CURRENCIES]
+    return list(cst.CURRENCIES.keys())

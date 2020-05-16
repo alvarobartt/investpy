@@ -37,7 +37,6 @@ def bonds_as_df(country=None):
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised when `bonds.csv` file was not found.
-        IOError: raised when `bond_countries.csv` file is missing or empty.
 
     """
 

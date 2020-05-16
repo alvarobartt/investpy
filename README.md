@@ -4,7 +4,9 @@
 
 <h2 align="center">Financial Data Extraction from Investing.com with Python</h2>
 
-investpy is a Python package to retrieve data from [Investing.com](https://www.investing.com/), which provides data retrieval from up to **39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**. investpy allows the user to download both recent and historical data from all the financial products indexed at Investing.com. It includes data from all over the world, from countries such as: **United States, France, India, Spain, Russia or Germany, amongst many others**. Therefore, investpy is intended to wrap up all the available data at Investing.com, so that it can be easily retrieved with Python for its further usage and/or analysis.
+investpy is a Python package to retrieve data from [Investing.com](https://www.investing.com/), which provides **data retrieval from up to: 39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**.
+
+investpy allows the user to download both recent and historical data from all the financial products indexed at Investing.com. It **includes data from all over the world, from countries such as: United States, France, India, Spain, Russia or Germany, amongst many others**.
 
 investpy seeks to be one of the most complete Python packages when it comes to financial data extraction in order to stop relying on public/private APIs, since investpy is **FREE** and has **NO LIMITATIONS**. These are some of the features that currently lead investpy to be one of the most consistent packages when it comes to financial data retrieval.
 
@@ -37,11 +39,13 @@ Additionally, **if you want to use the latest investpy version instead of the st
 
 ## Documentation
 
-You can find the **complete developer investpy documentation** at: https://investpy.readthedocs.io/, hosted on [Read the Docs](https://readthedocs.org/) and generated using [sphinx](https://www.sphinx-doc.org/en/master/) with the theme [sphinx_rtd_theme](https://github.com/readthedocs/sphinx_rtd_theme) which is the standard Read the Docs theme for sphinx.
+You can find the **complete investpy documentation** at [Documentation](https://investpy.readthedocs.io/).
+
+__Notes__: documentation is hosted on [Read the Docs](https://readthedocs.org/) and generated using [sphinx](https://www.sphinx-doc.org/en/master/) with the theme [sphinx_rtd_theme](https://github.com/readthedocs/sphinx_rtd_theme) which is the standard Read the Docs theme for sphinx.
 
 ## Usage
 
-Even though some investpy usage examples are presented on the [docs](https://investpy.readthedocs.io/usage.html), some basic functionality will be sorted out with sample Python code blocks.
+Even though some investpy usage examples are presented on the [docs](https://investpy.readthedocs.io/usage.html), some basic functionality will be sorted out with sample Python code blocks. Additionally, more usage examples can be found under [examples/](https://github.com/alvarobartt/investpy/tree/master/examples) directory, which contains a collection of Jupyter Notebooks on how to use investpy and handle its data.
 
 ### Recent/Historical Data Retrieval
 
@@ -81,7 +85,7 @@ search_results = investpy.search_quotes(text='apple',
                                         n_results=10)
 ```
 
-Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to know which are the available functions and attributes of the returned search results, please read the related documentation at: https://investpy.readthedocs.io/search_api.html. So on, those **search results let the user retrieve both recent and historical data from that concrete product, its information, etc.**, as presented in the piece of code below:
+Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances. In order to get to know which are the available functions and attributes of the returned search results, please read the related documentation at [Search Engine Documentation](https://investpy.readthedocs.io/search_api.html). So on, those **search results let the user retrieve both recent and historical data from that concrete product, its information, etc.**, as presented in the piece of code below:
 
 ```python
  for search_result in search_results[:1]:

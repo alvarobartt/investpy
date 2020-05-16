@@ -133,20 +133,15 @@ def get_stock_countries():
     """
     This function returns a listing with all the available countries from where stocks can be retrieved, so to
     let the user know which of them are available, since the parameter country is mandatory in every stock retrieval
-    function. Also, not just the available countries, but the required name is provided since Investing.com has a
-    certain country name standard and countries should be specified the same way they are in Investing.com.
+    function.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
-
-    Raises:
-        FileNotFoundError: raised if `stock_countries.csv` file was not found.
-        IOError: raised when `stock_countries.csv` file is missing or empty.
-
+    
     """
 
-    return stock_countries_as_list()
+    return list(cst.STOCK_COUNTRIES.keys())
 
 
 def get_stock_recent_data(stock, country, as_json=False, order='ascending', interval='Daily'):
@@ -245,7 +240,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -300,6 +295,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
     result = list()
 
     if path_:
@@ -494,7 +490,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -705,7 +701,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     selected_source = available_sources[language]
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -832,7 +828,7 @@ def get_stock_dividends(stock, country):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1049,7 +1045,7 @@ def get_stock_information(stock, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1161,7 +1157,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
     
     Raises:
         ValueError: raised if any of the introduced arguments errored.
-        FileNotFoundError: raised when either `stocks.csv` or `stock_countries.csv` file is missing.
+        FileNotFoundError: raised when `stocks.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
         RuntimeError: 
             raised either if the introduced country does not match any of the listed ones or if no overview results could be 
@@ -1186,7 +1182,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1202,16 +1198,6 @@ def get_stocks_overview(country, as_json=False, n_results=100):
 
     stocks = stocks[stocks['country'] == country]
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stock_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0071: stock countries file not found or errored.")
-
-    if countries is None:
-        raise IOError("ERR#0036: stock countries list not found or unable to retrieve.")
-
     head = {
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
@@ -1222,7 +1208,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
 
     params = {
         "noconstruct": "1",
-        "smlID": countries.loc[(countries['country'] == country).idxmax(), 'id'],
+        "smlID": cst.STOCK_COUNTRIES[country],
         "sid": "",
         "tabletype": "price",
         "index_id": 'all'
@@ -1295,7 +1281,6 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         return json.loads(df.to_json(orient='records'))
     else:
         return df
-
 
 
 def get_stock_financial_summary(stock, country, summary_type='income_statement', period='annual'):
@@ -1378,7 +1363,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
         raise ValueError("ERR#0137: introduced period is not valid, since available values are: " + ', '.join(cst.FINANCIAL_SUMMARY_PERIODS.keys()))
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1489,7 +1474,7 @@ def search_stocks(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks.csv'))
+    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:

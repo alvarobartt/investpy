@@ -14,6 +14,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
+from .utils import constant as cst
 from .utils.aux import random_user_agent
 from .utils.data import Data
 
@@ -791,29 +792,16 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
     if 1 > n_results or n_results > 1000:
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currencies.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        currencies = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0103: currencies file not found or errored.")
-
-    if currencies is None:
-        raise IOError("ERR#0104: currencies not found or unable to retrieve.")
-
     currency = unidecode(currency.lower())
 
-    if currency not in currencies['symbol'].str.lower().tolist():
+    if currency not in [curr.strip().lower() for curr in list(cst.CURRENCIES.keys())]:
         raise ValueError("ERR#0106: specified currency value not valid.")
 
-    currency = currencies.loc[(currencies['symbol'].str.lower() == currency).idxmax(), 'symbol']
-
-    value = currencies.loc[(currencies['symbol'] == currency).idxmax(), 'value']
     session_id = ''.join(sample(string.ascii_lowercase, 9))
 
     params = {
         'session_uniq_id': session_id,
-        'currencies': value
+        'currencies': cst.CURRENCIES[currency.upper()]
     }
 
     head = {

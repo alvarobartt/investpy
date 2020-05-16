@@ -149,7 +149,7 @@ PRODUCT_TYPE_FILES = {
     'etf': 'etfs.csv',
     'fund': 'funds.csv',
     'index': 'indices.csv',
-    'stock': 'stocks.csv',
+    'stock': 'stocks/stocks.csv',
     'bond': 'bonds.csv'
 }
 
@@ -279,56 +279,26 @@ CERTIFICATE_COUNTRIES = [
     {'country': 'sweden', 'id': 9}
 ]
 
-CURRENCIES = [
-    {'symbol': 'AED', 'name': 'UAE Dirham', 'value': 22}, {'symbol': 'AFN', 'name': 'Afghanistan Afghani', 'value': 93}, {'symbol': 'ALL', 'name': 'Albanian Lek', 'value': 58},
-    {'symbol': 'AMD', 'name': 'Armenian Dram', 'value': 158}, {'symbol': 'ANG', 'name': 'Antilles Guilder', 'value': 95}, {'symbol': 'AOA', 'name': 'Angolan kwanza', 'value': 159},
-    {'symbol': 'ARS', 'name': 'Argentinian Peso', 'value': 32}, {'symbol': 'AUD', 'name': 'Australian Dollar', 'value': 1}, {'symbol': 'AZN', 'name': 'Azerbaijani Manat', 'value': 161},
-    {'symbol': 'BAM', 'name': 'Bosnia Herzegovina Mark', 'value': 96}, {'symbol': 'BBD', 'name': 'Barbadian Dollar', 'value': 33}, {'symbol': 'BDT', 'name': 'Bangladeshi Taka', 'value': 59},
-    {'symbol': 'BGN', 'name': 'Bulgarian Lev', 'value': 91}, {'symbol': 'BHD', 'name': 'Baharain Dinar', 'value': 36}, {'symbol': 'BIF', 'name': 'Burundian Franc', 'value': 98},
-    {'symbol': 'BND', 'name': 'Brunei Dollar', 'value': 37}, {'symbol': 'BOB', 'name': 'Bolivian Boliviano', 'value': 99}, {'symbol': 'BRL', 'name': 'Brazil Real', 'value': 35},
-    {'symbol': 'BRLT', 'name': 'Brazilian Real Tourism', 'value': 1896}, {'symbol': 'BSD', 'name': 'Bahamas Dollar', 'value': 38}, {'symbol': 'BWP', 'name': 'Botswana Pula', 'value': 39},
-    {'symbol': 'BYN', 'name': 'Belarusian Ruble', 'value': 100}, {'symbol': 'BZD', 'name': 'Belize Dollar', 'value': 101}, {'symbol': 'CAD', 'name': 'Canadian Dollar', 'value': 15},
-    {'symbol': 'CHF', 'name': 'Swiss Franc', 'value': 4}, {'symbol': 'CLP', 'name': 'Chilean Peso', 'value': 40}, {'symbol': 'CNH', 'name': 'Chinese Yuan Offshore', 'value': 194},
-    {'symbol': 'CNY', 'name': 'Chinese Yuan', 'value': 41}, {'symbol': 'COP', 'name': 'Colombian Peso', 'value': 92}, {'symbol': 'CRC', 'name': 'Costa Rican Colon', 'value': 42},
-    {'symbol': 'CUP', 'name': 'Cuban Peso', 'value': 102}, {'symbol': 'CVE', 'name': 'Cape Verdean Escudo', 'value': 188}, {'symbol': 'CZK', 'name': 'Czech Koruna', 'value': 16},
-    {'symbol': 'DJF', 'name': 'Djiboutian Franc', 'value': 44}, {'symbol': 'DKK', 'name': 'Danish Krone', 'value': 6}, {'symbol': 'DOP', 'name': 'Dominican Peso', 'value': 45},
-    {'symbol': 'DZD', 'name': 'Algerian Dinar', 'value': 104}, {'symbol': 'EGP', 'name': 'Egyptian Pound', 'value': 47}, {'symbol': 'ETB', 'name': 'Ethiopian Birr', 'value': 48},
-    {'symbol': 'EUR', 'name': 'Euro', 'value': 17}, {'symbol': 'FJD', 'name': 'Fiji Dollar', 'value': 49}, {'symbol': 'GBP', 'name': 'British Pound', 'value': 3},
-    {'symbol': 'GEL', 'name': 'Georgian lari', 'value': 183}, {'symbol': 'GHS', 'name': 'Ghanaian Cedi', 'value': 50}, {'symbol': 'GMD', 'name': 'Gambian Dalasi', 'value': 51},
-    {'symbol': 'GNF', 'name': 'Guinean Franc', 'value': 107}, {'symbol': 'GTQ', 'name': 'Guatemalan Quetzal', 'value': 52}, {'symbol': 'HKD', 'name': 'Hong Kong Dollar', 'value': 20},
-    {'symbol': 'HNL', 'name': 'Honduran Lempira', 'value': 53}, {'symbol': 'HRK', 'name': 'Croatian Kuna', 'value': 109}, {'symbol': 'HTG', 'name': 'Haitian Gourde', 'value': 54},
-    {'symbol': 'HUF', 'name': 'Hungarian Forint', 'value': 11}, {'symbol': 'IDR', 'name': 'Indonesian Rupiah', 'value': 55}, {'symbol': 'ILS', 'name': 'Israeli Shekel', 'value': 23},
-    {'symbol': 'INR', 'name': 'Indian Rupee', 'value': 29}, {'symbol': 'IQD', 'name': 'Iraqi Dinar', 'value': 56}, {'symbol': 'IRR', 'name': 'Iranian Rial', 'value': 57},
-    {'symbol': 'ISK', 'name': 'Icelandic Kr', 'value': 60}, {'symbol': 'JMD', 'name': 'Jamaican Dollar', 'value': 61}, {'symbol': 'JOD', 'name': 'Jordan Dinar', 'value': 24},
-    {'symbol': 'JPY', 'name': 'Japanese Yen', 'value': 2}, {'symbol': 'KES', 'name': 'Kenyan Shilling', 'value': 110}, {'symbol': 'KGS', 'name': 'Kyrgyzstan som', 'value': 168},
-    {'symbol': 'KHR', 'name': 'Cambodian Riel', 'value': 111}, {'symbol': 'KMF', 'name': 'Comorian Franc', 'value': 169}, {'symbol': 'KRW', 'name': 'Korean Won', 'value': 28},
-    {'symbol': 'KWD', 'name': 'Kuwaiti Dinar', 'value': 25}, {'symbol': 'KYD', 'name': 'Cayman Islands Dollar', 'value': 62}, {'symbol': 'KZT', 'name': 'Kazakh Tenge', 'value': 63},
-    {'symbol': 'LAK', 'name': 'Lao Kip', 'value': 113}, {'symbol': 'LBP', 'name': 'Lebanese Pound', 'value': 114}, {'symbol': 'LKR', 'name': 'Sri Lankan Rupee', 'value': 115},
-    {'symbol': 'LSL', 'name': 'Lesotho loti', 'value': 185}, {'symbol': 'LYD', 'name': 'Libyan Dinar', 'value': 119}, {'symbol': 'MAD', 'name': 'Moroccan Dirham', 'value': 64},
-    {'symbol': 'MDL', 'name': 'Moldovan Leu', 'value': 181}, {'symbol': 'MGA', 'name': 'Malagasy Ariary', 'value': 121}, {'symbol': 'MKD', 'name': 'Macedonian Denar', 'value': 123},
-    {'symbol': 'MMK', 'name': 'Myanmar kyat', 'value': 124}, {'symbol': 'MNT', 'name': 'Mongolian Tugrik', 'value': 196}, {'symbol': 'MOP', 'name': 'Macanese Pataca', 'value': 125},
-    {'symbol': 'MRU', 'name': 'Mauritanian ouguiya', 'value': 126}, {'symbol': 'MUR', 'name': 'Mauritian Rupee', 'value': 66}, {'symbol': 'MVR', 'name': 'Maldivian Rufiyaa', 'value': 170},
-    {'symbol': 'MWK', 'name': 'Malawian Kwacha', 'value': 67}, {'symbol': 'MXN', 'name': 'Mexican Peso', 'value': 14}, {'symbol': 'MYR', 'name': 'Malaysian Ringgit', 'value': 68},
-    {'symbol': 'MZN', 'name': 'Mozambican Metical', 'value': 192}, {'symbol': 'NAD', 'name': 'Namibian Dollar', 'value': 128}, {'symbol': 'NGN', 'name': 'Nigerian Naira', 'value': 69},
-    {'symbol': 'NIO', 'name': 'Nicaraguan Córdoba', 'value': 70}, {'symbol': 'NOK', 'name': 'Norwegian Krone', 'value': 7}, {'symbol': 'NPR', 'name': 'Nepalese Rupee', 'value': 129},
-    {'symbol': 'NZD', 'name': 'New Zealand Dollar', 'value': 5}, {'symbol': 'OMR', 'name': 'Omani Rial', 'value': 71}, {'symbol': 'PAB', 'name': 'Panamanian Balboa', 'value': 130},
-    {'symbol': 'PEN', 'name': 'Peru Sol', 'value': 72}, {'symbol': 'PGK', 'name': 'Papua New Guinean Kina', 'value': 73}, {'symbol': 'PHP', 'name': 'Philippine Peso', 'value': 74},
-    {'symbol': 'PKR', 'name': 'Pakistani Rupee', 'value': 75}, {'symbol': 'PLN', 'name': 'Polish Zloty', 'value': 8}, {'symbol': 'PYG', 'name': 'Paraguayan Guarani', 'value': 131},
-    {'symbol': 'QAR', 'name': 'Qatari Riyal', 'value': 76}, {'symbol': 'RON', 'name': 'Romanian Leu', 'value': 78}, {'symbol': 'RSD', 'name': 'Serbian Dinar', 'value': 133},
-    {'symbol': 'RUB', 'name': 'Russian Ruble', 'value': 79}, {'symbol': 'RWF', 'name': 'Rwandan Franc', 'value': 134}, {'symbol': 'SAR', 'name': 'Saudi Riyal', 'value': 26},
-    {'symbol': 'SCR', 'name': 'Seychelles Rupee', 'value': 81}, {'symbol': 'SDG', 'name': 'Sudanese Pound', 'value': 136}, {'symbol': 'SEK', 'name': 'Swedish Krona', 'value': 18},
-    {'symbol': 'SGD', 'name': 'Singapore Dollar', 'value': 19}, {'symbol': 'SOS', 'name': 'Somali Shilling', 'value': 139}, {'symbol': 'STN', 'name': 'São Tomé/Príncipe Dobra', 'value': 141},
-    {'symbol': 'SVC', 'name': 'El Salvador Colon', 'value': 142}, {'symbol': 'SYP', 'name': 'Syrian Pound', 'value': 143}, {'symbol': 'SZL', 'name': 'Swazi Lilangeni', 'value': 82},
-    {'symbol': 'THB', 'name': 'Thai Baht', 'value': 10}, {'symbol': 'TJS', 'name': 'Tajikistani somoni', 'value': 193}, {'symbol': 'TMT', 'name': 'Turkmenistan manat', 'value': 1746},
-    {'symbol': 'TND', 'name': 'Tunisian Dinar', 'value': 83}, {'symbol': 'TRY', 'name': 'Turkish Lira', 'value': 9}, {'symbol': 'TTD', 'name': 'Trinidad Dollar', 'value': 84},
-    {'symbol': 'TWD', 'name': 'Taiwan Dollar', 'value': 34}, {'symbol': 'TZS', 'name': 'Tanzanian Shilling', 'value': 145}, {'symbol': 'UAH', 'name': 'Ukrainian Hryvnia', 'value': 85},
-    {'symbol': 'UGX', 'name': 'Ugandan Shilling', 'value': 146}, {'symbol': 'USD', 'name': 'US Dollar', 'value': 12}, {'symbol': 'UYU', 'name': 'Uruguayan Peso', 'value': 147},
-    {'symbol': 'UZS', 'name': 'Uzbekistani Sum', 'value': 148}, {'symbol': 'VES', 'name': 'Venezuelan Bolivar', 'value': 149}, {'symbol': 'VND', 'name': 'Vietnamese Dong', 'value': 87},
-    {'symbol': 'VUV', 'name': 'Vanuatu vatu', 'value': 177}, {'symbol': 'XAF', 'name': 'Central African Franc', 'value': 150}, {'symbol': 'XAGg', 'name': 'Gram Silver', 'value': 216},
-    {'symbol': 'XBR', 'name': 'Brent Spot', 'value': 1683}, {'symbol': 'XCD', 'name': 'East Caribbean Dollar', 'value': 179}, {'symbol': 'XOF', 'name': 'West African CFA franc', 'value': 151},
-    {'symbol': 'XPF', 'name': 'French Pacific Franc', 'value': 88}, {'symbol': 'YER', 'name': 'Yemeni Rial', 'value': 153}, {'symbol': 'ZAR', 'name': 'South African Rand', 'value': 13},
-    {'symbol': 'ZMW', 'name': 'Zambia Kwacha', 'value': 155}
-]
+CURRENCIES = {
+    'AED': 22, 'AFN': 93, 'ALL': 58, 'AMD': 158, 'ANG': 95, 'AOA': 159, 'ARS': 32, 'AUD': 1,
+    'AZN': 161, 'BAM': 96, 'BBD': 33, 'BDT': 59, 'BGN': 91, 'BHD': 36, 'BIF': 98, 'BND': 37,
+    'BOB': 99, 'BRL': 35, 'BRLT': 1896, 'BSD': 38, 'BWP': 39, 'BYN': 100, 'BZD': 101, 'CAD': 15,
+    'CHF': 4, 'CLP': 40, 'CNH': 194, 'CNY': 41, 'COP': 92, 'CRC': 42, 'CUP': 102, 'CVE': 188,
+    'CZK': 16, 'DJF': 44, 'DKK': 6, 'DOP': 45, 'DZD': 104, 'EGP': 47, 'ETB': 48, 'EUR': 17,
+    'FJD': 49, 'GBP': 3, 'GEL': 183, 'GHS': 50, 'GMD': 51, 'GNF': 107, 'GTQ': 52, 'HKD': 20,
+    'HNL': 53, 'HRK': 109, 'HTG': 54, 'HUF': 11, 'IDR': 55, 'ILS': 23, 'INR': 29, 'IQD': 56,
+    'IRR': 57, 'ISK': 60, 'JMD': 61, 'JOD': 24, 'JPY': 2, 'KES': 110, 'KGS': 168, 'KHR': 111,
+    'KMF': 169, 'KRW': 28, 'KWD': 25, 'KYD': 62, 'KZT': 63, 'LAK': 113, 'LBP': 114, 'LKR': 115,
+    'LSL': 185, 'LYD': 119, 'MAD': 64, 'MDL': 181, 'MGA': 121, 'MKD': 123, 'MMK': 124, 'MNT': 196,
+    'MOP': 125, 'MRU': 126, 'MUR': 66, 'MVR': 170, 'MWK': 67, 'MXN': 14, 'MYR': 68, 'MZN': 192,
+    'NAD': 128, 'NGN': 69, 'NIO': 70, 'NOK': 7, 'NPR': 129, 'NZD': 5, 'OMR': 71, 'PAB': 130, 
+    'PEN': 72, 'PGK': 73, 'PHP': 74, 'PKR': 75, 'PLN': 8, 'PYG': 131, 'QAR': 76, 'RON': 78,
+    'RSD': 133, 'RUB': 79, 'RWF': 134, 'SAR': 26, 'SCR': 81, 'SDG': 136, 'SEK': 18, 'SGD': 19,
+    'SOS': 139, 'STN': 141, 'SVC': 142, 'SYP': 143, 'SZL': 82, 'THB': 10, 'TJS': 193, 'TMT': 1746,
+    'TND': 83, 'TRY': 9, 'TTD': 84, 'TWD': 34, 'TZS': 145, 'UAH': 85, 'UGX': 146, 'USD': 12,
+    'UYU': 147, 'UZS': 148, 'VES': 149, 'VND': 87, 'VUV': 177, 'XAF': 150, 'XAGg': 216, 'XBR': 1683,
+    'XCD': 179, 'XOF': 151, 'XPF': 88, 'YER': 153, 'ZAR': 13, 'ZMW': 155
+}
 
 ETF_COUNTRIES = [
     {'country': 'australia', 'code': 'au'}, {'country': 'austria', 'code': 'at'}, {'country': 'belgium', 'code': 'be'}, {'country': 'brazil', 'code': 'br'}, {'country': 'bulgaria', 'code': 'bg'},
@@ -359,27 +329,20 @@ FUND_COUNTRIES = [
     {'country': 'united states', 'id': 5}, {'country': 'vietnam', 'id': 178}
 ]
 
-STOCK_COUNTRIES = [
-    {'country': 'argentina', 'id': 10141}, {'country': 'brazil', 'id': 602}, {'country': 'canada', 'id': 608}, {'country': 'chile', 'id': 10150}, {'country': 'colombia', 'id': 723},
-    {'country': 'costa rica', 'id': 688}, {'country': 'jamaica', 'id': 10210}, {'country': 'mexico', 'id': 612}, {'country': 'peru', 'id': 722}, {'country': 'united states', 'id': 800},
-    {'country': 'venezuela', 'id': 25920001}, {'country': 'austria', 'id': 10124}, {'country': 'belgium', 'id': 10121}, {'country': 'bosnia', 'id': 804}, {'country': 'bulgaria', 'id': 10151},
-    {'country': 'croatia', 'id': 10148}, {'country': 'cyprus', 'id': 725}, {'country': 'czech republic', 'id': 614}, {'country': 'denmark', 'id': 10122}, {'country': 'finland', 'id': 10123},
-    {'country': 'france', 'id': 10112}, {'country': 'germany', 'id': 10106}, {'country': 'greece', 'id': 10145}, {'country': 'hungary', 'id': 10128}, {'country': 'iceland', 'id': 610},
-    {'country': 'ireland', 'id': 616}, {'country': 'italy', 'id': 10109}, {'country': 'luxembourg', 'id': 802}, {'country': 'malta', 'id': 803}, {'country': 'montenegro', 'id': 10213},
-    {'country': 'netherlands', 'id': 10110}, {'country': 'norway', 'id': 10111}, {'country': 'poland', 'id': 10130}, {'country': 'portugal', 'id': 10113}, {'country': 'romania', 'id': 10149},
-    {'country': 'russia', 'id': 10144}, {'country': 'serbia', 'id': 805}, {'country': 'slovakia', 'id': 625}, {'country': 'slovenia', 'id': 620}, {'country': 'spain', 'id': 10119},
-    {'country': 'sweden', 'id': 10120}, {'country': 'switzerland', 'id': 10107}, {'country': 'turkey', 'id': 606}, {'country': 'ukraine', 'id': 623}, {'country': 'united kingdom', 'id': 801},
-    {'country': 'australia', 'id': 10125}, {'country': 'bangladesh', 'id': 10201}, {'country': 'china', 'id': 724}, {'country': 'hong kong', 'id': 10126}, {'country': 'india', 'id': 600},
-    {'country': 'indonesia', 'id': 615}, {'country': 'japan', 'id': 692}, {'country': 'kazakhstan', 'id': 10207}, {'country': 'malaysia', 'id': 618}, {'country': 'mongolia', 'id': 10216},
-    {'country': 'new zealand', 'id': 27525828}, {'country': 'pakistan', 'id': 619}, {'country': 'philippines', 'id': 721}, {'country': 'singapore', 'id': 10129}, {'country': 'south korea', 'id': 694},
-    {'country': 'sri lanka', 'id': 621}, {'country': 'taiwan', 'id': 622}, {'country': 'thailand', 'id': 720}, {'country': 'vietnam', 'id': 624}, {'country': 'bahrain', 'id': 10143},
-    {'country': 'egypt', 'id': 10136}, {'country': 'iraq', 'id': 10204}, {'country': 'israel', 'id': 10131}, {'country': 'jordan', 'id': 10134}, {'country': 'kuwait', 'id': 10132},
-    {'country': 'lebanon', 'id': 10146}, {'country': 'oman', 'id': 10142}, {'country': 'palestine', 'id': 10137}, {'country': 'qatar', 'id': 10139}, {'country': 'saudi arabia', 'id': 10133},
-    {'country': 'dubai', 'id': 10135}, {'country': 'botswana', 'id': 656}, {'country': 'ivory coast', 'id': 729}, {'country': 'kenya', 'id': 617}, {'country': 'malawi', 'id': 680},
-    {'country': 'mauritius', 'id': 678}, {'country': 'morocco', 'id': 10147}, {'country': 'namibia', 'id': 652}, {'country': 'nigeria', 'id': 628}, {'country': 'rwanda', 'id': 686},
-    {'country': 'south africa', 'id': 10127}, {'country': 'tanzania', 'id': 682}, {'country': 'tunisia', 'id': 604}, {'country': 'uganda', 'id': 654}, {'country': 'zambia', 'id': 25957877},
-    {'country': 'zimbabwe', 'id': 684}
-]
+STOCK_COUNTRIES = {
+    'argentina': 10141, 'brazil': 602, 'canada': 608, 'chile': 10150, 'colombia': 723, 'costa rica': 688, 'jamaica': 10210, 'mexico': 612,
+    'peru': 722, 'united states': 800, 'venezuela': 25920001, 'austria': 10124, 'belgium': 10121, 'bosnia': 804, 'bulgaria': 10151,
+    'croatia': 10148, 'cyprus': 725, 'czech republic': 614, 'denmark': 10122, 'finland': 10123, 'france': 10112, 'germany': 10106,
+    'greece': 10145, 'hungary': 10128, 'iceland': 610, 'ireland': 616, 'italy': 10109, 'luxembourg': 802, 'malta': 803, 'montenegro': 10213,
+    'netherlands': 10110, 'norway': 10111, 'poland': 10130, 'portugal': 10113, 'romania': 10149, 'russia': 10144, 'serbia': 805,
+    'slovakia': 625, 'slovenia': 620, 'spain': 10119, 'sweden': 10120, 'switzerland': 10107, 'turkey': 606, 'ukraine': 623, 'united kingdom': 801,
+    'australia': 10125, 'bangladesh': 10201, 'china': 724, 'hong kong': 10126, 'india': 600, 'indonesia': 615, 'japan': 692, 'kazakhstan': 10207,
+    'malaysia': 618, 'mongolia': 10216, 'new zealand': 27525828, 'pakistan': 619, 'philippines': 721, 'singapore': 10129, 'south korea': 694,
+    'sri lanka': 621, 'taiwan': 622, 'thailand': 720, 'vietnam': 624, 'bahrain': 10143, 'egypt': 10136, 'iraq': 10204, 'israel': 10131,
+    'jordan': 10134, 'kuwait': 10132, 'lebanon': 10146, 'oman': 10142, 'palestine': 10137, 'qatar': 10139, 'saudi arabia': 10133,
+    'dubai': 10135, 'botswana': 656, 'ivory coast': 729, 'kenya': 617, 'malawi': 680, 'mauritius': 678, 'morocco': 10147, 'namibia': 652,
+    'nigeria': 628, 'rwanda': 686, 'south africa': 10127, 'tanzania': 682, 'tunisia': 604, 'uganda': 654, 'zambia': 25957877, 'zimbabwe': 684
+}
 
 INDEX_COUNTRIES = [
     {'country': 'argentina', 'country_name': 'argentina'}, {'country': 'australia', 'country_name': 'australia'}, {'country': 'austria', 'country_name': 'austria'},
