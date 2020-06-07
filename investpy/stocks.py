@@ -309,6 +309,8 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
+            info[6] = elements_.xpath("./td[7]//text()")[0]
+
             stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
             
             stock_close = float(info[1].replace(',', ''))
@@ -318,9 +320,11 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
             stock_volume = int(info[5])
 
+            change = float(info[6].strip('%'))
+
             result.insert(len(result),
                           Data(stock_date, stock_open, stock_high, stock_low,
-                               stock_close, stock_volume, stock_currency, None))
+                               stock_close, stock_volume, stock_currency, change))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -574,6 +578,8 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.get('data-real-value'))
 
+                info[6] = elements_.xpath("./td[7]//text()")[0]
+
                 if data_flag is True:
                     stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
                     
@@ -584,9 +590,11 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
                     stock_volume = int(info[5])
 
+                    change = float(info[6].strip('%'))
+
                     result.insert(len(result),
                                   Data(stock_date, stock_open, stock_high, stock_low,
-                                       stock_close, stock_volume, stock_currency, None))
+                                       stock_close, stock_volume, stock_currency, change))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
