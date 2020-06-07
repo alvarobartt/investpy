@@ -49,6 +49,7 @@ class Data(object):
             'Low': self.low,
             'Close': self.close,
             'Volume': self.volume,
+            'Change%': self.exchange,
             'Currency': self.currency,
         }
 
@@ -60,6 +61,7 @@ class Data(object):
             'low': self.low,
             'close': self.close,
             'volume': self.volume,
+            'change': self.exchange,
             'currency': self.currency,
         }
 
