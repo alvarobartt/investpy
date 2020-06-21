@@ -363,7 +363,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     and if the historical data is going to be ordered ascending or descending (where the index is the date), respectively.
 
     Args:
-        commodity (:obj:`str`): name of the commodity to retrieve recent data from.
+        commodity (:obj:`str`): name of the commodity to retrieve recent historical data from.
         from_date (:obj:`str`): date formatted as `dd/mm/yyyy`, since when data is going to be retrieved.
         to_date (:obj:`str`): date formatted as `dd/mm/yyyy`, until when data is going to be retrieved.
         country (:obj:`str`, optional):
@@ -615,7 +615,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
                 if as_json is True:
                     json_ = {
                         'name': name,
-                        'recent':
+                        'historical':
                             [value.commodity_as_json() for value in result]
                     }
 
