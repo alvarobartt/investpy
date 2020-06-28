@@ -10,7 +10,7 @@ import requests
 from lxml.html import fromstring
 
 from .utils import constant as cst
-from .utils.aux import random_user_agent, resource_to_data
+from .utils.utils import random_user_agent, resource_to_data
 
 
 def technical_indicators(name, country, product_type, interval='daily'):

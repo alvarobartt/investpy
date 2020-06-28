@@ -7,7 +7,7 @@ from unidecode import unidecode
 
 from .utils import constant as cst
 from .utils.search_obj import SearchObj
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 
 
 def search_quotes(text, products=None, countries=None, n_results=None):

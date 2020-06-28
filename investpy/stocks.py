@@ -16,7 +16,7 @@ from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils import constant as cst
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 from .utils.data import Data
 
 from .data.stocks_data import stocks_as_df, stocks_as_list, stocks_as_dict

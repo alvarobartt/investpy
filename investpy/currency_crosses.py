@@ -15,7 +15,7 @@ from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils import constant as cst
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 from .utils.data import Data
 
 from .data.currency_crosses_data import currency_crosses_as_df, currency_crosses_as_list, currency_crosses_as_dict

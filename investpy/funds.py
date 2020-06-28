@@ -13,7 +13,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 from .utils.data import Data
 
 from .data.funds_data import funds_as_list, funds_as_dict, funds_as_df

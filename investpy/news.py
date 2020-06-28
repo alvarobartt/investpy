@@ -11,7 +11,7 @@ from unidecode import unidecode
 import pandas as pd
 
 from .utils import constant as cst
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 
 import requests
 from lxml.html import fromstring

@@ -15,7 +15,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 from .utils.data import Data
 
 from .data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict

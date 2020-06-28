@@ -14,7 +14,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.aux import random_user_agent
+from .utils.utils import random_user_agent
 from .utils.data import Data
 
 from .data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
