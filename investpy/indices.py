@@ -530,6 +530,15 @@ def get_index_futures_recent_data(index, country, as_json=False, order='ascendin
     else:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
+def get_futures_symbols():
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'indices', 'indices_f.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
+
+    return indices['name'].tolist()   
 
 def get_index_historical_data(index, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
     """
