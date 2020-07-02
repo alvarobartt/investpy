@@ -2,6 +2,7 @@
 
 # Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
 # See LICENSE for details.
+# Added support for index futures at line 340
 
 from datetime import datetime, date
 import json
@@ -238,6 +239,199 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+    else:
+        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
+
+    if indices is None:
+        raise IOError("ERR#0037: indices not found or unable to retrieve.")
+
+    if unidecode.unidecode(country.lower()) not in get_index_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+
+    index = index.strip()
+    index = index.lower()
+
+    if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
+        raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
+
+    full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
+    id_ = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'id']
+    name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
+
+    index_currency = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'currency']
+
+    header = full_name + ' Historical Data'
+
+    params = {
+        "curr_id": id_,
+        "smlID": str(randint(1000000, 99999999)),
+        "header": header,
+        "interval_sec": interval,
+        "sort_col": "date",
+        "sort_ord": "DESC",
+        "action": "historical_data"
+    }
+
+    head = {
+        "User-Agent": get_random(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = "https://www.investing.com/instruments/HistoricalDataAjax"
+
+    req = requests.post(url, headers=head, data=params)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
+    result = list()
+
+    if path_:
+        for elements_ in path_:
+            if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                raise IndexError("ERR#0046: index information unavailable or not found.")
+
+            info = []
+        
+            for nested_ in elements_.xpath(".//td"):
+                info.append(nested_.get('data-real-value'))
+
+            index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            
+            index_close = float(info[1].replace(',', ''))
+            index_open = float(info[2].replace(',', ''))
+            index_high = float(info[3].replace(',', ''))
+            index_low = float(info[4].replace(',', ''))
+
+            index_volume = int(info[5])
+
+            result.insert(len(result), Data(index_date, index_open, index_high, index_low,
+                                            index_close, index_volume, index_currency, None))
+
+        if order in ['ascending', 'asc']:
+            result = result[::-1]
+        elif order in ['descending', 'desc']:
+            result = result
+
+        if as_json is True:
+            json_ = {'name': name,
+                     'recent':
+                         [value.index_as_json() for value in result]
+                     }
+
+            return json.dumps(json_, sort_keys=False)
+        elif as_json is False:
+            df = pd.DataFrame.from_records([value.index_to_dict() for value in result])
+            df.set_index('Date', inplace=True)
+
+            return df
+    else:
+        raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+def get_index_futures_recent_data(index, country, as_json=False, order='ascending', interval='Daily'):
+    """
+    This function retrieves recent historical data from the introduced `index` from Investing
+    via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
+    :obj:`json` file, with `ascending` or `descending` order.
+
+    Args:
+        index (:obj:`str`): name of the index to retrieve recent historical data from.
+        country (:obj:`str`): name of the country from where the index is.
+        as_json (:obj:`bool`, optional):
+            optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
+        order (:obj:`str`, optional):
+            optional argument to define the order of the retrieved data (`ascending`, `asc` or `descending`, `desc`).
+        interval (:obj:`str`, optional):
+            value to define the historical data interval to retrieve, by default `Daily`, but it can also be `Weekly` or `Monthly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` or :obj:`json`:
+            The function returns either a :obj:`pandas.DataFrame` or a :obj:`json` file containing the retrieved
+            recent data from the specified index via argument. The dataset contains the open, high, low, close and volume
+            values for the selected index on market days, additionally the currency value is returned.
+
+            The returned data is case we use default arguments will look like::
+
+                Date || Open | High | Low | Close | Volume | Currency
+                -----||------|------|-----|-------|--------|----------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
+
+            but if we define `as_json=True`, then the output will be::
+
+                {
+                    name: name,
+                    recent: [
+                        {
+                            date: dd/mm/yyyy,
+                            open: x,
+                            high: x,
+                            low: x,
+                            close: x,
+                            volume: x,
+                            currency: x
+                        },
+                        ...
+                    ]
+                }
+
+    Raises:
+        ValueError: raised if there was an argument error.
+        IOError: raised if indices object/file was not found or unable to retrieve.
+        RuntimeError: raised if the introduced index does not match any of the indexed ones.
+        ConnectionError: raised if GET requests does not return 200 status code.
+        IndexError: raised if index information was unavailable or not found.
+
+    Examples:
+        >>> investpy.get_index_recent_data(index='ibex 35', country='spain')
+                           Open     High      Low    Close   Volume Currency
+            Date
+            2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR
+            2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR
+            2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR
+            2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR
+            2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR
+
+    """
+
+    if not index:
+        raise ValueError("ERR#0047: index param is mandatory and should be a str.")
+
+    if not isinstance(index, str):
+        raise ValueError("ERR#0047: index param is mandatory and should be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+
+    if not interval:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if not isinstance(interval, str):
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    if interval not in ['Daily', 'Weekly', 'Monthly']:
+        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join(('resources', 'indices', 'indices_f.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
