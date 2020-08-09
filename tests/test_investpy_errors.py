@@ -1,11 +1,9 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import investpy
+import pytest
 
-from investpy.utils.user_agent import get_random, clear_file, delete_file
+import investpy
 
 
 def test_stocks_errors():
@@ -485,7 +483,7 @@ def test_stocks_errors():
             investpy.get_stock_information(stock=param['stock'], country=param['country'], as_json=param['as_json'])
         except:
             pass
-    
+
     params = [
         {
             'country': 'error',
@@ -527,6 +525,90 @@ def test_stocks_errors():
     for param in params:
         try:
             investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+        except:
+            pass
+
+    params = [
+        {
+            'stock': None,
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': ['error'],
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': None,
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': ['error'],
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': None,
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': ['error'],
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'error',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': None
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': ['error']
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'error'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'error',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'error',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.get_stock_financial_summary(stock=param['stock'],
+                                                 country=param['country'], 
+                                                 summary_type=param['summary_type'],
+                                                 period=param['period'])
         except:
             pass
 
@@ -3411,56 +3493,56 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': None,
             'as_json': False,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': 'error',
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'error',
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'ascending',
             'interval': None
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'ascending',
             'interval': ['error']
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'ascending',
             'interval': 'error'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
@@ -3505,7 +3587,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': None,
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3514,7 +3596,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': ['error'],
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3523,7 +3605,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3532,7 +3614,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3541,7 +3623,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3550,7 +3632,7 @@ def test_certificate_errors():
             'interval': None
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3559,7 +3641,7 @@ def test_certificate_errors():
             'interval': ['error']
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3568,7 +3650,7 @@ def test_certificate_errors():
             'interval': 'error'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': 'error',
             'to_date': '01/01/2019',
@@ -3577,7 +3659,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': 'error',
@@ -3586,7 +3668,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2019',
             'to_date': '01/01/2018',
@@ -3595,7 +3677,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/1990',
             'to_date': '01/01/2019',
@@ -3604,7 +3686,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'error',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3647,22 +3729,22 @@ def test_certificate_errors():
             'as_json': False
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': None,
             'as_json': False
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': ['error'],
             'as_json': False
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': None
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'error',
             'as_json': False
         },
@@ -3725,15 +3807,15 @@ def test_certificate_errors():
     params = [
         {
             'by': None,
-            'value': 'COMMERZBANK'
+            'value': 'BNP'
         },
         {
             'by': ['error'],
-            'value': 'COMMERZBANK'
+            'value': 'BNP'
         },
         {
             'by': 'error',
-            'value': 'COMMERZBANK'
+            'value': 'BNP'
         },
         {
             'by': 'name',
@@ -3764,51 +3846,66 @@ def test_search_errors():
     params = [
         {
             'text': None,
-            'n_results': None,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': ['error'],
-            'n_results': None,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': 'error',
-            'n_results': None,
-            'filters': None
-        },
-        {
-            'text': 'error',
-            'n_results': ['error'],
-            'filters': None
-        },
-        {
-            'text': 'error',
-            'n_results': 0,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': 'bbva',
-            'n_results': 10,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': ['error']
         },
         {
             'text': 'bbva',
-            'n_results': 10,
-            'filters': 'error'
+            'products': None,
+            'countries': None,
+            'n_results': 0
         },
         {
             'text': 'bbva',
-            'n_results': 10,
-            'filters': ['error']
+            'products': 'error',
+            'countries': None,
+            'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': ['error'],
+            'countries': None,
+            'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': None,
+            'countries': 'error',
+            'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': None,
+            'countries': ['error'],
+            'n_results': 10
         }
     ]
 
     for param in params:
         try:
-            results = investpy.search(text=param['text'],
-                                      n_results=param['n_results'],
-                                      filters=param['filters'])
+            results = investpy.search_quotes(text=param['text'],
+                                             countries=param['countries'],
+                                             products=param['products'],
+                                             n_results=param['n_results'])
 
             dates = [
                 {
@@ -3830,7 +3927,8 @@ def test_search_errors():
                     try:
                         result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
                     except:
-                        pass
+                        continue
+                break
         except:
             pass
 
@@ -3962,7 +4060,7 @@ def test_news_errors():
 
     for param in params:
         try:
-            investpy.get_calendar(time_zone=param['time_zone'],
+            investpy.economic_calendar(time_zone=param['time_zone'],
                                   time_filter=param['time_filter'],
                                   countries=param['countries'],
                                   importances=param['importances'],
@@ -4079,24 +4177,6 @@ def test_technical_errors():
             pass
 
 
-def test_user_agent_errors():
-    """
-    This function raises errors on user_agent functions.
-    """
-
-    clear_file()
-    try:
-        get_random()
-    except:
-        pass
-
-    delete_file()
-    try:
-        get_random()
-    except:
-        pass
-
-
 if __name__ == '__main__':
     test_stocks_errors()
     test_funds_errors()
@@ -4110,4 +4190,3 @@ if __name__ == '__main__':
     test_search_errors()
     test_technical_errors()
     test_news_errors()
-    test_user_agent_errors()

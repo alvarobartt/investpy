@@ -1,22 +1,22 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
 
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.extra import random_user_agent
+from .utils.data import Data
 
-from investpy.data.crypto_data import cryptos_as_df, cryptos_as_list, cryptos_as_dict
+from .data.crypto_data import cryptos_as_df, cryptos_as_list, cryptos_as_dict
 
 
 def get_cryptos():
@@ -169,14 +169,15 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
         IndexError: raised if crypto recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_crypto_recent_data(crypto='bitcoin')
-                          Open     High     Low   Close   Volume Currency
-            Date                                                         
-            2019-10-25  7422.8   8697.7  7404.9  8658.3  1177632      USD
-            2019-10-26  8658.4  10540.0  8061.8  9230.6  1784005      USD
-            2019-10-27  9230.6   9773.2  9081.0  9529.6  1155038      USD
-            2019-10-28  9530.1   9866.9  9202.5  9207.2  1039295      USD
-            2019-10-29  9206.5   9531.3  9125.3  9411.3   918477      USD
+        >>> data = investpy.get_crypto_recent_data(crypto='bitcoin')
+        >>> data.head()
+                      Open     High     Low   Close   Volume Currency
+        Date                                                         
+        2019-10-25  7422.8   8697.7  7404.9  8658.3  1177632      USD
+        2019-10-26  8658.4  10540.0  8061.8  9230.6  1784005      USD
+        2019-10-27  9230.6   9773.2  9081.0  9529.6  1155038      USD
+        2019-10-28  9530.1   9866.9  9202.5  9207.2  1039295      USD
+        2019-10-29  9206.5   9531.3  9125.3  9411.3   918477      USD
 
     """
 
@@ -202,7 +203,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -214,7 +215,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     crypto = crypto.strip()
     crypto = crypto.lower()
 
-    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -238,7 +239,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -266,7 +267,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             crypto_close = float(info[1].replace(',', ''))
             crypto_open = float(info[2].replace(',', ''))
@@ -357,14 +358,15 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         IndexError: raised if crypto historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_crypto_historical_data(crypto='bitcoin', from_date='01/01/2018', to_date='01/01/2019')
-                           Open     High      Low    Close  Volume Currency
-            Date                                                           
-            2018-01-01  13850.5  13921.5  12877.7  13444.9   78425      USD
-            2018-01-02  13444.9  15306.1  12934.2  14754.1  137732      USD
-            2018-01-03  14754.1  15435.0  14579.7  15156.6  106543      USD
-            2018-01-04  15156.5  15408.7  14244.7  15180.1  110969      USD
-            2018-01-05  15180.1  17126.9  14832.4  16954.8  141960      USD
+        >>> data = investpy.get_crypto_historical_data(crypto='bitcoin', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                       Open     High      Low    Close  Volume Currency
+        Date                                                           
+        2018-01-01  13850.5  13921.5  12877.7  13444.9   78425      USD
+        2018-01-02  13444.9  15306.1  12934.2  14754.1  137732      USD
+        2018-01-03  14754.1  15435.0  14579.7  15156.6  106543      USD
+        2018-01-04  15156.5  15408.7  14244.7  15180.1  110969      USD
+        2018-01-05  15180.1  17126.9  14832.4  16954.8  141960      USD
 
     """
 
@@ -439,7 +441,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -451,7 +453,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     crypto = crypto.strip()
     crypto = crypto.lower()
 
-    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -482,7 +484,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -520,7 +522,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
                     crypto_close = float(info[1].replace(',', ''))
                     crypto_open = float(info[2].replace(',', ''))
@@ -610,7 +612,7 @@ def get_crypto_information(crypto, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -622,7 +624,7 @@ def get_crypto_information(crypto, as_json=False):
     crypto = crypto.strip()
     crypto = crypto.lower()
 
-    if unidecode.unidecode(crypto) not in [unidecode.unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -636,7 +638,7 @@ def get_crypto_information(crypto, as_json=False):
     url = "https://www.investing.com/crypto/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -725,14 +727,14 @@ def get_cryptos_overview(as_json=False, n_results=100):
             raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     header = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
     }
 
-    url = "https://es.investing.com/crypto/currencies"
+    url = "https://www.investing.com/crypto/currencies"
 
     req = requests.get(url, headers=header)
 
@@ -748,8 +750,15 @@ def get_cryptos_overview(as_json=False, n_results=100):
             table = table[:n_results]
             flag = True
         for row in table:
-            name = row.xpath(".//td[contains(@class, 'elp')]")[0].text_content().strip()
+            name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
             symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+            tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
+            
+            if len(tag) > 0:
+                status = 'available'
+            else:
+                status = 'unavailable'
 
             price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
 
@@ -763,6 +772,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
             data = {
                 "name": name,
                 "symbol": symbol,
+                "status": status,
                 "price": float(price.replace(',', '')),
                 "market_cap": float(market_cap.replace(',', '')),
                 "volume24h": volume24h,
@@ -785,7 +795,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
             return df
     else:
         header = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -809,8 +819,15 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
         if len(table) > 0:
             for row in table:
-                name = row.xpath(".//td[contains(@class, 'elp')]")[0].text_content().strip()
+                name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
                 symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+                tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
+            
+                if len(tag) > 0:
+                    status = 'available'
+                else:
+                    status = 'unavailable'
 
                 price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
 
@@ -824,6 +841,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
                 data = {
                     "name": name,
                     "symbol": symbol,
+                    "status": status,
                     "price": float(price.replace(',', '')),
                     "market_cap": float(market_cap.replace(',', '')),
                     "volume24h": volume24h,
@@ -883,7 +901,7 @@ def search_cryptos(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

@@ -1,22 +1,23 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime
-from time import strftime, gmtime
+from time import strftime, localtime, gmtime
+import pytz
+
 from random import choice
-import unidecode
+from unidecode import unidecode
 
 import pandas as pd
 
-from investpy.utils.user_agent import get_random
+from .utils import constant as cst
+from .utils.extra import random_user_agent
 
 import requests
 from lxml.html import fromstring
 
 
-def get_calendar(time_zone=None, time_filter='time_only', countries=None, importances=None, categories=None, from_date=None, to_date=None):
+def economic_calendar(time_zone=None, time_filter='time_only', countries=None, importances=None, categories=None, from_date=None, to_date=None):
     """
     This function retrieves the economic calendar, which covers financial events and indicators from all over the world
     updated in real-time. By default, the economic calendar of the currrent day from you local timezone will be retrieved, but
@@ -51,25 +52,16 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
         ValueError: raised if any of the introduced parameters is not valid or errored. 
 
     Examples:
-        >>> investpy.get_calendar()
-                id        date     time         zone currency importance                         event actual forecast previous
-            0  323  27/01/2020  All Day    singapore     None       None  Singapore - Chinese New Year   None     None     None
-            1    9  27/01/2020  All Day    hong kong     None       None    Hong Kong - New Year's Day   None     None     None
-            2   71  27/01/2020  All Day    australia     None       None     Australia - Australia Day   None     None     None
-            3  750  27/01/2020  All Day        china     None       None       China - Spring Festival   None     None     None
-            4  304  27/01/2020  All Day  south korea     None       None  South Korea - Market Holiday   None     None     None
+        >>> data = investpy.economic_calendar()
+        >>> data.head()
+            id        date     time         zone currency importance                         event actual forecast previous
+        0  323  27/01/2020  All Day    singapore     None       None  Singapore - Chinese New Year   None     None     None
+        1    9  27/01/2020  All Day    hong kong     None       None    Hong Kong - New Year's Day   None     None     None
+        2   71  27/01/2020  All Day    australia     None       None     Australia - Australia Day   None     None     None
+        3  750  27/01/2020  All Day        china     None       None       China - Spring Festival   None     None     None
+        4  304  27/01/2020  All Day  south korea     None       None  South Korea - Market Holiday   None     None     None
 
     """
-
-    time_zones = {
-        'GMT -11:00': [2, 35], 'GMT -10:00': [3], 'GMT -9:00': [4], 'GMT -8:00': [36, 5], 'GMT -7:00': [37, 38, 6], 
-        'GMT -6:00': [39, 7, 40, 41], 'GMT -5:00': [42, 8, 43], 'GMT -4:00': [10, 9, 45, 46], 
-        'GMT -3:30': [11], 'GMT -3:00': [44, 12, 48, 49, 50, 51, 47], 'GMT -1:00': [14, 53], 'GMT': [55, 15, 56],
-        'GMT +1:00': [16, 57, 58, 54, 166, 59, 60], 'GMT +2:00': [62, 64, 65, 66, 68, 17, 67, 61], 'GMT +3:00': [71, 63, 70, 18, 72], 
-        'GMT +3:30': [19], 'GMT +4:00': [20, 73], 'GMT +4:30': [21], 'GMT +5:00': [22, 77], 'GMT +5:30': [23, 79], 'GMT +5:45': [24], 
-        'GMT +6:00': [25], 'GMT +6:30': [26], 'GMT +7:00': [27], 'GMT +8:00': [178, 28, 113], 'GMT +9:00': [29, 88], 'GMT +9:30': [90], 
-        'GMT +10:30': [30], 'GMT +11:00': [31, 32], 'GMT +12:00': [1], 'GMT +13:00': [33]
-    }
 
     if time_zone is not None and not isinstance(time_zone, str):
         raise ValueError("ERR#0107: the introduced time_zone must be a string unless it is None.")
@@ -77,63 +69,29 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if time_zone is None:
         time_zone = 'GMT'
 
-        hour_diff = int(strftime('%H')) - int(strftime('%H', gmtime()))
-        min_diff = int(strftime('%M')) - int(strftime('%M', gmtime()))
+        diff = datetime.strptime(strftime('%d/%m/%Y %H:%M', localtime()), '%d/%m/%Y %H:%M') - \
+            datetime.strptime(strftime('%d/%m/%Y %H:%M', gmtime()), '%d/%m/%Y %H:%M')
+
+        hour_diff = int(diff.total_seconds() / 3600)
+        min_diff = int(diff.total_seconds() % 3600) * 60
 
         if hour_diff != 0:
-            time_zone = "GMT " + ('-' if hour_diff < 0 else '+') + str(hour_diff) + ":" + ('00' if min_diff == 0 else str(min_diff))
+            time_zone = "GMT " + ('+' if hour_diff > 0 else '') + str(hour_diff) + ":" + ('00' if min_diff < 30 else '30')
     else:
-        if time_zone not in time_zones:
+        if time_zone not in cst.TIMEZONES.keys():
             raise ValueError("ERR#0108: the introduced time_zone does not exist, please consider passing time_zone as None.")
-
-    time_filters = {
-        'time_remaining': 'timeRemain',
-        'time_only': 'timeOnly'
-    }
 
     if not isinstance(time_filter, str):
         raise ValueError("ERR#0109: the introduced time_filter is not valid since it must be a string.")
 
-    if time_filter not in time_filters:
+    if time_filter not in cst.TIME_FILTERS.keys():
         raise ValueError("ERR#0110: the introduced time_filter does not exist, available ones are: time_remaining and time_only.")
-
-    country_filters = {
-        'argentina': 29, 'australia': 25, 'austria': 54, 'bahrain': 145, 'bangladesh': 47, 'belgium': 34, 'bosnia': 174,
-        'botswana': 163, 'brazil': 32, 'bulgaria': 70, 'canada': 6, 'cayman islands': 232, 'chile': 27, 'china': 37, 'colombia': 122,
-        'costa rica': 15, 'croatia': 113, 'cyprus': 107, 'czech republic': 55, 'denmark': 24, 'dubai': 143, 'ecuador': 121, 'egypt': 59,
-        'estonia': 89, 'euro zone': 72, 'finland': 71, 'france': 22, 'germany': 17, 'greece': 51, 'hong kong': 39, 'hungary': 93, 
-        'iceland': 106, 'india': 14, 'indonesia': 48, 'iraq': 66, 'ireland': 33, 'israel': 23, 'italy': 10, 'ivory coast': 78, 'jamaica': 119, 
-        'japan': 35, 'jordan': 92, 'kazakhstan': 102, 'kenya': 57, 'kuwait': 94, 'latvia': 97, 'lebanon': 68, 'lithuania': 96, 'luxembourg': 103, 
-        'malawi': 111, 'malaysia': 42, 'malta': 109, 'mauritius': 188, 'mexico': 7, 'mongolia': 139, 'montenegro': 247, 'morocco': 105, 
-        'namibia': 172, 'netherlands': 21, 'new zealand': 43, 'nigeria': 20, 'norway': 60, 'oman': 87, 'pakistan': 44, 'palestine': 193, 
-        'peru': 125, 'philippines': 45, 'poland': 53, 'portugal': 38, 'qatar': 170, 'romania': 100, 'russia': 56, 'rwanda': 80, 'saudi arabia': 52, 
-        'serbia': 238, 'singapore': 36, 'slovakia': 90, 'slovenia': 112, 'south africa': 110, 'south korea': 11, 'spain': 26, 'sri lanka': 162,  
-        'sweden': 9, 'switzerland': 12, 'taiwan': 46, 'tanzania': 85, 'thailand': 41, 'tunisia': 202, 'turkey': 63, 'uganda': 123, 'ukraine': 61, 
-        'united kingdom': 4, 'united states': 5, 'venezuela': 138, 'vietnam': 178, 'zambia': 84, 'zimbabwe': 75
-    }
 
     if countries is not None and not isinstance(countries, list):
         raise ValueError("ERR#0111: the introduced countries value is not valid since it must be a list of strings unless it is None.")
 
-    importance_ratings = {
-        1: 'low',
-        2: 'medium',
-        3: 'high'
-    }
-
     if importances is not None and not isinstance(importances, list):
         raise ValueError("ERR#0112: the introduced importances value is not valid since it must be a list of strings unless it is None.")
-
-    category_filters = {
-        'credit': '_credit',
-        'employment': '_employment',
-        'economic_activity': '_economicActivity',
-        'inflation': '_inflation',
-        'central_banks': '_centralBanks',
-        'confidence': '_confidenceIndex',
-        'balance': '_balance',
-        'bonds': '_Bonds'
-    }
 
     if categories is not None and not isinstance(categories, list):
         raise ValueError("ERR#0113: the introduced categories value is not valid since it must be a list of strings unless it is None.")
@@ -147,7 +105,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     url = "https://www.investing.com/economic-calendar/Service/getCalendarFilteredData"
 
     headers = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -158,8 +116,8 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
 
     if any(date is None for date in dates) is True:
         data = {
-            'timeZone': choice(time_zones[time_zone]),
-            'timeFilter': time_filters[time_filter],
+            'timeZone': choice(cst.TIMEZONES[time_zone]),
+            'timeFilter': cst.TIME_FILTERS[time_filter],
             'currentTab': 'today',
             'submitFilters': 1,
             'limit_from': 0
@@ -185,8 +143,8 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
         data = {
             'dateFrom': datetime.strptime(from_date, '%d/%m/%Y').strftime('%Y-%m-%d'),
             'dateTo': datetime.strptime(to_date, '%d/%m/%Y').strftime('%Y-%m-%d'),
-            'timeZone': choice(time_zones[time_zone]),
-            'timeFilter': time_filters[time_filter],
+            'timeZone': choice(cst.TIMEZONES[time_zone]),
+            'timeFilter': cst.TIME_FILTERS[time_filter],
             'currentTab': 'custom',
             'submitFilters': 1,
             'limit_from': 0
@@ -195,14 +153,15 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if countries is not None:
         def_countries = list()
 
-        available_countries = list(country_filters.keys())
+        available_countries = list(cst.COUNTRY_ID_FILTERS.keys())
 
+        # TODO: improve loop using lambda
         for country in countries:
-            country = unidecode.unidecode(country.lower())
+            country = unidecode(country.lower())
             country = country.strip()
 
             if country in available_countries:
-                def_countries.append(country_filters[country])
+                def_countries.append(cst.COUNTRY_ID_FILTERS[country])
 
         if len(def_countries) > 0:
             data.update({
@@ -212,14 +171,15 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if categories is not None:
         def_categories = list()
 
-        available_categories = list(category_filters.keys())
+        available_categories = list(cst.CATEGORY_FILTERS.keys())
 
+        # TODO: improve loop using lambda
         for category in categories:
-            category = unidecode.unidecode(category.lower())
+            category = unidecode(category.lower())
             category = category.strip()
 
             if category in available_categories:
-                def_categories.append(category_filters[category])
+                def_categories.append(cst.CATEGORY_FILTERS[category])
 
         if len(def_categories) > 0:
             data.update({
@@ -229,11 +189,12 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     if importances is not None:
         def_importances = list()
 
+        # TODO: improve loop using lambda
         for importance in importances:
-            importance = unidecode.unidecode(importance.lower())
+            importance = unidecode(importance.lower())
             importance = importance.strip()
 
-            for key, value in importance_ratings.items():
+            for key, value in cst.IMPORTANCE_RATINGS.items():
                 if value == importance:
                     if key not in def_importances:
                         def_importances.append(key)
@@ -254,7 +215,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
     for row in table:
         id_ = row.get("id")
         if id_ == None:
-            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", ""))).strftime("%d/%m/%Y")
+            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", "")), tz=pytz.utc).strftime("%d/%m/%Y")
         else:
             id_ = id_.replace('eventRowId_', '')
 
@@ -287,7 +248,7 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
                 'time': time,
                 'zone': zone,
                 'currency': None if currency == '' else currency,
-                'importance': None if importance_rating == None else importance_ratings[int(importance_rating)],
+                'importance': None if importance_rating == None else cst.IMPORTANCE_RATINGS[int(importance_rating)],
                 'event': event,
                 'actual': None if actual == '' else actual,
                 'forecast': None if forecast == '' else forecast,
@@ -296,6 +257,4 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
 
             results.append(result)
     
-    data = pd.DataFrame(results)
-
-    return data
+    return pd.DataFrame(results)

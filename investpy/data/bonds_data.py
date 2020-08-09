@@ -1,13 +1,14 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import unidecode
-import json
-
-import pandas as pd
 import pkg_resources
+
+from unidecode import unidecode
+
+import json
+import pandas as pd
+
+from ..utils import constant as cst
 
 
 def bonds_as_df(country=None):
@@ -36,7 +37,6 @@ def bonds_as_df(country=None):
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised when `bonds.csv` file was not found.
-        IOError: raised when `bond_countries.csv` file is missing or empty.
 
     """
 
@@ -44,7 +44,7 @@ def bonds_as_df(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -59,9 +59,15 @@ def bonds_as_df(country=None):
     if country is None:
         bonds.reset_index(drop=True, inplace=True)
         return bonds
-    elif unidecode.unidecode(country.lower()) in bond_countries_as_list():
-        bonds = bonds[bonds['country'] == unidecode.unidecode(country.lower())]
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in bond_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        bonds = bonds[bonds['country'] == country]
         bonds.reset_index(drop=True, inplace=True)
+        
         return bonds
 
 
@@ -98,7 +104,7 @@ def bonds_as_list(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -112,8 +118,13 @@ def bonds_as_list(country=None):
 
     if country is None:
         return bonds['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in bond_countries_as_list():
-        return bonds[bonds['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in bond_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        return bonds[bonds['country'] == country]['name'].tolist()
 
 
 def bonds_as_dict(country=None, columns=None, as_json=False):
@@ -158,7 +169,7 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bonds.csv'))
+    resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -185,39 +196,28 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(bonds[columns].to_dict(orient='records'))
         else:
             return bonds[columns].to_dict(orient='records')
-    elif country in bond_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in bond_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         if as_json:
-            return json.dumps(
-                bonds[bonds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(bonds[bonds['country'] == country][columns].to_dict(orient='records'))
         else:
-            return bonds[bonds['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return bonds[bonds['country'] == country][columns].to_dict(orient='records')
 
 
 def bond_countries_as_list():
     """
     This function returns a listing with all the available countries from where bonds can be retrieved, so to
     let the user know which of them are available, since the parameter country is mandatory in every bond retrieval
-    function. Also, not just the available countries, but the required name is provided since Investing.com has a
-    certain country name standard and countries should be specified the same way they are in Investing.com.
+    function.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with government bonds as indexed in Investing.com
 
-    Raises:
-        FileNotFoundError: raised when `bonds.csv` file was not found.
-        IOError: raised when `bonds.csv` file is missing or empty.
-
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds', 'bond_countries.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        countries = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0070: bond countries file not found or errored.")
-
-    if countries is None:
-        raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
-
-    return countries['country'].tolist()
+    return [value['country'] for value in cst.BOND_COUNTRIES]

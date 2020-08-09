@@ -1,13 +1,14 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import unidecode
-import json
-
-import pandas as pd
 import pkg_resources
+
+from unidecode import unidecode
+
+import json
+import pandas as pd
+
+from ..utils import constant as cst
 
 
 def commodities_as_df(group=None):
@@ -45,7 +46,7 @@ def commodities_as_df(group=None):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -61,12 +62,15 @@ def commodities_as_df(group=None):
         commodities.reset_index(drop=True, inplace=True)
         return commodities
     else:
-        if unidecode.unidecode(group.lower()) in commodity_groups_list():
-            commodities = commodities[commodities['group'] == unidecode.unidecode(group.lower())]
-            commodities.reset_index(drop=True, inplace=True)
-            return commodities
-        else:
+        group = unidecode(group.strip().lower())
+
+        if group not in commodity_groups_list():
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+        
+        commodities = commodities[commodities['group'] == group]
+        commodities.reset_index(drop=True, inplace=True)
+        
+        return commodities
 
 
 def commodities_as_list(group=None):
@@ -100,7 +104,7 @@ def commodities_as_list(group=None):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -115,10 +119,12 @@ def commodities_as_list(group=None):
     if group is None:
         return commodities['name'].tolist()
     else:
-        if unidecode.unidecode(group.lower()) in commodity_groups_list():
-            return commodities[commodities['group'] == unidecode.unidecode(group.lower())]['name'].tolist()
-        else:
+        group = unidecode(group.strip().lower())
+
+        if group not in commodity_groups_list():
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+            
+        return commodities[commodities['group'] == group]['name'].tolist()
 
 
 def commodities_as_dict(group=None, columns=None, as_json=False):
@@ -169,7 +175,7 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -197,13 +203,15 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
         else:
             return commodities[columns].to_dict(orient='records')
     else:
-        if group in commodity_groups_list():
-            if as_json:
-                return json.dumps(commodities[commodities['group'] == unidecode.unidecode(group.lower())][columns].to_dict(orient='records'))
-            else:
-                return commodities[commodities['group'] == unidecode.unidecode(group.lower())][columns].to_dict(orient='records')
-        else:
+        group = unidecode(group.strip().lower())
+
+        if group not in commodity_groups_list():
             raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+
+        if as_json:
+            return json.dumps(commodities[commodities['group'] == group][columns].to_dict(orient='records'))
+        else:
+            return commodities[commodities['group'] == group][columns].to_dict(orient='records')
 
 
 def commodity_groups_list():
@@ -223,7 +231,7 @@ def commodity_groups_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

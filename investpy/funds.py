@@ -1,23 +1,23 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
 
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.extra import random_user_agent
+from .utils.data import Data
 
-from investpy.data.funds_data import funds_as_list, funds_as_dict, funds_as_df
-from investpy.data.funds_data import fund_countries_as_list
+from .data.funds_data import funds_as_list, funds_as_dict, funds_as_df
+from .data.funds_data import fund_countries_as_list
 
 
 def get_funds(country=None):
@@ -197,14 +197,15 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain')
-                         Open   High    Low  Close Currency
-            Date
-            2019-08-13  1.110  1.110  1.110  1.110      EUR
-            2019-08-16  1.109  1.109  1.109  1.109      EUR
-            2019-08-19  1.114  1.114  1.114  1.114      EUR
-            2019-08-20  1.112  1.112  1.112  1.112      EUR
-            2019-08-21  1.115  1.115  1.115  1.115      EUR
+        >>> data = investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain')
+        >>> data.head()
+                     Open   High    Low  Close Currency
+        Date
+        2019-08-13  1.110  1.110  1.110  1.110      EUR
+        2019-08-16  1.109  1.109  1.109  1.109      EUR
+        2019-08-19  1.114  1.114  1.114  1.114      EUR
+        2019-08-20  1.112  1.112  1.112  1.112      EUR
+        2019-08-21  1.115  1.115  1.115  1.115      EUR
 
     """
 
@@ -236,7 +237,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -245,15 +246,15 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+    if unidecode(country.lower()) not in get_fund_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+    funds = funds[funds['country'] == unidecode(country.lower())]
 
     fund = fund.strip()
     fund = fund.lower()
 
-    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+    if unidecode(fund) not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
@@ -275,7 +276,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -303,7 +304,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             fund_close = float(info[1].replace(',', ''))
             fund_open = float(info[2].replace(',', ''))
@@ -389,14 +390,15 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close Currency
-            Date
-            2018-02-15  1.105  1.105  1.105  1.105      EUR
-            2018-02-16  1.113  1.113  1.113  1.113      EUR
-            2018-02-17  1.113  1.113  1.113  1.113      EUR
-            2018-02-18  1.113  1.113  1.113  1.113      EUR
-            2018-02-19  1.111  1.111  1.111  1.111      EUR
+        >>> data = investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                     Open   High    Low  Close Currency
+        Date
+        2018-02-15  1.105  1.105  1.105  1.105      EUR
+        2018-02-16  1.113  1.113  1.113  1.113      EUR
+        2018-02-17  1.113  1.113  1.113  1.113      EUR
+        2018-02-18  1.113  1.113  1.113  1.113      EUR
+        2018-02-19  1.111  1.111  1.111  1.111      EUR
 
     """
 
@@ -477,7 +479,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -486,15 +488,15 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_fund_countries():
+    if unidecode(country.lower()) not in get_fund_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+    funds = funds[funds['country'] == unidecode(country.lower())]
 
     fund = fund.strip()
     fund = fund.lower()
 
-    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+    if unidecode(fund) not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
@@ -521,7 +523,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -559,7 +561,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                     
                     fund_close = float(info[1].replace(',', ''))
                     fund_open = float(info[2].replace(',', ''))
@@ -654,7 +656,7 @@ def get_fund_information(fund, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -663,23 +665,24 @@ def get_fund_information(fund, country, as_json=False):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    funds = funds[funds['country'] == unidecode.unidecode(country.lower())]
+    if country not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    fund = fund.strip()
-    fund = fund.lower()
+    funds = funds[funds['country'] == country]
 
-    if unidecode.unidecode(fund) not in [unidecode.unidecode(value.lower()) for value in funds['name'].tolist()]:
+    fund = unidecode(fund.strip().lower())
+
+    if fund not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
 
-    url = "https://es.investing.com/funds/" + tag
+    url = "https://www.investing.com/funds/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -697,109 +700,41 @@ def get_fund_information(fund, country, as_json=False):
     result = pd.DataFrame(columns=['Fund Name', 'Rating', '1-Year Change', 'Previous Close', 'Risk Rating',
                                    'TTM Yield', 'ROE', 'Issuer', 'Turnover', 'ROA', 'Inception Date',
                                    'Total Assets', 'Expenses', 'Min Investment', 'Market Cap', 'Category'])
+    
     result.at[0, 'Fund Name'] = fund
 
     if path_:
         for elements_ in path_:
-            title_ = elements_.xpath(".//span[@class='float_lang_base_1']")[0].text_content()
-
-            if title_ == 'Rating':
-                rating_score = 5 - len(
-                    elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
-
-                result.at[0, 'Rating'] = int(rating_score)
-            elif title_ == 'Var. en un año':
-                oneyear_variation = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[
-                    0].text_content().replace(" ", "")
-
-                result.at[0, '1-Year Change'] = oneyear_variation
-            elif title_ == 'Último cierre':
-                previous_close = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'Previous Close'] = previous_close
-
-                if previous_close != 'N/A':
-                    result.at[0, 'Previous Close'] = float(previous_close.replace('.', '').replace(',', '.'))
-            elif title_ == 'Calificación de riesgo':
-                risk_score = 5 - len(
-                    elements_.xpath(".//span[contains(@class, 'morningStarsWrap')]/i[@class='morningStarLight']"))
-
-                result.at[0, 'Risk Rating'] = int(risk_score)
-            elif title_ == 'Rendimiento año móvil':
-                ttm_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'TTM Yield'] = ttm_percentage
-            elif title_ == 'ROE':
-                roe_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'ROE'] = roe_percentage
-            elif title_ == 'Emisor':
-                issuer_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'Issuer'] = issuer_name.strip()
-            elif title_ == 'Volumen de ventas':
-                turnover_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[
-                    0].text_content()
-
-                result.at[0, 'Turnover'] = turnover_percentage
-            elif title_ == 'ROA':
-                roa_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'ROA'] = roa_percentage
-            elif title_ == 'Fecha de inicio':
-                value = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-                inception_date = datetime.strptime(value.replace('.', '/'), '%d/%m/%Y')
-
-                result.at[0, 'Inception Date'] = inception_date.strftime('%d/%m/%Y')
-            elif title_ == 'Total activos':
-                total_assets = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                if total_assets != 'N/A':
-                    if total_assets.__contains__('K'):
-                        total_assets = int(
-                            float(total_assets.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
-                    elif total_assets.__contains__('M'):
-                        total_assets = int(
-                            float(total_assets.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
-                    elif total_assets.__contains__('B'):
-                        total_assets = int(
-                            float(total_assets.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
-                    else:
-                        total_assets = int(float(total_assets.replace('.', '')))
-
-                result.at[0, 'Total Assets'] = total_assets
-            elif title_ == 'Gastos':
-                expenses_percentage = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[
-                    0].text_content()
-
-                result.at[0, 'Expenses'] = expenses_percentage
-            elif title_ == 'Inversión mínima':
-                min_investment = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'Min Investment'] = min_investment
-
-                if min_investment != 'N/A':
-                    result.at[0, 'Min Investment'] = int(float(min_investment.replace('.', '')))
-            elif title_ == 'Cap. mercado':
-                market_cap = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                if market_cap != 'N/A':
-                    if market_cap.__contains__('K'):
-                        market_cap = int(float(market_cap.replace('K', '').replace('.', '').replace(',', '.')) * 1e3)
-                    elif market_cap.__contains__('M'):
-                        market_cap = int(
-                            float(market_cap.replace('M', '').replace('.', '').replace(',', '.')) * 1e6)
-                    elif market_cap.__contains__('B'):
-                        market_cap = int(
-                            float(market_cap.replace('B', '').replace('.', '').replace(',', '.')) * 1e9)
-                    else:
-                        market_cap = int(float(market_cap.replace('.', '')))
-
-                result.at[0, 'Market Cap'] = market_cap
-            elif title_ == 'Categoría':
-                category_name = elements_.xpath(".//span[contains(@class, 'float_lang_base_2')]")[0].text_content()
-
-                result.at[0, 'Category'] = category_name
+            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+            title_ = element.text_content()
+            if title_ == "Day's Range":
+                title_ = 'Todays Range'
+            if title_ in result.columns.tolist():
+                try:
+                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    continue
+                except:
+                    pass
+                try:
+                    text = element.getnext().text_content().strip()
+                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                    continue
+                except:
+                    pass
+                try:
+                    value = element.getnext().text_content().strip()
+                    if value.__contains__('K'):
+                        value = float(value.replace('K', '').replace(',', '')) * 1e3
+                    elif value.__contains__('M'):
+                        value = float(value.replace('M', '').replace(',', '')) * 1e6
+                    elif value.__contains__('B'):
+                        value = float(value.replace('B', '').replace(',', '')) * 1e9
+                    elif value.__contains__('T'):
+                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    result.at[0, title_] = value
+                    continue
+                except:
+                    pass
 
         result.replace({'N/A': None}, inplace=True)
 
@@ -864,7 +799,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -873,7 +808,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_fund_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')
@@ -886,7 +821,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -911,11 +846,11 @@ def get_funds_overview(country, as_json=False, n_results=100):
             symbol = row.xpath(".//td[contains(@class, 'symbol')]")[0].get('title')
 
             nested = row.xpath(".//a")[0]
-            name = nested.text.strip()
-            full_name = nested.get('title').rstrip()
+            name = nested.get('title').rstrip()
+            full_name = nested.text.strip()
 
             country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-            country_flag = unidecode.unidecode(country_flag.lower())
+            country_flag = unidecode(country_flag.lower())
 
             last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
             last = row.xpath(last_path)[0].text_content()
@@ -944,6 +879,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
             data = {
                 "country": country_flag,
                 "name": name,
+                "full_name": full_name,
                 "symbol": symbol,
                 "last": float(last.replace(',', '')),
                 "change": change,
@@ -1001,7 +937,7 @@ def search_funds(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds', 'funds.csv'))
+    resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

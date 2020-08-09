@@ -1,24 +1,25 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
+
 import warnings
 
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.extra import random_user_agent
+from .utils.data import Data
 
-from investpy.data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
-from investpy.data.etfs_data import etf_countries_as_list
+from .data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
+from .data.etfs_data import etf_countries_as_list
 
 
 def get_etfs(country=None):
@@ -180,9 +181,9 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency | Exchange
-                -----||------|------|-----|-------|----------|---------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency | Exchange
+                -----||------|------|-----|-------|--------|----------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -195,6 +196,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x,
                             exchange: x
                         },
@@ -210,14 +212,15 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
-                          Open    High     Low   Close Currency Exchange
-            Date
-            2019-08-13  33.115  33.780  32.985  33.585      EUR   Madrid
-            2019-08-14  33.335  33.335  32.880  32.905      EUR   Madrid
-            2019-08-15  32.790  32.925  32.455  32.845      EUR   Madrid
-            2019-08-16  33.115  33.200  33.115  33.305      EUR   Madrid
-            2019-08-19  33.605  33.735  33.490  33.685      EUR   Madrid
+        >>> data = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
+        >>> data.head()
+                      Open    High    Low   Close  Volume Currency Exchange
+        Date                                                               
+        2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid
+        2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid
+        2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid
+        2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid
+        2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid
 
     """
 
@@ -252,7 +255,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -261,12 +264,12 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.strip().lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    etf = unidecode.unidecode(etf.strip().lower())
+    etf = unidecode(etf.strip().lower())
 
     def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
@@ -329,7 +332,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     header = symbol + ' Historical Data'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -355,6 +358,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
+    
     result = list()
 
     if path_:
@@ -367,15 +371,17 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
-            
+            etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+
             etf_close = float(info[1].replace(',', ''))
             etf_open = float(info[2].replace(',', ''))
             etf_high = float(info[3].replace(',', ''))
             etf_low = float(info[4].replace(',', ''))
 
+            etf_volume = int(info[5])
+
             result.insert(len(result),
-                          Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency, etf_exchange))
+                          Data(etf_date, etf_open, etf_high, etf_low, etf_close, etf_volume, etf_currency, etf_exchange))
 
         if order in ['ascending', 'asc']:
             result = result[::-1]
@@ -425,9 +431,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Currency | Exchange
-                -----||------|------|-----|-------|----------|---------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxxxx | xxxxxxxx
+                Date || Open | High | Low | Close | Volume | Currency | Exchange
+                -----||------|------|-----|-------|--------|----------|---------
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -440,6 +446,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
                             high: x,
                             low: x,
                             close: x,
+                            volume: x,
                             currency: x,
                             exchange: x
                         },
@@ -455,14 +462,15 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close Currency Exchange
-            Date
-            2011-12-07  23.70  23.70  23.70  23.62      EUR   Madrid
-            2011-12-08  23.53  23.60  23.15  23.04      EUR   Madrid
-            2011-12-09  23.36  23.60  23.36  23.62      EUR   Madrid
-            2011-12-12  23.15  23.26  23.00  22.88      EUR   Madrid
-            2011-12-13  22.88  22.88  22.88  22.80      EUR   Madrid
+        >>> data = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                     Open   High    Low  Close  Volume Currency Exchange
+        Date                                                            
+        2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid
+        2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid
+        2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid
+        2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid
+        2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid
 
     """
 
@@ -546,7 +554,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -555,12 +563,12 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.strip().lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    etf = unidecode.unidecode(etf.strip().lower())
+    etf = unidecode(etf.strip().lower())
 
     def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
@@ -640,7 +648,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -678,15 +686,17 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    etf_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                     
                     etf_close = float(info[1].replace(',', ''))
                     etf_open = float(info[2].replace(',', ''))
                     etf_high = float(info[3].replace(',', ''))
                     etf_low = float(info[4].replace(',', ''))
 
+                    etf_volume = int(info[5])
+
                     result.insert(len(result),
-                                  Data(etf_date, etf_open, etf_high, etf_low, etf_close, None, etf_currency, etf_exchange))
+                                  Data(etf_date, etf_open, etf_high, etf_low, etf_close, etf_volume, etf_currency, etf_exchange))
 
             if data_flag is True:
                 if order in ['ascending', 'asc']:
@@ -779,7 +789,7 @@ def get_etf_information(etf, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -788,7 +798,7 @@ def get_etf_information(etf, country, as_json=False):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
@@ -798,7 +808,7 @@ def get_etf_information(etf, country, as_json=False):
     etf = etf.strip()
     etf = etf.lower()
 
-    if unidecode.unidecode(etf) not in [unidecode.unidecode(value.lower()) for value in etfs['name'].tolist()]:
+    if unidecode(etf) not in [unidecode(value.lower()) for value in etfs['name'].tolist()]:
         raise RuntimeError("ERR#0019: etf " + str(etf) + " not found in " + str(country.lower()) + ", check if it is correct.")
 
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
@@ -807,7 +817,7 @@ def get_etf_information(etf, country, as_json=False):
     url = "https://www.investing.com/etfs/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -925,7 +935,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -934,7 +944,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
     if etfs is None:
         raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_etf_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')
@@ -947,7 +957,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -977,7 +987,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
 
             # In Euro Zone the ETFs are from different countries so the country is specified
             country_flag = row.xpath(".//td[@class='flag']/span")[0].get('title')
-            country_flag = unidecode.unidecode(country_flag.lower())
+            country_flag = unidecode(country_flag.lower())
 
             last_path = ".//td[@class='" + 'pid-' + str(id_) + '-last' + "']"
             last = row.xpath(last_path)[0].text_content()
@@ -1060,7 +1070,7 @@ def search_etfs(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs', 'etfs.csv'))
+    resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

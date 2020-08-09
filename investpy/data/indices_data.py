@@ -1,14 +1,14 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import json
-
-import pandas as pd
 import pkg_resources
 
-import unidecode
+from unidecode import unidecode
+
+import json
+import pandas as pd
+
+from ..utils import constant as cst
 
 
 def indices_as_df(country=None):
@@ -44,7 +44,7 @@ def indices_as_df(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -59,9 +59,15 @@ def indices_as_df(country=None):
     if country is None:
         indices.reset_index(drop=True, inplace=True)
         return indices
-    elif unidecode.unidecode(country.lower()) in index_countries_as_list():
-        indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in index_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        indices = indices[indices['country'] == country]
         indices.reset_index(drop=True, inplace=True)
+        
         return indices
 
 
@@ -96,7 +102,7 @@ def indices_as_list(country=None):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -110,8 +116,13 @@ def indices_as_list(country=None):
 
     if country is None:
         return indices['name'].tolist()
-    elif unidecode.unidecode(country.lower()) in index_countries_as_list():
-        return indices[indices['country'] == unidecode.unidecode(country.lower())]['name'].tolist()
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in index_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        return indices[indices['country'] == country]['name'].tolist()
 
 
 def indices_as_dict(country=None, columns=None, as_json=False):
@@ -161,7 +172,7 @@ def indices_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -188,37 +199,28 @@ def indices_as_dict(country=None, columns=None, as_json=False):
             return json.dumps(indices[columns].to_dict(orient='records'))
         else:
             return indices[columns].to_dict(orient='records')
-    elif country in index_countries_as_list():
+    else:
+        country = unidecode(country.strip().lower())
+
+        if country not in index_countries_as_list():
+            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+
         if as_json:
-            return json.dumps(indices[indices['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records'))
+            return json.dumps(indices[indices['country'] == country][columns].to_dict(orient='records'))
         else:
-            return indices[indices['country'] == unidecode.unidecode(country.lower())][columns].to_dict(orient='records')
+            return indices[indices['country'] == country][columns].to_dict(orient='records')
 
 
 def index_countries_as_list():
     """
-    This function retrieves all the country names indexed in Investing.com with available indices to retrieve data
-    from, via reading the `indices.csv` file from the resources directory. So on, this function will display a listing
-    containing a set of countries, in order to let the user know which countries are available for indices data retrieval.
+    This function returns a listing with all the available countries from where indices can be retrieved, so to
+    let the user know which of them are available, since the parameter country is mandatory in every index retrieval
+    function.
 
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with indices as indexed in Investing.com
 
-    Raises:
-        FileNotFoundError: raised if the `indices.csv` file was not found.
-        IOError: raised if the `indices.csv` file is missing or errored.
-    
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
-    if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
-    else:
-        raise FileNotFoundError("ERR#0059: indices file not found or errored.")
-
-    if indices is None:
-        raise IOError("ERR#0037: indices not found or unable to retrieve.")
-    else:
-        return indices['country'].unique().tolist()
+    return [value['country_name'] for value in cst.INDEX_COUNTRIES]

@@ -1,7 +1,7 @@
 Usage
 =====
 
-Along this document, the main `investpy <https://github.com/alvarob96/investpy>`_ functions are going to be presented. So on, this is a tutorial 
+Along this document, the main `investpy <https://github.com/alvarobartt/investpy>`_ functions are going to be presented. So on, this is a tutorial 
 on how to use **investpy** to retrieve data from the financial products available, such as: stocks, funds, ETFs, indices and currency crosses, 
 retrieved from Investing.com.
 
@@ -35,19 +35,19 @@ Stock Data Retrieval
 
     import investpy
 
-    df = investpy.get_stock_historical_data(stock='bbva',
-                                            country='spain',
+    df = investpy.get_stock_historical_data(stock='AAPL',
+                                            country='United States',
                                             from_date='01/01/2010',
-                                            to_date='01/01/2019')
+                                            to_date='01/01/2020')
     print(df.head())
-    
-                 Open   High    Low  Close  Volume Currency
-    Date                                                   
-    2010-01-04  12.73  12.96  12.73  12.96       0      EUR
-    2010-01-05  13.00  13.11  12.97  13.09       0      EUR
-    2010-01-06  13.03  13.17  13.02  13.12       0      EUR
-    2010-01-07  13.02  13.11  12.93  13.05       0      EUR
-    2010-01-08  13.12  13.22  13.04  13.18       0      EUR
+
+                Open   High    Low  Close     Volume Currency
+    Date                                                      
+    2010-01-04  30.49  30.64  30.34  30.57  123432176      USD
+    2010-01-05  30.66  30.80  30.46  30.63  150476160      USD
+    2010-01-06  30.63  30.75  30.11  30.14  138039728      USD
+    2010-01-07  30.25  30.29  29.86  30.08  119282440      USD
+    2010-01-08  30.04  30.29  29.87  30.28  111969192      USD
 
 Fund Data Retrieval
 ^^^^^^^^^^^^^^^^^^^

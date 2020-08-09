@@ -1,9 +1,9 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
 import warnings
@@ -11,14 +11,14 @@ import warnings
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.extra import random_user_agent
+from .utils.data import Data
 
-from investpy.data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
-from investpy.data.commodities_data import commodity_groups_list
+from .data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
+from .data.commodities_data import commodity_groups_list
 
 
 def get_commodities(group=None):
@@ -205,14 +205,15 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
         IndexError: raised if commodity recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_commodity_recent_data(commodity='gold')
-                          Open    High     Low   Close  Volume Currency
-            Date                                                       
-            2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
-            2019-10-28  1507.4  1510.8  1492.3  1495.8  318126      USD
-            2019-10-29  1494.3  1497.1  1485.6  1490.7  291980      USD
-            2019-10-30  1490.5  1499.3  1483.1  1496.7  353638      USD
-            2019-10-31  1498.8  1516.7  1496.0  1514.8  390013      USD
+        >>> data = investpy.get_commodity_recent_data(commodity='gold')
+        >>> data.head()
+                      Open    High     Low   Close  Volume Currency
+        Date                                                       
+        2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
+        2019-10-28  1507.4  1510.8  1492.3  1495.8  318126      USD
+        2019-10-29  1494.3  1497.1  1485.6  1490.7  291980      USD
+        2019-10-30  1490.5  1499.3  1483.1  1496.7  353638      USD
+        2019-10-31  1498.8  1516.7  1496.0  1514.8  390013      USD
 
     """
 
@@ -241,7 +242,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -253,7 +254,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     commodity = commodity.strip()
     commodity = commodity.lower()
 
-    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -267,10 +268,10 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
 
         del found_commodities
     else:
-        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
             raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+        commodities = commodities[commodities['country'] == unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -291,7 +292,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -319,7 +320,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             commodity_close = float(info[1].replace(',', ''))
             commodity_open = float(info[2].replace(',', ''))
@@ -413,14 +414,15 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
         IndexError: raised if commodity historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
-                          Open    High     Low   Close  Volume Currency
-            Date                                                       
-            2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD
-            2018-01-02  1370.5  1370.5  1370.5  1370.5      97      USD
-            2018-01-03  1372.0  1372.0  1369.0  1374.2      22      USD
-            2018-01-04  1363.4  1375.6  1362.7  1377.4      13      USD
-            2018-01-05  1377.8  1377.8  1377.8  1378.4      10      USD
+        >>> data = investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                      Open    High     Low   Close  Volume Currency
+        Date                                                       
+        2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD
+        2018-01-02  1370.5  1370.5  1370.5  1370.5      97      USD
+        2018-01-03  1372.0  1372.0  1369.0  1374.2      22      USD
+        2018-01-04  1363.4  1375.6  1362.7  1377.4      13      USD
+        2018-01-05  1377.8  1377.8  1377.8  1378.4      10      USD
 
     """
 
@@ -498,7 +500,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -510,7 +512,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     commodity = commodity.strip()
     commodity = commodity.lower()
 
-    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -524,10 +526,10 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
 
         del found_commodities
     else:
-        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
             raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+        commodities = commodities[commodities['country'] == unidecode(country.lower())]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -555,7 +557,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -593,7 +595,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                     
                     commodity_close = float(info[1].replace(',', ''))
                     commodity_open = float(info[2].replace(',', ''))
@@ -615,7 +617,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
                 if as_json is True:
                     json_ = {
                         'name': name,
-                        'recent':
+                        'historical':
                             [value.commodity_as_json() for value in result]
                     }
 
@@ -698,7 +700,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -710,7 +712,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
     commodity = commodity.strip()
     commodity = commodity.lower()
 
-    if unidecode.unidecode(commodity) not in [unidecode.unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -724,10 +726,10 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
         del found_commodities
     else:
-        if unidecode.unidecode(country.lower()) not in commodities['country'].unique().tolist():
+        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
             raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-        commodities = commodities[commodities['country'] == unidecode.unidecode(country.lower())]
+        commodities = commodities[commodities['country'] == unidecode(country.lower())]
 
     name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'name']
     tag = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'tag']
@@ -735,7 +737,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
     url = "https://www.investing.com/commodities/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -860,7 +862,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -869,7 +871,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    group = unidecode.unidecode(group.lower())
+    group = unidecode(group.lower())
 
     if group not in get_commodity_groups():
         raise RuntimeError('ERR#0091: specified commodity group value is not valid.')
@@ -877,7 +879,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
     commodities = commodities[commodities['group'] == group]
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -977,7 +979,7 @@ def search_commodities(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities', 'commodities.csv'))
+    resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

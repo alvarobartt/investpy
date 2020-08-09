@@ -1,6 +1,4 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import pytest
@@ -166,7 +164,46 @@ def test_investpy_stocks():
     for param in params:
         investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
-    investpy.get_stock_dividends(stock='BBVA', country='spain')
+    params = [
+        {
+            'stock': 'bbva',
+            'country': 'spain'
+        },
+        {
+            'stock': 'entel',
+            'country': 'chile'
+        }
+    ]
+
+    for param in params:
+        investpy.get_stock_dividends(stock=param['stock'], country=param['country'])
+
+    params = [
+        {
+            'stock': 'bbva',
+            'country': 'spain',
+            'summary_type': 'balance_sheet',
+            'period': 'annual'
+        },
+        {
+            'stock': 'aapl',
+            'country': 'united states',
+            'summary_type': 'income_statement',
+            'period': 'quarterly'
+        },
+        {
+            'stock': 'barc',
+            'country': 'united kingdom',
+            'summary_type': 'cash_flow_statement',
+            'period': 'annual'
+        }
+    ]
+
+    for param in params:
+        investpy.get_stock_financial_summary(stock=param['stock'],
+                                             country=param['country'], 
+                                             summary_type=param['summary_type'],
+                                             period=param['period'])
 
     investpy.search_stocks(by='name', value='BBVA')
 
@@ -1130,13 +1167,13 @@ def test_investpy_certificates():
     ]
 
     for param in params:
-        investpy.get_certificate_recent_data(certificate='COMMERZBANK SG 31Dec99',
+        investpy.get_certificate_recent_data(certificate='BNP Gold 31Dec99',
                                              country='france',
                                              as_json=param['as_json'],
                                              order=param['order'],
                                              interval='Daily')
 
-        investpy.get_certificate_historical_data(certificate='COMMERZBANK SG 31Dec99',
+        investpy.get_certificate_historical_data(certificate='BNP Gold 31Dec99',
                                                  country='france',
                                                  from_date='01/01/1990',
                                                  to_date='01/01/2019',
@@ -1146,12 +1183,12 @@ def test_investpy_certificates():
 
     params = [
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False
         },
         {
-            'certificate': 'COMMERZBANK SG 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': True
         }
@@ -1180,7 +1217,7 @@ def test_investpy_certificates():
                                            as_json=param['as_json'],
                                            n_results=param['n_results'])
 
-    investpy.search_certificates(by='name', value='COMMERZBANK')
+    investpy.search_certificates(by='name', value='BNP')
 
 
 def test_investpy_search():
@@ -1191,40 +1228,41 @@ def test_investpy_search():
     params = [
         {
             'text': 'bbva',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': 5
         },
         {
             'text': 'spain 3y',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': 5
         },
         {
             'text': 'ibex 35',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': 5
         },
         {
             'text': 'bnp daxplus',
-            'n_results': 5,
-            'filters': None
+            'products': None,
+            'countries': None,
+            'n_results': None
         },
         {
             'text': 'apple',
-            'n_results': None,
-            'filters': ['stocks']
-        },
-        {
-            'text': 'apple',
-            'n_results': 10,
-            'filters': ['stocks']
+            'products': ['stocks'],
+            'countries': ['united states'],
+            'n_results': 1
         }
     ]
 
     for param in params:
-        results = investpy.search(text=param['text'],
-                                  n_results=param['n_results'],
-                                  filters=param['filters'])
+        results = investpy.search_quotes(text=param['text'],
+                                         products=param['products'],
+                                         countries=param['countries'],
+                                         n_results=param['n_results'])
 
         dates = [
             {
@@ -1242,6 +1280,7 @@ def test_investpy_search():
             result.retrieve_recent_data()
             for date in dates:
                 result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
+            break
 
 
 def test_investpy_news():
@@ -1271,7 +1310,7 @@ def test_investpy_news():
     ]
 
     for param in params:
-        investpy.get_calendar(time_zone=param['time_zone'],
+        investpy.economic_calendar(time_zone=param['time_zone'],
                               time_filter=param['time_filter'],
                               countries=param['countries'],
                               importances=param['importances'],

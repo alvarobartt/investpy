@@ -1,9 +1,9 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 import re
 from random import randint
@@ -11,14 +11,14 @@ from random import randint
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.extra import random_user_agent
+from .utils.data import Data
 
-from investpy.data.certificates_data import certificates_as_df, certificates_as_list, certificates_as_dict
-from investpy.data.certificates_data import certificate_countries_as_list
+from .data.certificates_data import certificates_as_df, certificates_as_list, certificates_as_dict
+from .data.certificates_data import certificate_countries_as_list
 
 
 def get_certificates(country=None):
@@ -72,7 +72,7 @@ def get_certificates_list(country=None):
 
             In case the listing was successfully retrieved, the :obj:`list` will look like::
 
-                certificates_list = ['SOCIETE GENERALE CAC 40 X10 31DEC99', 'COMMERZBANK SG 31Dec99', ...]
+                certificates_list = ['SOCIETE GENERALE CAC 40 X10 31DEC99', 'SG ZT CAC 40 x7 Short 31Dec99', ...]
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
@@ -204,15 +204,15 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
         IndexError: raised if certificate information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_certificate_recent_data(certificate='COMMERZBANK Call ALIBABA GROUP', country='france')
-                        Open  High   Low  Close
-            Date                               
-            2019-11-27  5.47  5.47  5.47   5.47
-            2019-12-05  5.52  5.52  5.52   5.52
-            2019-12-10  5.37  5.37  5.37   5.37
-            2019-12-12  6.27  6.27  6.27   6.27
-            2019-12-16  6.80  6.80  6.80   6.80
-            2019-12-20  7.50  7.50  7.50   7.50
+        >>> data = investpy.get_certificate_recent_data(certificate='BNP Gold 31Dec99', country='france')
+        >>> data.head()
+                     Open   High     Low   Close
+        Date                                    
+        2020-07-09  146.4  146.8  145.95  145.95
+        2020-07-10  146.2  146.2  145.55  145.55
+        2020-07-13  145.6  145.6  145.45  145.45
+        2020-07-14  145.4  145.4  145.25  145.25
+        2020-07-15  144.9  145.1  144.70  144.95
 
     """
 
@@ -244,7 +244,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -253,15 +253,15 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+    if unidecode(country.lower()) not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == unidecode(country.lower())]
 
     certificate = certificate.strip()
     certificate = certificate.lower()
 
-    if unidecode.unidecode(certificate) not in [unidecode.unidecode(value.lower()) for value in certificates['name'].tolist()]:
+    if unidecode(certificate) not in [unidecode(value.lower()) for value in certificates['name'].tolist()]:
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
@@ -281,7 +281,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -310,7 +310,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             certificate_close = float(info[1].replace(',', ''))
             certificate_open = float(info[2].replace(',', ''))
@@ -398,14 +398,15 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
         IndexError: raised if certificate historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_certificate_historical_data(certificate='COMMERZBANK Call ALIBABA GROUP', country='france', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close
-            Date                                  
-            2018-03-14  39.77  39.77  39.77  39.77
-            2018-03-15  48.18  48.18  48.18  46.48
-            2018-03-16  46.48  46.48  46.48  46.48
-            2018-03-19  40.73  40.73  40.73  40.73
-            2018-03-20  44.61  44.61  44.61  44.61
+        >>> data = investpy.get_certificate_historical_data(certificate='BNP Gold 31Dec99', country='france', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                     Open   High    Low  Close
+        Date                                  
+        2010-01-04  77.15  77.15  77.15  77.15
+        2010-01-05  77.40  77.45  77.15  77.45
+        2010-01-06  78.40  78.40  78.40  78.40
+        2010-01-07  78.40  78.45  78.35  78.35
+        2010-01-08  77.95  78.10  77.95  78.10
 
     """
 
@@ -486,7 +487,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -495,15 +496,15 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+    if unidecode(country.lower()) not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == unidecode(country.lower())]
 
     certificate = certificate.strip()
     certificate = certificate.lower()
 
-    if unidecode.unidecode(certificate) not in [unidecode.unidecode(value.lower()) for value in certificates['name'].tolist()]:
+    if unidecode(certificate) not in [unidecode(value.lower()) for value in certificates['name'].tolist()]:
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
@@ -530,7 +531,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -568,7 +569,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
                     certificate_close = float(info[1].replace(',', ''))
                     certificate_open = float(info[2].replace(',', ''))
@@ -628,21 +629,21 @@ def get_certificate_information(certificate, country, as_json=False):
             None values. If the retrieval process succeeded, the resulting :obj:`dict` will look like::
 
                 certificate_information = {
-                    "Certificate Name": "COMMERZBANK Call ALIBABA GROUP",
-                    "Certificate Country": "france",
-                    "Prev. Close": 8.2,
-                    "Todays Range": "7.9 - 7.9",
-                    "Leverage": "1:1",
-                    "Open": 7.9,
-                    "52 wk Range": "1.93 - 9.37",
-                    "Strike Price": "None",
-                    "Volume": 30.0,
-                    "Issue Date": "None",
-                    "Issue Amount": "None",
-                    "Average Vol. (3m)": 5150.0,
-                    "Maturity Date": "31/12/2099",
-                    "1-Year Change": "186.26%",
-                    "Asset Class": "Equity"
+                    "Certificate Name": "XXXX",
+                    "Certificate Country": "XXXX",
+                    "Prev. Close": X.Y,
+                    "Todays Range": "X.Y - X.Y",
+                    "Leverage": "X:Y",
+                    "Open": X.Y,
+                    "52 wk Range": "X.Y - X.Y",
+                    "Strike Price": "XXXX",
+                    "Volume": X.Y,
+                    "Issue Date": "XXXX",
+                    "Issue Amount": "XXXX",
+                    "Average Vol. (3m)": X.Y,
+                    "Maturity Date": "dd/mm/yyyy",
+                    "1-Year Change": "X.Y%",
+                    "Asset Class": "XXXX"
                 }
 
     """
@@ -663,7 +664,7 @@ def get_certificate_information(certificate, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -672,15 +673,15 @@ def get_certificate_information(certificate, country, as_json=False):
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+    if unidecode(country.lower()) not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == unidecode(country.lower())]
 
     certificate = certificate.strip()
     certificate = certificate.lower()
 
-    if unidecode.unidecode(certificate) not in [unidecode.unidecode(value.lower()) for value in certificates['name'].tolist()]:
+    if unidecode(certificate) not in [unidecode(value.lower()) for value in certificates['name'].tolist()]:
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     tag = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'tag']
@@ -689,7 +690,7 @@ def get_certificate_information(certificate, country, as_json=False):
     url = "https://www.investing.com/certificates/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -808,7 +809,7 @@ def get_certificates_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -817,13 +818,13 @@ def get_certificates_overview(country, as_json=False, n_results=100):
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_certificate_countries():
+    if unidecode(country.lower()) not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode.unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == unidecode(country.lower())]
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -930,7 +931,7 @@ def search_certificates(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates', 'certificates.csv'))
+    resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

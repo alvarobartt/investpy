@@ -1,23 +1,23 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 from datetime import datetime, date
+import pytz
+
 import json
 from random import randint
 
 import pandas as pd
 import pkg_resources
 import requests
-import unidecode
+from unidecode import unidecode
 from lxml.html import fromstring
 
-from investpy.utils.user_agent import get_random
-from investpy.utils.data import Data
+from .utils.extra import random_user_agent
+from .utils.data import Data
 
-from investpy.data.indices_data import indices_as_df, indices_as_list, indices_as_dict
-from investpy.data.indices_data import index_countries_as_list
+from .data.indices_data import indices_as_df, indices_as_list, indices_as_dict
+from .data.indices_data import index_countries_as_list
 
 
 def get_indices(country=None):
@@ -198,14 +198,15 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
         IndexError: raised if index information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_index_recent_data(index='ibex 35', country='spain')
-                           Open     High      Low    Close   Volume Currency
-            Date
-            2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR
-            2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR
-            2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR
-            2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR
-            2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR
+        >>> data = investpy.get_index_recent_data(index='ibex 35', country='spain')
+        >>> data.head()
+                       Open     High      Low    Close   Volume Currency
+        Date
+        2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR
+        2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR
+        2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR
+        2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR
+        2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR
 
     """
 
@@ -237,7 +238,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -246,15 +247,15 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_index_countries():
+    if unidecode(country.lower()) not in get_index_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+    indices = indices[indices['country'] == unidecode(country.lower())]
 
     index = index.strip()
     index = index.lower()
 
-    if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
+    if unidecode(index) not in [unidecode(value.lower()) for value in indices['name'].tolist()]:
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
     full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
@@ -276,7 +277,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
     }
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -305,7 +306,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+            index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
             
             index_close = float(info[1].replace(',', ''))
             index_open = float(info[2].replace(',', ''))
@@ -395,14 +396,15 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         IndexError: raised if index information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_index_historical_data(index='ibex 35', country='spain', from_date='01/01/2018', to_date='01/01/2019')
-                           Open     High      Low    Close    Volume Currency
-            Date
-            2018-01-02  15128.2  15136.7  14996.6  15096.8  10340000      EUR
-            2018-01-03  15145.0  15186.9  15091.9  15106.9  12800000      EUR
-            2018-01-04  15105.5  15368.7  15103.7  15368.7  17070000      EUR
-            2018-01-05  15353.9  15407.5  15348.6  15398.9  11180000      EUR
-            2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR
+        >>> data = investpy.get_index_historical_data(index='ibex 35', country='spain', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                       Open     High      Low    Close    Volume Currency
+        Date
+        2018-01-02  15128.2  15136.7  14996.6  15096.8  10340000      EUR
+        2018-01-03  15145.0  15186.9  15091.9  15106.9  12800000      EUR
+        2018-01-04  15105.5  15368.7  15103.7  15368.7  17070000      EUR
+        2018-01-05  15353.9  15407.5  15348.6  15398.9  11180000      EUR
+        2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR
 
     """
 
@@ -483,7 +485,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -492,15 +494,15 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_index_countries():
+    if unidecode(country.lower()) not in get_index_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+    indices = indices[indices['country'] == unidecode(country.lower())]
 
     index = index.strip()
     index = index.lower()
 
-    if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
+    if unidecode(index) not in [unidecode(value.lower()) for value in indices['name'].tolist()]:
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
     full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
@@ -529,7 +531,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         }
 
         head = {
-            "User-Agent": get_random(),
+            "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
             "Accept-Encoding": "gzip, deflate, br",
@@ -567,7 +569,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0])).date()), '%Y-%m-%d')
+                    index_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
                     
                     index_close = float(info[1].replace(',', ''))
                     index_open = float(info[2].replace(',', ''))
@@ -661,7 +663,7 @@ def get_index_information(index, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -670,15 +672,15 @@ def get_index_information(index, country, as_json=False):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    if unidecode.unidecode(country.lower()) not in get_index_countries():
+    if unidecode(country.lower()) not in get_index_countries():
         raise ValueError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    indices = indices[indices['country'] == unidecode.unidecode(country.lower())]
+    indices = indices[indices['country'] == unidecode(country.lower())]
 
     index = index.strip()
     index = index.lower()
 
-    if unidecode.unidecode(index) not in [unidecode.unidecode(value.lower()) for value in indices['name'].tolist()]:
+    if unidecode(index) not in [unidecode(value.lower()) for value in indices['name'].tolist()]:
         raise ValueError("ERR#0045: index " + index + " not found, check if it is correct.")
 
     name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
@@ -687,7 +689,7 @@ def get_index_information(index, country, as_json=False):
     url = "https://www.investing.com/indices/" + tag
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -802,7 +804,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -811,7 +813,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    country = unidecode.unidecode(country.lower())
+    country = unidecode(country.lower())
 
     if country not in get_index_countries():
         raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
@@ -824,7 +826,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
         country = 'uk'
 
     head = {
-        "User-Agent": get_random(),
+        "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
         "Accept-Encoding": "gzip, deflate, br",
@@ -928,7 +930,7 @@ def search_indices(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'indices', 'indices.csv'))
+    resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:

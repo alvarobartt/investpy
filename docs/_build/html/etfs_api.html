@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>investpy.etfs &mdash; investpy 0.9.14 documentation</title>
+  <title>investpy.etfs &mdash; investpy 1.0 documentation</title>
   
 
   
@@ -21,10 +21,10 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -60,7 +60,7 @@
             
             
               <div class="version">
-                0.9.14
+                1.0
               </div>
             
           
@@ -208,7 +208,7 @@ with etfs was successfully completed, the resulting <code class="xref py py-obj 
 
 <dl class="function">
 <dt id="investpy.etfs.get_etf_historical_data">
-<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_historical_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">from_date</em>, <em class="sig-param">to_date</em>, <em class="sig-param">stock_exchange=None</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_historical_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves historical data from the introduced <cite>etf</cite> from Investing via Web Scraping on the
 introduced date range. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> object with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -229,9 +229,9 @@ introduced date range. The resulting data can it either be stored in a <code cla
 recent data from the specified etf via argument. The dataset contains the open, high, low and close
 values for the selected etf on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Currency</span> <span class="o">|</span> <span class="n">Exchange</span>
-<span class="o">-----||------|------|-----|-------|----------|---------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Volume</span> <span class="o">|</span> <span class="n">Currency</span> <span class="o">|</span> <span class="n">Exchange</span>
+<span class="o">-----||------|------|-----|-------|--------|----------|---------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
@@ -244,6 +244,7 @@ values for the selected etf on market days.</p>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">currency</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">exchange</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
@@ -268,14 +269,15 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
-<span class="go">                 Open   High    Low  Close Currency Exchange</span>
-<span class="go">    Date</span>
-<span class="go">    2011-12-07  23.70  23.70  23.70  23.62      EUR   Madrid</span>
-<span class="go">    2011-12-08  23.53  23.60  23.15  23.04      EUR   Madrid</span>
-<span class="go">    2011-12-09  23.36  23.60  23.36  23.62      EUR   Madrid</span>
-<span class="go">    2011-12-12  23.15  23.26  23.00  22.88      EUR   Madrid</span>
-<span class="go">    2011-12-13  22.88  22.88  22.88  22.80      EUR   Madrid</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">             Open   High    Low  Close  Volume Currency Exchange</span>
+<span class="go">Date</span>
+<span class="go">2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid</span>
+<span class="go">2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid</span>
+<span class="go">2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid</span>
+<span class="go">2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid</span>
+<span class="go">2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -338,7 +340,7 @@ None values. If the retrieval process succeeded, the resulting <code class="xref
 
 <dl class="function">
 <dt id="investpy.etfs.get_etf_recent_data">
-<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">investpy.etfs.</code><code class="sig-name descname">get_etf_recent_data</code><span class="sig-paren">(</span><em class="sig-param">etf</em>, <em class="sig-param">country</em>, <em class="sig-param">stock_exchange=None</em>, <em class="sig-param">as_json=False</em>, <em class="sig-param">order='ascending'</em>, <em class="sig-param">interval='Daily'</em><span class="sig-paren">)</span><a class="headerlink" href="#investpy.etfs.get_etf_recent_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function retrieves recent historical data from the introduced <cite>etf</cite> from Investing
 via Web Scraping. The resulting data can it either be stored in a <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> or in a
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">json</span></code> file, with <cite>ascending</cite> or <cite>descending</cite> order.</p>
@@ -357,9 +359,9 @@ via Web Scraping. The resulting data can it either be stored in a <code class="x
 recent data from the specified etf via argument. The dataset contains the open, high, low and close
 values for the selected etf on market days.</p>
 <p>The returned data is case we use default arguments will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Currency</span> <span class="o">|</span> <span class="n">Exchange</span>
-<span class="o">-----||------|------|-----|-------|----------|---------</span>
-<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Date</span> <span class="o">||</span> <span class="n">Open</span> <span class="o">|</span> <span class="n">High</span> <span class="o">|</span> <span class="n">Low</span> <span class="o">|</span> <span class="n">Close</span> <span class="o">|</span> <span class="n">Volume</span> <span class="o">|</span> <span class="n">Currency</span> <span class="o">|</span> <span class="n">Exchange</span>
+<span class="o">-----||------|------|-----|-------|--------|----------|---------</span>
+<span class="n">xxxx</span> <span class="o">||</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxx</span> <span class="o">|</span> <span class="n">xxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span>
 </pre></div>
 </div>
 <p>but if we define <cite>as_json=True</cite>, then the output will be:</p>
@@ -372,6 +374,7 @@ values for the selected etf on market days.</p>
             <span class="n">high</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">low</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">close</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="n">volume</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">currency</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
             <span class="n">exchange</span><span class="p">:</span> <span class="n">x</span>
         <span class="p">},</span>
@@ -396,14 +399,15 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
-<span class="go">                  Open    High     Low   Close Currency Exchange</span>
-<span class="go">    Date</span>
-<span class="go">    2019-08-13  33.115  33.780  32.985  33.585      EUR   Madrid</span>
-<span class="go">    2019-08-14  33.335  33.335  32.880  32.905      EUR   Madrid</span>
-<span class="go">    2019-08-15  32.790  32.925  32.455  32.845      EUR   Madrid</span>
-<span class="go">    2019-08-16  33.115  33.200  33.115  33.305      EUR   Madrid</span>
-<span class="go">    2019-08-19  33.605  33.735  33.490  33.685      EUR   Madrid</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">              Open    High    Low   Close  Volume Currency Exchange</span>
+<span class="go">Date</span>
+<span class="go">2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid</span>
+<span class="go">2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid</span>
+<span class="go">2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid</span>
+<span class="go">2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid</span>
+<span class="go">2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -424,9 +428,9 @@ was previously retrieved by investpy. Unless the country is specified, all the a
 Investing.com is returned, but if it is specified, just the etfs from that country are returned.</p>
 <p>In the case that the file reading of <cite>etfs.csv</cite> or the retrieval process from Investing.com was
 successfully completed, the resulting <code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code> will look like:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full_name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">asset_class</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">stock_exchange</span>
-<span class="o">--------|------|-----------|--------|------|-------------|----------|----------------</span>
-<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">country</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">full_name</span> <span class="o">|</span> <span class="n">symbol</span> <span class="o">|</span> <span class="n">isin</span> <span class="o">|</span> <span class="n">asset_class</span> <span class="o">|</span> <span class="n">currency</span> <span class="o">|</span> <span class="n">stock_exchange</span> <span class="o">|</span> <span class="n">def_stock_exchange</span>
+<span class="o">--------|------|-----------|--------|------|-------------|----------|----------------|--------------------</span>
+<span class="n">xxxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxx</span> <span class="o">|</span> <span class="n">xxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxx</span> <span class="o">|</span> <span class="n">xxxxxxxxxxxxxxxxxx</span>
 </pre></div>
 </div>
 </p>
@@ -472,7 +476,8 @@ fields are filled with <cite>None</cite> values.</p>
     <span class="s2">&quot;isin&quot;</span><span class="p">:</span> <span class="n">isin</span><span class="p">,</span>
     <span class="s2">&quot;asset_class&quot;</span><span class="p">:</span> <span class="n">asset_class</span><span class="p">,</span>
     <span class="s2">&quot;currency&quot;</span><span class="p">:</span> <span class="n">currency</span><span class="p">,</span>
-    <span class="s2">&quot;stock_exchange&quot;</span><span class="p">:</span> <span class="n">stock_exchange</span>
+    <span class="s2">&quot;stock_exchange&quot;</span><span class="p">:</span> <span class="n">stock_exchange</span><span class="p">,</span>
+    <span class="s2">&quot;def_stock_exchange&quot;</span><span class="p">:</span> <span class="n">def_stock_exchange</span>
 <span class="p">}</span>
 </pre></div>
 </div>

@@ -1,8 +1,5 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
-
 
 class Data(object):
     """
@@ -90,6 +87,7 @@ class Data(object):
             'High': self.high,
             'Low': self.low,
             'Close': self.close,
+            'Volume': self.volume,
             'Currency': self.currency,
             'Exchange': self.exchange
         }
@@ -101,6 +99,7 @@ class Data(object):
             'high': self.high,
             'low': self.low,
             'close': self.close,
+            'volume': self.volume,
             'currency': self.currency,
             'exchange': self.exchange
         }

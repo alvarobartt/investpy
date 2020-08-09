@@ -1,13 +1,12 @@
-#!/usr/bin/python3
-
-# Copyright 2018-2020 Alvaro Bartolome @ alvarob96 in GitHub
+# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import unidecode
-import json
-
-import pandas as pd
 import pkg_resources
+
+from unidecode import unidecode
+
+import json
+import pandas as pd
 
 
 def cryptos_as_df():
@@ -37,7 +36,7 @@ def cryptos_as_df():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -47,10 +46,11 @@ def cryptos_as_df():
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
     cryptos = cryptos[cryptos['status'] == 'available']
+    
     cryptos.drop(columns=['tag', 'id', 'status'], inplace=True)
     cryptos = cryptos.where(pd.notnull(cryptos), None)
-
     cryptos.reset_index(drop=True, inplace=True)
+    
     return cryptos
 
 
@@ -80,7 +80,7 @@ def cryptos_as_list():
     """
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
@@ -136,7 +136,7 @@ def cryptos_as_dict(columns=None, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'crypto', 'cryptos.csv'))
+    resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
         cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
