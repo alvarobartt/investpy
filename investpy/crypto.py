@@ -13,7 +13,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.crypto_data import cryptos_as_df, cryptos_as_list, cryptos_as_dict
@@ -169,14 +169,15 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
         IndexError: raised if crypto recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_crypto_recent_data(crypto='bitcoin')
-                          Open     High     Low   Close   Volume Currency
-            Date                                                         
-            2019-10-25  7422.8   8697.7  7404.9  8658.3  1177632      USD
-            2019-10-26  8658.4  10540.0  8061.8  9230.6  1784005      USD
-            2019-10-27  9230.6   9773.2  9081.0  9529.6  1155038      USD
-            2019-10-28  9530.1   9866.9  9202.5  9207.2  1039295      USD
-            2019-10-29  9206.5   9531.3  9125.3  9411.3   918477      USD
+        >>> data = investpy.get_crypto_recent_data(crypto='bitcoin')
+        >>> data.head()
+                      Open     High     Low   Close   Volume Currency
+        Date                                                         
+        2019-10-25  7422.8   8697.7  7404.9  8658.3  1177632      USD
+        2019-10-26  8658.4  10540.0  8061.8  9230.6  1784005      USD
+        2019-10-27  9230.6   9773.2  9081.0  9529.6  1155038      USD
+        2019-10-28  9530.1   9866.9  9202.5  9207.2  1039295      USD
+        2019-10-29  9206.5   9531.3  9125.3  9411.3   918477      USD
 
     """
 
@@ -357,14 +358,15 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         IndexError: raised if crypto historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_crypto_historical_data(crypto='bitcoin', from_date='01/01/2018', to_date='01/01/2019')
-                           Open     High      Low    Close  Volume Currency
-            Date                                                           
-            2018-01-01  13850.5  13921.5  12877.7  13444.9   78425      USD
-            2018-01-02  13444.9  15306.1  12934.2  14754.1  137732      USD
-            2018-01-03  14754.1  15435.0  14579.7  15156.6  106543      USD
-            2018-01-04  15156.5  15408.7  14244.7  15180.1  110969      USD
-            2018-01-05  15180.1  17126.9  14832.4  16954.8  141960      USD
+        >>> data = investpy.get_crypto_historical_data(crypto='bitcoin', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                       Open     High      Low    Close  Volume Currency
+        Date                                                           
+        2018-01-01  13850.5  13921.5  12877.7  13444.9   78425      USD
+        2018-01-02  13444.9  15306.1  12934.2  14754.1  137732      USD
+        2018-01-03  14754.1  15435.0  14579.7  15156.6  106543      USD
+        2018-01-04  15156.5  15408.7  14244.7  15180.1  110969      USD
+        2018-01-05  15180.1  17126.9  14832.4  16954.8  141960      USD
 
     """
 

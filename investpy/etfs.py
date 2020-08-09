@@ -15,7 +15,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.etfs_data import etfs_as_df, etfs_as_list, etfs_as_dict
@@ -212,14 +212,15 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
-                          Open    High    Low   Close  Volume Currency Exchange
-            Date                                                               
-            2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid
-            2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid
-            2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid
-            2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid
-            2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid
+        >>> data = investpy.get_etf_recent_data(etf='bbva accion dj eurostoxx 50', country='spain')
+        >>> data.head()
+                      Open    High    Low   Close  Volume Currency Exchange
+        Date                                                               
+        2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid
+        2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid
+        2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid
+        2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid
+        2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid
 
     """
 
@@ -461,14 +462,15 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         IndexError: raised if etf information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close  Volume Currency Exchange
-            Date                                                            
-            2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid
-            2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid
-            2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid
-            2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid
-            2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid
+        >>> data = investpy.get_etf_historical_data(etf='bbva accion dj eurostoxx 50', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                     Open   High    Low  Close  Volume Currency Exchange
+        Date                                                            
+        2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid
+        2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid
+        2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid
+        2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid
+        2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid
 
     """
 

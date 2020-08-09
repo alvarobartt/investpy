@@ -1,6 +1,5 @@
 include README.md
 include investpy/resources/*
-include investpy/resources/stocks/*
 include requirements.txt
 include docs/requirements.txt
 include tests/requirements.txt

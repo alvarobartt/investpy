@@ -13,7 +13,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.funds_data import funds_as_list, funds_as_dict, funds_as_df
@@ -197,14 +197,15 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain')
-                         Open   High    Low  Close Currency
-            Date
-            2019-08-13  1.110  1.110  1.110  1.110      EUR
-            2019-08-16  1.109  1.109  1.109  1.109      EUR
-            2019-08-19  1.114  1.114  1.114  1.114      EUR
-            2019-08-20  1.112  1.112  1.112  1.112      EUR
-            2019-08-21  1.115  1.115  1.115  1.115      EUR
+        >>> data = investpy.get_fund_recent_data(fund='bbva multiactivo conservador pp', country='spain')
+        >>> data.head()
+                     Open   High    Low  Close Currency
+        Date
+        2019-08-13  1.110  1.110  1.110  1.110      EUR
+        2019-08-16  1.109  1.109  1.109  1.109      EUR
+        2019-08-19  1.114  1.114  1.114  1.114      EUR
+        2019-08-20  1.112  1.112  1.112  1.112      EUR
+        2019-08-21  1.115  1.115  1.115  1.115      EUR
 
     """
 
@@ -389,14 +390,15 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         IndexError: if fund information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close Currency
-            Date
-            2018-02-15  1.105  1.105  1.105  1.105      EUR
-            2018-02-16  1.113  1.113  1.113  1.113      EUR
-            2018-02-17  1.113  1.113  1.113  1.113      EUR
-            2018-02-18  1.113  1.113  1.113  1.113      EUR
-            2018-02-19  1.111  1.111  1.111  1.111      EUR
+        >>> data = investpy.get_fund_historical_data(fund='bbva multiactivo conservador pp', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                     Open   High    Low  Close Currency
+        Date
+        2018-02-15  1.105  1.105  1.105  1.105      EUR
+        2018-02-16  1.113  1.113  1.113  1.113      EUR
+        2018-02-17  1.113  1.113  1.113  1.113      EUR
+        2018-02-18  1.113  1.113  1.113  1.113      EUR
+        2018-02-19  1.111  1.111  1.111  1.111      EUR
 
     """
 

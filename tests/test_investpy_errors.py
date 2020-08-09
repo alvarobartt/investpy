@@ -3493,56 +3493,56 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': None,
             'as_json': False,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': ['error'],
             'as_json': False,
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': 'error',
             'order': 'ascending',
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'error',
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'ascending',
             'interval': None
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'ascending',
             'interval': ['error']
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False,
             'order': 'ascending',
             'interval': 'error'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'spain',
             'as_json': False,
             'order': 'ascending',
@@ -3587,7 +3587,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': None,
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3596,7 +3596,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': ['error'],
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3605,7 +3605,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3614,7 +3614,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3623,7 +3623,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3632,7 +3632,7 @@ def test_certificate_errors():
             'interval': None
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3641,7 +3641,7 @@ def test_certificate_errors():
             'interval': ['error']
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3650,7 +3650,7 @@ def test_certificate_errors():
             'interval': 'error'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': 'error',
             'to_date': '01/01/2019',
@@ -3659,7 +3659,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2018',
             'to_date': 'error',
@@ -3668,7 +3668,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/2019',
             'to_date': '01/01/2018',
@@ -3677,7 +3677,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'from_date': '01/01/1990',
             'to_date': '01/01/2019',
@@ -3686,7 +3686,7 @@ def test_certificate_errors():
             'interval': 'Daily'
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'error',
             'from_date': '01/01/2018',
             'to_date': '01/01/2019',
@@ -3729,22 +3729,22 @@ def test_certificate_errors():
             'as_json': False
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': None,
             'as_json': False
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': ['error'],
             'as_json': False
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': None
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'error',
             'as_json': False
         },
@@ -3807,15 +3807,15 @@ def test_certificate_errors():
     params = [
         {
             'by': None,
-            'value': 'COMMERZBANK'
+            'value': 'BNP'
         },
         {
             'by': ['error'],
-            'value': 'COMMERZBANK'
+            'value': 'BNP'
         },
         {
             'by': 'error',
-            'value': 'COMMERZBANK'
+            'value': 'BNP'
         },
         {
             'by': 'name',
@@ -4060,7 +4060,7 @@ def test_news_errors():
 
     for param in params:
         try:
-            investpy.get_calendar(time_zone=param['time_zone'],
+            investpy.economic_calendar(time_zone=param['time_zone'],
                                   time_filter=param['time_filter'],
                                   countries=param['countries'],
                                   importances=param['importances'],

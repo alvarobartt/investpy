@@ -149,7 +149,7 @@ PRODUCT_TYPE_FILES = {
     'etf': 'etfs.csv',
     'fund': 'funds.csv',
     'index': 'indices.csv',
-    'stock': 'stocks/stocks.csv',
+    'stock': 'stocks.csv',
     'bond': 'bonds.csv'
 }
 

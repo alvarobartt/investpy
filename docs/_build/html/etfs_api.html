@@ -269,14 +269,15 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
-<span class="go">                 Open   High    Low  Close  Volume Currency Exchange</span>
-<span class="go">    Date</span>
-<span class="go">    2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid</span>
-<span class="go">    2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid</span>
-<span class="go">    2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid</span>
-<span class="go">    2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid</span>
-<span class="go">    2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_historical_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">,</span> <span class="n">from_date</span><span class="o">=</span><span class="s1">&#39;01/01/2010&#39;</span><span class="p">,</span> <span class="n">to_date</span><span class="o">=</span><span class="s1">&#39;01/01/2019&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">             Open   High    Low  Close  Volume Currency Exchange</span>
+<span class="go">Date</span>
+<span class="go">2011-12-07  23.70  23.70  23.70  23.62    2000      EUR   Madrid</span>
+<span class="go">2011-12-08  23.53  23.60  23.15  23.04     599      EUR   Madrid</span>
+<span class="go">2011-12-09  23.36  23.60  23.36  23.62    2379      EUR   Madrid</span>
+<span class="go">2011-12-12  23.15  23.26  23.00  22.88   10695      EUR   Madrid</span>
+<span class="go">2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -398,14 +399,15 @@ values for the selected etf on market days.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
-<span class="go">                  Open    High    Low   Close  Volume Currency Exchange</span>
-<span class="go">    Date</span>
-<span class="go">    2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid</span>
-<span class="go">    2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid</span>
-<span class="go">    2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid</span>
-<span class="go">    2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid</span>
-<span class="go">    2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">investpy</span><span class="o">.</span><span class="n">get_etf_recent_data</span><span class="p">(</span><span class="n">etf</span><span class="o">=</span><span class="s1">&#39;bbva accion dj eurostoxx 50&#39;</span><span class="p">,</span> <span class="n">country</span><span class="o">=</span><span class="s1">&#39;spain&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">              Open    High    Low   Close  Volume Currency Exchange</span>
+<span class="go">Date</span>
+<span class="go">2020-04-09  28.890  29.155  28.40  28.945   20651      EUR   Madrid</span>
+<span class="go">2020-04-14  29.345  30.235  28.94  29.280   14709      EUR   Madrid</span>
+<span class="go">2020-04-15  29.125  29.125  28.11  28.130   14344      EUR   Madrid</span>
+<span class="go">2020-04-16  28.505  28.590  28.08  28.225   17662      EUR   Madrid</span>
+<span class="go">2020-04-17  29.000  29.325  28.80  28.895   19578      EUR   Madrid</span>
 </pre></div>
 </div>
 </dd></dl>

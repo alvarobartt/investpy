@@ -11,7 +11,7 @@ import pytz
 from random import randint
 
 from .data import Data
-from .utils import random_user_agent
+from .extra import random_user_agent
 
 
 class SearchObj(object):

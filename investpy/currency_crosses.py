@@ -15,7 +15,7 @@ from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils import constant as cst
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.currency_crosses_data import currency_crosses_as_df, currency_crosses_as_list, currency_crosses_as_dict
@@ -231,14 +231,15 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         IndexError: raised if currency_cross information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_currency_cross_recent_data(currency_cross='EUR/USD')
-                          Open    High     Low   Close Currency
-            Date
-            2019-08-27  1.1101  1.1116  1.1084  1.1091      USD
-            2019-08-28  1.1090  1.1099  1.1072  1.1078      USD
-            2019-08-29  1.1078  1.1093  1.1042  1.1057      USD
-            2019-08-30  1.1058  1.1062  1.0963  1.0991      USD
-            2019-09-02  1.0990  1.1000  1.0958  1.0968      USD
+        >>> data = investpy.get_currency_cross_recent_data(currency_cross='EUR/USD')
+        >>> data.head()
+                      Open    High     Low   Close Currency
+        Date
+        2019-08-27  1.1101  1.1116  1.1084  1.1091      USD
+        2019-08-28  1.1090  1.1099  1.1072  1.1078      USD
+        2019-08-29  1.1078  1.1093  1.1042  1.1057      USD
+        2019-08-30  1.1058  1.1062  1.0963  1.0991      USD
+        2019-09-02  1.0990  1.1000  1.0958  1.0968      USD
 
     """
 
@@ -410,14 +411,15 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         IndexError: if currency_cross information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_currency_cross_historical_data(currency_cross='EUR/USD', from_date='01/01/2018', to_date='01/01/2019')
-                          Open    High     Low   Close Currency
-            Date
-            2018-01-01  1.2003  1.2014  1.1995  1.2010      USD
-            2018-01-02  1.2013  1.2084  1.2003  1.2059      USD
-            2018-01-03  1.2058  1.2070  1.2001  1.2014      USD
-            2018-01-04  1.2015  1.2090  1.2004  1.2068      USD
-            2018-01-05  1.2068  1.2085  1.2021  1.2030      USD
+        >>> data = investpy.get_currency_cross_historical_data(currency_cross='EUR/USD', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                      Open    High     Low   Close Currency
+        Date
+        2018-01-01  1.2003  1.2014  1.1995  1.2010      USD
+        2018-01-02  1.2013  1.2084  1.2003  1.2059      USD
+        2018-01-03  1.2058  1.2070  1.2001  1.2014      USD
+        2018-01-04  1.2015  1.2090  1.2004  1.2068      USD
+        2018-01-05  1.2068  1.2085  1.2021  1.2030      USD
 
     """
 

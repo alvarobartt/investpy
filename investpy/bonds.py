@@ -14,7 +14,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.bonds_data import bonds_as_df, bonds_as_list, bonds_as_dict
@@ -196,14 +196,15 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
         IndexError: raised if bond historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_bond_recent_data(bond='Argentina 3Y')
-                          Open    High     Low   Close
-            Date                                      
-            2019-09-23  52.214  52.214  52.214  52.214
-            2019-09-24  52.323  52.323  52.323  52.323
-            2019-09-25  52.432  52.432  52.432  52.432
-            2019-09-26  52.765  52.765  52.765  52.765
-            2019-09-27  52.876  52.876  52.876  52.876
+        >>> data = investpy.get_bond_recent_data(bond='Argentina 3Y')
+        >>> data.head()
+                      Open    High     Low   Close
+        Date                                      
+        2019-09-23  52.214  52.214  52.214  52.214
+        2019-09-24  52.323  52.323  52.323  52.323
+        2019-09-25  52.432  52.432  52.432  52.432
+        2019-09-26  52.765  52.765  52.765  52.765
+        2019-09-27  52.876  52.876  52.876  52.876
     
     """
 
@@ -377,14 +378,15 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
         IndexError: raised if bond historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_bond_historical_data(bond='Argentina 3Y', from_date='01/01/2010', to_date='01/01/2019')
-                        Open  High   Low  Close
-            Date                               
-            2011-01-03  4.15  4.15  4.15   5.15
-            2011-01-04  4.07  4.07  4.07   5.45
-            2011-01-05  4.27  4.27  4.27   5.71
-            2011-01-10  4.74  4.74  4.74   6.27
-            2011-01-11  4.30  4.30  4.30   6.56
+        >>> data = investpy.get_bond_historical_data(bond='Argentina 3Y', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                    Open  High   Low  Close
+        Date                               
+        2011-01-03  4.15  4.15  4.15   5.15
+        2011-01-04  4.07  4.07  4.07   5.45
+        2011-01-05  4.27  4.27  4.27   5.71
+        2011-01-10  4.74  4.74  4.74   6.27
+        2011-01-11  4.30  4.30  4.30   6.56
 
     """
 

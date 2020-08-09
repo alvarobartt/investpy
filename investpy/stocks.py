@@ -16,7 +16,7 @@ from unidecode import unidecode
 from lxml.html import fromstring
 
 from .utils import constant as cst
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.stocks_data import stocks_as_df, stocks_as_list, stocks_as_dict
@@ -201,14 +201,15 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         IndexError: raised if stock recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_stock_recent_data(stock='bbva', country='spain')
-                         Open   High    Low  Close    Volume Currency
-            Date
-            2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
-            2019-08-14  4.322  4.325  4.215  4.244  36890000      EUR
-            2019-08-15  4.281  4.298  4.187  4.234  21340000      EUR
-            2019-08-16  4.234  4.375  4.208  4.365  46080000      EUR
-            2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR
+        >>> data = investpy.get_stock_recent_data(stock='bbva', country='spain')
+        >>> data.head()
+                     Open   High    Low  Close    Volume Currency
+        Date
+        2019-08-13  4.263  4.395  4.230  4.353  27250000      EUR
+        2019-08-14  4.322  4.325  4.215  4.244  36890000      EUR
+        2019-08-15  4.281  4.298  4.187  4.234  21340000      EUR
+        2019-08-16  4.234  4.375  4.208  4.365  46080000      EUR
+        2019-08-19  4.396  4.425  4.269  4.269  18950000      EUR
 
     """
 
@@ -240,7 +241,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -402,14 +403,15 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
         IndexError: raised if stock historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
-                         Open   High    Low  Close  Volume Currency
-            Date
-            2010-01-04  12.73  12.96  12.73  12.96       0      EUR
-            2010-01-05  13.00  13.11  12.97  13.09       0      EUR
-            2010-01-06  13.03  13.17  13.02  13.12       0      EUR
-            2010-01-07  13.02  13.11  12.93  13.05       0      EUR
-            2010-01-08  13.12  13.22  13.04  13.18       0      EUR
+        >>> data = investpy.get_stock_historical_data(stock='bbva', country='spain', from_date='01/01/2010', to_date='01/01/2019')
+        >>> data.head()
+                     Open   High    Low  Close  Volume Currency
+        Date
+        2010-01-04  12.73  12.96  12.73  12.96       0      EUR
+        2010-01-05  13.00  13.11  12.97  13.09       0      EUR
+        2010-01-06  13.03  13.17  13.02  13.12       0      EUR
+        2010-01-07  13.02  13.11  12.93  13.05       0      EUR
+        2010-01-08  13.12  13.22  13.04  13.18       0      EUR
 
     """
 
@@ -490,7 +492,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     data_flag = False
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -658,11 +660,12 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         ConnectionError: raised if connection to Investing.com could not be established.
 
     Examples:
-        >>> investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
-            company_profile = {
-                url: 'https://www.investing.com/equities/bbva-company-profile',
-                desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a ...'
-            }
+        >>> company_profile = investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
+        >>> company_profile
+        company_profile = {
+            url: 'https://www.investing.com/equities/bbva-company-profile',
+            desc: 'Banco Bilbao Vizcaya Argentaria, S.A. (BBVA) is a ...'
+        }
 
     """
 
@@ -701,7 +704,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     selected_source = available_sources[language]
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -828,7 +831,7 @@ def get_stock_dividends(stock, country):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1045,7 +1048,7 @@ def get_stock_information(stock, country, as_json=False):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1182,7 +1185,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1318,13 +1321,14 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
         RuntimeError: raised if any error occurred while running the function.
 
     Examples:
-        >>> investpy.get_stock_financial_summary(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
-                        Total Revenue  Gross Profit  Operating Income  Net Income
-            Date                                                                 
-            2019-09-28         260174         98392             63930       55256
-            2018-09-29         265595        101839             70898       59531
-            2017-09-30         229234         88186             61344       48351
-            2016-09-24         215639         84263             60024       45687
+        >>> data = investpy.get_stock_financial_summary(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
+        >>> data.head()
+                    Total Revenue  Gross Profit  Operating Income  Net Income
+        Date                                                                 
+        2019-09-28         260174         98392             63930       55256
+        2018-09-29         265595        101839             70898       59531
+        2017-09-30         229234         88186             61344       48351
+        2016-09-24         215639         84263             60024       45687
 
     """
 
@@ -1363,7 +1367,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
         raise ValueError("ERR#0137: introduced period is not valid, since available values are: " + ', '.join(cst.FINANCIAL_SUMMARY_PERIODS.keys()))
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
@@ -1474,7 +1478,7 @@ def search_stocks(by, value):
         raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
 
     resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'stocks', 'stocks.csv'))
+    resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
         stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:

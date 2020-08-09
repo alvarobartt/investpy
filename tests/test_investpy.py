@@ -1167,13 +1167,13 @@ def test_investpy_certificates():
     ]
 
     for param in params:
-        investpy.get_certificate_recent_data(certificate='SG ZT CAC 40 x7 Short 31Dec99',
+        investpy.get_certificate_recent_data(certificate='BNP Gold 31Dec99',
                                              country='france',
                                              as_json=param['as_json'],
                                              order=param['order'],
                                              interval='Daily')
 
-        investpy.get_certificate_historical_data(certificate='SG ZT CAC 40 x7 Short 31Dec99',
+        investpy.get_certificate_historical_data(certificate='BNP Gold 31Dec99',
                                                  country='france',
                                                  from_date='01/01/1990',
                                                  to_date='01/01/2019',
@@ -1183,12 +1183,12 @@ def test_investpy_certificates():
 
     params = [
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': False
         },
         {
-            'certificate': 'SG ZT CAC 40 x7 Short 31Dec99',
+            'certificate': 'BNP Gold 31Dec99',
             'country': 'france',
             'as_json': True
         }
@@ -1217,7 +1217,7 @@ def test_investpy_certificates():
                                            as_json=param['as_json'],
                                            n_results=param['n_results'])
 
-    investpy.search_certificates(by='name', value='COMMERZBANK')
+    investpy.search_certificates(by='name', value='BNP')
 
 
 def test_investpy_search():
@@ -1310,7 +1310,7 @@ def test_investpy_news():
     ]
 
     for param in params:
-        investpy.get_calendar(time_zone=param['time_zone'],
+        investpy.economic_calendar(time_zone=param['time_zone'],
                               time_filter=param['time_filter'],
                               countries=param['countries'],
                               importances=param['importances'],

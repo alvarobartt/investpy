@@ -14,7 +14,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.commodities_data import commodities_as_df, commodities_as_list, commodities_as_dict
@@ -205,14 +205,15 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
         IndexError: raised if commodity recent data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_commodity_recent_data(commodity='gold')
-                          Open    High     Low   Close  Volume Currency
-            Date                                                       
-            2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
-            2019-10-28  1507.4  1510.8  1492.3  1495.8  318126      USD
-            2019-10-29  1494.3  1497.1  1485.6  1490.7  291980      USD
-            2019-10-30  1490.5  1499.3  1483.1  1496.7  353638      USD
-            2019-10-31  1498.8  1516.7  1496.0  1514.8  390013      USD
+        >>> data = investpy.get_commodity_recent_data(commodity='gold')
+        >>> data.head()
+                      Open    High     Low   Close  Volume Currency
+        Date                                                       
+        2019-10-25  1506.4  1520.9  1503.1  1505.3  368743      USD
+        2019-10-28  1507.4  1510.8  1492.3  1495.8  318126      USD
+        2019-10-29  1494.3  1497.1  1485.6  1490.7  291980      USD
+        2019-10-30  1490.5  1499.3  1483.1  1496.7  353638      USD
+        2019-10-31  1498.8  1516.7  1496.0  1514.8  390013      USD
 
     """
 
@@ -413,14 +414,15 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
         IndexError: raised if commodity historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
-                          Open    High     Low   Close  Volume Currency
-            Date                                                       
-            2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD
-            2018-01-02  1370.5  1370.5  1370.5  1370.5      97      USD
-            2018-01-03  1372.0  1372.0  1369.0  1374.2      22      USD
-            2018-01-04  1363.4  1375.6  1362.7  1377.4      13      USD
-            2018-01-05  1377.8  1377.8  1377.8  1378.4      10      USD
+        >>> data = investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                      Open    High     Low   Close  Volume Currency
+        Date                                                       
+        2018-01-01  1305.8  1309.7  1304.6  1308.7       0      USD
+        2018-01-02  1370.5  1370.5  1370.5  1370.5      97      USD
+        2018-01-03  1372.0  1372.0  1369.0  1374.2      22      USD
+        2018-01-04  1363.4  1375.6  1362.7  1377.4      13      USD
+        2018-01-05  1377.8  1377.8  1377.8  1378.4      10      USD
 
     """
 

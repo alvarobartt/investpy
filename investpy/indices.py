@@ -13,7 +13,7 @@ import requests
 from unidecode import unidecode
 from lxml.html import fromstring
 
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 from .utils.data import Data
 
 from .data.indices_data import indices_as_df, indices_as_list, indices_as_dict
@@ -198,14 +198,15 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
         IndexError: raised if index information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_index_recent_data(index='ibex 35', country='spain')
-                           Open     High      Low    Close   Volume Currency
-            Date
-            2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR
-            2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR
-            2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR
-            2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR
-            2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR
+        >>> data = investpy.get_index_recent_data(index='ibex 35', country='spain')
+        >>> data.head()
+                       Open     High      Low    Close   Volume Currency
+        Date
+        2019-08-26  12604.7  12646.3  12510.4  12621.3  4770000      EUR
+        2019-08-27  12618.3  12723.3  12593.6  12683.8  8230000      EUR
+        2019-08-28  12657.2  12697.2  12585.1  12642.5  7300000      EUR
+        2019-08-29  12637.2  12806.6  12633.8  12806.6  5650000      EUR
+        2019-08-30  12767.6  12905.9  12756.9  12821.6  6040000      EUR
 
     """
 
@@ -395,14 +396,15 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         IndexError: raised if index information was unavailable or not found.
 
     Examples:
-        >>> investpy.get_index_historical_data(index='ibex 35', country='spain', from_date='01/01/2018', to_date='01/01/2019')
-                           Open     High      Low    Close    Volume Currency
-            Date
-            2018-01-02  15128.2  15136.7  14996.6  15096.8  10340000      EUR
-            2018-01-03  15145.0  15186.9  15091.9  15106.9  12800000      EUR
-            2018-01-04  15105.5  15368.7  15103.7  15368.7  17070000      EUR
-            2018-01-05  15353.9  15407.5  15348.6  15398.9  11180000      EUR
-            2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR
+        >>> data = investpy.get_index_historical_data(index='ibex 35', country='spain', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data.head()
+                       Open     High      Low    Close    Volume Currency
+        Date
+        2018-01-02  15128.2  15136.7  14996.6  15096.8  10340000      EUR
+        2018-01-03  15145.0  15186.9  15091.9  15106.9  12800000      EUR
+        2018-01-04  15105.5  15368.7  15103.7  15368.7  17070000      EUR
+        2018-01-05  15353.9  15407.5  15348.6  15398.9  11180000      EUR
+        2018-01-08  15437.1  15448.7  15344.0  15373.3  12890000      EUR
 
     """
 

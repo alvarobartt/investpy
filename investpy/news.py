@@ -11,13 +11,13 @@ from unidecode import unidecode
 import pandas as pd
 
 from .utils import constant as cst
-from .utils.utils import random_user_agent
+from .utils.extra import random_user_agent
 
 import requests
 from lxml.html import fromstring
 
 
-def get_calendar(time_zone=None, time_filter='time_only', countries=None, importances=None, categories=None, from_date=None, to_date=None):
+def economic_calendar(time_zone=None, time_filter='time_only', countries=None, importances=None, categories=None, from_date=None, to_date=None):
     """
     This function retrieves the economic calendar, which covers financial events and indicators from all over the world
     updated in real-time. By default, the economic calendar of the currrent day from you local timezone will be retrieved, but
@@ -52,13 +52,14 @@ def get_calendar(time_zone=None, time_filter='time_only', countries=None, import
         ValueError: raised if any of the introduced parameters is not valid or errored. 
 
     Examples:
-        >>> investpy.get_calendar()
-                id        date     time         zone currency importance                         event actual forecast previous
-            0  323  27/01/2020  All Day    singapore     None       None  Singapore - Chinese New Year   None     None     None
-            1    9  27/01/2020  All Day    hong kong     None       None    Hong Kong - New Year's Day   None     None     None
-            2   71  27/01/2020  All Day    australia     None       None     Australia - Australia Day   None     None     None
-            3  750  27/01/2020  All Day        china     None       None       China - Spring Festival   None     None     None
-            4  304  27/01/2020  All Day  south korea     None       None  South Korea - Market Holiday   None     None     None
+        >>> data = investpy.economic_calendar()
+        >>> data.head()
+            id        date     time         zone currency importance                         event actual forecast previous
+        0  323  27/01/2020  All Day    singapore     None       None  Singapore - Chinese New Year   None     None     None
+        1    9  27/01/2020  All Day    hong kong     None       None    Hong Kong - New Year's Day   None     None     None
+        2   71  27/01/2020  All Day    australia     None       None     Australia - Australia Day   None     None     None
+        3  750  27/01/2020  All Day        china     None       None       China - Spring Festival   None     None     None
+        4  304  27/01/2020  All Day  south korea     None       None  South Korea - Market Holiday   None     None     None
 
     """
 
