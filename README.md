@@ -81,7 +81,7 @@ import investpy
 
 search_results = investpy.search_quotes(text='apple',
                                         products=['stocks'],
-                                        countries=['united_states'],
+                                        countries=['united states'],
                                         n_results=10)
 ```
 
