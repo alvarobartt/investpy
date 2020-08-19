@@ -23,8 +23,6 @@ investpy seeks to be one of the most complete Python packages when it comes to f
 
 <p align="center"><a href="https://www.buymeacoffee.com/alvarobartt" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a></p>
 
-**Or you can also Sponsor me at Github: [sponsors/alvarobartt](https://github.com/sponsors/alvarobartt).**
-
 ## Installation
 
 In order to get this package working you will need to **install it via pip** (with a Python3.5 version or higher) on the terminal by typing:
