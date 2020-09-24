@@ -376,5 +376,5 @@ INDEX_COUNTRIES = [
     {'country': 'tunisia', 'country_name': 'tunisia'}, {'country': 'turkey', 'country_name': 'turkey'}, {'country': 'uganda', 'country_name': 'uganda'},
     {'country': 'ukraine', 'country_name': 'ukraine'}, {'country': 'dubai', 'country_name': 'dubai'}, {'country': 'uk', 'country_name': 'united kingdom'},
     {'country': 'usa', 'country_name': 'united states'}, {'country': 'venezuela', 'country_name': 'venezuela'}, {'country': 'vietnam', 'country_name': 'vietnam'},
-    {'country': 'zambia', 'country_name': 'zambia'}, {'country': 'zimbabwe', 'country_name': 'zimbabwe'}
+    {'country': 'world', 'country_name': 'world'}, {'country': 'zambia', 'country_name': 'zambia'}, {'country': 'zimbabwe', 'country_name': 'zimbabwe'}
 ]
