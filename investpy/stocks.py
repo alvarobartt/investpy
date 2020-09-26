@@ -1432,7 +1432,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
                 curr_row = row.text_content().strip()
                 data[curr_row] = list()
                 continue
-            data[curr_row].append(int(row.text_content().strip()))
+            data[curr_row].append(float(row.text_content().strip()))
 
     dataset = pd.DataFrame(data)
     dataset.set_index('Date', inplace=True)
