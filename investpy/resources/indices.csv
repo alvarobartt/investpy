@@ -6279,6 +6279,9 @@ vietnam,VN Mid Cap,VN Mid Cap,vn-mid-cap,995069,VNIMC,VND,other_indices,world_in
 vietnam,FTSE Vietnam TR,FTSE Vietnam TR,ftse-vietnam-tr,29199,TFTFVTT,VND,other_indices,world_indices
 vietnam,FTSE Vietnam,FTSE Vietnam,ftse-vietnam,29196,FTFVTT,VND,additional_indices,world_indices
 vietnam,HNX Mid/Small Cap,HNX Mid/Small Cap,hnx-mid-small-cap,995077,HNXMSC,VND,other_indices,world_indices
+world,FTSE Emerging Markets China A Inclusion,FTSE Emerging Markets China A Inclusion,ftse-emerging-mkts-china-a-incl,961429,FTFQE,USD,other_indices,global_indices
+world,FTSE Developed Ex US,FTSE Developed Ex US,ftse-developed-ex-us,961197,FTAWDXUSR,USD,other_indices,global_indices
+world,FTSE High Dividend Yield Index,FTSE High Dividend Yield Index,ftse-high-div-yield,961504,FTGPVAN001,USD,other_indices,global_indices
 world,BNY Mellon Small Cap Select ADR,BNY Mellon Small Cap Select ADR,bny-small-cap-select-adr,956069,BKSCP,USD,other_indices,global_indices
 world,DJ Global ex-Europe Consumer Goods,Dow Jones Global ex-Europe Consumer Goods,dj-global-ex-europe-consumer-goods,954840,W8NCY,USD,other_indices,global_indices
 world,BNY Mellon Developed Markets 100 ADR,BNY Mellon Developed Markets 100 ADR,bny-developed-markets-100-adr,956003,BKTDM,USD,other_indices,global_indices
