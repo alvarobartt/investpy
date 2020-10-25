@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
-#
 # Configuration file for the Sphinx documentation builder.
 #
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/stable/config
+# This file only contains a selection of the most common options. For a full
+# list see the documentation:
+# https://www.sphinx-doc.org/en/master/usage/configuration.html
 
 # -- Path setup --------------------------------------------------------------
 
@@ -16,16 +14,13 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-import sphinx_rtd_theme
 
 # -- Project information -----------------------------------------------------
 
 project = 'investpy'
-copyright = '2018-2020, Alvaro Bartolome'
-author = 'Alvaro Bartolome'
+copyright = '2020, Alvaro Bartolome del Canto'
+author = 'Alvaro Bartolome del Canto'
 
-# The short X.Y version
-version = '1.0'
 # The full version, including alpha/beta/rc tags
 release = '1.0'
 
@@ -79,7 +74,7 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
+import sphinx_rtd_theme
 html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -160,9 +155,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'investpy', 'investpy Documentation',
-     author, 'investpy', 'One line description of project.',
+     author, 'investpy', 'Financial Data Extraction from Investing.com with Python.',
      'Miscellaneous'),
 ]
-
 
 # -- Extension configuration -------------------------------------------------

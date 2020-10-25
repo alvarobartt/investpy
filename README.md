@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/investpy_logo.png" hspace="20">
+  <img src="https://raw.githubusercontent.com/alvarobartt/investpy/refactor/docs/_static/logo.png" hspace="20">
 </p>
 
 <h2 align="center">Financial Data Extraction from Investing.com with Python</h2>
