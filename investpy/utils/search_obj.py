@@ -105,8 +105,8 @@ class SearchObj(object):
             to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
         
         Raises:
-            ValueError: ...
-            RuntimeError: ...
+            ValueError: raised if any of the introduced parameters was not valid or errored.
+            RuntimeError: raised if there was any error while retrieving the data from Investing.com.
 
         """
 
@@ -151,7 +151,9 @@ class SearchObj(object):
             else:
                 raise RuntimeError("ERR#0004: data retrieval error while scraping.")
         else:
-            head, params = self._prepare_historical_request(header=header, from_date=from_date.strftime('%m/%d/%Y'), to_date=to_date.strftime('%m/%d/%Y'))
+            head, params = self._prepare_historical_request(header=header,
+                                                            from_date=from_date.strftime('%m/%d/%Y'),
+                                                            to_date=to_date.strftime('%m/%d/%Y'))
             data = self._data_retrieval(product=self.pair_type, head=head, params=params)
 
         return data
@@ -172,8 +174,8 @@ class SearchObj(object):
                 instance and it also returns it as a normal function will do.
         
         Raises:
-            ConnectionError: ...
-            RuntimeError: ...
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
 
         """
 
@@ -206,8 +208,7 @@ class SearchObj(object):
                 try:
                     value = float(element.getnext().text_content().replace(',', ''))
                     if isinstance(value, float):
-                        if value.is_integer() is True:
-                            value = int(value)
+                        if value.is_integer() is True: value = int(value)
                     result[title] = value if value != 'N/A' else None
                     continue
                 except:
@@ -238,8 +239,7 @@ class SearchObj(object):
                     elif value.__contains__('T'):
                         value = float(value.replace('T', '').replace(',', '')) * 1e12
                     if isinstance(value, float):
-                        if value.is_integer() is True:
-                            value = int(value)
+                        if value.is_integer() is True: value = int(value)
                     result[title] = value if value != 'N/A' else None
                     continue
                 except:
@@ -248,8 +248,7 @@ class SearchObj(object):
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
         self.info = result
-
-        return result
+        return self.info
 
     def _prepare_request(self, header):
         head = {

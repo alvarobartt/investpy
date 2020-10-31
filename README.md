@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/investpy_logo.png" hspace="20">
+  <img src="https://raw.githubusercontent.com/alvarobartt/investpy/refactor/docs/source/_static/logo.png" hspace="20">
 </p>
 
 <h2 align="center">Financial Data Extraction from Investing.com with Python</h2>
@@ -13,7 +13,6 @@ investpy seeks to be one of the most complete Python packages when it comes to f
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
 [![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
 [![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://dev.azure.com/alvarobartt/alvarobartt/_apis/build/status/investpy?branchName=master)](https://dev.azure.com/alvarobartt/alvarobartt/_build/latest?definitionId=3&branchName=master)
 [![Build Status](https://img.shields.io/travis/alvarobartt/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarobartt/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarobartt/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarobartt/investpy)
