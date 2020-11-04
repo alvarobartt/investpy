@@ -601,6 +601,9 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
+    if order in ['descending', 'desc']:
+        final.reverse()
+
     if as_json is True:
         return json.dumps(final[0], sort_keys=False)
     elif as_json is False:
