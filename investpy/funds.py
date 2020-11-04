@@ -578,12 +578,9 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': name,
-                             'historical':
-                                 [value.fund_as_json() for value in result]
-                             }
+                    json_list = [value.fund_as_json() for value in result]
 
-                    final.append(json_)
+                    final.append(json_list)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -597,7 +594,11 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         final.reverse()
 
     if as_json is True:
-        return json.dumps(final[0], sort_keys=False)
+        json_ = {
+            'name': name,
+            'historical': [value for json_list in final for value in json_list]
+        }
+        return json.dumps(json_, sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
 

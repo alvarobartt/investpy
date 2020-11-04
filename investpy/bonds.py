@@ -555,13 +555,9 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
                     result = result
 
                 if as_json is True:
-                    json_ = {
-                        'name': name,
-                        'historical':
-                            [value.bond_as_json() for value in result]
-                    }
-
-                    final.append(json_)
+                    json_list = [value.bond_as_json() for value in result]
+                    
+                    final.append(json_list)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.bond_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -574,7 +570,11 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
         final.reverse()
 
     if as_json is True:
-        return json.dumps(final[0], sort_keys=False)
+        json_ = {
+            'name': name,
+            'historical': [value for json_list in final for value in json_list]
+        }
+        return json.dumps(json_, sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
 

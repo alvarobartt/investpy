@@ -542,13 +542,9 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     result = result
 
                 if as_json is True:
-                    json_ = {
-                        'name': crypto_name,
-                        'historical':
-                            [value.crypto_as_json() for value in result]
-                    }
+                    json_list = [value.crypto_as_json() for value in result]
                     
-                    final.append(json_)
+                    final.append(json_list)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.crypto_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -561,7 +557,11 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         final.reverse()
 
     if as_json is True:
-        return json.dumps(final[0], sort_keys=False)
+        json_ = {
+            'name': crypto_name,
+            'historical': [value for json_list in final for value in json_list]
+        }
+        return json.dumps(json_, sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
 
