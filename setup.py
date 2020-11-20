@@ -26,7 +26,7 @@ setup(
     download_url='https://github.com/alvarobartt/investpy/archive/1.0.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
-    author_email='alvarobartt@usal.es',
+    author_email='alvarobartt@yahoo.com',
     description='Financial Data Extraction from Investing.com with Python',
     long_description=readme(),
     long_description_content_type='text/markdown',
