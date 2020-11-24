@@ -106,6 +106,20 @@ CATEGORY_FILTERS = {
     'bonds': '_Bonds'
 }
 
+SECTOR_FILTERS = {
+    'financial_services': 'financial_services',
+    'consumer_cyclical': 'consumer_cyclical',
+    'technology': 'technology',
+    'capital_goods': 'capital_goods',
+    'healthcare': 'healthcare',
+    'basic_materials': 'basic_materials',
+    'consumer_non_cyclical': 'consumer_non_cyclical',
+    'energy': 'energy',
+    'transportation': 'transportation',
+    'utilities': 'utilities',
+    'conglomerates': 'conglomerates'
+}
+
 IMPORTANCE_RATINGS = {
     1: 'low',
     2: 'medium',
