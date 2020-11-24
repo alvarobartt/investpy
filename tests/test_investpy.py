@@ -201,7 +201,7 @@ def test_investpy_stocks():
 
     for param in params:
         investpy.get_stock_financial_summary(stock=param['stock'],
-                                             country=param['country'], 
+                                             country=param['country'],
                                              summary_type=param['summary_type'],
                                              period=param['period'])
 
@@ -566,15 +566,15 @@ def test_investpy_indices():
 
     for param in params:
         investpy.get_index_information(index=param['index'], country=param['country'], as_json=param['as_json'])
-    
+
     params = [
         {
-            'country': 'united states', 
+            'country': 'united states',
             'as_json': False,
             'n_results': 10
         },
         {
-            'country': 'united kingdom', 
+            'country': 'united kingdom',
             'as_json': True,
             'n_results': 10
         }
@@ -722,7 +722,7 @@ def test_investpy_currency_crosses():
 
     for param in params:
         investpy.get_currency_cross_information(currency_cross=param['currency_cross'], as_json=param['as_json'])
-    
+
     params = [
         {
             'currency': 'try',
@@ -735,7 +735,7 @@ def test_investpy_currency_crosses():
             'n_results': 100
         }
     ]
-    
+
     for param in params:
         investpy.get_currency_crosses_overview(currency=param['currency'], as_json=param['as_json'], n_results=param['n_results'])
 
@@ -844,7 +844,7 @@ def test_investpy_bonds():
 
     for param in params:
         investpy.get_bond_information(bond=param['bond'], as_json=param['as_json'])
-    
+
     params = [
         {
             'country': 'united states',
@@ -968,7 +968,7 @@ def test_investpy_commodities():
 
     for param in params:
         investpy.get_commodity_information(commodity=param['commodity'], country=param['country'], as_json=param['as_json'])
-    
+
     params = [
         {
             'group': 'metals',
@@ -992,7 +992,7 @@ def test_investpy_cryptos():
     """
     This function checks that crypto currencies data retrieval functions listed in investpy work properly.
     """
-    
+
     investpy.get_cryptos()
     investpy.get_cryptos_list()
 
@@ -1008,7 +1008,7 @@ def test_investpy_cryptos():
         {
             'columns': None,
             'as_json': True
-        },    
+        },
     ]
 
     for param in params:
@@ -1060,7 +1060,7 @@ def test_investpy_cryptos():
 
     for param in params:
         investpy.get_crypto_information(crypto=param['crypto'], as_json=param['as_json'])
-    
+
     params = [
         {
             'as_json': False,
@@ -1198,7 +1198,7 @@ def test_investpy_certificates():
         investpy.get_certificate_information(certificate=param['certificate'],
                                              country=param['country'],
                                              as_json=param['as_json'])
-    
+
     params = [
         {
             'country': 'france',
@@ -1311,12 +1311,42 @@ def test_investpy_news():
 
     for param in params:
         investpy.economic_calendar(time_zone=param['time_zone'],
-                              time_filter=param['time_filter'],
-                              countries=param['countries'],
-                              importances=param['importances'],
-                              categories=param['categories'],
-                              from_date=param['from_date'],
-                              to_date=param['to_date'])
+                                   time_filter=param['time_filter'],
+                                   countries=param['countries'],
+                                   importances=param['importances'],
+                                   categories=param['categories'],
+                                   from_date=param['from_date'],
+                                   to_date=param['to_date'])
+
+    params = [
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': ['spain', 'france'],
+            'importances': ['high', 'low'],
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': 'GMT -3:00',
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': '01/01/2020',
+            'to_date': '01/02/2020'
+        }
+    ]
+
+    for param in params:
+        investpy.earnings_calendar(time_zone=param['time_zone'],
+                                   time_filter=param['time_filter'],
+                                   countries=param['countries'],
+                                   importances=param['importances'],
+                                   sectors=param['sectors'],
+                                   from_date=param['from_date'],
+                                   to_date=param['to_date'])
 
 
 def test_investpy_technical():
