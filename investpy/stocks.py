@@ -82,7 +82,7 @@ def get_stocks_list(country=None):
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised if `stocks.csv` file was not found.
         IOError: raised when `stocks.csv` file is missing or empty.
-    
+
     """
 
     return stocks_as_list(country)
@@ -138,7 +138,7 @@ def get_stock_countries():
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
-    
+
     """
 
     return list(cst.STOCK_COUNTRIES.keys())
@@ -150,7 +150,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     of the introduced stock from the specified country will be retrieved and returned as a :obj:`pandas.DataFrame` if
     the parameters are valid and the request to Investing.com succeeds. Note that additionally some optional parameters
     can be specified: as_json and order, which let the user decide if the data is going to be returned as a
-    :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the 
+    :obj:`json` or not, and if the historical data is going to be ordered ascending or descending (where the index is the
     date), respectively.
 
     Args:
@@ -171,9 +171,9 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
             The resulting recent data, in case that the default parameters were applied, will look like::
 
-                Date || Open | High | Low | Close | Volume | Currency 
+                Date || Open | High | Low | Close | Volume | Currency
                 -----||------|------|-----|-------|--------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but in case that as_json parameter was defined as True, then the output will be::
 
@@ -296,7 +296,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-    
+
     result = list()
 
     if path_:
@@ -310,7 +310,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
                 info.append(nested_.get('data-real-value'))
 
             stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
-            
+
             stock_close = float(info[1].replace(',', ''))
             stock_open = float(info[2].replace(',', ''))
             stock_high = float(info[3].replace(',', ''))
@@ -373,9 +373,9 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
             The returned data is case we use default arguments will look like::
 
-                Date || Open | High | Low | Close | Volume | Currency 
+                Date || Open | High | Low | Close | Volume | Currency
                 -----||------|------|-----|-------|--------|----------
-                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx 
+                xxxx || xxxx | xxxx | xxx | xxxxx | xxxxxx | xxxxxxxx
 
             but if we define `as_json=True`, then the output will be::
 
@@ -569,15 +569,15 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                         raise IndexError("ERR#0007: stock information unavailable or not found.")
                 else:
                     data_flag = True
-                
+
                 info = []
-            
+
                 for nested_ in elements_.xpath(".//td"):
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
                     stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
-                    
+
                     stock_close = float(info[1].replace(',', ''))
                     stock_open = float(info[2].replace(',', ''))
                     stock_high = float(info[3].replace(',', ''))
@@ -601,7 +601,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                         'historical':
                             [value.stock_as_json() for value in result]
                     }
-                    
+
                     final.append(json_)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
@@ -760,7 +760,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
             company_profile['desc'] = ' '.join(text.replace('\n', ' ').replace('\xa0', ' ').split())
 
         return company_profile
-        
+
     elif selected_source == 'Investing':
         tag = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
 
@@ -900,7 +900,7 @@ def get_stock_dividends(stock, country):
                             try:
                                 value = int(element_.getnext().get('data-value'))
                                 dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(value).date()), '%Y-%m-%d')
-                            except:
+                            except BaseException:
                                 dividend_payment_date = None
                             next_element_ = element_.getnext()
                             dividend_yield = next_element_.getnext().text_content()
@@ -964,7 +964,7 @@ def get_stock_dividends(stock, country):
                                     try:
                                         value = int(element_.getnext().get('data-value'))
                                         dividend_payment_date = datetime.strptime(str(datetime.fromtimestamp(value).date()), '%Y-%m-%d')
-                                    except:
+                                    except BaseException:
                                         dividend_payment_date = None
                                     next_element_ = element_.getnext()
                                     dividend_yield = next_element_.getnext().text_content()
@@ -986,8 +986,8 @@ def get_stock_dividends(stock, country):
 
 def get_stock_information(stock, country, as_json=False):
     """
-    This function retrieves fundamental financial information from the specified stock. The retrieved 
-    information from the stock can be valuable as it is additional information that can be used combined 
+    This function retrieves fundamental financial information from the specified stock. The retrieved
+    information from the stock can be valuable as it is additional information that can be used combined
     with OHLC values, so to determine financial insights from the company which holds the specified stock.
 
     Args:
@@ -1103,13 +1103,13 @@ def get_stock_information(stock, country, as_json=False):
                 try:
                     result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
                     continue
-                except:
+                except BaseException:
                     pass
                 try:
                     text = element.getnext().text_content().strip()
                     result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
                     continue
-                except:
+                except BaseException:
                     pass
                 try:
                     value = element.getnext().text_content().strip()
@@ -1119,7 +1119,7 @@ def get_stock_information(stock, country, as_json=False):
                         value = float(value.replace('T', '').replace(',', '')) * 1e12
                     result.at[0, title_] = value
                     continue
-                except:
+                except BaseException:
                     pass
 
         result.replace({'N/A': None}, inplace=True)
@@ -1137,8 +1137,8 @@ def get_stocks_overview(country, as_json=False, n_results=100):
     """
     This function retrieves an overview containing all the real time data available for the main stocks from a country,
     such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-    function is to get an overview on the main stocks from a country, so to get a general view. Note that since 
-    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks 
+    function is to get an overview on the main stocks from a country, so to get a general view. Note that since
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks
     is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
 
     Args:
@@ -1157,16 +1157,16 @@ def get_stocks_overview(country, as_json=False, n_results=100):
                 country | name | symbol | last | high | low | change | change_percentage | turnover | currency
                 --------|------|--------|------|------|-----|--------|-------------------|----------|----------
                 xxxxxxx | xxxx | xxxxxx | xxxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx | xxxxxxxx | xxxxxxxx
-    
+
     Raises:
         ValueError: raised if any of the introduced arguments errored.
         FileNotFoundError: raised when `stocks.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: 
-            raised either if the introduced country does not match any of the listed ones or if no overview results could be 
+        RuntimeError:
+            raised either if the introduced country does not match any of the listed ones or if no overview results could be
             retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
-    
+
     """
 
     if country is None:
@@ -1297,22 +1297,22 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
         stock (:obj:`str`): symbol of the stock to retrieve its financial summary.
         country (:obj:`str`): name of the country from where the introduced stock symbol is.
         summary_type (:obj:`str`, optional):
-            type of the financial summary table to retrieve, default value is `income_statement`, but all the 
+            type of the financial summary table to retrieve, default value is `income_statement`, but all the
             available types are: `income_statement`, `cash_flow_statement` and `balance_sheet`.
         period (:obj:`str`, optional):
-            period range of the financial summary table to rertieve, detault value is `annual`, but all the 
+            period range of the financial summary table to rertieve, detault value is `annual`, but all the
             available periods are: `annual` and `quarterly`.
 
     Returns:
         :obj:`pandas.DataFrame` - financial_summary:
-            The resulting :obj:`pandas.DataFrame` contains the table of the requested financial summary from the 
+            The resulting :obj:`pandas.DataFrame` contains the table of the requested financial summary from the
             introduced stock, so the fields/column names may vary, since it depends on the summary_type introduced.
             So on, the returned table will have the following format/structure::
 
-                Date || Field 1 | Field 2 | ... | Field N 
+                Date || Field 1 | Field 2 | ... | Field N
                 -----||---------|---------|-----|---------
-                xxxx || xxxxxxx | xxxxxxx | xxx | xxxxxxx 
-                
+                xxxx || xxxxxxx | xxxxxxx | xxx | xxxxxxx
+
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
         FileNotFoundError: raised if the stocks.csv file was not found.
@@ -1324,7 +1324,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
         >>> data = investpy.get_stock_financial_summary(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
         >>> data.head()
                     Total Revenue  Gross Profit  Operating Income  Net Income
-        Date                                                                 
+        Date
         2019-09-28         260174         98392             63930       55256
         2018-09-29         265595        101839             70898       59531
         2017-09-30         229234         88186             61344       48351
@@ -1405,7 +1405,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     }
 
     url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax'
-    
+
     req = requests.get(url, params=params, headers=headers)
 
     if req.status_code != 200:
@@ -1497,7 +1497,7 @@ def search_stocks(by, value):
 
     stocks['matches'] = stocks[by].str.contains(value, case=False)
 
-    search_result = stocks.loc[stocks['matches'] == True].copy()
+    search_result = stocks.loc[stocks['matches']].copy()
 
     if len(search_result) == 0:
         raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + '.')
@@ -1506,3 +1506,176 @@ def search_stocks(by, value):
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result
+
+
+def get_stock_earnings(stock, country):
+    """
+        This function retrieves the earnings data from the specified stock. Earnings data include date of the
+        release date of the earnings report, period end of the earnings report, EPS, forecast EPS, revenue,
+        and forecast revenue.
+
+    Args:
+        stock (:obj:`str`): symbol of the stock to retrieve its earnings from.
+        country (:obj:`country`): name of the country from where the stock is from.
+
+    Returns:
+        :obj:`pandas.DataFrame` - stock_dividends:
+            Returns a :obj:`pandas.DataFrame` containing the retrieved information of stock earnings for every stock
+            symbol introduced as parameter.
+
+            So on, the resulting :obj:`pandas.DataFrame` will look like::
+
+                 Release Date  Period End     EPS  EPS Forcast   Revenue Revenue Forcast
+            0    02/02/2021    12/2020        NaN       1.3900      None         101.65B
+            1    29/10/2020    09/2020     0.7300       0.7099     64.7B           63.8B
+            2    30/07/2020    06/2020     0.6450       0.5100    59.69B          52.29B
+            3    30/04/2020    03/2020     0.6375       2.2500    58.31B           54.9B
+            ...
+
+    """
+
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
+
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    resource_package = 'investpy'
+    resource_path = '/'.join((('resources', 'stocks.csv')))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    if unidecode(country.lower()) not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    stocks = stocks[stocks['country'].str.lower() == unidecode(country.lower())]
+
+    stock = unidecode(stock.strip().lower())
+
+    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+
+    tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
+
+    headers = {
+        "User-Agent": random_user_agent(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/equities/' + str(tag_) + '-earnings'
+
+    req = requests.get(url=url, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root_ = fromstring(req.text)
+    path_ = root_.xpath(".//table[contains(@id, 'earningsHistory')]")
+
+    if path_:
+        more_results_id = path_[0].get('id').replace('earningsHistory', '')
+
+        path_ = root_.xpath(".//table[@id='earningsHistory" + str(more_results_id) + "']/tbody/tr")
+
+        objs = list()
+
+        if path_:
+            last_timestamp = path_[-1].get('event_timestamp')
+            for elements_ in path_:
+                info = []
+                release_date = period_end = eps = eps_forcast = revenue = revenue_forcast = None
+                for e_ in elements_.xpath(".//td"):
+                    info.append(unidecode(e_.text_content()).strip())
+                if len(info) != 6:  # earning info size should be 6.
+                    continue
+                release_date = datetime.strptime(info[0], '%b %d, %Y').strftime("%d/%m/%Y")
+                period_end = info[1]
+                eps = None if '--' in info[2] else float(info[2])
+                eps_forcast = None if '--' in info[3] else float(info[3].split(" ")[-1])  # remove "/  " from forcast info
+                revenue = None if '--' in info[4]else info[4]
+                revenue_forcast = None if '--' in info[5] else info[5].split(" ")[-1]  # remove "/  " from forcast info
+                obj = {
+                    'Release Date': release_date,
+                    'Period End': period_end,
+                    'EPS': eps,
+                    'EPS Forcast': eps_forcast,
+                    'Revenue': revenue,
+                    'Revenue Forcast': revenue_forcast,
+                }
+                objs.append(obj)
+
+        flag = True
+
+        while flag:
+            headers = {
+                "User-Agent": random_user_agent(),
+                "X-Requested-With": "XMLHttpRequest",
+                "Accept": "text/html",
+                "Accept-Encoding": "gzip, deflate, br",
+                "Connection": "keep-alive",
+            }
+
+            params = {
+                'pairID': int(more_results_id),
+                'last_timestamp': last_timestamp
+            }
+
+            url = 'https://www.investing.com/equities/morehistory'
+
+            req = requests.post(url=url, headers=headers, params=params)
+
+            if req.status_code != 200:
+                raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+            res = req.json()
+            if res['hasMoreHistory'] is False:
+                flag = False
+
+            if res['hasMoreHistory'] is None or not res['historyRows']:
+                break
+
+            root_ = fromstring(res['historyRows'])
+            path_ = root_.xpath(".//tr")
+            if path_:
+                last_timestamp = path_[-1].get('event_timestamp')
+                for elements_ in path_:
+                    release_date = period_end = eps = eps_forcast = revenue = revenue_forcast = None
+                    info = []
+                    for e_ in elements_.xpath(".//td"):
+                        info.append(unidecode(e_.text_content()).strip())
+                    if len(info) != 6:  # earning info size should be 6.
+                        continue
+                    release_date = datetime.strptime(info[0], '%b %d, %Y').strftime("%d/%m/%Y")
+                    period_end = info[1]
+                    eps = None if '--' in info[2] else float(info[2])
+                    eps_forcast = None if '--' in info[3] else float(info[3].split(" ")[-1])  # remove "/  " from forcast info
+                    revenue = None if '--' in info[4]else info[4]
+                    revenue_forcast = None if '--' in info[5] else info[5].split(" ")[-1]  # remove "/  " from forcast info
+                    obj = {
+                        'Release Date': release_date,
+                        'Period End': period_end,
+                        'EPS': eps,
+                        'EPS Forcast': eps_forcast,
+                        'Revenue': revenue,
+                        'Revenue Forcast': revenue_forcast,
+                    }
+                    objs.append(obj)
+
+        df = pd.DataFrame(objs)
+        return df
+    else:
+        raise RuntimeError("ERR#0061: introduced stock has no dividend's data to display.")

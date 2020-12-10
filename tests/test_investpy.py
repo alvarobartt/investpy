@@ -207,6 +207,20 @@ def test_investpy_stocks():
 
     investpy.search_stocks(by='name', value='BBVA')
 
+    params = [
+        {
+            'stock': 'bbva',
+            'country': 'spain'
+        },
+        {
+            'stock': 'entel',
+            'country': 'chile'
+        }
+    ]
+
+    for param in params:
+        investpy.get_stock_earnings(stock=param['stock'], country=param['country'])
+
 
 def test_investpy_funds():
     """
@@ -1311,12 +1325,12 @@ def test_investpy_news():
 
     for param in params:
         investpy.economic_calendar(time_zone=param['time_zone'],
-                              time_filter=param['time_filter'],
-                              countries=param['countries'],
-                              importances=param['importances'],
-                              categories=param['categories'],
-                              from_date=param['from_date'],
-                              to_date=param['to_date'])
+                                   time_filter=param['time_filter'],
+                                   countries=param['countries'],
+                                   importances=param['importances'],
+                                   categories=param['categories'],
+                                   from_date=param['from_date'],
+                                   to_date=param['to_date'])
 
 
 def test_investpy_technical():
