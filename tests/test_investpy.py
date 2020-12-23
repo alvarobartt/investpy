@@ -159,6 +159,11 @@ def test_investpy_stocks():
             'as_json': False,
             'n_results': 50
         }
+        {
+            'country': 'indonesia',
+            'as_json': False,
+            'n_results': 362
+        }
     ]
 
     for param in params:
