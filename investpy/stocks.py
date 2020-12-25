@@ -1260,6 +1260,8 @@ def get_stocks_overview(country, as_json=False, n_results=100):
                 turnover = float(turnover.replace('K', '').replace(',', '')) * 1e3
             elif turnover.__contains__('M'):
                 turnover = float(turnover.replace('M', '').replace(',', '')) * 1e6
+            elif turnover.__contains__('B'):
+                turnover = float(turnover.replace('B', '').replace(',', '')) * 1e9
 
             data = {
                 "country": country_check,
