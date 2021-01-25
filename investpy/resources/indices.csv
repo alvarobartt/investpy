@@ -2785,56 +2785,56 @@ israel,BNY Mellon Israel ADR,BNY Mellon Israel ADR,bny-israel-adr,955991,BKIL,US
 israel,DJ Israel Select Oil & Gas,Dow Jones Israel Select Oil & Gas,dj-israel-select-oil---gas,954468,DJILSOG,ILS,primary_sectors,global_indices
 israel,MSCI Israel,MSCI Israel,msci-israel,942892,MIIL00000PUS,USD,major_indices,global_indices
 israel,BNY Mellon Israel ADR TR,BNY Mellon Israel ADR Total Return,bny-israel-adr-tr,956064,BKILT,USD,additional_indices,global_indices
-israeli,TASE VIX VTA35,Tel Aviv Volatility Index VTA35,tase-vta35,1141703,VTA35,ILS,additional_indices,world_indices
-israeli,TA 60 SME,TA 60 SME,ta50ytr,10530,TA60SME,ILS,additional_indices,world_indices
-israeli,TA Growth,TA Growth,taytr,10528,TAGROWTH,ILS,additional_indices,world_indices
-israeli,TA Allshare,TA Allshare,ta-composite,15291,TAALLSHARE,ILS,additional_indices,world_indices
-israeli,TA 90,TA 90,ta75,10531,TA90,ILS,additional_indices,world_indices
-israeli,TA 125,TA 125,ta100,10527,TA125,ILS,additional_indices,world_indices
-israeli,TA Oil & Gas,TA Oil & Gas,ta-oil---gas,15293,TAOILGAS,ILS,primary_sectors,world_indices
-israeli,TA Real Estate,TA Real Estate,telreal,10533,TEREAL,ILS,primary_sectors,world_indices
-israeli,TASE Insurance,Insurance Shares and Convertibles,tase-insurance,1057706,TAINS,ILS,other_indices,world_indices
-israeli,TA Insurance,TA Insurance,ta-insurance,15292,TAINSRTPL,ILS,primary_sectors,world_indices
-israeli,TA Global BlueTech,TA Global BlueTech,tablutech50,14576,TABLUTECHGLB,ILS,primary_sectors,world_indices
-israeli,Tel Aviv Bond Ils,Tel Aviv Bond Ils,tel-aviv-bond-ils,942864,TELBONDILS,ILS,other_indices,world_indices
-israeli,TA Technology,TA Technology,ta-technology,15294,TATECH,ILS,primary_sectors,world_indices
-israeli,Tel Aviv Tech-Elite,Tel Aviv Tech-Elite,tel-aviv-tech-elite,942860,TATECELT,ILS,other_indices,world_indices
-israeli,Tel Bond Yields Shekel,Tel Bond Yields Shekel,tel-bond-yields-shekel,962501,TELBDYLDSHKL,ILS,other_indices,world_indices
-israeli,TASE Industry,Industry Shares and Convertibles,tase-industrial,1057707,TAIND,ILS,other_indices,world_indices
-israeli,Tel Bond 40,Tel Bond 40,telbond40,13053,TELBOND40,ILS,other_indices,world_indices
-israeli,Tel Bond 60,Tel Bond 60,telbond60,13054,TELBOND60,ILS,other_indices,world_indices
-israeli,Tel Bond Composite,Tel Bond Composite,tel-bond-composite,942862,TELBNDCOMP,ILS,other_indices,world_indices
-israeli,Tel Bond Cpi Linked,Tel Bond Cpi Linked,tel-bond-cpi-linked,942865,TLBNDCPI,ILS,other_indices,world_indices
-israeli,Tel Bond Cpi Linked Banks,Tel Bond Cpi Linked Banks,tel-bond-cpi-linked-banks,942866,TLBNDCPIBNK,ILS,other_indices,world_indices
-israeli,Tel Bond Cpi Linked Smallcap,Tel Bond Cpi Linked Smallcap,tel-bond-cpi-linked-smallcap,942867,TLBNDCPISC,ILS,other_indices,world_indices
-israeli,Tel Bond Floating,Tel Bond Floating,tel-bond-floating,942863,TELBNDFLTNG,ILS,other_indices,world_indices
-israeli,Tel Bond Non Linked,Tel Bond Non Linked,tel-bond-non-linked,986239,TELBDNONLKD,ILS,other_indices,world_indices
-israeli,Tel Bond Yields,Tel Bond Yields,tel-bond-yields,942861,TELBNDYLD,ILS,other_indices,world_indices
-israeli,TA Finance,TA Finance,telfin,10532,TELFIN,ILS,primary_sectors,world_indices
-israeli,Tel Bond-CPI Linked 5-15,Tel Bond-CPI Linked 5-15,tel-bond-cpi-linked-5-15,1141265,TLBNDSHKL15,ILS,other_indices,world_indices
-israeli,TASE Banks,Banks Shares and Convertibles,tase-cmrc-banks,1057702,TABNK,ILS,other_indices,world_indices
-israeli,Tel Bond 20,Tel Bond 20,telbond20,13052,TELBOND20,ILS,other_indices,world_indices
-israeli,TA Communications and IT,TA Communications and IT,ta-com,15290,TACOMMIT,ILS,primary_sectors,world_indices
-israeli,TASE Invest Holdings,Investment & Holdings Shares and Convertibles,tase-invest,1057703,TAINV,ILS,other_indices,world_indices
-israeli,TA Banks 5,TA Banks 5,telbank,11092,TELBANK5,ILS,primary_sectors,world_indices
-israeli,TASE Warrants,Warrants,tase-warrants,1057705,TAWNT,ILS,other_indices,world_indices
-israeli,Tel Div,Tel Div,teldiv,13055,TELDIV,ILS,other_indices,world_indices
-israeli,TA Biomed,TA Biomed,ta-biomed,15295,BIOMED,ILS,primary_sectors,world_indices
-israeli,TA-SME150,TA-SME150,tase-sme150,1009404,TA150SME,ILS,other_indices,world_indices
-israeli,TA-Rimon,TA-Rimon,tase-rimon,1009403,TARIMON,ILS,other_indices,world_indices
-israeli,TA Maala,TA Maala,maala,13051,MAALA,ILS,other_indices,world_indices
-israeli,TASE Shares,Shares,tase-general-shares,1057712,TASHARES,ILS,other_indices,world_indices
-israeli,TASE Chemical,"Chemical, Rubber & Plastic Shares and Convertibles",tase-chemist,1057710,TACHEM,ILS,other_indices,world_indices
-israeli,TA 35 Galum,Tel Aviv 35 Galum,tel-aviv-35-galum,1062663,TA35G,ILS,other_indices,world_indices
-israeli,TASE General,General Shares and Convertibles,tase-general,1057701,TASEALL,ILS,other_indices,world_indices
-israeli,Israel 50,Investing.com Israel 50,investing.com-israel-50,956472,invil50,ILS,other_indices,world_indices
-israeli,TA 35,TA 35,ta25,10529,TA35,ILS,major_indices,world_indices
-israeli,TASE Oil Gas Exploration,Oil & Gas Exploration Shares and Convertibles,tase-oil-gas,1057704,TAENR,ILS,other_indices,world_indices
-israeli,TASE Commerce Services,Commerce & Services Shares and Convertibles,tase-commerce-services,1057708,TASRV,ILS,other_indices,world_indices
-israeli,TASE Convertible Bonds,Convertible Bonds,tase-gen-convertibles,1057709,TACONV,ILS,other_indices,world_indices
-israeli,USD/ILS Galum,Dollar Galum,dollar-galum,1062664,USDILSG,ILS,other_indices,world_indices
-israeli,FTSE Israel,FTSE Israel,ftse-israel,28890,FTWIISRL,ILS,other_indices,world_indices
-israeli,TASE Real Estate Construction,Real Estate & Construction Shares and Convertibles,tase-real-estate,1057711,TAREAL,ILS,other_indices,world_indices
+israel,TASE VIX VTA35,Tel Aviv Volatility Index VTA35,tase-vta35,1141703,VTA35,ILS,additional_indices,world_indices
+israel,TA 60 SME,TA 60 SME,ta50ytr,10530,TA60SME,ILS,additional_indices,world_indices
+israel,TA Growth,TA Growth,taytr,10528,TAGROWTH,ILS,additional_indices,world_indices
+israel,TA Allshare,TA Allshare,ta-composite,15291,TAALLSHARE,ILS,additional_indices,world_indices
+israel,TA 90,TA 90,ta75,10531,TA90,ILS,additional_indices,world_indices
+israel,TA 125,TA 125,ta100,10527,TA125,ILS,additional_indices,world_indices
+israel,TA Oil & Gas,TA Oil & Gas,ta-oil---gas,15293,TAOILGAS,ILS,primary_sectors,world_indices
+israel,TA Real Estate,TA Real Estate,telreal,10533,TEREAL,ILS,primary_sectors,world_indices
+israel,TASE Insurance,Insurance Shares and Convertibles,tase-insurance,1057706,TAINS,ILS,other_indices,world_indices
+israel,TA Insurance,TA Insurance,ta-insurance,15292,TAINSRTPL,ILS,primary_sectors,world_indices
+israel,TA Global BlueTech,TA Global BlueTech,tablutech50,14576,TABLUTECHGLB,ILS,primary_sectors,world_indices
+israel,Tel Aviv Bond Ils,Tel Aviv Bond Ils,tel-aviv-bond-ils,942864,TELBONDILS,ILS,other_indices,world_indices
+israel,TA Technology,TA Technology,ta-technology,15294,TATECH,ILS,primary_sectors,world_indices
+israel,Tel Aviv Tech-Elite,Tel Aviv Tech-Elite,tel-aviv-tech-elite,942860,TATECELT,ILS,other_indices,world_indices
+israel,Tel Bond Yields Shekel,Tel Bond Yields Shekel,tel-bond-yields-shekel,962501,TELBDYLDSHKL,ILS,other_indices,world_indices
+israel,TASE Industry,Industry Shares and Convertibles,tase-industrial,1057707,TAIND,ILS,other_indices,world_indices
+israel,Tel Bond 40,Tel Bond 40,telbond40,13053,TELBOND40,ILS,other_indices,world_indices
+israel,Tel Bond 60,Tel Bond 60,telbond60,13054,TELBOND60,ILS,other_indices,world_indices
+israel,Tel Bond Composite,Tel Bond Composite,tel-bond-composite,942862,TELBNDCOMP,ILS,other_indices,world_indices
+israel,Tel Bond Cpi Linked,Tel Bond Cpi Linked,tel-bond-cpi-linked,942865,TLBNDCPI,ILS,other_indices,world_indices
+israel,Tel Bond Cpi Linked Banks,Tel Bond Cpi Linked Banks,tel-bond-cpi-linked-banks,942866,TLBNDCPIBNK,ILS,other_indices,world_indices
+israel,Tel Bond Cpi Linked Smallcap,Tel Bond Cpi Linked Smallcap,tel-bond-cpi-linked-smallcap,942867,TLBNDCPISC,ILS,other_indices,world_indices
+israel,Tel Bond Floating,Tel Bond Floating,tel-bond-floating,942863,TELBNDFLTNG,ILS,other_indices,world_indices
+israel,Tel Bond Non Linked,Tel Bond Non Linked,tel-bond-non-linked,986239,TELBDNONLKD,ILS,other_indices,world_indices
+israel,Tel Bond Yields,Tel Bond Yields,tel-bond-yields,942861,TELBNDYLD,ILS,other_indices,world_indices
+israel,TA Finance,TA Finance,telfin,10532,TELFIN,ILS,primary_sectors,world_indices
+israel,Tel Bond-CPI Linked 5-15,Tel Bond-CPI Linked 5-15,tel-bond-cpi-linked-5-15,1141265,TLBNDSHKL15,ILS,other_indices,world_indices
+israel,TASE Banks,Banks Shares and Convertibles,tase-cmrc-banks,1057702,TABNK,ILS,other_indices,world_indices
+israel,Tel Bond 20,Tel Bond 20,telbond20,13052,TELBOND20,ILS,other_indices,world_indices
+israel,TA Communications and IT,TA Communications and IT,ta-com,15290,TACOMMIT,ILS,primary_sectors,world_indices
+israel,TASE Invest Holdings,Investment & Holdings Shares and Convertibles,tase-invest,1057703,TAINV,ILS,other_indices,world_indices
+israel,TA Banks 5,TA Banks 5,telbank,11092,TELBANK5,ILS,primary_sectors,world_indices
+israel,TASE Warrants,Warrants,tase-warrants,1057705,TAWNT,ILS,other_indices,world_indices
+israel,Tel Div,Tel Div,teldiv,13055,TELDIV,ILS,other_indices,world_indices
+israel,TA Biomed,TA Biomed,ta-biomed,15295,BIOMED,ILS,primary_sectors,world_indices
+israel,TA-SME150,TA-SME150,tase-sme150,1009404,TA150SME,ILS,other_indices,world_indices
+israel,TA-Rimon,TA-Rimon,tase-rimon,1009403,TARIMON,ILS,other_indices,world_indices
+israel,TA Maala,TA Maala,maala,13051,MAALA,ILS,other_indices,world_indices
+israel,TASE Shares,Shares,tase-general-shares,1057712,TASHARES,ILS,other_indices,world_indices
+israel,TASE Chemical,"Chemical, Rubber & Plastic Shares and Convertibles",tase-chemist,1057710,TACHEM,ILS,other_indices,world_indices
+israel,TA 35 Galum,Tel Aviv 35 Galum,tel-aviv-35-galum,1062663,TA35G,ILS,other_indices,world_indices
+israel,TASE General,General Shares and Convertibles,tase-general,1057701,TASEALL,ILS,other_indices,world_indices
+israel,Israel 50,Investing.com Israel 50,investing.com-israel-50,956472,invil50,ILS,other_indices,world_indices
+israel,TA 35,TA 35,ta25,10529,TA35,ILS,major_indices,world_indices
+israel,TASE Oil Gas Exploration,Oil & Gas Exploration Shares and Convertibles,tase-oil-gas,1057704,TAENR,ILS,other_indices,world_indices
+israel,TASE Commerce Services,Commerce & Services Shares and Convertibles,tase-commerce-services,1057708,TASRV,ILS,other_indices,world_indices
+israel,TASE Convertible Bonds,Convertible Bonds,tase-gen-convertibles,1057709,TACONV,ILS,other_indices,world_indices
+israel,USD/ILS Galum,Dollar Galum,dollar-galum,1062664,USDILSG,ILS,other_indices,world_indices
+israel,FTSE Israel,FTSE Israel,ftse-israel,28890,FTWIISRL,ILS,other_indices,world_indices
+israel,TASE Real Estate Construction,Real Estate & Construction Shares and Convertibles,tase-real-estate,1057711,TAREAL,ILS,other_indices,world_indices
 italy,FTSE MIB,FTSE MIB,it-mib-40,177,FTMIB,EUR,major_indices,world_indices
 italy,FTSE Italia All Share Chemicals,FTSE Italia All Share Chemicals,ftse-italia-chemicals,27500,FTIT1300,EUR,primary_sectors,world_indices
 italy,FTSE Italia All Share Health Care,FTSE Italia All Share Health Care,ftse-italia-health-care,27493,FTIT4000,EUR,primary_sectors,world_indices
