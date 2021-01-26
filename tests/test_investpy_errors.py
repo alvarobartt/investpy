@@ -606,7 +606,7 @@ def test_stocks_errors():
     for param in params:
         try:
             investpy.get_stock_financial_summary(stock=param['stock'],
-                                                 country=param['country'], 
+                                                 country=param['country'],
                                                  summary_type=param['summary_type'],
                                                  period=param['period'])
         except:
@@ -1922,32 +1922,32 @@ def test_indices_errors():
 
     params = [
         {
-            'country': None, 
+            'country': None,
             'as_json': False,
             'n_results': 10
         },
         {
-            'country': ['error'], 
+            'country': ['error'],
             'as_json': False,
             'n_results': 10
         },
         {
-            'country': 'spain', 
+            'country': 'spain',
             'as_json': None,
             'n_results': 10
         },
         {
-            'country': 'spain', 
+            'country': 'spain',
             'as_json': False,
             'n_results': 'error'
         },
         {
-            'country': 'spain', 
+            'country': 'spain',
             'as_json': False,
             'n_results': 0
         },
         {
-            'country': 'error', 
+            'country': 'error',
             'as_json': False,
             'n_results': 10
         },
@@ -2312,7 +2312,7 @@ def test_currency_crosses_errors():
             'n_results': 10
         }
     ]
-    
+
     for param in params:
         try:
             investpy.get_currency_crosses_overview(currency=param['currency'], as_json=param['as_json'], n_results=param['n_results'])
@@ -2644,7 +2644,7 @@ def test_bonds_errors():
             investpy.get_bond_information(bond=param['bond'], as_json=param['as_json'])
         except:
             pass
-    
+
     params = [
         {
             'country': None,
@@ -3045,7 +3045,7 @@ def test_commodities_errors():
             investpy.get_commodity_information(commodity=param['commodity'], country=param['country'], as_json=param['as_json'])
         except:
             pass
-    
+
     params = [
         {
             'group': None,
@@ -3350,7 +3350,7 @@ def test_crypto_errors():
             investpy.get_crypto_information(crypto=param['crypto'], as_json=param['as_json'])
         except:
             pass
-    
+
     params = [
         {
             'as_json': None,
@@ -3566,7 +3566,7 @@ def test_certificate_errors():
                                                  interval=param['interval'])
         except:
             pass
-        
+
     params = [
         {
             'certificate': None,
@@ -3762,7 +3762,7 @@ def test_certificate_errors():
                                                  as_json=param['as_json'])
         except:
             pass
-    
+
     params = [
         {
             'country': None,
@@ -4061,12 +4061,144 @@ def test_news_errors():
     for param in params:
         try:
             investpy.economic_calendar(time_zone=param['time_zone'],
-                                  time_filter=param['time_filter'],
-                                  countries=param['countries'],
-                                  importances=param['importances'],
-                                  categories=param['categories'],
-                                  from_date=param['from_date'],
-                                  to_date=param['to_date'])
+                                       time_filter=param['time_filter'],
+                                       countries=param['countries'],
+                                       importances=param['importances'],
+                                       categories=param['categories'],
+                                       from_date=param['from_date'],
+                                       to_date=param['to_date'])
+        except:
+            pass
+
+    params = [
+        {
+            'time_zone': ['error'],
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': 'error',
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': None,
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': ['error'],
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': 'error',
+            'importances': None,
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': 'error',
+            'sectors': None,
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': 'error',
+            'from_date': None,
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': ['error'],
+            'to_date': None
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': None,
+            'to_date': ['error']
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': '01/01/2020',
+            'to_date': '01/02/2020'
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': 'error',
+            'to_date': '01/02/2020'
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': '01/01/2020',
+            'to_date': 'error'
+        },
+        {
+            'time_zone': None,
+            'time_filter': 'time_only',
+            'countries': None,
+            'importances': None,
+            'sectors': None,
+            'from_date': '01/01/2020',
+            'to_date': '01/01/2019'
+        }
+    ]
+
+    for param in params:
+        try:
+            investpy.earnings_calendar(time_zone=param['time_zone'],
+                                       time_filter=param['time_filter'],
+                                       countries=param['countries'],
+                                       importances=param['importances'],
+                                       sectors=param['sectors'],
+                                       from_date=param['from_date'],
+                                       to_date=param['to_date'])
         except:
             pass
 
