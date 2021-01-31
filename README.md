@@ -24,7 +24,7 @@ investpy seeks to be one of the most complete Python packages when it comes to f
 
 ## Installation
 
-In order to get this package working you will need to **install it via pip** (with a Python3.5 version or higher) on the terminal by typing:
+In order to get this package working you will need to **install it via pip** (with a Python 3.6 version or higher) on the terminal by typing:
 
 ``$ pip install investpy``
 
@@ -147,7 +147,7 @@ When citing this repository on your publications please use the following **BibT
 @misc{investpy,
     author = {Alvaro Bartolome del Canto},
     title = {investpy - Financial Data Extraction from Investing.com with Python},
-    year = {2018-2020},
+    year = {2018-2021},
     publisher = {GitHub},
     journal = {GitHub Repository},
     howpublished = {\url{https://github.com/alvarobartt/investpy}},
