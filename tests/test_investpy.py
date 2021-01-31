@@ -1316,12 +1316,12 @@ def test_investpy_news():
 
     for param in params:
         investpy.economic_calendar(time_zone=param['time_zone'],
-                              time_filter=param['time_filter'],
-                              countries=param['countries'],
-                              importances=param['importances'],
-                              categories=param['categories'],
-                              from_date=param['from_date'],
-                              to_date=param['to_date'])
+                                   time_filter=param['time_filter'],
+                                   countries=param['countries'],
+                                   importances=param['importances'],
+                                   categories=param['categories'],
+                                   from_date=param['from_date'],
+                                   to_date=param['to_date'])
 
 
 def test_investpy_technical():
@@ -1329,20 +1329,15 @@ def test_investpy_technical():
     This function checks that investpy news retrieval functionality works as expected.
     """
 
-    params = [
-        {
+    params = list()
+
+    for interval in list(investpy.utils.constant.INTERVAL_FILTERS.keys()):
+        params.append({
             'name': 'bbva',
             'country': 'spain',
             'product_type': 'stock',
-            'interval': 'weekly',
-        },
-        {
-            'name': 'bbva mi inversion rf mixta fi',
-            'country': 'spain',
-            'product_type': 'fund',
-            'interval': 'daily',
-        },
-    ]
+            'interval': interval
+        })
 
     for param in params:
         investpy.technical_indicators(name=param['name'],
