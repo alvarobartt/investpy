@@ -154,6 +154,7 @@ PRODUCT_TYPE_FILES = {
 }
 
 INTERVAL_FILTERS = {
+    '1min': 60,
     '5mins': 60*5,
     '15mins': 60*15,
     '30mins': 60*30,

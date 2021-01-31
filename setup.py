@@ -20,10 +20,10 @@ def requirements(filename):
 
 setup(
     name='investpy',
-    version='1.1.0',
+    version='1.0.1',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarobartt/investpy/archive/1.1.0.tar.gz',
+    download_url='https://github.com/alvarobartt/investpy/archive/1.0.1.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarobdc@yahoo.com',
@@ -35,10 +35,10 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
         "Topic :: Office/Business :: Financial",
