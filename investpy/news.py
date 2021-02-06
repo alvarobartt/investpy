@@ -205,7 +205,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                 'importance[]': def_importances
             })
 
-    last_id = 0
+    id_, last_id = 0, 0
     results = list()
 
     while True:
@@ -216,7 +216,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
 
         for reversed_row in table[::-1]:
             id_ = reversed_row.get("id")
-            if id_ != None:
+            if id_ is not None:
                 id_ = id_.replace('eventRowId_', '')
                 break
 
