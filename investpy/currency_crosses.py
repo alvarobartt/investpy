@@ -261,7 +261,9 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
@@ -290,7 +292,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": interval,
+        "interval_sec": interval.capitalize(),
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
@@ -457,7 +459,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     date_interval = {
@@ -526,7 +530,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": interval,
+            "interval_sec": interval.capitalize(),
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"

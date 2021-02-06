@@ -251,7 +251,9 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
@@ -343,7 +345,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": interval,
+        "interval_sec": interval.capitalize(),
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
@@ -501,7 +503,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
@@ -641,7 +645,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": interval,
+            "interval_sec": interval.capitalize(),
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
