@@ -240,7 +240,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-interval = interval.lower()
+    interval = interval.lower()
 
     if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
@@ -436,7 +436,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-interval = interval.lower()
+    interval = interval.lower()
 
     if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
