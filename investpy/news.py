@@ -24,22 +24,22 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
     note that some parameters can be specified so that the economic calendar to retrieve can be filtered.
 
     Args:
-        time_zone (:obj:`str`): 
+        time_zone (:obj:`str`, optional): 
             time zone in GMT +/- hours:minutes format, which will be the reference time, if None, the local GMT time zone will be used.
-        time_filter (:obj:`str`):
+        time_filter (:obj:`str`, optional):
             it can be `time_only` or `time_remain`, so that the calendar will display the time when the event will occurr according to 
             the time zone or the remaining time until an event occurs.
-        countries (:obj:`list` of :obj:`str`):
+        countries (:obj:`list` of :obj:`str`, optional):
             list of countries from where the events of the economic calendar will be retrieved, all contries will be taken into consideration 
             if this parameter is None.
-        importances (:obj:`list` of :obj:`str`):
+        importances (:obj:`list` of :obj:`str`, optional):
             list of importances of the events to be taken into consideration, can contain: high, medium and low; if None all the importance 
             ratings will be taken into consideration including holidays.
-        categories (:obj:`list` of :obj:`str`):
+        categories (:obj:`list` of :obj:`str`, optional):
             list of categories to which the events will be related to, if None all the available categories will be taken into consideration.
-        from_date (:obj:`str`):
+        from_date (:obj:`str`, optional):
             date from when the economic calendar will be retrieved in dd/mm/yyyy format, if None just current day's economic calendar will be retrieved.
-        to_date (:obj:`str`):
+        to_date (:obj:`str`, optional):
             date until when the economic calendar will be retrieved in dd/mm/yyyy format, if None just current day's economic calendar will be retrieved.
 
     Returns:
@@ -205,56 +205,70 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                 'importance[]': def_importances
             })
 
-    req = requests.post(url, headers=headers, data=data)
-
-    root = fromstring(req.json()['data'])
-    table = root.xpath(".//tr")
-
+    last_id = 0
     results = list()
 
-    for row in table:
-        id_ = row.get("id")
-        if id_ == None:
-            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", "")), tz=pytz.timezone('GMT')).strftime("%d/%m/%Y")
-        else:
-            id_ = id_.replace('eventRowId_', '')
+    while True:
+        req = requests.post(url, headers=headers, data=data)
 
-            time = zone = currency = sentiment = event = actual = forecast = previous = None
+        root = fromstring(req.json()['data'])
+        table = root.xpath(".//tr")
 
-            if row.get("id").__contains__("eventRowId_"):
-                for value in row.xpath("td"):
-                    if value.get("class").__contains__('first left'):
-                        time = value.text_content()
-                    elif value.get("class").__contains__('flagCur'):
-                        zone = value.xpath('span')[0].get('title').lower()
-                        currency = value.text_content().strip()
-                    elif value.get("class").__contains__('sentiment'):
-                        if value.get("data-img_key") == None:
-                            importance_rating = None
-                        else:
-                            importance_rating = value.get('data-img_key').replace('bull', '')
-                    elif value.get("class") == 'left event':
-                        event = value.text_content().strip()
-                    elif value.get("id") == 'eventActual_' + id_:
-                        actual = value.text_content().strip()
-                    elif value.get("id") == 'eventForecast_' + id_:
-                        forecast = value.text_content().strip()
-                    elif value.get("id") == 'eventPrevious_' + id_:
-                        previous = value.text_content().strip()
+        for reversed_row in table[::-1]:
+            id_ = reversed_row.get("id")
+            if id_ != None:
+                id_ = id_.replace('eventRowId_', '')
+                break
 
-            result = {
-                'id': id_,
-                'date': curr_date,
-                'time': time,
-                'zone': zone,
-                'currency': None if currency == '' else currency,
-                'importance': None if importance_rating == None else cst.IMPORTANCE_RATINGS[int(importance_rating)],
-                'event': event,
-                'actual': None if actual == '' else actual,
-                'forecast': None if forecast == '' else forecast,
-                'previous': None if previous == '' else previous
-            }
+        if id_ == last_id:
+            break
 
-            results.append(result)
+        for row in table:
+            id_ = row.get("id")
+            if id_ == None:
+                curr_timescope = int(row.xpath("td")[0].get("id").replace("theDay", ""))
+                curr_date = datetime.fromtimestamp(curr_timescope, tz=pytz.timezone('GMT')).strftime("%d/%m/%Y")
+            else:
+                id_ = id_.replace('eventRowId_', '')
+
+                time = zone = currency = sentiment = event = actual = forecast = previous = None
+
+                if row.get("id").__contains__("eventRowId_"):
+                    for value in row.xpath("td"):
+                        if value.get("class").__contains__('first left'):
+                            time = value.text_content()
+                        elif value.get("class").__contains__('flagCur'):
+                            zone = value.xpath('span')[0].get('title').lower()
+                            currency = value.text_content().strip()
+                        elif value.get("class").__contains__('sentiment'):
+                            if value.get("data-img_key") == None:
+                                importance_rating = None
+                            else:
+                                importance_rating = value.get('data-img_key').replace('bull', '')
+                        elif value.get("class") == 'left event':
+                            event = value.text_content().strip()
+                        elif value.get("id") == 'eventActual_' + id_:
+                            actual = value.text_content().strip()
+                        elif value.get("id") == 'eventForecast_' + id_:
+                            forecast = value.text_content().strip()
+                        elif value.get("id") == 'eventPrevious_' + id_:
+                            previous = value.text_content().strip()
+
+                results.append({
+                    'id': id_,
+                    'date': curr_date,
+                    'time': time,
+                    'zone': zone,
+                    'currency': None if currency == '' else currency,
+                    'importance': None if importance_rating == None else cst.IMPORTANCE_RATINGS[int(importance_rating)],
+                    'event': event,
+                    'actual': None if actual == '' else actual,
+                    'forecast': None if forecast == '' else forecast,
+                    'previous': None if previous == '' else previous
+                })
+        
+        last_id = results[-1]['id']
+        
+        data['limit_from'] += 1
     
     return pd.DataFrame(results)
