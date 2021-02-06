@@ -322,7 +322,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
+            commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
             
             commodity_close = float(info[1].replace(',', ''))
             commodity_open = float(info[2].replace(',', ''))
@@ -599,7 +599,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
+                    commodity_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
                     
                     commodity_close = float(info[1].replace(',', ''))
                     commodity_open = float(info[2].replace(',', ''))

@@ -352,7 +352,7 @@ class SearchObj(object):
                         raise IndexError("ERR#0033: information unavailable or not found.")
                     info.append(val)
 
-                date_ = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
+                date_ = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
                 
                 close_ = float(info[1].replace(',', ''))
                 open_ = float(info[2].replace(',', ''))

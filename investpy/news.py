@@ -215,7 +215,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
     for row in table:
         id_ = row.get("id")
         if id_ == None:
-            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", "")), tz=pytz.gmt).strftime("%d/%m/%Y")
+            curr_date = datetime.fromtimestamp(int(row.xpath("td")[0].get("id").replace("theDay", "")), tz=pytz.timezone('GMT')).strftime("%d/%m/%Y")
         else:
             id_ = id_.replace('eventRowId_', '')
 

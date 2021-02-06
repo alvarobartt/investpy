@@ -293,7 +293,7 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            bond_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
+            bond_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
 
             bond_close = float(info[1].replace(',', ''))
             bond_open = float(info[2].replace(',', ''))
@@ -542,7 +542,7 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
                     for nested_ in elements_.xpath(".//td"):
                         info.append(nested_.get('data-real-value'))
 
-                    bond_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
+                    bond_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
 
                     bond_close = float(info[1].replace(',', ''))
                     bond_open = float(info[2].replace(',', ''))
