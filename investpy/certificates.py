@@ -312,7 +312,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+            certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
             
             certificate_close = float(info[1].replace(',', ''))
             certificate_open = float(info[2].replace(',', ''))
@@ -573,7 +573,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+                    certificate_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
             
                     certificate_close = float(info[1].replace(',', ''))
                     certificate_open = float(info[2].replace(',', ''))

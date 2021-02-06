@@ -311,7 +311,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+            stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
             
             stock_close = float(info[1].replace(',', ''))
             stock_open = float(info[2].replace(',', ''))
@@ -580,7 +580,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+                    stock_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.gmt).date()), '%Y-%m-%d')
                     
                     stock_close = float(info[1].replace(',', ''))
                     stock_open = float(info[2].replace(',', ''))
