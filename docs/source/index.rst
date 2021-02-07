@@ -14,7 +14,7 @@ Welcome to investpy's documentation!
    _info/models.rst
    _info/stocks.rst
    _info/funds.rst
-   _info/api.rst
+   api.rst
    _info/information.md
    _info/faq.md
    _info/disclaimer.md

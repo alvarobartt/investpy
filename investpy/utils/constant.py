@@ -1,7 +1,6 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-
 FINANCIAL_SUMMARY_TYPES = {
     'income_statement': 0,
     'balance_sheet': 1,
