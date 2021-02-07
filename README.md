@@ -6,17 +6,15 @@
 
 investpy is a Python package to retrieve data from [Investing.com](https://www.investing.com/), which provides **data retrieval from up to: 39952 stocks, 82221 funds, 11403 etfs, 2029 currency crosses, 7797 indices, 688 bonds, 66 commodities, 250 certificates and 2812 cryptocurrencies**.
 
-investpy allows the user to download both recent and historical data from all the financial products indexed at Investing.com. It **includes data from all over the world, from countries such as: United States, France, India, Spain, Russia or Germany, amongst many others**.
+investpy allows the user to download both recent and historical data from all the financial products indexed at Investing.com. **It includes data from all over the world**, from countries such as: United States, France, India, Spain, Russia or Germany, amongst many others.
 
 investpy seeks to be one of the most complete Python packages when it comes to financial data extraction in order to stop relying on public/private APIs, since investpy is **FREE** and has **NO LIMITATIONS**. These are some of the features that currently lead investpy to be one of the most consistent packages when it comes to financial data retrieval.
 
 [![Python Version](https://img.shields.io/pypi/pyversions/investpy.svg)](https://pypi.org/project/investpy/)
-[![PyPi Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
+[![PyPI Version](https://img.shields.io/pypi/v/investpy.svg)](https://pypi.org/project/investpy/)
 [![Package Status](https://img.shields.io/pypi/status/investpy.svg)](https://pypi.org/project/investpy/)
-[![Build Status](https://img.shields.io/travis/alvarobartt/investpy/master.svg?label=Travis%20CI&logo=travis&logoColor=white)](https://travis-ci.org/alvarobartt/investpy)
 [![Documentation Status](https://readthedocs.org/projects/investpy/badge/?version=latest)](https://investpy.readthedocs.io/)
 [![codecov](https://codecov.io/gh/alvarobartt/investpy/branch/master/graph/badge.svg)](https://codecov.io/gh/alvarobartt/investpy)
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/investpy/community?source=orgpage)
 
 **If you want to support the project, you can buy the developer a coffee. More information at: [buy-me-a-coffee](https://github.com/alvarobartt/buy-me-a-coffee)**
 

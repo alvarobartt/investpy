@@ -22,5 +22,5 @@ jobs:
       run: pip install .
     - name: Install pytest requirements
       run: pip install investpy[tests]
-    - name: Run pytest unit tests
-      run: pytest
+    - name: Run pytest unit tests and check codecov
+      run: pytest --cov-report term --cov=investpy tests/
