@@ -38,7 +38,7 @@ Additionally, **if you want to use the latest investpy version instead of the st
 ``$ pip install git+https://github.com/alvarobartt/investpy.git@master``
 
 **The master branch ensures the user that the most updated version will always be working and fully operative** so as not to wait until the 
-stable release on the master branch comes out (which eventually may take some time depending on the amount of issues to solve).
+stable release comes out (which eventually may take some time depending on the amount of issues to solve).
 
 ## Documentation
 
