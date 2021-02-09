@@ -694,6 +694,20 @@ def test_investpy_currency_crosses():
             'as_json': False,
             'order': 'descending',
         },
+        {
+            'currency_cross': 'XAG/USD',
+            'from_date': '01/01/2010',
+            'to_date': '01/01/2015',
+            'as_json': False,
+            'order': 'descending',
+        },
+        {
+            'currency_cross': 'XAU/USD',
+            'from_date': '01/01/2010',
+            'to_date': '01/01/2015',
+            'as_json': False,
+            'order': 'descending',
+        }
     ]
 
     for param in params:
@@ -716,6 +730,14 @@ def test_investpy_currency_crosses():
         },
         {
             'currency_cross': 'EUR/USD',
+            'as_json': True
+        },
+        {
+            'currency_cross': 'XAU/USD',
+            'as_json': True
+        },
+        {
+            'currency_cross': 'XAG/USD',
             'as_json': True
         }
     ]
