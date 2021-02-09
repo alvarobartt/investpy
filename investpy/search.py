@@ -97,6 +97,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
     params = {
         'search_text': text,
         'tab': 'quotes',
+        'isFilter': True,
         'limit': 270,
         'offset': 0
     }
@@ -133,16 +134,31 @@ def search_quotes(text, products=None, countries=None, n_results=None):
             n_results = data['total']['quotes']
 
         for quote in data['quotes']:
-            if quote['pair_type'] in products and quote['flag'] in countries:
-                search_results.append(SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                                country=cst.FLAG_FILTERS[quote['flag']], tag=quote['link'],
-                                                pair_type=cst.PAIR_FILTERS[quote['pair_type']], exchange=quote['exchange']))
+            country, pair_type = quote['flag'], quote['pair_type']
+            
+            if countries is not None:
+                if quote['flag'] in countries:
+                    country = cst.FLAG_FILTERS[quote['flag']]
+                else:
+                    continue
+
+            if products is not None:
+                if quote['pair_type'] in products:
+                    pair_type = cst.PAIR_FILTERS[quote['pair_type']]
+                else:
+                    continue
+
+            print(quote)
+
+            search_obj = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
+                                   country=country, tag=quote['link'],
+                                   pair_type=pair_type, exchange=quote['exchange'])
+
+            if search_obj not in search_results: search_results.append(search_obj)
         
         params['offset'] += 270
-        
-        search_results = list(set(search_results))
 
         if len(search_results) >= n_results or len(search_results) >= total_results or params['offset'] >= total_results:
             break
-
+    
     return search_results[:n_results]
