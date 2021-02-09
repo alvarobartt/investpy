@@ -1,6 +1,11 @@
 name: run_tests
 
-on: [push]
+on:
+  push:
+    paths:
+      - .github/workflows/run_tests.yml
+      - investpy/**
+      - tests/**
 
 jobs:
   build:
