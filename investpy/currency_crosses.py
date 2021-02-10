@@ -278,7 +278,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     currency_cross = unidecode(currency_cross.strip().lower())
 
-    if currency_cross not in [value for value in currency_crosses['name'].str.lower()]:
+    if currency_cross not in list(currency_crosses['name'].str.lower()):
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
@@ -508,7 +508,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     currency_cross = unidecode(currency_cross.strip().lower())
 
-    if currency_cross not in [value for value in currency_crosses['name'].str.lower()]:
+    if currency_cross not in list(currency_crosses['name'].str.lower()):
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
@@ -675,7 +675,7 @@ def get_currency_cross_information(currency_cross, as_json=False):
 
     currency_cross = unidecode(currency_cross.strip().lower())
 
-    if currency_cross not in [value for value in currency_crosses['name'].str.lower()]:
+    if currency_cross not in list(currency_crosses['name'].str.lower()):
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     name = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
@@ -800,7 +800,7 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
 
     currency = unidecode(currency.strip().lower())
 
-    if currency not in [value for value in list(cst.CURRENCIES.keys())]:
+    if currency not in [value.lower() for value in list(cst.CURRENCIES.keys())]:
         raise ValueError("ERR#0106: specified currency value not valid.")
 
     session_id = ''.join(sample(string.ascii_lowercase, 9))

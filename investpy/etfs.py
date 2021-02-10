@@ -277,7 +277,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     
     etfs = etfs[etfs['country'].str.lower() == country]
 
-    if etf not in [value for value in etfs['name'].str.lower()]:
+    if etf not in list(etfs['name'].str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
     etfs = etfs[etfs['name'].str.lower() == etf]
@@ -578,7 +578,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     
     etfs = etfs[etfs['country'].str.lower() == country]
 
-    if etf not in [value for value in etfs['name'].str.lower()]:
+    if etf not in list(etfs['name'].str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
     etfs = etfs[etfs['name'].str.lower() == etf]
@@ -815,7 +815,7 @@ def get_etf_information(etf, country, as_json=False):
 
     etf = unidecode(etf.strip().lower())
 
-    if etf not in [value for value in etfs['name'].str.lower()]:
+    if etf not in list(etfs['name'].str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
     name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']

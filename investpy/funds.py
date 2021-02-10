@@ -257,7 +257,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in [value for value in funds['name'].str.lower()]:
+    if fund not in list(funds['name'].str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
@@ -502,7 +502,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in [value for value in funds['name'].str.lower()]:
+    if fund not in list(funds['name'].str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
@@ -683,7 +683,7 @@ def get_fund_information(fund, country, as_json=False):
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in [value for value in funds['name'].str.lower()]:
+    if fund not in list(funds['name'].str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']

@@ -105,7 +105,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
         if country is not None:
             country = unidecode(country.lower().strip())
 
-            if country not in data['country'].str.lower():
+            if country not in list(set(data['country'].str.lower())):
                 raise ValueError("ERR#0124: introduced country does not exist or is not available.")
 
             data = data[data['country'] == country]
@@ -120,7 +120,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in [value for value in data[check].str.lower()]:
+    if name not in list(data[check].str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
@@ -255,7 +255,7 @@ def moving_averages(name, country, product_type, interval='daily'):
         if country is not None:
             country = unidecode(country.lower().strip())
 
-            if country not in data['country'].str.lower():
+            if country not in list(set(data['country'].str.lower())):
                 raise ValueError("ERR#0124: introduced country does not exist or is not available.")
 
             data = data[data['country'] == country]
@@ -270,7 +270,7 @@ def moving_averages(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in [value for value in data[check].str.lower()]:
+    if name not in list(data[check].str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
@@ -409,7 +409,7 @@ def pivot_points(name, country, product_type, interval='daily'):
         if country is not None:
             country = unidecode(country.lower().strip())
 
-            if country not in data['country'].str.lower():
+            if country not in list(set(data['country'].str.lower())):
                 raise ValueError("ERR#0124: introduced country does not exist or is not available.")
 
             data = data[data['country'] == country]
@@ -424,7 +424,7 @@ def pivot_points(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in [value for value in data[check].str.lower()]:
+    if name not in list(data[check].str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
     product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']

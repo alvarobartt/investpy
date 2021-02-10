@@ -261,7 +261,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [value for value in stocks['symbol'].str.lower()]:
+    if stock not in list(stocks['symbol'].str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
@@ -515,7 +515,7 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [value for value in stocks['symbol'].str.lower()]:
+    if stock not in list(stocks['symbol'].str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
@@ -726,7 +726,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [value for value in stocks['symbol'].str.lower()]:
+    if stock not in list(stocks['symbol'].str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     company_profile = {
@@ -858,7 +858,7 @@ def get_stock_dividends(stock, country):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [value for value in stocks['symbol'].str.lower()]:
+    if stock not in list(stocks['symbol'].str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
@@ -1077,7 +1077,7 @@ def get_stock_information(stock, country, as_json=False):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [value for value in stocks['symbol'].str.lower()]:
+    if stock not in list(stocks['symbol'].str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'tag']
@@ -1400,7 +1400,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [value for value in stocks['symbol'].str.lower()]:
+    if stock not in list(stocks['symbol'].str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']

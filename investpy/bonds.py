@@ -243,7 +243,7 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
 
     bond = unidecode(bond.strip().lower())
 
-    if bond not in [value for value in bonds['name'].str.lower()]:
+    if bond not in list(bonds['name'].str.lower()):
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
     id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
@@ -475,7 +475,7 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
 
     bond = unidecode(bond.strip().lower())
 
-    if bond not in [value for value in bonds['name'].str.lower()]:
+    if bond not in list(bonds['name'].str.lower()):
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
     id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
@@ -643,7 +643,7 @@ def get_bond_information(bond, as_json=False):
 
     bond = unidecode(bond.strip().lower())
 
-    if bond not in [value for value in bonds['name'].str.lower()]:
+    if bond not in list(bonds['name'].str.lower()):
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
     name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']

@@ -255,7 +255,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
 
     commodity = unidecode(commodity.strip().lower())
 
-    if commodity not in [value for value in commodities['name'].str.lower()]:
+    if commodity not in list(commodities['name'].str.lower()):
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -271,7 +271,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     else:
         country = unidecode(country.strip().lower())
 
-        if country not in commodities['country'].str.lower():
+        if country not in list(set(commodities['country'].str.lower())):
             raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
         commodities = commodities[commodities['country'] == country]
@@ -516,7 +516,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
 
     commodity = unidecode(commodity.strip().lower())
 
-    if commodity not in [value for value in commodities['name'].str.lower()]:
+    if commodity not in list(commodities['name'].str.lower()):
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -532,7 +532,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     else:
         country = unidecode(country.strip().lower())
 
-        if country not in commodities['country'].str.lower():
+        if country not in list(set(commodities['country'].str.lower())):
             raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
         commodities = commodities[commodities['country'] == country]
@@ -720,7 +720,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
     commodity = unidecode(commodity.strip().lower())
 
-    if commodity not in [value for value in commodities['name'].str.lower()]:
+    if commodity not in list(commodities['name'].str.lower()):
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -736,7 +736,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
     else:
         country = unidecode(country.strip().lower())
 
-        if country not in commodities['country'].str.lower():
+        if country not in list(set(commodities['country'].str.lower())):
             raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
         commodities = commodities[commodities['country'] == country]

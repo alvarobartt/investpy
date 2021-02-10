@@ -264,7 +264,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
 
     certificate = unidecode(certificate.strip().lower())
 
-    if certificate not in [value for value in certificates['name'].str.lower()]:
+    if certificate not in list(certificates['name'].str.lower()):
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
@@ -510,7 +510,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
 
     certificate = unidecode(certificate.strip().lower())
 
-    if certificate not in [value for value in certificates['name'].str.lower()]:
+    if certificate not in list(certificates['name'].str.lower()):
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
@@ -691,7 +691,7 @@ def get_certificate_information(certificate, country, as_json=False):
 
     certificate = unidecode(certificate.strip().lower())
 
-    if certificate not in [value for value in certificates['name'].str.lower()]:
+    if certificate not in list(certificates['name'].str.lower()):
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     tag = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'tag']
