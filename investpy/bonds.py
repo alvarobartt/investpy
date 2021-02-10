@@ -241,10 +241,9 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
-    bond = bond.strip()
-    bond = bond.lower()
+    bond = unidecode(bond.strip().lower())
 
-    if unidecode(bond) not in [unidecode(value.lower()) for value in bonds['name'].tolist()]:
+    if bond not in [value for value in bonds['name'].str.lower()]:
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
     id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
@@ -474,10 +473,9 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
-    bond = bond.strip()
-    bond = bond.lower()
+    bond = unidecode(bond.strip().lower())
 
-    if unidecode(bond) not in [unidecode(value.lower()) for value in bonds['name'].tolist()]:
+    if bond not in [value for value in bonds['name'].str.lower()]:
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
     id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
@@ -643,10 +641,9 @@ def get_bond_information(bond, as_json=False):
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
-    bond = bond.strip()
-    bond = bond.lower()
+    bond = unidecode(bond.strip().lower())
 
-    if unidecode(bond) not in [unidecode(value.lower()) for value in bonds['name'].tolist()]:
+    if bond not in [value for value in bonds['name'].str.lower()]:
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
     name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
@@ -799,7 +796,7 @@ def get_bonds_overview(country, as_json=False):
     if bonds is None:
         raise IOError("ERR#0065: bonds object not found or unable to retrieve.")
 
-    country = unidecode(country.lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_bond_countries():
         raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")

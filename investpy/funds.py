@@ -248,21 +248,21 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    funds = funds[funds['country'] == unidecode(country.lower())]
+    if country not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    fund = fund.strip()
-    fund = fund.lower()
+    funds = funds[funds['country'].str.lower() == country]
 
-    if unidecode(fund) not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
+    fund = unidecode(fund.strip().lower())
+
+    if fund not in [value for value in funds['name'].str.lower()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
     name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
-
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
     header = symbol + ' Historical Data'
@@ -322,10 +322,11 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             result = result
 
         if as_json is True:
-            json_ = {'name': name,
-                     'recent':
-                         [value.fund_as_json() for value in result]
-                     }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.fund_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -492,21 +493,21 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    funds = funds[funds['country'] == unidecode(country.lower())]
+    if country not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    fund = fund.strip()
-    fund = fund.lower()
+    funds = funds[funds['country'].str.lower() == country]
 
-    if unidecode(fund) not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
+    fund = unidecode(fund.strip().lower())
+
+    if fund not in [value for value in funds['name'].str.lower()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
     id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
     name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
-
     fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
 
     final = list()
@@ -682,7 +683,7 @@ def get_fund_information(fund, country, as_json=False):
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
+    if fund not in [value for value in funds['name'].str.lower()]:
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
     tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
@@ -816,7 +817,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    country = unidecode(country.lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_fund_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')

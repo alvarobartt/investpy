@@ -253,10 +253,9 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    commodity = commodity.strip()
-    commodity = commodity.lower()
+    commodity = unidecode(commodity.strip().lower())
 
-    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if commodity not in [value for value in commodities['name'].str.lower()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -270,10 +269,12 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
 
         del found_commodities
     else:
-        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
-            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        country = unidecode(country.strip().lower())
 
-        commodities = commodities[commodities['country'] == unidecode(country.lower())]
+        if country not in commodities['country'].str.lower():
+            raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == country]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -513,10 +514,9 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    commodity = commodity.strip()
-    commodity = commodity.lower()
+    commodity = unidecode(commodity.strip().lower())
 
-    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if commodity not in [value for value in commodities['name'].str.lower()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -530,10 +530,12 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
 
         del found_commodities
     else:
-        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
-            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        country = unidecode(country.strip().lower())
 
-        commodities = commodities[commodities['country'] == unidecode(country.lower())]
+        if country not in commodities['country'].str.lower():
+            raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == country]
 
     full_name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'full_name']
     id_ = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'id']
@@ -716,10 +718,9 @@ def get_commodity_information(commodity, country=None, as_json=False):
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    commodity = commodity.strip()
-    commodity = commodity.lower()
+    commodity = unidecode(commodity.strip().lower())
 
-    if unidecode(commodity) not in [unidecode(value.lower()) for value in commodities['name'].tolist()]:
+    if commodity not in [value for value in commodities['name'].str.lower()]:
         raise RuntimeError("ERR#0079: commodity " + commodity + " not found, check if it is correct.")
 
     if country is None:
@@ -733,10 +734,12 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
         del found_commodities
     else:
-        if unidecode(country.lower()) not in commodities['country'].unique().tolist():
-            raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+        country = unidecode(country.strip().lower())
 
-        commodities = commodities[commodities['country'] == unidecode(country.lower())]
+        if country not in commodities['country'].str.lower():
+            raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        commodities = commodities[commodities['country'] == country]
 
     name = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'name']
     tag = commodities.loc[(commodities['name'].str.lower() == commodity).idxmax(), 'tag']
@@ -878,7 +881,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    group = unidecode(group.lower())
+    group = unidecode(group.strip().lower())
 
     if group not in get_commodity_groups():
         raise RuntimeError('ERR#0091: specified commodity group value is not valid.')

@@ -249,15 +249,16 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_index_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    indices = indices[indices['country'] == unidecode(country.lower())]
+    if country not in get_index_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    index = index.strip()
-    index = index.lower()
+    indices = indices[indices['country'] == country]
 
-    if unidecode(index) not in [unidecode(value.lower()) for value in indices['name'].tolist()]:
+    index = unidecode(index.strip().lower())
+
+    if index not in [value for value in indices['name'].str.lower()]:
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
     full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
@@ -326,10 +327,11 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
             result = result
 
         if as_json is True:
-            json_ = {'name': name,
-                     'recent':
-                         [value.index_as_json() for value in result]
-                     }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.index_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -498,15 +500,16 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_index_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    indices = indices[indices['country'] == unidecode(country.lower())]
+    if country not in get_index_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    index = index.strip()
-    index = index.lower()
+    indices = indices[indices['country'] == country]
 
-    if unidecode(index) not in [unidecode(value.lower()) for value in indices['name'].tolist()]:
+    index = unidecode(index.strip().lower())
+
+    if index not in [value for value in indices['name'].str.lower()]:
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
     full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
@@ -680,16 +683,17 @@ def get_index_information(index, country, as_json=False):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_index_countries():
-        raise ValueError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    indices = indices[indices['country'] == unidecode(country.lower())]
+    if country not in get_index_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    index = index.strip()
-    index = index.lower()
+    indices = indices[indices['country'] == country]
 
-    if unidecode(index) not in [unidecode(value.lower()) for value in indices['name'].tolist()]:
-        raise ValueError("ERR#0045: index " + index + " not found, check if it is correct.")
+    index = unidecode(index.strip().lower())
+
+    if index not in [value for value in indices['name'].str.lower()]:
+        raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
     name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
     tag = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'tag']
@@ -821,7 +825,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
     if indices is None:
         raise IOError("ERR#0037: indices not found or unable to retrieve.")
 
-    country = unidecode(country.lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_index_countries():
         raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")

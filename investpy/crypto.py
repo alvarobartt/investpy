@@ -214,10 +214,9 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-    crypto = crypto.strip()
-    crypto = crypto.lower()
+    crypto = unidecode(crypto.strip().lower())
 
-    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if crypto not in [value for value in cryptos['name'].str.lower()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -454,10 +453,9 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-    crypto = crypto.strip()
-    crypto = crypto.lower()
+    crypto = unidecode(crypto.strip().lower())
 
-    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if crypto not in [value for value in cryptos['name'].str.lower()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
@@ -628,10 +626,9 @@ def get_crypto_information(crypto, as_json=False):
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-    crypto = crypto.strip()
-    crypto = crypto.lower()
+    crypto = unidecode(crypto.strip().lower())
 
-    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if crypto not in [value for value in cryptos['name'].str.lower()]:
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
     status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']

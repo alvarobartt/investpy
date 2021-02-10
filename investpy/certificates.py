@@ -255,15 +255,16 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_certificate_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == country]
 
-    certificate = certificate.strip()
-    certificate = certificate.lower()
+    certificate = unidecode(certificate.strip().lower())
 
-    if unidecode(certificate) not in [unidecode(value.lower()) for value in certificates['name'].tolist()]:
+    if certificate not in [value for value in certificates['name'].str.lower()]:
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
@@ -500,15 +501,16 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_certificate_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == country]
 
-    certificate = certificate.strip()
-    certificate = certificate.lower()
+    certificate = unidecode(certificate.strip().lower())
 
-    if unidecode(certificate) not in [unidecode(value.lower()) for value in certificates['name'].tolist()]:
+    if certificate not in [value for value in certificates['name'].str.lower()]:
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
@@ -680,15 +682,16 @@ def get_certificate_information(certificate, country, as_json=False):
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_certificate_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == country]
 
-    certificate = certificate.strip()
-    certificate = certificate.lower()
+    certificate = unidecode(certificate.strip().lower())
 
-    if unidecode(certificate) not in [unidecode(value.lower()) for value in certificates['name'].tolist()]:
+    if certificate not in [value for value in certificates['name'].str.lower()]:
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
     tag = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'tag']
@@ -825,10 +828,12 @@ def get_certificates_overview(country, as_json=False, n_results=100):
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_certificate_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_certificate_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    certificates = certificates[certificates['country'] == unidecode(country.lower())]
+    certificates = certificates[certificates['country'] == country]
 
     head = {
         "User-Agent": random_user_agent(),

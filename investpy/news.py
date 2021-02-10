@@ -157,8 +157,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
 
         # TODO: improve loop using lambda
         for country in countries:
-            country = unidecode(country.lower())
-            country = country.strip()
+            country = unidecode(country.strip().lower())
 
             if country in available_countries:
                 def_countries.append(cst.COUNTRY_ID_FILTERS[country])

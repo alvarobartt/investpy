@@ -252,15 +252,16 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_stock_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
-    stock = stock.strip()
-    stock = stock.lower()
+    stock = unidecode(stock.strip().lower())
 
-    if unidecode(stock) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [value for value in stocks['symbol'].str.lower()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
@@ -505,15 +506,16 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_stock_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
-    stock = stock.strip()
-    stock = stock.lower()
+    stock = unidecode(stock.strip().lower())
 
-    if unidecode(stock) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [value for value in stocks['symbol'].str.lower()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
@@ -724,7 +726,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [value for value in stocks['symbol'].str.lower()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     company_profile = {
@@ -847,14 +849,16 @@ def get_stock_dividends(stock, country):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_stock_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'].str.lower() == unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [value for value in stocks['symbol'].str.lower()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
@@ -1064,15 +1068,17 @@ def get_stock_information(stock, country, as_json=False):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_stock_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
-    stock = stock.strip()
+    stock = unidecode(stock.strip().lower())
 
-    if unidecode(stock.lower()) not in [unidecode(value.lower()) for value in stocks['symbol'].tolist()]:
-        raise RuntimeError("ERR#0018: stock " + stock.lower() + " not found, check if it is correct.")
+    if stock not in [value for value in stocks['symbol'].str.lower()]:
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     tag = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'tag']
     stock = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'symbol']
@@ -1201,7 +1207,7 @@ def get_stocks_overview(country, as_json=False, n_results=100):
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    country = unidecode(country.lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_stock_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')
@@ -1385,14 +1391,16 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     if stocks is None:
         raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_stock_countries():
+    country = unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
         raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
 
-    stocks = stocks[stocks['country'] == unidecode(country.lower())]
+    stocks = stocks[stocks['country'] == country]
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in [unidecode(value.strip().lower()) for value in stocks['symbol'].tolist()]:
+    if stock not in [value for value in stocks['symbol'].str.lower()]:
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']

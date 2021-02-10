@@ -276,10 +276,9 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
 
-    currency_cross = currency_cross.strip()
-    currency_cross = currency_cross.lower()
+    currency_cross = unidecode(currency_cross.strip().lower())
 
-    if unidecode(currency_cross) not in [unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
+    if currency_cross not in [value for value in currency_crosses['name'].str.lower()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
@@ -507,10 +506,9 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
 
-    currency_cross = currency_cross.strip()
-    currency_cross = currency_cross.lower()
+    currency_cross = unidecode(currency_cross.strip().lower())
 
-    if unidecode(currency_cross) not in [unidecode(value.lower()) for value in currency_crosses['name'].tolist()]:
+    if currency_cross not in [value for value in currency_crosses['name'].str.lower()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
     id_ = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'id']
@@ -668,21 +666,20 @@ def get_currency_cross_information(currency_cross, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
-    if crosses is None:
+    if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
 
-    currency_cross = currency_cross.strip()
-    currency_cross = currency_cross.lower()
+    currency_cross = unidecode(currency_cross.strip().lower())
 
-    if unidecode(currency_cross) not in [unidecode(value.lower()) for value in crosses['name'].tolist()]:
+    if currency_cross not in [value for value in currency_crosses['name'].str.lower()]:
         raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exists.")
 
-    name = crosses.loc[(crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
-    tag = crosses.loc[(crosses['name'].str.lower() == currency_cross).idxmax(), 'tag']
+    name = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'name']
+    tag = currency_crosses.loc[(currency_crosses['name'].str.lower() == currency_cross).idxmax(), 'tag']
 
     url = "https://www.investing.com/currencies/" + tag
 
@@ -801,9 +798,9 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
     if 1 > n_results or n_results > 1000:
         raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
 
-    currency = unidecode(currency.lower())
+    currency = unidecode(currency.strip().lower())
 
-    if currency not in [curr.strip().lower() for curr in list(cst.CURRENCIES.keys())]:
+    if currency not in [value for value in list(cst.CURRENCIES.keys())]:
         raise ValueError("ERR#0106: specified currency value not valid.")
 
     session_id = ''.join(sample(string.ascii_lowercase, 9))
