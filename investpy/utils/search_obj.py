@@ -6,7 +6,7 @@ from lxml.html import fromstring
 import pandas as pd
 
 import json
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import pytz
 from random import randint
 
@@ -312,7 +312,7 @@ class SearchObj(object):
 
                 date_interval['intervals'].append(obj)
 
-                from_date = from_date.replace(year=from_date.year + 19)
+                from_date = from_date.replace(year=from_date.year + 19) + timedelta(days=1)
             else:
                 obj = {
                     'from': from_date.strftime('%m/%d/%Y'),
