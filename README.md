@@ -187,7 +187,7 @@ problems, just the main one and some nested/related errors that may be found.
 
 ## Citation
 
-When citing this repository on your publications please use the following **BibTeX** citation:
+When citing this repository on your scientific publications please use the following **BibTeX** citation:
 
 ```
 @misc{investpy,
@@ -200,13 +200,27 @@ When citing this repository on your publications please use the following **BibT
 }
 ```
 
+When citing this repository on any other social media, please use the following citation:
+
+```
+investpy - Financial Data Extraction from Investing.com with Python developed by Alvaro Bartolome del Canto
+```
+
+And include a mention (so that I can see your work!) to me at any of my social network profiles:
+
+- LinkedIn: https://linkedin.com/in/alvarobartt
+- Twitter: https://twitter.com/alvarobartt
+- GitHub: https://github.com/alvarobartt
+
+If applicable also mention the source from where the data is retrieved, Investing.com.
+
 ---
 
 ## Disclaimer
 
-This Python package has been made for research purposes to fit the needs that Investing.com does not cover, 
-so this package works like an Application Programming Interface (API) of Investing.com developed in an altruistic way.
+This Python package has been made for **research purposes** to fit the needs that Investing.com does not cover, 
+so this package works like an Application Programming Interface (API) of Investing.com developed in an **altruistic way**.
 
-Conclude that this package is not related in any way to Investing.com or any dependant company, the only 
+Conclude that **investpy is not affiliated in any way to Investing.com or any dependant company**, the only 
 requirement specified by Investing.com to develop this package was to "mention the source where data is 
 retrieved from".
