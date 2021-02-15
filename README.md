@@ -158,7 +158,7 @@ You can find the **complete investpy documentation** at [Documentation](https://
 
 ---
 
-## Utilities
+## Related projects
 
 Since investpy is intended to retrieve data from different financial products as indexed in Investing.com, 
 the **development of some support modules which implement an additional functionality based on investpy data**, 
