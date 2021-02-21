@@ -310,7 +310,8 @@ ETF_COUNTRIES = [
     {'country': 'peru', 'code': 'pe'}, {'country': 'poland', 'code': 'pl'}, {'country': 'portugal', 'code': 'pt'}, {'country': 'qatar', 'code': 'qa'}, {'country': 'romania', 'code': 'ro'},
     {'country': 'russia', 'code': 'ru'}, {'country': 'saudi arabia', 'code': 'sa'}, {'country': 'singapore', 'code': 'sg'}, {'country': 'south africa', 'code': 'sa'}, {'country': 'south korea', 'code': 'kr'},
     {'country': 'spain', 'code': 'es'}, {'country': 'sweden', 'code': 'se'}, {'country': 'switzerland', 'code': 'ch'}, {'country': 'taiwan', 'code': 'tw'}, {'country': 'thailand', 'code': 'th'},
-    {'country': 'turkey', 'code': 'tr'}, {'country': 'united kingdom', 'code': 'uk'}, {'country': 'united states', 'code': 'us'}, {'country': 'vietnam', 'code': 'vn'}
+    {'country': 'turkey', 'code': 'tr'}, {'country': 'united kingdom', 'code': 'uk'}, {'country': 'united states', 'code': 'us'}, {'country': 'vietnam', 'code': 'vn'},
+    {'country': 'euro zone', 'code': ''}
 ]
 
 FUND_COUNTRIES = [
@@ -376,5 +377,6 @@ INDEX_COUNTRIES = [
     {'country': 'tunisia', 'country_name': 'tunisia'}, {'country': 'turkey', 'country_name': 'turkey'}, {'country': 'uganda', 'country_name': 'uganda'},
     {'country': 'ukraine', 'country_name': 'ukraine'}, {'country': 'dubai', 'country_name': 'dubai'}, {'country': 'uk', 'country_name': 'united kingdom'},
     {'country': 'usa', 'country_name': 'united states'}, {'country': 'venezuela', 'country_name': 'venezuela'}, {'country': 'vietnam', 'country_name': 'vietnam'},
-    {'country': 'world', 'country_name': 'world'}, {'country': 'zambia', 'country_name': 'zambia'}, {'country': 'zimbabwe', 'country_name': 'zimbabwe'}
+    {'country': 'world', 'country_name': 'world'}, {'country': 'zambia', 'country_name': 'zambia'}, {'country': 'zimbabwe', 'country_name': 'zimbabwe'},
+    {'country': 'euro zone', 'country_name': 'euro zone'}
 ]
