@@ -163,9 +163,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                 def_countries.append(cst.COUNTRY_ID_FILTERS[country])
 
         if len(def_countries) > 0:
-            data.update({
-                'country[]': def_countries
-            })
+            data['country[]'] = def_countries
 
     if categories is not None:
         def_categories = list()
@@ -181,9 +179,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                 def_categories.append(cst.CATEGORY_FILTERS[category])
 
         if len(def_categories) > 0:
-            data.update({
-                'category[]': def_categories
-            })
+            data['category[]'] = def_categories
 
     if importances is not None:
         def_importances = list()
@@ -200,9 +196,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                     break
 
         if len(def_importances) > 0:            
-            data.update({
-                'importance[]': def_importances
-            })
+            data['importance[]'] = def_importances
 
     id_, last_id = 0, 0
     results = list()

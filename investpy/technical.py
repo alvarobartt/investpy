@@ -456,7 +456,7 @@ def pivot_points(name, country, product_type, interval='daily'):
     values = dict()
 
     for index, column in enumerate(header):
-        values.update({index: column.text_content().strip().lower().replace(' ', '_')})
+        values[index] = column.text_content().strip().lower().replace(' ', '_')
 
     table = root.xpath(".//table[contains(@class, 'crossRatesTbl')]/tbody/tr")
 
@@ -470,11 +470,11 @@ def pivot_points(name, country, product_type, interval='daily'):
             if value != 'name':
                 val = elements[key].text_content().strip()
                 try:
-                    pivot_pt.update({value: float(val)})
+                    pivot_pt[value] = float(val)
                 except:
-                    pivot_pt.update({value: None})
+                    pivot_pt[value] = None
             else:
-                pivot_pt.update({value: elements[key].text_content().strip()})
+                pivot_pt[value] = elements[key].text_content().strip()
         
         pivot_pts.append(pivot_pt)
 
