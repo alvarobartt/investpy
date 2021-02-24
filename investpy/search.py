@@ -148,11 +148,11 @@ def search_quotes(text, products=None, countries=None, n_results=None):
                 else:
                     continue
 
-            print(quote)
-
             search_obj = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
                                    country=country, tag=quote['link'],
                                    pair_type=pair_type, exchange=quote['exchange'])
+
+            if n_results == 1: return search_obj
 
             if search_obj not in search_results: search_results.append(search_obj)
         
