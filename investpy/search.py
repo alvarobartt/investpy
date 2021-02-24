@@ -33,10 +33,11 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         n_results (:obj:`int`, optional): number of search results to retrieve and return.
 
     Returns:
-        :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
+        :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj` or :obj:`investpy.utils.search_obj.SearchObj`:
             The resulting :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj` will contained the retrieved
             financial products matching the introduced text if found, otherwise a RuntimeError will be raised, so as to
-            let the user know that no results were found for the introduced text.
+            let the user know that no results were found for the introduced text. But note that if the n_results value
+            is equal to 1, a single value will be returned, instead of a list of values.
 
     Raises:
         ValueError: raised whenever any of the introduced parameter is not valid or errored.
