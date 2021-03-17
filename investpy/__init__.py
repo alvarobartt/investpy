@@ -38,5 +38,5 @@ from .certificates import get_certificates, get_certificates_list, get_certifica
 from .search import search_quotes
 
 from .news import economic_calendar
-
+from .holidays import holiday_calendar
 from .technical import technical_indicators, moving_averages, pivot_points
