@@ -242,6 +242,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
     if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
+    # start changing from here
     resource_package = 'investpy'
     resource_path = '/'.join((('resources', 'stocks.csv')))
     if pkg_resources.resource_exists(resource_package, resource_path):
@@ -330,19 +331,14 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         elif order in ['descending', 'desc']:
             result = result
 
-        if as_json is True:
-            json_ = {
-                'name': name,
-                'recent':
-                    [value.stock_as_json() for value in result]
-            }
+        # always return json
+        json_ = {
+            'name': name,
+            'recent':
+                [value.stock_as_json() for value in result]
+        }
 
-            return json.dumps(json_, sort_keys=False)
-        elif as_json is False:
-            df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
-            df.set_index('Date', inplace=True)
-
-            return df
+        return json.dumps(json_, sort_keys=False)
     else:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
@@ -601,15 +597,10 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
                 elif order in ['descending', 'desc']:
                     result = result
 
-                if as_json is True:
-                    json_list = [value.stock_as_json() for value in result]
+                # always return json data
+                json_list = [value.stock_as_json() for value in result]
                     
-                    final.append(json_list)
-                elif as_json is False:
-                    df = pd.DataFrame.from_records([value.stock_to_dict() for value in result])
-                    df.set_index('Date', inplace=True)
-
-                    final.append(df)
+                final.append(json_list)
 
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
@@ -617,14 +608,11 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
     if order in ['descending', 'desc']:
         final.reverse()
 
-    if as_json is True:
-        json_ = {
-            'name': name,
-            'historical': [value for json_list in final for value in json_list]
-        }
-        return json.dumps(json_, sort_keys=False)
-    elif as_json is False:
-        return pd.concat(final)
+    json_ = {
+        'name': name,
+        'historical': [value for json_list in final for value in json_list]
+    }
+    return json.dumps(json_, sort_keys=False)
 
 
 def get_stock_company_profile(stock, country='spain', language='english'):
