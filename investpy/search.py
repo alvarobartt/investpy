@@ -244,8 +244,8 @@ def search_events(text, importances=None, countries=None, n_results=None):
                     continue
 
             search_event = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
-                                   country=country, tag=quote['link'],
-                                   pair_type=pair_type, exchange=quote['exchange'])
+                                     country=country, tag=quote['link'],
+                                     pair_type=pair_type, exchange=quote['exchange'])
 
             if n_results == 1: return search_event
 
