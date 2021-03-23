@@ -35,7 +35,7 @@ from .certificates import get_certificates, get_certificates_list, get_certifica
     get_certificate_recent_data, get_certificate_historical_data, get_certificate_information, get_certificates_overview, \
     search_certificates
 
-from .search import search_quotes
+from .search import search_quotes, search_events
 
 from .news import economic_calendar
 

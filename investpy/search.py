@@ -17,10 +17,11 @@ def search_quotes(text, products=None, countries=None, n_results=None):
     class instances which will contain the search results so that they can be easily accessed and so
     to ease the data retrieval process since it can be done calling the methods `self.retrieve_recent_data()`
     or `self.retrieve_historical_data(from_date, to_date)` from each class instance, which will fill the historical
-    data attribute, `self.data`, of the class instance.
+    data attribute, `self.data`. The information of the financial product can also be retrieved using the
+    function `self.retrieve_information()`, that will also dump the information in the attribute `self.info`.
 
     Args:
-        text (:obj:`str`): text to search in Investing among all its indexed data.
+        text (:obj:`str`): text to search in Investing.com among all its indexed data.
         products (:obj:`list` of :obj:`str`, optional):
             list with the product type filter/s to be applied to search result quotes so that they match
             the filters. Possible products are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
@@ -41,7 +42,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
 
     Raises:
         ValueError: raised whenever any of the introduced parameter is not valid or errored.
-        ConnectionError: raised whenever the connection to Investing.com rfailed.
+        ConnectionError: raised whenever the connection to Investing.com failed.
         RuntimeError: raised when there was an error while executing the function.
 
     """
@@ -126,7 +127,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         data = req.json()
 
         if data['total']['quotes'] == 0:
-            raise RuntimeError("ERR#0093: no results found on Investing for the introduced text.")
+            raise RuntimeError("ERR#0093: no results found on Investing.com for the introduced text.")
 
         if total_results is None:
             total_results = data['total']['quotes']
@@ -219,7 +220,7 @@ def search_events(text, importances=None, countries=None, n_results=None):
         events = response.json()['ec_events']
 
         if len(events) == 0:
-            raise RuntimeError("ERR#0093: no results found on Investing for the introduced text.")
+            raise RuntimeError("ERR#0093: no results found on Investing.com for the introduced text.")
 
         if total_results is None:
             total_results = data['total']['quotes']

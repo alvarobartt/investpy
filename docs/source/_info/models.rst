@@ -27,7 +27,7 @@ day, respectively. And the volume value refers to the number of shares traded in
 .. note::
 
     The Data model is not usable as it is just a class used for the inner package, transparent to the user. It is used
-    in order to categorize each retrieved value from Investing and then to define its structure and, so on, the
+    in order to categorize each retrieved value from Investing.com and then to define its structure and, so on, the
     structure that either the resulting pandas.DataFrame or JSON file will be based on.
 
 Search Model
