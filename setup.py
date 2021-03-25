@@ -23,7 +23,7 @@ setup(
     version='1.0.3',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarobartt/investpy/archive/1.0.3.tar.gz',
+    download_url='https://github.com/hassansalehe/investpy/archive/x.0.0.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
     author_email='alvarobdc@yahoo.com',
