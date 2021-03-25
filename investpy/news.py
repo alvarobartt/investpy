@@ -8,8 +8,6 @@ import pytz
 from random import choice
 from unidecode import unidecode
 
-import pandas as pd
-
 from .utils import constant as cst
 from .utils.extra import random_user_agent
 
@@ -24,16 +22,16 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
     note that some parameters can be specified so that the economic calendar to retrieve can be filtered.
 
     Args:
-        time_zone (:obj:`str`, optional): 
+        time_zone (:obj:`str`, optional):
             time zone in GMT +/- hours:minutes format, which will be the reference time, if None, the local GMT time zone will be used.
         time_filter (:obj:`str`, optional):
-            it can be `time_only` or `time_remain`, so that the calendar will display the time when the event will occurr according to 
+            it can be `time_only` or `time_remain`, so that the calendar will display the time when the event will occurr according to
             the time zone or the remaining time until an event occurs.
         countries (:obj:`list` of :obj:`str`, optional):
-            list of countries from where the events of the economic calendar will be retrieved, all contries will be taken into consideration 
+            list of countries from where the events of the economic calendar will be retrieved, all contries will be taken into consideration
             if this parameter is None.
         importances (:obj:`list` of :obj:`str`, optional):
-            list of importances of the events to be taken into consideration, can contain: high, medium and low; if None all the importance 
+            list of importances of the events to be taken into consideration, can contain: high, medium and low; if None all the importance
             ratings will be taken into consideration including holidays.
         categories (:obj:`list` of :obj:`str`, optional):
             list of categories to which the events will be related to, if None all the available categories will be taken into consideration.
@@ -49,7 +47,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
             may be None since Investing.com does not provides that information.
 
     Raises:
-        ValueError: raised if any of the introduced parameters is not valid or errored. 
+        ValueError: raised if any of the introduced parameters is not valid or errored.
 
     Examples:
         >>> data = investpy.economic_calendar()
@@ -199,7 +197,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                         def_importances.append(key)
                     break
 
-        if len(def_importances) > 0:            
+        if len(def_importances) > 0:
             data.update({
                 'importance[]': def_importances
             })
@@ -265,9 +263,9 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
                     'forecast': None if forecast == '' else forecast,
                     'previous': None if previous == '' else previous
                 })
-        
+
         last_id = results[-1]['id']
-        
+
         data['limit_from'] += 1
-    
-    return pd.DataFrame(results)
+
+    return results

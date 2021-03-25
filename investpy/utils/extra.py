@@ -51,10 +51,10 @@ def random_user_agent():
 
     Returns:
         :obj:`str` - user_agent:
-            The returned :obj:`str` is the name of a random User-Agent, which will be passed on the 
-            headers of a request so to avoid restrictions due to the use of multiple requests from the 
+            The returned :obj:`str` is the name of a random User-Agent, which will be passed on the
+            headers of a request so to avoid restrictions due to the use of multiple requests from the
             same User-Agent.
-    
+
     """
 
     return str(random.choice(cst.USER_AGENTS))
