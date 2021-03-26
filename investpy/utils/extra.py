@@ -1,7 +1,6 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pandas as pd
 import pkg_resources
 
 import random
@@ -28,7 +27,7 @@ def resource_to_data(path_to_data):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', path_to_data))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        data = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        data = None
     else:
         raise FileNotFoundError("ERR#0115: data file not found or errored.")
 
