@@ -4,9 +4,9 @@
 __author__ = 'Alvaro Bartolome @ alvarobartt in GitHub'
 __version__ = '1.0.3'
 
-from .stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \
-    get_stock_historical_data, get_stock_company_profile, get_stock_dividends, get_stock_information, get_stocks_overview, \
-    get_stock_financial_summary, search_stocks
+from .stocks import get_stock_countries, get_stock_recent_data, \
+    get_stock_historical_data, get_stock_company_profile, \
+    get_stock_dividends, get_stock_information
 
 from .currency_crosses import get_currency_crosses, get_currency_crosses_list, get_currency_crosses_dict, \
     get_available_currencies, get_currency_cross_recent_data, get_currency_cross_historical_data, \
