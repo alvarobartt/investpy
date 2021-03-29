@@ -1099,7 +1099,7 @@ def get_stock_information(stock, country, as_json=False):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+    path_ = root_.xpath("//dl[contains(@class, 'grid')]/div")
 
     result = pd.DataFrame(columns=['Stock Symbol', 'Prev. Close', 'Todays Range', 'Revenue', 'Open', '52 wk Range',
                                    'EPS', 'Volume', 'Market Cap', 'Dividend (Yield)', 'Average Vol. (3m)', 'P/E Ratio',
@@ -1108,24 +1108,24 @@ def get_stock_information(stock, country, as_json=False):
 
     if path_:
         for elements_ in path_:
-            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
-            title_ = element.text_content()
+            title_ = elements_[0].text_content()
+            value_ = elements_[1].text_content()
             if title_ == "Day's Range":
                 title_ = 'Todays Range'
             if title_ in result.columns.tolist():
                 try:
-                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    result.at[0, title_] = float(value_.replace(',', ''))
                     continue
                 except:
                     pass
                 try:
-                    text = element.getnext().text_content().strip()
+                    text = value_.strip()
                     result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
                     continue
                 except:
                     pass
                 try:
-                    value = element.getnext().text_content().strip()
+                    value = value_.strip()
                     if value.__contains__('B'):
                         value = float(value.replace('B', '').replace(',', '')) * 1e9
                     elif value.__contains__('T'):
