@@ -273,14 +273,14 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
     etf = unidecode(etf.strip().lower())
 
-    def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+    def_exchange = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
     etfs = etfs[etfs['country'].str.lower() == country]
 
-    if etf not in list(etfs['name'].str.lower()):
+    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    etfs = etfs[etfs['name'].str.lower() == etf]
+    etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
 
     if def_exchange['country'] != country:
         warnings.warn(
@@ -296,7 +296,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
             
             etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
         else:
-            found_etfs = etfs[etfs['name'].str.lower() == etf]
+            found_etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
     
             if len(found_etfs) > 1:
                 warnings.warn(
@@ -307,7 +307,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
             del found_etfs
 
-            etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
+            etf_exchange = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
     else:
         if stock_exchange:
             if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
@@ -325,11 +325,11 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         else:
             etf_exchange = def_exchange['stock_exchange']
 
-    symbol = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
-    id_ = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
-    name = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
+    symbol = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
+    id_ = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
+    name = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
 
-    etf_currency = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
+    etf_currency = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
 
     header = symbol + ' Historical Data'
 
@@ -574,14 +574,14 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
     etf = unidecode(etf.strip().lower())
 
-    def_exchange = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+    def_exchange = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
     etfs = etfs[etfs['country'].str.lower() == country]
 
-    if etf not in list(etfs['name'].str.lower()):
+    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    etfs = etfs[etfs['name'].str.lower() == etf]
+    etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
 
     if def_exchange['country'] != country:
         warnings.warn(
@@ -597,7 +597,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
             
             etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
         else:
-            found_etfs = etfs[etfs['name'].str.lower() == etf]
+            found_etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
     
             if len(found_etfs) > 1:
                 warnings.warn(
@@ -608,7 +608,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
             del found_etfs
 
-            etf_exchange = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'stock_exchange']
+            etf_exchange = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
     else:
         if stock_exchange:
             if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
@@ -626,11 +626,11 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         else:
             etf_exchange = def_exchange['stock_exchange']
 
-    symbol = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
-    id_ = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
-    name = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
+    symbol = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
+    id_ = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
+    name = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
 
-    etf_currency = etfs.loc[((etfs['name'].str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
+    etf_currency = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
 
     final = list()
 
@@ -815,11 +815,11 @@ def get_etf_information(etf, country, as_json=False):
 
     etf = unidecode(etf.strip().lower())
 
-    if etf not in list(etfs['name'].str.lower()):
+    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    name = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'name']
-    tag = etfs.loc[(etfs['name'].str.lower() == etf).idxmax(), 'tag']
+    name = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'name']
+    tag = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'tag']
 
     url = "https://www.investing.com/etfs/" + tag
 

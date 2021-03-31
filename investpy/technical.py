@@ -120,10 +120,10 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,
@@ -270,10 +270,10 @@ def moving_averages(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,
@@ -424,10 +424,10 @@ def pivot_points(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,

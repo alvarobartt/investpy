@@ -304,13 +304,13 @@ def test_investpy_funds():
         {
             'fund': 'bbva multiactivo conservador pp',
             'country': 'spain',
-            'as_json': True,
+            'as_json': False
         },
         {
-            'fund': 'bbva multiactivo conservador pp',
-            'country': 'spain',
-            'as_json': False,
-        },
+            'fund': 'öhman Global Growth',
+            'country': 'sweden',
+            'as_json': True
+        }
     ]
 
     for param in params:
