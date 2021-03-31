@@ -120,10 +120,10 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,
@@ -270,10 +270,10 @@ def moving_averages(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,
@@ -424,10 +424,10 @@ def pivot_points(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,
@@ -456,7 +456,7 @@ def pivot_points(name, country, product_type, interval='daily'):
     values = dict()
 
     for index, column in enumerate(header):
-        values.update({index: column.text_content().strip().lower().replace(' ', '_')})
+        values[index] = column.text_content().strip().lower().replace(' ', '_')
 
     table = root.xpath(".//table[contains(@class, 'crossRatesTbl')]/tbody/tr")
 
@@ -470,11 +470,11 @@ def pivot_points(name, country, product_type, interval='daily'):
             if value != 'name':
                 val = elements[key].text_content().strip()
                 try:
-                    pivot_pt.update({value: float(val)})
+                    pivot_pt[value] = float(val)
                 except:
-                    pivot_pt.update({value: None})
+                    pivot_pt[value] = None
             else:
-                pivot_pt.update({value: elements[key].text_content().strip()})
+                pivot_pt[value] = elements[key].text_content().strip()
         
         pivot_pts.append(pivot_pt)
 

@@ -29,7 +29,7 @@ investpy to be one of the most consistent packages when it comes to financial da
 
 ---
 
-## Installation
+## :hammer_and_wrench: Installation
 
 To get this package working you will need to **install it via pip** (with a Python 3.6 version or higher) on the terminal by typing:
 
@@ -44,14 +44,14 @@ the stable release comes out (which eventually may take some time depending on t
 
 ---
 
-## Usage
+## :computer: Usage
 
 Even though some investpy usage examples are presented on the [docs](https://investpy.readthedocs.io/usage.html), 
 some basic functionality will be sorted out with sample Python code blocks. Additionally, more usage examples 
 can be found under [examples/](https://github.com/alvarobartt/investpy/tree/master/examples) directory, which 
 contains a collection of Jupyter Notebooks on how to use investpy and handle its data.
 
-### Recent/Historical Data Retrieval
+### :chart_with_upwards_trend: Recent/Historical Data Retrieval
 
 investpy allows the user to **download both recent and historical data from any financial product indexed** 
 (stocks, funds, ETFs, currency crosses, certificates, bonds, commodities, indices, and cryptos). In 
@@ -79,7 +79,7 @@ Date
 To get to know all the available recent and historical data extraction functions provided by 
 investpy, and also, parameter tuning, please read the docs.
 
-### Search Data
+### :mag: Search Data
 
 **Investing.com search engine is completely integrated** with investpy, which means that any available 
 financial product (quote) can be easily found. The search function allows the user to tune the parameters 
@@ -121,7 +121,7 @@ Date
 
 ```
 
-### Crypto Currencies Data Retrieval
+### :money_with_wings: Crypto Currencies Data Retrieval
 
 Cryptocurrencies support has recently been included, to let the user retrieve data and information from any 
 available crypto at Investing.com. Please note that some cryptocurrencies do not have available data indexed 
@@ -152,13 +152,40 @@ Date
 
 ---
 
-## Documentation
+## :open_book: Documentation
 
 You can find the **complete investpy documentation** at [Documentation](https://investpy.readthedocs.io/).
 
 ---
 
-## Related projects
+## :sparkles: Contribute
+
+As this is an open-source project it is **open to contributions, bug reports, bug fixes, documentation improvements, 
+enhancements, and ideas**. There is an open tab of [issues](https://github.com/alvarobartt/investpy/issues) where 
+anyone can open new issues if needed or navigate through them to solve them or contribute to its solving. 
+Remember that issues are not threads to describe multiple problems, this does not mean that issues can not 
+be discussed, but so to keep structured project management, the same issue should not describe different 
+problems, just the main one and some nested/related errors that may be found.
+
+---
+
+## :question: Discussions (Q&A, AMA)
+
+GitHub recently released a new feature named __GitHub Discussions__ (still in beta). GitHub Discussions is a 
+collaborative communication forum for the community around an open source project.
+
+Check the investpy GitHub Discussions page at [Discussions](https://github.com/alvarobartt/investpy/discussions), 
+and feel free to ask me (ar any developer) anything, share updates, have open-ended conversations, and follow along 
+on decisions affecting the community's way of working.
+
+:pushpin: __Note__. Usually I don't answer emails asking me questions about investpy, as we currently have the
+GitHub Discussions tab, and I encourage you to use it. GitHub Discussions is the easiest way to contact me about 
+investpy, so that I don't answer the same stuff more than once via email, as anyone can see the opened/answered
+discussions.
+
+---
+
+## :card_index_dividers: Related projects
 
 Since investpy is intended to retrieve data from different financial products as indexed in Investing.com, 
 the **development of some support modules which implement an additional functionality based on investpy data**, 
@@ -174,22 +201,11 @@ include it in this section.
 
 ---
 
-## Contribute - [![Open Source Helpers](https://www.codetriage.com/alvarobartt/investpy/badges/users.svg)](https://www.codetriage.com/alvarobartt/investpy)
-
-As this is an open-source project it is **open to contributions, bug reports, bug fixes, documentation improvements, 
-enhancements, and ideas**. There is an open tab of [issues](https://github.com/alvarobartt/investpy/issues) where 
-anyone can open new issues if needed or navigate through them to solve them or contribute to its solving. 
-Remember that issues are not threads to describe multiple problems, this does not mean that issues can not 
-be discussed, but so to keep structured project management, the same issue should not describe different 
-problems, just the main one and some nested/related errors that may be found.
-
----
-
-## Citation
+## :memo: Citation
 
 When citing this repository on your scientific publications please use the following **BibTeX** citation:
 
-```
+```bibtex
 @misc{investpy,
     author = {Alvaro Bartolome del Canto},
     title = {investpy - Financial Data Extraction from Investing.com with Python},
@@ -206,17 +222,24 @@ When citing this repository on any other social media, please use the following 
 investpy - Financial Data Extraction from Investing.com with Python developed by Alvaro Bartolome del Canto
 ```
 
-And include a mention (so that I can see your work!) to me at any of my social network profiles:
-
-- LinkedIn: https://linkedin.com/in/alvarobartt
-- Twitter: https://twitter.com/alvarobartt
-- GitHub: https://github.com/alvarobartt
-
-If applicable also mention the source from where the data is retrieved, Investing.com.
+You should also mention the source from where the data is retrieved, Investing.com; even though it's already
+included in the package short description title.
 
 ---
 
-## Disclaimer
+## :man_technologist: Contact Information
+
+You can contact me at any of my social network profiles:
+
+- :briefcase: LinkedIn: https://linkedin.com/in/alvarobartt
+- :bird: Twitter: https://twitter.com/alvarobartt
+- :octocat: GitHub: https://github.com/alvarobartt
+
+Or via email at alvarobartt@yahoo.com.
+
+---
+
+## :warning: Disclaimer
 
 This Python package has been made for **research purposes** to fit the needs that Investing.com does not cover, 
 so this package works like an Application Programming Interface (API) of Investing.com developed in an **altruistic way**.

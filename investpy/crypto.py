@@ -216,16 +216,16 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
 
     crypto = unidecode(crypto.strip().lower())
 
-    if crypto not in list(cryptos['name'].str.lower()):
+    if crypto not in list(cryptos['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    status = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'status']
     if status == 'unavailable':
         raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-    crypto_name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
-    crypto_id = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'id']
-    crypto_currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
+    crypto_name = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'name']
+    crypto_id = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'id']
+    crypto_currency = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'currency']
 
     header = crypto_name + ' Historical Data'
 
@@ -455,16 +455,16 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
 
     crypto = unidecode(crypto.strip().lower())
 
-    if crypto not in list(cryptos['name'].str.lower()):
+    if crypto not in list(cryptos['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    status = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'status']
     if status == 'unavailable':
         raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-    crypto_name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
-    crypto_id = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'id']
-    crypto_currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
+    crypto_name = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'name']
+    crypto_id = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'id']
+    crypto_currency = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'currency']
 
     header = crypto_name + ' Historical Data'
 
@@ -531,7 +531,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     crypto_high = float(info[3].replace(',', ''))
                     crypto_low = float(info[4].replace(',', ''))
 
-                    crypto_volume = int(info[5])
+                    crypto_volume = int(info[5] or 0)
 
                     result.insert(len(result),
                                   Data(crypto_date, crypto_open, crypto_high, crypto_low,
@@ -628,16 +628,16 @@ def get_crypto_information(crypto, as_json=False):
 
     crypto = unidecode(crypto.strip().lower())
 
-    if crypto not in list(cryptos['name'].str.lower()):
+    if crypto not in list(cryptos['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    status = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'status']
     if status == 'unavailable':
         raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-    name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
-    currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
-    tag = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'tag']
+    name = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'name']
+    currency = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'currency']
+    tag = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'tag']
 
     url = "https://www.investing.com/crypto/" + tag
 
@@ -699,7 +699,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
     Note:
         The amount of indexed crypto currencies may vary, so if n_results is set to `None`, all the available crypto
-        currencies in Investing while retrieving the overview, will be retrieved and returned.
+        currencies in Investing.com while retrieving the overview, will be retrieved and returned.
 
     Returns:
         :obj:`pandas.DataFrame` - cryptos_overview:

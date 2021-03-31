@@ -261,14 +261,14 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in list(stocks['symbol'].str.lower()):
+    if stock not in list(stocks['symbol'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
-    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
-    name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
+    symbol = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'symbol']
+    id_ = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'id']
+    name = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'name']
 
-    stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
+    stock_currency = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'currency']
 
     header = symbol + ' Historical Data'
 
@@ -515,14 +515,14 @@ def get_stock_historical_data(stock, country, from_date, to_date, as_json=False,
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in list(stocks['symbol'].str.lower()):
+    if stock not in list(stocks['symbol'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    symbol = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'symbol']
-    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
-    name = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'name']
+    symbol = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'symbol']
+    id_ = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'id']
+    name = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'name']
 
-    stock_currency = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'currency']
+    stock_currency = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'currency']
 
     final = list()
 
@@ -726,7 +726,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in list(stocks['symbol'].str.lower()):
+    if stock not in list(stocks['symbol'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
     company_profile = {
@@ -735,7 +735,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
     }
 
     if selected_source == 'Bolsa de Madrid':
-        isin = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'isin']
+        isin = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'isin']
 
         url = "http://www.bolsamadrid.es/esp/aspx/Empresas/FichaValor.aspx?ISIN=" + isin
 
@@ -771,7 +771,7 @@ def get_stock_company_profile(stock, country='spain', language='english'):
         return company_profile
         
     elif selected_source == 'Investing':
-        tag = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
+        tag = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'tag']
 
         url = "https://www.investing.com/equities/" + tag + "-company-profile"
 
@@ -858,10 +858,10 @@ def get_stock_dividends(stock, country):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in list(stocks['symbol'].str.lower()):
+    if stock not in list(stocks['symbol'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    tag_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'tag']
+    tag_ = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'tag']
 
     headers = {
         "User-Agent": random_user_agent(),
@@ -1077,15 +1077,15 @@ def get_stock_information(stock, country, as_json=False):
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in list(stocks['symbol'].str.lower()):
+    if stock not in list(stocks['symbol'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    tag = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'tag']
-    stock = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'symbol']
+    tag = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock.lower()).idxmax(), 'tag']
+    stock = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock.lower()).idxmax(), 'symbol']
 
-    url = "https://www.investing.com/equities/" + tag
+    url = f"https://www.investing.com/equities/{tag}"
 
-    head = {
+    headers = {
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
@@ -1093,57 +1093,57 @@ def get_stock_information(stock, country, as_json=False):
         "Connection": "keep-alive",
     }
 
-    req = requests.get(url, headers=head)
+    req = requests.get(url, headers=headers)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+    path_ = root_.xpath("//dl[contains(@class, 'grid')]/div")
 
     result = pd.DataFrame(columns=['Stock Symbol', 'Prev. Close', 'Todays Range', 'Revenue', 'Open', '52 wk Range',
                                    'EPS', 'Volume', 'Market Cap', 'Dividend (Yield)', 'Average Vol. (3m)', 'P/E Ratio',
                                    'Beta', '1-Year Change', 'Shares Outstanding', 'Next Earnings Date'])
     result.at[0, 'Stock Symbol'] = stock
 
-    if path_:
-        for elements_ in path_:
-            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
-            title_ = element.text_content()
-            if title_ == "Day's Range":
-                title_ = 'Todays Range'
-            if title_ in result.columns.tolist():
-                try:
-                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
-                    continue
-                except:
-                    pass
-                try:
-                    text = element.getnext().text_content().strip()
-                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
-                    continue
-                except:
-                    pass
-                try:
-                    value = element.getnext().text_content().strip()
-                    if value.__contains__('B'):
-                        value = float(value.replace('B', '').replace(',', '')) * 1e9
-                    elif value.__contains__('T'):
-                        value = float(value.replace('T', '').replace(',', '')) * 1e12
-                    result.at[0, title_] = value
-                    continue
-                except:
-                    pass
-
-        result.replace({'N/A': None}, inplace=True)
-
-        if as_json is True:
-            json_ = result.iloc[0].to_dict()
-            return json_
-        elif as_json is False:
-            return result
-    else:
+    if not path_:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+    
+    for elements_ in path_:
+        title_ = elements_[0].text_content()
+        value_ = elements_[1].text_content()
+        if title_ == "Day's Range":
+            title_ = 'Todays Range'
+        if title_ in result.columns.tolist():
+            try:
+                result.at[0, title_] = float(value_.replace(',', ''))
+                continue
+            except:
+                pass
+            try:
+                text = value_.strip()
+                result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                continue
+            except:
+                pass
+            try:
+                value = value_.strip()
+                if value.__contains__('B'):
+                    value = float(value.replace('B', '').replace(',', '')) * 1e9
+                elif value.__contains__('T'):
+                    value = float(value.replace('T', '').replace(',', '')) * 1e12
+                result.at[0, title_] = value
+                continue
+            except:
+                pass
+
+    result.replace({'N/A': None}, inplace=True)
+
+    if as_json is True:
+        json_ = result.iloc[0].to_dict()
+        return json_
+    elif as_json is False:
+        return result
 
 
 def get_stocks_overview(country, as_json=False, n_results=100):
@@ -1400,10 +1400,10 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
 
     stock = unidecode(stock.strip().lower())
 
-    if stock not in list(stocks['symbol'].str.lower()):
+    if stock not in list(stocks['symbol'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
 
-    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+    id_ = stocks.loc[(stocks['symbol'].apply(unidecode).str.lower() == stock).idxmax(), 'id']
 
     headers = {
         "User-Agent": random_user_agent(),

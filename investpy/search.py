@@ -17,10 +17,11 @@ def search_quotes(text, products=None, countries=None, n_results=None):
     class instances which will contain the search results so that they can be easily accessed and so
     to ease the data retrieval process since it can be done calling the methods `self.retrieve_recent_data()`
     or `self.retrieve_historical_data(from_date, to_date)` from each class instance, which will fill the historical
-    data attribute, `self.data`, of the class instance.
+    data attribute, `self.data`. The information of the financial product can also be retrieved using the
+    function `self.retrieve_information()`, that will also dump the information in the attribute `self.info`.
 
     Args:
-        text (:obj:`str`): text to search in Investing among all its indexed data.
+        text (:obj:`str`): text to search in Investing.com among all its indexed data.
         products (:obj:`list` of :obj:`str`, optional):
             list with the product type filter/s to be applied to search result quotes so that they match
             the filters. Possible products are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
@@ -33,14 +34,15 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         n_results (:obj:`int`, optional): number of search results to retrieve and return.
 
     Returns:
-        :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`:
+        :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj` or :obj:`investpy.utils.search_obj.SearchObj`:
             The resulting :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj` will contained the retrieved
             financial products matching the introduced text if found, otherwise a RuntimeError will be raised, so as to
-            let the user know that no results were found for the introduced text.
+            let the user know that no results were found for the introduced text. But note that if the n_results value
+            is equal to 1, a single value will be returned, instead of a list of values.
 
     Raises:
         ValueError: raised whenever any of the introduced parameter is not valid or errored.
-        ConnectionError: raised whenever the connection to Investing.com rfailed.
+        ConnectionError: raised whenever the connection to Investing.com failed.
         RuntimeError: raised when there was an error while executing the function.
 
     """
@@ -125,7 +127,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         data = req.json()
 
         if data['total']['quotes'] == 0:
-            raise RuntimeError("ERR#0093: no results found on Investing for the introduced text.")
+            raise RuntimeError("ERR#0093: no results found on Investing.com for the introduced text.")
 
         if total_results is None:
             total_results = data['total']['quotes']
@@ -148,13 +150,107 @@ def search_quotes(text, products=None, countries=None, n_results=None):
                 else:
                     continue
 
-            print(quote)
-
             search_obj = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
                                    country=country, tag=quote['link'],
                                    pair_type=pair_type, exchange=quote['exchange'])
 
+            if n_results == 1: return search_obj
+
             if search_obj not in search_results: search_results.append(search_obj)
+        
+        params['offset'] += 270
+
+        if len(search_results) >= n_results or len(search_results) >= total_results or params['offset'] >= total_results:
+            break
+    
+    return search_results[:n_results]
+
+
+def search_events(text, importances=None, countries=None, n_results=None):
+    """
+    TODO
+    """
+
+    if not text:
+        raise ValueError('ERR#0074: text parameter is mandatory and it should be a valid str.')
+
+    if not isinstance(text, str):
+        raise ValueError('ERR#0074: text parameter is mandatory and it should be a valid str.')
+
+    if importances and not isinstance(importances, list):
+        raise ValueError('ERR#0138: importances filtering parameter is optional, but if specified, it must be a list of str.')
+
+    if countries and not isinstance(countries, list):
+        raise ValueError('ERR#0128: countries filtering parameter is optional, but if specified, it must be a list of str.')
+
+    if n_results and not isinstance(n_results, int):
+        raise ValueError('ERR#0088: n_results parameter is optional, but if specified, it must be an integer equal or higher than 1.')
+
+    if n_results is not None:
+        if n_results < 1:
+            raise ValueError('ERR#0088: n_results parameter is optional, but if specified, it must be an integer equal or higher than 1.')
+
+    params = {
+        'search_text': text,
+        'tab': 'ec_event',
+        'limit': 270,
+        'offset': 0
+    }
+
+    headers = {
+        "User-Agent": random_user_agent(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    url = 'https://www.investing.com/search/service/SearchInnerPage'
+
+    search_results = list()
+
+    total_results = None
+
+    while True:
+        response = requests.post(url, data=params, headers=headers)
+
+        if response.status_code != 200:
+            raise ConnectionError(f"ERR#0015: error {response.status_code}, try again later.")
+
+        events = response.json()['ec_events']
+
+        if len(events) == 0:
+            raise RuntimeError("ERR#0093: no results found on Investing.com for the introduced text.")
+
+        if total_results is None:
+            total_results = data['total']['quotes']
+
+        if n_results is None:
+            n_results = data['total']['quotes']
+
+        for event in events:
+            country, pair_type = quote['flag'], quote['pair_type']
+            
+            if importances is not None:
+                if quote['pair_type'] in importances:
+                    print("TODO")
+                    ## pair_type = cst.PAIR_FILTERS[quote['pair_type']]
+                else:
+                    continue
+
+            if countries is not None:
+                if quote['flag'] in countries:
+                    country = cst.FLAG_FILTERS[quote['flag']]
+                else:
+                    continue
+
+            search_event = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
+                                     country=country, tag=quote['link'],
+                                     pair_type=pair_type, exchange=quote['exchange'])
+
+            if n_results == 1: return search_event
+
+            if search_event not in search_results: search_results.append(search_event)
         
         params['offset'] += 270
 

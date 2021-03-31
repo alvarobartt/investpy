@@ -304,13 +304,13 @@ def test_investpy_funds():
         {
             'fund': 'bbva multiactivo conservador pp',
             'country': 'spain',
-            'as_json': True,
+            'as_json': False
         },
         {
-            'fund': 'bbva multiactivo conservador pp',
-            'country': 'spain',
-            'as_json': False,
-        },
+            'fund': 'öhman Global Growth',
+            'country': 'sweden',
+            'as_json': True
+        }
     ]
 
     for param in params:
@@ -1282,6 +1282,12 @@ def test_investpy_search():
             'products': ['stocks'],
             'countries': ['united states'],
             'n_results': 1
+        },
+        {
+            'text': 'apple',
+            'products': ['stocks'],
+            'countries': ['united states'],
+            'n_results': 5
         }
     ]
 
@@ -1302,12 +1308,16 @@ def test_investpy_search():
             },
         ]
 
-        for result in results:
-            print(result)
-            result.retrieve_recent_data()
-            for date in dates:
-                result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
-            break
+        if isinstance(results, list):
+            result = results[0]
+        else:
+            result = results
+
+        print(result)
+
+        result.retrieve_recent_data()
+        for date in dates:
+            result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
 
 
 def test_investpy_news():

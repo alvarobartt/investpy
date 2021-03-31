@@ -257,13 +257,13 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in list(funds['name'].str.lower()):
+    if fund not in list(funds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
-    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
-    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
-    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+    symbol = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'name']
+    fund_currency = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'currency']
 
     header = symbol + ' Historical Data'
 
@@ -502,13 +502,13 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in list(funds['name'].str.lower()):
+    if fund not in list(funds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
-    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
-    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
-    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+    symbol = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'name']
+    fund_currency = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'currency']
 
     final = list()
 
@@ -683,10 +683,10 @@ def get_fund_information(fund, country, as_json=False):
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in list(funds['name'].str.lower()):
+    if fund not in list(funds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
+    tag = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'tag']
 
     url = "https://www.investing.com/funds/" + tag
 

@@ -243,12 +243,12 @@ def get_bond_recent_data(bond, as_json=False, order='ascending', interval='Daily
 
     bond = unidecode(bond.strip().lower())
 
-    if bond not in list(bonds['name'].str.lower()):
+    if bond not in list(bonds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
-    id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
-    name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
-    full_name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'full_name']
+    id_ = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'id']
+    name = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'name']
+    full_name = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'full_name']
 
     header = full_name + " Bond Yield Historical Data"
 
@@ -475,12 +475,12 @@ def get_bond_historical_data(bond, from_date, to_date, as_json=False, order='asc
 
     bond = unidecode(bond.strip().lower())
 
-    if bond not in list(bonds['name'].str.lower()):
+    if bond not in list(bonds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
-    id_ = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'id']
-    name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
-    full_name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'full_name']
+    id_ = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'id']
+    name = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'name']
+    full_name = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'full_name']
 
     final = list()
 
@@ -643,11 +643,11 @@ def get_bond_information(bond, as_json=False):
 
     bond = unidecode(bond.strip().lower())
 
-    if bond not in list(bonds['name'].str.lower()):
+    if bond not in list(bonds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0068: bond " + bond + " not found, check if it is correct.")
 
-    name = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'name']
-    tag = bonds.loc[(bonds['name'].str.lower() == bond).idxmax(), 'tag']
+    name = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'name']
+    tag = bonds.loc[(bonds['name'].apply(unidecode).str.lower() == bond).idxmax(), 'tag']
 
     url = "https://www.investing.com/rates-bonds/" + tag
 

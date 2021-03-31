@@ -264,12 +264,12 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
 
     certificate = unidecode(certificate.strip().lower())
 
-    if certificate not in list(certificates['name'].str.lower()):
+    if certificate not in list(certificates['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
-    symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
-    id_ = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'id']
-    name = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'name']
+    symbol = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'symbol']
+    id_ = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'id']
+    name = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'name']
 
     header = symbol + ' Historical Data'
 
@@ -510,12 +510,12 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
 
     certificate = unidecode(certificate.strip().lower())
 
-    if certificate not in list(certificates['name'].str.lower()):
+    if certificate not in list(certificates['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
-    symbol = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'symbol']
-    id_ = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'id']
-    name = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'name']
+    symbol = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'symbol']
+    id_ = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'id']
+    name = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'name']
 
     header = symbol + ' Historical Data'
 
@@ -600,7 +600,6 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
-
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
@@ -691,11 +690,11 @@ def get_certificate_information(certificate, country, as_json=False):
 
     certificate = unidecode(certificate.strip().lower())
 
-    if certificate not in list(certificates['name'].str.lower()):
+    if certificate not in list(certificates['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0101: certificate " + certificate + " not found, check if it is correct.")
 
-    tag = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'tag']
-    name = certificates.loc[(certificates['name'].str.lower() == certificate).idxmax(), 'name']
+    tag = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'tag']
+    name = certificates.loc[(certificates['name'].apply(unidecode).str.lower() == certificate).idxmax(), 'name']
 
     url = "https://www.investing.com/certificates/" + tag
 

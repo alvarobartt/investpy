@@ -258,14 +258,14 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
 
     index = unidecode(index.strip().lower())
 
-    if index not in list(indices['name'].str.lower()):
+    if index not in list(indices['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
-    full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
-    id_ = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'id']
-    name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
+    full_name = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'full_name']
+    id_ = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'id']
+    name = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'name']
 
-    index_currency = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'currency']
+    index_currency = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'currency']
 
     header = full_name + ' Historical Data'
 
@@ -509,14 +509,14 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
 
     index = unidecode(index.strip().lower())
 
-    if index not in list(indices['name'].str.lower()):
+    if index not in list(indices['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
-    full_name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'full_name']
-    id_ = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'id']
-    name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
+    full_name = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'full_name']
+    id_ = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'id']
+    name = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'name']
 
-    index_currency = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'currency']
+    index_currency = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'currency']
 
     final = list()
 
@@ -692,11 +692,11 @@ def get_index_information(index, country, as_json=False):
 
     index = unidecode(index.strip().lower())
 
-    if index not in list(indices['name'].str.lower()):
+    if index not in list(indices['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0045: index " + index + " not found, check if it is correct.")
 
-    name = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'name']
-    tag = indices.loc[(indices['name'].str.lower() == index).idxmax(), 'tag']
+    name = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'name']
+    tag = indices.loc[(indices['name'].apply(unidecode).str.lower() == index).idxmax(), 'tag']
 
     url = "https://www.investing.com/indices/" + tag
 
