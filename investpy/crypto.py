@@ -531,7 +531,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     crypto_high = float(info[3].replace(',', ''))
                     crypto_low = float(info[4].replace(',', ''))
 
-                    crypto_volume = int(info[5])
+                    crypto_volume = int(info[5] or 0)
 
                     result.insert(len(result),
                                   Data(crypto_date, crypto_open, crypto_high, crypto_low,
