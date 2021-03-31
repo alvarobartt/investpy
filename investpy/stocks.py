@@ -1083,9 +1083,9 @@ def get_stock_information(stock, country, as_json=False):
     tag = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'tag']
     stock = stocks.loc[(stocks['symbol'].str.lower() == stock.lower()).idxmax(), 'symbol']
 
-    url = "https://www.investing.com/equities/" + tag
+    url = f"https://www.investing.com/equities/{tag}"
 
-    head = {
+    headers = {
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
@@ -1093,7 +1093,7 @@ def get_stock_information(stock, country, as_json=False):
         "Connection": "keep-alive",
     }
 
-    req = requests.get(url, headers=head)
+    req = requests.get(url, headers=headers)
 
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
@@ -1106,44 +1106,44 @@ def get_stock_information(stock, country, as_json=False):
                                    'Beta', '1-Year Change', 'Shares Outstanding', 'Next Earnings Date'])
     result.at[0, 'Stock Symbol'] = stock
 
-    if path_:
-        for elements_ in path_:
-            title_ = elements_[0].text_content()
-            value_ = elements_[1].text_content()
-            if title_ == "Day's Range":
-                title_ = 'Todays Range'
-            if title_ in result.columns.tolist():
-                try:
-                    result.at[0, title_] = float(value_.replace(',', ''))
-                    continue
-                except:
-                    pass
-                try:
-                    text = value_.strip()
-                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
-                    continue
-                except:
-                    pass
-                try:
-                    value = value_.strip()
-                    if value.__contains__('B'):
-                        value = float(value.replace('B', '').replace(',', '')) * 1e9
-                    elif value.__contains__('T'):
-                        value = float(value.replace('T', '').replace(',', '')) * 1e12
-                    result.at[0, title_] = value
-                    continue
-                except:
-                    pass
-
-        result.replace({'N/A': None}, inplace=True)
-
-        if as_json is True:
-            json_ = result.iloc[0].to_dict()
-            return json_
-        elif as_json is False:
-            return result
-    else:
+    if not path_:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+    
+    for elements_ in path_:
+        title_ = elements_[0].text_content()
+        value_ = elements_[1].text_content()
+        if title_ == "Day's Range":
+            title_ = 'Todays Range'
+        if title_ in result.columns.tolist():
+            try:
+                result.at[0, title_] = float(value_.replace(',', ''))
+                continue
+            except:
+                pass
+            try:
+                text = value_.strip()
+                result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                continue
+            except:
+                pass
+            try:
+                value = value_.strip()
+                if value.__contains__('B'):
+                    value = float(value.replace('B', '').replace(',', '')) * 1e9
+                elif value.__contains__('T'):
+                    value = float(value.replace('T', '').replace(',', '')) * 1e12
+                result.at[0, title_] = value
+                continue
+            except:
+                pass
+
+    result.replace({'N/A': None}, inplace=True)
+
+    if as_json is True:
+        json_ = result.iloc[0].to_dict()
+        return json_
+    elif as_json is False:
+        return result
 
 
 def get_stocks_overview(country, as_json=False, n_results=100):
