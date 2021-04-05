@@ -409,7 +409,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
 def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=None, as_json=False, order='ascending', interval='Daily'):
     """
-    This function retrieves historical data from the introduced `etf` from Investing via Web Scraping on the 
+    This function retrieves historical data from the introduced `etf` from Investing.com via Web Scraping on the 
     introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
     :obj:`json` object with `ascending` or `descending` order.
 

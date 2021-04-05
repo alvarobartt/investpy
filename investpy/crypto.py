@@ -699,7 +699,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
     Note:
         The amount of indexed crypto currencies may vary, so if n_results is set to `None`, all the available crypto
-        currencies in Investing while retrieving the overview, will be retrieved and returned.
+        currencies in Investing.com while retrieving the overview, will be retrieved and returned.
 
     Returns:
         :obj:`pandas.DataFrame` - cryptos_overview:
