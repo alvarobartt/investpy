@@ -1457,6 +1457,164 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     return dataset
 
 
+def get_stock_financials(stock, country, summary_type='income_statement', period='annual'):
+    """
+    This function retrieves the financial summary of the introduced stock (by symbol) from the introduced
+    country, based on the summary_type value this function returns a different type of financial summary, so
+    that the output format of this function depends on its type. Additionally, the period of the retrieved
+    financial summary type can be specified.
+
+    Args:
+        stock (:obj:`str`): symbol of the stock to retrieve its financial summary.
+        country (:obj:`str`): name of the country from where the introduced stock symbol is.
+        summary_type (:obj:`str`, optional):
+            type of the financial summary table to retrieve, default value is `income_statement`, but all the
+            available types are: `income_statement`, `cash_flow_statement` and `balance_sheet`.
+        period (:obj:`str`, optional):
+            period range of the financial summary table to rertieve, detault value is `annual`, but all the
+            available periods are: `annual` and `quarterly`.
+
+    Returns:
+        :obj:`pandas.DataFrame` - financial_summary:
+            The resulting :obj:`pandas.DataFrame` contains the table of the requested financial summary from the
+            introduced stock, so the fields/column names may vary, since it depends on the summary_type introduced.
+            So on, the returned table will have the following format/structure::
+
+                Date || Field 1 | Field 2 | ... | Field N
+                -----||---------|---------|-----|---------
+                xxxx || xxxxxxx | xxxxxxx | xxx | xxxxxxx
+
+    Raises:
+        ValueError: raised if any of the introduced parameters is not valid or errored.
+        FileNotFoundError: raised if the stocks.csv file was not found.
+        IOError: raised if the stocks.csv file could not be read.
+        ConnectionError: raised if the connection to Investing.com errored or could not be established.
+        RuntimeError: raised if any error occurred while running the function.
+
+    Examples:
+        >>> data = investpy.get_stock_financial_summary(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
+        >>> data.head()
+                    Total Revenue  Gross Profit  Operating Income  Net Income
+        Date
+        2019-09-28         260174         98392             63930       55256
+        2018-09-29         265595        101839             70898       59531
+        2017-09-30         229234         88186             61344       48351
+        2016-09-24         215639         84263             60024       45687
+
+    """
+
+    if not stock:
+        raise ValueError("ERR#0013: stock parameter is mandatory and must be a valid stock symbol.")
+
+    if not isinstance(stock, str):
+        raise ValueError("ERR#0027: stock argument needs to be a str.")
+
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+
+    if not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+
+    if summary_type is None:
+        raise ValueError("ERR#0132: summary_type can not be None, it should be a str.")
+
+    if not isinstance(summary_type, str):
+        raise ValueError("ERR#0133: summary_type value not valid.")
+
+    summary_type = unidecode(summary_type.strip().lower())
+
+    if summary_type not in cst.FINANCIAL_SUMMARY_TYPES.keys():
+        raise ValueError("ERR#0134: introduced summary_type is not valid, since available values are: " + ', '.join(
+            cst.FINANCIAL_SUMMARY_TYPES.keys()))
+
+    if period is None:
+        raise ValueError("ERR#0135: period can not be None, it should be a str.")
+
+    if not isinstance(period, str):
+        raise ValueError("ERR#0136: period value not valid.")
+
+    period = unidecode(period.strip().lower())
+
+    if period not in cst.FINANCIAL_SUMMARY_PERIODS.keys():
+        raise ValueError("ERR#0137: introduced period is not valid, since available values are: " + ', '.join(
+            cst.FINANCIAL_SUMMARY_PERIODS.keys()))
+
+    resource_package = 'investpy'
+    resource_path = '/'.join((('resources', 'stocks.csv')))
+    if pkg_resources.resource_exists(resource_package, resource_path):
+        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+    else:
+        raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
+
+    if stocks is None:
+        raise IOError("ERR#0001: stocks object not found or unable to retrieve.")
+
+    country = unidecode(country.strip().lower())
+
+    if country not in get_stock_countries():
+        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+
+    stocks = stocks[stocks['country'] == country]
+
+    stock = unidecode(stock.strip().lower())
+
+    if stock not in list(stocks['symbol'].str.lower()):
+        raise RuntimeError("ERR#0018: stock " + stock + " not found, check if it is correct.")
+
+    id_ = stocks.loc[(stocks['symbol'].str.lower() == stock).idxmax(), 'id']
+
+    headers = {
+        "User-Agent": random_user_agent(),
+        "X-Requested-With": "XMLHttpRequest",
+        "Accept": "text/html",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Connection": "keep-alive",
+    }
+
+    params = {
+        "action": "change_report_type",
+        "pid": id_,
+        "financial_id": id_,
+        "ratios_id": id_,
+        "period_type": cst.FINANCIAL_SUMMARY_PERIODS[period]
+    }
+
+    url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax'
+
+    req = requests.get(url, params=params, headers=headers)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root = fromstring(req.text)
+    tables = root.xpath(".//div[@class='companySummaryIncomeStatement']\
+        /table[contains(@class, 'companyFinancialSummaryTbl')]")
+
+    data = {
+        'Date': list()
+    }
+
+    table = tables[cst.FINANCIAL_SUMMARY_TYPES[summary_type]]
+
+    for element in table.xpath(".//thead")[0].xpath(".//th"):
+        if element.get('class') is None:
+            data['Date'].append(datetime.strptime(element.text_content().strip(), '%b %d, %Y'))
+
+    for element in table.xpath(".//tbody")[0].xpath(".//tr"):
+        curr_row = None
+        for row in element.xpath(".//td"):
+            if row.get('class') is not None:
+                curr_row = row.text_content().strip()
+                data[curr_row] = list()
+                continue
+            data[curr_row].append(float(row.text_content().strip()))
+
+    dataset = pd.DataFrame(data)
+    dataset.set_index('Date', inplace=True)
+
+    return dataset
+
+
 def search_stocks(by, value):
     """
     This function searches stocks by the introduced value for the specified field. This means that this function
