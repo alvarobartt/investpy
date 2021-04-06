@@ -1457,7 +1457,7 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     return dataset
 
 
-def get_stock_financials(stock, country, summary_type='income_statement', period='annual'):
+def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
     """
     This function retrieves the financial summary of the introduced stock (by symbol) from the introduced
     country, based on the summary_type value this function returns a different type of financial summary, so
@@ -1492,7 +1492,7 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
         RuntimeError: raised if any error occurred while running the function.
 
     Examples:
-        >>> data = investpy.get_stock_financial_summary(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
+        >>> data = investpy.get_stock_financials(stock='AAPL', country='United States', summary_type='income_statement', period='annual')
         >>> data.head()
                     Total Revenue  Gross Profit  Operating Income  Net Income
         Date
@@ -1514,18 +1514,18 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
 
     if not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
+    # TODO: Change the summary_type to fit with financials_type
+    # if summary_type is None:
+        # raise ValueError("ERR#0132: summary_type can not be None, it should be a str.")
 
-    if summary_type is None:
-        raise ValueError("ERR#0132: summary_type can not be None, it should be a str.")
+    # if not isinstance(summary_type, str):
+        # raise ValueError("ERR#0133: summary_type value not valid.")
 
-    if not isinstance(summary_type, str):
-        raise ValueError("ERR#0133: summary_type value not valid.")
+    # summary_type = unidecode(summary_type.strip().lower())
 
-    summary_type = unidecode(summary_type.strip().lower())
-
-    if summary_type not in cst.FINANCIAL_SUMMARY_TYPES.keys():
-        raise ValueError("ERR#0134: introduced summary_type is not valid, since available values are: " + ', '.join(
-            cst.FINANCIAL_SUMMARY_TYPES.keys()))
+    # if summary_type not in cst.FINANCIAL_SUMMARY_TYPES.keys():
+        # raise ValueError("ERR#0134: introduced summary_type is not valid, since available values are: " + ', '.join(
+            # cst.FINANCIAL_SUMMARY_TYPES.keys()))
 
     if period is None:
         raise ValueError("ERR#0135: period can not be None, it should be a str.")
@@ -1573,13 +1573,12 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
 
     params = {
         "action": "change_report_type",
-        "pid": id_,
-        "financial_id": id_,
-        "ratios_id": id_,
+        "pair_ID": id_,
+        "report_type": finacials_type,
         "period_type": cst.FINANCIAL_SUMMARY_PERIODS[period]
     }
 
-    url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax'
+    url = 'https://www.investing.com/instruments/Financials/changereporttypeajax'
 
     req = requests.get(url, params=params, headers=headers)
 
@@ -1587,16 +1586,15 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root = fromstring(req.text)
-    tables = root.xpath(".//div[@class='companySummaryIncomeStatement']\
-        /table[contains(@class, 'companyFinancialSummaryTbl')]")
-
-    data = {
+    for element in root.xpath(".//tr"):
+        print(element.text_content())
+    return 0
+    """data = {
         'Date': list()
     }
+    table = tables
 
-    table = tables[cst.FINANCIAL_SUMMARY_TYPES[summary_type]]
-
-    for element in table.xpath(".//thead")[0].xpath(".//th"):
+    for element in table.xpath(".//thead").xpath(".//th"):
         if element.get('class') is None:
             data['Date'].append(datetime.strptime(element.text_content().strip(), '%b %d, %Y'))
 
@@ -1612,7 +1610,7 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
     dataset = pd.DataFrame(data)
     dataset.set_index('Date', inplace=True)
 
-    return dataset
+    return dataset"""
 
 
 def search_stocks(by, value):
