@@ -1457,7 +1457,8 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     return dataset
 
 
-def get_stock_financials(stock, country, summary_type='income_statement', period='annual'):
+# WORKING HERE FOR FIRST ISSUE
+def get_stock_financials(stock, country, summary_type='income_statement', period='Annual'):
     """
     This function retrieves the financial summary of the introduced stock (by symbol) from the introduced
     country, based on the summary_type value this function returns a different type of financial summary, so
@@ -1570,16 +1571,15 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
         "Accept-Encoding": "gzip, deflate, br",
         "Connection": "keep-alive",
     }
-
+# FROM HERE
     params = {
         "action": "change_report_type",
-        "pid": id_,
-        "financial_id": id_,
-        "ratios_id": id_,
-        "period_type": cst.FINANCIAL_SUMMARY_PERIODS[period]
+        "pair_id": id_,
+        "report_type": summary_type,
+        "period_type": cst.FINANCIAL_SUMMARY_PERIODS[period],
     }
 
-    url = 'https://www.investing.com/instruments/Financials/changesummaryreporttypeajax'
+    url = 'https://www.investing.com/instruments/Financials/changereporttypeajax'
 
     req = requests.get(url, params=params, headers=headers)
 
@@ -1587,14 +1587,14 @@ def get_stock_financials(stock, country, summary_type='income_statement', period
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root = fromstring(req.text)
-    tables = root.xpath(".//div[@class='companySummaryIncomeStatement']\
-        /table[contains(@class, 'companyFinancialSummaryTbl')]")
+
+    # tables = root.xpath(".//table['reportTbl']")
 
     data = {
         'Date': list()
     }
 
-    table = tables[cst.FINANCIAL_SUMMARY_TYPES[summary_type]]
+    table = root.xpath('TABLE[@CLASS="reportTbl"]')
 
     for element in table.xpath(".//thead")[0].xpath(".//th"):
         if element.get('class') is None:
