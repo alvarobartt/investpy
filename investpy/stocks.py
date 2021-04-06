@@ -1586,12 +1586,20 @@ def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root = fromstring(req.text)
-    for element in root.xpath(".//tr"):
-        print(element.text_content())
-    return 0
-    """data = {
+
+    data = {
         'Date': list()
     }
+
+    for element in root.xpath(".//tr")[0].xpath(".//th"):
+        if element.text_content() != "Period Ending:":
+            data['Date'].append(element.text_content()[:4]+"-"+element.text_content()[4:6]+"-"+element.text_content()[7:])
+
+    dataset = pd.DataFrame(data)
+    dataset.set_index('Date', inplace=True)
+
+    return dataset
+    """
     table = tables
 
     for element in table.xpath(".//thead").xpath(".//th"):
@@ -1607,10 +1615,7 @@ def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
                 continue
             data[curr_row].append(float(row.text_content().strip()))
 
-    dataset = pd.DataFrame(data)
-    dataset.set_index('Date', inplace=True)
-
-    return dataset"""
+    """
 
 
 def search_stocks(by, value):
