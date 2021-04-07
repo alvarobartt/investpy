@@ -347,7 +347,7 @@ def get_stock_recent_data(stock, country, as_json=False, order='ascending', inte
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_stock_historical_data(stock, country, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_stock_historical_data(stock, country, from_date='31/12/1969', to_date=(str(datetime.now().day)+"/"+str(datetime.now().month)+"/"+str(datetime.now().year)), as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced stock from Investing.com. So on, the historical data
     of the introduced stock from the specified country in the specified date range will be retrieved and returned as
@@ -1589,9 +1589,9 @@ def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
     for element in root.xpath(".//tr"):
         print(element.text_content())
     return 0
-    """data = {
-        'Date': list()
-    }
+    # data = {
+    #     'Date': list()
+    # }
     table = tables
 
     for element in table.xpath(".//thead").xpath(".//th"):
@@ -1610,7 +1610,7 @@ def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
     dataset = pd.DataFrame(data)
     dataset.set_index('Date', inplace=True)
 
-    return dataset"""
+    return dataset
 
 
 def search_stocks(by, value):

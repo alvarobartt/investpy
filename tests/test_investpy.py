@@ -20,53 +20,54 @@ def test_investpy_stocks():
     This function checks that stock data retrieval functions listed in investpy work properly.
     """
 
-    params = [
-        {
-            'country': 'spain',
-        },
-        {
-            'country': None,
-        },
-    ]
-
-    for param in params:
-        investpy.get_stocks(country=param['country'])
-        investpy.get_stocks_list(country=param['country'])
-
-    params = [
-        {
-            'country': None,
-            'columns': ['full_name', 'name'],
-            'as_json': True
-        },
-        {
-            'country': None,
-            'columns': ['full_name', 'name'],
-            'as_json': False
-        },
-        {
-            'country': 'spain',
-            'columns': ['full_name', 'name'],
-            'as_json': True
-        },
-        {
-            'country': 'spain',
-            'columns': ['full_name', 'name'],
-            'as_json': False
-        },
-        {
-            'country': 'spain',
-            'columns': None,
-            'as_json': False
-        },
-    ]
-
-    for param in params:
-        investpy.get_stocks_dict(country=param['country'],
-                                 columns=param['columns'],
-                                 as_json=param['as_json'])
-
-    investpy.get_stock_countries()
+    # TODO: Uncomment this stuff
+    # params = [
+    #     {
+    #         'country': 'spain',
+    #     },
+    #     {
+    #         'country': None,
+    #     },
+    # ]
+    #
+    # for param in params:
+    #     investpy.get_stocks(country=param['country'])
+    #     investpy.get_stocks_list(country=param['country'])
+    #
+    # params = [
+    #     {
+    #         'country': None,
+    #         'columns': ['full_name', 'name'],
+    #         'as_json': True
+    #     },
+    #     {
+    #         'country': None,
+    #         'columns': ['full_name', 'name'],
+    #         'as_json': False
+    #     },
+    #     {
+    #         'country': 'spain',
+    #         'columns': ['full_name', 'name'],
+    #         'as_json': True
+    #     },
+    #     {
+    #         'country': 'spain',
+    #         'columns': ['full_name', 'name'],
+    #         'as_json': False
+    #     },
+    #     {
+    #         'country': 'spain',
+    #         'columns': None,
+    #         'as_json': False
+    #     },
+    # ]
+    #
+    # for param in params:
+    #     investpy.get_stocks_dict(country=param['country'],
+    #                              columns=param['columns'],
+    #                              as_json=param['as_json'])
+    #
+    # investpy.get_stock_countries()
 
     params = [
         {
@@ -102,115 +103,116 @@ def test_investpy_stocks():
                                            order=param['order'],
                                            interval='Daily')
 
-    for value in ['spanish', 'english']:
-        investpy.get_stock_company_profile(stock='BBVA',
-                                           country='spain',
-                                           language=value)
-
-    params = [
-        {
-            'stock': 'bbva',
-            'country': 'spain',
-            'as_json': False
-        },
-        {
-            'stock': 'bbva',
-            'country': 'spain',
-            'as_json': True
-        },
-        {
-            'stock': 'HSBK',
-            'country': 'kazakhstan',
-            'as_json': False
-        }
-    ]
-
-    for param in params:
-        investpy.get_stock_information(stock=param['stock'], country=param['country'], as_json=param['as_json'])
-
-    params = [
-        {
-            'country': 'spain',
-            'as_json': True,
-            'n_results': 50
-        },
-        {
-            'country': 'united states',
-            'as_json': False,
-            'n_results': 50
-        },
-        {
-            'country': 'bosnia',
-            'as_json': False,
-            'n_results': 50
-        },
-        {
-            'country': 'palestine',
-            'as_json': False,
-            'n_results': 50
-        },
-        {
-            'country': 'dubai',
-            'as_json': False,
-            'n_results': 50
-        },
-        {
-            'country': 'ivory coast',
-            'as_json': False,
-            'n_results': 50
-        },
-        {
-            'country': 'indonesia',
-            'as_json': False,
-            'n_results': 362
-        }
-    ]
-
-    for param in params:
-        investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
-
-    params = [
-        {
-            'stock': 'bbva',
-            'country': 'spain'
-        },
-        {
-            'stock': 'entel',
-            'country': 'chile'
-        }
-    ]
-
-    for param in params:
-        investpy.get_stock_dividends(stock=param['stock'], country=param['country'])
-
-    params = [
-        {
-            'stock': 'bbva',
-            'country': 'spain',
-            'summary_type': 'balance_sheet',
-            'period': 'annual'
-        },
-        {
-            'stock': 'aapl',
-            'country': 'united states',
-            'summary_type': 'income_statement',
-            'period': 'quarterly'
-        },
-        {
-            'stock': 'barc',
-            'country': 'united kingdom',
-            'summary_type': 'cash_flow_statement',
-            'period': 'annual'
-        }
-    ]
-
-    for param in params:
-        investpy.get_stock_financial_summary(stock=param['stock'],
-                                             country=param['country'], 
-                                             summary_type=param['summary_type'],
-                                             period=param['period'])
-
-    investpy.search_stocks(by='name', value='BBVA')
+    # TODO: Uncomment this stuff
+    # for value in ['spanish', 'english']:
+    #     investpy.get_stock_company_profile(stock='BBVA',
+    #                                        country='spain',
+    #                                        language=value)
+    #
+    # params = [
+    #     {
+    #         'stock': 'bbva',
+    #         'country': 'spain',
+    #         'as_json': False
+    #     },
+    #     {
+    #         'stock': 'bbva',
+    #         'country': 'spain',
+    #         'as_json': True
+    #     },
+    #     {
+    #         'stock': 'HSBK',
+    #         'country': 'kazakhstan',
+    #         'as_json': False
+    #     }
+    # ]
+    #
+    # for param in params:
+    #     investpy.get_stock_information(stock=param['stock'], country=param['country'], as_json=param['as_json'])
+    #
+    # params = [
+    #     {
+    #         'country': 'spain',
+    #         'as_json': True,
+    #         'n_results': 50
+    #     },
+    #     {
+    #         'country': 'united states',
+    #         'as_json': False,
+    #         'n_results': 50
+    #     },
+    #     {
+    #         'country': 'bosnia',
+    #         'as_json': False,
+    #         'n_results': 50
+    #     },
+    #     {
+    #         'country': 'palestine',
+    #         'as_json': False,
+    #         'n_results': 50
+    #     },
+    #     {
+    #         'country': 'dubai',
+    #         'as_json': False,
+    #         'n_results': 50
+    #     },
+    #     {
+    #         'country': 'ivory coast',
+    #         'as_json': False,
+    #         'n_results': 50
+    #     },
+    #     {
+    #         'country': 'indonesia',
+    #         'as_json': False,
+    #         'n_results': 362
+    #     }
+    # ]
+    #
+    # for param in params:
+    #     investpy.get_stocks_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
+    #
+    # params = [
+    #     {
+    #         'stock': 'bbva',
+    #         'country': 'spain'
+    #     },
+    #     {
+    #         'stock': 'entel',
+    #         'country': 'chile'
+    #     }
+    # ]
+    #
+    # for param in params:
+    #     investpy.get_stock_dividends(stock=param['stock'], country=param['country'])
+    #
+    # params = [
+    #     {
+    #         'stock': 'bbva',
+    #         'country': 'spain',
+    #         'summary_type': 'balance_sheet',
+    #         'period': 'annual'
+    #     },
+    #     {
+    #         'stock': 'aapl',
+    #         'country': 'united states',
+    #         'summary_type': 'income_statement',
+    #         'period': 'quarterly'
+    #     },
+    #     {
+    #         'stock': 'barc',
+    #         'country': 'united kingdom',
+    #         'summary_type': 'cash_flow_statement',
+    #         'period': 'annual'
+    #     }
+    # ]
+    #
+    # for param in params:
+    #     investpy.get_stock_financial_summary(stock=param['stock'],
+    #                                          country=param['country'],
+    #                                          summary_type=param['summary_type'],
+    #                                          period=param['period'])
+    #
+    # investpy.search_stocks(by='name', value='BBVA')
 
 
 def test_investpy_funds():
