@@ -367,4 +367,4 @@ class SearchObj(object):
 
     def _convert2df(self):
         self.data = pd.DataFrame(self.data)
-        self.data = self.data.set_index('Date', inplace=True)
+        self.data.set_index('Date', inplace=True)
