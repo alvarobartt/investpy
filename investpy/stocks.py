@@ -1595,7 +1595,7 @@ def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
         if element.text_content() != "Period Ending:":
             data['Date'].append(element.text_content()[:4]+"-"+element.text_content()[4:6]+"-"+element.text_content()[7:])
 
-    for element in root.xpath(".//tbody")[0].xpath(".//tr"):
+    for element in root.xpath(".//td")[0].xpath(".//tr"):
         curr_row = None
         for row in element.xpath(".//td"):
 
