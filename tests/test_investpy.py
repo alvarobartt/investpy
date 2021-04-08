@@ -1315,9 +1315,9 @@ def test_investpy_search():
 
         print(result)
 
-        result.retrieve_recent_data()
+        assert result.retrieve_recent_data() is not None
         for date in dates:
-            result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
+            assert result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date']) is not None
 
 
 def test_investpy_news():
