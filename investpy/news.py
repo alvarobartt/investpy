@@ -108,7 +108,7 @@ def economic_calendar(time_zone=None, time_filter='time_only', countries=None, i
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
