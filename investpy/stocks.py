@@ -1588,7 +1588,7 @@ def get_stock_financials(stock, country, finacials_type='INC', period='annual'):
     root = fromstring(req.text)
     for element in root.xpath(".//tr"):
         print(element.text_content())
-    return 0
+    return ""
     # data = {
     #     'Date': list()
     # }
