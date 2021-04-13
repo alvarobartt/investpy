@@ -7,6 +7,11 @@ FINANCIAL_SUMMARY_TYPES = {
     'cash_flow_statement': 2
 }
 
+FINANCIAL_TYPE = {
+    'INC': 0,
+    'BAL': 1,
+    'CAS': 2
+}
 
 FINANCIAL_SUMMARY_PERIODS = {
     "annual": "Annual",
