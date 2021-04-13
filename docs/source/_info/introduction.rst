@@ -10,7 +10,7 @@ stocks of the companies that make up the Spanish Stock Market, until the date th
 a data extraction model for stocks from the Spanish Stock Market.
 
 As time passed by, a decision was made on how investpy could be improved, and as the package was expected to have a high
-scalability and thus cover all the data possibilities offered by Investing to the public, investpy is now trying to
+scalability and thus cover all the data possibilities offered by Investing.com to the public, investpy is now trying to
 expand the data it retrieves to make it more useful.
 
 Along this document some relevant features of `investpy <https://pypi.org/project/investpy/>`_ are going to be
@@ -52,10 +52,10 @@ Reference. For example, a block of code in order to get to test investpy usage i
 Data Source
 -----------
 
-`Investing <https://www.investing.com/>`_ is the main data source from which investpy retrieves the data. Investing is a
+`Investing.com <https://www.investing.com/>`_ is the main data source from which investpy retrieves the data. Investing.com is a
 global financial portal and Internet brand owned by Fusion Media Ltd. which provides news, analysis, streaming quotes,
 charts, technical data and financial tools about the global financial markets.
 
-So as, the decision of choosing Investing as the data source is based on its reliability and also because it is one of
+So as, the decision of choosing Investing.com as the data source is based on its reliability and also because it is one of
 the few web pages that provide detailed data from spanish markets, as it was the main focus when determining to
 develop the package as explained previously.

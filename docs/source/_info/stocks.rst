@@ -26,7 +26,7 @@ Listing
 ^^^^^^^
 
 `investpy <https://pypi.org/project/investpy/>`_ offers some listing functions that allow the user to get the general
-information of the indexed stocks on `Investing <https://www.investing.com/>`_ as that information is already
+information of the indexed stocks on `Investing.com <https://www.investing.com/>`_ as that information is already
 stored on CSV files generated automatically on the package installation.
 
 We can either retrieve the whole :obj:`pandas.DataFrame` containing all the information stored on the CSV file or a
@@ -82,7 +82,7 @@ values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/
 .. tip::
 
     If you are not familiar with stocks you can either retrieve a listing of the ones
-    available or check the one presented in `Investing Equities <https://www.investing.com/equities>`_.
+    available or check the one presented in `Investing.com Equities <https://www.investing.com/equities>`_.
 
 Company Profile
 ^^^^^^^^^^^^^^^
@@ -96,7 +96,7 @@ is a self-made description of the company.
     investpy.get_stock_company_profile(stock='bbva', country='spain', language='english')
 
 As explained before, when it comes to data retrieval, both ``stock`` and ``country`` parameters are mandatory, and
-should match; as the default value for the ``language`` of the retrieved company profile is *english* (as `Investing <https://www.investing.com/>`_
+should match; as the default value for the ``language`` of the retrieved company profile is *english* (as `Investing.com <https://www.investing.com/>`_
 provides company profiles written in english), but besides that, the function
 also retrieves the company profile on *spanish* from `Bolsa de Madrid <http://www.bolsamadrid.es/esp/aspx/Portada/Portada.aspx>`_,
 which is the additional resource used along this package.

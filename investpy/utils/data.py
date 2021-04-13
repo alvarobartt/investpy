@@ -225,22 +225,3 @@ class Data(object):
             'volume': self.volume,
             'currency': self.currency
         }
-
-    def unknown_to_dict(self):
-        if self.volume is None:
-            return {
-                'Date': self.date,
-                'Open': self.open,
-                'High': self.high,
-                'Low': self.low,
-                'Close': self.close,
-            }
-        else:
-            return {
-                'Date': self.date,
-                'Open': self.open,
-                'High': self.high,
-                'Low': self.low,
-                'Close': self.close,
-                'Volume': self.volume
-            }

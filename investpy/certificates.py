@@ -600,7 +600,6 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
                     df.set_index('Date', inplace=True)
 
                     final.append(df)
-
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 

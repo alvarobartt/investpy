@@ -2,17 +2,10 @@ import investpy
 
 
 def main():
-    # Old stuff
-    # data = investpy.get_stock_financial_summary(stock='GME', country='United States')
+    data = investpy.get_stock_financial_summary(stock='GME', country='United States')
+    # data = investpy.get_stock_financials(stock='AAPL', country='United States', finacials_type='BAL')
 
-    # Potential second presentable
-    # data = investpy.get_stock_financials(stock='AAPL', country='United States', finacials_type='BAL', period='quarterly')
-    # print(data)
-
-    # First presentable
-    tester = investpy.get_stock_historical_data(stock='GME', country='United States')
-    print(tester)
-
+    print(data)
 
 if __name__ == '__main__':
     main()
