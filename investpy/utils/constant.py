@@ -18,6 +18,17 @@ FINANCIAL_SUMMARY_PERIODS = {
     "quarterly": "Interim"
 }
 
+TRANSITION_FILTERS = {
+    'certificate': 'certificates',
+    'commodity': 'commodities',
+    'currency_cross': 'currencies',
+    'etf': 'etfs',
+    'fund': 'funds',
+    'index': 'indices',
+    'stock': 'equities',
+    'bond': 'rates-bonds'
+}
+
 PRODUCT_FILTERS = {
     'indices': 'indice',
     'stocks': 'equities',

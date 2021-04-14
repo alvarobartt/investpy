@@ -16,40 +16,36 @@ from .utils.extra import random_user_agent, resource_to_data
 def technical_indicators(name, country, product_type, interval='daily'):
     """
     This function retrieves the technical indicators values calculated by Investing.com for every financial product
-    available (stocks, funds, etfs, indices, currency crosses, bonds, certificates and commodities) for different 
+    available (stocks, funds, etfs, indices, currency crosses, bonds, certificates and commodities) for different
     time intervals. So on, the user must provide the product_type name and the name of the product (unless product_type
     is 'stock' which name value will be the stock's symbol) and the country if required (mandatory unless product_type
-    is either 'currency_cross' or 'commodity', where it must be None). Additionally, the interval can be specified 
+    is either 'currency_cross' or 'commodity', where it must be None). Additionally, the interval can be specified
     which defines the update frequency of the calculations of the technical indicators (mainly momentum indicators).
-
     Args:
         name (:obj:`str`):
-            name of the product to retrieve the technical indicators table from (if product_type is `stock`, its value 
+            name of the product to retrieve the technical indicators table from (if product_type is `stock`, its value
             must be the stock's symbol not the name).
-        country (:obj:`str`): 
-            country name of the introduced product if applicable (if product_type is either `currency_cross` or `commodity` 
+        country (:obj:`str`):
+            country name of the introduced product if applicable (if product_type is either `currency_cross` or `commodity`
             this parameter should be None, unless it can be specified just for `commodity` product_type).
-        product_type (:obj:`str`): 
-            identifier of the introduced product, available ones are: `stock`, `fund`, `etf`, `index`, `currency_cross`, 
+        product_type (:obj:`str`):
+            identifier of the introduced product, available ones are: `stock`, `fund`, `etf`, `index`, `currency_cross`,
             `bond`, `certificate` and `commodity`.
         interval (:obj:`str`):
-            time interval of the resulting calculations, available values are: `5mins`, `15mins`, `30mins`, `1hour`, 
+            time interval of the resulting calculations, available values are: `5mins`, `15mins`, `30mins`, `1hour`,
             `5hours`, `daily`, `weekly` and `monthly`.
-
     Returns:
         :obj:`pandas.DataFrame` - technical_indicators:
-            The resulting :obj:`pandas.DataFrame` contains the table with the results of the calculation of the technical 
+            The resulting :obj:`pandas.DataFrame` contains the table with the results of the calculation of the technical
             indicators made by Investing.com for the introduced financial product. So on, if the retrieval process succeed
             its result will look like::
-
-                 technical_indicator | value | signal 
+                 technical_indicator | value | signal
                 ---------------------|-------|--------
                  xxxxxxxxxxxxxxxxxxx | xxxxx | xxxxxx
-                
+
     Raises:
         ValueError: raised if any of the introduced parameters is not valid or errored.
-        ConnectionError: raised if the connection to Investing.com errored or could not be established. 
-
+        ConnectionError: raised if the connection to Investing.com errored or could not be established.
     Examples:
         >>> data = investpy.technical_indicators(name='bbva', country='spain', product_type='stock', interval='daily')
         >>> data.head()
@@ -66,7 +62,6 @@ def technical_indicators(name, country, product_type, interval='daily'):
         9   Ultimate Oscillator  43.0010             sell
         10                  ROC  -6.6240             sell
         11  Bull/Bear Power(13)  -0.1590             sell
-
     """
 
     if not name:
@@ -120,10 +115,10 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     name = unidecode(name.lower().strip())
 
-    if name not in list(data[check].str.lower()):
+    if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError("ERR#0122: introduced name does not exist in the introduced country (if required).")
 
-    product_id = data.loc[(data[check].str.lower() == name).idxmax(), 'id']
+    product_id = data.loc[(data[check].apply(unidecode).str.lower() == name).idxmax(), 'id']
 
     data_values = {
         'pairID': product_id,
@@ -135,7 +130,7 @@ def technical_indicators(name, country, product_type, interval='daily'):
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -157,14 +152,42 @@ def technical_indicators(name, country, product_type, interval='daily'):
                 tech_ind = value.text_content().strip()
                 tech_val = float(value.getnext().text_content().strip())
                 tech_sig = value.getnext().getnext().text_content().strip().lower()
-                
+
                 tech_indicators.append({
                     'technical_indicator': tech_ind,
                     'value': tech_val,
                     'signal': tech_sig.replace(' ', '_')
                 })
 
+    for potentialKey, potentialValue in cst.TRANSITION_FILTERS.items():
+        if product_type == potentialKey:
+            trans_product_type = potentialValue
+
+    tgt_name = data.loc[data['id'] == product_id, 'tag'].iloc[0]
+
+    url = "https://www.investing.com/" + trans_product_type + "/" + tgt_name + "-technical"
+    req = requests.post(url, headers=headers, data=data_values)
+
+    if req.status_code != 200:
+        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+
+    root = fromstring(req.text)
+    table = root.xpath(".//span[contains(@class, 'arial_26 inlineblock')]")
+    price = table[0].text
+
+    tech_indicators.append({
+        'technical_indicator': 'Price',
+        'value': price,
+        'signal': ''
+    })
+    tech_indicators.append({
+        'technical_indicator': 'DateTimeStamp',
+        'value': 'dd/,,/yyyy hh:mm:ss',
+        'signal': ''
+    })
+
     return pd.DataFrame(tech_indicators)
+    # return "CHANGE THIS BACK"
 
 
 def moving_averages(name, country, product_type, interval='daily'):
@@ -173,7 +196,7 @@ def moving_averages(name, country, product_type, interval='daily'):
     available (stocks, funds, etfs, indices, currency crosses, bonds, certificates and commodities) for different 
     time intervals. So on, the user must provide the product_type name and the name of the product (unless product_type
     is 'stock' which name value will be the stock's symbol) and the country if required (mandatory unless product_type
-    is either 'currency_cross' or 'commodity', where it must be None). Additionally, the interval can be specified 
+    is either 'currency_cross' or 'commodity', where it must be None). Additionally, the interval can be specified
     which defines the update frequency of the calculations of the moving averages (both simple and exponential). Note 
     that the specified interval is not the moving average's interval, since all the available time frames used on
     the calculation of the moving averages are retrieved.
