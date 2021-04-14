@@ -21,6 +21,7 @@ def main():
     data = investpy.technical_indicators(name='gme', country='united states', product_type='stock', interval='daily')
     # data = investpy.technical_indicators(name='U.S. 10Y', country='united states', product_type='bond', interval='daily')
     # data = investpy.technical_indicators(name='gme', country='united states', product_type='stock', interval='weekly')
+
     print(data)
 
 
