@@ -2,8 +2,8 @@ import investpy
 
 
 def main():
-    # Old stuff
-    # data = investpy.get_stock_financial_summary(stock='GME', country='United States')
+     # Old stuff
+     # data = investpy.get_stock_financial_summary(stock='GME', country='United States')
 
     # Potential second presentable
     # data = investpy.get_stock_financials(stock='GME', country='United States', finacials_type='BAL', period='quarterly')
