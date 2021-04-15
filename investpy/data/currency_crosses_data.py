@@ -57,7 +57,7 @@ def currency_crosses_as_df(base=None, second=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -160,7 +160,7 @@ def currency_crosses_as_list(base=None, second=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -275,7 +275,7 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 

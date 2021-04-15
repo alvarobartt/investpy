@@ -259,7 +259,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
@@ -560,7 +560,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
@@ -799,7 +799,7 @@ def get_etf_information(etf, country, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
@@ -944,7 +944,7 @@ def get_etfs_overview(country, as_json=False, n_results=100):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
@@ -1079,7 +1079,7 @@ def search_etfs(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'etfs.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 

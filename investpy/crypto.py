@@ -207,7 +207,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
@@ -446,7 +446,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
@@ -619,7 +619,7 @@ def get_crypto_information(crypto, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
@@ -907,7 +907,7 @@ def search_cryptos(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 

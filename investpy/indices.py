@@ -242,7 +242,7 @@ def get_index_recent_data(index, country, as_json=False, order='ascending', inte
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
@@ -493,7 +493,7 @@ def get_index_historical_data(index, country, from_date, to_date, as_json=False,
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
@@ -676,7 +676,7 @@ def get_index_information(index, country, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
@@ -818,7 +818,7 @@ def get_indices_overview(country, as_json=False, n_results=100):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 
@@ -944,7 +944,7 @@ def search_indices(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'indices.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        indices = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0059: indices file not found or errored.")
 

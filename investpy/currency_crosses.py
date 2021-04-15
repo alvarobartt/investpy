@@ -269,7 +269,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -499,7 +499,7 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -666,7 +666,7 @@ def get_currency_cross_information(currency_cross, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -921,7 +921,7 @@ def search_currency_crosses(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'currency_crosses.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 

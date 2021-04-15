@@ -248,7 +248,7 @@ def get_certificate_recent_data(certificate, country, as_json=False, order='asce
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
@@ -494,7 +494,7 @@ def get_certificate_historical_data(certificate, country, from_date, to_date, as
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
@@ -674,7 +674,7 @@ def get_certificate_information(certificate, country, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
@@ -820,7 +820,7 @@ def get_certificates_overview(country, as_json=False, n_results=100):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
@@ -944,7 +944,7 @@ def search_certificates(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'certificates.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 

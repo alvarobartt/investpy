@@ -48,7 +48,7 @@ def commodities_as_df(group=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -106,7 +106,7 @@ def commodities_as_list(group=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -177,7 +177,7 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -233,7 +233,7 @@ def commodity_groups_list():
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 

@@ -46,7 +46,7 @@ def bonds_as_df(country=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
@@ -106,7 +106,7 @@ def bonds_as_list(country=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
@@ -171,7 +171,7 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'bonds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
