@@ -146,18 +146,36 @@ def technical_indicators(name, country, product_type, interval='daily'):
 
     tech_indicators = list()
 
+    tech_indicators.append({
+        'Name': "===================",
+        '': "||",
+        'Value': "========================",
+        ' ': "|",
+        'Action': "==============="
+    })
+
     for row in table:
         for value in row.xpath("td"):
             if value.get('class').__contains__('symbol'):
                 tech_ind = value.text_content().strip()
                 tech_val = float(value.getnext().text_content().strip())
-                tech_sig = value.getnext().getnext().text_content().strip().lower()
+                tech_sig = value.getnext().getnext().text_content().strip()
 
                 tech_indicators.append({
-                    'technical_indicator': tech_ind,
-                    'value': tech_val,
-                    'signal': tech_sig.replace(' ', '_')
+                    'Name': tech_ind,
+                    '': "||",
+                    'Value': tech_val,
+                    ' ': "|",
+                    'Action': tech_sig
                 })
+
+    tech_indicators.append({
+        'Name': "===================",
+        '': "||",
+        'Value': "========================",
+        ' ': "|",
+        'Action': "==============="
+    })
 
     for potentialKey, potentialValue in cst.TRANSITION_FILTERS.items():
         if product_type == potentialKey:
@@ -174,20 +192,25 @@ def technical_indicators(name, country, product_type, interval='daily'):
     root = fromstring(req.text)
     table = root.xpath(".//span[contains(@class, 'arial_26 inlineblock')]")
     price = table[0].text
-
     tech_indicators.append({
-        'technical_indicator': 'Price',
-        'value': price,
-        'signal': ''
+        'Name': 'Price',
+        '': "||",
+        'Value': price,
+        ' ': "|",
+        'Action': '-'
     })
+
+    table = root.xpath(".//span[contains(@class, 'float_lang_base_2 arial_11')]")
+    time_date = table[1].text
     tech_indicators.append({
-        'technical_indicator': 'DateTimeStamp',
-        'value': 'dd/,,/yyyy hh:mm:ss',
-        'signal': ''
+        'Name': 'DateTimeStamp',
+        '': "||",
+        'Value': time_date,
+        ' ': "|",
+        'Action': '-'
     })
 
     return pd.DataFrame(tech_indicators)
-    # return "CHANGE THIS BACK"
 
 
 def moving_averages(name, country, product_type, interval='daily'):

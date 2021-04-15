@@ -1360,7 +1360,7 @@ def test_investpy_news():
 
 def test_investpy_technical():
     """
-    This function checks that investpy news retrieval functionality works as expected.
+    This function checks that investpy technical retrieval functionality works as expected.
     """
 
     params = list()
@@ -1379,15 +1379,15 @@ def test_investpy_technical():
                                       product_type=param['product_type'],
                                       interval=param['interval'])
 
-        investpy.moving_averages(name=param['name'],
-                                 country=param['country'],
-                                 product_type=param['product_type'],
-                                 interval=param['interval'])
-
-        investpy.pivot_points(name=param['name'],
-                              country=param['country'],
-                              product_type=param['product_type'],
-                              interval=param['interval'])
+        # investpy.moving_averages(name=param['name'],
+        #                          country=param['country'],
+        #                          product_type=param['product_type'],
+        #                          interval=param['interval'])
+        #
+        # investpy.pivot_points(name=param['name'],
+        #                       country=param['country'],
+        #                       product_type=param['product_type'],
+        #                       interval=param['interval'])
 
 
 if __name__ == '__main__':
