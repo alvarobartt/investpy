@@ -246,7 +246,7 @@ def get_commodity_recent_data(commodity, country=None, as_json=False, order='asc
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -507,7 +507,7 @@ def get_commodity_historical_data(commodity, from_date, to_date, country=None, a
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -711,7 +711,7 @@ def get_commodity_information(commodity, country=None, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -874,7 +874,7 @@ def get_commodities_overview(group, as_json=False, n_results=100):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
@@ -991,7 +991,7 @@ def search_commodities(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'commodities.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
