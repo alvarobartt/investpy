@@ -23,6 +23,7 @@ def main():
     # data = investpy.technical_indicators(name='gme', country='united states', product_type='stock', interval='weekly')
 
     # print(data)
+    # data = investpy.get_index_recent_data(index='ibex 35', country='spain')
 
     data = investpy.get_index_historical_data(index='Dow Jones US',
                                               country='united states',
@@ -31,6 +32,7 @@ def main():
                                               to_date='17/12/2020',
                                               order='descending',
                                               as_json=True)
+
     print(data.head())
 
     # data = investpy.get_indices_list(country='United States')
