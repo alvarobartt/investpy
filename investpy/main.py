@@ -24,6 +24,7 @@ def main():
 
     # print(data)
     # data = investpy.get_index_recent_data(index='ibex 35', country='spain')
+    # group issue 2 print(investpy.get_stocks())
 
     data = investpy.get_index_historical_data(index='Dow Jones US',
                                               country='united states',
