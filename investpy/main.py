@@ -24,7 +24,7 @@ def main():
 
     # print(data)
 
-    data = investpy.get_index_historical_data(index='DJ US',
+    data = investpy.get_index_historical_data(index='Dow Jones US',
                                               country='united states',
                                               interval='Daily',
                                               from_date='01/01/1996',
