@@ -53,7 +53,10 @@ def get_stocks(country=None):
 
     """
 
-    return stocks_as_df(country)
+    stocks_returned = stocks_as_df(country)
+    stocks_refined = stocks_returned.drop_duplicates()
+    pd.set_option('display.max_rows', None)
+    return stocks_refined
 
 
 def get_stocks_list(country=None):

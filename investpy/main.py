@@ -1,4 +1,5 @@
 import investpy
+import pandas as pd
 
 
 def main():
@@ -17,8 +18,8 @@ def main():
     # print(tester)
 
     # SOLO ISSUE TESTS
-    data = investpy.technical_indicators(name='bbva', country='spain', product_type='stock', interval='daily')
-    print(data)
+    # data = investpy.technical_indicators(name='bbva', country='spain', product_type='stock', interval='daily')
+    # print(data)
     #
     # data = investpy.technical_indicators(name='aapl', country='united states', product_type='stock', interval='daily')
     # print(data)
@@ -26,10 +27,12 @@ def main():
     # data = investpy.technical_indicators(name='gme', country='united states', product_type='stock', interval='daily')
     # print(data)
     #
-    # data = investpy.technical_indicators(name='U.S. 10Y', country='united states', product_type='bond', interval='daily')
+    # data = investpy.technical_indicators(name='U.S. 10Y', country='united states', product_type='bond',
+    #                                      interval='daily')
     # print(data)
     #
-    # data = investpy.technical_indicators(name='DOW 30', country='United States', product_type='index', interval='15mins')
+    # data = investpy.technical_indicators(name='DOW 30', country='United States', product_type='index',
+    #                                      interval='15mins')
     # print(data)
     #
     # data = investpy.technical_indicators(name='gme', country='united states', product_type='stock', interval='weekly')
@@ -44,8 +47,8 @@ def main():
     # print("(-----------------------------------------------------------------------)")
     # print(data_other)
 
+    print(investpy.get_stocks())
 
 
 if __name__ == '__main__':
     main()
-
