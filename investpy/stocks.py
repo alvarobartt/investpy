@@ -1527,9 +1527,9 @@ def search_stocks(by, value):
 
 def get_stock_earnings(stock, country):
     """
-        This function retrieves the earnings data from the specified stock. Earnings data include date of the
-        release date of the earnings report, period end of the earnings report, EPS, forecast EPS, revenue,
-        and forecast revenue.
+    This function retrieves the earnings data from the specified stock. Earnings data include date of the
+    release date of the earnings report, period end of the earnings report, EPS, forecast EPS, revenue,
+    and forecast revenue.
 
     Args:
         stock (:obj:`str`): symbol of the stock to retrieve its earnings from.
