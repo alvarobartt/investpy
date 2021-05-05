@@ -4,7 +4,6 @@ API Reference
 .. toctree::
    :maxdepth: 2
 
-   _api/main.rst
    _api/stocks.rst
    _api/funds.rst
    _api/etfs.rst

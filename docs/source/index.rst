@@ -1,7 +1,7 @@
 Welcome to investpy's documentation!
 ====================================
 
-.. image:: https://raw.githubusercontent.com/alvarobartt/investpy/refactor/docs/_static/logo.png
+.. image:: https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/_static/logo.png
     :align: center
 
 .. toctree::
@@ -14,7 +14,7 @@ Welcome to investpy's documentation!
    _info/models.rst
    _info/stocks.rst
    _info/funds.rst
-   _info/api.rst
+   api.rst
    _info/information.md
    _info/faq.md
    _info/disclaimer.md

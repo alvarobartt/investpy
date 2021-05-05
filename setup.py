@@ -1,4 +1,4 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import io
@@ -20,13 +20,13 @@ def requirements(filename):
 
 setup(
     name='investpy',
-    version='1.0',
+    version='1.0.6',
     packages=find_packages(),
     url='https://investpy.readthedocs.io/',
-    download_url='https://github.com/alvarobartt/investpy/archive/1.0.tar.gz',
+    download_url='https://github.com/alvarobartt/investpy/archive/1.0.6.tar.gz',
     license='MIT License',
     author='Alvaro Bartolome',
-    author_email='alvarobartt@yahoo.com',
+    author_email='alvarobdc@yahoo.com',
     description='Financial Data Extraction from Investing.com with Python',
     long_description=readme(),
     long_description_content_type='text/markdown',
@@ -35,10 +35,10 @@ setup(
     classifiers=[
         "Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3 :: Only",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
         "License :: OSI Approved :: MIT License",
         "Intended Audience :: Developers",
         "Topic :: Office/Business :: Financial",

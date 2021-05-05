@@ -1,7 +1,7 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta, timedelta
 import pytz
 
 import json
@@ -233,35 +233,37 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    funds = funds[funds['country'] == unidecode(country.lower())]
+    if country not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    fund = fund.strip()
-    fund = fund.lower()
+    funds = funds[funds['country'].str.lower() == country]
 
-    if unidecode(fund) not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
+    fund = unidecode(fund.strip().lower())
+
+    if fund not in list(funds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
-    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
-    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
-
-    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+    symbol = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'name']
+    fund_currency = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'currency']
 
     header = symbol + ' Historical Data'
 
@@ -269,7 +271,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
         "curr_id": id_,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": interval,
+        "interval_sec": interval.capitalize(),
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
@@ -279,7 +281,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -304,7 +306,7 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+            fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
             
             fund_close = float(info[1].replace(',', ''))
             fund_open = float(info[2].replace(',', ''))
@@ -320,10 +322,11 @@ def get_fund_recent_data(fund, country, as_json=False, order='ascending', interv
             result = result
 
         if as_json is True:
-            json_ = {'name': name,
-                     'recent':
-                         [value.fund_as_json() for value in result]
-                     }
+            json_ = {
+                'name': name,
+                'recent':
+                    [value.fund_as_json() for value in result]
+            }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
@@ -426,7 +429,9 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
@@ -462,7 +467,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
+            start_date = start_date.replace(year=start_date.year + 19) + timedelta(days=1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -481,29 +486,29 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    if unidecode(country.lower()) not in get_fund_countries():
-        raise RuntimeError("ERR#0034: country " + country.lower() + " not found, check if it is correct.")
+    country = unidecode(country.strip().lower())
 
-    funds = funds[funds['country'] == unidecode(country.lower())]
+    if country not in get_fund_countries():
+        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
-    fund = fund.strip()
-    fund = fund.lower()
+    funds = funds[funds['country'].str.lower() == country]
 
-    if unidecode(fund) not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
+    fund = unidecode(fund.strip().lower())
+
+    if fund not in list(funds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    symbol = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'symbol']
-    id_ = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'id']
-    name = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'name']
-
-    fund_currency = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'currency']
+    symbol = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'symbol']
+    id_ = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'id']
+    name = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'name']
+    fund_currency = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'currency']
 
     final = list()
 
@@ -516,7 +521,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": interval,
+            "interval_sec": interval.capitalize(),
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
@@ -526,7 +531,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
             "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": "gzip, deflate",
             "Connection": "keep-alive",
         }
 
@@ -561,7 +566,7 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+                    fund_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
                     
                     fund_close = float(info[1].replace(',', ''))
                     fund_open = float(info[2].replace(',', ''))
@@ -578,12 +583,9 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
                     result = result
 
                 if as_json is True:
-                    json_ = {'name': name,
-                             'historical':
-                                 [value.fund_as_json() for value in result]
-                             }
+                    json_list = [value.fund_as_json() for value in result]
 
-                    final.append(json_)
+                    final.append(json_list)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.fund_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -593,8 +595,15 @@ def get_fund_historical_data(fund, country, from_date, to_date, as_json=False, o
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
+    if order in ['descending', 'desc']:
+        final.reverse()
+
     if as_json is True:
-        return json.dumps(final[0], sort_keys=False)
+        json_ = {
+            'name': name,
+            'historical': [value for json_list in final for value in json_list]
+        }
+        return json.dumps(json_, sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
 
@@ -658,7 +667,7 @@ def get_fund_information(fund, country, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
@@ -674,10 +683,10 @@ def get_fund_information(fund, country, as_json=False):
 
     fund = unidecode(fund.strip().lower())
 
-    if fund not in [unidecode(value.lower()) for value in funds['name'].tolist()]:
+    if fund not in list(funds['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: fund " + fund + " not found, check if it is correct.")
 
-    tag = funds.loc[(funds['name'].str.lower() == fund).idxmax(), 'tag']
+    tag = funds.loc[(funds['name'].apply(unidecode).str.lower() == fund).idxmax(), 'tag']
 
     url = "https://www.investing.com/funds/" + tag
 
@@ -685,7 +694,7 @@ def get_fund_information(fund, country, as_json=False):
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -801,14 +810,14 @@ def get_funds_overview(country, as_json=False, n_results=100):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds object not found or unable to retrieve.")
 
-    country = unidecode(country.lower())
+    country = unidecode(country.strip().lower())
 
     if country not in get_fund_countries():
         raise RuntimeError('ERR#0025: specified country value is not valid.')
@@ -824,7 +833,7 @@ def get_funds_overview(country, as_json=False, n_results=100):
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -939,7 +948,7 @@ def search_funds(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 

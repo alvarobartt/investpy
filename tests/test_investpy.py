@@ -1,4 +1,4 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import pytest
@@ -158,6 +158,11 @@ def test_investpy_stocks():
             'country': 'ivory coast',
             'as_json': False,
             'n_results': 50
+        },
+        {
+            'country': 'indonesia',
+            'as_json': False,
+            'n_results': 362
         }
     ]
 
@@ -313,13 +318,13 @@ def test_investpy_funds():
         {
             'fund': 'bbva multiactivo conservador pp',
             'country': 'spain',
-            'as_json': True,
+            'as_json': False
         },
         {
-            'fund': 'bbva multiactivo conservador pp',
-            'country': 'spain',
-            'as_json': False,
-        },
+            'fund': 'öhman Global Growth',
+            'country': 'sweden',
+            'as_json': True
+        }
     ]
 
     for param in params:
@@ -708,6 +713,20 @@ def test_investpy_currency_crosses():
             'as_json': False,
             'order': 'descending',
         },
+        {
+            'currency_cross': 'XAG/USD',
+            'from_date': '01/01/2010',
+            'to_date': '01/01/2015',
+            'as_json': False,
+            'order': 'descending',
+        },
+        {
+            'currency_cross': 'XAU/USD',
+            'from_date': '01/01/2010',
+            'to_date': '01/01/2015',
+            'as_json': False,
+            'order': 'descending',
+        }
     ]
 
     for param in params:
@@ -730,6 +749,14 @@ def test_investpy_currency_crosses():
         },
         {
             'currency_cross': 'EUR/USD',
+            'as_json': True
+        },
+        {
+            'currency_cross': 'XAU/USD',
+            'as_json': True
+        },
+        {
+            'currency_cross': 'XAG/USD',
             'as_json': True
         }
     ]
@@ -1269,6 +1296,12 @@ def test_investpy_search():
             'products': ['stocks'],
             'countries': ['united states'],
             'n_results': 1
+        },
+        {
+            'text': 'apple',
+            'products': ['stocks'],
+            'countries': ['united states'],
+            'n_results': 5
         }
     ]
 
@@ -1289,12 +1322,16 @@ def test_investpy_search():
             },
         ]
 
-        for result in results:
-            print(result)
-            result.retrieve_recent_data()
-            for date in dates:
-                result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
-            break
+        if isinstance(results, list):
+            result = results[0]
+        else:
+            result = results
+
+        print(result)
+
+        assert result.retrieve_recent_data() is not None
+        for date in dates:
+            assert result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date']) is not None
 
 
 def test_investpy_news():
@@ -1338,20 +1375,15 @@ def test_investpy_technical():
     This function checks that investpy news retrieval functionality works as expected.
     """
 
-    params = [
-        {
+    params = list()
+
+    for interval in list(investpy.utils.constant.INTERVAL_FILTERS.keys()):
+        params.append({
             'name': 'bbva',
             'country': 'spain',
             'product_type': 'stock',
-            'interval': 'weekly',
-        },
-        {
-            'name': 'bbva mi inversion rf mixta fi',
-            'country': 'spain',
-            'product_type': 'fund',
-            'interval': 'daily',
-        },
-    ]
+            'interval': interval
+        })
 
     for param in params:
         investpy.technical_indicators(name=param['name'],

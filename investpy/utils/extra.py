@@ -1,4 +1,4 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import pandas as pd
@@ -28,7 +28,7 @@ def resource_to_data(path_to_data):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', path_to_data))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        data = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        data = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0115: data file not found or errored.")
 
@@ -57,4 +57,4 @@ def random_user_agent():
     
     """
 
-    return str(random.choice(cst.USER_AGENTS))
+    return random.choice(cst.USER_AGENTS)

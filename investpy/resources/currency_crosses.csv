@@ -2028,3 +2028,5 @@ VND/XAF,VND/XAF - Vietnamese Dong Central African Franc,vnd-xaf,2229,VND,Vietnam
 ZAR/XAF,ZAR/XAF - South African Rand Central African Franc,zar-xaf,10443,ZAR,South African Rand,XAF,Central African Franc
 ZAR/XCD,ZAR/XCD - South African Rand East Caribbean Dollar,zar-xcd,10444,ZAR,South African Rand,XCD,East Caribbean Dollar
 ZAR/XOF,ZAR/XOF - South African Rand West African CFA franc,zar-xof,10445,ZAR,South African Rand,XOF,West African CFA franc
+XAU/USD,XAU/USD - Gold Spot US Dollar,xau-usd,68,XAU,Gold Spot,USD,US Dollar
+XAG/USD,XAG/USD - Silver Spot US Dollar,xag-usd,69,XAG,Silver Spot,USD,US Dollar

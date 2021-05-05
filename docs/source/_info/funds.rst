@@ -13,7 +13,6 @@ fund or rainy-day fund to pay for unforeseen expenses or a trust fund to set asi
 
 Source: *Investopedia*
 
-
 Getting Started
 ---------------
 
@@ -29,7 +28,7 @@ Listing
 ^^^^^^^
 
 `investpy <https://pypi.org/project/investpy/>`_ offers some listing functions that allow the user to get the general
-information of the indexed funds on `Investing <https://www.investing.com/funds/>`_ as that information is already
+information of the indexed funds on `Investing.com <https://www.investing.com/funds/>`_ as that information is already
 stored on CSV files generated automatically on the package installation.
 
 The user can either retrieve the whole :obj:`pandas.DataFrame` containing all the information stored on the CSV file, a
@@ -146,7 +145,7 @@ values, as they are mandatory. Both date values are :obj:`str` formatted as *dd/
 .. tip::
 
     If you are not familiar with funds you can either retrieve a :obj:`list` of the ones available as provided by
-    investpy or check the listing in `Investing Funds <https://www.investing.com/funds>`_.
+    investpy or check the listing in `Investing.com Funds <https://www.investing.com/funds>`_.
 
 Fund Information
 ^^^^^^^^^^^^^^^^

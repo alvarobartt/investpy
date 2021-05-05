@@ -1,4 +1,4 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import pkg_resources
@@ -45,7 +45,7 @@ def funds_as_df(country=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
@@ -105,7 +105,7 @@ def funds_as_list(country=None):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
@@ -173,7 +173,7 @@ def funds_as_dict(country=None, columns=None, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'funds.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 

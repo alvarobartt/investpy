@@ -1,6 +1,11 @@
-name: Python package
+name: run_tests
 
-on: [push]
+on:
+  push:
+    paths:
+      - .github/workflows/run_tests.yml
+      - investpy/**
+      - tests/**
 
 jobs:
   build:
@@ -8,7 +13,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.5, 3.6, 3.7, 3.8]
+        python-version: [3.6, 3.7, 3.8, 3.9]
 
     steps:
     - uses: actions/checkout@v1
@@ -22,5 +27,5 @@ jobs:
       run: pip install .
     - name: Install pytest requirements
       run: pip install investpy[tests]
-    - name: Run pytest unit tests
-      run: pytest
+    - name: Run pytest unit tests and check codecov
+      run: pytest --cov-report term --cov=investpy tests/

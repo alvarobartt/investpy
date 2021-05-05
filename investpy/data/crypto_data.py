@@ -1,4 +1,4 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
 import pkg_resources
@@ -38,7 +38,7 @@ def cryptos_as_df():
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
@@ -82,7 +82,7 @@ def cryptos_as_list():
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
@@ -138,7 +138,7 @@ def cryptos_as_dict(columns=None, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 

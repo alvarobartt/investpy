@@ -1,7 +1,7 @@
-# Copyright 2018-2020 Alvaro Bartolome, alvarobartt @ GitHub
+# Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import pytz
 
 import json
@@ -199,32 +199,33 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-    crypto = crypto.strip()
-    crypto = crypto.lower()
+    crypto = unidecode(crypto.strip().lower())
 
-    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if crypto not in list(cryptos['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    status = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'status']
     if status == 'unavailable':
         raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-    crypto_name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
-    crypto_id = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'id']
-    crypto_currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
+    crypto_name = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'name']
+    crypto_id = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'id']
+    crypto_currency = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'currency']
 
     header = crypto_name + ' Historical Data'
 
@@ -232,7 +233,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
         "curr_id": crypto_id,
         "smlID": str(randint(1000000, 99999999)),
         "header": header,
-        "interval_sec": interval,
+        "interval_sec": interval.capitalize(),
         "sort_col": "date",
         "sort_ord": "DESC",
         "action": "historical_data"
@@ -242,7 +243,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -267,7 +268,7 @@ def get_crypto_recent_data(crypto, as_json=False, order='ascending', interval='D
             for nested_ in elements_.xpath(".//td"):
                 info.append(nested_.get('data-real-value'))
 
-            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+            crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
             
             crypto_close = float(info[1].replace(',', ''))
             crypto_open = float(info[2].replace(',', ''))
@@ -388,7 +389,9 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     if not isinstance(interval, str):
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
-    if interval not in ['Daily', 'Weekly', 'Monthly']:
+    interval = interval.lower()
+
+    if interval not in ['daily', 'weekly', 'monthly']:
         raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
 
     try:
@@ -424,7 +427,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
 
             date_interval['intervals'].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19, day=start_date.day + 1)
+            start_date = start_date.replace(year=start_date.year + 19) + timedelta(days=1)
         else:
             obj = {
                 'start': start_date.strftime('%m/%d/%Y'),
@@ -443,26 +446,25 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-    crypto = crypto.strip()
-    crypto = crypto.lower()
+    crypto = unidecode(crypto.strip().lower())
 
-    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if crypto not in list(cryptos['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    status = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'status']
     if status == 'unavailable':
         raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-    crypto_name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
-    crypto_id = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'id']
-    crypto_currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
+    crypto_name = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'name']
+    crypto_id = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'id']
+    crypto_currency = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'currency']
 
     header = crypto_name + ' Historical Data'
 
@@ -477,7 +479,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
             "header": header,
             "st_date": date_interval['intervals'][index]['start'],
             "end_date": date_interval['intervals'][index]['end'],
-            "interval_sec": interval,
+            "interval_sec": interval.capitalize(),
             "sort_col": "date",
             "sort_ord": "DESC",
             "action": "historical_data"
@@ -487,7 +489,7 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
             "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": "gzip, deflate",
             "Connection": "keep-alive",
         }
 
@@ -522,14 +524,14 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     info.append(nested_.get('data-real-value'))
 
                 if data_flag is True:
-                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.utc).date()), '%Y-%m-%d')
+                    crypto_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
             
                     crypto_close = float(info[1].replace(',', ''))
                     crypto_open = float(info[2].replace(',', ''))
                     crypto_high = float(info[3].replace(',', ''))
                     crypto_low = float(info[4].replace(',', ''))
 
-                    crypto_volume = int(info[5])
+                    crypto_volume = int(info[5] or 0)
 
                     result.insert(len(result),
                                   Data(crypto_date, crypto_open, crypto_high, crypto_low,
@@ -542,13 +544,9 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
                     result = result
 
                 if as_json is True:
-                    json_ = {
-                        'name': crypto_name,
-                        'historical':
-                            [value.crypto_as_json() for value in result]
-                    }
+                    json_list = [value.crypto_as_json() for value in result]
                     
-                    final.append(json_)
+                    final.append(json_list)
                 elif as_json is False:
                     df = pd.DataFrame.from_records([value.crypto_to_dict() for value in result])
                     df.set_index('Date', inplace=True)
@@ -557,8 +555,15 @@ def get_crypto_historical_data(crypto, from_date, to_date, as_json=False, order=
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
+    if order in ['descending', 'desc']:
+        final.reverse()
+
     if as_json is True:
-        return json.dumps(final[0], sort_keys=False)
+        json_ = {
+            'name': crypto_name,
+            'historical': [value for json_list in final for value in json_list]
+        }
+        return json.dumps(json_, sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
 
@@ -614,26 +619,25 @@ def get_crypto_information(crypto, as_json=False):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
     if cryptos is None:
         raise IOError("ERR#0082: cryptos not found or unable to retrieve.")
 
-    crypto = crypto.strip()
-    crypto = crypto.lower()
+    crypto = unidecode(crypto.strip().lower())
 
-    if unidecode(crypto) not in [unidecode(value.lower()) for value in cryptos['name'].tolist()]:
+    if crypto not in list(cryptos['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0085: crypto currency: " + crypto + ", not found, check if it is correct.")
 
-    status = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'status']
+    status = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'status']
     if status == 'unavailable':
         raise ValueError("ERR#0086: the selected crypto currency is not available for retrieval in Investing.com.")
 
-    name = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'name']
-    currency = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'currency']
-    tag = cryptos.loc[(cryptos['name'].str.lower() == crypto).idxmax(), 'tag']
+    name = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'name']
+    currency = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'currency']
+    tag = cryptos.loc[(cryptos['name'].apply(unidecode).str.lower() == crypto).idxmax(), 'tag']
 
     url = "https://www.investing.com/crypto/" + tag
 
@@ -641,7 +645,7 @@ def get_crypto_information(crypto, as_json=False):
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -695,7 +699,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
     Note:
         The amount of indexed crypto currencies may vary, so if n_results is set to `None`, all the available crypto
-        currencies in Investing while retrieving the overview, will be retrieved and returned.
+        currencies in Investing.com while retrieving the overview, will be retrieved and returned.
 
     Returns:
         :obj:`pandas.DataFrame` - cryptos_overview:
@@ -730,7 +734,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
-        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Encoding": "gzip, deflate",
         "Connection": "keep-alive",
     }
 
@@ -798,7 +802,7 @@ def get_cryptos_overview(as_json=False, n_results=100):
             "User-Agent": random_user_agent(),
             "X-Requested-With": "XMLHttpRequest",
             "Accept": "text/html",
-            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Encoding": "gzip, deflate",
             "Connection": "keep-alive",
         }
 
@@ -903,7 +907,7 @@ def search_cryptos(by, value):
     resource_package = 'investpy'
     resource_path = '/'.join(('resources', 'cryptos.csv'))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path))
+        cryptos = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
     else:
         raise FileNotFoundError("ERR#0081: cryptos file not found or errored.")
 
