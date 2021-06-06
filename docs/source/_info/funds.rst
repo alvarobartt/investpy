@@ -102,12 +102,12 @@ in order to make it more easy to use. Note that you can either select the value 
     country = search_result.loc[index, 'country']
 
     # Get both name and country via unique field such as isin
-    isin = 'ES0113211835'
-    name = search_result.loc[(search_result['isin'].str == isin).idxmax(), 'name']
-    country = search_result.loc[(search_result['isin'].str == isin).idxmax(), 'country']
+    isin = 'ES0134599036'
+    name = search_result.loc[search_result['isin'] == isin, 'name'].values[0]
+    country = search_result.loc[search_result['isin'] == isin, 'country'].values[0]
 
     # Or get it manually via printing the resulting pandas.DataFrame
-    print(search_results)
+    print(search_result)
 
 
 Recent & Historical Data
