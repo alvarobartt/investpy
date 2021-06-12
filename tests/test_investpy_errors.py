@@ -3897,6 +3897,12 @@ def test_search_errors():
             'products': None,
             'countries': ['error'],
             'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': None,
+            'countries': None,
+            'n_results': 10
         }
     ]
 
@@ -3922,13 +3928,20 @@ def test_search_errors():
                 },
             ]
 
-            for result in results:
+            for result in results[:1]:
                 for date in dates:
                     try:
                         result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
                     except:
                         continue
-                break
+            
+            intervals = ['non_existing', '1min']
+            for interval in intervals:
+                try:
+                    result.pair_type = 'funds'
+                    result.retrieve_technical_indicators(interval=interval)
+                except:
+                    continue
         except:
             pass
 
