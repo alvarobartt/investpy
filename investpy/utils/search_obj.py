@@ -12,6 +12,7 @@ from random import randint
 
 from .data import Data
 from .extra import random_user_agent
+from .constant import INTERVAL_FILTERS, FUNDS_INTERVAL_FILTERS
 
 
 class SearchObj(object):
@@ -252,6 +253,77 @@ class SearchObj(object):
                 pass
 
         return self.info
+
+    def retrieve_technical_indicators(self, interval='daily'):
+        """Class method used to retrieve the information from the class instance of any financial product.
+        
+        This method retrieves the information from Investing.com of the financial product of the current class
+        instance, so it fills the `SearchObj.info` attribute with the retrieved :obj:`dict`. This method uses the
+        previously retrieved data from the `investpy.search_quotes(text, products, countries, n_results)` 
+        function search results to build the request that it is going to be sent to Investing.com so to retrieve and 
+        parse the information, since the product tag is required.
+
+        Returns:
+            :obj:`dict` - info:
+                This method retrieves the information from the current class instance of a financial product
+                from Investing.com. This method both stores retrieved information in self.info attribute of the class 
+                instance and it also returns it as a normal function will do.
+        
+        Raises:
+            ValueError: raised if any of the input parameters is not valid.
+
+        """
+
+        if self.pair_type in []:
+            raise ValueError(f"Investing.com does not provide technical indicators for {self.pair_type}.")
+
+        if self.pair_type != 'funds' and interval not in INTERVAL_FILTERS:
+            raise ValueError(f"Investing.com just provides the following intervals for {self.pair_type}' technical " \
+                f"indicators: {', '.join(list(INTERVAL_FILTERS.keys()))}")
+
+        if self.pair_type == 'funds' and interval not in FUNDS_INTERVAL_FILTERS:
+            raise ValueError("Investing.com just provides the following intervals for funds' technical " \
+                f"indicators: {', '.join(list(FUNDS_INTERVAL_FILTERS.keys()))}")
+
+        params = {
+            'pairID': self.id_,
+            'period': INTERVAL_FILTERS[interval],
+            'viewType': 'normal'
+        }
+
+        headers = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://www.investing.com/instruments/Service/GetTechincalData"
+
+        req = requests.post(url, headers=headers, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
+
+        root_ = fromstring(req.text)
+        table_ = root_.xpath(".//table[contains(@class, 'technicalIndicatorsTbl')]/tbody/tr")
+
+        if not table_:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        self.technical_indicators = pd.DataFrame()
+
+        for row in table_:
+            for value in row.xpath("td"):
+                if value.get('class').__contains__('symbol'):
+                    self.technical_indicators = self.technical_indicators.append({
+                        'indicator': value.text_content().strip(),
+                        'value': float(value.getnext().text_content().strip()),
+                        'signal': (value.getnext().getnext().text_content().strip().lower()).replace(' ', '_')
+                    }, ignore_index=True)
+
+        return self.technical_indicators
 
     def _prepare_request(self, header):
         headers = {
