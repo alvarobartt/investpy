@@ -101,15 +101,15 @@ class SearchObj(object):
         `investpy.search_quotes(text, products, countries, n_results)` function search results to build the request 
         that it is going to be sent to Investing.com so to retrieve and parse the data.
 
+        Args:
+            from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
+            to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
+
         Returns:
             :obj:`pandas.DataFrame` - data:
                 This method retrieves the historical data from the current class instance of a financial product
                 from Investing.com. This method both stores retrieved data in self.data attribute of the class 
                 instance and it also returns it as a normal function will do.
-
-        Args:
-            from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
-            to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
         
         Raises:
             ValueError: raised if any of the introduced parameters was not valid or errored.
@@ -255,22 +255,30 @@ class SearchObj(object):
         return self.info
 
     def retrieve_technical_indicators(self, interval='daily'):
-        """Class method used to retrieve the information from the class instance of any financial product.
+        """Class method used to retrieve the technical indicators from the class instance of any financial product.
         
-        This method retrieves the information from Investing.com of the financial product of the current class
-        instance, so it fills the `SearchObj.info` attribute with the retrieved :obj:`dict`. This method uses the
+        This method retrieves the technical indicators from Investing.com for the financial product of the current
+        class instance, to later put in into the `SearchObj.technical_indicators` attribute. This method uses the
         previously retrieved data from the `investpy.search_quotes(text, products, countries, n_results)` 
         function search results to build the request that it is going to be sent to Investing.com so to retrieve and 
-        parse the information, since the product tag is required.
+        parse the technical indicators, since the product id is required.
+
+        Args:
+            interval (:obj:`str`, optional): 
+                time interval of the technical indicators' calculations, available values are: `5mins`, `15mins`, 
+                `30mins`, `1hour`, `5hours`, `daily`, `weekly` and `monthly`. Note that for funds just the intervals:
+                `daily`, `weekly` and `monthly` are available.
 
         Returns:
-            :obj:`dict` - info:
-                This method retrieves the information from the current class instance of a financial product
-                from Investing.com. This method both stores retrieved information in self.info attribute of the class 
-                instance and it also returns it as a normal function will do.
+            :obj:`pd.DataFrame` - technical_indicators:
+                This method retrieves the technical indicators from the current class instance of a financial product
+                from Investing.com. This method not just stores retrieved technical indicators table into self.technical_indicators
+                but it also returns it as a normal function will do.
         
         Raises:
             ValueError: raised if any of the input parameters is not valid.
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
 
         """
 
