@@ -210,10 +210,10 @@ class SearchObj(object):
         if not updated_path and not outdated_path:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
-        investing_updated = True if updated_path else False
+        path_, investing_updated = (updated_path, True) if updated_path else (outdated_path, False)
 
         self.information = dict()
-            
+        
         for elements_ in path_:
             if investing_updated:
                 element = elements_.xpath(".//dd")[0]

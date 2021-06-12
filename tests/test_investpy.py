@@ -1324,6 +1324,16 @@ def test_investpy_search():
 
         assert result.retrieve_technical_indicators() is not None
 
+    financial_products = [
+        ('stocks', 'apple'), ('etfs', 'apple'), ('commodities', 'apple'), ('currencies', 'usd'), ('funds', 'apple'), 
+        ('bonds', 'apple'), ('cryptos', 'bitcoin'), ('certificates', 'apple'), ('indices', 'apple'), ('fxfutures', 'usd')
+    ]
+
+    for product_type, product_name in financial_products:
+        search_result = investpy.search_quotes(text=product_name, products=[product_type], n_results=1)
+
+        assert search_result.retrieve_information() is not None
+
 
 def test_investpy_news():
     """

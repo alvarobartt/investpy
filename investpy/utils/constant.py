@@ -8,20 +8,25 @@ OUTDATED2UPDATED = {
     'ROI (TTM)': 'roiTtm',
     'Revenue': 'revenue',
     'Open': 'open',
+    'Price': 'price',
     'Price Open': 'priceOpen',
     'Price Range': 'priceRange',
     'Coupon': 'coupon',
+    'Coupon Frequency': 'couponFreq',
+    'Next Coupon Date': 'nextCouponDate',
     '52 wk Range': 'weekRange',
     'EPS': 'eps',
     'Volume': 'volume',
     'Market Cap': 'marketCap',
     'Dividend (Yield)': 'dividend',
+    'Dividend Yield': 'dividend',
     'Average Vol. (3m)': 'avgVolume',
     'P/E Ratio': 'ratio',
     'Beta': 'beta',
     'Month': 'month',
+    'Duration': 'duration',
     '1-Year Change': 'oneYearReturn',
-    'Madurity Date': 'madurityDate',
+    'Maturity Date': 'maturityDate',
     'Shares Outstanding': 'sharesOutstanding',
     'Next Earnings Date': 'nextEarningDate',
     'Dividends (TTM)': 'dividednsTtm',
@@ -45,14 +50,17 @@ OUTDATED2UPDATED = {
     'Inception Date': 'inceptionDate',
     'Min. Investment': 'minInvestment',
     'TTM Yield': 'ttmYield',
+    'Yield': 'yield',
     'Turnover': 'turnover',
     'ROE': 'roe',
     'ROA': 'roa',
+    'Type': 'type',
     'Expenses': 'expenses',
     'Category': 'category',
     'Leverage': 'leverage',
     'Strike Price': 'strikePrice',
-    'Issue Amount': 'issueAmount'
+    'Issue Amount': 'issueAmount',
+    'Issue Date': 'issueDate'
 }
 
 FINANCIAL_SUMMARY_TYPES = {
@@ -67,28 +75,28 @@ FINANCIAL_SUMMARY_PERIODS = {
 }
 
 PRODUCT_FILTERS = {
-    'indices': 'indice', 
-    'stocks': 'equities', 
-    'etfs': 'etf', 
-    'funds': 'fund', 
-    'commodities': 'commodity', 
-    'currencies': 'currency', 
-    'cryptos': 'crypto', 
-    'bonds': 'bond', 
-    'certificates': 'certificate', 
+    'indices': 'indice',
+    'stocks': 'equities',
+    'etfs': 'etf',
+    'funds': 'fund',
+    'commodities': 'commodity',
+    'currencies': 'currency',
+    'cryptos': 'crypto',
+    'bonds': 'bond',
+    'certificates': 'certificate',
     'fxfutures': 'fxfuture'
 }
 
 PAIR_FILTERS = {
-    'indice': 'indices', 
-    'equities': 'stocks', 
-    'etf': 'etfs', 
-    'fund': 'funds', 
-    'commodity': 'commodities', 
-    'currency': 'currencies', 
-    'crypto': 'cryptos', 
-    'bond': 'bonds', 
-    'certificate': 'certificates', 
+    'indice': 'indices',
+    'equities': 'stocks',
+    'etf': 'etfs',
+    'fund': 'funds',
+    'commodity': 'commodities',
+    'currency': 'currencies',
+    'crypto': 'cryptos',
+    'bond': 'bonds',
+    'certificate': 'certificates',
     'fxfuture': 'fxfutures'
 }
 
