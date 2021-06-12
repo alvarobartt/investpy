@@ -333,6 +333,49 @@ class SearchObj(object):
 
         return self.technical_indicators
 
+    def retrieve_currency(self):
+        """Class method used to retrieve the default currency from the class instance of any financial product.
+        
+        This method retrieves the default currency from Investing.com of the financial product of the current class
+        instance. This method uses the data previously retrieved from the `investpy.search_quotes(text, products, countries, n_results)` 
+        function search results to build the request that it is going to be sent to Investing.com so to retrieve and 
+        parse the information, since the product tag is required.
+
+        Returns:
+            :obj:`str` - default_currency:
+                This method retrieves the default currency from the current class instance of a financial product
+                from Investing.com.
+        
+        Raises:
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
+
+        """
+
+        url = f"https://www.investing.com{self.tag}"
+
+        headers = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        req = requests.get(url, headers=headers)
+
+        if req.status_code != 200:
+            raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
+
+        root_ = fromstring(req.text)
+        path_ = root_.xpath("//div[contains(@class, 'instrument-metadata_currency')]/span")
+
+        if not path_:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+            
+        self.default_currency = path_[-1].text_content().strip()
+        return self.default_currency
+
     def _prepare_request(self, header):
         headers = {
             "User-Agent": random_user_agent(),
