@@ -152,7 +152,7 @@ class SearchObj(object):
                     continue
 
             if len(self.data) < 1:
-                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+                raise IndexError("ERR#0033: information unavailable or not found.")
         else:
             headers, params = self._prepare_historical_request(header=header,
                                                                from_date=from_date.strftime('%m/%d/%Y'),
