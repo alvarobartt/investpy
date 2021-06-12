@@ -118,6 +118,8 @@ def search_quotes(text, products=None, countries=None, n_results=None):
 
     total_results = None
 
+    user_limit = True if n_results is not None else False
+
     while True:
         req = requests.post(url, headers=head, data=params)
 
@@ -154,7 +156,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
                                    country=country, tag=quote['link'],
                                    pair_type=pair_type, exchange=quote['exchange'])
 
-            if n_results == 1: return search_obj
+            if n_results == 1 and user_limit: return search_obj
 
             if search_obj not in search_results: search_results.append(search_obj)
         
