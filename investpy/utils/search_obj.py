@@ -175,7 +175,7 @@ class SearchObj(object):
         Returns:
             :obj:`dict` - info:
                 This method retrieves the information from the current class instance of a financial product
-                from Investing.com. This method both stores retrieved information in self.info attribute of the class 
+                from Investing.com. This method both stores retrieved information in self.information attribute of the class 
                 instance and it also returns it as a normal function will do.
         
         Raises:
@@ -202,7 +202,7 @@ class SearchObj(object):
         root_ = fromstring(req.text)
         path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
 
-        self.info = dict()
+        self.information = dict()
 
         if not path_:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
@@ -216,14 +216,14 @@ class SearchObj(object):
                 value = float(element.getnext().text_content().replace(',', ''))
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
-                self.info[title] = value if value != 'N/A' else None
+                self.information[title] = value if value != 'N/A' else None
                 continue
             except:
                 pass
             try:
                 text = element.getnext().text_content().strip()
                 text = datetime.strptime(text, "%m/%d/%Y").strftime("%d/%m/%Y")
-                self.info[title] = text if text != 'N/A' else None
+                self.information[title] = text if text != 'N/A' else None
                 continue
             except:
                 pass
@@ -231,7 +231,7 @@ class SearchObj(object):
                 text = element.getnext().text_content().strip()
                 if text.__contains__('1 = '):
                     text = text.replace('1 = ', '')
-                    self.info[title] = text if text != 'N/A' else None
+                    self.information[title] = text if text != 'N/A' else None
                     continue
             except:
                 pass
@@ -247,12 +247,12 @@ class SearchObj(object):
                     value = float(value.replace('T', '').replace(',', '')) * 1e12
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
-                self.info[title] = value if value != 'N/A' else None
+                self.information[title] = value if value != 'N/A' else None
                 continue
             except:
                 pass
 
-        return self.info
+        return self.information
 
     def retrieve_technical_indicators(self, interval='daily'):
         """Class method used to retrieve the technical indicators from the class instance of any financial product.

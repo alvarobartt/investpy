@@ -14,11 +14,17 @@ def search_quotes(text, products=None, countries=None, n_results=None):
     """
     This function will use the Investing.com search engine so to retrieve the search results of the
     introduced text. This function will create a :obj:`list` of :obj:`investpy.utils.search_obj.SearchObj`
-    class instances which will contain the search results so that they can be easily accessed and so
+    class instances, unless `n_results` is set to 1, where just a single :obj:`investpy.utils.search_obj.SearchObj`
+    will be returned.
+    
+    Those class instances will contain the search results so that they can be easily accessed and so
     to ease the data retrieval process since it can be done calling the methods `self.retrieve_recent_data()`
     or `self.retrieve_historical_data(from_date, to_date)` from each class instance, which will fill the historical
-    data attribute, `self.data`. The information of the financial product can also be retrieved using the
-    function `self.retrieve_information()`, that will also dump the information in the attribute `self.info`.
+    data attribute, `self.data`. Also the information of the financial product can be retrieved using the
+    function `self.retrieve_information()`, that will also dump the information in the attribute `self.information`;
+    the technical indicators can be retrieved using `self.retrieve_technical_indicators()` dumped in the attribute
+    `self.technical_indicators`; the default currency using `self.retrieve_currecy()` dumped in the attribute
+    `self.default_currency`.
 
     Args:
         text (:obj:`str`): text to search in Investing.com among all its indexed data.
@@ -74,7 +80,6 @@ def search_quotes(text, products=None, countries=None, n_results=None):
 
         condition = set(products).issubset(cst.PRODUCT_FILTERS.keys())
         if condition is False:
-            # TODO: instead of printing the possible filters, reference the docs
             raise ValueError('ERR#0095: products filtering parameter possible values are: \"' + ', '.join(cst.PRODUCT_FILTERS.keys()) + '\".')
         
         products = [cst.PRODUCT_FILTERS[product] for product in products]
@@ -89,7 +94,6 @@ def search_quotes(text, products=None, countries=None, n_results=None):
 
         condition = set(countries).issubset(cst.COUNTRY_FILTERS.keys())
         if condition is False:
-            # TODO: instead of printing the possible filters, reference the docs
             raise ValueError('ERR#0129: countries filtering parameter possible values are: \"' + ', '.join(cst.COUNTRY_FILTERS.keys()) + '\".')
         
         countries = [cst.COUNTRY_FILTERS[country] for country in countries]
