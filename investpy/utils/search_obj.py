@@ -361,7 +361,7 @@ class SearchObj(object):
                 result['Change Pct'] = float(info[6].replace(',', '').replace('%', ''))
             
             if not has_volume and has_change_pct:
-                result['Change Pct'] = float(info[6].replace(',', '').replace('%', ''))
+                result['Change Pct'] = float(info[5].replace(',', '').replace('%', ''))
 
             results.append(result)
 
