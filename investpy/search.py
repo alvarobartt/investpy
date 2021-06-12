@@ -5,9 +5,9 @@ import requests
 
 from unidecode import unidecode
 
-from .utils import constant as cst
 from .utils.search_obj import SearchObj
 from .utils.extra import random_user_agent
+from .utils.constant import PRODUCT_FILTERS, COUNTRY_FILTERS, PAIR_FILTERS, FLAG_FILTERS
 
 
 def search_quotes(text, products=None, countries=None, n_results=None):
@@ -78,11 +78,11 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         except:
             raise ValueError("ERR#0130: the introduced products filter must be a list of str in order to be valid.")
 
-        condition = set(products).issubset(cst.PRODUCT_FILTERS.keys())
+        condition = set(products).issubset(PRODUCT_FILTERS.keys())
         if condition is False:
-            raise ValueError('ERR#0095: products filtering parameter possible values are: \"' + ', '.join(cst.PRODUCT_FILTERS.keys()) + '\".')
+            raise ValueError('ERR#0095: products filtering parameter possible values are: \"' + ', '.join(PRODUCT_FILTERS.keys()) + '\".')
         
-        products = [cst.PRODUCT_FILTERS[product] for product in products]
+        products = [PRODUCT_FILTERS[product] for product in products]
 
     if countries:
         try:
@@ -90,11 +90,11 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         except:
             raise ValueError("ERR#0131: the introduced countries filter must be a list of str in order to be valid.")
 
-        condition = set(countries).issubset(cst.COUNTRY_FILTERS.keys())
+        condition = set(countries).issubset(COUNTRY_FILTERS.keys())
         if condition is False:
-            raise ValueError('ERR#0129: countries filtering parameter possible values are: \"' + ', '.join(cst.COUNTRY_FILTERS.keys()) + '\".')
+            raise ValueError('ERR#0129: countries filtering parameter possible values are: \"' + ', '.join(COUNTRY_FILTERS.keys()) + '\".')
         
-        countries = [cst.COUNTRY_FILTERS[country] for country in countries]
+        countries = [COUNTRY_FILTERS[country] for country in countries]
 
     params = {
         'search_text': text,
@@ -104,7 +104,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         'offset': 0
     }
 
-    head = {
+    headers = {
         "User-Agent": random_user_agent(),
         "X-Requested-With": "XMLHttpRequest",
         "Accept": "text/html",
@@ -121,10 +121,10 @@ def search_quotes(text, products=None, countries=None, n_results=None):
     user_limit = True if n_results is not None else False
 
     while True:
-        req = requests.post(url, headers=head, data=params)
+        req = requests.post(url, headers=headers, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
 
         data = req.json()
 
@@ -141,16 +141,18 @@ def search_quotes(text, products=None, countries=None, n_results=None):
             country, pair_type = quote['flag'], quote['pair_type']
 
             if countries is not None:
-                if quote['flag'] in countries:
-                    country = cst.FLAG_FILTERS[quote['flag']]
-                else:
+                if quote['flag'] not in countries:
                     continue
 
             if products is not None:
-                if quote['pair_type'] in products:
-                    pair_type = cst.PAIR_FILTERS[quote['pair_type']]
-                else:
+                if quote['pair_type'] not in products:
                     continue
+            
+            pair_type = PAIR_FILTERS[quote['pair_type']]
+
+            country = None
+            if pair_type not in ['cryptos', 'commodities']:
+                country = FLAG_FILTERS[quote['flag']] if quote['flag'] in FLAG_FILTERS else quote['flag']
 
             search_obj = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
                                    country=country, tag=quote['link'],
@@ -237,17 +239,16 @@ def search_events(text, importances=None, countries=None, n_results=None):
             country, pair_type = quote['flag'], quote['pair_type']
             
             if importances is not None:
-                if quote['pair_type'] in importances:
-                    print("TODO")
-                    ## pair_type = cst.PAIR_FILTERS[quote['pair_type']]
-                else:
+                if quote['pair_type'] not in importances:
                     continue
 
             if countries is not None:
-                if quote['flag'] in countries:
-                    country = cst.FLAG_FILTERS[quote['flag']]
-                else:
+                if quote['flag'] not in countries:
                     continue
+
+            print("TODO")
+            ## pair_type = PAIR_FILTERS[quote['pair_type']]
+            ## country = FLAG_FILTERS[quote['flag']]
 
             search_event = SearchObj(id_=quote['pairId'], name=quote['name'], symbol=quote['symbol'],
                                      country=country, tag=quote['link'],
@@ -262,4 +263,7 @@ def search_events(text, importances=None, countries=None, n_results=None):
         if len(search_results) >= n_results or len(search_results) >= total_results or params['offset'] >= total_results:
             break
     
+    if len(search_results) < 1:
+        raise RuntimeError("ERR#0093: no results found on Investing.com for the introduced query.")
+
     return search_results[:n_results]
