@@ -200,20 +200,18 @@ class SearchObj(object):
             raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
 
         root_ = fromstring(req.text)
-        path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
-
-        self.information = dict()
+        path_ = root_.xpath("//dl[@data-test='key-info']/div")
 
         if not path_:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        self.information = dict()
             
         for elements_ in path_:
-            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
-            title = element.text_content().strip()
-            if title == "Day's Range":
-                title = 'Todays Range'
+            element = elements_.xpath(".//dd")[0]
+            title = element.get('data-test')
             try:
-                value = float(element.getnext().text_content().replace(',', ''))
+                value = float(element.text_content().replace(',', ''))
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
                 self.information[title] = value if value != 'N/A' else None
@@ -221,14 +219,14 @@ class SearchObj(object):
             except:
                 pass
             try:
-                text = element.getnext().text_content().strip()
-                text = datetime.strptime(text, "%m/%d/%Y").strftime("%d/%m/%Y")
+                text = element.text_content().strip()
+                text = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
                 self.information[title] = text if text != 'N/A' else None
                 continue
             except:
                 pass
             try:
-                text = element.getnext().text_content().strip()
+                text = element.text_content().strip()
                 if text.__contains__('1 = '):
                     text = text.replace('1 = ', '')
                     self.information[title] = text if text != 'N/A' else None
@@ -236,7 +234,7 @@ class SearchObj(object):
             except:
                 pass
             try:
-                value = element.getnext().text_content().strip()
+                value = element.text_content().strip()
                 if value.__contains__('K'):
                     value = float(value.replace('K', '').replace(',', '')) * 1e3
                 elif value.__contains__('M'):
