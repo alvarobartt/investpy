@@ -321,10 +321,8 @@ class SearchObj(object):
         return intervals
     
     def _data_retrieval(self, product, headers, params):
-        if product in ['stocks', 'etfs', 'indices', 'fxfutures', 'cryptos']:
-            has_volume = True
-        else:
-            has_volume = False
+        has_volume = True if product in ['stocks', 'etfs', 'indices', 'cryptos', 'commodities', 'fxfutures'] else False
+        has_change_pct = True # Every financial product has it
 
         url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
@@ -345,8 +343,8 @@ class SearchObj(object):
             info = []
 
             for nested_ in elements_.xpath(".//td"):
-                val = nested_.get('data-real-value')
-                if val is None and nested_.text_content() == 'No results found':
+                val = nested_.get('data-real-value') if nested_.get('data-real-value') is not None else nested_.text_content()
+                if val == 'No results found':
                     raise IndexError("ERR#0033: information unavailable or not found.")
                 info.append(val)
 
@@ -358,7 +356,12 @@ class SearchObj(object):
                 'Close': float(info[1].replace(',', ''))
             }
 
-            if has_volume is True: result['Volume'] = int(info[5])
+            if has_volume and has_change_pct:
+                result['Volume'] = int(info[5])
+                result['Change Pct'] = float(info[6].replace(',', '').replace('%', ''))
+            
+            if not has_volume and has_change_pct:
+                result['Change Pct'] = float(info[6].replace(',', '').replace('%', ''))
 
             results.append(result)
 
