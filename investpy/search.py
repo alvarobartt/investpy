@@ -31,7 +31,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
         products (:obj:`list` of :obj:`str`, optional):
             list with the product type filter/s to be applied to search result quotes so that they match
             the filters. Possible products are: `indices`, `stocks`, `etfs`, `funds`, `commodities`, `currencies`, 
-            `crypto`, `bonds`, `certificates` and `fxfutures`, by default this parameter is set to `None` which 
+            `cryptos`, `bonds`, `certificates` and `fxfutures`, by default this parameter is set to `None` which 
             means that no filter will be applied, and all product type quotes will be retrieved.
         countries (:obj:`list` of :obj:`str`, optional):
             list with the country name filter/s to be applied to search result quotes so that they match
@@ -83,8 +83,6 @@ def search_quotes(text, products=None, countries=None, n_results=None):
             raise ValueError('ERR#0095: products filtering parameter possible values are: \"' + ', '.join(cst.PRODUCT_FILTERS.keys()) + '\".')
         
         products = [cst.PRODUCT_FILTERS[product] for product in products]
-    else:
-        products = list(cst.PRODUCT_FILTERS.values())
 
     if countries:
         try:
@@ -97,8 +95,6 @@ def search_quotes(text, products=None, countries=None, n_results=None):
             raise ValueError('ERR#0129: countries filtering parameter possible values are: \"' + ', '.join(cst.COUNTRY_FILTERS.keys()) + '\".')
         
         countries = [cst.COUNTRY_FILTERS[country] for country in countries]
-    else:
-        countries = list(cst.COUNTRY_FILTERS.values())
 
     params = {
         'search_text': text,
@@ -143,7 +139,7 @@ def search_quotes(text, products=None, countries=None, n_results=None):
 
         for quote in data['quotes']:
             country, pair_type = quote['flag'], quote['pair_type']
-            
+
             if countries is not None:
                 if quote['flag'] in countries:
                     country = cst.FLAG_FILTERS[quote['flag']]
@@ -168,6 +164,9 @@ def search_quotes(text, products=None, countries=None, n_results=None):
 
         if len(search_results) >= n_results or len(search_results) >= total_results or params['offset'] >= total_results:
             break
+
+    if len(search_results) < 1:
+        raise RuntimeError("ERR#0093: no results found on Investing.com for the introduced query.")
     
     return search_results[:n_results]
 
