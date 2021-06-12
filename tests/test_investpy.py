@@ -1320,8 +1320,7 @@ def test_investpy_search():
         for date in dates:
             assert result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date']) is not None
 
-        assert result.retrieve_information() is not None
-
+        assert result.retrieve_currency() is not None
         assert result.retrieve_technical_indicators() is not None
 
     financial_products = [
