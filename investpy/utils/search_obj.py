@@ -12,7 +12,7 @@ from random import randint
 
 from .data import Data
 from .extra import random_user_agent
-from .constant import INTERVAL_FILTERS, FUNDS_INTERVAL_FILTERS
+from .constant import INTERVAL_FILTERS, FUNDS_INTERVAL_FILTERS, OUTDATED2UPDATED
 
 
 class SearchObj(object):
@@ -199,17 +199,30 @@ class SearchObj(object):
         if req.status_code != 200:
             raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
 
-        root_ = fromstring(req.text)
-        path_ = root_.xpath("//dl[@data-test='key-info']/div")
+        # Just change this list once the update is included for all the other products
+        updated_for = ['stocks']
+        outdated_for = ['etfs', 'commodities', 'currencies', 'funds', 'bonds', 'cryptos', 'certificates', 'indices', 'fxfutures']
 
-        if not path_:
+        root_ = fromstring(req.text)
+        updated_path = root_.xpath("//dl[@data-test='key-info']/div")
+        outdated_path = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+
+        if not updated_path and not outdated_path:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        investing_updated = True if updated_path else False
 
         self.information = dict()
             
         for elements_ in path_:
-            element = elements_.xpath(".//dd")[0]
-            title = element.get('data-test')
+            if investing_updated:
+                element = elements_.xpath(".//dd")[0]
+                title = element.get('data-test')
+            else:
+                element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+                title = element.text_content().strip()
+                title = OUTDATED2UPDATED[title]
+                element = element.getnext()
             try:
                 value = float(element.text_content().replace(',', ''))
                 if isinstance(value, float):
@@ -220,7 +233,8 @@ class SearchObj(object):
                 pass
             try:
                 text = element.text_content().strip()
-                text = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                in_format = "%b %d, %Y" if investing_updated else "%m/%d/%Y"
+                text = datetime.strptime(text, in_format).strftime("%d/%m/%Y")
                 self.information[title] = text if text != 'N/A' else None
                 continue
             except:

@@ -1,6 +1,60 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
+# To be removed once Investing.com aligns financial products information
+OUTDATED2UPDATED = {
+    'Prev. Close': 'prevClose',
+    "Day's Range": 'dailyRange',
+    'ROI (TTM)': 'roiTtm',
+    'Revenue': 'revenue',
+    'Open': 'open',
+    'Price Open': 'priceOpen',
+    'Price Range': 'priceRange',
+    'Coupon': 'coupon',
+    '52 wk Range': 'weekRange',
+    'EPS': 'eps',
+    'Volume': 'volume',
+    'Market Cap': 'marketCap',
+    'Dividend (Yield)': 'dividend',
+    'Average Vol. (3m)': 'avgVolume',
+    'P/E Ratio': 'ratio',
+    'Beta': 'beta',
+    'Month': 'month',
+    '1-Year Change': 'oneYearReturn',
+    'Madurity Date': 'madurityDate',
+    'Shares Outstanding': 'sharesOutstanding',
+    'Next Earnings Date': 'nextEarningDate',
+    'Dividends (TTM)': 'dividednsTtm',
+    'Total Assets': 'totalAssets',
+    'Asset Class': 'assetClass',
+    'Tick Size': 'tickSize',
+    'Contract Size': 'contractSize',
+    'Tick Value': 'tickValue',
+    'Settlement': 'settlement',
+    'Base Symbol': 'baseSymbol',
+    'Settlement Day': 'settlementDay',
+    'Settlement Type': 'settlementType',
+    'Point Value': 'pointValue',
+    'Last Rollover Day': 'lastRolloverDay',
+    'Months': 'months',
+    'Bid': 'bid',
+    'Ask': 'ask',
+    'Rating': 'rating',
+    'Risk Rating': 'riskRating',
+    'Issuer': 'issuer',
+    'Inception Date': 'inceptionDate',
+    'Min. Investment': 'minInvestment',
+    'TTM Yield': 'ttmYield',
+    'Turnover': 'turnover',
+    'ROE': 'roe',
+    'ROA': 'roa',
+    'Expenses': 'expenses',
+    'Category': 'category',
+    'Leverage': 'leverage',
+    'Strike Price': 'strikePrice',
+    'Issue Amount': 'issueAmount'
+}
+
 FINANCIAL_SUMMARY_TYPES = {
     'income_statement': 0,
     'balance_sheet': 1,
@@ -8,8 +62,8 @@ FINANCIAL_SUMMARY_TYPES = {
 }
 
 FINANCIAL_SUMMARY_PERIODS = {
-    "annual": "Annual",
-    "quarterly": "Interim"
+    'annual': 'Annual',
+    'quarterly': 'Interim'
 }
 
 PRODUCT_FILTERS = {
