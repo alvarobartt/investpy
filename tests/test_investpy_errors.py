@@ -3,6 +3,8 @@
 
 import pytest
 
+import time
+
 import investpy
 
 
@@ -645,6 +647,8 @@ def test_stocks_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_funds_errors():
     """
@@ -1101,6 +1105,8 @@ def test_funds_errors():
             investpy.search_funds(by=param['by'], value=param['value'])
         except:
             pass
+    
+    time.sleep(5)
 
 
 def test_etfs_errors():
@@ -1547,6 +1553,8 @@ def test_etfs_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_indices_errors():
     """
@@ -1992,6 +2000,8 @@ def test_indices_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_currency_crosses_errors():
     """
@@ -2377,6 +2387,8 @@ def test_currency_crosses_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_bonds_errors():
     """
@@ -2702,6 +2714,8 @@ def test_bonds_errors():
             investpy.search_bonds(by=param['by'], value=param['value'])
         except:
             pass
+
+    time.sleep(5)
 
 
 def test_commodities_errors():
@@ -3118,6 +3132,8 @@ def test_commodities_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_crypto_errors():
     """
@@ -3404,6 +3420,8 @@ def test_crypto_errors():
             investpy.search_cryptos(by=param['by'], value=param['value'])
         except:
             pass
+
+    time.sleep(5)
 
 
 def test_certificate_errors():
@@ -3837,6 +3855,8 @@ def test_certificate_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_search_errors():
     """
@@ -3944,6 +3964,8 @@ def test_search_errors():
                     continue
         except:
             pass
+
+    time.sleep(5)
 
 
 def test_news_errors():
@@ -4083,6 +4105,8 @@ def test_news_errors():
         except:
             pass
 
+    time.sleep(5)
+
 
 def test_technical_errors():
     """
@@ -4189,17 +4213,4 @@ def test_technical_errors():
         except:
             pass
 
-
-if __name__ == '__main__':
-    test_stocks_errors()
-    test_funds_errors()
-    test_etfs_errors()
-    test_indices_errors()
-    test_currency_crosses_errors()
-    test_bonds_errors()
-    test_commodities_errors()
-    test_crypto_errors()
-    test_certificate_errors()
-    test_search_errors()
-    test_technical_errors()
-    test_news_errors()
+    time.sleep(5)
