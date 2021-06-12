@@ -364,6 +364,10 @@ class SearchObj(object):
 
         """
 
+        # Temporary workaround to fix build
+        if self.pair_type != 'stocks':
+            return 'NOT_AVAILABLE_YET'
+
         url = f"https://www.investing.com{self.tag}"
 
         headers = {
