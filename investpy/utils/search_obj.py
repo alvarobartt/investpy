@@ -201,7 +201,7 @@ class SearchObj(object):
         root_ = fromstring(req.text)
         path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
 
-        info = dict()
+        self.info = dict()
 
         if not path_:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
@@ -215,14 +215,14 @@ class SearchObj(object):
                 value = float(element.getnext().text_content().replace(',', ''))
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
-                info[title] = value if value != 'N/A' else None
+                self.info[title] = value if value != 'N/A' else None
                 continue
             except:
                 pass
             try:
                 text = element.getnext().text_content().strip()
                 text = datetime.strptime(text, "%m/%d/%Y").strftime("%d/%m/%Y")
-                info[title] = text if text != 'N/A' else None
+                self.info[title] = text if text != 'N/A' else None
                 continue
             except:
                 pass
@@ -230,7 +230,7 @@ class SearchObj(object):
                 text = element.getnext().text_content().strip()
                 if text.__contains__('1 = '):
                     text = text.replace('1 = ', '')
-                    info[title] = text if text != 'N/A' else None
+                    self.info[title] = text if text != 'N/A' else None
                     continue
             except:
                 pass
@@ -246,12 +246,11 @@ class SearchObj(object):
                     value = float(value.replace('T', '').replace(',', '')) * 1e12
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
-                info[title] = value if value != 'N/A' else None
+                self.info[title] = value if value != 'N/A' else None
                 continue
             except:
                 pass
 
-        self.info = info
         return self.info
 
     def _prepare_request(self, header):
