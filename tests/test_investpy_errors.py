@@ -3,8 +3,6 @@
 
 import pytest
 
-import time
-
 import investpy
 
 
@@ -647,8 +645,6 @@ def test_stocks_errors():
         except:
             pass
 
-    time.sleep(5)
-
 
 def test_funds_errors():
     """
@@ -1106,8 +1102,6 @@ def test_funds_errors():
         except:
             pass
     
-    time.sleep(5)
-
 
 def test_etfs_errors():
     """
@@ -1552,8 +1546,6 @@ def test_etfs_errors():
             investpy.search_etfs(by=param['by'], value=param['value'])
         except:
             pass
-
-    time.sleep(5)
 
 
 def test_indices_errors():
@@ -2000,8 +1992,6 @@ def test_indices_errors():
         except:
             pass
 
-    time.sleep(5)
-
 
 def test_currency_crosses_errors():
     """
@@ -2387,8 +2377,6 @@ def test_currency_crosses_errors():
         except:
             pass
 
-    time.sleep(5)
-
 
 def test_bonds_errors():
     """
@@ -2714,8 +2702,6 @@ def test_bonds_errors():
             investpy.search_bonds(by=param['by'], value=param['value'])
         except:
             pass
-
-    time.sleep(5)
 
 
 def test_commodities_errors():
@@ -3132,8 +3118,6 @@ def test_commodities_errors():
         except:
             pass
 
-    time.sleep(5)
-
 
 def test_crypto_errors():
     """
@@ -3420,8 +3404,6 @@ def test_crypto_errors():
             investpy.search_cryptos(by=param['by'], value=param['value'])
         except:
             pass
-
-    time.sleep(5)
 
 
 def test_certificate_errors():
@@ -3855,8 +3837,6 @@ def test_certificate_errors():
         except:
             pass
 
-    time.sleep(5)
-
 
 def test_search_errors():
     """
@@ -3964,8 +3944,6 @@ def test_search_errors():
                     continue
         except:
             pass
-
-    time.sleep(5)
 
 
 def test_news_errors():
@@ -4105,8 +4083,6 @@ def test_news_errors():
         except:
             pass
 
-    time.sleep(5)
-
 
 def test_technical_errors():
     """
@@ -4212,5 +4188,3 @@ def test_technical_errors():
                                   interval=param['interval'])
         except:
             pass
-
-    time.sleep(5)

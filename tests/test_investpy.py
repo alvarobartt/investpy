@@ -3,8 +3,6 @@
 
 import pytest
 
-import time
-
 import investpy
 
 
@@ -214,8 +212,6 @@ def test_investpy_stocks():
 
     investpy.search_stocks(by='name', value='BBVA')
 
-    time.sleep(5)
-
 
 def test_investpy_funds():
     """
@@ -350,8 +346,6 @@ def test_investpy_funds():
 
     investpy.search_funds(by='name', value='bbva')
 
-    time.sleep(5)
-
 
 def test_investpy_etfs():
     """
@@ -474,8 +468,6 @@ def test_investpy_etfs():
 
     investpy.search_etfs(by='name', value='bbva')
 
-    time.sleep(5)
-
 
 def test_investpy_indices():
     """
@@ -597,8 +589,6 @@ def test_investpy_indices():
         investpy.get_indices_overview(country=param['country'], as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_indices(by='name', value='ibex')
-
-    time.sleep(5)
 
 
 def test_investpy_currency_crosses():
@@ -778,8 +768,6 @@ def test_investpy_currency_crosses():
 
     investpy.search_currency_crosses(by='base', value='EUR')
 
-    time.sleep(5)
-
 
 def test_investpy_bonds():
     """
@@ -899,8 +887,6 @@ def test_investpy_bonds():
         investpy.get_bonds_overview(country=param['country'], as_json=param['as_json'])
 
     investpy.search_bonds(by='name', value='Spain')
-
-    time.sleep(5)
 
 
 def test_investpy_commodities():
@@ -1028,8 +1014,6 @@ def test_investpy_commodities():
 
     investpy.search_commodities(by='name', value='gold')
 
-    time.sleep(5)
-
 
 def test_investpy_cryptos():
     """
@@ -1135,8 +1119,6 @@ def test_investpy_cryptos():
         investpy.get_cryptos_overview(as_json=param['as_json'], n_results=param['n_results'])
 
     investpy.search_cryptos(by='name', value='bitcoin')
-
-    time.sleep(5)
 
 
 def test_investpy_certificates():
@@ -1264,8 +1246,6 @@ def test_investpy_certificates():
 
     investpy.search_certificates(by='name', value='BNP')
 
-    time.sleep(5)
-
 
 def test_investpy_search():
     """
@@ -1353,8 +1333,6 @@ def test_investpy_search():
 
         assert search_result.retrieve_information() is not None
 
-    time.sleep(5)
-
 
 def test_investpy_news():
     """
@@ -1391,8 +1369,6 @@ def test_investpy_news():
                                    from_date=param['from_date'],
                                    to_date=param['to_date'])
 
-    time.sleep(5)
-
 
 def test_investpy_technical():
     """
@@ -1424,5 +1400,3 @@ def test_investpy_technical():
                               country=param['country'],
                               product_type=param['product_type'],
                               interval=param['interval'])
-
-    time.sleep(5)
