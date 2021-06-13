@@ -364,10 +364,6 @@ class SearchObj(object):
 
         """
 
-        # Temporary workaround to fix build
-        if self.pair_type != 'stocks':
-            return 'NOT_AVAILABLE_YET'
-
         url = f"https://www.investing.com{self.tag}"
 
         headers = {
@@ -383,11 +379,18 @@ class SearchObj(object):
         if req.status_code != 200:
             raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
 
-        root_ = fromstring(req.text)
-        path_ = root_.xpath("//div[contains(@class, 'instrument-metadata_currency')]/span")
+        # Just change this list once the update is included for all the other products
+        updated_for = ['stocks']
+        outdated_for = ['etfs', 'commodities', 'currencies', 'funds', 'bonds', 'cryptos', 'certificates', 'indices', 'fxfutures']
 
-        if not path_:
+        root_ = fromstring(req.text)
+        updated_path = root_.xpath("//div[contains(@class, 'instrument-metadata_currency')]/span")
+        outdated_path = root_.xpath("//div[@id='quotes_summary_current_data']/div/div/div[contains(@class, 'bottom')]/span[@class='bold']")
+
+        if not updated_path and not outdated_path:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        path_, investing_updated = (updated_path, True) if updated_path else (outdated_path, False)
             
         self.default_currency = path_[-1].text_content().strip()
         return self.default_currency
