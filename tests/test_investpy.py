@@ -1316,8 +1316,22 @@ def test_investpy_search():
         print(result)
 
         assert result.retrieve_recent_data() is not None
+        
         for date in dates:
             assert result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date']) is not None
+
+        assert result.retrieve_currency() is not None
+        assert result.retrieve_technical_indicators() is not None
+
+    financial_products = [
+        ('stocks', 'apple'), ('etfs', 'apple'), ('commodities', 'apple'), ('currencies', 'usd'), ('funds', 'apple'), 
+        ('bonds', 'apple'), ('cryptos', 'bitcoin'), ('certificates', 'apple'), ('indices', 'apple'), ('fxfutures', 'usd')
+    ]
+
+    for product_type, product_name in financial_products:
+        search_result = investpy.search_quotes(text=product_name, products=[product_type], n_results=1)
+
+        assert search_result.retrieve_information() is not None
 
 
 def test_investpy_news():
@@ -1386,19 +1400,3 @@ def test_investpy_technical():
                               country=param['country'],
                               product_type=param['product_type'],
                               interval=param['interval'])
-
-
-if __name__ == '__main__':
-    test_investpy()
-    test_investpy_stocks()
-    test_investpy_funds()
-    test_investpy_etfs()
-    test_investpy_indices()
-    test_investpy_currency_crosses()
-    test_investpy_bonds()
-    test_investpy_commodities()
-    test_investpy_cryptos()
-    test_investpy_certificates()
-    test_investpy_search()
-    test_investpy_news()
-    test_investpy_technical()

@@ -1,6 +1,68 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
+# To be removed once Investing.com aligns financial products information
+OUTDATED2UPDATED = {
+    'Prev. Close': 'prevClose',
+    "Day's Range": 'dailyRange',
+    'ROI (TTM)': 'roiTtm',
+    'Revenue': 'revenue',
+    'Open': 'open',
+    'Price': 'price',
+    'Price Open': 'priceOpen',
+    'Price Range': 'priceRange',
+    'Coupon': 'coupon',
+    'Coupon Frequency': 'couponFreq',
+    'Next Coupon Date': 'nextCouponDate',
+    '52 wk Range': 'weekRange',
+    'EPS': 'eps',
+    'Volume': 'volume',
+    'Market Cap': 'marketCap',
+    'Dividend (Yield)': 'dividend',
+    'Dividend Yield': 'dividend',
+    'Average Vol. (3m)': 'avgVolume',
+    'P/E Ratio': 'ratio',
+    'Beta': 'beta',
+    'Month': 'month',
+    'Duration': 'duration',
+    '1-Year Change': 'oneYearReturn',
+    'Maturity Date': 'maturityDate',
+    'Shares Outstanding': 'sharesOutstanding',
+    'Next Earnings Date': 'nextEarningDate',
+    'Dividends (TTM)': 'dividednsTtm',
+    'Total Assets': 'totalAssets',
+    'Asset Class': 'assetClass',
+    'Tick Size': 'tickSize',
+    'Contract Size': 'contractSize',
+    'Tick Value': 'tickValue',
+    'Settlement': 'settlement',
+    'Base Symbol': 'baseSymbol',
+    'Settlement Day': 'settlementDay',
+    'Settlement Type': 'settlementType',
+    'Point Value': 'pointValue',
+    'Last Rollover Day': 'lastRolloverDay',
+    'Months': 'months',
+    'Bid': 'bid',
+    'Ask': 'ask',
+    'Rating': 'rating',
+    'Risk Rating': 'riskRating',
+    'Issuer': 'issuer',
+    'Inception Date': 'inceptionDate',
+    'Min. Investment': 'minInvestment',
+    'TTM Yield': 'ttmYield',
+    'Yield': 'yield',
+    'Turnover': 'turnover',
+    'ROE': 'roe',
+    'ROA': 'roa',
+    'Type': 'type',
+    'Expenses': 'expenses',
+    'Category': 'category',
+    'Leverage': 'leverage',
+    'Strike Price': 'strikePrice',
+    'Issue Amount': 'issueAmount',
+    'Issue Date': 'issueDate'
+}
+
 FINANCIAL_SUMMARY_TYPES = {
     'income_statement': 0,
     'balance_sheet': 1,
@@ -8,33 +70,33 @@ FINANCIAL_SUMMARY_TYPES = {
 }
 
 FINANCIAL_SUMMARY_PERIODS = {
-    "annual": "Annual",
-    "quarterly": "Interim"
+    'annual': 'Annual',
+    'quarterly': 'Interim'
 }
 
 PRODUCT_FILTERS = {
-    'indices': 'indice', 
-    'stocks': 'equities', 
-    'etfs': 'etf', 
-    'funds': 'fund', 
-    'commodities': 'commodity', 
-    'currencies': 'currency', 
-    'cryptos': 'crypto', 
-    'bonds': 'bond', 
-    'certificates': 'certificate', 
+    'indices': 'indice',
+    'stocks': 'equities',
+    'etfs': 'etf',
+    'funds': 'fund',
+    'commodities': 'commodity',
+    'currencies': 'currency',
+    'cryptos': 'crypto',
+    'bonds': 'bond',
+    'certificates': 'certificate',
     'fxfutures': 'fxfuture'
 }
 
 PAIR_FILTERS = {
-    'indice': 'indices', 
-    'equities': 'stocks', 
-    'etf': 'etfs', 
-    'fund': 'funds', 
-    'commodity': 'commodities', 
-    'currency': 'currencies', 
-    'crypto': 'cryptos', 
-    'bond': 'bonds', 
-    'certificate': 'certificates', 
+    'indice': 'indices',
+    'equities': 'stocks',
+    'etf': 'etfs',
+    'fund': 'funds',
+    'commodity': 'commodities',
+    'currency': 'currencies',
+    'crypto': 'cryptos',
+    'bond': 'bonds',
+    'certificate': 'certificates',
     'fxfuture': 'fxfutures'
 }
 
@@ -161,6 +223,13 @@ INTERVAL_FILTERS = {
     '30mins': 60*30,
     '1hour': 60*60,
     '5hours': 60*60*5,
+    'daily': 60*60*24,
+    'weekly': 'week',
+    'monthly': 'month'
+}
+
+# https://www.investing.com/funds/vanguard-500-index-admiral-technical
+FUNDS_INTERVAL_FILTERS = {
     'daily': 60*60*24,
     'weekly': 'week',
     'monthly': 'month'

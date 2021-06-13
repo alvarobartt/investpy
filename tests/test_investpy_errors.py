@@ -1101,7 +1101,7 @@ def test_funds_errors():
             investpy.search_funds(by=param['by'], value=param['value'])
         except:
             pass
-
+    
 
 def test_etfs_errors():
     """
@@ -3897,6 +3897,12 @@ def test_search_errors():
             'products': None,
             'countries': ['error'],
             'n_results': 10
+        },
+        {
+            'text': 'bbva',
+            'products': None,
+            'countries': None,
+            'n_results': 10
         }
     ]
 
@@ -3922,13 +3928,20 @@ def test_search_errors():
                 },
             ]
 
-            for result in results:
+            for result in results[:1]:
                 for date in dates:
                     try:
                         result.retrieve_historical_data(from_date=date['from_date'], to_date=date['to_date'])
                     except:
                         continue
-                break
+            
+            intervals = ['non_existing', '1min']
+            for interval in intervals:
+                try:
+                    result.pair_type = 'funds'
+                    result.retrieve_technical_indicators(interval=interval)
+                except:
+                    continue
         except:
             pass
 
@@ -4175,18 +4188,3 @@ def test_technical_errors():
                                   interval=param['interval'])
         except:
             pass
-
-
-if __name__ == '__main__':
-    test_stocks_errors()
-    test_funds_errors()
-    test_etfs_errors()
-    test_indices_errors()
-    test_currency_crosses_errors()
-    test_bonds_errors()
-    test_commodities_errors()
-    test_crypto_errors()
-    test_certificate_errors()
-    test_search_errors()
-    test_technical_errors()
-    test_news_errors()
