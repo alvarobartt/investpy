@@ -2,7 +2,7 @@
 # See LICENSE for details.
 
 __author__ = 'Alvaro Bartolome @ alvarobartt in GitHub'
-__version__ = '1.0.6'
+__version__ = '1.0.7'
 
 from .stocks import get_stocks, get_stocks_list, get_stocks_dict, get_stock_countries, get_stock_recent_data, \
     get_stock_historical_data, get_stock_company_profile, get_stock_dividends, get_stock_information, get_stocks_overview, \
@@ -35,7 +35,8 @@ from .certificates import get_certificates, get_certificates_list, get_certifica
     get_certificate_recent_data, get_certificate_historical_data, get_certificate_information, get_certificates_overview, \
     search_certificates
 
-from .search import search_quotes, search_events
+from .search import search_quotes
+# from .search import search_events
 
 from .news import economic_calendar
 
