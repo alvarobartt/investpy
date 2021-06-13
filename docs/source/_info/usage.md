@@ -63,7 +63,7 @@ documentation at [Search Engine Documentation](https://investpy.readthedocs.io/s
 search results let the user retrieve both recent and historical data, its information, the technical indicators,
 the default currency, etc., as presented in the pieces of code below:
 
-#### ◾ Recent Data
+#### Recent Data
 
 ```python
 recent_data = search_result.retrieve_recent_data()
@@ -80,7 +80,7 @@ Date
 
 ```
 
-#### ◾ Historical Data
+#### Historical Data
 
 ```python
 historical_data = search_result.retrieve_historical_data(from_date='01/01/2019', to_date='01/01/2020')
@@ -97,7 +97,7 @@ Date
 
 ```
 
-#### ◾ Information
+#### Information
 
 ```python
 information = search_result.retrieve_information()
@@ -108,7 +108,7 @@ print(information)
 
 ```
 
-#### ◾ Currency
+#### Currency
 
 ```python
 default_currency = search_result.retrieve_currency()
@@ -119,7 +119,7 @@ print(default_currency)
 
 ```
 
-#### ◾ Technical Indicators
+#### Technical Indicators
 
 ```python
 technical_indicators = search_result.retrieve_technical_indicators(interval="daily")

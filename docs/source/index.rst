@@ -5,8 +5,8 @@ Welcome to investpy's documentation!
     :align: center
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: Documentation
 
    _info/introduction.md
    _info/installation.md
@@ -16,6 +16,11 @@ Welcome to investpy's documentation!
    _info/citation.md
    _info/discussions.md
    _info/disclaimer.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Developer
+
    api.rst
 
 
