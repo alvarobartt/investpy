@@ -1,6 +1,21 @@
-# ❓ Frequent Asked Questions - FAQs
+# ❓ Discussions (Q&A, AMA)
 
-In this section the Frequent Asked Questions are answered, so please read this section before posting a question or openning an issue since duplicates will not be solved or will be referenced to this section. Also, if you think that there are more possible FAQs, consider openning an issue in GitHub so to notify it, since if we all contribute this section can be clear enough so to ease question answering.
+GitHub recently released a new feature named __GitHub Discussions__ (still in beta). GitHub Discussions is a 
+collaborative communication forum for the community around an open source project.
+
+Check the investpy GitHub Discussions page at [Discussions](https://github.com/alvarobartt/investpy/discussions), 
+and feel free to ask me (ar any developer) anything, share updates, have open-ended conversations, and follow along 
+on decisions affecting the community's way of working.
+
+:pushpin: __Note__. Usually I don't answer emails asking me questions about investpy, as we currently have the
+GitHub Discussions tab, and I encourage you to use it. GitHub Discussions is the easiest way to contact me about 
+investpy, so that I don't answer the same stuff more than once via email, as anyone can see the opened/answered
+discussions.
+
+Also, in this section some Frequent Asked Questions are answered, so please read this section before posting a 
+question or openning an issue since duplicates will not be solved or will be referenced to this section. Also, 
+if you think that there are more possible FAQs, consider openning an issue in GitHub so to notify it, since if we 
+all contribute this section can be clear enough so to ease question answering.
 
 ## Where can I find the reference of a function and its usage?
 

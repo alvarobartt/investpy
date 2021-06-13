@@ -14,7 +14,7 @@ Welcome to investpy's documentation!
    _info/related_projects.md
    _info/contact_information.md
    _info/citation.md
-   _info/faq.md
+   _info/discussions.md
    _info/disclaimer.md
    api.rst
 
