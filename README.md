@@ -97,9 +97,8 @@ search_result = investpy.search_quotes(text='apple', products=['stocks'],
                                        countries=['united states'], n_results=1)
 print(search_result)
 ```
-```{r, engine='python', count_lines}
+```json
 {"id_": 6408, "name": "Apple Inc", "symbol": "AAPL", "country": "united states", "tag": "/equities/apple-computer-inc", "pair_type": "stocks", "exchange": "NASDAQ"}
-
 ```
 
 Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances, unless
@@ -107,85 +106,14 @@ Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchOb
 To get to know which are the available functions and attributes of the returned search results, please read the related 
 documentation at [Search Engine Documentation](https://investpy.readthedocs.io/search_api.html). So on, those 
 search results let the user retrieve both recent and historical data, its information, the technical indicators,
-the default currency, etc., as presented in the pieces of code below:
-
-#### Recent Data
+the default currency, etc., as presented in the piece of code below:
 
 ```python
 recent_data = search_result.retrieve_recent_data()
-print(recent_data.head())
-```
-```{r, engine='python', count_lines}
-              Open    High     Low   Close     Volume  Change Pct
-Date
-2021-05-13  124.58  126.15  124.26  124.97  105861000        1.79
-2021-05-14  126.25  127.89  125.85  127.45   81918000        1.98
-2021-05-17  126.82  126.93  125.17  126.27   74245000       -0.93
-2021-05-18  126.56  126.99  124.78  124.85   63343000       -1.12
-2021-05-19  123.16  124.92  122.86  124.69   92612000       -0.13
-
-```
-
-#### Historical Data
-
-```python
 historical_data = search_result.retrieve_historical_data(from_date='01/01/2019', to_date='01/01/2020')
-print(historical_data.head())
-```
-```{r, engine='python', count_lines}
-             Open   High    Low  Close     Volume  Change Pct
-Date
-2020-01-02  74.06  75.15  73.80  75.09  135647008        2.28
-2020-01-03  74.29  75.14  74.13  74.36  146536000       -0.97
-2020-01-06  73.45  74.99  73.19  74.95  118579000        0.80
-2020-01-07  74.96  75.22  74.37  74.60  111511000       -0.47
-2020-01-08  74.29  76.11  74.29  75.80  132364000        1.61
-
-```
-
-#### Information
-
-```python
 information = search_result.retrieve_information()
-print(information)
-```
-```{r, engine='python', count_lines}
-{'prevClose': 126.11, 'dailyRange': '126.1-127.44', 'revenue': 325410000000, 'open': 126.53, 'weekRange': '83.14-145.09', 'eps': 4.46, 'volume': 53522373, 'marketCap': 2130000000000, 'dividend': '0.88(0.70%)', 'avgVolume': 88858729, 'ratio': 28.58, 'beta': 1.2, 'oneYearReturn': '50.35%', 'sharesOutstanding': 16687631000, 'nextEarningDate': '03/08/2021'}
-
-```
-
-#### Currency
-
-```python
 default_currency = search_result.retrieve_currency()
-print(default_currency)
-```
-```{r, engine='python', count_lines}
-'USD'
-
-```
-
-#### Technical Indicators
-
-```python
 technical_indicators = search_result.retrieve_technical_indicators(interval='daily')
-print(technical_indicators)
-```
-```{r, engine='python', count_lines}
-              indicator           signal     value
-0               RSI(14)          neutral   52.1610
-1            STOCH(9,6)              buy   63.7110
-2          STOCHRSI(14)       overbought  100.0000
-3           MACD(12,26)             sell   -0.6700
-4               ADX(14)          neutral   21.4750
-5           Williams %R              buy  -20.9430
-6               CCI(14)              buy   67.1057
-7               ATR(14)  less_volatility    1.7871
-8        Highs/Lows(14)              buy    0.4279
-9   Ultimate Oscillator             sell   47.3620
-10                  ROC              buy    1.5150
-11  Bull/Bear Power(13)              buy    1.3580
-
 ```
 
 ### :money_with_wings: Crypto Currencies Data Retrieval
