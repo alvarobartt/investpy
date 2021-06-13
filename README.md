@@ -5,8 +5,8 @@
 <h2 align="center">Financial Data Extraction from Investing.com with Python</h2>
 
 investpy is a Python package to retrieve data from [Investing.com](https://www.investing.com/), which provides data retrieval 
-from up to: 39952 stocks, 82221 funds, 11403 ETFs, 2029 currency crosses, 7797 indices, 688 bonds, 66 commodities, 250 certificates, 
-and 2812 cryptocurrencies.
+from up to 39952 stocks, 82221 funds, 11403 ETFs, 2029 currency crosses, 7797 indices, 688 bonds, 66 commodities, 250 certificates, 
+and 4697 cryptocurrencies.
 
 investpy allows the user to download both recent and historical data from all the financial products indexed at Investing.com. 
 **It includes data from all over the world**, from countries such as United States, France, India, Spain, Russia, or Germany, 
@@ -188,7 +188,7 @@ consider it.
 As already presented previously, **historical data retrieval using investpy is really easy**. The piece of code 
 presented below shows how to retrieve the past years of historical data from Bitcoin (BTC).
 
-````python
+```python
 import investpy
 
 data = investpy.get_crypto_historical_data(crypto='bitcoin',
@@ -196,7 +196,7 @@ data = investpy.get_crypto_historical_data(crypto='bitcoin',
                                            to_date='01/01/2019')
 
 print(data.head())
-````
+```
 ```{r, engine='python', count_lines}
              Open    High    Low   Close  Volume Currency
 Date                                                     

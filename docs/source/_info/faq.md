@@ -1,4 +1,4 @@
-# Frequent Asked Questions - FAQs
+# ❓ Frequent Asked Questions - FAQs
 
 In this section the Frequent Asked Questions are answered, so please read this section before posting a question or openning an issue since duplicates will not be solved or will be referenced to this section. Also, if you think that there are more possible FAQs, consider openning an issue in GitHub so to notify it, since if we all contribute this section can be clear enough so to ease question answering.
 
@@ -12,14 +12,13 @@ As it is known, investpy gathers and retrieves data from Investing.com which is 
 
 ## I am having problems while installing the package.
 
-If you followed the [Installation Guide](https://github.com/alvarobartt/investpy/blob/master/README.md#Installation), you should be able to use investpy without having any problem, anyways, if you are stuck on it, open an issue at investpy issues tab so to let the developers know which is your problem in order to solve it as soon as possible. If you were not able to complete the installation, please check that you are running Python 3.5 at least and that you are installing the latest version available, if you are still having problems, open an issue.
+If you followed the [Installation Guide](https://github.com/alvarobartt/investpy/blob/master/README.md#Installation), you should be able to use investpy without having any problem, anyways, if you are stuck on it, open an issue at investpy issues tab so to let the developers know which is your problem in order to solve it as soon as possible. If you were not able to complete the installation, please check that you are running at least Python 3.6 and that you are installing the latest version available, if you are still having problems, open an issue.
 
 ## How do I contribute to investpy?
 
-Currently I am not admitting any Pull Request since investpy is under development, and so to keep a clean structure, I will be developing new functionalities until code is clean enough to let newcome contributors help. Anyways, the most effective tool you have in order to contribute to investpy are **issues** where you can give me new ideas or some functionallity you would like to see implemented in investpy. You can also use issues in order to report bugs or problems so to help investpy's development and consistency.
-
-## How do I reference investpy?
-
-Since investpy is an open source Python package, whenever you use it, would be nice from you to mention or comment where does the data comes from. This way, investpy can be spread among more users which will consequently improve package usage since more users can contribute to it due to the increasing reach to newcome developers. A sample reference is presented below:
-
-`investpy - a Python package for Financial Data Extraction from Investing.com developed by Álvaro Bartolomé del Canto, alvarobartt @ GitHub`
+As this is an open-source project it is **open to contributions, bug reports, bug fixes, documentation improvements, 
+enhancements, and ideas**. There is an open tab of [issues](https://github.com/alvarobartt/investpy/issues) where 
+anyone can open new issues if needed or navigate through them to solve them or contribute to its solving. 
+Remember that issues are not threads to describe multiple problems, this does not mean that issues can not 
+be discussed, but so to keep structured project management, the same issue should not describe different 
+problems, just the main one and some nested/related errors that may be found.
