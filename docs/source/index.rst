@@ -1,23 +1,27 @@
 Welcome to investpy's documentation!
 ====================================
 
-.. image:: https://raw.githubusercontent.com/alvarobartt/investpy/master/docs/_static/logo.png
+.. image:: _static/logo.png
     :align: center
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: Documentation
 
-   _info/introduction.rst
-   _info/installation.rst
-   _info/usage.rst
-   _info/models.rst
-   _info/stocks.rst
-   _info/funds.rst
-   api.rst
-   _info/information.md
-   _info/faq.md
+   _info/introduction.md
+   _info/installation.md
+   _info/usage.md
+   _info/related_projects.md
+   _info/contact_information.md
+   _info/citation.md
+   _info/discussions.md
    _info/disclaimer.md
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Developer
+
+   api.rst
 
 
 Indices and tables

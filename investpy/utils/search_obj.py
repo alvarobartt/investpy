@@ -12,6 +12,7 @@ from random import randint
 
 from .data import Data
 from .extra import random_user_agent
+from .constant import INTERVAL_FILTERS, FUNDS_INTERVAL_FILTERS, OUTDATED2UPDATED
 
 
 class SearchObj(object):
@@ -100,15 +101,15 @@ class SearchObj(object):
         `investpy.search_quotes(text, products, countries, n_results)` function search results to build the request 
         that it is going to be sent to Investing.com so to retrieve and parse the data.
 
+        Args:
+            from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
+            to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
+
         Returns:
             :obj:`pandas.DataFrame` - data:
                 This method retrieves the historical data from the current class instance of a financial product
                 from Investing.com. This method both stores retrieved data in self.data attribute of the class 
                 instance and it also returns it as a normal function will do.
-
-        Args:
-            from_date (:obj:`str`): date from which data will be retrieved, specified in dd/mm/yyyy format.
-            to_date (:obj:`str`): date until data will be retrieved, specified in dd/mm/yyyy format.
         
         Raises:
             ValueError: raised if any of the introduced parameters was not valid or errored.
@@ -152,7 +153,7 @@ class SearchObj(object):
                     continue
 
             if len(self.data) < 1:
-                raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+                raise IndexError("ERR#0033: information unavailable or not found.")
         else:
             headers, params = self._prepare_historical_request(header=header,
                                                                from_date=from_date.strftime('%m/%d/%Y'),
@@ -174,7 +175,7 @@ class SearchObj(object):
         Returns:
             :obj:`dict` - info:
                 This method retrieves the information from the current class instance of a financial product
-                from Investing.com. This method both stores retrieved information in self.info attribute of the class 
+                from Investing.com. This method both stores retrieved information in self.information attribute of the class 
                 instance and it also returns it as a normal function will do.
         
         Raises:
@@ -198,44 +199,56 @@ class SearchObj(object):
         if req.status_code != 200:
             raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
 
+        # Just change this list once the update is included for all the other products
+        updated_for = ['stocks']
+        outdated_for = ['etfs', 'commodities', 'currencies', 'funds', 'bonds', 'cryptos', 'certificates', 'indices', 'fxfutures']
+
         root_ = fromstring(req.text)
-        path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+        updated_path = root_.xpath("//dl[@data-test='key-info']/div")
+        outdated_path = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
 
-        info = dict()
-
-        if not path_:
+        if not updated_path and not outdated_path:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
-            
+
+        path_, investing_updated = (updated_path, True) if updated_path else (outdated_path, False)
+
+        self.information = dict()
+        
         for elements_ in path_:
-            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
-            title = element.text_content().strip()
-            if title == "Day's Range":
-                title = 'Todays Range'
+            if investing_updated:
+                element = elements_.xpath(".//dd")[0]
+                title = element.get('data-test')
+            else:
+                element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
+                title = element.text_content().strip()
+                title = OUTDATED2UPDATED[title]
+                element = element.getnext()
             try:
-                value = float(element.getnext().text_content().replace(',', ''))
+                value = float(element.text_content().replace(',', ''))
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
-                info[title] = value if value != 'N/A' else None
+                self.information[title] = value if value != 'N/A' else None
                 continue
             except:
                 pass
             try:
-                text = element.getnext().text_content().strip()
-                text = datetime.strptime(text, "%m/%d/%Y").strftime("%d/%m/%Y")
-                info[title] = text if text != 'N/A' else None
+                text = element.text_content().strip()
+                in_format = "%b %d, %Y" if investing_updated else "%m/%d/%Y"
+                text = datetime.strptime(text, in_format).strftime("%d/%m/%Y")
+                self.information[title] = text if text != 'N/A' else None
                 continue
             except:
                 pass
             try:
-                text = element.getnext().text_content().strip()
+                text = element.text_content().strip()
                 if text.__contains__('1 = '):
                     text = text.replace('1 = ', '')
-                    info[title] = text if text != 'N/A' else None
+                    self.information[title] = text if text != 'N/A' else None
                     continue
             except:
                 pass
             try:
-                value = element.getnext().text_content().strip()
+                value = element.text_content().strip()
                 if value.__contains__('K'):
                     value = float(value.replace('K', '').replace(',', '')) * 1e3
                 elif value.__contains__('M'):
@@ -246,13 +259,141 @@ class SearchObj(object):
                     value = float(value.replace('T', '').replace(',', '')) * 1e12
                 if isinstance(value, float):
                     if value.is_integer() is True: value = int(value)
-                info[title] = value if value != 'N/A' else None
+                self.information[title] = value if value != 'N/A' else None
                 continue
             except:
                 pass
 
-        self.info = info
-        return self.info
+        return self.information
+
+    def retrieve_technical_indicators(self, interval='daily'):
+        """Class method used to retrieve the technical indicators from the class instance of any financial product.
+        
+        This method retrieves the technical indicators from Investing.com for the financial product of the current
+        class instance, to later put in into the `SearchObj.technical_indicators` attribute. This method uses the
+        previously retrieved data from the `investpy.search_quotes(text, products, countries, n_results)` 
+        function search results to build the request that it is going to be sent to Investing.com so to retrieve and 
+        parse the technical indicators, since the product id is required.
+
+        Args:
+            interval (:obj:`str`, optional): 
+                time interval of the technical indicators' calculations, available values are: `5mins`, `15mins`, 
+                `30mins`, `1hour`, `5hours`, `daily`, `weekly` and `monthly`. Note that for funds just the intervals:
+                `daily`, `weekly` and `monthly` are available.
+
+        Returns:
+            :obj:`pd.DataFrame` - technical_indicators:
+                This method retrieves the technical indicators from the current class instance of a financial product
+                from Investing.com. This method not just stores retrieved technical indicators table into self.technical_indicators
+                but it also returns it as a normal function will do.
+        
+        Raises:
+            ValueError: raised if any of the input parameters is not valid.
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
+
+        """
+
+        if self.pair_type in []:
+            raise ValueError(f"Investing.com does not provide technical indicators for {self.pair_type}.")
+
+        if self.pair_type != 'funds' and interval not in INTERVAL_FILTERS:
+            raise ValueError(f"Investing.com just provides the following intervals for {self.pair_type}' technical " \
+                f"indicators: {', '.join(list(INTERVAL_FILTERS.keys()))}")
+
+        if self.pair_type == 'funds' and interval not in FUNDS_INTERVAL_FILTERS:
+            raise ValueError("Investing.com just provides the following intervals for funds' technical " \
+                f"indicators: {', '.join(list(FUNDS_INTERVAL_FILTERS.keys()))}")
+
+        params = {
+            'pairID': self.id_,
+            'period': INTERVAL_FILTERS[interval],
+            'viewType': 'normal'
+        }
+
+        headers = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://www.investing.com/instruments/Service/GetTechincalData"
+
+        req = requests.post(url, headers=headers, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
+
+        root_ = fromstring(req.text)
+        table_ = root_.xpath(".//table[contains(@class, 'technicalIndicatorsTbl')]/tbody/tr")
+
+        if not table_:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        self.technical_indicators = pd.DataFrame()
+
+        for row in table_:
+            for value in row.xpath("td"):
+                if value.get('class').__contains__('symbol'):
+                    self.technical_indicators = self.technical_indicators.append({
+                        'indicator': value.text_content().strip(),
+                        'value': float(value.getnext().text_content().strip()),
+                        'signal': (value.getnext().getnext().text_content().strip().lower()).replace(' ', '_')
+                    }, ignore_index=True)
+
+        return self.technical_indicators
+
+    def retrieve_currency(self):
+        """Class method used to retrieve the default currency from the class instance of any financial product.
+        
+        This method retrieves the default currency from Investing.com of the financial product of the current class
+        instance. This method uses the data previously retrieved from the `investpy.search_quotes(text, products, countries, n_results)` 
+        function search results to build the request that it is going to be sent to Investing.com so to retrieve and 
+        parse the information, since the product tag is required.
+
+        Returns:
+            :obj:`str` - default_currency:
+                This method retrieves the default currency from the current class instance of a financial product
+                from Investing.com.
+        
+        Raises:
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
+
+        """
+
+        url = f"https://www.investing.com{self.tag}"
+
+        headers = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        req = requests.get(url, headers=headers)
+
+        if req.status_code != 200:
+            raise ConnectionError(f"ERR#0015: error {req.status_code}, try again later.")
+
+        # Just change this list once the update is included for all the other products
+        updated_for = ['stocks']
+        outdated_for = ['etfs', 'commodities', 'currencies', 'funds', 'bonds', 'cryptos', 'certificates', 'indices', 'fxfutures']
+
+        root_ = fromstring(req.text)
+        updated_path = root_.xpath("//div[contains(@class, 'instrument-metadata_currency')]/span")
+        outdated_path = root_.xpath("//div[@id='quotes_summary_current_data']/div/div/div[contains(@class, 'bottom')]/span[@class='bold']")
+
+        if not updated_path and not outdated_path:
+            raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+
+        path_, investing_updated = (updated_path, True) if updated_path else (outdated_path, False)
+            
+        self.default_currency = path_[-1].text_content().strip()
+        return self.default_currency
 
     def _prepare_request(self, header):
         headers = {
@@ -322,10 +463,8 @@ class SearchObj(object):
         return intervals
     
     def _data_retrieval(self, product, headers, params):
-        if product in ['stocks', 'etfs', 'indices', 'fxfutures', 'cryptos']:
-            has_volume = True
-        else:
-            has_volume = False
+        has_volume = True if product in ['stocks', 'etfs', 'indices', 'cryptos', 'commodities', 'fxfutures'] else False
+        has_change_pct = True # Every financial product has it
 
         url = "https://www.investing.com/instruments/HistoricalDataAjax"
 
@@ -346,8 +485,8 @@ class SearchObj(object):
             info = []
 
             for nested_ in elements_.xpath(".//td"):
-                val = nested_.get('data-real-value')
-                if val is None and nested_.text_content() == 'No results found':
+                val = nested_.get('data-real-value') if nested_.get('data-real-value') is not None else nested_.text_content()
+                if val == 'No results found':
                     raise IndexError("ERR#0033: information unavailable or not found.")
                 info.append(val)
 
@@ -359,7 +498,12 @@ class SearchObj(object):
                 'Close': float(info[1].replace(',', ''))
             }
 
-            if has_volume is True: result['Volume'] = int(info[5])
+            if has_volume and has_change_pct:
+                result['Volume'] = int(info[5])
+                result['Change Pct'] = float(info[6].replace(',', '').replace('%', ''))
+            
+            if not has_volume and has_change_pct:
+                result['Change Pct'] = float(info[5].replace(',', '').replace('%', ''))
 
             results.append(result)
 

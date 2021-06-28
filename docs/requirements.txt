@@ -1,3 +1,4 @@
-sphinx==2.4.4
-sphinx_rtd_theme==0.4.3
-recommonmark==0.6.0
+sphinx==3.4.3
+recommonmark==0.7.1
+furo==2021.4.11b34
+investpy==1.0.7
