@@ -1642,7 +1642,7 @@ def get_stock_earnings(stock, country):
                 "User-Agent": random_user_agent(),
                 "X-Requested-With": "XMLHttpRequest",
                 "Accept": "text/html",
-                "Accept-Encoding": "gzip, deflate, br",
+                "Accept-Encoding": "gzip, deflate",
                 "Connection": "keep-alive",
             }
 
@@ -1695,4 +1695,4 @@ def get_stock_earnings(stock, country):
         df = pd.DataFrame(objs)
         return df
     else:
-        raise RuntimeError("ERR#0061: introduced stock has no dividend's data to display.")
+        raise RuntimeError("ERR#0061: introduced stock has no earnings history's data to display.")
