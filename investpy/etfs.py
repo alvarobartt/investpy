@@ -157,15 +157,17 @@ def get_etf_countries():
     return etf_countries_as_list()
 
 
-def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order='ascending', interval='Daily'):
+def get_etf_recent_data(etf, country, is_symbol=False, stock_exchange=None, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced `etf` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
     :obj:`json` file, with `ascending` or `descending` order.
 
     Args:
-        etf (:obj:`str`): name of the etf to retrieve recent historical data from.
+        etf (:obj:`str`): name or symbol of the etf to retrieve recent historical data from.
         country (:obj:`str`): name of the country from where the etf is.
+        is_symbol (:obj:`bool`, optional):
+            determine wether the etf is searched by its name or by its symbol.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -271,16 +273,18 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
     if country not in get_etf_countries():
         raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
 
+    etfs = etfs[etfs['country'].str.lower() == country]
+    
     etf = unidecode(etf.strip().lower())
 
-    def_exchange = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
-    
-    etfs = etfs[etfs['country'].str.lower() == country]
+    name_access = 'symbol' if is_symbol else 'name'
 
-    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
+    def_exchange = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+
+    if etf not in list(etfs[name_access].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
+    etfs = etfs[etfs[name_access].apply(unidecode).str.lower() == etf]
 
     if def_exchange['country'] != country:
         warnings.warn(
@@ -296,7 +300,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
             
             etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
         else:
-            found_etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
+            found_etfs = etfs[etfs[name_access].apply(unidecode).str.lower() == etf]
     
             if len(found_etfs) > 1:
                 warnings.warn(
@@ -307,7 +311,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
 
             del found_etfs
 
-            etf_exchange = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
+            etf_exchange = etfs.loc[(etfs[name_access].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
     else:
         if stock_exchange:
             if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
@@ -325,11 +329,11 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         else:
             etf_exchange = def_exchange['stock_exchange']
 
-    symbol = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
-    id_ = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
-    name = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
+    symbol = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
+    id_ = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
+    name = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), name_access]
 
-    etf_currency = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
+    etf_currency = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
 
     header = symbol + ' Historical Data'
 
@@ -407,17 +411,19 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=None, as_json=False, order='ascending', interval='Daily'):
+def get_etf_historical_data(etf, country, from_date, to_date, is_symbol=False, stock_exchange=None, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves historical data from the introduced `etf` from Investing.com via Web Scraping on the 
     introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
     :obj:`json` object with `ascending` or `descending` order.
 
     Args:
-        etf (:obj:`str`): name of the etf to retrieve recent historical data from.
+        etf (:obj:`str`): name or symbol of the etf to retrieve recent historical data from.
         country (:obj:`str`): name of the country from where the etf is.
         from_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, from where data is going to be retrieved.
         to_date (:obj:`str`): date as `str` formatted as `dd/mm/yyyy`, until where data is going to be retrieved.
+        is_symbol (:obj:`bool`, optional):
+            determine wether the etf is searched by its name or by its symbol.
         as_json (:obj:`bool`, optional):
             to determine the format of the output data (:obj:`pandas.DataFrame` or :obj:`json`).
         order (:obj:`str`, optional):
@@ -574,14 +580,16 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
     etf = unidecode(etf.strip().lower())
 
-    def_exchange = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+    name_access = 'symbol' if is_symbol else 'name'
+
+    def_exchange = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
     
     etfs = etfs[etfs['country'].str.lower() == country]
 
-    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
+    if etf not in list(etfs[name_access].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
+    etfs = etfs[etfs[name_access].apply(unidecode).str.lower() == etf]
 
     if def_exchange['country'] != country:
         warnings.warn(
@@ -597,7 +605,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
             
             etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
         else:
-            found_etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
+            found_etfs = etfs[etfs[name_access].apply(unidecode).str.lower() == etf]
     
             if len(found_etfs) > 1:
                 warnings.warn(
@@ -608,7 +616,7 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
 
             del found_etfs
 
-            etf_exchange = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
+            etf_exchange = etfs.loc[(etfs[name_access].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
     else:
         if stock_exchange:
             if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
@@ -626,11 +634,11 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         else:
             etf_exchange = def_exchange['stock_exchange']
 
-    symbol = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
-    id_ = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
-    name = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
+    symbol = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
+    id_ = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
+    name = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), name_access]
 
-    etf_currency = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
+    etf_currency = etfs.loc[((etfs[name_access].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
 
     final = list()
 
@@ -733,15 +741,17 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         return pd.concat(final)
 
 
-def get_etf_information(etf, country, as_json=False):
+def get_etf_information(etf, country, is_symbol=False, as_json=False):
     """
     This function retrieves fundamental financial information from the specified ETF. The retrieved 
     information from the ETF can be valuable as it is additional information that can be used combined 
     with OHLC values, so to determine financial insights from the company which holds the specified ETF.
 
     Args:
-        etf (:obj:`str`): name of the ETF to retrieve recent historical data from.
+        etf (:obj:`str`): name or symbol of the ETF to retrieve recent historical data from.
         country (:obj:`str`): name of the country from where the ETF is.
+        is_symbol (:obj:`bool`, optional):
+            determine wether the etf is searched by its name or by its symbol.
         as_json (:obj:`bool`, optional):
             optional argument to determine the format of the output data (:obj:`dict` or :obj:`json`).
 
@@ -818,8 +828,10 @@ def get_etf_information(etf, country, as_json=False):
     if etf not in list(etfs['name'].apply(unidecode).str.lower()):
         raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
-    name = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'name']
-    tag = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'tag']
+    name_access = 'symbol' if is_symbol else 'name'
+
+    name = etfs.loc[(etfs[name_access].apply(unidecode).str.lower() == etf).idxmax(), name_access]
+    tag = etfs.loc[(etfs[name_access].apply(unidecode).str.lower() == etf).idxmax(), 'tag']
 
     url = "https://www.investing.com/etfs/" + tag
 
