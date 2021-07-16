@@ -240,6 +240,9 @@ def get_etf_recent_data(etf, country, is_symbol=False, stock_exchange=None, as_j
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
+    if not isinstance(is_symbol, bool):
+        raise ValueError("ERR#0139: is_symbol argument can just be True or False (default), bool type.")
+
     if stock_exchange is not None and not isinstance(stock_exchange, str):
         raise ValueError("ERR#0125: specified stock_exchange value is not valid, it should be a str.")
 
@@ -497,6 +500,9 @@ def get_etf_historical_data(etf, country, from_date, to_date, is_symbol=False, s
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(is_symbol, bool):
+        raise ValueError("ERR#0139: is_symbol argument can just be True or False (default), bool type.")
 
     if stock_exchange is not None and not isinstance(stock_exchange, str):
         raise ValueError("ERR#0125: specified stock_exchange value is not valid, it should be a str.")
@@ -806,6 +812,9 @@ def get_etf_information(etf, country, is_symbol=False, as_json=False):
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
+
+    if not isinstance(is_symbol, bool):
+        raise ValueError("ERR#0139: is_symbol argument can just be True or False (default), bool type.")
 
     if not isinstance(as_json, bool):
         raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
