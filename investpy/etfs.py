@@ -838,10 +838,10 @@ def get_etf_information(etf, country, is_symbol=False, as_json=False):
 
     etf = unidecode(etf.strip().lower())
 
-    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
-        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
-
     search_field = 'symbol' if is_symbol else 'name'
+
+    if etf not in list(etfs[search_field].apply(unidecode).str.lower()):
+        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
 
     name = etfs.loc[(etfs[search_field].apply(unidecode).str.lower() == etf).idxmax(), search_field]
     tag = etfs.loc[(etfs[search_field].apply(unidecode).str.lower() == etf).idxmax(), 'tag']
