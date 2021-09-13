@@ -1427,6 +1427,9 @@ def get_stock_financial_summary(stock, country, summary_type='income_statement',
     if req.status_code != 200:
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
+    if not req.text:
+        raise RuntimeError('ERR#0139: no matching financial summary found.')
+
     root = fromstring(req.text)
     tables = root.xpath(".//div[@class='companySummaryIncomeStatement']\
         /table[contains(@class, 'companyFinancialSummaryTbl')]")
