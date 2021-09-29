@@ -6256,6 +6256,8 @@ united states,DJ Integrated Oil & Gas,Dow Jones Integrated Oil & Gas,dj-integrat
 united states,DJ Insurance Brokers,Dow Jones Insurance Brokers,dj-insurance-brokers,20059,DJUSIB,USD,other_indices,world_indices
 united states,NQ OMX Green Economy ex-US TR USD,NASDAQ OMX Green Economy ex-US TR USD,nasdaq-omx-green-economy-ex-us-tr,14906,GRNEXUSX,USD,other_indices,world_indices
 united states,DJ Global ex-U.S. Select REIT,Dow Jones Global ex-US Select REIT,dj-global-ex-u.s.-select-reit,954658,DWXRT,USD,primary_sectors,global_indices
+united states,Nations VolDex,Nations VolDex,nations-voldex-historical-data,1169683,VOLI,USD,other_indices,world_indices
+united states,Nations TailDex,Nations TailDex,nations-taildex,1169684,TDEX,USD,other_indices,world_indices
 venezuela,Bursatil,Bursatil,bursatil,49748,IBC,VES,major_indices,world_indices
 venezuela,Bursatil Industrial,Bursatil Industrial,bursatil-industrial,49750,IBCI,VES,primary_sectors,world_indices
 venezuela,Bursatil Finanacial,Bursatil Finanacial,bursatil-finanacial,49749,IBCF,VES,primary_sectors,world_indices
