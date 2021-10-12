@@ -407,7 +407,7 @@ def get_etf_recent_data(etf, country, stock_exchange=None, as_json=False, order=
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=None, as_json=False, order='ascending', interval='Daily'):
+def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=None, as_json=False, order='ascending', interval='Daily',id=None):
     """
     This function retrieves historical data from the introduced `etf` from Investing.com via Web Scraping on the 
     introduced date range. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a 
@@ -475,51 +475,17 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         2011-12-13  22.88  22.88  22.88  22.80      15      EUR   Madrid
 
     """
+    if not id:
+        interval = stupid_checks(as_json, country, etf, from_date, interval, order, stock_exchange, to_date)
 
-    if not etf:
-        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+    if type(to_date)==str:
+        end_date = datetime.strptime(to_date, '%d/%m/%Y')
+        start_date = datetime.strptime(from_date, '%d/%m/%Y')
+    else:
+        end_date= to_date
+        start_date = from_date
 
-    if not isinstance(etf, str):
-        raise ValueError("ERR#0030: etf argument needs to be a str.")
 
-    if country is None:
-        raise ValueError("ERR#0039: country can not be None, it should be a str.")
-
-    if country is not None and not isinstance(country, str):
-        raise ValueError("ERR#0025: specified country value not valid.")
-
-    if stock_exchange is not None and not isinstance(stock_exchange, str):
-        raise ValueError("ERR#0125: specified stock_exchange value is not valid, it should be a str.")
-
-    if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
-
-    if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
-
-    if not interval:
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
-
-    if not isinstance(interval, str):
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
-
-    interval = interval.lower()
-
-    if interval not in ['daily', 'weekly', 'monthly']:
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
-
-    try:
-        datetime.strptime(from_date, '%d/%m/%Y')
-    except ValueError:
-        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
-
-    try:
-        datetime.strptime(to_date, '%d/%m/%Y')
-    except ValueError:
-        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
-
-    start_date = datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
@@ -564,73 +530,12 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
-    if etfs is None:
-        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
-
-    country = unidecode(country.strip().lower())
-
-    if country not in get_etf_countries():
-        raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
-
-    etf = unidecode(etf.strip().lower())
-
-    def_exchange = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
-    
-    etfs = etfs[etfs['country'].str.lower() == country]
-
-    if etf not in list(etfs['name'].apply(unidecode).str.lower()):
-        raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
-
-    etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
-
-    if def_exchange['country'] != country:
-        warnings.warn(
-            'Selected country does not contain the default stock exchange of the introduced ETF. ' + \
-            'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
-            def_exchange['stock_exchange'] + '\".', 
-            Warning
-        )
-        
-        if stock_exchange:
-            if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
-                raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
-            
-            etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
-        else:
-            found_etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
-    
-            if len(found_etfs) > 1:
-                warnings.warn(
-                    'Note that the displayed information can differ depending on the stock exchange. Available stock_exchange' + \
-                    ' values for \"' + country + '\" are: \"' + '\", \"'.join(found_etfs['stock_exchange']) + '\".',
-                    Warning
-                )
-
-            del found_etfs
-
-            etf_exchange = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
+    if not id:
+        etf_currency, etf_exchange, id_, name, symbol = dostuff(etf, etfs)
     else:
-        if stock_exchange:
-            if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
-                raise ValueError("ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
-
-            if def_exchange['stock_exchange'].lower() != stock_exchange.lower():
-                warnings.warn(
-                    'Selected stock_exchange is not the default one of the introduced ETF. ' + \
-                    'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
-                    def_exchange['stock_exchange'].lower() + '\".', 
-                    Warning
-                )
-
-            etf_exchange = etfs.loc[(etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
-        else:
-            etf_exchange = def_exchange['stock_exchange']
-
-    symbol = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
-    id_ = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
-    name = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
-
-    etf_currency = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
+        id_=id
+        name=symbol=etf
+        etf_currency, etf_exchange = 'unk','unk'
 
     final = list()
 
@@ -731,6 +636,120 @@ def get_etf_historical_data(etf, country, from_date, to_date, stock_exchange=Non
         return json.dumps(json_, sort_keys=False)
     elif as_json is False:
         return pd.concat(final)
+
+
+def dostuff(etf, etfs):
+    if etfs is None:
+        raise IOError("ERR#0009: etfs object not found or unable to retrieve.")
+
+        country = unidecode(country.strip().lower())
+
+        if country not in get_etf_countries():
+            raise RuntimeError("ERR#0034: country " + country + " not found, check if it is correct.")
+
+        etf = unidecode(etf.strip().lower())
+
+        def_exchange = etfs.loc[
+            ((etfs['name'].apply(unidecode).str.lower() == etf) & (etfs['def_stock_exchange'] == True)).idxmax()]
+
+        etfs = etfs[etfs['country'].str.lower() == country]
+
+        if etf not in list(etfs['name'].apply(unidecode).str.lower()):
+            raise RuntimeError("ERR#0019: etf " + etf + " not found, check if it is correct.")
+
+        etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
+
+        if def_exchange['country'] != country:
+            warnings.warn(
+                'Selected country does not contain the default stock exchange of the introduced ETF. ' + \
+                'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
+                def_exchange['stock_exchange'] + '\".',
+                Warning
+            )
+
+            if stock_exchange:
+                if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
+                    raise ValueError(
+                        "ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+
+                etf_exchange = etfs.loc[
+                    (etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
+            else:
+                found_etfs = etfs[etfs['name'].apply(unidecode).str.lower() == etf]
+
+                if len(found_etfs) > 1:
+                    warnings.warn(
+                        'Note that the displayed information can differ depending on the stock exchange. Available stock_exchange' + \
+                        ' values for \"' + country + '\" are: \"' + '\", \"'.join(found_etfs['stock_exchange']) + '\".',
+                        Warning
+                    )
+
+                del found_etfs
+
+                etf_exchange = etfs.loc[(etfs['name'].apply(unidecode).str.lower() == etf).idxmax(), 'stock_exchange']
+        else:
+            if stock_exchange:
+                if stock_exchange.lower() not in etfs['stock_exchange'].str.lower():
+                    raise ValueError(
+                        "ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange.")
+
+                if def_exchange['stock_exchange'].lower() != stock_exchange.lower():
+                    warnings.warn(
+                        'Selected stock_exchange is not the default one of the introduced ETF. ' + \
+                        'Default country is: \"' + def_exchange['country'] + '\" and default stock_exchange: \"' + \
+                        def_exchange['stock_exchange'].lower() + '\".',
+                        Warning
+                    )
+
+                etf_exchange = etfs.loc[
+                    (etfs['stock_exchange'].str.lower() == stock_exchange.lower()).idxmax(), 'stock_exchange']
+            else:
+                etf_exchange = def_exchange['stock_exchange']
+    symbol = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (
+                etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'symbol']
+    id_ = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (
+                etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'id']
+    name = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (
+                etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'name']
+    etf_currency = etfs.loc[((etfs['name'].apply(unidecode).str.lower() == etf) & (
+                etfs['stock_exchange'].str.lower() == etf_exchange.lower())).idxmax(), 'currency']
+    return etf_currency, etf_exchange, id_, name, symbol
+
+
+def stupid_checks(as_json, country, etf, from_date, interval, order, stock_exchange, to_date):
+    if not etf:
+        raise ValueError("ERR#0031: etf parameter is mandatory and must be a valid etf name.")
+    if not isinstance(etf, str):
+        raise ValueError("ERR#0030: etf argument needs to be a str.")
+    if country is None:
+        raise ValueError("ERR#0039: country can not be None, it should be a str.")
+    if country is not None and not isinstance(country, str):
+        raise ValueError("ERR#0025: specified country value not valid.")
+    if stock_exchange is not None and not isinstance(stock_exchange, str):
+        raise ValueError("ERR#0125: specified stock_exchange value is not valid, it should be a str.")
+    if not isinstance(as_json, bool):
+        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+    if order not in ['ascending', 'asc', 'descending', 'desc']:
+        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+    if not interval:
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    if not isinstance(interval, str):
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    interval = interval.lower()
+    if interval not in ['daily', 'weekly', 'monthly']:
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    try:
+        datetime.strptime(from_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
+    try:
+        datetime.strptime(to_date, '%d/%m/%Y')
+    except ValueError:
+        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
+    return interval
 
 
 def get_etf_information(etf, country, as_json=False):
