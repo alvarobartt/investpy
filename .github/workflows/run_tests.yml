@@ -1,11 +1,15 @@
 name: run_tests
 
 on:
+  branches:
+    - master
   push:
     paths:
       - .github/workflows/run_tests.yml
       - investpy/**
       - tests/**
+      - requirements.txt
+      - setup.py
 
 jobs:
   run-investpy-tests:
