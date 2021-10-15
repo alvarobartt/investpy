@@ -1,9 +1,9 @@
 name: run_tests
 
 on:
-  branches:
-    - master
   push:
+    branches:
+      - master
     paths:
       - .github/workflows/run_tests.yml
       - investpy/**
