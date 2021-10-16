@@ -714,54 +714,52 @@ def get_index_information(index, country, as_json=False):
         raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
 
     root_ = fromstring(req.text)
-    path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
+    path_ = root_.xpath("//dl[@data-test='key-info']/div")
 
-    result = pd.DataFrame(columns=['Index Name', 'Prev. Close', 'Volume', 'Todays Range', 'Open',
-                                   'Average Vol. (3m)', '52 wk Range', '1-Year Change'])
+    result = pd.DataFrame(columns=["Index Name", "Prev. Close", "Volume", "Day's Range", "Open",
+                                   "Average Vol. (3m)", "52 wk Range", "1-Year Change"])
     result.at[0, 'Index Name'] = name
 
-    if path_:
-        for elements_ in path_:
-            element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
-            title_ = element.text_content()
-            if title_ == "Day's Range":
-                title_ = 'Todays Range'
-            if title_ in result.columns.tolist():
-                try:
-                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
-                    continue
-                except:
-                    pass
-                try:
-                    text = element.getnext().text_content().strip()
-                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
-                    continue
-                except:
-                    pass
-                try:
-                    value = element.getnext().text_content().strip()
-                    if value.__contains__('K'):
-                        value = float(value.replace('K', '').replace(',', '')) * 1e3
-                    elif value.__contains__('M'):
-                        value = float(value.replace('M', '').replace(',', '')) * 1e6
-                    elif value.__contains__('B'):
-                        value = float(value.replace('B', '').replace(',', '')) * 1e9
-                    elif value.__contains__('T'):
-                        value = float(value.replace('T', '').replace(',', '')) * 1e12
-                    result.at[0, title_] = value
-                    continue
-                except:
-                    pass
-
-        result.replace({'N/A': None}, inplace=True)
-
-        if as_json is True:
-            json_ = result.iloc[0].to_dict()
-            return json_
-        elif as_json is False:
-            return result
-    else:
+    if not path_:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
+    
+    for elements_ in path_:
+        title_ = elements_.xpath(".//dt")[0].text_content()
+        element = elements_.xpath(".//dd")[0]
+        if title_ in result.columns.tolist():
+            try:
+                result.at[0, title_] = float(element.text_content().replace(',', ''))
+                continue
+            except:
+                pass
+            try:
+                text = element.text_content().strip()
+                result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                continue
+            except:
+                pass
+            try:
+                value = element.text_content().strip()
+                if value.__contains__('K'):
+                    value = float(value.replace('K', '').replace(',', '')) * 1e3
+                elif value.__contains__('M'):
+                    value = float(value.replace('M', '').replace(',', '')) * 1e6
+                elif value.__contains__('B'):
+                    value = float(value.replace('B', '').replace(',', '')) * 1e9
+                elif value.__contains__('T'):
+                    value = float(value.replace('T', '').replace(',', '')) * 1e12
+                result.at[0, title_] = value
+                continue
+            except:
+                pass
+
+    result.replace({'N/A': None}, inplace=True)
+
+    if as_json is True:
+        json_ = result.iloc[0].to_dict()
+        return json_
+    elif as_json is False:
+        return result
 
 
 def get_indices_overview(country, as_json=False, n_results=100):
