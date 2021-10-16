@@ -749,46 +749,51 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
     flag = False
 
-    if len(table) > 0:
-        if n_results is not None and n_results <= 100:
-            table = table[:n_results]
-            flag = True
-        for row in table:
-            name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
-            symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
-
-            tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
-            
-            if len(tag) > 0:
-                status = 'available'
-            else:
-                status = 'unavailable'
-
-            price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
-
-            market_cap = row.xpath(".//td[@class='js-market-cap']")[0].get('data-value')
-            volume24h = row.xpath(".//td[@class='js-24h-volume']")[0].get('data-value')
-            total_volume = row.xpath(".//td[@class='js-total-vol']")[0].text_content()
-
-            change24h = row.xpath(".//td[contains(@class, 'js-currency-change-24h')]")[0].text_content()
-            change7d = row.xpath(".//td[contains(@class, 'js-currency-change-7d')]")[0].text_content()
-
-            data = {
-                "name": name,
-                "symbol": symbol,
-                "status": status,
-                "price": float(price.replace(',', '')),
-                "market_cap": float(market_cap.replace(',', '')),
-                "volume24h": volume24h,
-                "total_volume": total_volume,
-                "change24h": change24h,
-                "change7d": change7d,
-                "currency": "USD"
-            }
-
-            results.append(data)
-    else:
+    if len(table) < 1:
         raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+    
+    if n_results is not None and n_results <= 100:
+        table = table[:n_results]
+        flag = True
+    
+    for row in table:
+        name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
+        symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+        # Due to Investing.com parsing error
+        if symbol in ["GRV", "GLYPH"]:
+            continue
+
+        tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
+        
+        if len(tag) > 0:
+            status = 'available'
+        else:
+            status = 'unavailable'
+
+        price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
+
+        market_cap = row.xpath(".//td[@class='js-market-cap']")[0].get('data-value')
+        volume24h = row.xpath(".//td[@class='js-24h-volume']")[0].get('data-value')
+        total_volume = row.xpath(".//td[@class='js-total-vol']")[0].text_content()
+
+        change24h = row.xpath(".//td[contains(@class, 'js-currency-change-24h')]")[0].text_content()
+        change7d = row.xpath(".//td[contains(@class, 'js-currency-change-7d')]")[0].text_content()
+
+        data = {
+            "name": name,
+            "symbol": symbol,
+            "status": status,
+            "price": float(price.replace(',', '')),
+            "market_cap": float(market_cap.replace(',', '')),
+            "volume24h": volume24h,
+            "total_volume": total_volume,
+            "change24h": change24h,
+            "change7d": change7d,
+            "currency": "USD"
+        }
+
+        results.append(data)
 
     if flag is True:
         df = pd.DataFrame(results)
@@ -821,43 +826,47 @@ def get_cryptos_overview(as_json=False, n_results=100):
             remaining_cryptos = n_results - len(results)
             table = table[:remaining_cryptos]
 
-        if len(table) > 0:
-            for row in table:
-                name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
-                symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
-
-                tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
-            
-                if len(tag) > 0:
-                    status = 'available'
-                else:
-                    status = 'unavailable'
-
-                price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
-
-                market_cap = row.xpath(".//td[@class='js-market-cap']")[0].get('data-value')
-                volume24h = row.xpath(".//td[@class='js-24h-volume']")[0].get('data-value')
-                total_volume = row.xpath(".//td[@class='js-total-vol']")[0].text_content()
-
-                change24h = row.xpath(".//td[contains(@class, 'js-currency-change-24h')]")[0].text_content()
-                change7d = row.xpath(".//td[contains(@class, 'js-currency-change-7d')]")[0].text_content()
-
-                data = {
-                    "name": name,
-                    "symbol": symbol,
-                    "status": status,
-                    "price": float(price.replace(',', '')),
-                    "market_cap": float(market_cap.replace(',', '')),
-                    "volume24h": volume24h,
-                    "total_volume": total_volume,
-                    "change24h": change24h,
-                    "change7d": change7d,
-                    "currency": "USD"
-                }
-
-                results.append(data)
-        else:
+        if len(table) < 1:
             raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+        
+        for row in table:
+            name = row.xpath(".//td[contains(@class, 'cryptoName')]")[0].text_content().strip()
+            symbol = row.xpath(".//td[contains(@class, 'symb')]")[0].get('title').strip()
+
+            # Due to Investing.com parsing error
+            if symbol in ["GRV", "GLYPH"]:
+                continue
+
+            tag = row.xpath(".//td[contains(@class, 'cryptoName')]/a")
+        
+            if len(tag) > 0:
+                status = 'available'
+            else:
+                status = 'unavailable'
+
+            price = row.xpath(".//td[contains(@class, 'price')]")[0].text_content()
+
+            market_cap = row.xpath(".//td[@class='js-market-cap']")[0].get('data-value')
+            volume24h = row.xpath(".//td[@class='js-24h-volume']")[0].get('data-value')
+            total_volume = row.xpath(".//td[@class='js-total-vol']")[0].text_content()
+
+            change24h = row.xpath(".//td[contains(@class, 'js-currency-change-24h')]")[0].text_content()
+            change7d = row.xpath(".//td[contains(@class, 'js-currency-change-7d')]")[0].text_content()
+
+            data = {
+                "name": name,
+                "symbol": symbol,
+                "status": status,
+                "price": float(price.replace(',', '')),
+                "market_cap": float(market_cap.replace(',', '')),
+                "volume24h": volume24h,
+                "total_volume": total_volume,
+                "change24h": change24h,
+                "change7d": change7d,
+                "currency": "USD"
+            }
+
+            results.append(data)
 
     df = pd.DataFrame(results)
 
