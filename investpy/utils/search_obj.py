@@ -138,7 +138,8 @@ class SearchObj(object):
 
         if from_date >= to_date:
             raise ValueError(
-                "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+                "ERR#0032: to_date should be greater than from_date, both formatted as"
+                " 'dd/mm/yyyy'."
             )
 
         if self.pair_type in ["stocks", "funds", "etfs", "currencies", "certificates"]:
@@ -328,19 +329,22 @@ class SearchObj(object):
 
         if self.pair_type in []:
             raise ValueError(
-                f"Investing.com does not provide technical indicators for {self.pair_type}."
+                "Investing.com does not provide technical indicators for"
+                f" {self.pair_type}."
             )
 
         if self.pair_type != "funds" and interval not in INTERVAL_FILTERS:
             raise ValueError(
-                f"Investing.com just provides the following intervals for {self.pair_type}' technical "
-                f"indicators: {', '.join(list(INTERVAL_FILTERS.keys()))}"
+                "Investing.com just provides the following intervals for"
+                f" {self.pair_type}' technical indicators:"
+                f" {', '.join(list(INTERVAL_FILTERS.keys()))}"
             )
 
         if self.pair_type == "funds" and interval not in FUNDS_INTERVAL_FILTERS:
             raise ValueError(
-                "Investing.com just provides the following intervals for funds' technical "
-                f"indicators: {', '.join(list(FUNDS_INTERVAL_FILTERS.keys()))}"
+                "Investing.com just provides the following intervals for funds'"
+                " technical indicators:"
+                f" {', '.join(list(FUNDS_INTERVAL_FILTERS.keys()))}"
             )
 
         params = {
@@ -447,7 +451,8 @@ class SearchObj(object):
             "//div[contains(@class, 'instrument-metadata_currency')]/span"
         )
         outdated_path = root_.xpath(
-            "//div[@id='quotes_summary_current_data']/div/div/div[contains(@class, 'bottom')]/span[@class='bold']"
+            "//div[@id='quotes_summary_current_data']/div/div/div[contains(@class,"
+            " 'bottom')]/span[@class='bold']"
         )
 
         if not updated_path and not outdated_path:

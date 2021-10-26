@@ -203,7 +203,8 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
     else:
         if not isinstance(columns, list):
             raise ValueError(
-                "ERR#0020: specified columns argument is not a list, it can just be list type."
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
             )
 
     if not all(column in certificates.columns.tolist() for column in columns):

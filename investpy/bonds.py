@@ -225,24 +225,28 @@ def get_bond_recent_data(bond, as_json=False, order="ascending", interval="Daily
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     resource_package = "investpy"
@@ -445,24 +449,28 @@ def get_bond_historical_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     try:
@@ -484,7 +492,8 @@ def get_bond_historical_data(
 
     if start_date >= end_date:
         raise ValueError(
-            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+            "ERR#0032: to_date should be greater than from_date, both formatted as"
+            " 'dd/mm/yyyy'."
         )
 
     date_interval = {

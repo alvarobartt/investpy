@@ -236,24 +236,28 @@ def get_stock_recent_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     resource_package = "investpy"
@@ -496,24 +500,28 @@ def get_stock_historical_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     try:
@@ -535,7 +543,8 @@ def get_stock_historical_data(
 
     if start_date >= end_date:
         raise ValueError(
-            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+            "ERR#0032: to_date should be greater than from_date, both formatted as"
+            " 'dd/mm/yyyy'."
         )
 
     date_interval = {
@@ -822,7 +831,8 @@ def get_stock_company_profile(stock, country="spain", language="english"):
 
     if language not in available_sources.keys():
         raise ValueError(
-            "ERR#0014: the specified language is not valid, it can just be either spanish (es) or english (en)."
+            "ERR#0014: the specified language is not valid, it can just be either"
+            " spanish (es) or english (en)."
         )
 
     country = unidecode(country.strip().lower())
@@ -834,7 +844,8 @@ def get_stock_company_profile(stock, country="spain", language="english"):
 
     if country != "spain" and language == "spanish":
         raise ValueError(
-            "ERR#0127: currently spanish company description is just available for spanish stocks."
+            "ERR#0127: currently spanish company description is just available for"
+            " spanish stocks."
         )
 
     selected_source = available_sources[language]
@@ -1633,8 +1644,8 @@ def get_stock_financial_summary(
 
     if summary_type not in cst.FINANCIAL_SUMMARY_TYPES.keys():
         raise ValueError(
-            "ERR#0134: introduced summary_type is not valid, since available values are: "
-            + ", ".join(cst.FINANCIAL_SUMMARY_TYPES.keys())
+            "ERR#0134: introduced summary_type is not valid, since available values"
+            " are: " + ", ".join(cst.FINANCIAL_SUMMARY_TYPES.keys())
         )
 
     if period is None:
@@ -1713,8 +1724,8 @@ def get_stock_financial_summary(
 
     root = fromstring(req.text)
     tables = root.xpath(
-        ".//div[@class='companySummaryIncomeStatement']\
-        /table[contains(@class, 'companyFinancialSummaryTbl')]"
+        ".//div[@class='companySummaryIncomeStatement']        /table[contains(@class,"
+        " 'companyFinancialSummaryTbl')]"
     )
 
     data = {"Date": list()}

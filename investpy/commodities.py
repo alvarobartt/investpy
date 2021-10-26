@@ -223,12 +223,14 @@ def get_commodity_recent_data(
 
     if not commodity:
         raise ValueError(
-            "ERR#0078: commodity parameter is mandatory and must be a valid commodity name."
+            "ERR#0078: commodity parameter is mandatory and must be a valid commodity"
+            " name."
         )
 
     if not isinstance(commodity, str):
         raise ValueError(
-            "ERR#0078: commodity parameter is mandatory and must be a valid commodity name."
+            "ERR#0078: commodity parameter is mandatory and must be a valid commodity"
+            " name."
         )
 
     if country is not None and not isinstance(country, str):
@@ -241,24 +243,28 @@ def get_commodity_recent_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     resource_package = "investpy"
@@ -288,8 +294,8 @@ def get_commodity_recent_data(
 
         if len(found_commodities) > 1:
             msg = (
-                "Note that the displayed commodity data can differ depending on the country. "
-                "If you want to retrieve "
+                "Note that the displayed commodity data can differ depending on the"
+                " country. If you want to retrieve "
                 + commodity
                 + " data from either "
                 + " or ".join(found_commodities["country"].tolist())
@@ -501,12 +507,14 @@ def get_commodity_historical_data(
 
     if not commodity:
         raise ValueError(
-            "ERR#0078: commodity parameter is mandatory and must be a valid commodity name."
+            "ERR#0078: commodity parameter is mandatory and must be a valid commodity"
+            " name."
         )
 
     if not isinstance(commodity, str):
         raise ValueError(
-            "ERR#0078: commodity parameter is mandatory and must be a valid commodity name."
+            "ERR#0078: commodity parameter is mandatory and must be a valid commodity"
+            " name."
         )
 
     if country is not None and not isinstance(country, str):
@@ -519,24 +527,28 @@ def get_commodity_historical_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     try:
@@ -558,7 +570,8 @@ def get_commodity_historical_data(
 
     if start_date >= end_date:
         raise ValueError(
-            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+            "ERR#0032: to_date should be greater than from_date, both formatted as"
+            " 'dd/mm/yyyy'."
         )
 
     date_interval = {
@@ -625,8 +638,8 @@ def get_commodity_historical_data(
 
         if len(found_commodities) > 1:
             msg = (
-                "Note that the displayed commodity data can differ depending on the country. "
-                "If you want to retrieve "
+                "Note that the displayed commodity data can differ depending on the"
+                " country. If you want to retrieve "
                 + commodity
                 + " data from either "
                 + " or ".join(found_commodities["country"].tolist())
@@ -839,12 +852,14 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
     if not commodity:
         raise ValueError(
-            "ERR#0078: commodity parameter is mandatory and must be a valid commodity name."
+            "ERR#0078: commodity parameter is mandatory and must be a valid commodity"
+            " name."
         )
 
     if not isinstance(commodity, str):
         raise ValueError(
-            "ERR#0078: commodity parameter is mandatory and must be a valid commodity name."
+            "ERR#0078: commodity parameter is mandatory and must be a valid commodity"
+            " name."
         )
 
     if country is not None and not isinstance(country, str):
@@ -882,8 +897,8 @@ def get_commodity_information(commodity, country=None, as_json=False):
 
         if len(found_commodities) > 1:
             msg = (
-                "Note that the displayed commodity information can differ depending on the country. "
-                "If you want to retrieve "
+                "Note that the displayed commodity information can differ depending on"
+                " the country. If you want to retrieve "
                 + commodity
                 + " data from either "
                 + " or ".join(found_commodities["country"].tolist())

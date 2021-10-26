@@ -258,24 +258,28 @@ def get_etf_recent_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     resource_package = "investpy"
@@ -318,7 +322,8 @@ def get_etf_recent_data(
 
     if def_exchange["country"] != country:
         warnings.warn(
-            "Selected country does not contain the default stock exchange of the introduced ETF. "
+            "Selected country does not contain the default stock exchange of the"
+            " introduced ETF. "
             + 'Default country is: "'
             + def_exchange["country"]
             + '" and default stock_exchange: "'
@@ -330,7 +335,8 @@ def get_etf_recent_data(
         if stock_exchange:
             if stock_exchange.lower() not in etfs["stock_exchange"].str.lower():
                 raise ValueError(
-                    "ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange."
+                    "ERR#0126: introduced stock_exchange value does not exists, leave"
+                    " this parameter to None to use default stock_exchange."
                 )
 
             etf_exchange = etfs.loc[
@@ -342,7 +348,8 @@ def get_etf_recent_data(
 
             if len(found_etfs) > 1:
                 warnings.warn(
-                    "Note that the displayed information can differ depending on the stock exchange. Available stock_exchange"
+                    "Note that the displayed information can differ depending on the"
+                    " stock exchange. Available stock_exchange"
                     + ' values for "'
                     + country
                     + '" are: "'
@@ -361,12 +368,14 @@ def get_etf_recent_data(
         if stock_exchange:
             if stock_exchange.lower() not in etfs["stock_exchange"].str.lower():
                 raise ValueError(
-                    "ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange."
+                    "ERR#0126: introduced stock_exchange value does not exists, leave"
+                    " this parameter to None to use default stock_exchange."
                 )
 
             if def_exchange["stock_exchange"].lower() != stock_exchange.lower():
                 warnings.warn(
-                    "Selected stock_exchange is not the default one of the introduced ETF. "
+                    "Selected stock_exchange is not the default one of the introduced"
+                    " ETF. "
                     + 'Default country is: "'
                     + def_exchange["country"]
                     + '" and default stock_exchange: "'
@@ -606,24 +615,28 @@ def get_etf_historical_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     try:
@@ -641,7 +654,8 @@ def get_etf_historical_data(
 
     if start_date >= end_date:
         raise ValueError(
-            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+            "ERR#0032: to_date should be greater than from_date, both formatted as"
+            " 'dd/mm/yyyy'."
         )
 
     date_interval = {
@@ -721,7 +735,8 @@ def get_etf_historical_data(
 
     if def_exchange["country"] != country:
         warnings.warn(
-            "Selected country does not contain the default stock exchange of the introduced ETF. "
+            "Selected country does not contain the default stock exchange of the"
+            " introduced ETF. "
             + 'Default country is: "'
             + def_exchange["country"]
             + '" and default stock_exchange: "'
@@ -733,7 +748,8 @@ def get_etf_historical_data(
         if stock_exchange:
             if stock_exchange.lower() not in etfs["stock_exchange"].str.lower():
                 raise ValueError(
-                    "ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange."
+                    "ERR#0126: introduced stock_exchange value does not exists, leave"
+                    " this parameter to None to use default stock_exchange."
                 )
 
             etf_exchange = etfs.loc[
@@ -745,7 +761,8 @@ def get_etf_historical_data(
 
             if len(found_etfs) > 1:
                 warnings.warn(
-                    "Note that the displayed information can differ depending on the stock exchange. Available stock_exchange"
+                    "Note that the displayed information can differ depending on the"
+                    " stock exchange. Available stock_exchange"
                     + ' values for "'
                     + country
                     + '" are: "'
@@ -764,12 +781,14 @@ def get_etf_historical_data(
         if stock_exchange:
             if stock_exchange.lower() not in etfs["stock_exchange"].str.lower():
                 raise ValueError(
-                    "ERR#0126: introduced stock_exchange value does not exists, leave this parameter to None to use default stock_exchange."
+                    "ERR#0126: introduced stock_exchange value does not exists, leave"
+                    " this parameter to None to use default stock_exchange."
                 )
 
             if def_exchange["stock_exchange"].lower() != stock_exchange.lower():
                 warnings.warn(
-                    "Selected stock_exchange is not the default one of the introduced ETF. "
+                    "Selected stock_exchange is not the default one of the introduced"
+                    " ETF. "
                     + 'Default country is: "'
                     + def_exchange["country"]
                     + '" and default stock_exchange: "'

@@ -95,32 +95,38 @@ def economic_calendar(
     else:
         if time_zone not in cst.TIMEZONES.keys():
             raise ValueError(
-                "ERR#0108: the introduced time_zone does not exist, please consider passing time_zone as None."
+                "ERR#0108: the introduced time_zone does not exist, please consider"
+                " passing time_zone as None."
             )
 
     if not isinstance(time_filter, str):
         raise ValueError(
-            "ERR#0109: the introduced time_filter is not valid since it must be a string."
+            "ERR#0109: the introduced time_filter is not valid since it must be a"
+            " string."
         )
 
     if time_filter not in cst.TIME_FILTERS.keys():
         raise ValueError(
-            "ERR#0110: the introduced time_filter does not exist, available ones are: time_remaining and time_only."
+            "ERR#0110: the introduced time_filter does not exist, available ones are:"
+            " time_remaining and time_only."
         )
 
     if countries is not None and not isinstance(countries, list):
         raise ValueError(
-            "ERR#0111: the introduced countries value is not valid since it must be a list of strings unless it is None."
+            "ERR#0111: the introduced countries value is not valid since it must be a"
+            " list of strings unless it is None."
         )
 
     if importances is not None and not isinstance(importances, list):
         raise ValueError(
-            "ERR#0112: the introduced importances value is not valid since it must be a list of strings unless it is None."
+            "ERR#0112: the introduced importances value is not valid since it must be a"
+            " list of strings unless it is None."
         )
 
     if categories is not None and not isinstance(categories, list):
         raise ValueError(
-            "ERR#0113: the introduced categories value is not valid since it must be a list of strings unless it is None."
+            "ERR#0113: the introduced categories value is not valid since it must be a"
+            " list of strings unless it is None."
         )
 
     if from_date is not None and not isinstance(from_date, str):
@@ -174,7 +180,8 @@ def economic_calendar(
 
         if start_date >= end_date:
             raise ValueError(
-                "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+                "ERR#0032: to_date should be greater than from_date, both formatted as"
+                " 'dd/mm/yyyy'."
             )
 
         data = {

@@ -102,15 +102,15 @@ def technical_indicators(name, country, product_type, interval="daily"):
 
     if product_type not in cst.PRODUCT_TYPE_FILES.keys():
         raise ValueError(
-            "ERR#0119: introduced product_type value does not exist. Available values are: "
-            + ", ".join(cst.PRODUCT_TYPE_FILES.keys())
+            "ERR#0119: introduced product_type value does not exist. Available values"
+            " are: " + ", ".join(cst.PRODUCT_TYPE_FILES.keys())
         )
 
     if interval:
         if interval not in cst.INTERVAL_FILTERS.keys():
             raise ValueError(
-                "ERR#0120: introduced interval value does not exist. Available values are: "
-                + ", ".join(cst.INTERVAL_FILTERS.keys())
+                "ERR#0120: introduced interval value does not exist. Available values"
+                " are: " + ", ".join(cst.INTERVAL_FILTERS.keys())
             )
 
     data = resource_to_data(path_to_data=cst.PRODUCT_TYPE_FILES[product_type])
@@ -128,7 +128,8 @@ def technical_indicators(name, country, product_type, interval="daily"):
         else:
             if product_type != "commodity":
                 raise ValueError(
-                    "ERR#0123: country parameter is required with the introduced product_type."
+                    "ERR#0123: country parameter is required with the introduced"
+                    " product_type."
                 )
 
     if product_type == "stock":
@@ -140,7 +141,8 @@ def technical_indicators(name, country, product_type, interval="daily"):
 
     if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError(
-            "ERR#0122: introduced name does not exist in the introduced country (if required)."
+            "ERR#0122: introduced name does not exist in the introduced country (if"
+            " required)."
         )
 
     product_id = data.loc[
@@ -280,15 +282,15 @@ def moving_averages(name, country, product_type, interval="daily"):
 
     if product_type not in cst.PRODUCT_TYPE_FILES.keys():
         raise ValueError(
-            "ERR#0119: introduced product_type value does not exist. Available values are: "
-            + ", ".join(cst.PRODUCT_TYPE_FILES.keys())
+            "ERR#0119: introduced product_type value does not exist. Available values"
+            " are: " + ", ".join(cst.PRODUCT_TYPE_FILES.keys())
         )
 
     if interval:
         if interval not in cst.INTERVAL_FILTERS.keys():
             raise ValueError(
-                "ERR#0120: introduced interval value does not exist. Available values are: "
-                + ", ".join(cst.INTERVAL_FILTERS.keys())
+                "ERR#0120: introduced interval value does not exist. Available values"
+                " are: " + ", ".join(cst.INTERVAL_FILTERS.keys())
             )
 
     data = resource_to_data(path_to_data=cst.PRODUCT_TYPE_FILES[product_type])
@@ -306,7 +308,8 @@ def moving_averages(name, country, product_type, interval="daily"):
         else:
             if product_type != "commodity":
                 raise ValueError(
-                    "ERR#0123: country parameter is required with the introduced product_type."
+                    "ERR#0123: country parameter is required with the introduced"
+                    " product_type."
                 )
 
     if product_type == "stock":
@@ -318,7 +321,8 @@ def moving_averages(name, country, product_type, interval="daily"):
 
     if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError(
-            "ERR#0122: introduced name does not exist in the introduced country (if required)."
+            "ERR#0122: introduced name does not exist in the introduced country (if"
+            " required)."
         )
 
     product_id = data.loc[
@@ -482,15 +486,15 @@ def pivot_points(name, country, product_type, interval="daily"):
 
     if product_type not in cst.PRODUCT_TYPE_FILES.keys():
         raise ValueError(
-            "ERR#0119: introduced product_type value does not exist. Available values are: "
-            + ", ".join(cst.PRODUCT_TYPE_FILES.keys())
+            "ERR#0119: introduced product_type value does not exist. Available values"
+            " are: " + ", ".join(cst.PRODUCT_TYPE_FILES.keys())
         )
 
     if interval:
         if interval not in cst.INTERVAL_FILTERS.keys():
             raise ValueError(
-                "ERR#0120: introduced interval value does not exist. Available values are: "
-                + ", ".join(cst.INTERVAL_FILTERS.keys())
+                "ERR#0120: introduced interval value does not exist. Available values"
+                " are: " + ", ".join(cst.INTERVAL_FILTERS.keys())
             )
 
     data = resource_to_data(path_to_data=cst.PRODUCT_TYPE_FILES[product_type])
@@ -508,7 +512,8 @@ def pivot_points(name, country, product_type, interval="daily"):
         else:
             if product_type != "commodity":
                 raise ValueError(
-                    "ERR#0123: country parameter is required with the introduced product_type."
+                    "ERR#0123: country parameter is required with the introduced"
+                    " product_type."
                 )
 
     if product_type == "stock":
@@ -520,7 +525,8 @@ def pivot_points(name, country, product_type, interval="daily"):
 
     if name not in list(data[check].apply(unidecode).str.lower()):
         raise ValueError(
-            "ERR#0122: introduced name does not exist in the introduced country (if required)."
+            "ERR#0122: introduced name does not exist in the introduced country (if"
+            " required)."
         )
 
     product_id = data.loc[

@@ -194,24 +194,28 @@ def get_crypto_recent_data(crypto, as_json=False, order="ascending", interval="D
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     resource_package = "investpy"
@@ -241,7 +245,8 @@ def get_crypto_recent_data(crypto, as_json=False, order="ascending", interval="D
     ]
     if status == "unavailable":
         raise ValueError(
-            "ERR#0086: the selected crypto currency is not available for retrieval in Investing.com."
+            "ERR#0086: the selected crypto currency is not available for retrieval in"
+            " Investing.com."
         )
 
     crypto_name = cryptos.loc[
@@ -433,24 +438,28 @@ def get_crypto_historical_data(
 
     if order not in ["ascending", "asc", "descending", "desc"]:
         raise ValueError(
-            "ERR#0003: order argument can just be ascending (asc) or descending (desc), str type."
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
         )
 
     if not interval:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     if not isinstance(interval, str):
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     interval = interval.lower()
 
     if interval not in ["daily", "weekly", "monthly"]:
         raise ValueError(
-            "ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'."
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
         )
 
     try:
@@ -472,7 +481,8 @@ def get_crypto_historical_data(
 
     if start_date >= end_date:
         raise ValueError(
-            "ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'."
+            "ERR#0032: to_date should be greater than from_date, both formatted as"
+            " 'dd/mm/yyyy'."
         )
 
     date_interval = {
@@ -539,7 +549,8 @@ def get_crypto_historical_data(
     ]
     if status == "unavailable":
         raise ValueError(
-            "ERR#0086: the selected crypto currency is not available for retrieval in Investing.com."
+            "ERR#0086: the selected crypto currency is not available for retrieval in"
+            " Investing.com."
         )
 
     crypto_name = cryptos.loc[
@@ -756,7 +767,8 @@ def get_crypto_information(crypto, as_json=False):
     ]
     if status == "unavailable":
         raise ValueError(
-            "ERR#0086: the selected crypto currency is not available for retrieval in Investing.com."
+            "ERR#0086: the selected crypto currency is not available for retrieval in"
+            " Investing.com."
         )
 
     name = cryptos.loc[
@@ -982,7 +994,8 @@ def get_cryptos_overview(as_json=False, n_results=100):
 
         if len(table) < 1:
             raise RuntimeError(
-                "ERR#0092: no data found while retrieving the overview from Investing.com"
+                "ERR#0092: no data found while retrieving the overview from"
+                " Investing.com"
             )
 
         for row in table:
