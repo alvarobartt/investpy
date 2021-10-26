@@ -1,0 +1,3 @@
+include README.md
+include investpy/resources/*
+include requirements/*.txt
