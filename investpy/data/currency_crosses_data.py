@@ -1,12 +1,11 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
@@ -45,7 +44,7 @@ def currency_crosses_as_df(base=None, second=None):
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
     if base is not None and not isinstance(base, str):
@@ -54,10 +53,13 @@ def currency_crosses_as_df(base=None, second=None):
     if second is not None and not isinstance(second, str):
         raise ValueError("ERR#0051: specified second currency value is not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -66,7 +68,7 @@ def currency_crosses_as_df(base=None, second=None):
 
     available_currencies = available_currencies_as_list()
 
-    currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses.drop(columns=["tag", "id"], inplace=True)
     currency_crosses = currency_crosses.where(pd.notnull(currency_crosses), None)
 
     if base is None and second is None:
@@ -76,17 +78,21 @@ def currency_crosses_as_df(base=None, second=None):
         base = unidecode(base.strip().upper())
 
         if base not in available_currencies:
-            raise ValueError("ERR#0053: the introduced currency " + base + " does not exists.")
-        
+            raise ValueError(
+                "ERR#0053: the introduced currency " + base + " does not exists."
+            )
+
         if second is not None:
             second = unidecode(second.strip().upper())
 
             if second not in available_currencies:
-                raise ValueError("ERR#0053: the introduced currency " + second + " does not exists.")
-            
+                raise ValueError(
+                    "ERR#0053: the introduced currency " + second + " does not exists."
+                )
+
             currency_crosses = currency_crosses[
-                (currency_crosses['base'] == base) &
-                (currency_crosses['second'] == second)
+                (currency_crosses["base"] == base)
+                & (currency_crosses["second"] == second)
             ]
 
             currency_crosses.reset_index(drop=True, inplace=True)
@@ -94,10 +100,15 @@ def currency_crosses_as_df(base=None, second=None):
             if len(currency_crosses) > 0:
                 return currency_crosses
             else:
-                raise ValueError("ERR#0054: the introduced currency cross " + base + "/" +
-                                    second + " does not exists.")
+                raise ValueError(
+                    "ERR#0054: the introduced currency cross "
+                    + base
+                    + "/"
+                    + second
+                    + " does not exists."
+                )
         else:
-            currency_crosses = currency_crosses[currency_crosses['base'] == base]
+            currency_crosses = currency_crosses[currency_crosses["base"] == base]
             currency_crosses.reset_index(drop=True, inplace=True)
 
             return currency_crosses
@@ -105,9 +116,11 @@ def currency_crosses_as_df(base=None, second=None):
         second = unidecode(second.strip().upper())
 
         if second not in available_currencies:
-            raise ValueError("ERR#0053: the introduced currency " + second + " does not exists.")
-        
-        currency_crosses = currency_crosses[currency_crosses['second'] == second]
+            raise ValueError(
+                "ERR#0053: the introduced currency " + second + " does not exists."
+            )
+
+        currency_crosses = currency_crosses[currency_crosses["second"] == second]
         currency_crosses.reset_index(drop=True, inplace=True)
 
         return currency_crosses
@@ -148,7 +161,7 @@ def currency_crosses_as_list(base=None, second=None):
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
     if base is not None and not isinstance(base, str):
@@ -157,10 +170,13 @@ def currency_crosses_as_list(base=None, second=None):
     if second is not None and not isinstance(second, str):
         raise ValueError("ERR#0051: specified second currency value is not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -169,51 +185,62 @@ def currency_crosses_as_list(base=None, second=None):
 
     available_currencies = available_currencies_as_list()
 
-    currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses.drop(columns=["tag", "id"], inplace=True)
     currency_crosses = currency_crosses.where(pd.notnull(currency_crosses), None)
 
     if base is None and second is None:
         currency_crosses.reset_index(drop=True, inplace=True)
-        return currency_crosses['name'].tolist()
+        return currency_crosses["name"].tolist()
     elif base is not None:
         base = unidecode(base.strip().upper())
 
         if base not in available_currencies:
-            raise ValueError("ERR#0053: the introduced currency " + base + " does not exists.")
-            
+            raise ValueError(
+                "ERR#0053: the introduced currency " + base + " does not exists."
+            )
+
         if second is not None:
             second = unidecode(second.strip().upper())
 
             if second not in available_currencies:
-                raise ValueError("ERR#0053: the introduced currency " + second + " does not exists.")
-                
+                raise ValueError(
+                    "ERR#0053: the introduced currency " + second + " does not exists."
+                )
+
             currency_crosses = currency_crosses[
-                (currency_crosses['base'] == base) &
-                (currency_crosses['second'] == second)
+                (currency_crosses["base"] == base)
+                & (currency_crosses["second"] == second)
             ]
-            
+
             currency_crosses.reset_index(drop=True, inplace=True)
 
             if len(currency_crosses) > 0:
-                return currency_crosses['name'].tolist()
+                return currency_crosses["name"].tolist()
             else:
-                raise ValueError("ERR#0054: the introduced currency cross " + base + "/" +
-                                    second + " does not exists.")
+                raise ValueError(
+                    "ERR#0054: the introduced currency cross "
+                    + base
+                    + "/"
+                    + second
+                    + " does not exists."
+                )
         else:
-            currency_crosses = currency_crosses[currency_crosses['base'] == base]
+            currency_crosses = currency_crosses[currency_crosses["base"] == base]
             currency_crosses.reset_index(drop=True, inplace=True)
 
-            return currency_crosses['name'].tolist()
+            return currency_crosses["name"].tolist()
     elif second is not None:
         second = unidecode(second.strip().upper())
 
         if second not in available_currencies:
-            raise ValueError("ERR#0053: the introduced currency " + second + " does not exists.")
-        
-        currency_crosses = currency_crosses[currency_crosses['second'] == second]
+            raise ValueError(
+                "ERR#0053: the introduced currency " + second + " does not exists."
+            )
+
+        currency_crosses = currency_crosses[currency_crosses["second"] == second]
         currency_crosses.reset_index(drop=True, inplace=True)
 
-        return currency_crosses['name'].tolist()            
+        return currency_crosses["name"].tolist()
 
 
 def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False):
@@ -255,12 +282,12 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
                     'second': second,
                     'second_name': second_name
                 }
-    
+
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
     if base is not None and not isinstance(base, str):
@@ -270,12 +297,17 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
         raise ValueError("ERR#0051: specified second currency value is not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -284,74 +316,94 @@ def currency_crosses_as_dict(base=None, second=None, columns=None, as_json=False
 
     available_currencies = available_currencies_as_list()
 
-    currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses.drop(columns=["tag", "id"], inplace=True)
     currency_crosses = currency_crosses.where(pd.notnull(currency_crosses), None)
 
     if columns is None:
         columns = currency_crosses.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in currency_crosses.columns.tolist() for column in columns):
-        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<name, full_name, base, base_name, second, second_name>")
+        raise ValueError(
+            "ERR#0021: specified columns does not exist, available columns are "
+            "<name, full_name, base, base_name, second, second_name>"
+        )
 
     if base is None and second is None:
         currency_crosses.reset_index(drop=True, inplace=True)
 
         if as_json:
-            return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+            return json.dumps(currency_crosses[columns].to_dict(orient="records"))
         else:
-            return currency_crosses[columns].to_dict(orient='records')
+            return currency_crosses[columns].to_dict(orient="records")
     elif base is not None:
         base = unidecode(base.strip().upper())
 
         if base not in available_currencies:
-            raise ValueError("ERR#0053: the introduced currency " + base + " does not exists.")
-        
+            raise ValueError(
+                "ERR#0053: the introduced currency " + base + " does not exists."
+            )
+
         if second is not None:
             second = unidecode(second.strip().upper())
 
             if second not in available_currencies:
-                raise ValueError("ERR#0053: the introduced currency " + second + " does not exists.")
+                raise ValueError(
+                    "ERR#0053: the introduced currency " + second + " does not exists."
+                )
 
             currency_crosses = currency_crosses[
-                (currency_crosses['base'] == base) &
-                (currency_crosses['second'] == second)
+                (currency_crosses["base"] == base)
+                & (currency_crosses["second"] == second)
             ]
 
             currency_crosses.reset_index(drop=True, inplace=True)
 
             if len(currency_crosses) > 0:
                 if as_json:
-                    return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+                    return json.dumps(
+                        currency_crosses[columns].to_dict(orient="records")
+                    )
                 else:
-                    return currency_crosses[columns].to_dict(orient='records')
+                    return currency_crosses[columns].to_dict(orient="records")
             else:
-                raise ValueError("ERR#0054: the introduced currency cross " + base + "/" +
-                                    second + " does not exists.")
+                raise ValueError(
+                    "ERR#0054: the introduced currency cross "
+                    + base
+                    + "/"
+                    + second
+                    + " does not exists."
+                )
         else:
-            currency_crosses = currency_crosses[currency_crosses['base'] == base]
+            currency_crosses = currency_crosses[currency_crosses["base"] == base]
             currency_crosses.reset_index(drop=True, inplace=True)
 
             if as_json:
-                return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+                return json.dumps(currency_crosses[columns].to_dict(orient="records"))
             else:
-                return currency_crosses[columns].to_dict(orient='records')
+                return currency_crosses[columns].to_dict(orient="records")
     elif second is not None:
         second = unidecode(second.strip().upper())
 
         if second not in available_currencies:
-            raise ValueError("ERR#0053: the introduced currency " + second + " does not exists.")
+            raise ValueError(
+                "ERR#0053: the introduced currency " + second + " does not exists."
+            )
 
-        currency_crosses = currency_crosses[currency_crosses['second'] == unidecode(second.upper())]
+        currency_crosses = currency_crosses[
+            currency_crosses["second"] == unidecode(second.upper())
+        ]
         currency_crosses.reset_index(drop=True, inplace=True)
 
         if as_json:
-            return json.dumps(currency_crosses[columns].to_dict(orient='records'))
+            return json.dumps(currency_crosses[columns].to_dict(orient="records"))
         else:
-            return currency_crosses[columns].to_dict(orient='records')
+            return currency_crosses[columns].to_dict(orient="records")
 
 
 def available_currencies_as_list():

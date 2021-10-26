@@ -1,25 +1,27 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-from datetime import datetime, date, timedelta
-import pytz
-
 import json
-from random import randint, sample
 import string
+from datetime import date, datetime, timedelta
+from random import randint, sample
 
 import pandas as pd
 import pkg_resources
+import pytz
 import requests
-from unidecode import unidecode
 from lxml.html import fromstring
+from unidecode import unidecode
 
+from .data.currency_crosses_data import (
+    available_currencies_as_list,
+    currency_crosses_as_df,
+    currency_crosses_as_dict,
+    currency_crosses_as_list,
+)
 from .utils import constant as cst
-from .utils.extra import random_user_agent
 from .utils.data import Data
-
-from .data.currency_crosses_data import currency_crosses_as_df, currency_crosses_as_list, currency_crosses_as_dict
-from .data.currency_crosses_data import available_currencies_as_list
+from .utils.extra import random_user_agent
 
 
 def get_currency_crosses(base=None, second=None):
@@ -56,7 +58,7 @@ def get_currency_crosses(base=None, second=None):
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
     return currency_crosses_as_df(base=base, second=second)
@@ -97,7 +99,7 @@ def get_currency_crosses_list(base=None, second=None):
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
     return currency_crosses_as_list(base=base, second=second)
@@ -142,15 +144,17 @@ def get_currency_crosses_dict(base=None, second=None, columns=None, as_json=Fals
                     'second': second,
                     'second_name': second_name
                 }
-    
+
     Raises:
         ValueError: raised if any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
-    return currency_crosses_as_dict(base=base, second=second, columns=columns, as_json=as_json)
+    return currency_crosses_as_dict(
+        base=base, second=second, columns=columns, as_json=as_json
+    )
 
 
 def get_available_currencies():
@@ -174,13 +178,15 @@ def get_available_currencies():
     Raises:
         FileNotFoundError: raised if `currency_crosses.csv` file was not found.
         IOError: raised if currency crosses retrieval failed, both for missing file or empty file.
-    
+
     """
 
     return available_currencies_as_list()
 
 
-def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascending', interval='Daily'):
+def get_currency_cross_recent_data(
+    currency_cross, as_json=False, order="ascending", interval="Daily"
+):
     """
     This function retrieves recent historical data from the introduced `currency_cross` as indexed in Investing.com
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -244,32 +250,53 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     """
 
     if not currency_cross:
-        raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
+        raise ValueError(
+            "ERR#0052: currency_cross param is mandatory and should be a str."
+        )
 
     if not isinstance(currency_cross, str):
-        raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
+        raise ValueError(
+            "ERR#0052: currency_cross param is mandatory and should be a str."
+        )
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+    if order not in ["ascending", "asc", "descending", "desc"]:
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
+        )
 
     if not interval:
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
+        )
 
     if not isinstance(interval, str):
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
+        )
 
     interval = interval.lower()
 
-    if interval not in ['daily', 'weekly', 'monthly']:
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    if interval not in ["daily", "weekly", "monthly"]:
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -278,14 +305,35 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     currency_cross = unidecode(currency_cross.strip().lower())
 
-    if currency_cross not in list(currency_crosses['name'].apply(unidecode).str.lower()):
-        raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exist.")
+    if currency_cross not in list(
+        currency_crosses["name"].apply(unidecode).str.lower()
+    ):
+        raise RuntimeError(
+            "ERR#0054: the introduced currency_cross "
+            + str(currency_cross)
+            + " does not exist."
+        )
 
-    id_ = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'id']
-    name = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'name']
-    currency = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'second']
+    id_ = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "id",
+    ]
+    name = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "name",
+    ]
+    currency = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "second",
+    ]
 
-    header = name + ' Historical Data'
+    header = name + " Historical Data"
 
     params = {
         "curr_id": id_,
@@ -294,7 +342,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         "interval_sec": interval.capitalize(),
         "sort_col": "date",
         "sort_ord": "DESC",
-        "action": "historical_data"
+        "action": "historical_data",
     }
 
     head = {
@@ -310,7 +358,9 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
     req = requests.post(url, headers=head, data=params)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError(
+            "ERR#0015: error " + str(req.status_code) + ", try again later."
+        )
 
     root_ = fromstring(req.text)
     path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
@@ -318,48 +368,73 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
 
     if path_:
         for elements_ in path_:
-            if elements_.xpath(".//td")[0].text_content() == 'No results found':
-                raise IndexError("ERR#0055: currency_cross information unavailable or not found.")
+            if elements_.xpath(".//td")[0].text_content() == "No results found":
+                raise IndexError(
+                    "ERR#0055: currency_cross information unavailable or not found."
+                )
 
             info = []
-        
+
             for nested_ in elements_.xpath(".//td"):
-                info.append(nested_.get('data-real-value'))
+                info.append(nested_.get("data-real-value"))
 
-            currency_cross_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
-            
-            currency_cross_close = float(info[1].replace(',', ''))
-            currency_cross_open = float(info[2].replace(',', ''))
-            currency_cross_high = float(info[3].replace(',', ''))
-            currency_cross_low = float(info[4].replace(',', ''))
+            currency_cross_date = datetime.strptime(
+                str(
+                    datetime.fromtimestamp(int(info[0]), tz=pytz.timezone("GMT")).date()
+                ),
+                "%Y-%m-%d",
+            )
 
-            result.insert(len(result),
-                          Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                               currency_cross_close, None, currency, None))
+            currency_cross_close = float(info[1].replace(",", ""))
+            currency_cross_open = float(info[2].replace(",", ""))
+            currency_cross_high = float(info[3].replace(",", ""))
+            currency_cross_low = float(info[4].replace(",", ""))
 
-        if order in ['ascending', 'asc']:
+            result.insert(
+                len(result),
+                Data(
+                    currency_cross_date,
+                    currency_cross_open,
+                    currency_cross_high,
+                    currency_cross_low,
+                    currency_cross_close,
+                    None,
+                    currency,
+                    None,
+                ),
+            )
+
+        if order in ["ascending", "asc"]:
             result = result[::-1]
-        elif order in ['descending', 'desc']:
+        elif order in ["descending", "desc"]:
             result = result
 
         if as_json is True:
             json_ = {
-                'name': name,
-                'recent': 
-                    [value.currency_cross_as_json() for value in result]
+                "name": name,
+                "recent": [value.currency_cross_as_json() for value in result],
             }
 
             return json.dumps(json_, sort_keys=False)
         elif as_json is False:
-            df = pd.DataFrame.from_records([value.currency_cross_to_dict() for value in result])
-            df.set_index('Date', inplace=True)
+            df = pd.DataFrame.from_records(
+                [value.currency_cross_to_dict() for value in result]
+            )
+            df.set_index("Date", inplace=True)
 
             return df
     else:
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_currency_cross_historical_data(
+    currency_cross,
+    from_date,
+    to_date,
+    as_json=False,
+    order="ascending",
+    interval="Daily",
+):
     """
     This function retrieves recent historical data from the introduced `currency_cross` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -425,46 +500,67 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     """
 
     if not currency_cross:
-        raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
+        raise ValueError(
+            "ERR#0052: currency_cross param is mandatory and should be a str."
+        )
 
     if not isinstance(currency_cross, str):
-        raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
+        raise ValueError(
+            "ERR#0052: currency_cross param is mandatory and should be a str."
+        )
 
     try:
-        datetime.strptime(from_date, '%d/%m/%Y')
+        datetime.strptime(from_date, "%d/%m/%Y")
     except ValueError:
         raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
     try:
-        datetime.strptime(to_date, '%d/%m/%Y')
+        datetime.strptime(to_date, "%d/%m/%Y")
     except ValueError:
         raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
 
-    start_date = datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.strptime(to_date, '%d/%m/%Y')
+    start_date = datetime.strptime(from_date, "%d/%m/%Y")
+    end_date = datetime.strptime(to_date, "%d/%m/%Y")
 
     if start_date >= end_date:
-        raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
+        raise ValueError(
+            "ERR#0032: to_date should be greater than from_date, both formatted as"
+            " 'dd/mm/yyyy'."
+        )
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    if order not in ['ascending', 'asc', 'descending', 'desc']:
-        raise ValueError("ERR#0003: order argument can just be ascending (asc) or descending (desc), str type.")
+    if order not in ["ascending", "asc", "descending", "desc"]:
+        raise ValueError(
+            "ERR#0003: order argument can just be ascending (asc) or descending (desc),"
+            " str type."
+        )
 
     if not interval:
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
+        )
 
     if not isinstance(interval, str):
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
+        )
 
     interval = interval.lower()
 
-    if interval not in ['daily', 'weekly', 'monthly']:
-        raise ValueError("ERR#0073: interval value should be a str type and it can just be either 'Daily', 'Weekly' or 'Monthly'.")
+    if interval not in ["daily", "weekly", "monthly"]:
+        raise ValueError(
+            "ERR#0073: interval value should be a str type and it can just be either"
+            " 'Daily', 'Weekly' or 'Monthly'."
+        )
 
     date_interval = {
-        'intervals': [],
+        "intervals": [],
     }
 
     flag = True
@@ -474,32 +570,39 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
         if diff > 19:
             obj = {
-                'start': start_date.strftime('%m/%d/%Y'),
-                'end': start_date.replace(year=start_date.year + 19).strftime('%m/%d/%Y'),
+                "start": start_date.strftime("%m/%d/%Y"),
+                "end": start_date.replace(year=start_date.year + 19).strftime(
+                    "%m/%d/%Y"
+                ),
             }
 
-            date_interval['intervals'].append(obj)
+            date_interval["intervals"].append(obj)
 
-            start_date = start_date.replace(year=start_date.year + 19) + timedelta(days=1)
+            start_date = start_date.replace(year=start_date.year + 19) + timedelta(
+                days=1
+            )
         else:
             obj = {
-                'start': start_date.strftime('%m/%d/%Y'),
-                'end': end_date.strftime('%m/%d/%Y'),
+                "start": start_date.strftime("%m/%d/%Y"),
+                "end": end_date.strftime("%m/%d/%Y"),
             }
 
-            date_interval['intervals'].append(obj)
+            date_interval["intervals"].append(obj)
 
             flag = False
 
-    interval_limit = len(date_interval['intervals'])
+    interval_limit = len(date_interval["intervals"])
     interval_counter = 0
 
     data_flag = False
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -508,30 +611,51 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
     currency_cross = unidecode(currency_cross.strip().lower())
 
-    if currency_cross not in list(currency_crosses['name'].apply(unidecode).str.lower()):
-        raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exist.")
+    if currency_cross not in list(
+        currency_crosses["name"].apply(unidecode).str.lower()
+    ):
+        raise RuntimeError(
+            "ERR#0054: the introduced currency_cross "
+            + str(currency_cross)
+            + " does not exist."
+        )
 
-    id_ = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'id']
-    name = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'name']
-    currency = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'second']
+    id_ = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "id",
+    ]
+    name = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "name",
+    ]
+    currency = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "second",
+    ]
 
     final = list()
 
-    header = name + ' Historical Data'
+    header = name + " Historical Data"
 
-    for index in range(len(date_interval['intervals'])):
+    for index in range(len(date_interval["intervals"])):
         interval_counter += 1
 
         params = {
             "curr_id": id_,
             "smlID": str(randint(1000000, 99999999)),
             "header": header,
-            "st_date": date_interval['intervals'][index]['start'],
-            "end_date": date_interval['intervals'][index]['end'],
+            "st_date": date_interval["intervals"][index]["start"],
+            "end_date": date_interval["intervals"][index]["end"],
             "interval_sec": interval.capitalize(),
             "sort_col": "date",
             "sort_ord": "DESC",
-            "action": "historical_data"
+            "action": "historical_data",
         }
 
         head = {
@@ -547,68 +671,92 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
         req = requests.post(url, headers=head, data=params)
 
         if req.status_code != 200:
-            raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+            raise ConnectionError(
+                "ERR#0015: error " + str(req.status_code) + ", try again later."
+            )
 
         if not req.text:
             continue
 
         root_ = fromstring(req.text)
         path_ = root_.xpath(".//table[@id='curr_table']/tbody/tr")
-        
+
         result = list()
 
         if path_:
             for elements_ in path_:
                 info = []
-        
-                for nested_ in elements_.xpath(".//td"):
-                    info.append(nested_.get('data-real-value'))
 
-                if elements_.xpath(".//td")[0].text_content() == 'No results found':
+                for nested_ in elements_.xpath(".//td"):
+                    info.append(nested_.get("data-real-value"))
+
+                if elements_.xpath(".//td")[0].text_content() == "No results found":
                     if interval_counter < interval_limit:
                         data_flag = False
                     else:
-                        raise IndexError("ERR#0055: currency_cross information unavailable or not found.")
+                        raise IndexError(
+                            "ERR#0055: currency_cross information unavailable or not"
+                            " found."
+                        )
                 else:
                     data_flag = True
 
                 if data_flag is True:
-                    currency_cross_date = datetime.strptime(str(datetime.fromtimestamp(int(info[0]), tz=pytz.timezone('GMT')).date()), '%Y-%m-%d')
-                    
-                    currency_cross_close = float(info[1].replace(',', ''))
-                    currency_cross_open = float(info[2].replace(',', ''))
-                    currency_cross_high = float(info[3].replace(',', ''))
-                    currency_cross_low = float(info[4].replace(',', ''))
+                    currency_cross_date = datetime.strptime(
+                        str(
+                            datetime.fromtimestamp(
+                                int(info[0]), tz=pytz.timezone("GMT")
+                            ).date()
+                        ),
+                        "%Y-%m-%d",
+                    )
 
-                    result.insert(len(result),
-                                  Data(currency_cross_date, currency_cross_open, currency_cross_high, currency_cross_low,
-                                       currency_cross_close, None, currency, None))
+                    currency_cross_close = float(info[1].replace(",", ""))
+                    currency_cross_open = float(info[2].replace(",", ""))
+                    currency_cross_high = float(info[3].replace(",", ""))
+                    currency_cross_low = float(info[4].replace(",", ""))
+
+                    result.insert(
+                        len(result),
+                        Data(
+                            currency_cross_date,
+                            currency_cross_open,
+                            currency_cross_high,
+                            currency_cross_low,
+                            currency_cross_close,
+                            None,
+                            currency,
+                            None,
+                        ),
+                    )
 
             if data_flag is True:
-                if order in ['ascending', 'asc']:
+                if order in ["ascending", "asc"]:
                     result = result[::-1]
-                elif order in ['descending', 'desc']:
+                elif order in ["descending", "desc"]:
                     result = result
 
                 if as_json is True:
                     json_list = [value.currency_cross_as_json() for value in result]
-                    
+
                     final.append(json_list)
                 elif as_json is False:
-                    df = pd.DataFrame.from_records([value.currency_cross_to_dict() for value in result])
-                    df.set_index('Date', inplace=True)
+                    df = pd.DataFrame.from_records(
+                        [value.currency_cross_to_dict() for value in result]
+                    )
+                    df.set_index("Date", inplace=True)
 
                     final.append(df)
         else:
             raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
-    if order in ['descending', 'desc']:
+    if order in ["descending", "desc"]:
         final.reverse()
 
     if as_json is True:
         json_ = {
-            'name': name,
-            'historical': [value for json_list in final for value in json_list]
+            "name": name,
+            "historical": [value for json_list in final for value in json_list],
         }
         return json.dumps(json_, sort_keys=False)
     elif as_json is False:
@@ -617,8 +765,8 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
 
 def get_currency_cross_information(currency_cross, as_json=False):
     """
-    This function retrieves fundamental financial information from the specified currency cross. The retrieved 
-    information from the currency cross can be valuable as it is additional information that can be used combined 
+    This function retrieves fundamental financial information from the specified currency cross. The retrieved
+    information from the currency cross can be valuable as it is additional information that can be used combined
     with OHLC values, so to determine financial insights from the company which holds the specified currency cross.
 
     Args:
@@ -655,18 +803,27 @@ def get_currency_cross_information(currency_cross, as_json=False):
     """
 
     if not currency_cross:
-        raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
+        raise ValueError(
+            "ERR#0052: currency_cross param is mandatory and should be a str."
+        )
 
     if not isinstance(currency_cross, str):
-        raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
+        raise ValueError(
+            "ERR#0052: currency_cross param is mandatory and should be a str."
+        )
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
@@ -675,11 +832,27 @@ def get_currency_cross_information(currency_cross, as_json=False):
 
     currency_cross = unidecode(currency_cross.strip().lower())
 
-    if currency_cross not in list(currency_crosses['name'].apply(unidecode).str.lower()):
-        raise RuntimeError("ERR#0054: the introduced currency_cross " + str(currency_cross) + " does not exist.")
+    if currency_cross not in list(
+        currency_crosses["name"].apply(unidecode).str.lower()
+    ):
+        raise RuntimeError(
+            "ERR#0054: the introduced currency_cross "
+            + str(currency_cross)
+            + " does not exist."
+        )
 
-    name = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'name']
-    tag = currency_crosses.loc[(currency_crosses['name'].apply(unidecode).str.lower() == currency_cross).idxmax(), 'tag']
+    name = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "name",
+    ]
+    tag = currency_crosses.loc[
+        (
+            currency_crosses["name"].apply(unidecode).str.lower() == currency_cross
+        ).idxmax(),
+        "tag",
+    ]
 
     url = "https://www.investing.com/currencies/" + tag
 
@@ -694,49 +867,65 @@ def get_currency_cross_information(currency_cross, as_json=False):
     req = requests.get(url, headers=head)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError(
+            "ERR#0015: error " + str(req.status_code) + ", try again later."
+        )
 
     root_ = fromstring(req.text)
     path_ = root_.xpath("//div[contains(@class, 'overviewDataTable')]/div")
 
-    result = pd.DataFrame(columns=['Currency Cross', 'Prev. Close', 'Bid', 'Todays Range', 
-                                   'Open', 'Ask', '52 wk Range', '1-Year Change'])
-    result.at[0, 'Currency Cross'] = name
+    result = pd.DataFrame(
+        columns=[
+            "Currency Cross",
+            "Prev. Close",
+            "Bid",
+            "Todays Range",
+            "Open",
+            "Ask",
+            "52 wk Range",
+            "1-Year Change",
+        ]
+    )
+    result.at[0, "Currency Cross"] = name
 
     if path_:
         for elements_ in path_:
             element = elements_.xpath(".//span[@class='float_lang_base_1']")[0]
             title_ = element.text_content()
             if title_ == "Day's Range":
-                title_ = 'Todays Range'
+                title_ = "Todays Range"
             if title_ in result.columns.tolist():
                 try:
-                    result.at[0, title_] = float(element.getnext().text_content().replace(',', ''))
+                    result.at[0, title_] = float(
+                        element.getnext().text_content().replace(",", "")
+                    )
                     continue
                 except:
                     pass
                 try:
                     text = element.getnext().text_content().strip()
-                    result.at[0, title_] = datetime.strptime(text, "%b %d, %Y").strftime("%d/%m/%Y")
+                    result.at[0, title_] = datetime.strptime(
+                        text, "%b %d, %Y"
+                    ).strftime("%d/%m/%Y")
                     continue
                 except:
                     pass
                 try:
                     value = element.getnext().text_content().strip()
-                    if value.__contains__('K'):
-                        value = float(value.replace('K', '').replace(',', '')) * 1e3
-                    elif value.__contains__('M'):
-                        value = float(value.replace('M', '').replace(',', '')) * 1e6
-                    elif value.__contains__('B'):
-                        value = float(value.replace('B', '').replace(',', '')) * 1e9
-                    elif value.__contains__('T'):
-                        value = float(value.replace('T', '').replace(',', '')) * 1e12
+                    if value.__contains__("K"):
+                        value = float(value.replace("K", "").replace(",", "")) * 1e3
+                    elif value.__contains__("M"):
+                        value = float(value.replace("M", "").replace(",", "")) * 1e6
+                    elif value.__contains__("B"):
+                        value = float(value.replace("B", "").replace(",", "")) * 1e9
+                    elif value.__contains__("T"):
+                        value = float(value.replace("T", "").replace(",", "")) * 1e12
                     result.at[0, title_] = value
                     continue
                 except:
                     pass
 
-        result.replace({'N/A': None}, inplace=True)
+        result.replace({"N/A": None}, inplace=True)
 
         if as_json is True:
             json_ = result.iloc[0].to_dict()
@@ -751,8 +940,8 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
     """
     This function retrieves an overview containing all the real time data available for the main stocks from a country,
     such as the names, symbols, current value, etc. as indexed in Investing.com. So on, the main usage of this
-    function is to get an overview on the main stocks from a country, so to get a general view. Note that since 
-    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks 
+    function is to get an overview on the main stocks from a country, so to get a general view. Note that since
+    this function is retrieving a lot of information at once, by default just the overview of the Top 100 stocks
     is being retrieved, but an additional parameter called n_results can be specified so to retrieve N results.
 
     Args:
@@ -770,17 +959,17 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
 
                 symbol | name | bid | ask | high | low | change | change_percentage
                 -------|------|-----|-----|------|-----|--------|-------------------
-                xxxxxx | xxxx | xxx | xxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx 
-    
+                xxxxxx | xxxx | xxx | xxx | xxxx | xxx | xxxxxx | xxxxxxxxxxxxxxxxx
+
     Raises:
         ValueError: raised if any of the introduced arguments errored.
         FileNotFoundError: raised if `currencies.csv` file is missing.
         IOError: raised if data could not be retrieved due to file error.
-        RuntimeError: 
-            raised either if the introduced currency does not match any of the listed ones or if no overview results could be 
+        RuntimeError:
+            raised either if the introduced currency does not match any of the listed ones or if no overview results could be
             retrieved from Investing.com.
         ConnectionError: raised if GET requests does not return 200 status code.
-    
+
     """
 
     if currency is None:
@@ -790,24 +979,30 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
         raise ValueError("ERR#0106: specified currency value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
     if not isinstance(n_results, int):
-        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+        raise ValueError(
+            "ERR#0089: n_results argument should be an integer between 1 and 1000."
+        )
 
     if 1 > n_results or n_results > 1000:
-        raise ValueError("ERR#0089: n_results argument should be an integer between 1 and 1000.")
+        raise ValueError(
+            "ERR#0089: n_results argument should be an integer between 1 and 1000."
+        )
 
     currency = unidecode(currency.strip().lower())
 
     if currency not in [value.lower() for value in list(cst.CURRENCIES.keys())]:
         raise ValueError("ERR#0106: specified currency value not valid.")
 
-    session_id = ''.join(sample(string.ascii_lowercase, 9))
+    session_id = "".join(sample(string.ascii_lowercase, 9))
 
     params = {
-        'session_uniq_id': session_id,
-        'currencies': cst.CURRENCIES[currency.upper()]
+        "session_uniq_id": session_id,
+        "currencies": cst.CURRENCIES[currency.upper()],
     }
 
     head = {
@@ -818,63 +1013,73 @@ def get_currency_crosses_overview(currency, as_json=False, n_results=100):
         "Connection": "keep-alive",
     }
 
-    url = 'https://www.investing.com/currencies/Service/ChangeCurrency'
+    url = "https://www.investing.com/currencies/Service/ChangeCurrency"
 
     req = requests.get(url, headers=head, params=params)
 
     if req.status_code != 200:
-        raise ConnectionError("ERR#0015: error " + str(req.status_code) + ", try again later.")
+        raise ConnectionError(
+            "ERR#0015: error " + str(req.status_code) + ", try again later."
+        )
 
-    root_ = fromstring(req.json()['HTML'])
+    root_ = fromstring(req.json()["HTML"])
     table = root_.xpath(".//table[@id='cr1']/tbody/tr")
 
     results = list()
 
     if len(table) > 0:
         for row in table[:n_results]:
-            id_ = row.get('id').replace('pair_', '')
+            id_ = row.get("id").replace("pair_", "")
 
-            symbol = row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
-            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].get('title')
+            symbol = (
+                row.xpath(".//td[contains(@class, 'elp')]/a")[0].text_content().strip()
+            )
+            name = row.xpath(".//td[contains(@class, 'elp')]/a")[0].get("title")
 
-            if symbol.__contains__(currency + '='):
+            if symbol.__contains__(currency + "="):
                 old_symbol = symbol
-                symbol = symbol.replace('=', '').replace(currency, '/' + currency)
+                symbol = symbol.replace("=", "").replace(currency, "/" + currency)
                 name = name.replace(old_symbol, symbol)
-            elif symbol.__contains__('='):
+            elif symbol.__contains__("="):
                 old_symbol = symbol
-                symbol = symbol.replace('=', '').replace(currency, currency + '/')
+                symbol = symbol.replace("=", "").replace(currency, currency + "/")
                 name = name.replace(old_symbol, symbol)
 
-            pid = 'pid-' + id_
+            pid = "pid-" + id_
 
             bid = row.xpath(".//td[@class='" + pid + "-bid']")[0].text_content()
             ask = row.xpath(".//td[@class='" + pid + "-ask']")[0].text_content()
             high = row.xpath(".//td[@class='" + pid + "-high']")[0].text_content()
             low = row.xpath(".//td[@class='" + pid + "-low']")[0].text_content()
 
-            pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[0].text_content()
-            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[0].text_content()
+            pc = row.xpath(".//td[contains(@class, '" + pid + "-pc')]")[
+                0
+            ].text_content()
+            pcp = row.xpath(".//td[contains(@class, '" + pid + "-pcp')]")[
+                0
+            ].text_content()
 
             data = {
                 "symbol": symbol,
                 "name": name,
-                "bid": float(bid.replace(',', '')),
-                "ask": float(ask.replace(',', '')),
-                "high": float(high.replace(',', '')),
-                "low": float(low.replace(',', '')),
+                "bid": float(bid.replace(",", "")),
+                "ask": float(ask.replace(",", "")),
+                "high": float(high.replace(",", "")),
+                "low": float(low.replace(",", "")),
                 "change": pc,
-                "change_percentage": pcp
+                "change_percentage": pcp,
             }
 
             results.append(data)
     else:
-        raise RuntimeError("ERR#0092: no data found while retrieving the overview from Investing.com")
+        raise RuntimeError(
+            "ERR#0092: no data found while retrieving the overview from Investing.com"
+        )
 
     df = pd.DataFrame(results)
 
     if as_json:
-        return json.loads(df.to_json(orient='records'))
+        return json.loads(df.to_json(orient="records"))
     else:
         return df
 
@@ -903,47 +1108,62 @@ def search_currency_crosses(by, value):
        FileNotFoundError: raised if `currency_crosses.csv` file is missing.
        IOError: raised if data could not be retrieved due to file error.
        RuntimeError: raised if no results were found for the introduced value in the introduced field.
-    
+
     """
 
     if not by:
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            "ERR#0006: the introduced field to search is mandatory and should be a str."
+        )
 
     if not isinstance(by, str):
-        raise ValueError('ERR#0006: the introduced field to search is mandatory and should be a str.')
+        raise ValueError(
+            "ERR#0006: the introduced field to search is mandatory and should be a str."
+        )
 
     if not value:
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            "ERR#0017: the introduced value to search is mandatory and should be a str."
+        )
 
     if not isinstance(value, str):
-        raise ValueError('ERR#0017: the introduced value to search is mandatory and should be a str.')
+        raise ValueError(
+            "ERR#0017: the introduced value to search is mandatory and should be a str."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'currency_crosses.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "currency_crosses.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        currency_crosses = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        currency_crosses = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0060: currency_crosses file not found or errored.")
 
     if currency_crosses is None:
         raise IOError("ERR#0050: currency_crosses not found or unable to retrieve.")
 
-    currency_crosses.drop(columns=['tag', 'id'], inplace=True)
+    currency_crosses.drop(columns=["tag", "id"], inplace=True)
 
     available_search_fields = currency_crosses.columns.tolist()
 
     if isinstance(by, str) and by not in available_search_fields:
-        raise ValueError('ERR#0026: the introduced field to search can either just be '
-                         + ' or '.join(available_search_fields))
+        raise ValueError(
+            "ERR#0026: the introduced field to search can either just be "
+            + " or ".join(available_search_fields)
+        )
 
-    currency_crosses['matches'] = currency_crosses[by].str.contains(value, case=False)
+    currency_crosses["matches"] = currency_crosses[by].str.contains(value, case=False)
 
-    search_result = currency_crosses.loc[currency_crosses['matches'] == True].copy()
+    search_result = currency_crosses.loc[currency_crosses["matches"] == True].copy()
 
     if len(search_result) == 0:
-        raise RuntimeError('ERR#0043: no results were found for the introduced ' + str(by) + ' value.')
+        raise RuntimeError(
+            "ERR#0043: no results were found for the introduced " + str(by) + " value."
+        )
 
-    search_result.drop(columns=['matches'], inplace=True)
+    search_result.drop(columns=["matches"], inplace=True)
     search_result.reset_index(drop=True, inplace=True)
 
     return search_result

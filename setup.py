@@ -45,7 +45,7 @@ setup(
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries"
     ],
-    python_requires='>=3',
+    python_requires='>=3.7',
     extras_require={
         "tests": requirements(filename='tests/requirements.txt'),
         "docs": requirements(filename='docs/requirements.txt')

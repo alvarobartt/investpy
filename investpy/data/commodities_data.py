@@ -1,12 +1,11 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
@@ -31,9 +30,9 @@ def commodities_as_df(group=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                title | country | name | full_name | currency | group 
+                title | country | name | full_name | currency | group
                 ------|---------|------|-----------|----------|-------
-                xxxxx | xxxxxxx | xxxx | xxxxxxxxx | xxxxxxxx | xxxxx 
+                xxxxx | xxxxxxx | xxxx | xxxxxxxxx | xxxxxxxx | xxxxx
 
     Raises:
         ValueError: raised whenever any of the introduced arguments is not valid.
@@ -41,21 +40,24 @@ def commodities_as_df(group=None):
         IOError: raised when `commodities.csv` file is missing or empty.
 
     """
-    
+
     if group is not None and not isinstance(group, str):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "commodities.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        commodities = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    commodities.drop(columns=['tag', 'id'], inplace=True)
+    commodities.drop(columns=["tag", "id"], inplace=True)
     commodities = commodities.where(pd.notnull(commodities), None)
 
     if group is None:
@@ -65,11 +67,13 @@ def commodities_as_df(group=None):
         group = unidecode(group.strip().lower())
 
         if group not in commodity_groups_list():
-            raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
-        
-        commodities = commodities[commodities['group'] == group]
+            raise ValueError(
+                "ERR#0077: introduced group does not exists or is not a valid one."
+            )
+
+        commodities = commodities[commodities["group"] == group]
         commodities.reset_index(drop=True, inplace=True)
-        
+
         return commodities
 
 
@@ -77,7 +81,7 @@ def commodities_as_list(group=None):
     """
     This function retrieves all the commodity names as stored in `commodities.csv` file, which contains all the
     data from the commodities as previously retrieved from Investing.com. So on, this function will just return
-    the commodity names from either all the available groups or from any group, which will later be used when it 
+    the commodity names from either all the available groups or from any group, which will later be used when it
     comes to both recent and historical data retrieval.
 
     Args:
@@ -97,34 +101,39 @@ def commodities_as_list(group=None):
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised when `commodities.csv` file was not found.
         IOError: raised when `commodities.csv` file is missing or empty.
-    
+
     """
 
     if group is not None and not isinstance(group, str):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "commodities.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        commodities = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    commodities.drop(columns=['tag', 'id'], inplace=True)
+    commodities.drop(columns=["tag", "id"], inplace=True)
     commodities = commodities.where(pd.notnull(commodities), None)
 
     if group is None:
-        return commodities['name'].tolist()
+        return commodities["name"].tolist()
     else:
         group = unidecode(group.strip().lower())
 
         if group not in commodity_groups_list():
-            raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
-            
-        return commodities[commodities['group'] == group]['name'].tolist()
+            raise ValueError(
+                "ERR#0077: introduced group does not exists or is not a valid one."
+            )
+
+        return commodities[commodities["group"] == group]["name"].tolist()
 
 
 def commodities_as_dict(group=None, columns=None, as_json=False):
@@ -133,9 +142,9 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
     Python dictionary which contains the same information as the file, but every row is a :obj:`dict` and
     all of them are contained in a :obj:`list`. Note that the dictionary structure is the same one as the
     JSON structure. Some optional paramaters can be specified such as the group, columns or as_json, which
-    are the name of the commodity group to filter between all the available commodities so not to return all the 
-    commodities but just the ones from the introduced group, the column names that want to be retrieved in case 
-    of needing just some columns to avoid unnecessary information load, and whether the information wants to be 
+    are the name of the commodity group to filter between all the available commodities so not to return all the
+    commodities but just the ones from the introduced group, the column names that want to be retrieved in case
+    of needing just some columns to avoid unnecessary information load, and whether the information wants to be
     returned as a JSON object or as a dictionary; respectively.
 
     Args:
@@ -172,52 +181,70 @@ def commodities_as_dict(group=None, columns=None, as_json=False):
         raise ValueError("ERR#0076: specified commodity group value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "commodities.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        commodities = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
 
-    commodities.drop(columns=['tag', 'id'], inplace=True)
+    commodities.drop(columns=["tag", "id"], inplace=True)
     commodities = commodities.where(pd.notnull(commodities), None)
 
     if columns is None:
         columns = commodities.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in commodities.columns.tolist() for column in columns):
-        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<title, country, name, full_name, currency, group>")
+        raise ValueError(
+            "ERR#0021: specified columns does not exist, available columns are "
+            "<title, country, name, full_name, currency, group>"
+        )
 
     if group is None:
         if as_json:
-            return json.dumps(commodities[columns].to_dict(orient='records'))
+            return json.dumps(commodities[columns].to_dict(orient="records"))
         else:
-            return commodities[columns].to_dict(orient='records')
+            return commodities[columns].to_dict(orient="records")
     else:
         group = unidecode(group.strip().lower())
 
         if group not in commodity_groups_list():
-            raise ValueError("ERR#0077: introduced group does not exists or is not a valid one.")
+            raise ValueError(
+                "ERR#0077: introduced group does not exists or is not a valid one."
+            )
 
         if as_json:
-            return json.dumps(commodities[commodities['group'] == group][columns].to_dict(orient='records'))
+            return json.dumps(
+                commodities[commodities["group"] == group][columns].to_dict(
+                    orient="records"
+                )
+            )
         else:
-            return commodities[commodities['group'] == group][columns].to_dict(orient='records')
+            return commodities[commodities["group"] == group][columns].to_dict(
+                orient="records"
+            )
 
 
 def commodity_groups_list():
     """
     This function returns a listing with all the available commodity groupsson that a filtering can be applied when
-    retrieving data from commodities. The current available commodity groups are metals, agriculture and energy, 
+    retrieving data from commodities. The current available commodity groups are metals, agriculture and energy,
     which include all the raw materials or commodities included in them.
 
     Returns:
@@ -230,14 +257,17 @@ def commodity_groups_list():
 
     """
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'commodities.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "commodities.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        commodities = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        commodities = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0075: commodities file not found or errored.")
 
     if commodities is None:
         raise IOError("ERR#0076: commodities not found or unable to retrieve.")
-    
-    return commodities['group'].unique().tolist()
+
+    return commodities["group"].unique().tolist()

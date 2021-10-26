@@ -1,12 +1,11 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
@@ -44,17 +43,20 @@ def stocks_as_df(country=None):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join((('resources', 'stocks.csv')))
+    resource_package = "investpy"
+    resource_path = "/".join((("resources", "stocks.csv")))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        stocks = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
-    stocks.drop(columns=['tag', 'id'], inplace=True)
+    stocks.drop(columns=["tag", "id"], inplace=True)
     stocks = stocks.where(pd.notnull(stocks), None)
 
     if country is None:
@@ -64,11 +66,13 @@ def stocks_as_df(country=None):
         country = unidecode(country.strip().lower())
 
         if country not in stock_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        stocks = stocks[stocks['country'] == country]
+        stocks = stocks[stocks["country"] == country]
         stocks.reset_index(drop=True, inplace=True)
-        
+
         return stocks
 
 
@@ -98,34 +102,39 @@ def stocks_as_list(country=None):
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised if `stocks.csv` file was not found.
         IOError: raised when `stocks.csv` file is missing or empty.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join((('resources', 'stocks.csv')))
+    resource_package = "investpy"
+    resource_path = "/".join((("resources", "stocks.csv")))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        stocks = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
-    stocks.drop(columns=['tag', 'id'], inplace=True)
+    stocks.drop(columns=["tag", "id"], inplace=True)
     stocks = stocks.where(pd.notnull(stocks), None)
 
     if country is None:
-        return stocks['symbol'].tolist()
+        return stocks["symbol"].tolist()
     else:
         country = unidecode(country.strip().lower())
 
         if country not in stock_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        return stocks[stocks['country'] == country]['symbol'].tolist()
+        return stocks[stocks["country"] == country]["symbol"].tolist()
 
 
 def stocks_as_dict(country=None, columns=None, as_json=False):
@@ -170,46 +179,62 @@ def stocks_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join((('resources', 'stocks.csv')))
+    resource_package = "investpy"
+    resource_path = "/".join((("resources", "stocks.csv")))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        stocks = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        stocks = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0056: stocks file not found or errored.")
 
     if stocks is None:
         raise IOError("ERR#0001: stocks list not found or unable to retrieve.")
 
-    stocks.drop(columns=['tag', 'id'], inplace=True)
+    stocks.drop(columns=["tag", "id"], inplace=True)
     stocks = stocks.where(pd.notnull(stocks), None)
 
     if columns is None:
         columns = stocks.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in stocks.columns.tolist() for column in columns):
-        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, name, full_name, isin, currency, symbol>")
+        raise ValueError(
+            "ERR#0021: specified columns does not exist, available columns are "
+            "<country, name, full_name, isin, currency, symbol>"
+        )
 
     if country is None:
         if as_json:
-            return json.dumps(stocks[columns].to_dict(orient='records'))
+            return json.dumps(stocks[columns].to_dict(orient="records"))
         else:
-            return stocks[columns].to_dict(orient='records')
+            return stocks[columns].to_dict(orient="records")
     else:
         country = unidecode(country.strip().lower())
 
         if country not in stock_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
         if as_json:
-            return json.dumps(stocks[stocks['country'] == country][columns].to_dict(orient='records'))
+            return json.dumps(
+                stocks[stocks["country"] == country][columns].to_dict(orient="records")
+            )
         else:
-            return stocks[stocks['country'] == country][columns].to_dict(orient='records')
+            return stocks[stocks["country"] == country][columns].to_dict(
+                orient="records"
+            )
 
 
 def stock_countries_as_list():
@@ -221,7 +246,7 @@ def stock_countries_as_list():
     Returns:
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the available countries with stocks as indexed in Investing.com
-    
+
     """
 
     return list(cst.STOCK_COUNTRIES.keys())

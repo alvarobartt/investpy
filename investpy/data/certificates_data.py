@@ -1,20 +1,19 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
 
 def certificates_as_df(country=None):
     """
-    This function retrieves all the data stored in `certificates.csv` file, which previously was retrieved from 
-    Investing.com. Since the resulting object is a matrix of data, the certificate's data is properly structured 
+    This function retrieves all the data stored in `certificates.csv` file, which previously was retrieved from
+    Investing.com. Since the resulting object is a matrix of data, the certificate's data is properly structured
     in rows and columns, where columns are the certificate data attribute names. Additionally, country
     filtering can be specified, which will make this function return not all the stored certificates, but just
     the data of the certificates from the introduced country.
@@ -44,17 +43,20 @@ def certificates_as_df(country=None):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "certificates.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        certificates = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    certificates.drop(columns=['tag', 'id'], inplace=True)
+    certificates.drop(columns=["tag", "id"], inplace=True)
     certificates = certificates.where(pd.notnull(certificates), None)
 
     if country is None:
@@ -64,11 +66,13 @@ def certificates_as_df(country=None):
         country = unidecode(country.strip().lower())
 
         if country not in certificate_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        certificates = certificates[certificates['country'] == country]
+        certificates = certificates[certificates["country"] == country]
         certificates.reset_index(drop=True, inplace=True)
-        
+
         return certificates
 
 
@@ -96,41 +100,46 @@ def certificates_as_list(country=None):
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised if `certificates.csv` file was not found.
         IOError: raised when `certificates.csv` file is missing or empty.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "certificates.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        certificates = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
     if certificates is None:
         raise IOError("ERR#0097: certificates not found or unable to retrieve.")
 
-    certificates.drop(columns=['tag', 'id'], inplace=True)
+    certificates.drop(columns=["tag", "id"], inplace=True)
     certificates = certificates.where(pd.notnull(certificates), None)
 
     if country is None:
-        return certificates['name'].tolist()
+        return certificates["name"].tolist()
     else:
         country = unidecode(country.strip().lower())
 
         if country not in certificate_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        return certificates[certificates['country'] == country]['name'].tolist()
+        return certificates[certificates["country"] == country]["name"].tolist()
 
 
 def certificates_as_dict(country=None, columns=None, as_json=False):
     """
     This function retrieves all the available certificates indexed on Investing.com, stored on `certificates.csv`.
-    This function also allows the user to specify which country do they want to retrieve data from, or from every 
-    listed country; the columns which the user wants to be included on the resulting :obj:`dict`; and the output 
+    This function also allows the user to specify which country do they want to retrieve data from, or from every
+    listed country; the columns which the user wants to be included on the resulting :obj:`dict`; and the output
     of the function will either be a :obj:`dict` or a :obj:`json`.
 
     Args:
@@ -162,23 +171,28 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised if `certificates.csv` file was not found.
         IOError: raised when `certificates.csv` file is missing or empty.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
-    
-    if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'certificates.csv'))
+    if not isinstance(as_json, bool):
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
+
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "certificates.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        certificates = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        certificates = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0096: certificates file not found or errored.")
 
-    certificates.drop(columns=['tag', 'id'], inplace=True)
+    certificates.drop(columns=["tag", "id"], inplace=True)
     certificates = certificates.where(pd.notnull(certificates), None)
 
     if certificates is None:
@@ -188,33 +202,46 @@ def certificates_as_dict(country=None, columns=None, as_json=False):
         columns = certificates.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in certificates.columns.tolist() for column in columns):
-        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, name, full_name, symbol, issuer, isin, asset_class, underlying>")
+        raise ValueError(
+            "ERR#0021: specified columns does not exist, available columns are "
+            "<country, name, full_name, symbol, issuer, isin, asset_class, underlying>"
+        )
 
     if country is None:
         if as_json:
-            return json.dumps(certificates[columns].to_dict(orient='records'))
+            return json.dumps(certificates[columns].to_dict(orient="records"))
         else:
-            return certificates[columns].to_dict(orient='records')
+            return certificates[columns].to_dict(orient="records")
     else:
         country = unidecode(country.strip().lower())
 
         if country not in certificate_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
-        
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
+
         if as_json:
-            return json.dumps(certificates[certificates['country'] == country][columns].to_dict(orient='records'))
+            return json.dumps(
+                certificates[certificates["country"] == country][columns].to_dict(
+                    orient="records"
+                )
+            )
         else:
-            return certificates[certificates['country'] == country][columns].to_dict(orient='records')
+            return certificates[certificates["country"] == country][columns].to_dict(
+                orient="records"
+            )
 
 
 def certificate_countries_as_list():
     """
-    This function retrieves all the available countries to retrieve certificates from, as the listed countries 
-    are the ones indexed on Investing.com. The purpose of this function is to list the countries which 
+    This function retrieves all the available countries to retrieve certificates from, as the listed countries
+    are the ones indexed on Investing.com. The purpose of this function is to list the countries which
     have available certificates according to Investing.com data, since the country parameter is needed when
     retrieving data from any certificate available.
 
@@ -222,7 +249,7 @@ def certificate_countries_as_list():
         :obj:`list` - countries:
             The resulting :obj:`list` contains all the countries listed on Investing.com with available certificates
             to retrieve data from.
-    
+
     """
 
-    return [value['country'] for value in cst.CERTIFICATE_COUNTRIES]
+    return [value["country"] for value in cst.CERTIFICATE_COUNTRIES]

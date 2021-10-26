@@ -1,12 +1,11 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
@@ -23,37 +22,40 @@ def etfs_as_df(country=None):
     Returns:
         :obj:`pandas.DataFrame` - etfs:
             The resulting :obj:`pandas.DataFrame` contains all the etfs basic information stored on `etfs.csv`, since it
-            was previously retrieved by investpy. Unless the country is specified, all the available etfs indexed on 
+            was previously retrieved by investpy. Unless the country is specified, all the available etfs indexed on
             Investing.com is returned, but if it is specified, just the etfs from that country are returned.
 
             In the case that the file reading of `etfs.csv` or the retrieval process from Investing.com was
             successfully completed, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full_name | symbol | isin | asset_class | currency | stock_exchange | def_stock_exchange 
+                country | name | full_name | symbol | isin | asset_class | currency | stock_exchange | def_stock_exchange
                 --------|------|-----------|--------|------|-------------|----------|----------------|--------------------
-                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx 
+                xxxxxxx | xxxx | xxxxxxxxx | xxxxxx | xxxx | xxxxxxxxxxx | xxxxxxxx | xxxxxxxxxxxxxx | xxxxxxxxxxxxxxxxxx
 
     Raises:
         ValueError: raised when any of the input arguments is not valid.
         FileNotFoundError: raised when `etfs.csv` file was not found.
         IOError: raised when `etfs.csv` file is missing.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "etfs.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        etfs = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs not found or unable to retrieve.")
 
-    etfs.drop(columns=['tag', 'id'], inplace=True)
+    etfs.drop(columns=["tag", "id"], inplace=True)
     etfs = etfs.where(pd.notnull(etfs), None)
 
     if country is None:
@@ -63,11 +65,13 @@ def etfs_as_df(country=None):
         country = unidecode(country.strip().lower())
 
         if country not in etf_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        etfs = etfs[etfs['country'] == country]
+        etfs = etfs[etfs["country"] == country]
         etfs.reset_index(drop=True, inplace=True)
-        
+
         return etfs
 
 
@@ -99,34 +103,39 @@ def etfs_as_list(country=None):
         ValueError: raised when any of the input arguments is not valid.
         FileNotFoundError: raised when `etfs.csv` file was not found.
         IOError: raised when `etfs.csv` file is missing.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "etfs.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        etfs = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs not found or unable to retrieve.")
 
-    etfs.drop(columns=['tag', 'id'], inplace=True)
+    etfs.drop(columns=["tag", "id"], inplace=True)
     etfs = etfs.where(pd.notnull(etfs), None)
 
     if country is None:
-        return etfs['name'].tolist()
+        return etfs["name"].tolist()
     else:
         country = unidecode(country.strip().lower())
 
         if country not in etf_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        return etfs[etfs['country'] == country]['name'].tolist()
+        return etfs[etfs["country"] == country]["name"].tolist()
 
 
 def etfs_as_dict(country=None, columns=None, as_json=False):
@@ -139,7 +148,7 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
     Args:
         country (:obj:`str`, optional): name of the country to retrieve all its available etfs from.
         columns (:obj:`list`, optional):
-            names of the columns of the etf data to retrieve <country, name, full_name, symbol, isin, asset_class, 
+            names of the columns of the etf data to retrieve <country, name, full_name, symbol, isin, asset_class,
             currency, stock_exchange>
         as_json (:obj:`bool`, optional):
             value to determine the format of the output data which can either be a :obj:`dict` or a :obj:`json`.
@@ -167,53 +176,68 @@ def etfs_as_dict(country=None, columns=None, as_json=False):
         ValueError: raised when any of the input arguments is not valid.
         FileNotFoundError: raised when `etfs.csv` file was not found.
         IOError: raised when `etfs.csv` file is missing.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'etfs.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "etfs.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        etfs = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        etfs = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0058: etfs file not found or errored.")
 
     if etfs is None:
         raise IOError("ERR#0009: etfs not found or unable to retrieve.")
 
-    etfs.drop(columns=['tag', 'id'], inplace=True)
+    etfs.drop(columns=["tag", "id"], inplace=True)
     etfs = etfs.where(pd.notnull(etfs), None)
 
     if columns is None:
         columns = etfs.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in etfs.columns.tolist() for column in columns):
-        raise ValueError("ERR#0021: specified columns does not exist, available columns are "
-                         "<country, name, full_name, symbol, isin, asset_class, currency, stock_exchange>")
+        raise ValueError(
+            "ERR#0021: specified columns does not exist, available columns are"
+            " <country, name, full_name, symbol, isin, asset_class, currency,"
+            " stock_exchange>"
+        )
 
     if country is None:
         if as_json:
-            return json.dumps(etfs[columns].to_dict(orient='records'))
+            return json.dumps(etfs[columns].to_dict(orient="records"))
         else:
-            return etfs[columns].to_dict(orient='records')
+            return etfs[columns].to_dict(orient="records")
     else:
         country = unidecode(country.strip().lower())
 
         if country not in etf_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
         if as_json:
-            return json.dumps(etfs[etfs['country'] == country][columns].to_dict(orient='records'))
+            return json.dumps(
+                etfs[etfs["country"] == country][columns].to_dict(orient="records")
+            )
         else:
-            return etfs[etfs['country'] == country][columns].to_dict(orient='records')
+            return etfs[etfs["country"] == country][columns].to_dict(orient="records")
 
 
 def etf_countries_as_list():
@@ -228,4 +252,4 @@ def etf_countries_as_list():
 
     """
 
-    return [value['country'] for value in cst.ETF_COUNTRIES]
+    return [value["country"] for value in cst.ETF_COUNTRIES]

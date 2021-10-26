@@ -1,12 +1,11 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
@@ -30,7 +29,7 @@ def bonds_as_df(country=None):
 
             So on, the resulting :obj:`pandas.DataFrame` will look like::
 
-                country | name | full name 
+                country | name | full name
                 --------|------|-----------
                 xxxxxxx | xxxx | xxxxxxxxx
 
@@ -43,17 +42,20 @@ def bonds_as_df(country=None):
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "bonds.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        bonds = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
     if bonds is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
-    bonds.drop(columns=['tag', 'id'], inplace=True)
+    bonds.drop(columns=["tag", "id"], inplace=True)
     bonds = bonds.where(pd.notnull(bonds), None)
 
     if country is None:
@@ -63,11 +65,13 @@ def bonds_as_df(country=None):
         country = unidecode(country.strip().lower())
 
         if country not in bond_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        bonds = bonds[bonds['country'] == country]
+        bonds = bonds[bonds["country"] == country]
         bonds.reset_index(drop=True, inplace=True)
-        
+
         return bonds
 
 
@@ -97,34 +101,39 @@ def bonds_as_list(country=None):
         ValueError: raised whenever any of the introduced arguments is not valid.
         FileNotFoundError: raised when `bonds.csv` file was not found.
         IOError: raised when `bonds.csv` file is missing or empty.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "bonds.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        bonds = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
     if bonds is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
-    bonds.drop(columns=['tag', 'id'], inplace=True)
+    bonds.drop(columns=["tag", "id"], inplace=True)
     bonds = bonds.where(pd.notnull(bonds), None)
 
     if country is None:
-        return bonds['name'].tolist()
+        return bonds["name"].tolist()
     else:
         country = unidecode(country.strip().lower())
 
         if country not in bond_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        return bonds[bonds['country'] == country]['name'].tolist()
+        return bonds[bonds["country"] == country]["name"].tolist()
 
 
 def bonds_as_dict(country=None, columns=None, as_json=False):
@@ -166,46 +175,60 @@ def bonds_as_dict(country=None, columns=None, as_json=False):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'bonds.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "bonds.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        bonds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        bonds = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0064: bonds file not found or errored.")
 
     if bonds is None:
         raise IOError("ERR#0062: bonds country list not found or unable to retrieve.")
 
-    bonds.drop(columns=['tag', 'id'], inplace=True)
+    bonds.drop(columns=["tag", "id"], inplace=True)
     bonds = bonds.where(pd.notnull(bonds), None)
 
     if columns is None:
         columns = bonds.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in bonds.columns.tolist() for column in columns):
-        raise ValueError("ERR#0063: specified columns does not exist, available columns are "
-                         "<country, name, full_name>")
+        raise ValueError(
+            "ERR#0063: specified columns does not exist, available columns are "
+            "<country, name, full_name>"
+        )
 
     if country is None:
         if as_json:
-            return json.dumps(bonds[columns].to_dict(orient='records'))
+            return json.dumps(bonds[columns].to_dict(orient="records"))
         else:
-            return bonds[columns].to_dict(orient='records')
+            return bonds[columns].to_dict(orient="records")
     else:
         country = unidecode(country.strip().lower())
 
         if country not in bond_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
         if as_json:
-            return json.dumps(bonds[bonds['country'] == country][columns].to_dict(orient='records'))
+            return json.dumps(
+                bonds[bonds["country"] == country][columns].to_dict(orient="records")
+            )
         else:
-            return bonds[bonds['country'] == country][columns].to_dict(orient='records')
+            return bonds[bonds["country"] == country][columns].to_dict(orient="records")
 
 
 def bond_countries_as_list():
@@ -220,4 +243,4 @@ def bond_countries_as_list():
 
     """
 
-    return [value['country'] for value in cst.BOND_COUNTRIES]
+    return [value["country"] for value in cst.BOND_COUNTRIES]

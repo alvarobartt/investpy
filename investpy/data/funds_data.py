@@ -1,12 +1,11 @@
 # Copyright 2018-2021 Alvaro Bartolome, alvarobartt @ GitHub
 # See LICENSE for details.
 
-import pkg_resources
-
-from unidecode import unidecode
-
 import json
+
 import pandas as pd
+import pkg_resources
+from unidecode import unidecode
 
 from ..utils import constant as cst
 
@@ -36,23 +35,26 @@ def funds_as_df(country=None):
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised when the `funds.csv` file was not found.
         IOError: raised if the `funds.csv` file is missing or errored.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "funds.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        funds = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
-    funds.drop(columns=['tag', 'id'], inplace=True)
+    funds.drop(columns=["tag", "id"], inplace=True)
     funds = funds.where(pd.notnull(funds), None)
 
     if country is None:
@@ -62,11 +64,13 @@ def funds_as_df(country=None):
         country = unidecode(country.strip().lower())
 
         if country not in fund_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        funds = funds[funds['country'] == unidecode(country.lower())]
+        funds = funds[funds["country"] == unidecode(country.lower())]
         funds.reset_index(drop=True, inplace=True)
-        
+
         return funds
 
 
@@ -96,39 +100,44 @@ def funds_as_list(country=None):
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised when the `funds.csv` file was not found.
         IOError: raised if the `funds.csv` file is missing or errored.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "funds.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        funds = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
-    funds.drop(columns=['tag', 'id'], inplace=True)
+    funds.drop(columns=["tag", "id"], inplace=True)
     funds = funds.where(pd.notnull(funds), None)
 
     if country is None:
-        return funds['name'].tolist()
+        return funds["name"].tolist()
     else:
         country = unidecode(country.strip().lower())
 
         if country not in fund_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
-        return funds[funds['country'] == country]['name'].tolist()
+        return funds[funds["country"] == country]["name"].tolist()
 
 
 def funds_as_dict(country=None, columns=None, as_json=False):
     """
-    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing 
+    This function retrieves all the available funds on Investing.com and returns them as a :obj:`dict` containing
     the country, name, symbol, tag, id, issuer, isin, asset_class, currency and underlying data. All the available
     funds can be found at: https://www.investing.com/funds/
 
@@ -161,53 +170,67 @@ def funds_as_dict(country=None, columns=None, as_json=False):
         ValueError: raised whenever any of the introduced arguments is not valid or errored.
         FileNotFoundError: raised when the `funds.csv` file was not found.
         IOError: raised if the `funds.csv` file is missing or errored.
-    
+
     """
 
     if country is not None and not isinstance(country, str):
         raise ValueError("ERR#0025: specified country value not valid.")
 
     if not isinstance(as_json, bool):
-        raise ValueError("ERR#0002: as_json argument can just be True or False, bool type.")
+        raise ValueError(
+            "ERR#0002: as_json argument can just be True or False, bool type."
+        )
 
-    resource_package = 'investpy'
-    resource_path = '/'.join(('resources', 'funds.csv'))
+    resource_package = "investpy"
+    resource_path = "/".join(("resources", "funds.csv"))
     if pkg_resources.resource_exists(resource_package, resource_path):
-        funds = pd.read_csv(pkg_resources.resource_filename(resource_package, resource_path), keep_default_na=False)
+        funds = pd.read_csv(
+            pkg_resources.resource_filename(resource_package, resource_path),
+            keep_default_na=False,
+        )
     else:
         raise FileNotFoundError("ERR#0057: funds file not found or errored.")
 
     if funds is None:
         raise IOError("ERR#0005: funds not found or unable to retrieve.")
 
-    funds.drop(columns=['tag', 'id'], inplace=True)
+    funds.drop(columns=["tag", "id"], inplace=True)
     funds = funds.where(pd.notnull(funds), None)
 
     if columns is None:
         columns = funds.columns.tolist()
     else:
         if not isinstance(columns, list):
-            raise ValueError("ERR#0020: specified columns argument is not a list, it can just be list type.")
+            raise ValueError(
+                "ERR#0020: specified columns argument is not a list, it can just be"
+                " list type."
+            )
 
     if not all(column in funds.columns.tolist() for column in columns):
-        raise ValueError("ERR#0023: specified columns does not exist, available columns are "
-                         "<country, name, symbol, issuer, isin, asset_class, currency, underlying>")
+        raise ValueError(
+            "ERR#0023: specified columns does not exist, available columns are "
+            "<country, name, symbol, issuer, isin, asset_class, currency, underlying>"
+        )
 
     if country is None:
         if as_json:
-            return json.dumps(funds[columns].to_dict(orient='records'))
+            return json.dumps(funds[columns].to_dict(orient="records"))
         else:
-            return funds[columns].to_dict(orient='records')
+            return funds[columns].to_dict(orient="records")
     else:
         country = unidecode(country.strip().lower())
 
         if country not in fund_countries_as_list():
-            raise ValueError("ERR#0034: country " + country + " not found, check if it is correct.")
+            raise ValueError(
+                "ERR#0034: country " + country + " not found, check if it is correct."
+            )
 
         if as_json:
-            return json.dumps(funds[funds['country'] == country][columns].to_dict(orient='records'))
+            return json.dumps(
+                funds[funds["country"] == country][columns].to_dict(orient="records")
+            )
         else:
-            return funds[funds['country'] == country][columns].to_dict(orient='records')
+            return funds[funds["country"] == country][columns].to_dict(orient="records")
 
 
 def fund_countries_as_list():
@@ -222,4 +245,4 @@ def fund_countries_as_list():
 
     """
 
-    return [value['country'] for value in cst.FUND_COUNTRIES]
+    return [value["country"] for value in cst.FUND_COUNTRIES]
