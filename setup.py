@@ -30,7 +30,7 @@ setup(
     description='Financial Data Extraction from Investing.com with Python',
     long_description=readme(),
     long_description_content_type='text/markdown',
-    install_requires=requirements(filename='requirements.txt'),
+    install_requires=requirements(filename='requirements/requirements.txt'),
     include_package_data=True,
     classifiers=[
         "Development Status :: 4 - Beta",
@@ -47,8 +47,8 @@ setup(
     ],
     python_requires='>=3.7',
     extras_require={
-        "tests": requirements(filename='tests/requirements.txt'),
-        "docs": requirements(filename='docs/requirements.txt')
+        "tests": requirements(filename='requirements/tests-requirements.txt'),
+        "docs": requirements(filename='requirements/docs-requirements.txt')
     },
     keywords=', '.join([
         'investing', 'investing-api', 'historical-data',
