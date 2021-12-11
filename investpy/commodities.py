@@ -493,7 +493,7 @@ def get_commodity_historical_data(
         IndexError: raised if commodity historical data was unavailable or not found in Investing.com.
 
     Examples:
-        >>> data = investpy.get_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
+        >>> data = investpy.get_commodity_historical_data(commodity='gold', from_date='01/01/2018', to_date='01/01/2019')
         >>> data.head()
                       Open    High     Low   Close  Volume Currency
         Date
