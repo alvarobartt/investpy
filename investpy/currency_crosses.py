@@ -359,7 +359,7 @@ def get_currency_cross_recent_data(currency_cross, as_json=False, order='ascendi
         raise RuntimeError("ERR#0004: data retrieval error while scraping.")
 
 
-def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_json=False, order='ascending', interval='Daily'):
+def get_currency_cross_historical_data(currency_cross, start_date, end_date, as_json=False, order='ascending', interval='Daily'):
     """
     This function retrieves recent historical data from the introduced `currency_cross` from Investing
     via Web Scraping. The resulting data can it either be stored in a :obj:`pandas.DataFrame` or in a
@@ -430,18 +430,6 @@ def get_currency_cross_historical_data(currency_cross, from_date, to_date, as_js
     if not isinstance(currency_cross, str):
         raise ValueError("ERR#0052: currency_cross param is mandatory and should be a str.")
 
-    try:
-        datetime.strptime(from_date, '%d/%m/%Y')
-    except ValueError:
-        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
-
-    try:
-        datetime.strptime(to_date, '%d/%m/%Y')
-    except ValueError:
-        raise ValueError("ERR#0011: incorrect data format, it should be 'dd/mm/yyyy'.")
-
-    start_date = datetime.strptime(from_date, '%d/%m/%Y')
-    end_date = datetime.strptime(to_date, '%d/%m/%Y')
 
     if start_date >= end_date:
         raise ValueError("ERR#0032: to_date should be greater than from_date, both formatted as 'dd/mm/yyyy'.")
