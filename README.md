@@ -189,6 +189,7 @@ combined with investpy:
 
 - [pyrtfolio](https://github.com/alvarobartt/pyrtfolio/): is a Python package to generate stock portfolios.
 - [trendet](https://github.com/alvarobartt/trendet/): is a Python package for trend detection on stock time-series data.
+- [pypme](https://github.com/ymyke/pypme): is a Python package for PME (Public Market Equivalent) calculation
 
 If you developed an interesting/useful project based on investpy data, please open an issue to let me know to 
 include it in this section.
