@@ -189,7 +189,8 @@ combined with investpy:
 
 - [pyrtfolio](https://github.com/alvarobartt/pyrtfolio/): is a Python package to generate stock portfolios.
 - [trendet](https://github.com/alvarobartt/trendet/): is a Python package for trend detection on stock time-series data.
-- [pypme](https://github.com/ymyke/pypme): is a Python package for PME (Public Market Equivalent) calculation
+- [pypme](https://github.com/ymyke/pypme): is a Python package for PME (Public Market Equivalent) calculation.
+- [tessa](https://github.com/ymyke/tessa): Find financial assets and get their price history without worrying about different APIs or rate limiting. Use it to better find assets that are on investing.com but not yet exposed via investpy and to prevent 429 errors.
 
 If you developed an interesting/useful project based on investpy data, please open an issue to let me know to 
 include it in this section.
