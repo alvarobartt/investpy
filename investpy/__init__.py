@@ -91,7 +91,7 @@ from .indices import (
     get_indices_overview,
     search_indices,
 )
-from .news import economic_calendar
+from investpy.calendars import economic_calendar
 from .search import search_quotes
 from .stocks import (
     get_stock_company_profile,
