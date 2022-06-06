@@ -523,12 +523,14 @@ def earnings_calendar(
                         txt = value.text.replace('/\xa0\xa0', '')
                         eps_forecast = float(txt) if txt != '--' else np.nan
                     elif i == 4:
-                        rev_actual = convert_abbreviations_to_number(value.text) if value.text != '--' else np.nan
+                        txt = value.text.replace(',', '')
+                        rev_actual = convert_abbreviations_to_number(txt) if txt != '--' else np.nan
                     elif i == 5:
-                        txt = value.text.replace('/\xa0\xa0', '')
+                        txt = value.text.replace('/\xa0\xa0', '').replace(',', '')
                         rev_forecast = convert_abbreviations_to_number(txt) if txt != '--' else np.nan
                     elif i == 6:
-                        mkt_cap = convert_abbreviations_to_number(value.text) if value.text else np.nan
+                        txt = value.text.replace(',', '')
+                        mkt_cap = convert_abbreviations_to_number(txt) if txt else np.nan
                     elif i == 7:
                         txt = value.find('span').get('data-tooltip')
                         time = txt if txt else None
