@@ -1745,7 +1745,10 @@ def get_stock_financial_summary(
                 curr_row = row.text_content().strip()
                 data[curr_row] = list()
                 continue
+            try:
             data[curr_row].append(float(row.text_content().strip()))
+            except ValueError: #Missing values get ignored
+                data[curr_row].append(float('nan'))
 
     dataset = pd.DataFrame(data)
     dataset.set_index("Date", inplace=True)
