@@ -1061,6 +1061,8 @@ def get_stock_dividends(stock, country):
             "3": "semi_annual",
             "4": "annual",
             "5": "trailing_twelve_months",
+            "6": "interim",
+            "7": "other",
         }
 
         if path_:
