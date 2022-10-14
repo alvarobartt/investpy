@@ -1081,9 +1081,12 @@ def get_stock_dividends(stock, country):
                                 ),
                                 "%Y-%m-%d",
                             )
-                            dividend_value = float(
-                                element_.getnext().text_content().replace(",", "")
-                            )
+                            try:
+                                dividend_value = float(
+                                    element_.getnext().text_content().replace(",", "")
+                                )
+                            except:
+                                continue
                         if element_.get("data-value") in type_values.keys():
                             dividend_type = type_values[element_.get("data-value")]
                             try:
@@ -1163,11 +1166,14 @@ def get_stock_dividends(stock, country):
                                         ),
                                         "%Y-%m-%d",
                                     )
-                                    dividend_value = float(
-                                        element_.getnext()
-                                        .text_content()
-                                        .replace(",", "")
-                                    )
+                                    try:
+                                        dividend_value = float(
+                                            element_.getnext()
+                                            .text_content()
+                                            .replace(",", "")
+                                        )
+                                    except:
+                                        continue
                                 if element_.get("data-value") in type_values.keys():
                                     dividend_type = type_values[
                                         element_.get("data-value")
