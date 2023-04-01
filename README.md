@@ -105,7 +105,7 @@ print(search_result)
 Retrieved search results will be a `list` of `investpy.utils.search_obj.SearchObj` class instances, unless
 `n_results` is set to 1, when just a single `investpy.utils.search_obj.SearchObj` class instance will be returned.
 To get to know which are the available functions and attributes of the returned search results, please read the related 
-documentation at [Search Engine Documentation](https://investpy.readthedocs.io/search_api.html). So on, those 
+documentation at [Search Engine Documentation](https://investpy.readthedocs.io/_api/search.html). So on, those 
 search results let the user retrieve both recent and historical data, its information, the technical indicators,
 the default currency, etc., as presented in the piece of code below:
 
