@@ -395,6 +395,227 @@ class SearchObj(object):
                     )
 
         return self.technical_indicators
+    
+    def retrieve_moving_averages(self, interval="daily"):
+        """Class method used to retrieve the moving averages from the class instance of any financial product.
+
+        This method retrieves the moving averages from Investing.com for the financial product of the current
+        class instance, to later put in into the `SearchObj.moving_averages` attribute. This method uses the
+        previously retrieved data from the `investpy.search_quotes(text, products, countries, n_results)`
+        function search results to build the request that it is going to be sent to Investing.com so to retrieve and
+        parse the moving averages, since the product id is required.
+
+        Args:
+            interval (:obj:`str`, optional):
+                time interval of the moving averages' calculations, available values are: `5mins`, `15mins`,
+                `30mins`, `1hour`, `5hours`, `daily`, `weekly` and `monthly`. Note that for funds just the intervals:
+                `daily`, `weekly` and `monthly` are available.
+
+        Returns:
+            :obj:`pd.DataFrame` - moving_averages:
+                This method retrieves the moving averages from the current class instance of a financial product
+                from Investing.com. This method not just stores retrieved moving averages table into self.moving_averages
+                but it also returns it as a normal function will do.
+
+        Raises:
+            ValueError: raised if any of the input parameters is not valid.
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
+            
+        """
+
+        if self.pair_type in []:
+            raise ValueError(
+                "Investing.com does not provide technical indicators for"
+                f" {self.pair_type}."
+            )
+
+        if self.pair_type != "funds" and interval not in INTERVAL_FILTERS:
+            raise ValueError(
+                "Investing.com just provides the following intervals for"
+                f" {self.pair_type}' technical indicators:"
+                f" {', '.join(list(INTERVAL_FILTERS.keys()))}"
+            )
+
+        if self.pair_type == "funds" and interval not in FUNDS_INTERVAL_FILTERS:
+            raise ValueError(
+                "Investing.com just provides the following intervals for funds'"
+                " technical indicators:"
+                f" {', '.join(list(FUNDS_INTERVAL_FILTERS.keys()))}"
+            )
+
+        params = {
+            "pairID": self.id_,
+            "period": INTERVAL_FILTERS[interval],
+            "viewType": "normal",
+        }
+
+        headers = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://www.investing.com/instruments/Service/GetTechincalData"
+
+        req = requests.post(url, headers=headers, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError(
+                f"ERR#0015: error {req.status_code}, try again later."
+            )
+
+        root = fromstring(req.text)
+        table = root.xpath(".//table[contains(@class, 'movingAvgsTbl')]/tbody/tr")
+
+        moving_avgs = list()
+
+        for row in table:
+            for value in row.xpath("td"):
+                if value.get("class") is not None:
+                    if value.get("class").__contains__("symbol"):
+                        ma_period = value.text_content().strip().replace("MA", "")
+                        sma_signal = (
+                            value.getnext().xpath("span")[0].text_content().strip().lower()
+                        )
+                        sma_value = float(
+                            value.getnext()
+                            .text_content()
+                            .lower()
+                            .replace(sma_signal, "")
+                            .strip()
+                        )
+                        value = value.getnext()
+                        ema_signal = (
+                            value.getnext()
+                            .xpath(".//span")[0]
+                            .text_content()
+                            .strip()
+                            .lower()
+                        )
+                        ema_value = float(
+                            value.getnext()
+                            .text_content()
+                            .lower()
+                            .replace(ema_signal, "")
+                            .strip()
+                        )
+
+                        moving_avgs.append(
+                            {
+                                "period": ma_period,
+                                "sma_value": sma_value,
+                                "sma_signal": sma_signal,
+                                "ema_value": ema_value,
+                                "ema_signal": ema_signal,
+                            }
+                        )
+
+        return pd.DataFrame(moving_avgs)
+    
+
+    def retrieve_pivot_points(self, interval="daily"):
+        """Class method used to retrieve the pivot_points from the class instance of any financial product.
+
+        This method retrieves the pivot_points from Investing.com for the financial product of the current
+        class instance, to later put in into the `SearchObj.pivot_points` attribute. This method uses the
+        previously retrieved data from the `investpy.search_quotes(text, products, countries, n_results)`
+        function search results to build the request that it is going to be sent to Investing.com so to retrieve and
+        parse the pivot_points, since the product id is required.
+
+        Args:
+            interval (:obj:`str`, optional):
+                time interval of the pivot_points' calculations, available values are: `5mins`, `15mins`,
+                `30mins`, `1hour`, `5hours`, `daily`, `weekly` and `monthly`. Note that for funds just the intervals:
+                `daily`, `weekly` and `monthly` are available.
+
+        Returns:
+            :obj:`pd.DataFrame` - pivot_points:
+                This method retrieves the pivot_points from the current class instance of a financial product
+                from Investing.com. This method not just stores retrieved pivot_points table into self.pivot_points
+                but it also returns it as a normal function will do.
+
+        Raises:
+            ValueError: raised if any of the input parameters is not valid.
+            ConnectionError: raised if connection to Investing.com could not be established.
+            RuntimeError: raised if there was any problem while retrieving the data from Investing.com.
+
+        """
+
+        if self.pair_type in []:
+            raise ValueError(
+                "Investing.com does not provide technical indicators for"
+                f" {self.pair_type}."
+            )
+
+        if self.pair_type != "funds" and interval not in INTERVAL_FILTERS:
+            raise ValueError(
+                "Investing.com just provides the following intervals for"
+                f" {self.pair_type}' technical indicators:"
+                f" {', '.join(list(INTERVAL_FILTERS.keys()))}"
+            )
+
+        if self.pair_type == "funds" and interval not in FUNDS_INTERVAL_FILTERS:
+            raise ValueError(
+                "Investing.com just provides the following intervals for funds'"
+                " technical indicators:"
+                f" {', '.join(list(FUNDS_INTERVAL_FILTERS.keys()))}"
+            )
+
+        params = {
+            "pairID": self.id_,
+            "period": INTERVAL_FILTERS[interval],
+            "viewType": "normal",
+        }
+
+        headers = {
+            "User-Agent": random_user_agent(),
+            "X-Requested-With": "XMLHttpRequest",
+            "Accept": "text/html",
+            "Accept-Encoding": "gzip, deflate",
+            "Connection": "keep-alive",
+        }
+
+        url = "https://www.investing.com/instruments/Service/GetTechincalData"
+
+        req = requests.post(url, headers=headers, data=params)
+
+        if req.status_code != 200:
+            raise ConnectionError(
+                f"ERR#0015: error {req.status_code}, try again later."
+            )
+
+        root = fromstring(req.text)
+        header = root.xpath(".//table[contains(@class, 'crossRatesTbl')]/thead/tr/th")
+
+        values = dict()
+
+        for index, column in enumerate(header):
+            values[index] = column.text_content().strip().lower().replace(" ", "_")
+
+        table = root.xpath(".//table[contains(@class, 'crossRatesTbl')]/tbody/tr")
+
+        pivot_pts = list()
+
+        for row in table:
+            pivot_pt = dict()
+            elements = row.xpath("td")
+
+            for key, value in values.items():
+                if value != "name":
+                    val = elements[key].text_content().strip()
+                    try:
+                        pivot_pt[value] = float(val)
+                    except:
+                        pivot_pt[value] = None
+                else:
+                    pivot_pt[value] = elements[key].text_content().strip()
+
+            pivot_pts.append(pivot_pt)
+
+        return pd.DataFrame(pivot_pts)
 
     def retrieve_currency(self):
         """Class method used to retrieve the default currency from the class instance of any financial product.
